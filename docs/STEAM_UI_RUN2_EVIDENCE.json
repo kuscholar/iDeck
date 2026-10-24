@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-22",
+  "observed_build": 10,
+  "observed_source": "29f5f6f",
+  "device_log": {
+    "bytes": 3728289,
+    "sha256": "49eabc5c1306506d17995a602a1efc4a8c0a81cbdf777faced3f59f9c63801fb"
+  },
+  "cef_log": {
+    "bytes": 649,
+    "sha256": "b9d6aa792fdd3e1474cd9096c3db7ffd825936214d79eceed2537a26ef3ee014"
+  },
+  "observations": {
+    "JIT_enable": "CS_DEBUGGED and debugger attached before pool creation",
+    "detach": "Intentional early-detach after pool ready; badge incorrectly represented debugger connection only",
+    "primary_pool_mib": 592,
+    "secondary_pool": "fixed candidate rejected: entire mapping did not meet RX validation; released",
+    "libcef_load": "Loaded into executable image pool in first helper",
+    "cef_version_reported": "126.0.6478.183",
+    "first_later_image_failure": "libglesv2.dll STATUS_NO_MEMORY; request 0x7c8000, main virgin 0x134000",
+    "helper_exception": "0x80000003 at libcef+0x59ef905, after image-allocation failures; causation not established",
+    "BrowserReady": "not observed",
+    "interactive_login": false
+  },
+  "hypothesis_update": "Build 10 did not validate fixed caller-reserved memory on device. Larger primary pool reflects address layout; do not credit candidate. Revert exact-reservation path. Test only existing pool-low=1 to move FEX buffers out of main image pool.",
+  "candidate_build": 11,
+  "candidate_artifacts": {
+    "linked_debug_dylib": {
+      "bytes": 66017456,
+      "sha256": "cea4af2f3e2232e15449816ccd175276cba4b2a2024d49b0b08542730ea95728"
+    },
+    "host_executable": {
+      "bytes": 92208,
+      "sha256": "666ba765bc84034e8dbbb0e83c5e239f98672f60bf6d0a6347c923b05c4713be"
+    }
+  },
+  "candidate_device_validation": "PENDING",
+  "tests": {
+    "pool_low": "PASS host model",
+    "pool_split": "PASS ASan/UBSan host",
+    "jit_method": "PASS",
+    "steam_ui_policy": "PASS",
+    "frontend": "PASS"
+  },
+  "candidate_install": "Build 11 signed with strict code-sign verification, installed and launched; region C execution pending"
+}

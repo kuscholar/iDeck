@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-23",
+  "source_parent": "a10687c64f525b4aadfa99faad7403167ad525c1",
+  "phase": 1,
+  "hypothesis": "Repeated real/soft pool intervals can alias PartitionAlloc metadata and misclassify a 128-byte PTD as an 8192-byte slot. Test strict overlap rejection; do not assume causation from addresses alone.",
+  "build17": {
+    "full_xcode_build": "PASS",
+    "signed_installed_launched": true,
+    "evidence": {
+      "bytes": 3031652,
+      "sha256": "77ec3eb5e03841a8123fcd49cfadd63ab3cc075e041a864ccb3ddc2af273cd4a"
+    },
+    "captured_duration_seconds": 33,
+    "refcount_assertions": 0,
+    "allocator_snapshots": 0,
+    "max_observed_present": 1219,
+    "browser_ready": false,
+    "interactive_login_verified": false,
+    "limitation": "No metadata result; callback initial metadata unavailable. Continued presents are not proof of CEF content or interaction."
+  },
+  "build18": {
+    "build_method": "Build 17 Mach-O reused; diagnostic PE and CFBundleVersion updated; re-signed and installed",
+    "diagnostic_pe": {
+      "bytes": 1572864,
+      "sha256": "191a7bca49fb92ddbe7f559ede17d0771a6cd1ddff37785ff5b8a305d077fcc8"
+    },
+    "evidence": {
+      "bytes": 2265383,
+      "sha256": "86b7d886a74bd5f2ca84feee22856196e8ee24360099130a24b82277cb11b030"
+    },
+    "allocator_snapshot": {
+      "event": "thread-exit-begin",
+      "tid": "012c",
+      "value": "0x7800280200",
+      "slot_size": 8192,
+      "ref": "0x78002821fc",
+      "ref_value": 0
+    },
+    "first_assert_line": 18107,
+    "failure": "chrome_elf+0xd7e3e, caller+0x65bb4, offender=0",
+    "initial_metadata": "Not captured for this PTD. Some other callbacks returned BRP flag 0; no initial-state inference.",
+    "overlap_evidence_lines": [
+      11345,
+      13147
+    ],
+    "overlap": "Real grant 0x7800000000 +0x400000000, then soft guard-prefixed grant returned 0x77ffff0000 +0x400010000; covers same real pool.",
+    "browser_ready": false
+  },
+  "build19": {
+    "full_native_build": "37 units PASS",
+    "full_xcode_build": "PASS",
+    "final_macho_guard_marker": true,
+    "signed_installed": true,
+    "arm64ec_ntdll": {
+      "bytes": 1572864,
+      "sha256": "191a7bca49fb92ddbe7f559ede17d0771a6cd1ddff37785ff5b8a305d077fcc8"
+    },
+    "linked_debug_dylib": {
+      "bytes": 66068192,
+      "sha256": "4124051b268717a7b019cf99d14d0d1e0b22af628b89d17313434d639dec67ba"
+    },
+    "host_executable": {
+      "bytes": 92208,
+      "sha256": "ec3c5d2f3240cb902d910ad401b4743d8c99702a66479296aad4b7dbd147d6df"
+    },
+    "native_archive": {
+      "bytes": 2375760,
+      "sha256": "a9dec54bd048abd3cf388bddae64cb0c09d542c333c18b6738737ff53f2db8f3"
+    },
+    "device_result": "PASS guard activation; CEF FAILs at allocation gate, not interactive UI",
+    "device_log": {
+      "bytes": 2062959,
+      "sha256": "71a3e9307317aea78d472ffc39462fd206d090eb0688c5093d8833767d586ab1"
+    },
+    "captured_duration_seconds": 57.79,
+    "reject_soft_overlap_count": 12,
+    "overlapping_soft_grants": 0,
+    "observed_allocation_failure": "STATUS_NO_MEMORY 0xc0000017 on 16 GiB and ~32 GiB fallback reservations; first fatal libcef.dll+0x6923404",
+    "fatal_site": "libcef.dll+0x6923404 confirmed by loaded base and matching offline bytes; NOT chrome_elf+0xd7e3e",
+    "diagnostic_caution": "Existing brp-contain label matches generic CC CC 0F 0B and mislabels this libcef fatal as refcount. Do not use that string alone as a crash classifier.",
+    "browser_ready": false,
+    "interactive_login_verified": false,
+    "steam_cef_log": {
+      "bytes": 5678,
+      "sha256": "9ff6547b78d5b5adbeaa4429c10762f27251a49415bc936d1e6ec898bcf8bf08"
+    }
+  },
+  "host_checks": {
+    "policy": "PASS",
+    "observer": "PASS ASan/UBSan; exact callback fingerprint; partial reads and incompatible code rejected",
+    "strict_reservation": "PASS ASan/UBSan; actual overlap tree/guard, dual gating, balanced locks",
+    "jit_method": "PASS",
+    "frontend": "PASS"
+  },
+  "limitations": [
+    "No Windows control.",
+    "No login/Big Picture/interaction validation.",
+    "Trace layout and timing differ.",
+    "Observer does not capture allocation/free history; incomplete initial FLS records must not be interpreted as a successful read.",
+    "Strict check covers emergency soft fallback against current Wine views only; no complete native/soft reservation broker."
+  ],
+  "next_experiment": "Inventory real/soft/cage pool ownership and disjoint address intervals before any new broker/layout change. Reproduce duplicate soft/real pool grant in an isolated reservation test; preserve strict experimental guard and do not trade collision for silent aliasing."
+}

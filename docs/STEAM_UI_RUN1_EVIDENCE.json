@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-22",
+  "observed_build": 9,
+  "observed_source": "4293afb",
+  "evidence": {
+    "device_log": {
+      "bytes": 3492096,
+      "sha256": "bb31160445263f57f23c6c4f5d287dee4af67e0d3d52c64d6b029ae91c57114c"
+    },
+    "cef_log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "observations": {
+    "launch_route": "experiment-begin login-only confirmed",
+    "primary_pool_mib": 464,
+    "secondary_pool": "wrong lower address returned; released",
+    "requested_libcef_image_bytes": 222101504,
+    "bump_before_first_cef_failure": 300695552,
+    "fex_tail_reserved_bytes": 50364416,
+    "remaining_virgin_bytes": 135479296,
+    "libcef_no_pool_failures": 9,
+    "cef_log_bytes": 0,
+    "login_window": false,
+    "reported_dialog": "steamwebhelper is not responding"
+  },
+  "hypothesis": "Fixed secondary reservation plus existing debugger preparation can retain the measured upper run, increasing contiguous executable image capacity. Not yet verified on device.",
+  "candidate_build": 10,
+  "candidate_artifacts": {
+    "host_executable": {
+      "bytes": 92208,
+      "sha256": "005f7899c59a11b6a88e918d39d650c69eeda317d05d9e4144cf58b95929f3cc"
+    },
+    "linked_debug_dylib": {
+      "bytes": 66018608,
+      "sha256": "0b918c0281891bcad0a674b2cb4f19de60fc432bc25d6c2800d0b751e4600dd1"
+    }
+  },
+  "candidate_validation": {
+    "signed_and_installed": true,
+    "device_jit_pool_execution": "PENDING",
+    "local_exact_reservation_test": "PASS with real host Mach VM and mocked debugger, not iOS",
+    "pool_split": "PASS ASan/UBSan host tests",
+    "pool_placement": "PASS host tests",
+    "jit_method": "PASS",
+    "steam_ui_policy": "PASS"
+  }
+}

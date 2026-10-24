@@ -1,0 +1,74 @@
+Madeira third-party notices (shipped in every built package)
+
+Madeira itself: GPL-3.0-or-later (LICENSE-MADEIRA-GPL-3.0.txt) with the
+Madeira Converter Exception, version 1 (LICENSE-MADEIRA-EXCEPTION.txt),
+which is a DRAFT and not in effect until adopted in a tagged release.
+
+Steam sign-in, owned library and downloads (SwiftSteam): derived from
+Jfishin's Madeira Steam client and used with his permission; GPL-3.0-or-later
+with the exception, (C) 2026 Jfishin, 125hz.
+
+Madeira Dock (arm64ec-windows/dockhost.exe, when built): GPL-3.0-or-later
+with the exception, (C) 2026 125hz. Source: https://github.com/125hz/madeira-dock
+(the madeira-dock submodule). Its licence and the notices of its
+statically linked LLVM/MinGW-w64 runtime are in arm64ec-windows/dock-notices.txt.
+
+Statically linked into the application binary:
+- Wine (fork branch madeira-lgpl, from upstream wine-11.4): LGPL-2.1-or-later
+  (LGPL-2.1.txt). Madeira's modifications: LGPL-2.1-or-later, (C) 2026 Will
+  Faust. Source: the wine submodule of the Madeira repository.
+- FEX-Emu (fork): MIT (FEX-MIT.txt); Madeira's modifications GPL-3.0-or-later
+  with the exception. rpmalloc (fork): 0BSD (rpmalloc-0BSD.txt); Madeira's
+  modifications GPL-3.0-or-later with the exception.
+- DXMT (fork): MIT (DXMT-MIT.txt); Madeira's modifications GPL-3.0-or-later
+  with the exception. Bundled LLVM: Apache-2.0 with LLVM exception
+  (LLVM-Apache-2.0-with-exception.txt).
+  DXMT's Direct3D 9 frontend and DXSO shader translator, written by David
+  Acevedo and imported from dacevedo12/dxmt tag v0.4-d3d9 (that tree's
+  licence notice: Copyright (c) 2023-2026 Feifan He for CodeWeavers):
+  LGPL-2.1-or-later (LGPL-2.1.txt), kept under
+  LGPL-2.1-or-later as received. Source: the dxmt submodule of the
+  Madeira repository; its LICENSE-MADEIRA.md lists the imported files.
+- GnuTLS 3.8.9: LGPL-2.1-or-later (LGPL-2.1.txt).
+- Nettle 3.10.1 and Hogweed 3.10.1: dual-licensed LGPL-3.0-or-later /
+  GPL-2.0-or-later; Madeira elects LGPL-3.0-or-later (LGPL-3.0.txt).
+- GMP 6.3.0: dual-licensed LGPL-3.0-or-later / GPL-2.0-or-later; Madeira
+  elects LGPL-3.0-or-later (LGPL-3.0.txt).
+  Source tarballs and SHA-256 sums for GnuTLS, Nettle and GMP: the Madeira
+  repository, build/gnutls-ios/src, built by build/gnutls-ios/build.sh.
+- Zstandard educational decoder (app/Madeira/SwiftSteam/zstd_edu.c, for
+  Steam's zstd content chunks): (C) Meta Platforms, Inc. and affiliates;
+  BSD-3-Clause selected from its BSD / GPL-2.0 dual licence (ZSTD-BSD.txt).
+- liblzma: public domain / 0BSD, the iOS SDK's system library, linked
+  dynamically; nothing is bundled.
+- FFmpeg 7.1.1 (libavformat, libavcodec, libavutil, libswresample):
+  LGPL-2.1-or-later (LGPL-2.1.txt), configured without any GPL, version3 or
+  non-free component. Source tarball (the unmodified upstream release from
+  ffmpeg.org) and its SHA-256: the Madeira repository, build/ffmpeg/src,
+  built by build/ffmpeg/build.sh.
+
+Bundled as files only in a development build that includes it (wine-mono/;
+release builds download it from WineHQ when the user asks, into
+Library/Application Support/WineMono, with the same mscorlib patch):
+- Wine Mono 11.0.0, the .NET Framework runtime Wine's mscoree loads,
+  unmodified except mscorlib.dll (GC.Collect with GCCollectionMode.Optimized
+  returns; Madeira's build/wine-mono/bundle.sh): Mono (LGPL or MIT X11 per part), FNA (Ms-PL and MIT), FAudio,
+  FNA3D, MojoShader and SDL3 (zlib), winforms, wpf, monoDX, System.Speech and
+  Wine Mono's own code (MIT); details in wine-mono/COPYING. Source:
+  wine-mono-11.0.0-src.tar.xz from https://dl.winehq.org/wine/wine-mono/11.0.0/
+  (SHA-256 c504cb0b91ce09b72869e063844ce114564d4ac340479a82aa6789f51510e520).
+Dynamically loaded at runtime:
+- Apple Metal Shader Converter dynamic library: Apple proprietary, under the
+  agreement in d3d12/METAL-SHADER-CONVERTER-AGREEMENT.txt (section 2.B:
+  distribution solely for shader conversion). Its headers: Apache-2.0
+  (d3d12/LICENSE-metal-shader-converter-headers.txt).
+
+LGPL notice: this application uses the LGPL-licensed libraries above. Their
+complete corresponding source, and the application's own source and build
+scripts, are in the Madeira repository. The procedure for rebuilding the
+application against modified versions of those libraries is documented in
+docs/BUILDING.md in that repository, together with the inputs it needs that
+the repository does not contain and the verification status of each step;
+as of 2026-09-16 that end-to-end rebuild has not been demonstrated from a
+clean checkout. Reverse engineering the combined work for debugging such
+modifications is permitted.

@@ -1,0 +1,27 @@
+{
+  "project": "iDeck",
+  "snapshot_date": "2026-10-24",
+  "source_repository": "https://github.com/kuscholar/Madeira",
+  "source_branch": "experiment/steam-big-picture",
+  "source_commit": "b6ea0dc11543973148c3f54ef81f44724333d4da",
+  "original_upstream": "https://github.com/willfaust/Madeira",
+  "source_policy": "Independent source snapshot, not a claim of original authorship. Original upstream history remains linked and pinned; no binary history imported.",
+  "submodules": {
+    "wine": {
+      "commit": "9129e9684daaeae70da9435e7c6060e59392634e",
+      "url": "https://github.com/willfaust/wine.git"
+    },
+    "FEX": {
+      "commit": "f59cab95659e8add0c88f0c76ec1cf483c536dbf",
+      "url": "https://github.com/willfaust/FEX.git"
+    },
+    "dxmt": {
+      "commit": "128b297c6e9a00014408dc68b4c2c2373b5813de",
+      "url": "https://github.com/willfaust/dxmt.git"
+    },
+    "madeira-dock": {
+      "commit": "72558e416a390f3669457930f09a389e54f49556",
+      "url": "https://github.com/willfaust/madeira-dock.git"
+    }
+  }
+}

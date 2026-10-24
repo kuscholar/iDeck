@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-23",
+  "parent": "026dfde456f9b5015ba5d9ab38d3d4dbb14a194f",
+  "phase": 1,
+  "probe": {
+    "bytes": 91648,
+    "sha256": "08848ea2c3b0145e9ce5fa7b561019ecdd7b835ca3eb31dca0b459e7bbbdaff4",
+    "format": "PE32+ executable (console) x86-64, for MS Windows",
+    "device_execution": "Build 20 COMPLETE; capacity gate exit70",
+    "windows_control": "NOT RUN",
+    "host_logic": "PASS ASan/UBSan: disjoint, overlap, capacity, overflow, explicit opt-in; four-call reserve-only fixture"
+  },
+  "inventory": "docs/STEAM_UI_POOL_INVENTORY.json",
+  "runtime_patch": "None this run; Build 19 guard preserved",
+  "hypothesis": "Four full PA claims + current FEX/cage reservations cannot be packed disjointly inside the existing high band; current address policy needs a measured layout/broker decision.",
+  "arithmetic": {
+    "high_band_bytes": 68719476736,
+    "four_claims_bytes": 68719607808,
+    "fex_bytes": 17179869184,
+    "cage_bytes": 8589869056,
+    "disjoint_total_before_other_allocations": 94489346048
+  },
+  "limitations": [
+    "Offline artifacts are prior device observations, not a fresh run.",
+    "Historical interval graph lacks full release/process ownership; strict live-view rejection is stronger coexistence evidence.",
+    "Capacity bound applies to current high band and full reported intervals; it is not an iPhone-wide impossibility verdict.",
+    "Sparse native map probes do not characterize every lower gap.",
+    "Subsequent Build 20 device result is a capacity gate, not CEF or Windows-control success."
+  ],
+  "build20": {
+    "full_unsigned_xcode_build": "PASS",
+    "local_signing": "PASS deep strict verification",
+    "installed": "PASS; installed and tested in subsequent user-authorized run",
+    "device_execution": "COMPLETE; exit70 capacity gate",
+    "explicit_argument": "madeira-reservation-diagnostics",
+    "result_path": "drive_c/madeira-reservation-results.txt",
+    "final_macho_launch_marker": true,
+    "final_macho_strict_guard_marker": true,
+    "linked_debug_dylib": {
+      "bytes": 66065312,
+      "sha256": "2ca38915041b7085412d03f2309a7565f4ebe5afbc05659917bce2b766177662"
+    },
+    "host_executable": {
+      "bytes": 92208,
+      "sha256": "61ea17ebe976f8f2b1101ed8b6b8de507a452b060b5a4085fd1bd8e4fce3c653"
+    },
+    "arm64ec_ntdll": {
+      "bytes": 1572864,
+      "sha256": "596ba0e4853e56ed61e006a20651edfb86cf49162bb0ac9bedc91d5873d43ada"
+    },
+    "pe_choice": "Explicitly staged original source-farm ARM64EC ntdll; previous optional CEF FLS observer not needed for reserve-only test",
+    "policy_jit_frontend": "PASS; fixed batch/explicit opt-in/CRLF checked; default and non-lab paths gated",
+    "device_test": {
+      "source": "8225668ef16692dd087abf79ba26a7e6cd1428cc",
+      "install": "PASS; hash-matched previously signed Build 20",
+      "jit": "PASS automatic paired JIT",
+      "result": "CAPACITY_GATE; reservation-exit=70",
+      "calls": [
+        {
+          "call": 0,
+          "base": "0x7800000000",
+          "size": "0x400000000",
+          "query_state": "MEM_RESERVE 0x2000"
+        },
+        {
+          "call": 1,
+          "base": "0x73ffff0000",
+          "size": "0x400010000",
+          "query_state": "MEM_RESERVE 0x2000"
+        },
+        {
+          "call": 2,
+          "base": null,
+          "size": "0x400000000",
+          "win32_error": 487
+        }
+      ],
+      "native_guard": "Two soft-overlap rejects; no overlapped range was granted",
+      "results": {
+        "bytes": 1256,
+        "sha256": "e523303014dc7f895bfd57552b3693a3611fa1ac929790bc9bdfd530b6d00b01"
+      },
+      "log": {
+        "bytes": 170048,
+        "sha256": "fc3f3268260be34a8c1ed7015284b56da4b8e70b8cf6790e11b9b018a1a5d34b"
+      },
+      "cleanup": "Only Lab PID terminated to release test reserves",
+      "limitation": "This confirms isolated Wine allocation contract capacity gate, not native kernel map availability, CEF success or a Windows control."
+    }
+  },
+  "minimal_patch": "Opt-in fixed reservation diagnostic launch route plus local inventory/probe; no allocator-policy change.",
+  "prior_offline_device_availability": "CoreDevice 4016; required trusted-connectivity/power assertion unavailable; lock state NOT determined. No install or launch attempted.",
+  "current_device_availability": "PASS; unlocked Kusch, Build 20 installed and tested through automatic paired JIT."
+}

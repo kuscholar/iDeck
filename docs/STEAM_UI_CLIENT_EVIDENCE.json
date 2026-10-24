@@ -1,0 +1,27 @@
+{
+  "source": "https://client-update.akamai.steamstatic.com/steam_client_win64",
+  "version": "1792618285",
+  "manifest_sha256": "0b12d3072042b2f2aa7b5bc0677c686210465438de981340bb46ac717b1caab8",
+  "integrity": "HTTPS manifest and package SHA256; manifest signatures not independently verified",
+  "expanded_bytes": 829728769,
+  "file_count": 6558,
+  "core_files": {
+    "steam.exe": {
+      "bytes": 5823128,
+      "sha256": "f8a4ca44008c516eebecafaa4bc26772b2a6eb0fef8034bce56a3311e21ab705"
+    },
+    "steamclient64.dll": {
+      "bytes": 26547864,
+      "sha256": "253e0a11a4415b38c78a42f7bdd6ecc426455f06c1ba6453a48090df3142dbbc"
+    },
+    "bin/cef/cef.win64/steamwebhelper.exe": {
+      "bytes": 7501976,
+      "sha256": "abbd293bd42564944700b46b9245209a4fef15247e21b968dd622d874961f4ce"
+    },
+    "bin/cef/cef.win64/libcef.dll": {
+      "bytes": 219859608,
+      "sha256": "c85bf94462b3c79baeac63823db52d15e116eead71ea414e5d3a112c59e434d3"
+    }
+  },
+  "execution": "NOT RUN; packages staged in isolated device app, presence checked, device hashes not independently read back"
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Refuse to push to a non-local remote while the converter exception is still a
+# draft. Distribution starts with the push, not with a tag. Enable with:
+#   git config core.hooksPath .githooks
+url="$2"
+case "$url" in /*|file:*) exit 0 ;; esac
+if grep -q "^Adopted on: *$" LICENSE-EXCEPTION.md 2>/dev/null || grep -q "DRAFT" LICENSE-EXCEPTION.md 2>/dev/null; then
+    echo "pre-push: LICENSE-EXCEPTION.md is still a draft (adoption line not completed); refusing to publish to $url" >&2
+    exit 1
+fi

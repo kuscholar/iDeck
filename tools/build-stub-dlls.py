@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+"""Build arm64ec stand-ins for Wine DLLs that upstream's set does not ship.
+
+A game whose import table names a missing DLL dies in the loader with
+STATUS_DLL_NOT_FOUND before running a single instruction, even when it would
+never call the DLL. Crysis Remastered imports d3d10.dll, avifil32.dll and
+vulkan-1.dll that way. Each stand-in exports exactly the names in Wine's own
+.spec (so any import resolves) and answers with an error:
+
+- vulkan-1.dll: Wine's forwards everything to winevulkan, which needs a host
+  Vulkan driver iOS does not have. Here it answers like the Khronos loader on
+  a PC without a Vulkan driver, so games fall back to D3D: the global commands
+  work (vkEnumerateInstanceVersion reports 1.3, the instance extension and
+  layer lists are empty), vkCreateInstance and every other call report
+  VK_ERROR_INCOMPATIBLE_DRIVER, and vkGetInstanceProcAddr hands out only the
+  global commands (the real loader always does; NULL for those crashed Crysis
+  Remastered's RenderThread, which calls vkEnumerateInstanceVersion through
+  it, log 2026-09-30 18:42), NULL for everything else.
+- d3d10.dll: the shader-blob entry points Wine forwards to d3dcompiler_43
+  (shipped) stay forwards; D3D10Get*ShaderProfile answer like Wine; the rest
+  return E_NOTIMPL.
+- avifil32.dll: AVI file I/O; calls return AVIERR_UNSUPPORTED, AVIFileInit and
+  AVIFileExit do nothing, the exported IIDs carry their real values.
+
+Usage: build-stub-dlls.py <wine source dir> <out dir> <clang> <llvm-readobj> <ship dir>
+"""
+import os, re, subprocess, sys
+
+wine, out, cc, readobj, ship = sys.argv[1:6]
+
+DLLS = {
+    "vulkan-1": dict(ret="-9",                       # VK_ERROR_INCOMPATIBLE_DRIVER
+                     null=re.compile(r"ProcAddr$"), keep_forwards=(),
+                     # Real prototypes: arm64ec entry thunks follow the C signature.
+                     defs={
+    "vkEnumerateInstanceVersion":
+        "int vkEnumerateInstanceVersion(unsigned *v) { if (v) *v = (1u << 22) | (3u << 12); return 0; }",
+    "vkEnumerateInstanceExtensionProperties":
+        "int vkEnumerateInstanceExtensionProperties(const char *layer, unsigned *n, void *p)"
+        " { if (layer) return -6; if (n) *n = 0; return 0; }",  # VK_ERROR_LAYER_NOT_PRESENT
+    "vkEnumerateInstanceLayerProperties":
+        "int vkEnumerateInstanceLayerProperties(unsigned *n, void *p) { if (n) *n = 0; return 0; }",
+    "vkCreateInstance":
+        "int vkCreateInstance(const void *info, const void *alloc, void **inst)"
+        " { if (inst) *inst = 0; return -9; }",
+    "vkGetInstanceProcAddr": """void *vkGetInstanceProcAddr(void *inst, const char *name)
+{
+    static const struct { const char *n; void *f; } global[] = {
+        { "vkEnumerateInstanceVersion", (void *)vkEnumerateInstanceVersion },
+        { "vkEnumerateInstanceExtensionProperties", (void *)vkEnumerateInstanceExtensionProperties },
+        { "vkEnumerateInstanceLayerProperties", (void *)vkEnumerateInstanceLayerProperties },
+        { "vkCreateInstance", (void *)vkCreateInstance },
+        { "vkGetInstanceProcAddr", (void *)vkGetInstanceProcAddr },
+    };
+    unsigned i, k;
+    if (!name) return 0;
+    for (i = 0; i < sizeof(global) / sizeof(global[0]); i++) {
+        for (k = 0; global[i].n[k] && global[i].n[k] == name[k]; k++) ;
+        if (!global[i].n[k] && !name[k]) return global[i].f;
+    }
+    return 0;
+}""",
+                     }),
+    "d3d10": dict(ret="(long long)(int)0x80004001",   # E_NOTIMPL
+                  null=None, keep_forwards=("d3dcompiler_43",),
+                  bodies={"D3D10GetVertexShaderProfile": 'return (long long)"vs_4_0";',
+                          "D3D10GetPixelShaderProfile": 'return (long long)"ps_4_0";',
+                          "D3D10GetGeometryShaderProfile": 'return (long long)"gs_4_0";'}),
+    "avifil32": dict(ret="(long long)(int)0x80044065",  # AVIERR_UNSUPPORTED
+                     null=None, keep_forwards=(),
+                     bodies={"AVIFileInit": "return 0;", "AVIFileExit": "return 0;"},
+                     data={"IID_IAVIFile": 0x00020020, "IID_IAVIStream": 0x00020021,
+                           "IID_IGetFrame": 0x00020023, "IID_IAVIEditStream": 0x00020024,
+                           "CLSID_AVISimpleUnMarshal": 0x00020009}),
+}
+
+def parse_spec(path):
+    for line in open(path):
+        line = line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        # ordinal type [-flags...] name[(args)] [forward target]
+        m = re.match(r"(\S+)\s+(\S+)((?:\s+-\S+)*)\s+([A-Za-z_][A-Za-z0-9_@]*)(\([^)]*\))?\s*(\S+)?", line)
+        if not m:
+            sys.exit("cannot parse spec line: " + line)
+        yield m.group(1), m.group(2), m.group(4), m.group(6)
+
+failed = False
+for dll, cfg in DLLS.items():
+    d = os.path.join(out, dll)
+    os.makedirs(d, exist_ok=True)
+    spec = os.path.join(wine, "dlls", dll, dll + ".spec")
+    c = ["/* Generated by tools/build-stub-dlls.py from wine/dlls/%s/%s.spec. */" % (dll, dll),
+         "int __stdcall DllMain(void *inst, unsigned reason, void *reserved) { return 1; }"]
+    deff = ["LIBRARY %s.dll" % dll, "EXPORTS"]
+    names = []
+    later = []   # full definitions, in cfg order (vkGetInstanceProcAddr refers to the others)
+    for ordinal, kind, name, target in parse_spec(spec):
+        names.append(name)
+        ordtxt = "" if ordinal == "@" else " @%s" % ordinal
+        if kind == "extern":
+            guid = cfg.get("data", {}).get(name)
+            if guid is None:
+                sys.exit("%s: no value for data export %s" % (dll, name))
+            c.append("const struct { unsigned l; unsigned short w1, w2; unsigned char b[8]; } %s = "
+                     "{ 0x%08x, 0, 0, { 0xc0, 0, 0, 0, 0, 0, 0, 0x46 } };" % (name, guid))
+            deff.append("    %s DATA%s" % (name, ordtxt))
+            continue
+        if target and target.split(".")[0] in cfg["keep_forwards"]:
+            deff.append("    %s=%s%s" % (name, target, ordtxt))
+            continue
+        if name in cfg.get("defs", {}):
+            later.append(cfg["defs"][name])
+            deff.append("    %s%s" % (name, ordtxt))
+            continue
+        body = cfg.get("bodies", {}).get(name)
+        if body is None:
+            body = "return 0;" if cfg["null"] and cfg["null"].search(name) else "return %s;" % cfg["ret"]
+        c.append("long long %s(void) { %s }" % (name, body))
+        deff.append("    %s%s" % (name, ordtxt))
+    c += [cfg["defs"][n] for n in cfg.get("defs", {}) if cfg["defs"][n] in later]
+    src, dfile, dllout = (os.path.join(d, dll + ext) for ext in (".c", ".def", ".dll"))
+    open(src, "w").write("\n".join(c) + "\n")
+    open(dfile, "w").write("\n".join(deff) + "\n")
+    r = subprocess.run([cc, "-shared", "-O2", "-o", dllout, src, dfile], capture_output=True, text=True)
+    if r.returncode:
+        print(r.stderr[-3000:])
+        print("::error::%s.dll did not build" % dll)
+        failed = True
+        continue
+    exp = subprocess.run([readobj, "--coff-exports", dllout], capture_output=True, text=True).stdout
+    have = set(re.findall(r"^\s*Name: (\S+)", exp, re.M))
+    missing = set(names) - have
+    if missing:
+        print("::error::%s.dll lacks %s" % (dll, sorted(missing)[:10]))
+        failed = True
+        continue
+    dest = os.path.join(ship, dll + ".dll")
+    if os.path.exists(dest):
+        print("::notice::%s.dll is shipped for real -- no stand-in needed" % dll)
+        continue
+    open(dest, "wb").write(open(dllout, "rb").read())
+    print("::notice::%s.dll stand-in built (%d exports) and shipped" % (dll, len(names)))
+sys.exit(1 if failed else 0)

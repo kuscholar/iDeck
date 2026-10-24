@@ -1,0 +1,116 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright 2026 Jfishin, 125hz
+// Madeira Converter Exception: see LICENSE-EXCEPTION.md
+//
+// Derived from Jfishin's Madeira Steam client, used in Madeira with the
+// author's permission (see docs/STEAM_SIGNIN.md, "Provenance"). The sign-in
+// errors are the ones sign-in raises; the connection, library and download
+// errors belong to the owned library and downloads (docs/STEAM_LIBRARY.md).
+
+import Foundation
+
+/// Errors raised by the Steam sign-in, library and download code.
+enum SteamError: LocalizedError, Equatable {
+    /// Logon EResults that mean the stored sign-in token itself is unusable:
+    /// InvalidPassword, AccessDenied, AccountNotFound, Revoked, Expired,
+    /// InvalidSignature.
+    static let signInExpiredCodes: Set<UInt32> = [5, 15, 18, 26, 27, 94]
+
+    // Sign-in
+    case authenticationFailed(String)
+    case invalidCredentials
+    case rateLimited
+    case accountDisabled
+    case rsaKeyFetchFailed
+    case qrCodeExpired
+    case authSessionExpired
+    case protobufError(String)
+
+    // Connection
+    case noServersAvailable
+    case connectionFailed(String)
+    case connectionTimeout
+    case disconnected
+    /// The CM refused the logon with this EResult. Lets callers tell a revoked
+    /// or expired sign-in from a transient network failure.
+    case logonDenied(UInt32)
+    case invalidMessage
+
+    // Library
+    case appInfoNotFound(UInt32)
+    case depotNotFound(UInt32)
+
+    // Content
+    case manifestFetchFailed(String)
+    case chunkDownloadFailed(String)
+    case decryptionFailed(String)
+    case decompressionFailed
+    /// A downloaded chunk could not be decoded; the value names the encoding
+    /// (vzip, vzstd, zip) or its leading bytes.
+    case chunkDecodeFailed(String)
+    case checksumMismatch
+    case depotKeyNotFound(UInt32)
+    case insufficientDiskSpace(needed: UInt64, available: UInt64)
+
+    var errorDescription: String? {
+        switch self {
+        case .authenticationFailed(let reason):
+            return reason
+        case .invalidCredentials:
+            return "The account name or password is incorrect."
+        case .rateLimited:
+            return "Too many attempts. Please try again later."
+        case .accountDisabled:
+            return "This Steam account has been disabled"
+        case .rsaKeyFetchFailed:
+            return "Failed to fetch RSA public key for password encryption"
+        case .qrCodeExpired:
+            return "QR code has expired. Please try again."
+        case .authSessionExpired:
+            return "The sign-in request expired. Start again."
+        case .protobufError(let detail):
+            return "Protocol buffer error: \(detail)"
+        case .noServersAvailable:
+            return "No Steam servers are available."
+        case .connectionFailed(let reason):
+            return "Connection failed: \(reason)"
+        case .connectionTimeout:
+            return "Steam did not respond in time. Check your internet connection and try again."
+        case .disconnected:
+            return "Disconnected from Steam."
+        case .logonDenied(let code):
+            return SteamError.signInExpiredCodes.contains(code)
+                ? "Your Steam sign-in is no longer valid. Sign in again."
+                : "Steam refused the connection (code \(code)). Try again later."
+        case .invalidMessage:
+            return "Received an invalid message from Steam."
+        case .appInfoNotFound(let appID):
+            return "Steam has no information for app \(appID)."
+        case .depotNotFound:
+            return "Steam has no Windows download for this game."
+        case .manifestFetchFailed(let reason):
+            return "Could not read the game's file list: \(reason)"
+        case .chunkDownloadFailed(let reason):
+            return "Download failed: \(reason)"
+        case .decryptionFailed(let reason):
+            return "Decryption failed: \(reason)"
+        case .decompressionFailed:
+            return "Failed to decompress downloaded data."
+        case .chunkDecodeFailed(let format):
+            return "Part of the game could not be decoded (\(format)). Try again; downloaded parts are kept."
+        case .checksumMismatch:
+            return "A downloaded part failed its checksum."
+        case .depotKeyNotFound:
+            return "Steam did not allow this account to download the game's files. Check that the account owns it."
+        case .insufficientDiskSpace(let needed, let available):
+            return String(format: "Not enough free space: the download needs %.1f GB and %.1f GB is available.",
+                          Double(needed) / 1_000_000_000, Double(available) / 1_000_000_000)
+        }
+    }
+}
+
+/// Where a Steam Guard code comes from.
+enum SteamGuardType: String, Codable {
+    case email = "email"
+    case device = "device"          // Steam Mobile Authenticator
+}

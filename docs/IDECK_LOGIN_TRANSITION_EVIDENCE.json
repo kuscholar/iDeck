@@ -1,0 +1,41 @@
+{
+  "user_report": "Build50 login succeeded; Steam icon spins indefinitely entering UI",
+  "installed_build": 50,
+  "base_revision": "d662d18",
+  "device_login_evidence": "Steam login log fresh10:41:53 SetLoginState Success-OK; categorical iDeck-account success marker present",
+  "transition_ack": "big-picture-requested",
+  "runtime_snapshot": "No captured Mach unhandled fault or CEF fatal marker in snapshot",
+  "frontend_observation": "Uncaught promise TypeError: reading persona from undefined; several missing-friend-cache warnings (identifiers excluded)",
+  "hypothesis": "Live desktop-to-Big-Picture transition or initialization timing differs from a fresh authenticated direct Big Picture start",
+  "discriminator": "Keep exact Build50/client/prefix/auth, restart isolated app directly with -bigpicture; no new code or account switch",
+  "limits": [
+    "Dispatch ACK does not prove transition completed",
+    "JS error not established as sole cause",
+    "Fresh restart tests saved login; prior success does not prove authentication persisted"
+  ],
+  "private_evidence_sha256": {
+    "native-private.txt": "d643291f02d1f5a92cae50f29f525706ef7cb271403843883fd6d8c0b608c478",
+    "steamui_login.txt": "1eddf13b6129a6aba37afc9be4415e3858cb5ab3cdb9fa41d8b78ffe2c6e554c",
+    "webhelper_js.txt": "167a12a2295ad42e170347aa3706aec82d3de40a2dadff8872849ca92af2948c",
+    "steamui_html.txt": "38dd40f379c4548cbca34a184e143228c2c224c48cac9b42f4291a699c2c0252",
+    "ack.txt": "cdd9486676cada2ab1f1040a61381b7df364106281dbf6d285480bc080db4690"
+  },
+  "direct_restart_result": "Actual direct launch PID21564 failed before Steam UI: wow64.dll RVA1b724 writes0x480 because NtQueryInformationProcess current ProcessWow64Information supplied a null PEB32.",
+  "source_cause": "process_ios.c current ProcessWow64Information uses shared wow_peb; loader clears/reassigns it while sibling native process boots. Disassembly shows NtQueryInformationProcess(class26), load returned pointer, write WOW64INFO at returned PEB32+0x480.",
+  "correction": "Earlier helper Build46 null CPU-reserved explanation was incomplete. This exact startup instruction writes PEB32-adjacent WOW64INFO; the returned PEB32 is null. Distinguish other x18/TLS faults.",
+  "build51": {
+    "patch": "Lab+64bit only: current ProcessWow64Information derives PEB32 from calling TEB owner and owner-bound WoW window, not session globals; remote/ordinary/old-style paths unchanged",
+    "tests": "Production function ASan/UBSan: native zero, null/foreign legacy, two WoW owners plus native owner concurrently, disabled/old-style gates",
+    "scope": "No FEX/Valve/submodule edits, no blind retry or protection workaround",
+    "native_build": "37/37 passed",
+    "device": "Installed and direct Big Picture launched PID21625. Fresh Steam login10:50:52 Success/OK without agent credentials; UI log new BrowserReady10:50:55 after gamepadui init. Actual interactive UI pending user. Native live-copy failed CoreDevice7000/POSIX60 and yielded empty file; not evidence of no faults.",
+    "xcode": "full51 passed",
+    "linked_marker": "[steam-ui-wow-peb] verified in final Madeira.debug.dylib",
+    "regressions": "owner sanitizer tests, launcher/login observer/keyboard/affinity32/keyed-event checks pass with host compiler",
+    "ordinary_launch": "Direct saved-login Big Picture; desktop-first only explicit account/diagnostic mode, not forced on every open",
+    "debug_macho_sha256": "93827f5e61e4eb5bdbf216745fc114bac7eb8bf1f608bb3b0707cabaeee3eaf1",
+    "login_sha256": "b7e563fa0c9982feb1c611b3db4b10f630551459ccbc68b85caff2d41030c69c",
+    "ui_sha256": "6365778e64eb799732e3a3c361b619b87eecc45d7f8bc5a4f3183d3d9ed7c3aa"
+  },
+  "direct_native_sha256": "01b6fb01a62a31bfbb5d70066bdb1abf494cd3bced0c903d68c0370ac3633102"
+}

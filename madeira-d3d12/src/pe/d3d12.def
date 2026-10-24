@@ -1,0 +1,25 @@
+; Export table for the runtime shipped as d3d12.dll. The two ordinals are
+; pinned because the engine delay-loads them by number (verified from its
+; import table: ord101, ord102), matching Wine's and Microsoft's d3d12.
+LIBRARY d3d12.dll
+EXPORTS
+    D3D12CreateDevice @101
+    D3D12GetDebugInterface @102
+    D3D12CoreCreateLayeredDevice
+    D3D12CoreGetLayeredDeviceSize
+    D3D12CoreRegisterLayers
+    D3D12CreateRootSignatureDeserializer
+    D3D12CreateVersionedRootSignatureDeserializer
+    D3D12EnableExperimentalFeatures
+    D3D12GetInterface
+    D3D12SerializeRootSignature
+    D3D12SerializeVersionedRootSignature
+    MadeiraD3D12CreateDevice
+    MadeiraD3D12GetBuildMarker
+    MadeiraD3D12LogProbe
+    MadeiraD3D12GetQueueStats
+    MadeiraD3D12SerializeRootSignature
+    MadeiraD3D12PresenterCreate
+    MadeiraD3D12PresenterAcquire
+    MadeiraD3D12PresenterPresent
+    MadeiraD3D12PresenterDestroy

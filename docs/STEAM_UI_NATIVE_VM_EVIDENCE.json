@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-23",
+  "phase": 1,
+  "source_parent": "8225668ef16692dd087abf79ba26a7e6cd1428cc",
+  "build": 21,
+  "hypothesis": "Independent native fixed PROT_NONE requests can distinguish pre-Wine map availability from Wine placement policy at 16-GiB-aligned slots. Failure alone still needs native region occupancy context.",
+  "protocol": "31 aligned bases, 64 KiB and 16 GiB each; non-overwriting public SDK vm_map/vm_deallocate; 64-bit address/size assertion; query current region with vm_region_64; release query object ports and only successful own mappings.",
+  "host_test": "PASS ASan/UBSan 62 requests; fixed/NONE/NONE; own cleanup only; null/nonnul query-port cleanup; early stop on failed cleanup or unexpected returned address",
+  "full_xcode_build": "PASS; first compile used unsupported iOS mach_vm.h, changed to SDK-declared 64-bit vm_map and rebuilt successfully",
+  "final_macho_markers": [
+    "madeira-native-vm-diagnostics",
+    "native-vm-probe COMPLETE",
+    "reject-soft-overlap"
+  ],
+  "linked_debug_dylib": {
+    "bytes": 66068608,
+    "sha256": "ec41c24ea83de83c0bcbc022c238e5a013b9837ba7665f003b32bf0eec083906"
+  },
+  "host_executable": {
+    "bytes": 92208,
+    "sha256": "e0ce5dac4e43bf85dbbbd9329baf88f5d71e98ad28165262d9f4b70897c5dfd4"
+  },
+  "native_archive": {
+    "bytes": 2375760,
+    "sha256": "a9dec54bd048abd3cf388bddae64cb0c09d542c333c18b6738737ff53f2db8f3"
+  },
+  "signing": "PASS deep strict",
+  "install": "PASS separate lab bundle, working app retained",
+  "device_execution": "COMPLETE; code=0; 62 requests, 8 successful and 54 failed",
+  "limitations": [
+    "Pre-Wine JIT-enabled app snapshot, not bare kernel or live CEF map.",
+    "Each own mapping released before next request; successful spans do not prove simultaneous packability.",
+    "Reservation/NONE success does not prove commit, JIT execution, CEF initialization or login.",
+    "Mapping failure can be occupancy or native VM policy; retain region context and exact kernel code."
+  ],
+  "device_artifacts": {
+    "result": {
+      "bytes": 12955,
+      "sha256": "a2a1299502455400786d9a845423db5e115440b35a28a44492761d625d84abab"
+    },
+    "log": {
+      "bytes": 2129,
+      "sha256": "07be1bca8230879e813725bb323be1e6b3dab855e4e7dc29addfbb16c651182c"
+    },
+    "redacted_samples": {
+      "bytes": 3733,
+      "sha256": "0a89f7a475a721cec1ca4287f17f29bc63b901616d16bb47d72ecef95a83d393"
+    }
+  },
+  "device_summary": {
+    "successes": 8,
+    "failure_codes": {
+      "3": 54
+    },
+    "successful_bases": [
+      "0x7000000000",
+      "0x7400000000",
+      "0x7800000000",
+      "0x7c00000000"
+    ],
+    "successful_sizes": [
+      "0x10000",
+      "0x400000000"
+    ],
+    "failed_bases_count": 27,
+    "mapping_cleanup_failures": 0,
+    "query_port_cleanup_failures": 0,
+    "no_wine_bootstrap": true,
+    "jit_enabled": true,
+    "native_entry_log_result": 0,
+    "existing_queried_regions": [
+      {
+        "base": "0x1000000000",
+        "size": "0x6000000000",
+        "protection": 0
+      },
+      {
+        "base": "0x2ea000000",
+        "size": "0xcd6000000",
+        "protection": 1
+      }
+    ]
+  },
+  "conclusion": "Pre-Wine native map accepts full 16 GiB and 64 KiB at only the four aligned slots in [0x7000000000,0x8000000000). Lower sampled slots are occupied, including a PROT_NONE [0x1000000000,0x7000000000) mapping. This is stronger than a Wine-only placement failure, but does not identify mapping ownership or prove all unaligned/smaller gaps unusable.",
+  "cleanup": "Only lab PID terminated after copying results; all successful temporary mappings and queried object ports already released by probe.",
+  "assessment": "NO-GO for simply packing four full pools plus existing FEX/cage into this measured high band. Global feasibility remains undetermined until a correct reduced-demand/ownership model is demonstrated.",
+  "next_experiment": "Attribute the four genuine CEF pool requests to modules/allocator instances and document exact alignment/size/lifetime contracts from matching implementation before any layout change. Do not repeat this 16 GiB grid or reclaim pre-existing native mappings."
+}

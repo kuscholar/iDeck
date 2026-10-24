@@ -1,0 +1,71 @@
+{
+  "phase": 3,
+  "installed_build_at_observation": 27,
+  "research_parent": "da2d1da",
+  "observations": [
+    "genuine authenticated Steam desktop library visible through Device Hub",
+    "user reports AssistiveTouch enabled and manually entered Big Picture",
+    "actual Big Picture startup background and partial loading indicator visible",
+    "same native process14195 alive; boot view unchanged over several minutes",
+    "new Valve BrowserReady/controller-UI initialization events after entry",
+    "Escape through Device Hub capture produced no visible navigation change"
+  ],
+  "evidence": {
+    "cef_log.txt": "9285fa449387d6805baa5ca883c1291c4c4796fef955d9e926617c7c5ba0d0fa",
+    "steamui_html.txt": "2b8d25493b2a015ba6d82f07116709b26efd3d074c235a48c89a12b7e4d27212",
+    "webhelper.txt": "f42ed8c9b3055b814ea74275b8eb1281298d931c1362e79229d5a65e852dcc57",
+    "controller_ui.txt": "36f316062ee9a8444bfd7f249e45bc8fc1a703955fb75e8ab385e330c61f7a48"
+  },
+  "warnings": [
+    "CEF invalid browser dimensions0x0 (may concern hidden popup)",
+    "FFmpeg unsupported pixel format-1",
+    "earlier new-browser-info response timeout predates Big Picture entry"
+  ],
+  "hypothesis": "desktop-to-Big-Picture transition in shared CEF context may differ from direct official -bigpicture startup",
+  "discriminator": "Build28 explicit double-flagged genuine -bigpicture launch using same prefix/other parameters",
+  "limits": [
+    "no working Big Picture navigation demonstrated",
+    "no sole cause attributed to warnings",
+    "no Bluetooth controller or licensed game launch/return proof"
+  ],
+  "direct_start_build": 28,
+  "direct_start_result": "Installed and launched; official startup confirms forcing gamepadui. Guest display black; no usable Big Picture navigation.",
+  "native_snapshot": {
+    "sha256": "8bbce8c4f3752b57bf00b678a009b9ed07e703f43de91c8b9190413e7c650a73",
+    "bytes": 4958155,
+    "private_path": "steam-ui-big-picture-build28/native-stable-serial.txt",
+    "collection": "bounded serial suspend/copy/SIGCONT; all commands completed; same process resumed"
+  },
+  "faults": {
+    "crashpad_child_breakpoint": {
+      "guest_address": "0x6df3def3",
+      "image": "libcef.dll",
+      "verified_load_base": "0x6aeb0000",
+      "rva": "0x308def3",
+      "disk_instruction": "int3 followed by ud2",
+      "count": 3,
+      "interpretation": "deliberate fatal trap; exact assertion/caller not yet identified"
+    },
+    "browser_consequence": "crashpad_client_win.cc(188): crash server did not respond, self-terminating (two occurrences)",
+    "separate_native_protection_fault": {
+      "host_address": "0x78ffffffff",
+      "guest_offset": "0xffffffff",
+      "kr": 2,
+      "saved_guest_return": "NtReleaseKeyedEvent stub; may be stale syscall return, not fault instruction"
+    }
+  },
+  "next_experiment": "Identify crashpad fatal caller and reproduce its specific failed contract in an isolated i386 PE before changing runtime behavior.",
+  "build29": {
+    "hypothesis": "Fatal EBP frame chain identifies which CEF CHECK fails before Crashpad handshake timeout.",
+    "diagnostic": "lab session plus exact CEF126 trap gated, bounded 8-frame read from faulting thread WoW window; code RVAs only",
+    "native_build": "37/37 units pass",
+    "xcode_build": "PASS",
+    "linked_debug_macho_marker": "verified",
+    "signature": "deep strict verified",
+    "device_result": "Actual real Big Picture homepage rendered, populated recent-game/recommendation cards. Later game details/download view visible; physical vs remote input attribution pending.",
+    "native_snapshot_sha256": "f90bf0fdac8aef5b951a5ce7b48d0888995263ee26f95c7c7a4241cdcd728a13",
+    "native_snapshot_observation": "No CEF32 fatal caller probe, no guest INT3, no Crashpad no-response marker in 75.9-second snapshot. Diagnostic is read-only; do not claim it fixed the intermittent failure.",
+    "account_persistence": "Authenticated Big Picture populated after app upgrade/restart in same prefix, without new credential entry.",
+    "game_inventory": "Isolated Steam steamapps had no appmanifest at first inventory; main game prefix untouched."
+  }
+}

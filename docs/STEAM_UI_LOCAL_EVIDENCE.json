@@ -1,0 +1,57 @@
+{
+  "scope": "host tests, final signed Mach-O, successful device install/start; no on-device CEF validation",
+  "date": "2026-10-22",
+  "bundle_id": "com.kuschqin.madeira.steamui",
+  "build": "9",
+  "artifacts": {
+    "host_executable": {
+      "bytes": 92208,
+      "sha256": "67bc91bbd1ffee600a490adb3951158d39a554a752f29c35743d246c979bdc37"
+    },
+    "linked_debug_dylib": {
+      "bytes": 66017456,
+      "sha256": "08fd8443478251c51979196362289d9e70dbbaea474d70a946791d1a80ebcf55"
+    },
+    "rebuilt_ntdll_archive": {
+      "bytes": 2375312,
+      "sha256": "fc01508ca60b850309f6fbcad0cd98a10ed2c138f73ab3bf5737a07ccb207d43"
+    },
+    "synthetic_amd64_pe": {
+      "bytes": 94208,
+      "sha256": "101931cb9189c09a0570efaddad36a762d25eb50ddf26a5661213480d5975b83"
+    }
+  },
+  "tests": {
+    "production_launch_and_privacy": {
+      "result": "PASS",
+      "log_sha256": "a3dc79edbe078bced184a6df6157bb6d129c5ec743c15a4b42fbe06d1bc04354"
+    },
+    "dock_contract": {
+      "result": "PASS",
+      "log_sha256": "c84d76f49f9e817e762d72e01f9cf1dc40a4f3fffacd286e0f1b9fe170f9ed1b"
+    },
+    "frontend": {
+      "result": "PASS",
+      "log_sha256": "7d879a48c096c2acad10cbf7f5fa92430405847cc38a20f04b3e3f51c2409baa"
+    },
+    "jit_method": {
+      "result": "PASS",
+      "log_sha256": "df57d30b0ba0b86ad47ca719c6a770c93bd1c8c7484d35e482b4d5bd4a1a693c"
+    },
+    "jit_network": {
+      "result": "PASS",
+      "log_sha256": "8e2626be2731cfc69cd1cf7739bff4927b63ef6fd62d37370d5fd12f77a3db88"
+    }
+  },
+  "final_link_markers": [
+    "[steam-ui-process] event=",
+    "experiment-begin login-only",
+    "payload-wide debug channels disabled",
+    "no fixed Steam game identity published",
+    "cef-policy single-process=1 verbose=0"
+  ],
+  "guest_probe_execution": "NOT RUN",
+  "signing": "Matching isolated app/helper profiles generated through official Xcode UI; codesign deep strict verification passed",
+  "device_install": "PASS: com.kuschqin.madeira.steamui Build 9 installed and launched; baseline app retained",
+  "device_startup": "Log confirms v0.1.3 (9), developer interface, increased-memory-limit=true; debugger/JIT and CEF execution pending"
+}

@@ -1,0 +1,132 @@
+diff --git a/dlls/ntdll/thread.c b/dlls/ntdll/thread.c
+index 7ade5d6f..224bd8c4 100644
+--- a/dlls/ntdll/thread.c
++++ b/dlls/ntdll/thread.c
+@@ -478,6 +478,91 @@ static RTL_CRITICAL_SECTION fls_section = { &fls_critsect_debug, -1, 0, 0, 0, 0
+ 
+ #define MAX_FLS_DATA_COUNT 0xff0
+ 
++
++/* Read only known allocator metadata via a fault-reporting API. The exact
++ * destructor fingerprint pins the interpretation to the inspected client.
++ * Never read or print the PTD/user allocation itself. */
++static int steam_ui_pa_read( ULONG_PTR addr, void *out, SIZE_T size )
++{
++    SIZE_T got = 0;
++    if (addr < 0x10000 || addr > ~(ULONG_PTR)0 - size) return 0;
++    return !NtReadVirtualMemory( NtCurrentProcess(), (const void *)addr, out, size, &got ) && got == size;
++}
++
++static int steam_ui_pa_snapshot( const char *event, ULONG index, const void *data, const void *callback )
++{
++    static const unsigned char expected[] = {
++        0x48,0x83,0xec,0x28,0x48,0x85,0xc9,0x74,0x11,0x48,0x8d,0x05,
++        0xe0,0xb7,0x0a,0x00,0x48,0x3b,0xc8,0x74,0x05,0xe8,0xf6,0x12,
++        0xfc,0xff,0x48,0x83,0xc4,0x28,0xc3 };
++    unsigned char code[sizeof(expected)], offset, brp;
++    ULONG_PTR ptr = (ULONG_PTR)data, super, meta, bucket, root, ref;
++    ULONG slot_size, ref_value;
++    if (strcmp( event, "set" ) && strcmp( event, "thread-exit-begin" ) && strcmp( event, "free-index-begin" )) return 0;
++    if (!data || !callback || (ptr & 15)) return 0;
++    if (!steam_ui_pa_read( (ULONG_PTR)callback, code, sizeof(code) )) return -1;
++    if (memcmp(code,expected,sizeof(code))) return -2;
++    super = ptr & ~(ULONG_PTR)0x1fffff;
++    meta = super + 0x1000 + ((ptr >> 9) & 0xfe0);
++    if (!steam_ui_pa_read( super + 0x1000, &root, sizeof(root) ) ||
++        !steam_ui_pa_read( meta + 0x1e, &offset, sizeof(offset) )) return -3;
++    meta -= (offset & 0x3f) * 32;
++    if (!steam_ui_pa_read( root + 4, &brp, sizeof(brp) )) return -4;
++    if (brp != 1) return 10 + brp;
++    if (        !steam_ui_pa_read( meta + 0x10, &bucket, sizeof(bucket) ) ||
++        !steam_ui_pa_read( bucket + 0x18, &slot_size, sizeof(slot_size) ) ||
++        slot_size < 4 || slot_size > 0x200000) return -5;
++    /* Exact non-page-aligned branch at chrome_elf+0x65886. The page-aligned
++     * table branch differs; reject it rather than guess its interpretation. */
++    if (!(ptr & 0xfff)) return 0;
++    ref = ptr + slot_size - 4;
++    if (!steam_ui_pa_read( ref, &ref_value, sizeof(ref_value) )) return -7;
++    wine_dbg_printf( "[steam-ui-pa] event=%s index=%lu tid=%04lx value=%p meta=%p bucket=%p slot_size=%lu ref=%p ref_value=%08lx\n",
++                     event,index,(ULONG)(ULONG_PTR)NtCurrentTeb()->ClientId.UniqueThread,data,
++                     (void *)meta,(void *)bucket,slot_size,(void *)ref,ref_value );
++    return 1;
++}
++
++/* Steam UI lab: bounded metadata only; never print environment values, paths
++ * or pointed-to content. This observer does not change callback ordering. */
++static void steam_ui_fls_event( const char *event, ULONG index, const void *data,
++                                const void *callback, const void *fls )
++{
++    static LONG enabled, count, skip_count;
++    static const void *callbacks[MAX_FLS_DATA_COUNT];
++    TEB *teb = NtCurrentTeb();
++    UNICODE_STRING key, value;
++    WCHAR buffer[2];
++    LONG sequence;
++    if (!teb || !teb->Peb || !teb->Peb->ProcessParameters || !teb->Peb->ProcessParameters->Environment) return;
++    if (!enabled)
++    {
++        value.Buffer = buffer; value.MaximumLength = sizeof(buffer);
++        RtlInitUnicodeString( &key, L"MADEIRA_STEAM_UI_SESSION" );
++        if (RtlQueryEnvironmentVariable_U( teb->Peb->ProcessParameters->Environment, &key, &value ) ||
++            value.Length != sizeof(WCHAR) || buffer[0] != '1') return;
++        RtlInitUnicodeString( &key, L"MADEIRA_STEAM_UI_FLS_TRACE" );
++        if (RtlQueryEnvironmentVariable_U( teb->Peb->ProcessParameters->Environment, &key, &value ) ||
++            value.Length != sizeof(WCHAR) || buffer[0] != '1') return;
++        InterlockedExchange( &enabled, 1 );
++    }
++    if (index >= MAX_FLS_DATA_COUNT) return;
++    if (!strcmp(event, "alloc")) callbacks[index] = callback;
++    if (!callback) callback = callbacks[index];
++    sequence = InterlockedIncrement( &count );
++    if (sequence > 4096) return;
++    {
++        int snapshot = steam_ui_pa_snapshot( event, index, data, callback );
++        if (snapshot && snapshot != 1 && index == 2 && InterlockedIncrement(&skip_count) <= 32)
++            wine_dbg_printf("[steam-ui-pa-skip] event=%s index=%lu tid=%04lx status=%d\n",
++                            event,index,(ULONG)(ULONG_PTR)teb->ClientId.UniqueThread,snapshot);
++    }
++    wine_dbg_printf( "[steam-ui-fls] seq=%ld event=%s pid=%04lx tid=%04lx peb=%p teb=%p index=%lu fls=%p value=%p callback=%p\n",
++                     sequence, event, (ULONG)(ULONG_PTR)teb->ClientId.UniqueProcess,
++                     (ULONG)(ULONG_PTR)teb->ClientId.UniqueThread, teb->Peb, teb,
++                     index, fls, data, callback );
++}
++
+ static void lock_fls_data(void)
+ {
+     RtlEnterCriticalSection( &fls_section );
+@@ -583,6 +668,7 @@ NTSTATUS WINAPI DECLSPEC_HOTPATCH RtlFlsAlloc( PFLS_CALLBACK_FUNCTION callback,
+     if ((*ret_index = fls_index_from_chunk_index( chunk_index, index )) > fls_data.fls_high_index)
+         fls_data.fls_high_index = *ret_index;
+ 
++    steam_ui_fls_event( "alloc", *ret_index, NULL, callback, NULL );
+     unlock_fls_data();
+ 
+     return STATUS_SUCCESS;
+@@ -632,7 +718,9 @@ NTSTATUS WINAPI DECLSPEC_HOTPATCH RtlFlsFree( ULONG index )
+                 TRACE_(relay)("Calling FLS callback %p, arg %p.\n", callback,
+                         fls->fls_data_chunks[chunk_index][idx + 1]);
+ 
++                steam_ui_fls_event( "free-index-begin", index, fls->fls_data_chunks[chunk_index][idx + 1], callback, fls );
+                 callback( fls->fls_data_chunks[chunk_index][idx + 1] );
++                steam_ui_fls_event( "free-index-end", index, fls->fls_data_chunks[chunk_index][idx + 1], callback, fls );
+             }
+             fls->fls_data_chunks[chunk_index][idx + 1] = NULL;
+         }
+@@ -668,6 +756,7 @@ NTSTATUS WINAPI DECLSPEC_HOTPATCH RtlFlsSetValue( ULONG index, void *data )
+             (fls_chunk_size( chunk_index ) + 1) * sizeof(*fls->fls_data_chunks[chunk_index]) )))
+         return STATUS_NO_MEMORY;
+ 
++    steam_ui_fls_event( "set", index, data, NULL, fls );
+     fls->fls_data_chunks[chunk_index][idx + 1] = data;
+ 
+     return STATUS_SUCCESS;
+@@ -737,7 +826,9 @@ void WINAPI DECLSPEC_HOTPATCH RtlProcessFlsData( void *teb_fls_data, ULONG flags
+                     TRACE_(relay)("Calling FLS callback %p, arg %p.\n", callback,
+                             fls->fls_data_chunks[i][index + 1]);
+ 
++                    steam_ui_fls_event( "thread-exit-begin", fls_index_from_chunk_index(i, index), fls->fls_data_chunks[i][index + 1], callback, fls );
+                     callback( fls->fls_data_chunks[i][index + 1] );
++                    steam_ui_fls_event( "thread-exit-end", fls_index_from_chunk_index(i, index), fls->fls_data_chunks[i][index + 1], callback, fls );
+                 }
+                 fls->fls_data_chunks[i][index + 1] = NULL;
+             }

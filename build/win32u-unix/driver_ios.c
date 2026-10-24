@@ -1,0 +1,2875 @@
+/*
+ * Graphics driver management functions
+ *
+ * Copyright 1994 Bob Amstadt
+ * Copyright 1996, 2001 Alexandre Julliard
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ */
+
+#if 0
+#pragma makedep unix
+#endif
+
+#include <assert.h>
+#include <pthread.h>
+
+#include "ntstatus.h"
+#include "ntgdi_private.h"
+#include "ntuser_private.h"
+#include "wine/winbase16.h"
+#include "wine/list.h"
+#include "wine/debug.h"
+
+WINE_DEFAULT_DEBUG_CHANNEL(driver);
+WINE_DECLARE_DEBUG_CHANNEL(winediag);
+
+static const struct user_driver_funcs lazy_load_driver;
+static struct user_driver_funcs null_user_driver;
+static WCHAR driver_load_error[80];
+
+#ifdef WINE_IOS
+/* winios.drv — Madeira's iOS display/input driver. Lives in
+ * app/Madeira/Winios/. Most slots stay NULL so __wine_set_user_driver's
+ * SET_USER_FUNC fallback installs the always-success nulldrv_* stubs;
+ * we only override the bits that need real iOS UIKit bridging
+ * (pProcessEvents, pSetCursor, etc.) once those are wired up.
+ *
+ * Implementations live in app/Madeira/Winios/Winios.m and are pulled in
+ * via these extern declarations. Each is __attribute__((weak)) so the
+ * driver registers cleanly even before the Obj-C side is implemented —
+ * a missing impl resolves to NULL and SET_USER_FUNC falls back. */
+extern BOOL winios_pCreateWindow( HWND hwnd ) __attribute__((weak));
+extern BOOL winios_pProcessEvents( DWORD mask ) __attribute__((weak));
+extern void winios_pSetCursor( HWND hwnd, HCURSOR cursor ) __attribute__((weak));
+extern void winios_pDestroyCursorIcon( HCURSOR cursor ) __attribute__((weak));
+extern void winios_pDestroyWindow( HWND hwnd ) __attribute__((weak));
+extern UINT winios_pShowWindow( HWND hwnd, INT cmd, RECT *rect, UINT swp ) __attribute__((weak));
+extern void winios_pWindowPosChanged( HWND hwnd, HWND insert_after, HWND owner_hint, UINT swp_flags,
+                                      const struct window_rects *new_rects, struct window_surface *surface ) __attribute__((weak));
+
+static struct user_driver_funcs winios_user_driver;
+
+/* Direct mode (no virtual desktop) has no compositor to draw the Windows
+ * cursor, so the app draws the program's own cursor over the game view while a
+ * hardware mouse is in use (app/Madeira/Winios/WiniosCursor.c and
+ * HardwareInput.swift). The driver reports the cursor image, whether the
+ * program hides it, and where Wine's cursor is after clipping; it changes
+ * nothing the program sees, and does nothing until the app has asked for the
+ * reports (MADEIRA_DIRECT_CURSOR=0 or MADEIRA_HWINPUT=0 in the app: never). */
+extern int winios_direct_cursor_wanted( void ) __attribute__((weak));
+extern void winios_direct_cursor_set( unsigned int id, int w, int h, int hot_x, int hot_y,
+                                      const void *bgra ) __attribute__((weak));
+extern void winios_direct_cursor_show( int show ) __attribute__((weak));
+extern void winios_direct_cursor_pos( int x, int y ) __attribute__((weak));
+
+static int winios_desktop_mode(void);
+
+static int winios_direct_cursor_on(void)
+{
+    return !winios_desktop_mode() && winios_direct_cursor_wanted && winios_direct_cursor_wanted();
+}
+
+/* Wine's cursor position, read the way NtUserGetCursorPos does but without the
+ * DPI mapping: the app posts and draws in the server's screen pixels. */
+static void winios_report_cursor_pos(void)
+{
+    struct object_lock lock = OBJECT_LOCK_INIT;
+    const desktop_shm_t *desktop_shm;
+    NTSTATUS status;
+    int x = 0, y = 0;
+
+    while ((status = get_shared_desktop( &lock, &desktop_shm )) == STATUS_PENDING)
+    {
+        x = desktop_shm->cursor.x;
+        y = desktop_shm->cursor.y;
+    }
+    if (!status) winios_direct_cursor_pos( x, y );
+}
+
+/* A program moved its cursor itself (SetCursorPos). Direct mode only. */
+static BOOL winios_drv_set_cursor_pos( INT x, INT y )
+{
+    if (winios_direct_cursor_on()) winios_direct_cursor_pos( x, y );
+    return TRUE;
+}
+
+static void ios_foreground_if_none( const char *why );   /* madeira-bcd, MADEIRA_INPUT_FOREGROUND, below */
+
+/* C bridge for Winios.m to inject mouse input without pulling in Wine
+ * headers into Obj-C (where INPUT/HWND/etc. would conflict with UIKit
+ * types). Call this from pProcessEvents drain or directly from a
+ * deferred Swift dispatch — it just packages an INPUT_MOUSE event and
+ * hands it to NtUserSendHardwareInput. */
+void winios_drv_post_mouse(int x, int y, unsigned int flags, unsigned int mouse_data, HWND hwnd)
+{
+    INPUT input;
+    input.type           = INPUT_MOUSE;
+    input.mi.dx          = x;
+    input.mi.dy          = y;
+    input.mi.mouseData   = mouse_data;
+    input.mi.dwFlags     = flags;
+    input.mi.time        = 0;
+    input.mi.dwExtraInfo = 0;
+
+    /* Pass hwnd=NULL — the server then hit-tests via shallow_window_from_point
+     * which walks the desktop's children (where the game's window lives).
+     * Passing the desktop handle goes through window_thread_from_point on
+     * the detached desktop window and returns NULL, dropping the message.
+     * Call win32u's send_hardware_message directly (same library) instead
+     * of the NtUserCallHwndParam inline — we get the raw NTSTATUS and skip
+     * a dispatch layer that can fail for its own reasons. */
+    ios_foreground_if_none( "an injected mouse event" );
+    NTSTATUS st = send_hardware_message( NULL, 0, &input, 0 );
+    {
+        static unsigned cnt;
+        if (cnt++ < 40)
+            dprintf(2, "[winios] drv_post_mouse hwnd=%p flags=0x%x x=%d y=%d -> status=0x%x\n",
+                    hwnd, flags, x, y, (unsigned)st);
+    }
+    /* The server has already moved (and clipped) its cursor for a MOVE. */
+    if ((flags & MOUSEEVENTF_MOVE) && winios_direct_cursor_on()) winios_report_cursor_pos();
+}
+
+/* The dedicated navigation keys (arrows, Insert/Delete, Home/End, Page
+ * Up/Down) share their scan codes with the numpad, and Wine's US table lists
+ * the numpad position first, so MAPVK_VK_TO_VSC_EX answers 0x48 for VK_UP,
+ * not 0xe048. A raw-input or DirectInput reader then sees numpad 8. The app
+ * never posts these virtual keys for a numpad key (a numpad key is
+ * VK_NUMPAD0-9 or VK_DECIMAL), so one of them here always means the dedicated
+ * key: mark it extended, as the physical key's E0 prefix is.
+ * MADEIRA_NAV_KEYS_E0=0 restores the previous flags.
+ * tests/host/check-nav-keys.py compiles this function on its own. */
+static UINT winios_key_extended_flag( UINT vk, UINT scan, int nav_e0 )
+{
+    if (scan & 0xe000) return KEYEVENTF_EXTENDEDKEY;
+    if (!nav_e0) return 0;
+    switch (vk)
+    {
+    case VK_PRIOR: case VK_NEXT: case VK_END: case VK_HOME:
+    case VK_LEFT: case VK_UP: case VK_RIGHT: case VK_DOWN:
+    case VK_INSERT: case VK_DELETE:
+        return KEYEVENTF_EXTENDEDKEY;
+    }
+    return 0;
+}
+/* end winios_key_extended_flag */
+
+/* Keyboard sibling of winios_drv_post_key: packages an INPUT_KEYBOARD
+ * event. vk is a Windows virtual-key code (VK_RETURN=0x0D, VK_SPACE=0x20,
+ * VK_ESCAPE=0x1B, ...); flags is 0 for key-down, KEYEVENTF_KEYUP (0x2)
+ * for key-up. Scan code derived via the default layout so games reading
+ * scan codes (DirectInput-style) see something plausible. */
+void winios_drv_post_key(unsigned short vk, unsigned int flags)
+{
+    INPUT input = {0};
+    NTSTATUS st;
+    UINT scan;
+    static int nav_e0 = -1;
+
+    /* ml647: DERIVE THE SCAN CODE. This used to hardcode wScan = 0 while the
+     * comment above claimed it was "derived via the default layout" — the
+     * comment described an intent the code never implemented.
+     *
+     * Nothing downstream fills it in for us. wineserver passes our value
+     * straight through, twice:
+     *     rawkeyboard_init(): RAWKEYBOARD.MakeCode = scan      (queue_ios.c:2093)
+     *     queue_keyboard_message(): lparam = scan << 16        (queue_ios.c:2356)
+     * so with 0 every synthetic key arrived with MakeCode 0 and an empty
+     * scan-code field in WM_KEYDOWN's lParam. No real keyboard can do that.
+     *
+     * Wine's own UI never noticed, because dialogs read the VK out of wParam.
+     * A GAME does notice: Unity reads the keyboard through raw input and
+     * DirectInput identifies keys by scan code (DIK_W is 0x11, not 'W'), so
+     * W/A/S/D were delivered, accepted with STATUS_SUCCESS, and then discarded
+     * as unidentifiable. That is why the on-screen stick moved nothing.
+     *
+     * MAPVK_VK_TO_VSC_EX returns 0xE0xx for the extended keys — arrows, the nav
+     * cluster, right ctrl/alt, numpad enter and divide. Those MUST carry
+     * KEYEVENTF_EXTENDEDKEY, or a scan-code reader sees the numpad twin
+     * instead: without E0, "up arrow" is numpad 8. */
+    scan = NtUserMapVirtualKeyEx( vk, MAPVK_VK_TO_VSC_EX, NtUserGetKeyboardLayout(0) );
+    if (nav_e0 < 0)
+    {
+        const char *e = getenv( "MADEIRA_NAV_KEYS_E0" );
+        nav_e0 = !(e && e[0] == '0');
+    }
+    flags |= winios_key_extended_flag( vk, scan, nav_e0 );
+
+    input.type           = INPUT_KEYBOARD;
+    input.ki.wVk         = vk;
+    input.ki.wScan       = scan & 0xff;
+    input.ki.dwFlags     = flags;
+    input.ki.time        = 0;
+    input.ki.dwExtraInfo = 0;
+
+    ios_foreground_if_none( "an injected key" );
+    st = send_hardware_message( NULL, 0, &input, 0 );
+    {
+        /* ml647: COUNT EVENTS, and never let a cap masquerade as absence. The
+         * old "first 40 lines" cap was exhausted by arrow keys early in the
+         * session, so the WASD presses that prompted this fix left no trace at
+         * all and the log looked like they were never sent. Log the first few,
+         * then one line per 256 with a running total that is always truthful. */
+        static unsigned cnt, bad;
+        if (st) bad++;
+        cnt++;
+        const char *session = getenv("MADEIRA_STEAM_UI_SESSION");
+        if ((!session || strcmp(session, "1")) && (cnt <= 8 || (cnt & 0xff) == 0))
+            dprintf(2, "[winios] ml647 drv_post_key #%u vk=0x%x scan=0x%x flags=0x%x "
+                       "-> status=0x%x (failures=%u)\n",
+                    cnt, vk, scan, flags, (unsigned)st, bad);
+    }
+}
+
+/* [winios-tree] window-tree dump: every top-level window with class,
+ * title, style and rects. Driven from the app side (Winios.m
+ * ProcessEvents drain) every few seconds in desktop mode — ground truth
+ * for "does the taskbar exist / is it visible / where is it". */
+void winios_dump_window_tree(void)
+{
+    HWND list[128];
+    ULONG size = ARRAY_SIZE(list), i;
+    NTSTATUS status;
+
+    status = NtUserBuildHwndList( 0, 0, FALSE, TRUE, 0, ARRAY_SIZE(list), list, &size );
+    if (status)
+    {
+        dprintf( 2, "[winios-tree] BuildHwndList failed 0x%x\n", (unsigned)status );
+        return;
+    }
+    dprintf( 2, "[winios-tree] ---- %u top-level windows ----\n", (unsigned)(size ? size - 1 : 0) );
+    /* who takes the keyboard and, for a game that pauses without focus, the pad */
+    {
+        HWND fg = NtUserGetForegroundWindow();
+        DWORD fg_pid = 0, fg_tid = fg ? get_window_thread( fg, &fg_pid ) : 0;
+        dprintf( 2, "[winios-tree] foreground=%p pid=%04x tid=%04x\n", fg, (unsigned)fg_pid, (unsigned)fg_tid );
+    }
+    for (i = 0; i + 1 < size && i < ARRAY_SIZE(list); i++)
+    {
+        HWND hwnd = list[i];
+        WCHAR clsW[64], txtW[64];
+        char cls[64], txt[64];
+        UNICODE_STRING us = { .Buffer = clsW, .MaximumLength = sizeof(clsW) };
+        struct window_rects rects = {0};
+        DWORD style, ex_style, pid = 0, tid;
+        int j, n;
+
+        cls[0] = 0;
+        if (NtUserGetClassName( hwnd, FALSE, &us ) > 0)
+        {
+            for (j = 0; j < us.Length / (int)sizeof(WCHAR) && j < 63; j++)
+                cls[j] = (clsW[j] >= 32 && clsW[j] < 127) ? (char)clsW[j] : '?';
+            cls[j] = 0;
+        }
+        n = NtUserInternalGetWindowText( hwnd, txtW, ARRAY_SIZE(txtW) );
+        for (j = 0; j < n && j < 63; j++)
+            txt[j] = (txtW[j] >= 32 && txtW[j] < 127) ? (char)txtW[j] : '?';
+        txt[j] = 0;
+
+        style = get_window_long( hwnd, GWL_STYLE );
+        ex_style = get_window_long( hwnd, GWL_EXSTYLE );
+        tid = get_window_thread( hwnd, &pid );
+        get_window_rects( hwnd, COORDS_SCREEN, &rects, get_thread_dpi() );
+
+        dprintf( 2, "[winios-tree] %p '%s' \"%s\" style=%08x ex=%08x vis=%d tid=%04x "
+                 "win={%d,%d,%d,%d} client={%d,%d,%d,%d}\n",
+                 hwnd, cls, txt, (unsigned)style, (unsigned)ex_style,
+                 (style & WS_VISIBLE) ? 1 : 0, (unsigned)tid,
+                 (int)rects.window.left, (int)rects.window.top, (int)rects.window.right, (int)rects.window.bottom,
+                 (int)rects.client.left, (int)rects.client.top, (int)rects.client.right, (int)rects.client.bottom );
+
+        /* children of visible top-levels (controls like the Start button) */
+        if (style & WS_VISIBLE)
+        {
+            HWND kids[32];
+            ULONG ksize = ARRAY_SIZE(kids), k;
+            if (!NtUserBuildHwndList( 0, hwnd, TRUE, TRUE, 0, ARRAY_SIZE(kids), kids, &ksize ))
+            {
+                for (k = 0; k + 1 < ksize && k < ARRAY_SIZE(kids); k++)
+                {
+                    WCHAR kclsW[32];
+                    char kcls[32];
+                    UNICODE_STRING kus = { .Buffer = kclsW, .MaximumLength = sizeof(kclsW) };
+                    struct window_rects krects = {0};
+                    DWORD kstyle;
+
+                    kcls[0] = 0;
+                    if (NtUserGetClassName( kids[k], FALSE, &kus ) > 0)
+                    {
+                        for (j = 0; j < kus.Length / (int)sizeof(WCHAR) && j < 31; j++)
+                            kcls[j] = (kclsW[j] >= 32 && kclsW[j] < 127) ? (char)kclsW[j] : '?';
+                        kcls[j] = 0;
+                    }
+                    kstyle = get_window_long( kids[k], GWL_STYLE );
+                    get_window_rects( kids[k], COORDS_SCREEN, &krects, get_thread_dpi() );
+                    dprintf( 2, "[winios-tree]    +child %p '%s' style=%08x vis=%d win={%d,%d,%d,%d}\n",
+                             kids[k], kcls, (unsigned)kstyle, (kstyle & WS_VISIBLE) ? 1 : 0,
+                             (int)krects.window.left, (int)krects.window.top,
+                             (int)krects.window.right, (int)krects.window.bottom );
+                }
+            }
+        }
+    }
+}
+
+/* Window census helpers for app/Madeira/Winios/Winios.m, which keeps the
+ * library's starting screen up over a Madeira Dock start until the game's own
+ * window is shown (see winios_window_census_enable in Winios.h). Winios.m
+ * cannot include the Wine headers, so the win32u and ntdll calls live here.
+ * All of them run on a Wine thread, only while the app has the census on. */
+
+/* A top-level window's owning process id and style bits. Returns 0 for a
+ * child window, the desktop window itself, or a window that is gone. */
+int winios_drv_census_owner( HWND hwnd, unsigned int *pid, unsigned int *style )
+{
+    DWORD process = 0, bits;
+
+    *pid = 0;
+    *style = 0;
+    bits = get_window_long( hwnd, GWL_STYLE );
+    if (bits & WS_CHILD) return 0;
+    if (!NtUserGetAncestor( hwnd, GA_PARENT )) return 0;   /* the desktop window */
+    if (!get_window_thread( hwnd, &process )) return 0;
+    *pid = process;
+    *style = bits;
+    return 1;
+}
+
+/* The executable path of process `pid`, as the server recorded it when the
+ * process started (no handle is opened): lower-case, with the NT "\??\"
+ * prefix removed, so "\??\C:\Windows\explorer.exe" reads
+ * "c:\windows\explorer.exe". Characters outside printable ASCII become '?';
+ * a path longer than the buffer is cut. Returns 1 when the path was read. */
+int winios_drv_process_image( unsigned int pid, char *out, unsigned int size )
+{
+    WCHAR path[MAX_PATH + 8];
+    SYSTEM_PROCESS_ID_INFORMATION info;
+    unsigned int i, j = 0, n;
+
+    if (!out || !size) return 0;
+    out[0] = 0;
+    if (!pid) return 0;
+    memset( &info, 0, sizeof(info) );
+    info.ProcessId = pid;
+    info.ImageName.Buffer = path;
+    info.ImageName.MaximumLength = sizeof(path);
+    if (NtQuerySystemInformation( SystemProcessIdInformation, &info, sizeof(info), NULL )) return 0;
+    n = info.ImageName.Length / sizeof(WCHAR);
+    if (n > ARRAY_SIZE(path)) n = ARRAY_SIZE(path);
+    i = (n >= 4 && path[0] == '\\' && (path[1] == '?' || path[1] == '\\') && path[2] == '?' && path[3] == '\\') ? 4 : 0;
+    for (; i < n && j + 1 < size; i++)
+    {
+        WCHAR c = path[i];
+        if (c == '/') c = '\\';
+        out[j++] = (c >= 'A' && c <= 'Z') ? (char)(c + 32) : (c >= 32 && c < 127) ? (char)c : '?';
+    }
+    out[j] = 0;
+    return j > 0;
+}
+
+/* What a taskbar click sends to a minimized window. Posted, never sent: the
+ * caller runs inside the window's WindowPosChanged. */
+int winios_drv_post_restore( HWND hwnd )
+{
+    return NtUserPostMessage( hwnd, WM_SYSCOMMAND, SC_RESTORE, 0 ) ? 1 : 0;
+}
+
+/* A taskbar click also brings the window to the front. Only the window's own
+ * thread does that, from its event pump (not inside SetWindowPos). Returns 0
+ * on another thread, 1 when the window is now foreground, -1 on failure. */
+int winios_drv_foreground_if_owner( HWND hwnd )
+{
+    if (!hwnd || get_window_thread( hwnd, NULL ) != GetCurrentThreadId()) return 0;
+    return NtUserSetForegroundWindow( hwnd ) ? 1 : -1;
+}
+
+/* ============================================================ *
+ * winios window surfaces (S2): GDI window content → app compositor.
+ * Modeled on win32u's offscreen surface (dce.c): the generic
+ * window_surface layer owns the 32bpp top-down DIB and hands us the
+ * bits at flush time; we just forward them to the app side, which
+ * uploads into a per-window CALayer. Gated on MADEIRA_DESKTOP=1 so the
+ * games path keeps its invisible offscreen surfaces unchanged.
+ * ============================================================ */
+
+/* Implemented in app/Madeira/Winios/Winios.m (weak, same pattern as the
+ * driver hooks below). Called on wine threads — the app side copies the
+ * bits before returning and uploads on the main thread. */
+extern int winios_surface_present( HWND hwnd, int dirty_x, int dirty_y, int dirty_w, int dirty_h,
+                                    int surf_w, int surf_h, int stride, const void *bits,
+                                    unsigned int alpha_mask ) __attribute__((weak));
+extern void winios_window_frame( HWND hwnd, int x, int y, int w, int h, int visible,
+                                 int cx, int cy, int cw, int ch ) __attribute__((weak));
+extern void winios_window_visibility( HWND hwnd, int visible ) __attribute__((weak));
+extern void winios_window_geometry( HWND hwnd, int x, int y, int w, int h,
+                                    int cx, int cy, int cw, int ch ) __attribute__((weak));
+extern void winios_cursor_set( unsigned int id, int w, int h, int hot_x, int hot_y,
+                               const void *bgra ) __attribute__((weak));
+extern void winios_cursor_show( int show ) __attribute__((weak));
+
+static int winios_desktop_mode(void);
+
+/* pSetCursor: extract the cursor image as straight-alpha BGRA and forward
+ * to the app-side compositor cursor layer. win32u calls this on every
+ * cursor CHANGE (WM_SETCURSOR → NtUserSetCursor), so resize arrows,
+ * I-beam and app cursors all arrive here. In direct mode the same image and
+ * visibility go to the app's direct-mode cursor instead (see
+ * winios_direct_cursor_on). */
+static void winios_drv_set_cursor( HWND hwnd, HCURSOR cursor )
+{
+    static HCURSOR last_cursor;
+    ICONINFO info = {0};
+    BITMAP bm;
+    HDC hdc;
+    unsigned int *color = NULL, *mask = NULL;
+    int w, h, i, has_alpha = 0;
+    char bmibuf[sizeof(BITMAPINFOHEADER) + 256 * sizeof(RGBQUAD)];
+    BITMAPINFO *bmi = (BITMAPINFO *)bmibuf;
+    void (*cursor_set)( unsigned int, int, int, int, int, const void * ) = winios_cursor_set;
+    void (*cursor_show)( int ) = winios_cursor_show;
+
+    if (!winios_desktop_mode())
+    {
+        if (!winios_direct_cursor_on()) return;
+        cursor_set = winios_direct_cursor_set;
+        cursor_show = winios_direct_cursor_show;
+    }
+    if (!cursor_set) return;
+    if (!cursor)
+    {
+        if (cursor_show) cursor_show( 0 );
+        return;
+    }
+    if (cursor_show) cursor_show( 1 );
+    if (cursor == last_cursor) return;
+
+    if (!NtUserGetIconInfo( cursor, &info, NULL, NULL, NULL, 0 )) return;
+    hdc = NtGdiCreateCompatibleDC( 0 );
+
+#define WINIOS_BMI_INIT(width, height) do { \
+        memset( bmibuf, 0, sizeof(bmibuf) ); \
+        bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER); \
+        bmi->bmiHeader.biWidth = (width); \
+        bmi->bmiHeader.biHeight = -(height); \
+        bmi->bmiHeader.biPlanes = 1; \
+        bmi->bmiHeader.biBitCount = 32; \
+        bmi->bmiHeader.biCompression = BI_RGB; \
+    } while (0)
+
+    if (info.hbmColor)
+    {
+        if (!NtGdiExtGetObjectW( info.hbmColor, sizeof(bm), &bm )) goto done;
+        w = bm.bmWidth; h = bm.bmHeight;
+        if (w <= 0 || h <= 0 || w > 256 || h > 256) goto done;
+        if (!(color = malloc( (size_t)w * h * 4 ))) goto done;
+        WINIOS_BMI_INIT( w, h );
+        NtGdiGetDIBitsInternal( hdc, info.hbmColor, 0, h, color, bmi, DIB_RGB_COLORS,
+                                w * h * 4, sizeof(bmibuf) );
+        for (i = 0; i < w * h; i++) if (color[i] & 0xff000000) { has_alpha = 1; break; }
+        if (!has_alpha)
+        {
+            /* no alpha channel — derive from the AND mask (0 = opaque) */
+            if (!(mask = malloc( (size_t)w * h * 4 ))) goto done;
+            WINIOS_BMI_INIT( w, h );
+            NtGdiGetDIBitsInternal( hdc, info.hbmMask, 0, h, mask, bmi, DIB_RGB_COLORS,
+                                    w * h * 4, sizeof(bmibuf) );
+            for (i = 0; i < w * h; i++)
+                color[i] = (color[i] & 0xffffff) | ((mask[i] & 0xffffff) ? 0 : 0xff000000);
+        }
+    }
+    else  /* monochrome: hbmMask stacks AND (top) over XOR (bottom) */
+    {
+        if (!NtGdiExtGetObjectW( info.hbmMask, sizeof(bm), &bm )) goto done;
+        w = bm.bmWidth; h = bm.bmHeight / 2;
+        if (w <= 0 || h <= 0 || w > 256 || h > 256) goto done;
+        if (!(mask = malloc( (size_t)w * h * 2 * 4 ))) goto done;
+        WINIOS_BMI_INIT( w, h * 2 );
+        NtGdiGetDIBitsInternal( hdc, info.hbmMask, 0, h * 2, mask, bmi, DIB_RGB_COLORS,
+                                w * h * 2 * 4, sizeof(bmibuf) );
+        if (!(color = malloc( (size_t)w * h * 4 ))) goto done;
+        for (i = 0; i < w * h; i++)
+        {
+            int and_set = mask[i] & 0xffffff;
+            int xor_set = mask[w * h + i] & 0xffffff;
+            if (and_set && !xor_set) color[i] = 0;              /* transparent */
+            else if (xor_set)        color[i] = 0xffffffff;     /* white (invert ≈ white) */
+            else                     color[i] = 0xff000000;     /* black */
+        }
+    }
+#undef WINIOS_BMI_INIT
+
+    cursor_set( (unsigned int)(UINT_PTR)cursor, w, h,
+                (int)info.xHotspot, (int)info.yHotspot, color );
+    last_cursor = cursor;
+    dprintf( 2, "[winios] cursor set hcursor=%p %dx%d hot=(%u,%u)\n",
+             cursor, w, h, (unsigned)info.xHotspot, (unsigned)info.yHotspot );
+
+done:
+    free( color );
+    free( mask );
+    if (info.hbmColor) NtGdiDeleteObjectApp( info.hbmColor );
+    if (info.hbmMask) NtGdiDeleteObjectApp( info.hbmMask );
+    NtGdiDeleteObjectApp( hdc );
+}
+
+static int winios_desktop_mode(void)
+{
+    static int mode = -1;
+    if (mode < 0)
+    {
+        const char *env = getenv( "MADEIRA_DESKTOP" );
+        mode = (env && *env == '1');
+    }
+    return mode;
+}
+
+/* Game-mode windows. Outside desktop mode a window got win32u's offscreen
+ * surface and its position never reached the app, so a launcher or a message
+ * box a game opens before (or instead of) its 3D window was drawn nowhere:
+ * Ghost of Tsushima's Play / Options launcher and its "No installed graphics
+ * card" box. Both gates open for a game session too; the app side (Winios.m)
+ * draws only top-level windows that do not cover the whole guest desktop and
+ * do not present through Metal, so a game's own window never covers its
+ * picture. MADEIRA_GAME_WINDOWS=0 restores the old behaviour. */
+static int winios_game_windows(void)
+{
+    static int on = -1;
+    if (on < 0)
+    {
+        const char *env = getenv( "MADEIRA_GAME_WINDOWS" );
+        on = !winios_desktop_mode() && !(env && *env == '0');
+    }
+    return on;
+}
+
+/* Game mode, a thread that shows a launcher / message box. Taps and keys wait
+ * in the app's ring (Winios.m) until a wine thread runs pProcessEvents. A
+ * game's own loop polls PeekMessage and drains it every frame, but a modal
+ * loop (MessageBox, a launcher's GetMessage) sleeps in wait_message with no
+ * timeout and the wineserver does not watch the ring, so the box took no tap
+ * or key. Desktop mode wakes such waits every 16 ms to drain the ring
+ * (message_ios.c wait_message); a thread that shows a visible top-level
+ * window smaller than the guest desktop now does the same. A full-screen game
+ * window never marks its thread. MADEIRA_GAME_INPUT_WAKE=0 turns this off.
+ * Logs [game-input] once per thread (8 at most). */
+static __thread int winios_thread_shows_dialog;
+
+int winios_input_wake_thread(void)
+{
+    return winios_thread_shows_dialog;
+}
+
+static void winios_note_dialog_thread( HWND hwnd, const RECT *visible )
+{
+    static int on = -1;
+    static unsigned int said;
+    RECT screen;
+
+    if (winios_thread_shows_dialog) return;
+    if (on < 0)
+    {
+        /* Default on: a launcher / message box over a game takes taps and keys; 0 = off. */
+        const char *env = getenv( "MADEIRA_GAME_INPUT_WAKE" );
+        on = !(env && *env == '0');
+    }
+    if (!on) return;
+    if (visible->right - visible->left < 32 || visible->bottom - visible->top < 32) return;
+    if (!(get_window_long( hwnd, GWL_STYLE ) & WS_VISIBLE)) return;
+    if (get_window_thread( hwnd, NULL ) != GetCurrentThreadId()) return;
+    screen = get_virtual_screen_rect( 0, MDT_DEFAULT );
+    if (visible->left <= screen.left && visible->top <= screen.top &&
+        visible->right >= screen.right && visible->bottom >= screen.bottom) return;
+    winios_thread_shows_dialog = 1;
+    if (__atomic_fetch_add( &said, 1, __ATOMIC_RELAXED ) < 8)
+        dprintf( 2, "[game-input] tid=%04x hwnd=%p vis={%d,%d,%d,%d}: this thread shows a window over "
+                 "the game; its message waits now wake every 16 ms to take taps and keys "
+                 "(MADEIRA_GAME_INPUT_WAKE=0 disables)\n", (int)GetCurrentThreadId(), hwnd,
+                 (int)visible->left, (int)visible->top, (int)visible->right, (int)visible->bottom );
+}
+
+/* Activation of a full-screen window when it is shown. iOS has no window
+ * manager, and the wineserver keeps Windows' foreground lock (queue_ios.c,
+ * set_foreground_window): a process that has had neither input nor the
+ * foreground may not take it from another process unless its parent holds
+ * it. A game started by a launcher whose windows belong to other processes
+ * is refused: Grand Theft Auto V Enhanced, started by Launcher.exe in a Dock
+ * session (log 2026-10-07 19:27, build 433), asked four times to activate
+ * its 1920x1080 window after the launcher's windows (SocialClubHelper.exe's
+ * UI, the console conhost.exe opened for it) had held the foreground, and
+ * sat at its first screen with no keyboard, mouse or pad; a copy of the game
+ * started on its own plays with a pad on the same build. A window manager
+ * gives a newly shown full-screen window the activation it asks for, so: a
+ * visible top-level window covering the whole virtual screen that is shown
+ * without SWP_NOACTIVATE is made foreground by its own thread at its next
+ * message poll, unless a window of its process already is (the internal path
+ * ios_foreground_check uses). Once per show; smaller windows (launchers,
+ * dialogs) are left to the lock. MADEIRA_FULLSCREEN_FOREGROUND=0 turns this
+ * off. Logs [fg-show] (16 lines at most). */
+static __thread HWND ios_show_foreground;
+
+static int ios_fullscreen_foreground_enabled(void)
+{
+    static int on = -1;
+
+    if (on < 0)
+    {
+        const char *env = getenv( "MADEIRA_FULLSCREEN_FOREGROUND" );  /* 0: a full-screen window shown with activation is left to the foreground lock */
+        on = !(env && env[0] == '0' && !env[1]);
+    }
+    return on;
+}
+
+/* From winios_drv_window_pos_changed, on the window's own thread. */
+static void ios_note_fullscreen_show( HWND hwnd, UINT swp_flags, const RECT *visible )
+{
+    DWORD style;
+    RECT screen;
+
+    if (!(swp_flags & SWP_SHOWWINDOW) || (swp_flags & (SWP_NOACTIVATE | SWP_HIDEWINDOW))) return;
+    if (!ios_fullscreen_foreground_enabled()) return;
+    style = get_window_long( hwnd, GWL_STYLE );
+    if ((style & (WS_CHILD | WS_MINIMIZE | WS_DISABLED)) || !(style & WS_VISIBLE)) return;
+    if (get_window_long( hwnd, GWL_EXSTYLE ) & WS_EX_NOACTIVATE) return;
+    if (NtUserGetAncestor( hwnd, GA_PARENT ) != get_desktop_window()) return;
+    if (get_window_thread( hwnd, NULL ) != GetCurrentThreadId()) return;
+    screen = get_virtual_screen_rect( 0, MDT_DEFAULT );
+    if (visible->left > screen.left || visible->top > screen.top ||
+        visible->right < screen.right || visible->bottom < screen.bottom) return;
+    ios_show_foreground = hwnd;
+}
+
+static void ios_apply_fullscreen_foreground(void)
+{
+    static unsigned int said;
+    HWND hwnd = ios_show_foreground, fg;
+    DWORD pid = GetCurrentProcessId(), fg_pid = 0;
+    BOOL ok;
+
+    ios_show_foreground = 0;
+    if (!is_window( hwnd ) || !is_window_visible( hwnd )) return;
+    if ((fg = NtUserGetForegroundWindow()) && get_window_thread( fg, &fg_pid ) && fg_pid == pid) return;
+    ok = set_foreground_window( hwnd, FALSE, TRUE );
+    if (__atomic_fetch_add( &said, 1, __ATOMIC_RELAXED ) < 16)
+        dprintf( 2, "[fg-show] full-screen window %p of pid %04x was shown with activation while %p "
+                 "(pid %04x) held the foreground: made it foreground ok=%d "
+                 "(MADEIRA_FULLSCREEN_FOREGROUND=0 disables)\n",
+                 hwnd, (unsigned)pid, fg, (unsigned)fg_pid, ok );
+}
+
+/* pProcessEvents: runs on every message poll of a wine thread (message_ios.c
+ * process_driver_events), so a window's own thread gets here right after it
+ * was shown. */
+static BOOL winios_drv_process_events( DWORD mask )
+{
+    if (ios_show_foreground) ios_apply_fullscreen_foreground();
+    ios_foreground_if_none( "a message poll" );
+    return winios_pProcessEvents ? winios_pProcessEvents( mask ) : FALSE;
+}
+
+/* ml505 probe. This hook was a pure stub: wine hands the driver the
+ * surface's VISIBLE REGION here — the rects left after sibling and child
+ * occlusion — and we discarded all of it.
+ *
+ * That matters now. The Steam login window has THREE full-size children
+ * (0x1011c/0x10122/0x10136), all WS_CLIPSIBLINGS, all at the parent's exact
+ * rect, and none of them presents: they all paint into the parent's ONE
+ * surface. If sibling clipping is not being applied, each paints the whole
+ * rect in turn and the surface flips between whatever each draws — which is
+ * exactly the two-state alternation measured in ml503/ml504.
+ *
+ * So log what wine actually computes. count==0 with no rects means "fully
+ * visible, no clipping"; a real region means clipping IS being computed and
+ * the fault lies elsewhere. Either answer narrows it. */
+static void winios_surface_set_clip( struct window_surface *surface, const RECT *rects, UINT count )
+{
+    static unsigned clip_calls;
+    unsigned n = ++clip_calls;
+    if (n <= 64 || (n % 256) == 0)
+    {
+        dprintf( 2, "[surf-clip] #%u surface=%p hwnd=%p count=%u%s rev=ml505\n",
+                 n, surface, surface ? surface->hwnd : NULL, count,
+                 count ? "" : "  (NO CLIP = fully visible)" );
+        for (UINT i = 0; i < count && i < 6; i++)
+            dprintf( 2, "[surf-clip]    rect[%u] = {%d,%d,%d,%d}\n", i,
+                     (int)rects[i].left, (int)rects[i].top,
+                     (int)rects[i].right, (int)rects[i].bottom );
+    }
+}
+
+static BOOL winios_surface_flush( struct window_surface *surface, const RECT *rect, const RECT *dirty,
+                                  const BITMAPINFO *color_info, const void *color_bits, BOOL shape_changed,
+                                  const BITMAPINFO *shape_info, const void *shape_bits )
+{
+    /* ml505: attribute the paint. All three children share this ONE surface,
+     * so if they paint on different threads the mach thread id separates
+     * them — and a single thread painting alternating content rules the
+     * sibling theory out just as firmly. */
+    {
+        static unsigned fl_n;
+        unsigned n = ++fl_n;
+        if (n <= 200 || (n % 200) == 0)
+            dprintf( 2, "[surf-flush] #%u surface=%p hwnd=%p mach_tid=%u "
+                     "rect={%d,%d,%d,%d} dirty={%d,%d,%d,%d} rev=ml505\n",
+                     n, surface, surface ? surface->hwnd : NULL,
+                     (unsigned)pthread_mach_thread_np( pthread_self() ),
+                     (int)rect->left, (int)rect->top, (int)rect->right, (int)rect->bottom,
+                     (int)dirty->left, (int)dirty->top, (int)dirty->right, (int)dirty->bottom );
+    }
+
+    if (winios_surface_present && color_bits)
+    {
+        int surf_w = color_info->bmiHeader.biWidth;
+        int surf_h = color_info->bmiHeader.biHeight;
+        if (surf_h < 0) surf_h = -surf_h;
+        /* ml1028: propagate the snapshot allocation result. dce.c only calls
+         * reset_bounds() when we return TRUE, so returning FALSE keeps the
+         * dirty region and the frame is repainted on a later flush instead of
+         * the copy throwing an uncaught ObjC exception and killing us. */
+        if (!winios_surface_present( surface->hwnd,
+                                     dirty->left, dirty->top,
+                                     dirty->right - dirty->left, dirty->bottom - dirty->top,
+                                     surf_w, surf_h, surf_w * 4, color_bits, surface->alpha_mask ))
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static void winios_surface_destroy( struct window_surface *surface )
+{
+    /* Layer teardown happens on pDestroyWindow, not here — surfaces are
+     * recreated on every resize and dropping the layer would flicker. */
+}
+
+static const struct window_surface_funcs winios_surface_funcs =
+{
+    winios_surface_set_clip,
+    winios_surface_flush,
+    winios_surface_destroy
+};
+
+/* madeira-bcd: [swap-win] WHAT HAPPENS TO A SWAPCHAIN'S WINDOW. Red Dead
+ * Redemption 2 hangs when its Screen Type is switched to Windowed Borderless
+ * (owner, 2026-10-08); the switch restyles, moves and re-activates the window
+ * its swapchain presents into, and the logs said nothing about that window
+ * ([win-pos] stops at its 1200th line and has no style or activation). Winios.m
+ * keeps the windows a swapchain made its Metal view for (IOSDisplayShim reports
+ * each one); for those windows these hooks log style changes (SetWindowStyle),
+ * position changes (pos-begin at WindowPosChanging, pos at WindowPosChanged,
+ * with the time between the two on the window's thread) and activations
+ * (ActivateWindow). The three hooks did not exist before and do what win32u's
+ * null driver does: nothing, or TRUE. Logging only: each window's first 32
+ * lines of a kind, then every 100th (Winios.m keeps the counts). */
+extern int winios_swapchain_hwnd( void *hwnd ) __attribute__((weak));
+extern int winios_swapchain_take( int slot, int kind, unsigned int *seq ) __attribute__((weak));
+enum { WINIOS_SWAP_STYLE, WINIOS_SWAP_POS_BEGIN, WINIOS_SWAP_POS, WINIOS_SWAP_ACTIVATE };
+
+/* The window's slot + 1 in Winios.m's table, 0 when no swapchain presents into it. */
+static int winios_swap_win( HWND hwnd )
+{
+    return hwnd && winios_swapchain_hwnd ? winios_swapchain_hwnd( hwnd ) : 0;
+}
+
+static int winios_swap_win_take( int slot, int kind, unsigned int *seq )
+{
+    return slot && winios_swapchain_take && winios_swapchain_take( slot, kind, seq );
+}
+
+static double winios_swap_win_ms(void)
+{
+    struct timespec ts;
+    clock_gettime( CLOCK_MONOTONIC, &ts );
+    return ts.tv_sec * 1000.0 + ts.tv_nsec / 1e6;
+}
+
+static __thread HWND winios_swap_pos_hwnd;   /* the swapchain window between pos-begin and pos */
+static __thread double winios_swap_pos_t0;
+
+static void winios_drv_set_window_style( HWND hwnd, INT offset, STYLESTRUCT *style )
+{
+    unsigned int seq;
+    HWND fg;
+
+    if (!winios_swap_win_take( winios_swap_win( hwnd ), WINIOS_SWAP_STYLE, &seq )) return;
+    fg = NtUserGetForegroundWindow();
+    dprintf( 2, "[swap-win] #%u style hwnd=%p %s %08x -> %08x (set %08x, cleared %08x) shown=%d fg=%p%s tid=%04x\n",
+             seq, hwnd, offset == GWL_STYLE ? "GWL_STYLE" : offset == GWL_EXSTYLE ? "GWL_EXSTYLE" : "other",
+             (unsigned)style->styleOld, (unsigned)style->styleNew,
+             (unsigned)(style->styleNew & ~style->styleOld), (unsigned)(style->styleOld & ~style->styleNew),
+             (int)is_window_visible( hwnd ), fg, fg == hwnd ? " (this window)" : "", (int)GetCurrentThreadId() );
+}
+
+static BOOL winios_drv_window_pos_changing( HWND hwnd, UINT swp_flags, BOOL shaped, const struct window_rects *rects )
+{
+    unsigned int seq;
+    int slot = winios_swap_win( hwnd );
+
+    if (slot)
+    {
+        winios_swap_pos_hwnd = hwnd;
+        winios_swap_pos_t0 = winios_swap_win_ms();
+        if (winios_swap_win_take( slot, WINIOS_SWAP_POS_BEGIN, &seq ))
+            dprintf( 2, "[swap-win] #%u pos-begin hwnd=%p flags=%08x window={%d,%d,%d,%d} client={%d,%d,%d,%d} "
+                     "tid=%04x\n", seq, hwnd, swp_flags,
+                     (int)rects->window.left, (int)rects->window.top, (int)rects->window.right, (int)rects->window.bottom,
+                     (int)rects->client.left, (int)rects->client.top, (int)rects->client.right, (int)rects->client.bottom,
+                     (int)GetCurrentThreadId() );
+    }
+    return TRUE;   /* as win32u's null driver: the window may have a surface */
+}
+
+static void winios_drv_activate_window( HWND hwnd, HWND previous )
+{
+    unsigned int seq;
+    int now_swap = winios_swap_win( hwnd ), was_swap = winios_swap_win( previous );
+
+    if (!winios_swap_win_take( now_swap ? now_swap : was_swap, WINIOS_SWAP_ACTIVATE, &seq )) return;
+    dprintf( 2, "[swap-win] #%u activate hwnd=%p%s (now foreground) previous=%p%s tid=%04x\n", seq,
+             hwnd, now_swap ? " (swapchain window)" : "", previous, was_swap ? " (swapchain window)" : "",
+             (int)GetCurrentThreadId() );
+}
+
+/* From the end of winios_drv_window_pos_changed, on the window's thread. */
+static void winios_swap_win_pos( int slot, HWND hwnd, HWND insert_after, UINT swp_flags, const struct window_rects *r )
+{
+    unsigned int seq;
+    double since = winios_swap_pos_hwnd == hwnd ? winios_swap_win_ms() - winios_swap_pos_t0 : -1.0;
+    HWND fg;
+
+    if (winios_swap_pos_hwnd == hwnd) winios_swap_pos_hwnd = 0;
+    if (!winios_swap_win_take( slot, WINIOS_SWAP_POS, &seq )) return;
+    fg = NtUserGetForegroundWindow();
+    dprintf( 2, "[swap-win] #%u pos hwnd=%p after=%p flags=%08x window={%d,%d,%d,%d} client={%d,%d,%d,%d} "
+             "visible={%d,%d,%d,%d} style=%08x exstyle=%08x shown=%d fg=%p%s tid=%04x, %.2f ms after pos-begin%s\n",
+             seq, hwnd, insert_after, swp_flags,
+             (int)r->window.left, (int)r->window.top, (int)r->window.right, (int)r->window.bottom,
+             (int)r->client.left, (int)r->client.top, (int)r->client.right, (int)r->client.bottom,
+             (int)r->visible.left, (int)r->visible.top, (int)r->visible.right, (int)r->visible.bottom,
+             (unsigned)get_window_long( hwnd, GWL_STYLE ), (unsigned)get_window_long( hwnd, GWL_EXSTYLE ),
+             (int)is_window_visible( hwnd ), fg, fg == hwnd ? " (this window)" : "", (int)GetCurrentThreadId(),
+             since < 0 ? 0.0 : since, since < 0 ? " (no pos-begin on this thread)" : "" );
+}
+
+static BOOL winios_CreateWindowSurface( HWND hwnd, BOOL layered, const RECT *surface_rect,
+                                        struct window_surface **window_surface )
+{
+    char buffer[FIELD_OFFSET( BITMAPINFO, bmiColors[256] )];
+    BITMAPINFO *info = (BITMAPINFO *)buffer;
+    struct window_surface *previous;
+
+    /* Game mode: a window as large as the guest desktop is the game's own. It
+     * presents through Metal and Winios.m never draws it, so it keeps win32u's
+     * offscreen surface, as before game-mode windows, instead of having its whole
+     * surface copied to the app at every flush (about 8 MB at 1080p). */
+    if (!winios_desktop_mode())
+    {
+        RECT screen = get_virtual_screen_rect( 0, MDT_DEFAULT );
+        if (surface_rect->right - surface_rect->left >= screen.right - screen.left &&
+            surface_rect->bottom - surface_rect->top >= screen.bottom - screen.top)
+            return FALSE;
+    }
+
+    if ((previous = *window_surface) && previous->funcs == &winios_surface_funcs
+        && EqualRect( &previous->rect, surface_rect )) return TRUE;
+
+    memset( info, 0, sizeof(*info) );
+    info->bmiHeader.biSize        = sizeof(info->bmiHeader);
+    info->bmiHeader.biWidth       = surface_rect->right;
+    info->bmiHeader.biHeight      = -surface_rect->bottom; /* top-down */
+    info->bmiHeader.biPlanes      = 1;
+    info->bmiHeader.biBitCount    = 32;
+    info->bmiHeader.biSizeImage   = surface_rect->right * surface_rect->bottom * 4;
+    info->bmiHeader.biCompression = BI_RGB;
+
+    *window_surface = window_surface_create( sizeof(struct window_surface), &winios_surface_funcs,
+                                             hwnd, surface_rect, info, 0 );
+    if (previous) window_surface_release( previous );
+
+    {
+        /* ml505: was capped at 16 GLOBALLY, so a window created late (the
+         * login popup) never appeared here at all. Which hwnds get their own
+         * surface — and which do not — is exactly the question: children that
+         * never get one are painting into their parent's. */
+        static unsigned cnt;
+        unsigned n = ++cnt;
+        if (n <= 96 || (n % 64) == 0)
+            dprintf( 2, "[surf-create] #%u hwnd=%p rect={%d,%d,%d,%d} layered=%d "
+                     "prev=%p -> %p%s rev=ml505\n",
+                     n, hwnd, (int)surface_rect->left, (int)surface_rect->top,
+                     (int)surface_rect->right, (int)surface_rect->bottom, layered,
+                     previous, *window_surface,
+                     previous ? "  (RECREATED — old content dropped)" : "  (first)" );
+    }
+    return TRUE;
+}
+
+/* WindowPosChanged gives children parent-relative raw-pixel rectangles, but
+ * the app's independent HWND layers need screen coordinates. Query on this
+ * Wine thread, after apply_window_pos updated the rectangles. Translate the
+ * supplied frame rather than replacing it: retain its visible bounds, client
+ * offset and pixel dimensions, including a server-side rectangle fallback.
+ * Roots keep the driver's supplied frame (notably exclusive fullscreen). */
+static BOOL winios_drv_screen_rects( HWND hwnd, const struct window_rects *new_rects,
+                                    struct window_rects *rects )
+{
+    struct window_rects screen, parent;
+    HWND ancestor = NtUserGetAncestor( hwnd, GA_PARENT );
+    UINT raw_dpi = 0;
+    int x, y;
+
+    if (new_rects && (!ancestor || ancestor == get_desktop_window()))
+    {
+        *rects = *new_rects;
+        return TRUE;
+    }
+    if (!get_win_monitor_dpi( hwnd, &raw_dpi ) || !raw_dpi ||
+        !get_window_rects( hwnd, COORDS_SCREEN, &screen, raw_dpi )) return FALSE;
+    if (!new_rects)
+    {
+        *rects = screen;
+        return TRUE;
+    }
+    if (!get_window_rects( hwnd, COORDS_PARENT, &parent, raw_dpi )) return FALSE;
+    x = screen.window.left - parent.window.left;
+    y = screen.window.top - parent.window.top;
+    *rects = *new_rects;
+    OffsetRect( &rects->window, x, y );
+    /* An RTL parent can mirror asymmetric client/visible insets. Use each
+     * rectangle's own translation, while keeping the supplied dimensions. */
+    OffsetRect( &rects->client, screen.client.left - parent.client.left,
+                screen.client.top - parent.client.top );
+    OffsetRect( &rects->visible, screen.visible.left - parent.visible.left,
+                screen.visible.top - parent.visible.top );
+    return TRUE;
+}
+
+/* A parent move/show/hide does not send WindowPosChanged to every child.
+ * Refresh existing independent layers without recreating their surfaces or
+ * Metal layers. Query screen coordinates through Wine for nested children. */
+static void winios_drv_refresh_children( HWND hwnd, BOOL geometry )
+{
+    HWND *children;
+    ULONG capacity = 128, count, i;
+    NTSTATUS status;
+
+    if (!winios_window_visibility && !(geometry && winios_window_geometry)) return;
+    for (;;)
+    {
+        if (!(children = malloc( capacity * sizeof(*children) ))) return;
+        status = NtUserBuildHwndList( 0, hwnd, TRUE, TRUE, 0, capacity, children, &count );
+        if (!status) break;
+        free( children );
+        if (status != STATUS_BUFFER_TOO_SMALL || count <= capacity) return;
+        capacity = count;
+    }
+    /* NtUserBuildHwndList includes a final HWND_BOTTOM sentinel. */
+    for (i = 0; i + 1 < count; i++)
+    {
+        struct window_rects rects;
+        if (geometry && winios_window_geometry && winios_drv_screen_rects( children[i], NULL, &rects ))
+        {
+            const RECT *v = &rects.visible, *c = &rects.client;
+            winios_window_geometry( children[i], v->left, v->top, v->right - v->left, v->bottom - v->top,
+                                    c->left, c->top, c->right - c->left, c->bottom - c->top );
+        }
+        if (winios_window_visibility)
+            winios_window_visibility( children[i], is_window_visible( children[i] ) );
+    }
+    free( children );
+}
+
+/* pWindowPosChanged wrapper: dereference window_rects HERE (Winios.m
+ * cannot include wine headers) and forward plain ints for the layer
+ * frame; chain to the Winios.m hook afterwards. */
+static void winios_drv_window_pos_changed( HWND hwnd, HWND insert_after, HWND owner_hint, UINT swp_flags,
+                                           const struct window_rects *new_rects, struct window_surface *surface )
+{
+    ios_note_fullscreen_show( hwnd, swp_flags, &new_rects->visible );
+
+    /* desktop mode, or a top-level window in game mode (Winios.m draws it
+     * in its transparent game-mode overlay, never the desktop backdrop that
+     * would cover the DXMT Metal layer) */
+    if (winios_window_frame && (winios_desktop_mode()
+        || (winios_game_windows() && !(get_window_long( hwnd, GWL_STYLE ) & WS_CHILD)
+            && NtUserGetAncestor( hwnd, GA_PARENT ) == get_desktop_window())))
+    {
+        struct window_rects rects = *new_rects;
+        const RECT *v = &rects.visible;
+        const RECT *c = &rects.client;
+        BOOL desktop = winios_desktop_mode();
+        BOOL frame_valid = !desktop || winios_drv_screen_rects( hwnd, new_rects, &rects );
+        /* The visible rect describes geometry even for a hidden window.
+         * Wine has already updated WS_VISIBLE before this callback; include
+         * its parent chain so a hidden browser's child Metal layer stays hidden. */
+        int visible = is_window_visible( hwnd ) && !IsRectEmpty( v ) && !(swp_flags & SWP_HIDEWINDOW);
+        if (frame_valid)
+            winios_window_frame( hwnd, v->left, v->top, v->right - v->left, v->bottom - v->top, visible,
+                                 c->left, c->top, c->right - c->left, c->bottom - c->top );
+        if (desktop)
+        {
+            BOOL geometry = !(swp_flags & SWP_NOMOVE) || !(swp_flags & SWP_NOSIZE) ||
+                            (swp_flags & SWP_FRAMECHANGED);
+            if (geometry || (swp_flags & (SWP_SHOWWINDOW | SWP_HIDEWINDOW)))
+                winios_drv_refresh_children( hwnd, geometry );
+            if (!frame_valid || v->left != new_rects->visible.left || v->top != new_rects->visible.top)
+            {
+                static unsigned frame_n;
+                unsigned n = ++frame_n;
+                if (n <= 64 || (n % 128) == 0)
+                    dprintf( 2, "[win-frame] #%u hwnd=%p valid=%u local={%d,%d,%d,%d} "
+                             "screen={%d,%d,%d,%d} rev=sc-screen\n", n, (void *)hwnd, (unsigned)frame_valid,
+                             (int)new_rects->visible.left, (int)new_rects->visible.top,
+                             (int)new_rects->visible.right, (int)new_rects->visible.bottom,
+                             (int)v->left, (int)v->top, (int)v->right, (int)v->bottom );
+            }
+        }
+        if (visible && surface && winios_game_windows()) winios_note_dialog_thread( hwnd, v );
+    }
+    /* ml505: z-order and geometry churn. If the three same-rect siblings are
+     * being reordered, the topmost changes and the surface shows whichever
+     * painted last — an alternation with no Chromium involvement at all.
+     * insert_after names the z-order move; surface tells us which windows
+     * share one. Skip empty rects (the 1x1 IME/message windows) so the
+     * signal is not buried. */
+    if (!IsRectEmpty( &new_rects->visible ))
+    {
+        static unsigned pos_n;
+        unsigned n = ++pos_n;
+        /* ml529: 200 was too tight — the Steam login popup's events land at
+         * #190-200, i.e. exactly where the log ran out, which made a
+         * swp=0 signature indistinguishable from absence. */
+        if (n <= 1200 || (n % 128) == 0)
+        {
+            const RECT *v = &new_rects->visible;
+            dprintf( 2, "[win-pos] #%u hwnd=%p after=%p flags=%08x vis={%d,%d,%d,%d} "
+                     "surface=%p rev=ml505 style=%08x visible=%u parent=%p\n",
+                     n, hwnd, insert_after, (unsigned)swp_flags,
+                     (int)v->left, (int)v->top, (int)v->right, (int)v->bottom, surface,
+                     (unsigned)get_window_long( hwnd, GWL_STYLE ), (unsigned)is_window_visible( hwnd ),
+                     NtUserGetAncestor( hwnd, GA_PARENT ) );
+            /* ml853: name the window. A dialog nobody can see (nothing is
+             * presenting) is otherwise just a rectangle; the class and the
+             * text of every window, children included, make it readable
+             * from the log. Static controls carry a message box's body. */
+            {
+                WCHAR clsW[64], txtW[200];
+                char cls[64], txt[200];
+                UNICODE_STRING us = { 0, sizeof(clsW), clsW };
+                int j, tn;
+                cls[0] = 0;
+                if (NtUserGetClassName( hwnd, FALSE, &us ) > 0)
+                {
+                    for (j = 0; j < us.Length / (int)sizeof(WCHAR) && j < 63; j++)
+                        cls[j] = (clsW[j] >= 32 && clsW[j] < 127) ? (char)clsW[j] : '?';
+                    cls[j] = 0;
+                }
+                tn = NtUserInternalGetWindowText( hwnd, txtW, ARRAY_SIZE(txtW) );
+                for (j = 0; j < tn && j < 199; j++)
+                    txt[j] = (txtW[j] >= 32 && txtW[j] < 127) ? (char)txtW[j] : '?';
+                txt[j] = 0;
+                if (cls[0] || txt[0])
+                    dprintf( 2, "[win-name] #%u hwnd=%p class='%s' text=\"%s\" rev=ml853\n", n, hwnd, cls, txt );
+            }
+        }
+    }
+
+    /* Game-mode windows need an expose-equivalent repaint. A real windowing
+     * system answers a window becoming visible, or getting a new backing
+     * surface, with an expose / damage event, and the driver turns it into
+     * NtUserRedrawWindow -- the only thing that queues WM_PAINT. winios has no
+     * such event, so a game's message box painted once into its first
+     * surface, got a new one ("[surf-create] ... RECREATED") and never
+     * painted or flushed again: a layer with no bits. Condition: a
+     * surface-backed window that is visible and was just shown or had its
+     * surface changed (apply_window_pos forces SWP_FRAMECHANGED when the
+     * surface pointer changes). Game mode only; desktop mode is unchanged. */
+    if (winios_game_windows() && surface && !IsRectEmpty( &new_rects->visible ) &&
+        !(swp_flags & SWP_HIDEWINDOW) && (swp_flags & (SWP_SHOWWINDOW | SWP_FRAMECHANGED)) &&
+        (get_window_long( hwnd, GWL_STYLE ) & WS_VISIBLE))
+        NtUserRedrawWindow( hwnd, NULL, 0, RDW_INVALIDATE | RDW_ERASE | RDW_FRAME | RDW_ALLCHILDREN );
+
+    if (winios_pWindowPosChanged)
+        winios_pWindowPosChanged( hwnd, insert_after, owner_hint, swp_flags, new_rects, surface );
+
+    {   /* madeira-bcd: [swap-win] */
+        int slot = winios_swap_win( hwnd );
+        if (slot) winios_swap_win_pos( slot, hwnd, insert_after, swp_flags, new_rects );
+    }
+}
+#endif
+
+static INT nulldrv_AbortDoc( PHYSDEV dev )
+{
+    return 0;
+}
+
+static BOOL nulldrv_Arc( PHYSDEV dev, INT left, INT top, INT right, INT bottom,
+                         INT xstart, INT ystart, INT xend, INT yend )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_Chord( PHYSDEV dev, INT left, INT top, INT right, INT bottom,
+                           INT xstart, INT ystart, INT xend, INT yend )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_CreateCompatibleDC( PHYSDEV orig, PHYSDEV *pdev )
+{
+    if (!user_driver->dc_funcs.pCreateCompatibleDC) return TRUE;
+    return user_driver->dc_funcs.pCreateCompatibleDC( NULL, pdev );
+}
+
+static BOOL nulldrv_CreateDC( PHYSDEV *dev, LPCWSTR device, LPCWSTR output,
+                              const DEVMODEW *devmode )
+{
+    assert(0);  /* should never be called */
+    return FALSE;
+}
+
+static BOOL nulldrv_DeleteDC( PHYSDEV dev )
+{
+    assert(0);  /* should never be called */
+    return TRUE;
+}
+
+static BOOL nulldrv_DeleteObject( PHYSDEV dev, HGDIOBJ obj )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_Ellipse( PHYSDEV dev, INT left, INT top, INT right, INT bottom )
+{
+    return TRUE;
+}
+
+static INT nulldrv_EndDoc( PHYSDEV dev )
+{
+    return 0;
+}
+
+static INT nulldrv_EndPage( PHYSDEV dev )
+{
+    return 0;
+}
+
+static BOOL nulldrv_EnumFonts( PHYSDEV dev, LOGFONTW *logfont, font_enum_proc proc, LPARAM lParam )
+{
+    return TRUE;
+}
+
+static INT nulldrv_ExtEscape( PHYSDEV dev, INT escape, INT in_size, const void *in_data,
+                              INT out_size, void *out_data )
+{
+    return 0;
+}
+
+static BOOL nulldrv_ExtFloodFill( PHYSDEV dev, INT x, INT y, COLORREF color, UINT type )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_FontIsLinked( PHYSDEV dev )
+{
+    return FALSE;
+}
+
+static UINT nulldrv_GetBoundsRect( PHYSDEV dev, RECT *rect, UINT flags )
+{
+    return DCB_RESET;
+}
+
+static BOOL nulldrv_GetCharABCWidths( PHYSDEV dev, UINT first, UINT count, WCHAR *chars, ABC *abc )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_GetCharABCWidthsI( PHYSDEV dev, UINT first, UINT count, WORD *indices, LPABC abc )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_GetCharWidth( PHYSDEV dev, UINT first, UINT count,
+                                  const WCHAR *chars, INT *buffer )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_GetCharWidthInfo( PHYSDEV dev, void *info )
+{
+    return FALSE;
+}
+
+static INT nulldrv_GetDeviceCaps( PHYSDEV dev, INT cap )
+{
+    int bpp;
+
+    switch (cap)
+    {
+    case DRIVERVERSION:   return 0x4000;
+    case TECHNOLOGY:      return DT_RASDISPLAY;
+    case HORZSIZE:        return muldiv( NtGdiGetDeviceCaps( dev->hdc, HORZRES ), 254,
+                                         NtGdiGetDeviceCaps( dev->hdc, LOGPIXELSX ) * 10 );
+    case VERTSIZE:        return muldiv( NtGdiGetDeviceCaps( dev->hdc, VERTRES ), 254,
+                                         NtGdiGetDeviceCaps( dev->hdc, LOGPIXELSY ) * 10 );
+    case HORZRES:
+    {
+        DC *dc = get_nulldrv_dc( dev );
+        RECT rect;
+        int ret;
+
+        if (dc->display[0])
+        {
+            rect = get_display_rect( dc->display );
+            if (!IsRectEmpty( &rect )) return rect.right - rect.left;
+        }
+
+        ret = get_system_metrics( SM_CXSCREEN );
+        return ret ? ret : 640;
+    }
+    case VERTRES:
+    {
+        DC *dc = get_nulldrv_dc( dev );
+        RECT rect;
+        int ret;
+
+        if (dc->display[0])
+        {
+            rect = get_display_rect( dc->display );
+            if (!IsRectEmpty( &rect )) return rect.bottom - rect.top;
+        }
+
+        ret = get_system_metrics( SM_CYSCREEN );
+        return ret ? ret : 480;
+    }
+    case BITSPIXEL:
+    {
+        UNICODE_STRING display;
+        DC *dc;
+
+        if (NtGdiGetDeviceCaps( dev->hdc, TECHNOLOGY ) == DT_RASDISPLAY)
+        {
+            dc = get_nulldrv_dc( dev );
+            RtlInitUnicodeString( &display, dc->display );
+            return get_display_depth( &display );
+        }
+        return 32;
+    }
+    case PLANES:          return 1;
+    case NUMBRUSHES:      return -1;
+    case NUMPENS:         return -1;
+    case NUMMARKERS:      return 0;
+    case NUMFONTS:        return 0;
+    case PDEVICESIZE:     return 0;
+    case CURVECAPS:       return (CC_CIRCLES | CC_PIE | CC_CHORD | CC_ELLIPSES | CC_WIDE |
+                                  CC_STYLED | CC_WIDESTYLED | CC_INTERIORS | CC_ROUNDRECT);
+    case LINECAPS:        return (LC_POLYLINE | LC_MARKER | LC_POLYMARKER | LC_WIDE |
+                                  LC_STYLED | LC_WIDESTYLED | LC_INTERIORS);
+    case POLYGONALCAPS:   return (PC_POLYGON | PC_RECTANGLE | PC_WINDPOLYGON | PC_SCANLINE |
+                                  PC_WIDE | PC_STYLED | PC_WIDESTYLED | PC_INTERIORS);
+    case TEXTCAPS:        return (TC_OP_CHARACTER | TC_OP_STROKE | TC_CP_STROKE |
+                                  TC_CR_ANY | TC_SF_X_YINDEP | TC_SA_DOUBLE | TC_SA_INTEGER |
+                                  TC_SA_CONTIN | TC_UA_ABLE | TC_SO_ABLE | TC_RA_ABLE | TC_VA_ABLE);
+    case CLIPCAPS:        return CP_RECTANGLE;
+    case RASTERCAPS:      return (RC_BITBLT | RC_BITMAP64 | RC_GDI20_OUTPUT | RC_DI_BITMAP | RC_DIBTODEV |
+                                  RC_BIGFONT | RC_STRETCHBLT | RC_FLOODFILL | RC_STRETCHDIB | RC_DEVBITS |
+                                  (NtGdiGetDeviceCaps( dev->hdc, SIZEPALETTE ) ? RC_PALETTE : 0));
+    case ASPECTX:         return 36;
+    case ASPECTY:         return 36;
+    case ASPECTXY:        return (int)(hypot( NtGdiGetDeviceCaps( dev->hdc, ASPECTX ),
+                                              NtGdiGetDeviceCaps( dev->hdc, ASPECTY )) + 0.5);
+    case CAPS1:           return 0;
+    case SIZEPALETTE:     return 0;
+    case NUMRESERVED:     return 20;
+    case PHYSICALWIDTH:   return 0;
+    case PHYSICALHEIGHT:  return 0;
+    case PHYSICALOFFSETX: return 0;
+    case PHYSICALOFFSETY: return 0;
+    case SCALINGFACTORX:  return 0;
+    case SCALINGFACTORY:  return 0;
+    case VREFRESH:
+    {
+        UNICODE_STRING display;
+        DEVMODEW devmode;
+        DC *dc;
+
+        if (NtGdiGetDeviceCaps( dev->hdc, TECHNOLOGY ) != DT_RASDISPLAY)
+            return 0;
+
+        dc = get_nulldrv_dc( dev );
+
+        memset( &devmode, 0, sizeof(devmode) );
+        devmode.dmSize = sizeof(devmode);
+        RtlInitUnicodeString( &display, dc->display );
+        if (NtUserEnumDisplaySettings( &display, ENUM_CURRENT_SETTINGS, &devmode, 0 ) &&
+            devmode.dmDisplayFrequency)
+            return devmode.dmDisplayFrequency;
+        return 1;
+    }
+    case DESKTOPHORZRES:
+        if (NtGdiGetDeviceCaps( dev->hdc, TECHNOLOGY ) == DT_RASDISPLAY)
+        {
+            RECT rect = get_virtual_screen_rect( 0, MDT_DEFAULT );
+            return rect.right - rect.left;
+        }
+        return NtGdiGetDeviceCaps( dev->hdc, HORZRES );
+    case DESKTOPVERTRES:
+        if (NtGdiGetDeviceCaps( dev->hdc, TECHNOLOGY ) == DT_RASDISPLAY)
+        {
+            RECT rect = get_virtual_screen_rect( 0, MDT_DEFAULT );
+            return rect.bottom - rect.top;
+        }
+        return NtGdiGetDeviceCaps( dev->hdc, VERTRES );
+    case BLTALIGNMENT:    return 0;
+    case SHADEBLENDCAPS:  return 0;
+    case COLORMGMTCAPS:   return 0;
+    case LOGPIXELSX:
+    case LOGPIXELSY:      return get_system_dpi();
+    case NUMCOLORS:
+        bpp = NtGdiGetDeviceCaps( dev->hdc, BITSPIXEL );
+        /* Newer versions of Windows return -1 for 8-bit and higher */
+        return (bpp > 4) ? -1 : (1 << bpp);
+    case COLORRES:
+        /* The observed correspondence between BITSPIXEL and COLORRES is:
+         * BITSPIXEL: 8  -> COLORRES: 18
+         * BITSPIXEL: 16 -> COLORRES: 16
+         * BITSPIXEL: 24 -> COLORRES: 24
+         * BITSPIXEL: 32 -> COLORRES: 24 */
+        bpp = NtGdiGetDeviceCaps( dev->hdc, BITSPIXEL );
+        return (bpp <= 8) ? 18 : min( 24, bpp );
+    default:
+        FIXME("(%p): unsupported capability %d, will return 0\n", dev->hdc, cap );
+        return 0;
+    }
+}
+
+static BOOL nulldrv_GetDeviceGammaRamp( PHYSDEV dev, void *ramp )
+{
+    RtlSetLastWin32Error( ERROR_INVALID_PARAMETER );
+    return FALSE;
+}
+
+static DWORD nulldrv_GetFontData( PHYSDEV dev, DWORD table, DWORD offset, LPVOID buffer, DWORD length )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_GetFontRealizationInfo( PHYSDEV dev, void *info )
+{
+    return FALSE;
+}
+
+static DWORD nulldrv_GetFontUnicodeRanges( PHYSDEV dev, LPGLYPHSET glyphs )
+{
+    return 0;
+}
+
+static DWORD nulldrv_GetGlyphIndices( PHYSDEV dev, LPCWSTR str, INT count, LPWORD indices, DWORD flags )
+{
+    return GDI_ERROR;
+}
+
+static DWORD nulldrv_GetGlyphOutline( PHYSDEV dev, UINT ch, UINT format, LPGLYPHMETRICS metrics,
+                                      DWORD size, LPVOID buffer, const MAT2 *mat )
+{
+    return GDI_ERROR;
+}
+
+static DWORD nulldrv_GetImage( PHYSDEV dev, BITMAPINFO *info, struct gdi_image_bits *bits,
+                               struct bitblt_coords *src )
+{
+    return ERROR_NOT_SUPPORTED;
+}
+
+static DWORD nulldrv_GetKerningPairs( PHYSDEV dev, DWORD count, LPKERNINGPAIR pairs )
+{
+    return 0;
+}
+
+static UINT nulldrv_GetOutlineTextMetrics( PHYSDEV dev, UINT size, LPOUTLINETEXTMETRICW otm )
+{
+    return 0;
+}
+
+static UINT nulldrv_GetTextCharsetInfo( PHYSDEV dev, LPFONTSIGNATURE fs, DWORD flags )
+{
+    return DEFAULT_CHARSET;
+}
+
+static BOOL nulldrv_GetTextExtentExPoint( PHYSDEV dev, LPCWSTR str, INT count, INT *dx )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_GetTextExtentExPointI( PHYSDEV dev, const WORD *indices, INT count, INT *dx )
+{
+    return FALSE;
+}
+
+static INT nulldrv_GetTextFace( PHYSDEV dev, INT size, LPWSTR name )
+{
+    INT ret = 0;
+    LOGFONTW font;
+    DC *dc = get_nulldrv_dc( dev );
+
+    if (NtGdiExtGetObjectW( dc->hFont, sizeof(font), &font ))
+    {
+        ret = lstrlenW( font.lfFaceName ) + 1;
+        if (name)
+        {
+            lstrcpynW( name, font.lfFaceName, size );
+            ret = min( size, ret );
+        }
+    }
+    return ret;
+}
+
+static BOOL nulldrv_GetTextMetrics( PHYSDEV dev, TEXTMETRICW *metrics )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_LineTo( PHYSDEV dev, INT x, INT y )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_MoveTo( PHYSDEV dev, INT x, INT y )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_PaintRgn( PHYSDEV dev, HRGN rgn )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_PatBlt( PHYSDEV dev, struct bitblt_coords *dst, DWORD rop )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_Pie( PHYSDEV dev, INT left, INT top, INT right, INT bottom,
+                         INT xstart, INT ystart, INT xend, INT yend )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_PolyPolygon( PHYSDEV dev, const POINT *points, const INT *counts, UINT polygons )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_PolyPolyline( PHYSDEV dev, const POINT *points, const DWORD *counts, DWORD lines )
+{
+    return TRUE;
+}
+
+static DWORD nulldrv_PutImage( PHYSDEV dev, HRGN clip, BITMAPINFO *info,
+                               const struct gdi_image_bits *bits, struct bitblt_coords *src,
+                               struct bitblt_coords *dst, DWORD rop )
+{
+    return ERROR_SUCCESS;
+}
+
+static UINT nulldrv_RealizeDefaultPalette( PHYSDEV dev )
+{
+    return 0;
+}
+
+static UINT nulldrv_RealizePalette( PHYSDEV dev, HPALETTE palette, BOOL primary )
+{
+    return 0;
+}
+
+static BOOL nulldrv_Rectangle( PHYSDEV dev, INT left, INT top, INT right, INT bottom )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_ResetDC( PHYSDEV dev, const DEVMODEW *devmode )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_RoundRect( PHYSDEV dev, INT left, INT top, INT right, INT bottom,
+                               INT ell_width, INT ell_height )
+{
+    return TRUE;
+}
+
+static HBITMAP nulldrv_SelectBitmap( PHYSDEV dev, HBITMAP bitmap )
+{
+    return bitmap;
+}
+
+static HBRUSH nulldrv_SelectBrush( PHYSDEV dev, HBRUSH brush, const struct brush_pattern *pattern )
+{
+    return brush;
+}
+
+static HFONT nulldrv_SelectFont( PHYSDEV dev, HFONT font, UINT *aa_flags )
+{
+    return font;
+}
+
+static HPEN nulldrv_SelectPen( PHYSDEV dev, HPEN pen, const struct brush_pattern *pattern )
+{
+    return pen;
+}
+
+static COLORREF nulldrv_SetBkColor( PHYSDEV dev, COLORREF color )
+{
+    return color;
+}
+
+static UINT nulldrv_SetBoundsRect( PHYSDEV dev, RECT *rect, UINT flags )
+{
+    return DCB_RESET;
+}
+
+static COLORREF nulldrv_SetDCBrushColor( PHYSDEV dev, COLORREF color )
+{
+    return color;
+}
+
+static COLORREF nulldrv_SetDCPenColor( PHYSDEV dev, COLORREF color )
+{
+    return color;
+}
+
+static void nulldrv_SetDeviceClipping( PHYSDEV dev, HRGN rgn )
+{
+}
+
+static BOOL nulldrv_SetDeviceGammaRamp( PHYSDEV dev, void *ramp )
+{
+    RtlSetLastWin32Error( ERROR_INVALID_PARAMETER );
+    return FALSE;
+}
+
+static COLORREF nulldrv_SetPixel( PHYSDEV dev, INT x, INT y, COLORREF color )
+{
+    return color;
+}
+
+static COLORREF nulldrv_SetTextColor( PHYSDEV dev, COLORREF color )
+{
+    return color;
+}
+
+static INT nulldrv_StartDoc( PHYSDEV dev, const DOCINFOW *info )
+{
+    return 0;
+}
+
+static INT nulldrv_StartPage( PHYSDEV dev )
+{
+    return 1;
+}
+
+static BOOL nulldrv_UnrealizePalette( HPALETTE palette )
+{
+    return FALSE;
+}
+
+const struct gdi_dc_funcs null_driver =
+{
+    nulldrv_AbortDoc,                   /* pAbortDoc */
+    nulldrv_AbortPath,                  /* pAbortPath */
+    nulldrv_AlphaBlend,                 /* pAlphaBlend */
+    nulldrv_AngleArc,                   /* pAngleArc */
+    nulldrv_Arc,                        /* pArc */
+    nulldrv_ArcTo,                      /* pArcTo */
+    nulldrv_BeginPath,                  /* pBeginPath */
+    nulldrv_BlendImage,                 /* pBlendImage */
+    nulldrv_Chord,                      /* pChord */
+    nulldrv_CloseFigure,                /* pCloseFigure */
+    nulldrv_CreateCompatibleDC,         /* pCreateCompatibleDC */
+    nulldrv_CreateDC,                   /* pCreateDC */
+    nulldrv_DeleteDC,                   /* pDeleteDC */
+    nulldrv_DeleteObject,               /* pDeleteObject */
+    nulldrv_Ellipse,                    /* pEllipse */
+    nulldrv_EndDoc,                     /* pEndDoc */
+    nulldrv_EndPage,                    /* pEndPage */
+    nulldrv_EndPath,                    /* pEndPath */
+    nulldrv_EnumFonts,                  /* pEnumFonts */
+    nulldrv_ExtEscape,                  /* pExtEscape */
+    nulldrv_ExtFloodFill,               /* pExtFloodFill */
+    nulldrv_ExtTextOut,                 /* pExtTextOut */
+    nulldrv_FillPath,                   /* pFillPath */
+    nulldrv_FillRgn,                    /* pFillRgn */
+    nulldrv_FontIsLinked,               /* pFontIsLinked */
+    nulldrv_FrameRgn,                   /* pFrameRgn */
+    nulldrv_GetBoundsRect,              /* pGetBoundsRect */
+    nulldrv_GetCharABCWidths,           /* pGetCharABCWidths */
+    nulldrv_GetCharABCWidthsI,          /* pGetCharABCWidthsI */
+    nulldrv_GetCharWidth,               /* pGetCharWidth */
+    nulldrv_GetCharWidthInfo,           /* pGetCharWidthInfo */
+    nulldrv_GetDeviceCaps,              /* pGetDeviceCaps */
+    nulldrv_GetDeviceGammaRamp,         /* pGetDeviceGammaRamp */
+    nulldrv_GetFontData,                /* pGetFontData */
+    nulldrv_GetFontRealizationInfo,     /* pGetFontRealizationInfo */
+    nulldrv_GetFontUnicodeRanges,       /* pGetFontUnicodeRanges */
+    nulldrv_GetGlyphIndices,            /* pGetGlyphIndices */
+    nulldrv_GetGlyphOutline,            /* pGetGlyphOutline */
+    nulldrv_GetImage,                   /* pGetImage */
+    nulldrv_GetKerningPairs,            /* pGetKerningPairs */
+    nulldrv_GetNearestColor,            /* pGetNearestColor */
+    nulldrv_GetOutlineTextMetrics,      /* pGetOutlineTextMetrics */
+    nulldrv_GetPixel,                   /* pGetPixel */
+    nulldrv_GetSystemPaletteEntries,    /* pGetSystemPaletteEntries */
+    nulldrv_GetTextCharsetInfo,         /* pGetTextCharsetInfo */
+    nulldrv_GetTextExtentExPoint,       /* pGetTextExtentExPoint */
+    nulldrv_GetTextExtentExPointI,      /* pGetTextExtentExPointI */
+    nulldrv_GetTextFace,                /* pGetTextFace */
+    nulldrv_GetTextMetrics,             /* pGetTextMetrics */
+    nulldrv_GradientFill,               /* pGradientFill */
+    nulldrv_InvertRgn,                  /* pInvertRgn */
+    nulldrv_LineTo,                     /* pLineTo */
+    nulldrv_MoveTo,                     /* pMoveTo */
+    nulldrv_PaintRgn,                   /* pPaintRgn */
+    nulldrv_PatBlt,                     /* pPatBlt */
+    nulldrv_Pie,                        /* pPie */
+    nulldrv_PolyBezier,                 /* pPolyBezier */
+    nulldrv_PolyBezierTo,               /* pPolyBezierTo */
+    nulldrv_PolyDraw,                   /* pPolyDraw */
+    nulldrv_PolyPolygon,                /* pPolyPolygon */
+    nulldrv_PolyPolyline,               /* pPolyPolyline */
+    nulldrv_PolylineTo,                 /* pPolylineTo */
+    nulldrv_PutImage,                   /* pPutImage */
+    nulldrv_RealizeDefaultPalette,      /* pRealizeDefaultPalette */
+    nulldrv_RealizePalette,             /* pRealizePalette */
+    nulldrv_Rectangle,                  /* pRectangle */
+    nulldrv_ResetDC,                    /* pResetDC */
+    nulldrv_RoundRect,                  /* pRoundRect */
+    nulldrv_SelectBitmap,               /* pSelectBitmap */
+    nulldrv_SelectBrush,                /* pSelectBrush */
+    nulldrv_SelectFont,                 /* pSelectFont */
+    nulldrv_SelectPen,                  /* pSelectPen */
+    nulldrv_SetBkColor,                 /* pSetBkColor */
+    nulldrv_SetBoundsRect,              /* pSetBoundsRect */
+    nulldrv_SetDCBrushColor,            /* pSetDCBrushColor */
+    nulldrv_SetDCPenColor,              /* pSetDCPenColor */
+    nulldrv_SetDIBitsToDevice,          /* pSetDIBitsToDevice */
+    nulldrv_SetDeviceClipping,          /* pSetDeviceClipping */
+    nulldrv_SetDeviceGammaRamp,         /* pSetDeviceGammaRamp */
+    nulldrv_SetPixel,                   /* pSetPixel */
+    nulldrv_SetTextColor,               /* pSetTextColor */
+    nulldrv_StartDoc,                   /* pStartDoc */
+    nulldrv_StartPage,                  /* pStartPage */
+    nulldrv_StretchBlt,                 /* pStretchBlt */
+    nulldrv_StretchDIBits,              /* pStretchDIBits */
+    nulldrv_StrokeAndFillPath,          /* pStrokeAndFillPath */
+    nulldrv_StrokePath,                 /* pStrokePath */
+    nulldrv_UnrealizePalette,           /* pUnrealizePalette */
+
+    GDI_PRIORITY_NULL_DRV               /* priority */
+};
+
+
+/**********************************************************************
+ * Null user driver
+ *
+ * These are fallbacks for entry points that are not implemented in the real driver.
+ */
+
+static BOOL nulldrv_ActivateKeyboardLayout( HKL layout, UINT flags )
+{
+    return TRUE;
+}
+
+static void nulldrv_Beep(void)
+{
+}
+
+static UINT nulldrv_GetKeyboardLayoutList( INT size, HKL *layouts )
+{
+    return ~0; /* use default implementation */
+}
+
+static INT nulldrv_GetKeyNameText( LONG lparam, LPWSTR buffer, INT size )
+{
+    return -1; /* use default implementation */
+}
+
+static UINT nulldrv_MapVirtualKeyEx( UINT code, UINT type, HKL layout )
+{
+    return -1; /* use default implementation */
+}
+
+static BOOL nulldrv_RegisterHotKey( HWND hwnd, UINT modifiers, UINT vk )
+{
+    return TRUE;
+}
+
+static INT nulldrv_ToUnicodeEx( UINT virt, UINT scan, const BYTE *state, LPWSTR str,
+                                int size, UINT flags, HKL layout )
+{
+    return -2; /* use default implementation */
+}
+
+static void nulldrv_UnregisterHotKey( HWND hwnd, UINT modifiers, UINT vk )
+{
+}
+
+static SHORT nulldrv_VkKeyScanEx( WCHAR ch, HKL layout )
+{
+    return -256; /* use default implementation */
+}
+
+static const KBDTABLES *nulldrv_KbdLayerDescriptor( HKL layout )
+{
+    return NULL;
+}
+
+static void nulldrv_ReleaseKbdTables( const KBDTABLES *tables )
+{
+}
+
+static UINT nulldrv_ImeProcessKey( HIMC himc, UINT wparam, UINT lparam, const BYTE *state )
+{
+    return 0;
+}
+
+static void nulldrv_NotifyIMEStatus( HWND hwnd, UINT status )
+{
+}
+
+static BOOL nulldrv_SetIMECompositionRect( HWND hwnd, RECT rect )
+{
+    return FALSE;
+}
+
+static LRESULT nulldrv_DesktopWindowProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
+{
+    return default_window_proc( hwnd, msg, wparam, lparam, FALSE );
+}
+
+static void nulldrv_DestroyCursorIcon( HCURSOR cursor )
+{
+}
+
+static void nulldrv_SetCursor( HWND hwnd, HCURSOR cursor )
+{
+}
+
+static BOOL nulldrv_GetCursorPos( LPPOINT pt )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_SetCursorPos( INT x, INT y )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_ClipCursor( const RECT *clip, BOOL reset )
+{
+    return TRUE;
+}
+
+static LRESULT nulldrv_NotifyIcon( HWND hwnd, UINT msg, NOTIFYICONDATAW *data )
+{
+    return -1;
+}
+
+static void nulldrv_CleanupIcons( HWND hwnd )
+{
+}
+
+static void nulldrv_SystrayDockInit( HWND hwnd )
+{
+}
+
+static BOOL nulldrv_SystrayDockInsert( HWND hwnd, UINT cx, UINT cy, void *icon )
+{
+    return FALSE;
+}
+
+static void nulldrv_SystrayDockClear( HWND hwnd )
+{
+}
+
+static BOOL nulldrv_SystrayDockRemove( HWND hwnd )
+{
+    return FALSE;
+}
+
+static void nulldrv_UpdateClipboard(void)
+{
+}
+
+static LONG nulldrv_ChangeDisplaySettings( LPDEVMODEW displays, LPCWSTR primary_name, HWND hwnd,
+                                           DWORD flags, LPVOID lparam )
+{
+    return DISP_CHANGE_SUCCESSFUL;
+}
+
+static UINT nulldrv_UpdateDisplayDevices( const struct gdi_device_manager *manager, void *param )
+{
+    return STATUS_NOT_IMPLEMENTED;
+}
+
+#ifdef WINE_IOS
+/* winios.drv: register a single 1024×768 monitor matching the values
+ * sysparams_ios.c returns for SM_CXSCREEN/CYSCREEN. Wine uses this for
+ * EnumDisplayDevices, EnumDisplayMonitors, GetDeviceCaps, and the
+ * registry-backed monitor records. Without it, Wine derives broken
+ * geometry from the (zero-initialized) winstation monitor list. */
+/* NOTE: This is wired into winios_user_driver.pUpdateDisplayDevices but
+ * is currently DORMANT on iOS. sysparams_ios.c:lock_display_devices has
+ * an `is_service_process()` shortcut that bypasses Wine's full display
+ * enumeration and uses a hardcoded `virtual_monitor` (also 1024x768).
+ * This implementation is ready for when we remove that shortcut to
+ * support real games' EnumDisplayDevices/ChangeDisplaySettings calls. */
+static UINT winios_UpdateDisplayDevices( const struct gdi_device_manager *manager, void *param )
+{
+    /* Single virtual GPU: vendor 0x1002 (AMD) + a placeholder device id —
+     * Wine's user32/dxgi only check vendor/device for filter logic; the
+     * exact values don't matter for our render path. */
+    struct pci_id pci_id = { .vendor = 0x1002, .device = 0x67df, .subsystem = 0, .revision = 0 };
+    manager->add_gpu( "winios GPU", &pci_id, NULL, param );
+
+    /* Single source/adapter, attached + primary. */
+    manager->add_source( "winios0", 0x00000005 /* DISPLAY_DEVICE_ATTACHED|PRIMARY */,
+                         96 /* dpi */, param );
+
+    /* Single monitor at (0,0)–(1024,768). */
+    struct gdi_monitor monitor = {
+        .rc_monitor = { 0, 0, 1024, 768 },
+        .rc_work    = { 0, 0, 1024, 768 },
+        .edid       = NULL,
+        .edid_len   = 0,
+        .hdr_enabled = FALSE,
+    };
+    manager->add_monitor( &monitor, param );
+
+    /* Single 1024×768×32 mode at 60 Hz. */
+    DEVMODEW current = { .dmSize = sizeof(current) };
+    current.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_DISPLAYFREQUENCY;
+    current.dmBitsPerPel = 32;
+    current.dmPelsWidth = 1024;
+    current.dmPelsHeight = 768;
+    current.dmDisplayFrequency = 60;
+    manager->add_modes( &current, 1, &current, param );
+
+    return STATUS_SUCCESS;
+}
+#endif
+
+static BOOL nulldrv_CreateDesktop( const WCHAR *name, UINT width, UINT height )
+{
+    return TRUE;
+}
+
+static BOOL nodrv_CreateWindow( HWND hwnd )
+{
+    static int warned;
+    HWND parent = NtUserGetAncestor( hwnd, GA_PARENT );
+
+    /* HWND_MESSAGE windows don't need a graphics driver */
+    if (!parent || parent == UlongToHandle( NtUserGetThreadInfo()->msg_window )) return TRUE;
+    if (warned++) return FALSE;
+
+    ERR_(winediag)( "Application tried to create a window, but no driver could be loaded.\n" );
+    if (driver_load_error[0]) ERR_(winediag)( "%s\n", debugstr_w(driver_load_error) );
+    return FALSE;
+}
+
+static BOOL nulldrv_CreateWindow( HWND hwnd )
+{
+    return TRUE;
+}
+
+static void nulldrv_DestroyWindow( HWND hwnd )
+{
+}
+
+static void nulldrv_FlashWindowEx( FLASHWINFO *info )
+{
+}
+
+static void nulldrv_GetDC( HDC hdc, HWND hwnd, HWND top_win, const RECT *win_rect,
+                           const RECT *top_rect, DWORD flags )
+{
+}
+
+static BOOL nulldrv_ProcessEvents( DWORD mask )
+{
+    return FALSE;
+}
+
+static void nulldrv_ReleaseDC( HWND hwnd, HDC hdc )
+{
+}
+
+static BOOL nulldrv_ScrollDC( HDC hdc, INT dx, INT dy, HRGN update )
+{
+    RECT rect;
+
+    NtGdiGetAppClipBox( hdc, &rect );
+    return NtGdiBitBlt( hdc, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
+                        hdc, rect.left - dx, rect.top - dy, SRCCOPY, 0, 0 );
+}
+
+static void nulldrv_SetCapture( HWND hwnd, UINT flags )
+{
+}
+
+static void nulldrv_SetDesktopWindow( HWND hwnd )
+{
+}
+
+static void nulldrv_ActivateWindow( HWND hwnd, HWND previous )
+{
+}
+
+static void nulldrv_SetLayeredWindowAttributes( HWND hwnd, COLORREF key, BYTE alpha, DWORD flags )
+{
+}
+
+static void nulldrv_SetParent( HWND hwnd, HWND parent, HWND old_parent )
+{
+}
+
+static void nulldrv_SetWindowRgn( HWND hwnd, HRGN hrgn, BOOL redraw )
+{
+}
+
+static void nulldrv_SetWindowIcons( HWND hwnd, HICON icon, const ICONINFO *ii, HICON icon_small, const ICONINFO *ii_small )
+{
+}
+
+static void nulldrv_SetWindowStyle( HWND hwnd, INT offset, STYLESTRUCT *style )
+{
+}
+
+static void nulldrv_SetWindowText( HWND hwnd, LPCWSTR text )
+{
+}
+
+static UINT nulldrv_ShowWindow( HWND hwnd, INT cmd, RECT *rect, UINT swp )
+{
+    return ~0; /* use default implementation */
+}
+
+static LRESULT nulldrv_SysCommand( HWND hwnd, WPARAM wparam, LPARAM lparam, const POINT *pos )
+{
+    return -1;
+}
+
+static void nulldrv_UpdateLayeredWindow( HWND hwnd, BYTE alpha, UINT flags )
+{
+}
+
+static LRESULT nulldrv_WindowMessage( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
+{
+    return 0;
+}
+
+static BOOL nulldrv_WindowPosChanging( HWND hwnd, UINT swp_flags, BOOL shaped, const struct window_rects *rects )
+{
+    return TRUE;
+}
+
+static BOOL nulldrv_GetWindowStyleMasks( HWND hwnd, UINT style, UINT ex_style, UINT *style_mask, UINT *ex_style_mask )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_GetWindowStateUpdates( HWND hwnd, UINT *state_cmd, UINT *swp_flags, RECT *rect, HWND *foreground )
+{
+    return FALSE;
+}
+
+static BOOL nulldrv_CreateWindowSurface( HWND hwnd, BOOL layered, const RECT *surface_rect, struct window_surface **surface )
+{
+    return FALSE;
+}
+
+static void nulldrv_MoveWindowBits( HWND hwnd, const struct window_rects *old_rects,
+                                    const struct window_rects *new_rects, const RECT *valid_rects )
+{
+}
+
+static void nulldrv_WindowPosChanged( HWND hwnd, HWND insert_after, HWND owner_hint, UINT swp_flags,
+                                      const struct window_rects *new_rects, struct window_surface *surface )
+{
+}
+
+static BOOL nulldrv_SystemParametersInfo( UINT action, UINT int_param, void *ptr_param, UINT flags )
+{
+    return FALSE;
+}
+
+static LRESULT nulldrv_WintabProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam, void *buffer )
+{
+    return 0;
+}
+
+static UINT nulldrv_VulkanInit( UINT version, void *vulkan_handle, const struct vulkan_driver_funcs **driver_funcs )
+{
+    return STATUS_NOT_IMPLEMENTED;
+}
+
+static UINT nulldrv_OpenGLInit( UINT version, const struct opengl_funcs *opengl_funcs, const struct opengl_driver_funcs **driver_funcs )
+{
+    return STATUS_NOT_IMPLEMENTED;
+}
+
+static void nulldrv_ThreadDetach( void )
+{
+}
+
+static const WCHAR guid_key_prefixW[] =
+{
+    '\\','R','e','g','i','s','t','r','y',
+    '\\','M','a','c','h','i','n','e',
+    '\\','S','y','s','t','e','m',
+    '\\','C','u','r','r','e','n','t','C','o','n','t','r','o','l','S','e','t',
+    '\\','C','o','n','t','r','o','l',
+    '\\','V','i','d','e','o','\\','{'
+};
+static const WCHAR guid_key_suffixW[] = {'}','\\','0','0','0','0'};
+
+static BOOL load_desktop_driver( HWND hwnd )
+{
+    static const WCHAR guid_nullW[] = {'0','0','0','0','0','0','0','0','-','0','0','0','0','-','0','0','0','0','-',
+                                       '0','0','0','0','-','0','0','0','0','0','0','0','0','0','0','0','0',0};
+    WCHAR key[ARRAYSIZE(guid_key_prefixW) + 40 + ARRAYSIZE(guid_key_suffixW)], *ptr;
+    char buf[4096];
+    KEY_VALUE_PARTIAL_INFORMATION *info = (void *)buf;
+    ATOM_BASIC_INFORMATION *abi = (ATOM_BASIC_INFORMATION *)buf;
+    BOOL ret = FALSE;
+    HKEY hkey;
+    DWORD size;
+    UINT guid_atom;
+
+    static const WCHAR prop_nameW[] =
+        {'_','_','w','i','n','e','_','d','i','s','p','l','a','y','_','d','e','v','i','c','e',
+         '_','g','u','i','d',0};
+
+    user_check_not_lock();
+
+    asciiz_to_unicode( driver_load_error, "The explorer process failed to start." );  /* default error */
+    /* wait for graphics driver to be ready */
+    send_message( hwnd, WM_NULL, 0, 0 );
+
+    guid_atom = HandleToULong( NtUserGetProp( hwnd, prop_nameW ));
+    memcpy( key, guid_key_prefixW, sizeof(guid_key_prefixW) );
+    ptr = key + ARRAYSIZE(guid_key_prefixW);
+    if (NtQueryInformationAtom( guid_atom, AtomBasicInformation, buf, sizeof(buf), NULL ))
+    {
+        wcscpy( ptr, guid_nullW );
+        ptr += ARRAY_SIZE(guid_nullW) - 1;
+    }
+    else
+    {
+        memcpy( ptr, abi->Name, abi->NameLength );
+        ptr += abi->NameLength / sizeof(WCHAR);
+    }
+    memcpy( ptr, guid_key_suffixW, sizeof(guid_key_suffixW) );
+    ptr += ARRAY_SIZE(guid_key_suffixW);
+
+    if (!(hkey = reg_open_key( NULL, key, (ptr - key) * sizeof(WCHAR) ))) return FALSE;
+
+    if ((size = query_reg_ascii_value( hkey, "GraphicsDriver", info, sizeof(buf) )))
+    {
+        static const WCHAR nullW[] = {'n','u','l','l',0};
+        TRACE( "trying driver %s\n", debugstr_wn( (const WCHAR *)info->Data,
+                                                  info->DataLength / sizeof(WCHAR) ));
+        if (info->DataLength != sizeof(nullW) || memcmp( info->Data, nullW, sizeof(nullW) ))
+        {
+            void *ret_ptr;
+            ULONG ret_len;
+            ret = !KeUserModeCallback( NtUserLoadDriver, info->Data, info->DataLength, &ret_ptr, &ret_len );
+        }
+        else
+        {
+            __wine_set_user_driver( &null_user_driver, WINE_GDI_DRIVER_VERSION );
+            ret = TRUE;
+        }
+    }
+    else if ((size = query_reg_ascii_value( hkey, "DriverError", info, sizeof(buf) )))
+    {
+        memcpy( driver_load_error, info->Data, min( info->DataLength, sizeof(driver_load_error) ));
+        driver_load_error[ARRAYSIZE(driver_load_error) - 1] = 0;
+    }
+
+    NtClose( hkey );
+    return ret;
+}
+
+/**********************************************************************
+ * Lazy loading user driver
+ *
+ * Initial driver used before another driver is loaded.
+ * Each entry point simply loads the real driver and chains to it.
+ */
+
+static void load_display_driver(void)
+{
+    USEROBJECTFLAGS flags;
+    HWINSTA winstation;
+
+    if (is_service_process() || !load_desktop_driver( get_desktop_window() ) || user_driver == &lazy_load_driver)
+    {
+        winstation = NtUserGetProcessWindowStation();
+        if (!NtUserGetObjectInformation( winstation, UOI_FLAGS, &flags, sizeof(flags), NULL )
+            || (flags.dwFlags & WSF_VISIBLE))
+        {
+#ifdef WINE_IOS
+            /* iOS: leave pCreateWindow as the always-success nulldrv path
+             * (set by __wine_set_user_driver via SET_USER_FUNC fallback).
+             * The nodrv_CreateWindow returns FALSE for any non-HWND_MESSAGE
+             * window, which would abort CreateWindowEx. We don't want that
+             * — winios.drv (below) takes over actual window/input bridging. */
+#else
+            null_user_driver.pCreateWindow = nodrv_CreateWindow;
+#endif
+        }
+
+#ifdef WINE_IOS
+        /* Wire up winios.drv slots from the weak externs above. Slots
+         * with no implementation linked (weak ref == NULL) stay NULL
+         * and SET_USER_FUNC falls back to nulldrv_*. Real impls live
+         * in app/Madeira/Winios/Winios.m and link in via Madeira.app. */
+        if (winios_pCreateWindow)        winios_user_driver.pCreateWindow        = winios_pCreateWindow;
+        if (winios_pDestroyWindow)       winios_user_driver.pDestroyWindow       = winios_pDestroyWindow;
+        if (winios_pProcessEvents)       winios_user_driver.pProcessEvents       = winios_drv_process_events;
+        if (winios_desktop_mode())       winios_user_driver.pSetCursor           = winios_drv_set_cursor;
+        /* direct mode: inert (like winios_pSetCursor) until the app enables it */
+        else if (winios_direct_cursor_set) winios_user_driver.pSetCursor         = winios_drv_set_cursor;
+        else if (winios_pSetCursor)      winios_user_driver.pSetCursor           = winios_pSetCursor;
+        if (!winios_desktop_mode() && winios_direct_cursor_pos)
+            winios_user_driver.pSetCursorPos = winios_drv_set_cursor_pos;
+        if (winios_pDestroyCursorIcon)   winios_user_driver.pDestroyCursorIcon   = winios_pDestroyCursorIcon;
+        if (winios_pShowWindow)          winios_user_driver.pShowWindow          = winios_pShowWindow;
+        /* window-pos wrapper dereferences window_rects on this side and
+         * forwards plain ints to Winios.m's layer compositor */
+        if (winios_pWindowPosChanged || winios_window_frame)
+            winios_user_driver.pWindowPosChanged = winios_drv_window_pos_changed;
+        /* madeira-bcd: [swap-win] logging around a swapchain's window; each
+         * does what the null driver's does (nothing, or TRUE) */
+        if (winios_swapchain_hwnd && winios_swapchain_take)
+        {
+            winios_user_driver.pSetWindowStyle = winios_drv_set_window_style;
+            winios_user_driver.pWindowPosChanging = winios_drv_window_pos_changing;
+            winios_user_driver.pActivateWindow = winios_drv_activate_window;
+        }
+        /* S2 desktop mode: GDI window surfaces → app compositor. */
+        if (winios_desktop_mode())
+        {
+            winios_user_driver.pCreateWindowSurface = winios_CreateWindowSurface;
+            dprintf( 2, "[winios] desktop mode: window-surface compositing ENABLED\n" );
+        }
+        /* Game mode: launcher / dialog windows get real surfaces too; only
+         * top-level windows reach Winios.m's overlay (window_pos_changed). */
+        else if (winios_game_windows())
+        {
+            winios_user_driver.pCreateWindowSurface = winios_CreateWindowSurface;
+            dprintf( 2, "[winios] game mode: launcher / dialog windows are drawn over the game "
+                        "(MADEIRA_GAME_WINDOWS=0 hides them)\n" );
+        }
+        winios_user_driver.pUpdateDisplayDevices = winios_UpdateDisplayDevices;
+        __wine_set_user_driver( &winios_user_driver, WINE_GDI_DRIVER_VERSION );
+#else
+        __wine_set_user_driver( &null_user_driver, WINE_GDI_DRIVER_VERSION );
+#endif
+    }
+}
+
+static const struct user_driver_funcs *load_driver(void)
+{
+    load_display_driver();
+    update_display_cache( FALSE );
+    return user_driver;
+}
+
+void init_display_driver(void)
+{
+    if (user_driver == &lazy_load_driver) load_display_driver();
+}
+
+/**********************************************************************
+ *           get_display_driver
+ */
+const struct gdi_dc_funcs *get_display_driver(void)
+{
+    if (user_driver == &lazy_load_driver) load_driver();
+    return &user_driver->dc_funcs;
+}
+
+static BOOL loaderdrv_ActivateKeyboardLayout( HKL layout, UINT flags )
+{
+    return load_driver()->pActivateKeyboardLayout( layout, flags );
+}
+
+static void loaderdrv_Beep(void)
+{
+    load_driver()->pBeep();
+}
+
+static INT loaderdrv_GetKeyNameText( LONG lparam, LPWSTR buffer, INT size )
+{
+    return load_driver()->pGetKeyNameText( lparam, buffer, size );
+}
+
+static UINT loaderdrv_GetKeyboardLayoutList( INT size, HKL *layouts )
+{
+    return load_driver()->pGetKeyboardLayoutList( size, layouts );
+}
+
+static UINT loaderdrv_MapVirtualKeyEx( UINT code, UINT type, HKL layout )
+{
+    return load_driver()->pMapVirtualKeyEx( code, type, layout );
+}
+
+static INT loaderdrv_ToUnicodeEx( UINT virt, UINT scan, const BYTE *state, LPWSTR str,
+                                        int size, UINT flags, HKL layout )
+{
+    return load_driver()->pToUnicodeEx( virt, scan, state, str, size, flags, layout );
+}
+
+static BOOL loaderdrv_RegisterHotKey( HWND hwnd, UINT modifiers, UINT vk )
+{
+    return load_driver()->pRegisterHotKey( hwnd, modifiers, vk );
+}
+
+static void loaderdrv_UnregisterHotKey( HWND hwnd, UINT modifiers, UINT vk )
+{
+    load_driver()->pUnregisterHotKey( hwnd, modifiers, vk );
+}
+
+static SHORT loaderdrv_VkKeyScanEx( WCHAR ch, HKL layout )
+{
+    return load_driver()->pVkKeyScanEx( ch, layout );
+}
+
+static const KBDTABLES *loaderdrv_KbdLayerDescriptor( HKL layout )
+{
+    return load_driver()->pKbdLayerDescriptor( layout );
+}
+
+static void loaderdrv_ReleaseKbdTables( const KBDTABLES *tables )
+{
+    return load_driver()->pReleaseKbdTables( tables );
+}
+
+static UINT loaderdrv_ImeProcessKey( HIMC himc, UINT wparam, UINT lparam, const BYTE *state )
+{
+    return load_driver()->pImeProcessKey( himc, wparam, lparam, state );
+}
+
+static void loaderdrv_NotifyIMEStatus( HWND hwnd, UINT status )
+{
+    return load_driver()->pNotifyIMEStatus( hwnd, status );
+}
+
+static BOOL loaderdrv_SetIMECompositionRect( HWND hwnd, RECT rect )
+{
+    return load_driver()->pSetIMECompositionRect( hwnd, rect );
+}
+
+static LONG loaderdrv_ChangeDisplaySettings( LPDEVMODEW displays, LPCWSTR primary_name, HWND hwnd,
+                                             DWORD flags, LPVOID lparam )
+{
+    return load_driver()->pChangeDisplaySettings( displays, primary_name, hwnd, flags, lparam );
+}
+
+static void loaderdrv_SetCursor( HWND hwnd, HCURSOR cursor )
+{
+    load_driver()->pSetCursor( hwnd, cursor );
+}
+
+static BOOL loaderdrv_GetCursorPos( POINT *pt )
+{
+    return load_driver()->pGetCursorPos( pt );
+}
+
+static BOOL loaderdrv_SetCursorPos( INT x, INT y )
+{
+    return load_driver()->pSetCursorPos( x, y );
+}
+
+static BOOL loaderdrv_ClipCursor( const RECT *clip, BOOL reset )
+{
+    return load_driver()->pClipCursor( clip, reset );
+}
+
+static LRESULT loaderdrv_NotifyIcon( HWND hwnd, UINT msg, NOTIFYICONDATAW *data )
+{
+    return load_driver()->pNotifyIcon( hwnd, msg, data );
+}
+
+static void loaderdrv_CleanupIcons( HWND hwnd )
+{
+    load_driver()->pCleanupIcons( hwnd );
+}
+
+static void loaderdrv_SystrayDockInit( HWND hwnd )
+{
+    load_driver()->pSystrayDockInit( hwnd );
+}
+
+static BOOL loaderdrv_SystrayDockInsert( HWND hwnd, UINT cx, UINT cy, void *icon )
+{
+    return load_driver()->pSystrayDockInsert( hwnd, cx, cy, icon );
+}
+
+static void loaderdrv_SystrayDockClear( HWND hwnd )
+{
+    load_driver()->pSystrayDockClear( hwnd );
+}
+
+static BOOL loaderdrv_SystrayDockRemove( HWND hwnd )
+{
+    return load_driver()->pSystrayDockRemove( hwnd );
+}
+
+static LRESULT nulldrv_ClipboardWindowProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
+{
+    return 0;
+}
+
+static void loaderdrv_UpdateClipboard(void)
+{
+    load_driver()->pUpdateClipboard();
+}
+
+static UINT loaderdrv_UpdateDisplayDevices( const struct gdi_device_manager *manager, void *param )
+{
+    return load_driver()->pUpdateDisplayDevices( manager, param );
+}
+
+static BOOL loaderdrv_CreateDesktop( const WCHAR *name, UINT width, UINT height )
+{
+    return load_driver()->pCreateDesktop( name, width, height );
+}
+
+static BOOL loaderdrv_CreateWindow( HWND hwnd )
+{
+    return load_driver()->pCreateWindow( hwnd );
+}
+
+static void loaderdrv_GetDC( HDC hdc, HWND hwnd, HWND top_win, const RECT *win_rect,
+                             const RECT *top_rect, DWORD flags )
+{
+    load_driver()->pGetDC( hdc, hwnd, top_win, win_rect, top_rect, flags );
+}
+
+static void loaderdrv_FlashWindowEx( FLASHWINFO *info )
+{
+    load_driver()->pFlashWindowEx( info );
+}
+
+static void loaderdrv_SetDesktopWindow( HWND hwnd )
+{
+    load_driver()->pSetDesktopWindow( hwnd );
+}
+
+static void loaderdrv_SetLayeredWindowAttributes( HWND hwnd, COLORREF key, BYTE alpha, DWORD flags )
+{
+    load_driver()->pSetLayeredWindowAttributes( hwnd, key, alpha, flags );
+}
+
+static void loaderdrv_SetWindowRgn( HWND hwnd, HRGN hrgn, BOOL redraw )
+{
+    load_driver()->pSetWindowRgn( hwnd, hrgn, redraw );
+}
+
+static void loaderdrv_UpdateLayeredWindow( HWND hwnd, BYTE alpha, UINT flags )
+{
+    load_driver()->pUpdateLayeredWindow( hwnd, alpha, flags );
+}
+
+static LRESULT loaderdrv_WintabProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam, void *buffer )
+{
+    return load_driver()->pWintabProc( hwnd, msg, wparam, lparam, buffer );
+}
+
+static UINT loaderdrv_VulkanInit( UINT version, void *vulkan_handle, const struct vulkan_driver_funcs **driver_funcs )
+{
+    return load_driver()->pVulkanInit( version, vulkan_handle, driver_funcs );
+}
+
+static UINT loaderdrv_OpenGLInit( UINT version, const struct opengl_funcs *opengl_funcs, const struct opengl_driver_funcs **driver_funcs )
+{
+    return load_driver()->pOpenGLInit( version, opengl_funcs, driver_funcs );
+}
+
+static const struct user_driver_funcs lazy_load_driver =
+{
+    { NULL },
+    /* keyboard functions */
+    loaderdrv_ActivateKeyboardLayout,
+    loaderdrv_Beep,
+    loaderdrv_GetKeyNameText,
+    loaderdrv_GetKeyboardLayoutList,
+    loaderdrv_MapVirtualKeyEx,
+    loaderdrv_RegisterHotKey,
+    loaderdrv_ToUnicodeEx,
+    loaderdrv_UnregisterHotKey,
+    loaderdrv_VkKeyScanEx,
+    loaderdrv_KbdLayerDescriptor,
+    loaderdrv_ReleaseKbdTables,
+    loaderdrv_ImeProcessKey,
+    loaderdrv_NotifyIMEStatus,
+    loaderdrv_SetIMECompositionRect,
+    /* cursor/icon functions */
+    nulldrv_DestroyCursorIcon,
+    loaderdrv_SetCursor,
+    loaderdrv_GetCursorPos,
+    loaderdrv_SetCursorPos,
+    loaderdrv_ClipCursor,
+    /* systray functions */
+    loaderdrv_NotifyIcon,
+    loaderdrv_CleanupIcons,
+    loaderdrv_SystrayDockInit,
+    loaderdrv_SystrayDockInsert,
+    loaderdrv_SystrayDockClear,
+    loaderdrv_SystrayDockRemove,
+    /* clipboard functions */
+    nulldrv_ClipboardWindowProc,
+    loaderdrv_UpdateClipboard,
+    /* display modes */
+    loaderdrv_ChangeDisplaySettings,
+    loaderdrv_UpdateDisplayDevices,
+    /* windowing functions */
+    loaderdrv_CreateDesktop,
+    loaderdrv_CreateWindow,
+    nulldrv_DesktopWindowProc,
+    nulldrv_DestroyWindow,
+    loaderdrv_FlashWindowEx,
+    loaderdrv_GetDC,
+    nulldrv_ProcessEvents,
+    nulldrv_ReleaseDC,
+    nulldrv_ScrollDC,
+    nulldrv_SetCapture,
+    loaderdrv_SetDesktopWindow,
+    nulldrv_ActivateWindow,
+    loaderdrv_SetLayeredWindowAttributes,
+    nulldrv_SetParent,
+    loaderdrv_SetWindowRgn,
+    nulldrv_SetWindowIcons,
+    nulldrv_SetWindowStyle,
+    nulldrv_SetWindowText,
+    nulldrv_ShowWindow,
+    nulldrv_SysCommand,
+    loaderdrv_UpdateLayeredWindow,
+    nulldrv_WindowMessage,
+    nulldrv_WindowPosChanging,
+    nulldrv_GetWindowStyleMasks,
+    nulldrv_GetWindowStateUpdates,
+    nulldrv_CreateWindowSurface,
+    nulldrv_MoveWindowBits,
+    nulldrv_WindowPosChanged,
+    /* system parameters */
+    nulldrv_SystemParametersInfo,
+    /* wintab support */
+    loaderdrv_WintabProc,
+    /* vulkan support */
+    loaderdrv_VulkanInit,
+    /* opengl support */
+    loaderdrv_OpenGLInit,
+    /* thread management */
+    nulldrv_ThreadDetach,
+};
+
+const struct user_driver_funcs *user_driver = &lazy_load_driver;
+
+/******************************************************************************
+ *	     __wine_set_user_driver   (win32u.so)
+ */
+void __wine_set_user_driver( const struct user_driver_funcs *funcs, UINT version )
+{
+    struct user_driver_funcs *driver, *prev;
+
+    if (version != WINE_GDI_DRIVER_VERSION)
+    {
+        ERR( "version mismatch, driver wants %u but win32u has %u\n",
+             version, WINE_GDI_DRIVER_VERSION );
+        return;
+    }
+
+    if (!funcs)
+    {
+        prev = InterlockedExchangePointer( (void **)&user_driver, (void *)&lazy_load_driver );
+        if (prev != &lazy_load_driver)
+            free( prev );
+        return;
+    }
+
+    driver = malloc( sizeof(*driver) );
+    *driver = *funcs;
+
+#define SET_USER_FUNC(name) \
+    do { if (!driver->p##name) driver->p##name = nulldrv_##name; } while(0)
+
+    SET_USER_FUNC(ActivateKeyboardLayout);
+    SET_USER_FUNC(Beep);
+    SET_USER_FUNC(GetKeyNameText);
+    SET_USER_FUNC(GetKeyboardLayoutList);
+    SET_USER_FUNC(MapVirtualKeyEx);
+    SET_USER_FUNC(RegisterHotKey);
+    SET_USER_FUNC(ToUnicodeEx);
+    SET_USER_FUNC(UnregisterHotKey);
+    SET_USER_FUNC(VkKeyScanEx);
+    SET_USER_FUNC(KbdLayerDescriptor);
+    SET_USER_FUNC(ReleaseKbdTables);
+    SET_USER_FUNC(ImeProcessKey);
+    SET_USER_FUNC(NotifyIMEStatus);
+    SET_USER_FUNC(SetIMECompositionRect);
+    SET_USER_FUNC(DestroyCursorIcon);
+    SET_USER_FUNC(SetCursor);
+    SET_USER_FUNC(GetCursorPos);
+    SET_USER_FUNC(SetCursorPos);
+    SET_USER_FUNC(ClipCursor);
+    SET_USER_FUNC(NotifyIcon);
+    SET_USER_FUNC(CleanupIcons);
+    SET_USER_FUNC(SystrayDockInit);
+    SET_USER_FUNC(SystrayDockInsert);
+    SET_USER_FUNC(SystrayDockClear);
+    SET_USER_FUNC(SystrayDockRemove);
+    SET_USER_FUNC(ClipboardWindowProc);
+    SET_USER_FUNC(UpdateClipboard);
+    SET_USER_FUNC(ChangeDisplaySettings);
+    SET_USER_FUNC(UpdateDisplayDevices);
+    SET_USER_FUNC(CreateDesktop);
+    SET_USER_FUNC(CreateWindow);
+    SET_USER_FUNC(DesktopWindowProc);
+    SET_USER_FUNC(DestroyWindow);
+    SET_USER_FUNC(FlashWindowEx);
+    SET_USER_FUNC(GetDC);
+    SET_USER_FUNC(ProcessEvents);
+    SET_USER_FUNC(ReleaseDC);
+    SET_USER_FUNC(ScrollDC);
+    SET_USER_FUNC(SetCapture);
+    SET_USER_FUNC(SetDesktopWindow);
+    SET_USER_FUNC(ActivateWindow);
+    SET_USER_FUNC(SetLayeredWindowAttributes);
+    SET_USER_FUNC(SetParent);
+    SET_USER_FUNC(SetWindowRgn);
+    SET_USER_FUNC(SetWindowIcons);
+    SET_USER_FUNC(SetWindowStyle);
+    SET_USER_FUNC(SetWindowText);
+    SET_USER_FUNC(ShowWindow);
+    SET_USER_FUNC(SysCommand);
+    SET_USER_FUNC(UpdateLayeredWindow);
+    SET_USER_FUNC(WindowMessage);
+    SET_USER_FUNC(WindowPosChanging);
+    SET_USER_FUNC(GetWindowStyleMasks);
+    SET_USER_FUNC(GetWindowStateUpdates);
+    SET_USER_FUNC(CreateWindowSurface);
+    SET_USER_FUNC(MoveWindowBits);
+    SET_USER_FUNC(WindowPosChanged);
+    SET_USER_FUNC(SystemParametersInfo);
+    SET_USER_FUNC(WintabProc);
+    SET_USER_FUNC(VulkanInit);
+    SET_USER_FUNC(OpenGLInit);
+    SET_USER_FUNC(ThreadDetach);
+#undef SET_USER_FUNC
+
+    prev = InterlockedCompareExchangePointer( (void **)&user_driver, driver, (void *)&lazy_load_driver );
+    if (prev != &lazy_load_driver)
+    {
+        /* another thread beat us to it */
+        free( driver );
+        driver = prev;
+    }
+}
+
+/******************************************************************************
+ *		NtGdiExtEscape   (win32u.@)
+ *
+ * Access capabilities of a particular device that are not available through GDI.
+ */
+INT WINAPI NtGdiExtEscape( HDC hdc, WCHAR *driver, int driver_id, INT escape, INT input_size,
+                           const char *input, INT output_size, char *output )
+{
+    PHYSDEV physdev;
+    INT ret;
+    DC * dc = get_dc_ptr( hdc );
+
+    if (!dc) return 0;
+    update_dc( dc );
+    physdev = GET_DC_PHYSDEV( dc, pExtEscape );
+    ret = physdev->funcs->pExtEscape( physdev, escape, input_size, input, output_size, output );
+    release_dc_ptr( dc );
+    return ret;
+}
+
+static void nulldrv_surface_destroy( struct client_surface *client )
+{
+}
+
+static void nulldrv_surface_detach( struct client_surface *client )
+{
+}
+
+static void nulldrv_surface_update( struct client_surface *client )
+{
+}
+
+static void nulldrv_surface_present( struct client_surface *client, HDC hdc )
+{
+}
+
+static const struct client_surface_funcs nulldrv_surface_funcs =
+{
+    .destroy = nulldrv_surface_destroy,
+    .detach = nulldrv_surface_detach,
+    .update = nulldrv_surface_update,
+    .present = nulldrv_surface_present,
+};
+
+struct client_surface *nulldrv_client_surface_create( HWND hwnd )
+{
+    return client_surface_create( sizeof(struct client_surface), &nulldrv_surface_funcs, hwnd );
+}
+
+/* ml1920: same-task controller snapshots supplied by the app. */
+#include "../../app/Madeira/Winios/WiniosGamepad.h"
+
+/* Byte-for-byte XINPUT_STATE (a DWORD packet number followed by
+ * XINPUT_GAMEPAD). Not #included from xinput.h: that is a PE-side SDK header
+ * and this is the unix half of win32u. */
+struct ios_xinput_gamepad
+{
+    WORD  buttons;
+    BYTE  left_trigger;
+    BYTE  right_trigger;
+    SHORT thumb_lx, thumb_ly, thumb_rx, thumb_ry;
+};
+
+struct ios_xinput_state
+{
+    DWORD packet_number;
+    struct ios_xinput_gamepad gamepad;
+};
+
+/* Byte-for-byte XINPUT_CAPABILITIES. */
+struct ios_xinput_caps
+{
+    BYTE  type;
+    BYTE  sub_type;
+    WORD  flags;
+    struct ios_xinput_gamepad gamepad;
+    WORD  left_motor_speed, right_motor_speed;
+};
+
+C_ASSERT( sizeof(struct ios_xinput_state) == 16 );
+C_ASSERT( sizeof(struct ios_xinput_caps) == 20 );
+C_ASSERT( sizeof(struct winios_gamepad) == 20 );
+
+/* There is no window manager on iOS, so nothing ever activates a window: a
+ * game's ShowWindow/SetWindowPos calls typically carry SWP_NOACTIVATE, and
+ * GetForegroundWindow() is then not the game's window. A game that ignores
+ * its input unless it is in the foreground (Dark Souls Remastered compares
+ * GetForegroundWindow() with its own window every frame) reads the pad and
+ * drops it.
+ *
+ * Standing in for the window manager: while a process polls XInput and the
+ * foreground window is not one of its own, make its main window (the largest
+ * top-level, non-child window of at least 320x200) foreground and active.
+ * A window of the same process already in front, such as one of its dialogs,
+ * is left alone. Checked at most once a second.
+ * MADEIRA_FOREGROUND_FIX=0 turns this off. */
+static HWND ios_main_window( DWORD pid )
+{
+    HWND *list, best = 0;
+    LONGLONG best_area = 0;
+    UINT dpi = get_thread_dpi();
+    int i;
+
+    if (!(list = list_window_children( 0 ))) return 0;
+    for (i = 0; list[i]; i++)
+    {
+        DWORD wpid = 0, style;
+        LONGLONG area;
+        RECT r;
+
+        if (!get_window_thread( list[i], &wpid ) || wpid != pid) continue;
+        style = get_window_long( list[i], GWL_STYLE );
+        if ((style & (WS_POPUP | WS_CHILD)) == WS_CHILD) continue;
+        /* madeira-bcd: never a hidden window -- its keys would go nowhere, and
+         * a launcher that polls XInput with only hidden windows left (behind
+         * the game it started) must not take the game's foreground. */
+        if (!(style & WS_VISIBLE)) continue;
+        if (!get_window_rect( list[i], &r, dpi )) continue;
+        if (r.right - r.left < 320 || r.bottom - r.top < 200) continue;
+        area = (LONGLONG)(r.right - r.left) * (r.bottom - r.top);
+        if (area > best_area) { best = list[i]; best_area = area; }
+    }
+    free( list );
+    return best;
+}
+
+/* madeira-bcd: NOBODY IN FRONT (opt-in, MADEIRA_INPUT_FOREGROUND=1). Horizon
+ * Zero Dawn on build 471 (2026-10-09 15:01) showed its window "DX12" through
+ * style changes and SetWindowPos with SWP_NOACTIVATE only, and it reads no
+ * XInput (it uses Windows.Gaming.Input), so neither the show rule above nor
+ * ios_foreground_check made it foreground: GetForegroundWindow() stayed NULL
+ * ([swap-win] ... fg=0x0). The wineserver queues WM_INPUT only for the
+ * foreground process (queue_ios.c get_foreground_thread) and sends keys to the
+ * foreground thread's focus, so its language menu got none of the Enter
+ * presses (drv_post_key status 0) and none of the taps. With the switch, while
+ * no window at all is foreground, a wine thread polling its messages or posting
+ * injected input makes its process's main window (ios_main_window: the largest
+ * visible top-level window of 320x200 or more) foreground. Never while some
+ * window is foreground, so it cannot take the foreground from another process.
+ * At most every 250 ms. Logs [fg-none] (16 lines). */
+static void ios_foreground_if_none( const char *why )
+{
+    static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+    static long long next_ns;
+    static int enabled = -1;
+    static unsigned int said;
+    DWORD pid = GetCurrentProcessId();
+    HWND main_hwnd;
+    struct timespec ts;
+    long long now;
+    BOOL ok;
+
+    if (enabled < 0)
+    {
+        const char *e = getenv( "MADEIRA_INPUT_FOREGROUND" );  /* 1: while no window is foreground, a process polling messages or posting input makes its main window foreground */
+        enabled = e && e[0] == '1' && !e[1];
+    }
+    if (!enabled || NtUserGetForegroundWindow()) return;
+
+    clock_gettime( CLOCK_MONOTONIC, &ts );
+    now = (long long)ts.tv_sec * 1000000000LL + ts.tv_nsec;
+    if (pthread_mutex_trylock( &lock )) return;
+    if (now < next_ns) { pthread_mutex_unlock( &lock ); return; }
+    next_ns = now + 250000000LL;
+    pthread_mutex_unlock( &lock );
+
+    if (!(main_hwnd = ios_main_window( pid ))) return;
+    ok = set_foreground_window( main_hwnd, FALSE, TRUE );
+    if (__atomic_fetch_add( &said, 1, __ATOMIC_RELAXED ) < 16)
+        dprintf( 2, "[fg-none] no window was foreground: made the main window %p of pid %04x foreground "
+                 "on %s, ok=%d (MADEIRA_INPUT_FOREGROUND=1)\n", main_hwnd, (unsigned)pid, why, ok );
+}
+
+static void ios_foreground_check(void)
+{
+    static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+    static long long next_ns;
+    static int enabled = -1, logged;
+    DWORD pid = GetCurrentProcessId(), fg_pid = 0;
+    HWND fg, main_hwnd;
+    struct timespec ts;
+    long long now;
+    BOOL ok;
+
+    if (enabled < 0)
+    {
+        const char *e = getenv( "MADEIRA_FOREGROUND_FIX" );  /* 0: never make the game's main window foreground */
+        enabled = !(e && e[0] == '0' && !e[1]);
+    }
+    if (!enabled) return;
+
+    clock_gettime( CLOCK_MONOTONIC, &ts );
+    now = (long long)ts.tv_sec * 1000000000LL + ts.tv_nsec;
+    if (pthread_mutex_trylock( &lock )) return;
+    if (now < next_ns) { pthread_mutex_unlock( &lock ); return; }
+    next_ns = now + 1000000000LL;
+    pthread_mutex_unlock( &lock );
+
+    if ((fg = NtUserGetForegroundWindow()) && get_window_thread( fg, &fg_pid ) && fg_pid == pid) return;
+    if (!(main_hwnd = ios_main_window( pid ))) return;
+
+    ok = set_foreground_window( main_hwnd, FALSE, TRUE );
+    if (logged < 16)
+    {
+        logged++;
+        dprintf( 2, "[fg] activated main window %p of pid %04x (foreground was %p) ok=%d\n",
+                 main_hwnd, (unsigned)pid, fg, ok );
+    }
+}
+
+/***********************************************************************
+ *           ios_gamepad_query
+ *
+ * The body of NtUserCallTwoParam_GetGamepadState. `index` is the XInput user
+ * index (0-3) and `op` selects the payload; see NtUserGamepadOp_* in
+ * wine/include/ntuser.h. Op 2 (ml2106, NtUserGamepadOp_SetVibration) passes
+ * the game's XINPUT_VIBRATION in from XInputSetState; an xinput that predates
+ * it never sends it. Returns 1 when a pad is connected in that slot and
+ * `buffer` was filled (or read), 0 otherwise — which is also what an upstream,
+ * non-Madeira win32u returns for a code it does not know, so xinput1_3's
+ * runtime probe falls back to the existing HID path.
+ */
+ULONG_PTR ios_gamepad_query( UINT index, UINT op, void *buffer )
+{
+    struct winios_gamepad pad;
+
+    if (!buffer || index >= 4) return 0;
+    if (op == 0 && index == 0) ios_foreground_check();
+    if (!winios_gamepad_get_state( index, &pad )) return 0;
+
+    switch (op)
+    {
+    case 0:   /* NtUserGamepadOp_State */
+    {
+        struct ios_xinput_state *state = buffer;
+
+        state->packet_number        = pad.packet;
+        state->gamepad.buttons      = pad.buttons;
+        state->gamepad.left_trigger  = pad.left_trigger;
+        state->gamepad.right_trigger = pad.right_trigger;
+        state->gamepad.thumb_lx     = pad.lx;
+        state->gamepad.thumb_ly     = pad.ly;
+        state->gamepad.thumb_rx     = pad.rx;
+        state->gamepad.thumb_ry     = pad.ry;
+        return 1;
+    }
+    case 1:   /* NtUserGamepadOp_Caps */
+    {
+        struct ios_xinput_caps *caps = buffer;
+
+        /* XINPUT_DEVTYPE_GAMEPAD / XINPUT_DEVSUBTYPE_GAMEPAD. The `gamepad`
+         * member of XINPUT_CAPABILITIES is not a reading — it is a MASK of
+         * what the device can report, which is why every field is saturated
+         * rather than copied from `pad`. 0xf3ff is every XINPUT_GAMEPAD_* bit
+         * except the two reserved gaps; the thumbs report 16-bit resolution
+         * (low bits clear, as real XInput reports them) and the triggers 8. */
+        caps->type     = 1;
+        caps->sub_type = 1;
+        caps->flags    = 0;
+        caps->gamepad.buttons       = 0xf3ff;
+        caps->gamepad.left_trigger  = 0xff;
+        caps->gamepad.right_trigger = 0xff;
+        caps->gamepad.thumb_lx = caps->gamepad.thumb_ly = (SHORT)0xffc0;
+        caps->gamepad.thumb_rx = caps->gamepad.thumb_ry = (SHORT)0xffc0;
+        /* ml2106: motors only while the app applies XInput rumble
+         * (env.MADEIRA_PAD_OUTPUT); 0xff is what a wired Xbox pad reports. */
+        caps->left_motor_speed = caps->right_motor_speed = winios_gamepad_rumble_caps() ? 0xff : 0;
+        return 1;
+    }
+    case 2:   /* ml2106 NtUserGamepadOp_SetVibration: XINPUT_VIBRATION (4 bytes, in) */
+    {
+        const WORD *motors = buffer;
+
+        winios_gamepad_set_vibration( index, motors[0], motors[1] );
+        return 1;
+    }
+    default:
+        return 0;
+    }
+}

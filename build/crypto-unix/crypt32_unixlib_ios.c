@@ -1,0 +1,1080 @@
+/*
+ * Copyright 2019 Hans Leidekker for CodeWeavers
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ */
+
+#if 0
+#pragma makedep unix
+#endif
+
+#include "config.h"
+
+#include <stdarg.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <dlfcn.h>
+#include <sys/stat.h>
+/* iOS-Madeira: SecTrustSettingsCopyCertificates / SecItemExport are
+ * macOS-only — the iOS SDK has no API to enumerate system root CAs at
+ * all. We ship Mozilla's CA bundle (cacert.pem) in the app instead;
+ * see load_root_certs below. */
+#if defined(__APPLE__) && !defined(WINE_IOS)
+#include <Security/Security.h>
+#endif
+#ifdef SONAME_LIBGNUTLS
+#include <gnutls/pkcs12.h>
+#endif
+
+#include "ntstatus.h"
+#include "windef.h"
+#include "winbase.h"
+#include "winternl.h"
+#include "wincrypt.h"
+#include "crypt32_private.h"
+#include "wine/debug.h"
+
+WINE_DEFAULT_DEBUG_CHANNEL(crypt);
+
+#ifdef SONAME_LIBGNUTLS
+
+WINE_DECLARE_DEBUG_CHANNEL(winediag);
+
+int gnutls_x509_privkey_get_pk_algorithm2(gnutls_x509_privkey_t, unsigned int*);
+
+static void *libgnutls_handle;
+#define MAKE_FUNCPTR(f) static typeof(f) * p##f
+MAKE_FUNCPTR(gnutls_global_deinit);
+MAKE_FUNCPTR(gnutls_global_init);
+MAKE_FUNCPTR(gnutls_global_set_log_function);
+MAKE_FUNCPTR(gnutls_global_set_log_level);
+MAKE_FUNCPTR(gnutls_perror);
+MAKE_FUNCPTR(gnutls_pkcs12_bag_decrypt);
+MAKE_FUNCPTR(gnutls_pkcs12_bag_deinit);
+MAKE_FUNCPTR(gnutls_pkcs12_bag_get_count);
+MAKE_FUNCPTR(gnutls_pkcs12_bag_get_data);
+MAKE_FUNCPTR(gnutls_pkcs12_bag_get_type);
+MAKE_FUNCPTR(gnutls_pkcs12_bag_init);
+MAKE_FUNCPTR(gnutls_pkcs12_deinit);
+MAKE_FUNCPTR(gnutls_pkcs12_get_bag);
+MAKE_FUNCPTR(gnutls_pkcs12_import);
+MAKE_FUNCPTR(gnutls_pkcs12_init);
+MAKE_FUNCPTR(gnutls_pkcs12_verify_mac);
+MAKE_FUNCPTR(gnutls_x509_crt_deinit);
+MAKE_FUNCPTR(gnutls_x509_crt_export);
+MAKE_FUNCPTR(gnutls_x509_crt_import);
+MAKE_FUNCPTR(gnutls_x509_crt_init);
+MAKE_FUNCPTR(gnutls_x509_privkey_deinit);
+MAKE_FUNCPTR(gnutls_x509_privkey_export_rsa_raw2);
+MAKE_FUNCPTR(gnutls_x509_privkey_get_pk_algorithm2);
+MAKE_FUNCPTR(gnutls_x509_privkey_import_pkcs8);
+MAKE_FUNCPTR(gnutls_x509_privkey_init);
+#undef MAKE_FUNCPTR
+
+static void gnutls_log( int level, const char *msg )
+{
+    TRACE( "<%d> %s", level, msg );
+}
+
+static NTSTATUS process_attach( void *args )
+{
+    const char *env_str;
+    int ret;
+
+    if ((env_str = getenv("GNUTLS_SYSTEM_PRIORITY_FILE")))
+    {
+        WARN("GNUTLS_SYSTEM_PRIORITY_FILE is %s.\n", debugstr_a(env_str));
+    }
+    else
+    {
+        WARN("Setting GNUTLS_SYSTEM_PRIORITY_FILE to \"/dev/null\".\n");
+        setenv("GNUTLS_SYSTEM_PRIORITY_FILE", "/dev/null", 0);
+    }
+
+    if (!(libgnutls_handle = dlopen( SONAME_LIBGNUTLS, RTLD_NOW )))
+    {
+        ERR_(winediag)( "failed to load libgnutls, no support for pfx import/export\n" );
+        return STATUS_DLL_NOT_FOUND;
+    }
+
+#define LOAD_FUNCPTR(f) \
+    if (!(p##f = dlsym( libgnutls_handle, #f ))) \
+    { \
+        ERR( "failed to load %s\n", #f ); \
+        goto fail; \
+    }
+
+    LOAD_FUNCPTR(gnutls_global_deinit)
+    LOAD_FUNCPTR(gnutls_global_init)
+    LOAD_FUNCPTR(gnutls_global_set_log_function)
+    LOAD_FUNCPTR(gnutls_global_set_log_level)
+    LOAD_FUNCPTR(gnutls_perror)
+    LOAD_FUNCPTR(gnutls_pkcs12_bag_decrypt)
+    LOAD_FUNCPTR(gnutls_pkcs12_bag_deinit)
+    LOAD_FUNCPTR(gnutls_pkcs12_bag_get_count)
+    LOAD_FUNCPTR(gnutls_pkcs12_bag_get_data)
+    LOAD_FUNCPTR(gnutls_pkcs12_bag_get_type)
+    LOAD_FUNCPTR(gnutls_pkcs12_bag_init)
+    LOAD_FUNCPTR(gnutls_pkcs12_deinit)
+    LOAD_FUNCPTR(gnutls_pkcs12_get_bag)
+    LOAD_FUNCPTR(gnutls_pkcs12_import)
+    LOAD_FUNCPTR(gnutls_pkcs12_init)
+    LOAD_FUNCPTR(gnutls_pkcs12_verify_mac)
+    LOAD_FUNCPTR(gnutls_x509_crt_deinit)
+    LOAD_FUNCPTR(gnutls_x509_crt_export)
+    LOAD_FUNCPTR(gnutls_x509_crt_import)
+    LOAD_FUNCPTR(gnutls_x509_crt_init)
+    LOAD_FUNCPTR(gnutls_x509_privkey_deinit)
+    LOAD_FUNCPTR(gnutls_x509_privkey_export_rsa_raw2)
+    LOAD_FUNCPTR(gnutls_x509_privkey_get_pk_algorithm2)
+    LOAD_FUNCPTR(gnutls_x509_privkey_import_pkcs8)
+    LOAD_FUNCPTR(gnutls_x509_privkey_init)
+#undef LOAD_FUNCPTR
+
+    if ((ret = pgnutls_global_init()) != GNUTLS_E_SUCCESS)
+    {
+        pgnutls_perror( ret );
+        goto fail;
+    }
+
+    if (TRACE_ON( crypt ))
+    {
+        char *env = getenv("GNUTLS_DEBUG_LEVEL");
+        int level = env ? atoi(env) : 4;
+        pgnutls_global_set_log_level(level);
+        pgnutls_global_set_log_function( gnutls_log );
+    }
+
+    return TRUE;
+
+fail:
+    dlclose( libgnutls_handle );
+    libgnutls_handle = NULL;
+    return STATUS_DLL_INIT_FAILED;
+}
+
+static NTSTATUS process_detach( void *args )
+{
+    if (libgnutls_handle)
+    {
+        if (TRACE_ON( crypt ))
+            pgnutls_global_set_log_function( NULL );
+        pgnutls_global_deinit();
+        dlclose( libgnutls_handle );
+        libgnutls_handle = NULL;
+    }
+    return STATUS_SUCCESS;
+}
+#define RSA_MAGIC_KEY  ('R' | ('S' << 8) | ('A' << 16) | ('2' << 24))
+#define RSA_PUBEXP     65537
+
+struct cert_store_data
+{
+    gnutls_pkcs12_t p12;
+    gnutls_x509_privkey_t key;
+    gnutls_x509_crt_t *chain;
+    unsigned int key_bitlen;
+    unsigned int chain_len;
+};
+
+static struct cert_store_data *get_store_data( cert_store_data_t data )
+{
+    return (struct cert_store_data *)(ULONG_PTR)data;
+}
+
+static NTSTATUS import_store_key( void *args )
+{
+    struct import_store_key_params *params = args;
+    struct cert_store_data *data = get_store_data( params->data );
+    int i, ret;
+    unsigned int bitlen;
+    gnutls_datum_t m, e, d, p, q, u, e1, e2;
+    BLOBHEADER *hdr;
+    RSAPUBKEY *rsakey;
+    BYTE *src, *dst;
+    DWORD size;
+
+    if (!data->key) return STATUS_NOT_FOUND;
+    bitlen = data->key_bitlen;
+
+    size = sizeof(*hdr) + sizeof(*rsakey) + (bitlen * 9 / 16);
+    if (!params->buf || *params->buf_size < size)
+    {
+        *params->buf_size = size;
+        return STATUS_BUFFER_TOO_SMALL;
+    }
+
+    if ((ret = pgnutls_x509_privkey_export_rsa_raw2( data->key, &m, &e, &d, &p, &q, &u, &e1, &e2 )) < 0)
+    {
+        pgnutls_perror( ret );
+        return STATUS_INVALID_PARAMETER;
+    }
+
+    hdr = params->buf;
+    hdr->bType    = PRIVATEKEYBLOB;
+    hdr->bVersion = CUR_BLOB_VERSION;
+    hdr->reserved = 0;
+    hdr->aiKeyAlg = CALG_RSA_KEYX;
+
+    rsakey = (RSAPUBKEY *)(hdr + 1);
+    rsakey->magic  = RSA_MAGIC_KEY;
+    rsakey->bitlen = bitlen;
+    rsakey->pubexp = RSA_PUBEXP;
+
+    dst = (BYTE *)(rsakey + 1);
+    if (m.size == bitlen / 8 + 1 && !m.data[0]) src = m.data + 1;
+    else if (m.size != bitlen / 8) goto done;
+    else src = m.data;
+    for (i = bitlen / 8 - 1; i >= 0; i--) *dst++ = src[i];
+
+    if (p.size == bitlen / 16 + 1 && !p.data[0]) src = p.data + 1;
+    else if (p.size != bitlen / 16) goto done;
+    else src = p.data;
+    for (i = bitlen / 16 - 1; i >= 0; i--) *dst++ = src[i];
+
+    if (q.size == bitlen / 16 + 1 && !q.data[0]) src = q.data + 1;
+    else if (q.size != bitlen / 16) goto done;
+    else src = q.data;
+    for (i = bitlen / 16 - 1; i >= 0; i--) *dst++ = src[i];
+
+    if (e1.size == bitlen / 16 + 1 && !e1.data[0]) src = e1.data + 1;
+    else if (e1.size != bitlen / 16) goto done;
+    else src = e1.data;
+    for (i = bitlen / 16 - 1; i >= 0; i--) *dst++ = src[i];
+
+    if (e2.size == bitlen / 16 + 1 && !e2.data[0]) src = e2.data + 1;
+    else if (e2.size != bitlen / 16) goto done;
+    else src = e2.data;
+    for (i = bitlen / 16 - 1; i >= 0; i--) *dst++ = src[i];
+
+    if (u.size == bitlen / 16 + 1 && !u.data[0]) src = u.data + 1;
+    else if (u.size != bitlen / 16) goto done;
+    else src = u.data;
+    for (i = bitlen / 16 - 1; i >= 0; i--) *dst++ = src[i];
+
+    if (d.size == bitlen / 8 + 1 && !d.data[0]) src = d.data + 1;
+    else if (d.size != bitlen / 8) goto done;
+    else src = d.data;
+    for (i = bitlen / 8 - 1; i >= 0; i--) *dst++ = src[i];
+
+done:
+    free( m.data );
+    free( e.data );
+    free( d.data );
+    free( p.data );
+    free( q.data );
+    free( u.data );
+    free( e1.data );
+    free( e2.data );
+    return STATUS_SUCCESS;
+}
+
+static char *password_to_ascii( const WCHAR *str )
+{
+    char *ret;
+    unsigned int i = 0;
+
+    if (!(ret = malloc( (lstrlenW(str) + 1) * sizeof(*ret) ))) return NULL;
+    while (*str)
+    {
+        if (*str > 0x7f) WARN( "password contains non-ascii characters\n" );
+        ret[i++] = *str++;
+    }
+    ret[i] = 0;
+    return ret;
+}
+
+static int parse_bag_datum( gnutls_pkcs12_bag_t bag, unsigned int index, const char *pwd,
+        gnutls_x509_crt_t *certs, unsigned int *cert_count,
+        gnutls_x509_privkey_t *key )
+{
+    gnutls_datum_t data;
+    int type = pgnutls_pkcs12_bag_get_type( bag, index );
+
+    if (pgnutls_pkcs12_bag_get_data( bag, index, &data ) < 0) return -1;
+
+    switch (type)
+    {
+    case GNUTLS_BAG_CERTIFICATE:
+    {
+        gnutls_x509_crt_t crt;
+
+        if (pgnutls_x509_crt_init( &crt ) < 0) return -1;
+        if (pgnutls_x509_crt_import( crt, &data, GNUTLS_X509_FMT_DER ) < 0)
+        {
+            pgnutls_x509_crt_deinit( crt );
+            return -1;
+        }
+        certs[(*cert_count)++] = crt;
+        break;
+    }
+    case GNUTLS_BAG_PKCS8_ENCRYPTED_KEY:
+    case GNUTLS_BAG_PKCS8_KEY:
+        if (*key) break; /* already found a key */
+        if (pgnutls_x509_privkey_init( key ) < 0) return -1;
+        if (pgnutls_x509_privkey_import_pkcs8( *key, &data, GNUTLS_X509_FMT_DER, pwd,
+                type == GNUTLS_BAG_PKCS8_KEY ? GNUTLS_PKCS_PLAIN : 0 ) < 0)
+        {
+            pgnutls_x509_privkey_deinit( *key );
+            *key = NULL;
+            return -1;
+        }
+        break;
+    }
+    return 0;
+}
+
+static int parse_pkcs12_bag( gnutls_pkcs12_t p12, unsigned int index, const char *pwd,
+        gnutls_x509_crt_t *certs, unsigned int *cert_count,
+        gnutls_x509_privkey_t *key )
+{
+    gnutls_pkcs12_bag_t bag;
+    unsigned int j, bag_count;
+    int ret = -1;
+
+    if (pgnutls_pkcs12_bag_init( &bag ) < 0) return -1;
+    if (pgnutls_pkcs12_get_bag( p12, index, bag ) < 0) goto done;
+
+    if (pgnutls_pkcs12_bag_get_type( bag, 0 ) == GNUTLS_BAG_ENCRYPTED
+        && pgnutls_pkcs12_bag_decrypt( bag, pwd ) < 0)
+        goto done;
+
+    bag_count = pgnutls_pkcs12_bag_get_count( bag );
+    for (j = 0; j < bag_count; j++)
+        if (parse_bag_datum( bag, j, pwd, certs, cert_count, key ) < 0) goto done;
+
+    ret = 0;
+done:
+    pgnutls_pkcs12_bag_deinit( bag );
+    return ret;
+}
+
+static NTSTATUS parse_pkcs12_bags( gnutls_pkcs12_t p12, const char *pwd,
+        gnutls_x509_crt_t **certs_ret, unsigned int *cert_count_ret,
+        gnutls_x509_privkey_t *key_ret )
+{
+    gnutls_x509_privkey_t key = NULL;
+    gnutls_x509_crt_t *certs = NULL;
+    unsigned int i, bag_count, total_items = 0, cert_count = 0;
+    NTSTATUS status = STATUS_INVALID_PARAMETER;
+
+    for (i = 0; ; i++)
+    {
+        gnutls_pkcs12_bag_t bag;
+        int count;
+
+        if (pgnutls_pkcs12_bag_init( &bag ) < 0) goto error;
+        if (pgnutls_pkcs12_get_bag( p12, i, bag ) < 0)
+        {
+            pgnutls_pkcs12_bag_deinit( bag );
+            break;
+        }
+        if (pgnutls_pkcs12_bag_get_type( bag, 0 ) == GNUTLS_BAG_ENCRYPTED
+            && pgnutls_pkcs12_bag_decrypt( bag, pwd ) < 0)
+        {
+            pgnutls_pkcs12_bag_deinit( bag );
+            goto error;
+        }
+
+        count = pgnutls_pkcs12_bag_get_count( bag );
+        pgnutls_pkcs12_bag_deinit( bag );
+        if (count < 0) goto error;
+        total_items += count;
+    }
+    bag_count = i;
+
+    if (!total_items) goto error;
+    if (!(certs = malloc( total_items * sizeof(*certs) )))
+    {
+        status = STATUS_NO_MEMORY;
+        goto error;
+    }
+
+    for (i = 0; i < bag_count; i++)
+        if (parse_pkcs12_bag( p12, i, pwd, certs, &cert_count, &key ) < 0) goto error;
+
+    if (!cert_count) goto error;
+
+    *certs_ret = certs;
+    *cert_count_ret = cert_count;
+    *key_ret = key;
+    return STATUS_SUCCESS;
+
+error:
+    for (i = 0; i < cert_count; i++) pgnutls_x509_crt_deinit( certs[i] );
+    free( certs );
+    if (key) pgnutls_x509_privkey_deinit( key );
+    return status;
+}
+
+static NTSTATUS open_cert_store( void *args )
+{
+    struct open_cert_store_params *params = args;
+    gnutls_pkcs12_t p12 = NULL;
+    gnutls_datum_t pfx_data;
+    gnutls_x509_privkey_t key = NULL;
+    gnutls_x509_crt_t *certs = NULL;
+    unsigned int i, cert_count = 0, bitlen;
+    char *pwd = NULL;
+    NTSTATUS status;
+    int ret;
+    struct cert_store_data *store_data;
+
+    if (!libgnutls_handle) return STATUS_DLL_NOT_FOUND;
+    if (params->password && !(pwd = password_to_ascii( params->password ))) return STATUS_NO_MEMORY;
+
+    if ((ret = pgnutls_pkcs12_init( &p12 )) < 0) goto error;
+
+    pfx_data.data = params->pfx->pbData;
+    pfx_data.size = params->pfx->cbData;
+    if ((ret = pgnutls_pkcs12_import( p12, &pfx_data, GNUTLS_X509_FMT_DER, 0 )) < 0) goto error;
+    if ((ret = pgnutls_pkcs12_verify_mac( p12, pwd ? pwd : "" )) < 0) goto error;
+
+    status = parse_pkcs12_bags( p12, pwd ? pwd : "", &certs, &cert_count, &key );
+    if (status)
+        goto done;
+
+    if (key)
+    {
+        if ((ret = pgnutls_x509_privkey_get_pk_algorithm2( key, &bitlen )) < 0) goto error;
+
+        if (ret != GNUTLS_PK_RSA)
+        {
+            FIXME( "key algorithm %u not supported\n", ret );
+            status = STATUS_INVALID_PARAMETER;
+            goto done;
+        }
+    }
+
+    store_data = malloc( sizeof(*store_data) );
+    store_data->p12 = p12;
+    store_data->key = key;
+    store_data->chain = certs;
+    store_data->key_bitlen = key ? bitlen : 0;
+    store_data->chain_len = cert_count;
+
+    free( pwd );
+    *params->data_ret = (ULONG_PTR)store_data;
+    *params->key_count_ret = key ? 1 : 0;
+    return STATUS_SUCCESS;
+
+error:
+    pgnutls_perror( ret );
+    status = STATUS_INVALID_PARAMETER;
+done:
+    for (i = 0; i < cert_count; i++) pgnutls_x509_crt_deinit( certs[i] );
+    free( certs );
+    if (key) pgnutls_x509_privkey_deinit( key );
+    if (p12) pgnutls_pkcs12_deinit( p12 );
+    free( pwd );
+    return status;
+}
+
+static NTSTATUS import_store_cert( void *args )
+{
+    struct import_store_cert_params *params = args;
+    struct cert_store_data *data = get_store_data( params->data );
+    size_t size = 0;
+    int ret;
+
+    if (params->index >= data->chain_len) return STATUS_NO_MORE_ENTRIES;
+
+    if ((ret = pgnutls_x509_crt_export( data->chain[params->index], GNUTLS_X509_FMT_DER, NULL, &size )) != GNUTLS_E_SHORT_MEMORY_BUFFER)
+        return STATUS_INVALID_PARAMETER;
+
+    if (!params->buf || *params->buf_size < size)
+    {
+        *params->buf_size = size;
+        return STATUS_BUFFER_TOO_SMALL;
+    }
+    if ((ret = pgnutls_x509_crt_export( data->chain[params->index], GNUTLS_X509_FMT_DER, params->buf, &size )) < 0)
+        return STATUS_INVALID_PARAMETER;
+
+    return STATUS_SUCCESS;
+}
+
+static NTSTATUS close_cert_store( void *args )
+{
+    struct close_cert_store_params *params = args;
+    struct cert_store_data *data = get_store_data( params->data );
+
+    if (params->data)
+    {
+        unsigned int i;
+        for (i = 0; i < data->chain_len; i++)
+            pgnutls_x509_crt_deinit( data->chain[i] );
+        free( data->chain );
+        if (data->key) pgnutls_x509_privkey_deinit( data->key );
+        pgnutls_pkcs12_deinit( data->p12 );
+        free( data );
+    }
+    return STATUS_SUCCESS;
+}
+
+#else /* SONAME_LIBGNUTLS */
+
+static NTSTATUS process_attach( void *args ) { return STATUS_SUCCESS; }
+static NTSTATUS process_detach( void *args ) { return STATUS_SUCCESS; }
+static NTSTATUS open_cert_store( void *args ) { return STATUS_DLL_NOT_FOUND; }
+static NTSTATUS import_store_key( void *args ) { return STATUS_DLL_NOT_FOUND; }
+static NTSTATUS import_store_cert( void *args ) { return STATUS_DLL_NOT_FOUND; }
+static NTSTATUS close_cert_store( void *args ) { return STATUS_DLL_NOT_FOUND; }
+
+#endif /* SONAME_LIBGNUTLS */
+
+struct root_cert
+{
+    struct list entry;
+    SIZE_T      size;
+    BYTE        data[1];
+};
+
+static struct list root_cert_list = LIST_INIT(root_cert_list);
+
+static BYTE *add_cert( SIZE_T size )
+{
+    struct root_cert *cert = malloc( offsetof( struct root_cert, data[size] ));
+
+    if (!cert) return NULL;
+    cert->size = size;
+    list_add_tail( &root_cert_list, &cert->entry );
+    return cert->data;
+}
+
+struct DynamicBuffer
+{
+    DWORD allocated;
+    DWORD used;
+    char *data;
+};
+
+static inline void reset_buffer(struct DynamicBuffer *buffer)
+{
+    buffer->used = 0;
+    if (buffer->data) buffer->data[0] = 0;
+}
+
+static void add_line_to_buffer(struct DynamicBuffer *buffer, LPCSTR line)
+{
+    if (buffer->used + strlen(line) + 1 > buffer->allocated)
+    {
+        DWORD new_size = max( max( buffer->allocated * 2, 1024 ), buffer->used + strlen(line) + 1 );
+        void *ptr = realloc( buffer->data, new_size );
+        if (!ptr) return;
+        buffer->data = ptr;
+        buffer->allocated = new_size;
+        if (!buffer->used) buffer->data[0] = 0;
+    }
+    strcpy( buffer->data + buffer->used, line );
+    buffer->used += strlen(line);
+}
+
+#define BASE64_DECODE_PADDING    0x100
+#define BASE64_DECODE_WHITESPACE 0x200
+#define BASE64_DECODE_INVALID    0x300
+
+static inline int decodeBase64Byte(char c)
+{
+    int ret = BASE64_DECODE_INVALID;
+
+    if (c >= 'A' && c <= 'Z')
+        ret = c - 'A';
+    else if (c >= 'a' && c <= 'z')
+        ret = c - 'a' + 26;
+    else if (c >= '0' && c <= '9')
+        ret = c - '0' + 52;
+    else if (c == '+')
+        ret = 62;
+    else if (c == '/')
+        ret = 63;
+    else if (c == '=')
+        ret = BASE64_DECODE_PADDING;
+    else if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+        ret = BASE64_DECODE_WHITESPACE;
+    return ret;
+}
+
+static BOOL base64_to_cert( const char *str )
+{
+    DWORD i, valid, out, hasPadding;
+    BYTE block[4], *data;
+
+    for (i = valid = out = hasPadding = 0; str[i]; i++)
+    {
+        int d = decodeBase64Byte( str[i] );
+        if (d == BASE64_DECODE_INVALID) return FALSE;
+        if (d == BASE64_DECODE_WHITESPACE) continue;
+
+        /* When padding starts, data is not acceptable */
+        if (hasPadding && d != BASE64_DECODE_PADDING) return FALSE;
+
+        /* Padding after a full block (like "VVVV=") is ok and stops decoding */
+        if (d == BASE64_DECODE_PADDING && (valid & 3) == 0) break;
+
+        valid++;
+        if (d == BASE64_DECODE_PADDING)
+        {
+            hasPadding = 1;
+            /* When padding reaches a full block, stop decoding */
+            if ((valid & 3) == 0) break;
+            continue;
+        }
+
+        /* out is incremented in the 4-char block as follows: "1-23" */
+        if ((valid & 3) != 2) out++;
+    }
+    /* Fail if the block has bad padding; omitting padding is fine */
+    if ((valid & 3) != 0 && hasPadding) return FALSE;
+
+    if (!(data = add_cert( out ))) return FALSE;
+    for (i = valid = out = 0; str[i]; i++)
+    {
+        int d = decodeBase64Byte( str[i] );
+        if (d == BASE64_DECODE_WHITESPACE) continue;
+        if (d == BASE64_DECODE_PADDING) break;
+        block[valid & 3] = d;
+        valid += 1;
+        switch (valid & 3)
+        {
+        case 1:
+            data[out++] = (block[0] << 2);
+            break;
+        case 2:
+            data[out-1] = (block[0] << 2) | (block[1] >> 4);
+            break;
+        case 3:
+            data[out++] = (block[1] << 4) | (block[2] >> 2);
+            break;
+        case 0:
+            data[out++] = (block[2] << 6) | (block[3] >> 0);
+            break;
+        }
+    }
+    return TRUE;
+}
+
+/* Reads the file fd, and imports any certificates in it into store. */
+static void import_certs_from_file( int fd )
+{
+    FILE *fp = fdopen(fd, "r");
+    char line[1024];
+    BOOL in_cert = FALSE;
+    struct DynamicBuffer saved_cert = { 0, 0, NULL };
+    int num_certs = 0;
+
+    if (!fp) return;
+    TRACE("\n");
+    while (fgets(line, sizeof(line), fp))
+    {
+        static const char header[] = "-----BEGIN CERTIFICATE-----";
+        static const char trailer[] = "-----END CERTIFICATE-----";
+
+        if (!strncmp(line, header, strlen(header)))
+        {
+            TRACE("begin new certificate\n");
+            in_cert = TRUE;
+            reset_buffer(&saved_cert);
+        }
+        else if (!strncmp(line, trailer, strlen(trailer)))
+        {
+            TRACE("end of certificate, adding cert\n");
+            in_cert = FALSE;
+            if (base64_to_cert( saved_cert.data )) num_certs++;
+        }
+        else if (in_cert) add_line_to_buffer(&saved_cert, line);
+    }
+    free( saved_cert.data );
+    TRACE("Read %d certs\n", num_certs);
+    fclose(fp);
+}
+
+static void import_certs_from_path(LPCSTR path, BOOL allow_dir);
+
+static BOOL check_buffer_resize(char **ptr_buf, size_t *buf_size, size_t check_size)
+{
+    if (check_size > *buf_size)
+    {
+        void *ptr = realloc(*ptr_buf, check_size);
+
+        if (!ptr) return FALSE;
+        *buf_size = check_size;
+        *ptr_buf = ptr;
+    }
+    return TRUE;
+}
+
+/* Opens path, which must be a directory, and imports certificates from every
+ * file in the directory into store.
+ * Returns TRUE if any certificates were successfully imported.
+ */
+static void import_certs_from_dir( LPCSTR path )
+{
+    DIR *dir;
+
+    dir = opendir(path);
+    if (dir)
+    {
+        size_t path_len = strlen(path), bufsize = 0;
+        char *filebuf = NULL;
+
+        struct dirent *entry;
+        while ((entry = readdir(dir)))
+        {
+            if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, ".."))
+            {
+                size_t name_len = strlen(entry->d_name);
+
+                if (!check_buffer_resize(&filebuf, &bufsize, path_len + 1 + name_len + 1)) break;
+                snprintf(filebuf, bufsize, "%s/%s", path, entry->d_name);
+                import_certs_from_path(filebuf, FALSE);
+            }
+        }
+        free(filebuf);
+        closedir(dir);
+    }
+}
+
+/* Opens path, which may be a file or a directory, and imports any certificates
+ * it finds into store.
+ * Returns TRUE if any certificates were successfully imported.
+ */
+static void import_certs_from_path(LPCSTR path, BOOL allow_dir)
+{
+    int fd;
+
+    TRACE("(%s, %d)\n", debugstr_a(path), allow_dir);
+
+    fd = open(path, O_RDONLY);
+    if (fd != -1)
+    {
+        struct stat st;
+
+        if (fstat(fd, &st) == 0)
+        {
+            if (S_ISREG(st.st_mode))
+                import_certs_from_file(fd);
+            else if (S_ISDIR(st.st_mode))
+            {
+                if (allow_dir)
+                    import_certs_from_dir(path);
+                else
+                    WARN("%s is a directory and directories are disallowed\n",
+                     debugstr_a(path));
+            }
+            else
+                ERR("%s: invalid file type\n", path);
+        }
+        close(fd);
+    }
+}
+
+static const char * const CRYPT_knownLocations[] = {
+ "/etc/ssl/certs/ca-certificates.crt",
+ "/etc/ssl/certs",
+ "/etc/pki/tls/certs/ca-bundle.crt",
+ "/usr/share/ca-certificates/ca-bundle.crt",
+ "/usr/local/share/certs/",
+ "/etc/sfw/openssl/certs",
+ "/etc/security/cacerts",  /* Android */
+};
+
+static void load_root_certs(void)
+{
+    unsigned int i;
+
+#ifdef WINE_IOS
+    /* iOS-Madeira: no system root store API on iOS. WineProcessBridge.m
+     * points MADEIRA_CA_BUNDLE at the bundled Mozilla cacert.pem
+     * (concatenated PEM — same format as ca-certificates.crt, which
+     * import_certs_from_file already parses). */
+    const char *bundle = getenv( "MADEIRA_CA_BUNDLE" );
+    dprintf(2, "[crypt32-ios] load_root_certs: MADEIRA_CA_BUNDLE=%s\n",
+            bundle ? bundle : "(NULL!)");  /* Steam S0 diag */
+    if (bundle) import_certs_from_path( bundle, FALSE );
+    {
+        struct list *c;
+        int n = 0;
+        LIST_FOR_EACH( c, &root_cert_list ) n++;
+        dprintf(2, "[crypt32-ios] load_root_certs: %d root certs imported\n", n);  /* Steam S0 diag */
+    }
+#endif
+
+#if defined(__APPLE__) && !defined(WINE_IOS)
+    const SecTrustSettingsDomain domains[] = {
+        kSecTrustSettingsDomainSystem,
+        kSecTrustSettingsDomainAdmin,
+        kSecTrustSettingsDomainUser
+    };
+    OSStatus status;
+    CFArrayRef certs;
+    DWORD domain;
+
+    for (domain = 0; domain < ARRAY_SIZE(domains); domain++)
+    {
+        status = SecTrustSettingsCopyCertificates(domains[domain], &certs);
+        if (status == noErr)
+        {
+            for (i = 0; i < CFArrayGetCount(certs); i++)
+            {
+                SecCertificateRef cert = (SecCertificateRef)CFArrayGetValueAtIndex(certs, i);
+                CFDataRef certData;
+                if ((status = SecItemExport(cert, kSecFormatX509Cert, 0, NULL, &certData)) == noErr)
+                {
+                    BYTE *data = add_cert( CFDataGetLength(certData) );
+                    if (data) memcpy( data, CFDataGetBytePtr(certData), CFDataGetLength(certData) );
+                    CFRelease(certData);
+                }
+                else
+                    WARN("could not export certificate %u to X509 format: 0x%08x\n", i, (unsigned int)status);
+            }
+            CFRelease(certs);
+        }
+    }
+#endif
+
+    for (i = 0; i < ARRAY_SIZE(CRYPT_knownLocations) && list_empty(&root_cert_list); i++)
+        import_certs_from_path( CRYPT_knownLocations[i], TRUE );
+}
+
+/* On iOS this one unix side serves every pseudo-process of the session.  A
+ * 32-bit process's root store import must not consume the list another
+ * process is still importing from, so a WoW64 caller enumerates with a
+ * per-thread position instead (ios_enum_root_certs_wow).  The lock serialises
+ * the one-time load and every walk or removal of the list. */
+#include <pthread.h>
+#include <stdint.h>
+#include <time.h>
+static pthread_mutex_t ios_root_lock = PTHREAD_MUTEX_INITIALIZER;
+static BOOL ios_roots_loaded;
+
+static void ios_load_roots_locked(void)
+{
+    if (!ios_roots_loaded) load_root_certs();
+    ios_roots_loaded = TRUE;
+}
+
+static NTSTATUS enum_root_certs( void *args )
+{
+    struct enum_root_certs_params *params = args;
+    struct list *ptr;
+    struct root_cert *cert;
+    NTSTATUS status = STATUS_SUCCESS;
+
+    pthread_mutex_lock( &ios_root_lock );
+    ios_load_roots_locked();
+
+    if (!(ptr = list_head( &root_cert_list ))) status = STATUS_NO_MORE_ENTRIES;
+    else
+    {
+        cert = LIST_ENTRY( ptr, struct root_cert, entry );
+        *params->needed = cert->size;
+        if (cert->size <= params->size)
+        {
+            memcpy( params->buffer, cert->data, cert->size );
+            list_remove( &cert->entry );
+            free( cert );
+        }
+    }
+    pthread_mutex_unlock( &ios_root_lock );
+    return status;
+}
+
+/* The WoW64 enumeration: each thread keeps its own position; the rootstore
+ * loop runs on one thread and asks again for the same certificate after
+ * growing its buffer, so the position advances only when one was copied.  The
+ * position is dropped at the end of the list and restarted after 10 s idle. */
+#define IOS_ROOT_CURSORS 32
+static struct { uintptr_t thread; unsigned int index; unsigned long long stamp; } ios_root_cursor[IOS_ROOT_CURSORS];
+
+static unsigned long long ios_root_now_ms(void)
+{
+    struct timespec ts;
+    clock_gettime( CLOCK_MONOTONIC, &ts );
+    return (unsigned long long)ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
+}
+
+static NTSTATUS ios_enum_root_certs_wow( struct enum_root_certs_params *params )
+{
+    uintptr_t self = (uintptr_t)pthread_self();
+    unsigned long long now = ios_root_now_ms();
+    unsigned int i, slot = IOS_ROOT_CURSORS, oldest = 0, n = 0;
+    struct list *ptr;
+    NTSTATUS status;
+
+    pthread_mutex_lock( &ios_root_lock );
+    ios_load_roots_locked();
+    for (i = 0; i < IOS_ROOT_CURSORS; i++)
+    {
+        if (ios_root_cursor[i].thread == self) { slot = i; break; }
+        if (ios_root_cursor[i].stamp < ios_root_cursor[oldest].stamp) oldest = i;
+    }
+    if (slot == IOS_ROOT_CURSORS)
+    {
+        slot = oldest;
+        ios_root_cursor[slot].thread = self;
+        ios_root_cursor[slot].index = 0;
+    }
+    else if (now - ios_root_cursor[slot].stamp > 10000) ios_root_cursor[slot].index = 0;
+    ios_root_cursor[slot].stamp = now;
+
+    LIST_FOR_EACH( ptr, &root_cert_list )
+        if (n++ == ios_root_cursor[slot].index) break;
+    if (ptr == &root_cert_list)
+    {
+        ios_root_cursor[slot].thread = 0;
+        ios_root_cursor[slot].index = 0;
+        ios_root_cursor[slot].stamp = 0;
+        status = STATUS_NO_MORE_ENTRIES;
+    }
+    else
+    {
+        struct root_cert *cert = LIST_ENTRY( ptr, struct root_cert, entry );
+        *params->needed = cert->size;
+        if (cert->size <= params->size)
+        {
+            memcpy( params->buffer, cert->data, cert->size );
+            ios_root_cursor[slot].index++;
+        }
+        status = STATUS_SUCCESS;
+    }
+    pthread_mutex_unlock( &ios_root_lock );
+    return status;
+}
+
+const unixlib_entry_t __wine_unix_call_funcs[] =
+{
+    process_attach,
+    process_detach,
+    open_cert_store,
+    import_store_key,
+    import_store_cert,
+    close_cert_store,
+    enum_root_certs,
+};
+
+C_ASSERT( ARRAYSIZE(__wine_unix_call_funcs) == unix_funcs_count );
+
+#ifdef _WIN64
+/* In every thunk below `args` is already a HOST pointer (the WoW64 module
+ * converts that one outer pointer) but every pointer EMBEDDED in the 32-bit
+ * block is still a GUEST address: ios_wow_host_ptr() is the +B conversion
+ * (NULL-preserving), and plain ULongToPtr off the iOS port. */
+
+typedef ULONG PTR32;
+
+typedef struct
+{
+    DWORD cbData;
+    PTR32 pbData;
+} CRYPT_DATA_BLOB32;
+
+static NTSTATUS wow64_open_cert_store( void *args )
+{
+    struct
+    {
+        PTR32 pfx;
+        PTR32 password;
+        PTR32 data_ret;
+        PTR32 key_count_ret;
+    } const *params32 = args;
+
+    const CRYPT_DATA_BLOB32 *pfx32 = ios_wow_host_ptr( params32->pfx );
+    CRYPT_DATA_BLOB pfx = { pfx32->cbData, ios_wow_host_ptr( pfx32->pbData ) };
+    struct open_cert_store_params params =
+    {
+        &pfx,
+        ios_wow_host_ptr( params32->password ),
+        ios_wow_host_ptr( params32->data_ret ),
+        ios_wow_host_ptr( params32->key_count_ret )
+    };
+
+    return open_cert_store( &params );
+}
+
+static NTSTATUS wow64_import_store_key( void *args )
+{
+    struct
+    {
+        cert_store_data_t data;
+        PTR32 buf;
+        PTR32 buf_size;
+    } const *params32 = args;
+
+    struct import_store_key_params params =
+    {
+        params32->data,
+        ios_wow_host_ptr( params32->buf ),
+        ios_wow_host_ptr( params32->buf_size )
+    };
+
+    return import_store_key( &params );
+}
+
+static NTSTATUS wow64_import_store_cert( void *args )
+{
+    struct
+    {
+        cert_store_data_t data;
+        unsigned int index;
+        PTR32 buf;
+        PTR32 buf_size;
+    } const *params32 = args;
+
+    struct import_store_cert_params params =
+    {
+        params32->data,
+        params32->index,
+        ios_wow_host_ptr( params32->buf ),
+        ios_wow_host_ptr( params32->buf_size )
+    };
+
+    return import_store_cert( &params );
+}
+
+static NTSTATUS wow64_enum_root_certs( void *args )
+{
+    struct
+    {
+        PTR32  buffer;
+        DWORD  size;
+        PTR32  needed;
+    } const *params32 = args;
+
+    struct enum_root_certs_params params =
+    {
+        ios_wow_host_ptr( params32->buffer ),
+        params32->size,
+        ios_wow_host_ptr( params32->needed )
+    };
+
+    return ios_enum_root_certs_wow( &params );
+}
+
+const unixlib_entry_t __wine_unix_call_wow64_funcs[] =
+{
+    process_attach,
+    process_detach,
+    wow64_open_cert_store,
+    wow64_import_store_key,
+    wow64_import_store_cert,
+    close_cert_store,
+    wow64_enum_root_certs,
+};
+
+C_ASSERT( ARRAYSIZE(__wine_unix_call_wow64_funcs) == unix_funcs_count );
+
+#endif  /* _WIN64 */

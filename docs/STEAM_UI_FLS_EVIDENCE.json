@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-23",
+  "build": "14",
+  "hypothesis": "A basic repeated FLS callback or cross-pseudo-process FLS namespace leak could supply an already-released object to a destructor. Test this before any runtime patch.",
+  "expected_contract_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/fibersapi/nf-fibersapi-flsfree",
+    "https://learn.microsoft.com/en-us/windows/win32/api/fibersapi/nf-fibersapi-flsalloc"
+  ],
+  "probe": {
+    "bytes": 96256,
+    "sha256": "72260078b2d188b1db78c625cf5170a72eb9466fa14f25b2bde6e9435af861b9"
+  },
+  "host_executable": {
+    "bytes": 92208,
+    "sha256": "b5cdf42405d0aebdf894cf862c973532fe2f69274940aa7a6eabaff60c24b212"
+  },
+  "linked_debug_dylib": {
+    "bytes": 66049504,
+    "sha256": "29b3d7d16f4d2c067051bd8e1a5ff45504f0f9b0c30d74c93cb0202b905c6615"
+  },
+  "signed_verified_installed": true,
+  "initial_launch": "Rejected by iOS Locked; installed probe but execution pending unlock",
+  "tests": {
+    "host_policy": "PASS",
+    "jit_method": "PASS",
+    "frontend": "PASS"
+  },
+  "device_execution": "PASS on Build 15; source c11d633; user started manual FLS test",
+  "limitations": "No Windows control run. A passing synthetic test cannot validate the full CEF allocator or all callback lifetimes.",
+  "manual_candidate": {
+    "build": "15",
+    "bundle_id": "com.kuschqin.madeira.steamui",
+    "purpose": "Explicit manual FLS Diagnostics button; same probe and runtime as Build 14",
+    "linked_debug_dylib": {
+      "bytes": 66051776,
+      "sha256": "c60f1f6fa8808f6cd74a7da01da83b350f89c29ed38af235608d6e10863a8c50"
+    },
+    "final_link_marker": "FLS Diagnostics",
+    "device_execution": "PASS: expected FLS assertions and exit=0 confirmed in device result file",
+    "signature": "codesign --verify --deep --strict passed",
+    "initial_install_attempt": "Connection interrupted (IXRemoteErrorDomain 6); actual device state being rechecked",
+    "install": "PASS on single retry after initial connection interruption",
+    "probe_readback": "PASS: actual device probe SHA256 matches recorded 72260078b2d188b1db78c625cf5170a72eb9466fa14f25b2bde6e9435af861b9"
+  },
+  "device_result": {
+    "result_file": {
+      "bytes": 1867,
+      "sha256": "74ef8baf275435498bcb74ed74c97b95ca23d93705a919ce020b24eac2c767b9"
+    },
+    "device_log": {
+      "bytes": 202314,
+      "sha256": "53186293cf0e715575b66a63481b5a26a43a73782e77988c24349789a0f76575"
+    },
+    "observed_output": [
+      "fls-probe thread-exit-once=PASS",
+      "fls-probe parent_once=1 wrong_owner=0 child_exit=0 wait=0",
+      "fls-probe result=PASS",
+      "fls-exit=0"
+    ],
+    "scope": "Worker teardown once, no extra call on index release, no parent/child namespace interference in this test",
+    "independent_windows_control": "NOT RUN",
+    "runtime_changes": "NONE"
+  },
+  "next_discriminator": "Trace callback/object allocation and release ownership in the real CEF workload; do not infer that all FLS or allocator paths are correct.",
+  "ntdll_followup": "CoreDevice could not read sysx64/ntdll.dll via app-container path (POSIX 62); no device ntdll hash verification claimed."
+}

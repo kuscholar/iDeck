@@ -1,0 +1,17 @@
+LIBRARY faultrep.dll
+EXPORTS
+    AddERExcludedApplicationA
+    AddERExcludedApplicationW
+    CreateMinidumpA
+    CreateMinidumpW
+    ReportEREvent
+    ReportEREventDW
+    ReportFault
+    ReportFaultDWM
+    ReportFaultFromQueue
+    ReportFaultToQueue
+    ReportHang
+    ReportKernelFaultA
+    ReportKernelFaultDWW
+    ReportKernelFaultW
+    WerReportHang

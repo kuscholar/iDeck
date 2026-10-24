@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-23",
+  "phase": 1,
+  "build": 16,
+  "source_parent": "29643eea314284c2d5888f29a3eda73fe441edb9",
+  "wine_pin": "9129e9684daaeae70da9435e7c6060e59392634e",
+  "patch": {
+    "bytes": 3652,
+    "sha256": "7aabb7627ef307a7205f3b8e35db43c1eee6db4ce06ce0e388469152be03c3d5"
+  },
+  "embedded_arm64ec_ntdll": {
+    "bytes": 1572864,
+    "sha256": "76494c640a59389e6285f2d437874a26a45eb9443a8f2855853297f1d515ef2c"
+  },
+  "linked_debug_dylib": {
+    "bytes": 66051776,
+    "sha256": "e332569bfe06be2be1584277ed1226b265489f167d28b11cf7f0c3a9f8b7bf2a"
+  },
+  "host_executable": {
+    "bytes": 92208,
+    "sha256": "f31d8b4b0a15a24d386b7a56864393264df4a71140d50bc80d4b2e53d6265a15"
+  },
+  "device_artifacts": {
+    "fls-log.txt": {
+      "bytes": 183832,
+      "sha256": "ed15e89521967d88e8d5b88481e5449b723e62f514c1f6de114a2f3ded0e57f5"
+    },
+    "fls-results.txt": {
+      "bytes": 1867,
+      "sha256": "01e59d684bc751a866d7ed82171d12047cb444530c3639856c6d6e3bdead6f99"
+    },
+    "cef-log.txt": {
+      "bytes": 2458532,
+      "sha256": "0033fee27ca60c730e290e95848da8b695822ebf9c8d167865c81e8dc49b04b9"
+    }
+  },
+  "private_evidence_directory": "/Users/kuschqin/Downloads/GitHub/FunProjects/.madeira-install/steam-ui-trace-build16",
+  "install_and_launch": "PASS; automatic paired JIT, explicit FLS then real Steam launch arguments",
+  "synthetic_with_observer": "PASS; thread-exit-once; parent_once=1 wrong_owner=0 child_exit=0 wait=0; fls-exit=0",
+  "real_cef": {
+    "failure": "chrome_elf.dll+0xd7e3e refcount assertion; caller +0x65bb4; offender=0",
+    "first_assert_log_line": 18388,
+    "observed_value_history": [
+      {
+        "seq": "60",
+        "event": "set",
+        "pid": "00ac",
+        "tid": "012c",
+        "peb": "00000001259EC000",
+        "teb": "0000007068E00000",
+        "index": "2",
+        "fls": "0000007068B46A90",
+        "value": "0000007800280200",
+        "callback": "0000000000000000",
+        "line": 13895
+      },
+      {
+        "seq": "1301",
+        "event": "thread-exit-begin",
+        "pid": "00ac",
+        "tid": "012c",
+        "peb": "00000001259EC000",
+        "teb": "0000007068E00000",
+        "index": "2",
+        "fls": "0000007068B46A90",
+        "value": "0000007800280200",
+        "callback": "00000071E135C1E0",
+        "line": 18370
+      }
+    ],
+    "callback_rva": "chrome_elf.dll+0x9c1e0",
+    "conclusion": "Only one set and one thread-exit-begin for this value before assertion; no end. No earlier FLS callback for this value was recorded. Simple repeated FLS delivery is unsupported in this run. Earlier non-FLS release, corruption or translation error remains untested.",
+    "browser_ready": false,
+    "interactive_login_verified": false
+  },
+  "observer_records": 3821,
+  "max_sequence_by_pid": {
+    "0058": 2512,
+    "00ac": 1301,
+    "0204": 2,
+    "020c": 2,
+    "0214": 2
+  },
+  "limitations": [
+    "Observer changes timing and PE code layout; not a behavior fix.",
+    "No Windows control; no allocator/free history captured.",
+    "PE hash verified in final signed local app and marker observed on device; installed PE not independently read back.",
+    "No claim of interactive CEF, Big Picture or Bluetooth success."
+  ],
+  "next_experiment": "Trace bounded chrome_elf CRT PTD allocation/free metadata for the failing thread and compare against the first FLS callback, without suppressing refcount checks."
+}

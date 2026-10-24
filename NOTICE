@@ -1,0 +1,19 @@
+iDeck — modified Madeira derivative, 2026-10-24
+
+This repository contains substantial software authored by Will Faust and the
+Madeira, Wine, FEX, DXMT and other credited contributors. It is not wholly new
+work by iDeck. Original copyright/license notices remain in their files.
+
+Source snapshot: kuscholar/Madeira, experiment/steam-big-picture,
+b6ea0dc11543973148c3f54ef81f44724333d4da.
+Original project: https://github.com/willfaust/Madeira
+Exact dependency revisions: docs/PROVENANCE.json.
+
+iDeck modifications and new original material are GPL-3.0-or-later with the
+Madeira Converter Exception version1 for the iDeck-authored work only. This
+statement grants no exception or relicensing for anyone else's code. Component
+licenses take precedence for their files. No warranty; see COPYING.
+
+Steam, SteamOS, Steam Deck and Valve are Valve trademarks. Apple, iPhone, iPad,
+iOS and Metal are Apple trademarks. No affiliation or endorsement is claimed.
+The project runs Windows Steam locally via translation, not Linux SteamOS.

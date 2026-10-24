@@ -1,0 +1,30 @@
+{
+  "build": 27,
+  "phase": 1,
+  "research_parent": "76e0df5",
+  "reported_failure": "iPhone software keyboard cannot type into genuine Steam login",
+  "observed_precondition": "Device Hub Generic Keyboard enumerated; old handlesTyping discards UIKeyInput on enumeration alone",
+  "change": "lab focused text responder owns text; raw hardware text-down deduplicated, key-up/shortcuts preserved; hasText supports external guest buffer",
+  "tests": {
+    "text_routing_policy": "PASS",
+    "existing_hardware_input_regression": "PASS",
+    "launcher_regression": "PASS",
+    "native_win32u_with_freetype": "PASS",
+    "full_unsigned_ios_build": "PASS",
+    "final_macho_marker_and_fonts": "PASS",
+    "strict_signing": "PASS",
+    "device_install": "PASS"
+  },
+  "final_debug_macho_sha256": "4f99e2373863bed34b2548b520f25ce813824c92938cec6c40a26bcf87000a00",
+  "private_evidence_dir": ".madeira-install/steam-ui-keyboard-build27/",
+  "device_observation": "Build27 and genuine Steam login visible through Device Hub; direct remote pointer did not summon software keyboard",
+  "device_input_test": "USER-REPORTED PASS: user physically tested iPhone screen keyboard insertion and deletion on Build27",
+  "privacy": "no injected characters entered in test; key payload logs suppressed for native Steam session; optional hardware diagnostics redact held keys",
+  "limits": [
+    "ASCII VK mapping retained",
+    "no auth/password/code entered by agent",
+    "hardware keyboard routing regression checked locally, not device-verified",
+    "Big Picture/game goal remains incomplete"
+  ],
+  "device_input_evidence_limit": "User report, not an agent-captured typed-text artifact; no credentials or test contents retained"
+}

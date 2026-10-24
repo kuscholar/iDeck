@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "runs": [
+    {
+      "input_run": "steam-ui-pa-build18",
+      "input_name": "cef-log.txt",
+      "input_bytes": 2265383,
+      "sha256": "86b7d886a74bd5f2ca84feee22856196e8ee24360099130a24b82277cb11b030",
+      "events": [
+        {
+          "kind": "cage-holdback",
+          "line": 224,
+          "base": 489626271744,
+          "size": 8589869056
+        },
+        {
+          "kind": "fex-arena",
+          "line": 323,
+          "base": 532575944704,
+          "size": 17179869184
+        },
+        {
+          "kind": "real-pool-reported",
+          "line": 11345,
+          "base": 515396075520,
+          "size": 17179869184
+        },
+        {
+          "kind": "real-pool-reported",
+          "line": 11350,
+          "base": 498216140800,
+          "size": 17179934720
+        },
+        {
+          "kind": "soft-pool-reported",
+          "line": 12973,
+          "base": 498216206336,
+          "size": 17179869184
+        },
+        {
+          "kind": "soft-pool-reported",
+          "line": 13147,
+          "base": 515396009984,
+          "size": 17179934720
+        }
+      ],
+      "rejected_overlaps": [],
+      "historical_intersections": [
+        {
+          "earlier_line": 11350,
+          "earlier_kind": "real-pool-reported",
+          "soft_line": 12973,
+          "intersection_base": 498216206336,
+          "intersection_size": 17179869184
+        },
+        {
+          "earlier_line": 11345,
+          "earlier_kind": "real-pool-reported",
+          "soft_line": 13147,
+          "intersection_base": 515396075520,
+          "intersection_size": 17179869184
+        },
+        {
+          "earlier_line": 11350,
+          "earlier_kind": "real-pool-reported",
+          "soft_line": 13147,
+          "intersection_base": 515396009984,
+          "intersection_size": 65536
+        }
+      ],
+      "failed_slots": [
+        {
+          "slot": 446676598784,
+          "status": 3221225496
+        },
+        {
+          "slot": 463856467968,
+          "status": 3221225496
+        },
+        {
+          "slot": 481036337152,
+          "status": 3221225496
+        },
+        {
+          "slot": 498216206336,
+          "status": 3221225496
+        },
+        {
+          "slot": 515396075520,
+          "status": 3221225496
+        },
+        {
+          "slot": 532575944704,
+          "status": 3221225496
+        }
+      ],
+      "limits": [
+        "Runtime-reported intervals; not a fresh kernel map or per-module owner proof.",
+        "Historical intersections ignore release/restart lifecycle; confirm a live view using strict rejection or VirtualQuery.",
+        "No inferred reserve-only committed byte totals: existing bigres counters are incomplete.",
+        "Unparsed log payloads are excluded; no auth, tokens, commands or strings copied."
+      ]
+    },
+    {
+      "input_run": "steam-ui-reserve-build19",
+      "input_name": "cef-log.txt",
+      "input_bytes": 2062959,
+      "sha256": "71a3e9307317aea78d472ffc39462fd206d090eb0688c5093d8833767d586ab1",
+      "events": [
+        {
+          "kind": "cage-holdback",
+          "line": 225,
+          "base": 489626271744,
+          "size": 8589869056
+        },
+        {
+          "kind": "fex-arena",
+          "line": 324,
+          "base": 532575944704,
+          "size": 17179869184
+        },
+        {
+          "kind": "real-pool-reported",
+          "line": 11775,
+          "base": 515396075520,
+          "size": 17179869184
+        },
+        {
+          "kind": "real-pool-reported",
+          "line": 11780,
+          "base": 498216140800,
+          "size": 17179934720
+        }
+      ],
+      "rejected_overlaps": [
+        {
+          "line": 12791,
+          "candidate": 498216206336,
+          "size": 17179869184,
+          "view": 498216140800,
+          "view_size": 17179934720
+        },
+        {
+          "line": 12792,
+          "candidate": 515396075520,
+          "size": 17179869184,
+          "view": 515396075520,
+          "view_size": 17179869184
+        },
+        {
+          "line": 13001,
+          "candidate": 498216206336,
+          "size": 17179869184,
+          "view": 498216140800,
+          "view_size": 17179934720
+        },
+        {
+          "line": 13002,
+          "candidate": 515396075520,
+          "size": 17179869184,
+          "view": 515396075520,
+          "view_size": 17179869184
+        },
+        {
+          "line": 13020,
+          "candidate": 498216206336,
+          "size": 17179869184,
+          "view": 498216140800,
+          "view_size": 17179934720
+        },
+        {
+          "line": 13021,
+          "candidate": 515396075520,
+          "size": 17179869184,
+          "view": 515396075520,
+          "view_size": 17179869184
+        },
+        {
+          "line": 14398,
+          "candidate": 498216206336,
+          "size": 17179869184,
+          "view": 498216140800,
+          "view_size": 17179934720
+        },
+        {
+          "line": 14399,
+          "candidate": 515396075520,
+          "size": 17179869184,
+          "view": 515396075520,
+          "view_size": 17179869184
+        },
+        {
+          "line": 14419,
+          "candidate": 498216206336,
+          "size": 17179869184,
+          "view": 498216140800,
+          "view_size": 17179934720
+        },
+        {
+          "line": 14420,
+          "candidate": 515396075520,
+          "size": 17179869184,
+          "view": 515396075520,
+          "view_size": 17179869184
+        },
+        {
+          "line": 14439,
+          "candidate": 498216206336,
+          "size": 17179869184,
+          "view": 498216140800,
+          "view_size": 17179934720
+        },
+        {
+          "line": 14440,
+          "candidate": 515396075520,
+          "size": 17179869184,
+          "view": 515396075520,
+          "view_size": 17179869184
+        }
+      ],
+      "historical_intersections": [],
+      "failed_slots": [
+        {
+          "slot": 446676598784,
+          "status": 3221225496
+        },
+        {
+          "slot": 463856467968,
+          "status": 3221225496
+        },
+        {
+          "slot": 481036337152,
+          "status": 3221225496
+        },
+        {
+          "slot": 498216206336,
+          "status": 3221225496
+        },
+        {
+          "slot": 515396075520,
+          "status": 3221225496
+        },
+        {
+          "slot": 532575944704,
+          "status": 3221225496
+        }
+      ],
+      "limits": [
+        "Runtime-reported intervals; not a fresh kernel map or per-module owner proof.",
+        "Historical intersections ignore release/restart lifecycle; confirm a live view using strict rejection or VirtualQuery.",
+        "No inferred reserve-only committed byte totals: existing bigres counters are incomplete.",
+        "Unparsed log payloads are excluded; no auth, tokens, commands or strings copied."
+      ]
+    }
+  ]
+}

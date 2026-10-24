@@ -1,0 +1,111 @@
+{
+  "phase": 1,
+  "build": 23,
+  "research_parent": "c820e7c",
+  "device_evidence": {
+    "result_sha256": "a113a1077172141d7836edfc5b4d75ba208e5f63496d935369428c8ae4cd581c",
+    "private_log_sha256": "d1c4c1c5aaa32acd9d35cbfabb370cdfdac6436356d13cfb543a9869c3fcbbba"
+  },
+  "observations": [
+    "genuine i386 chrome_elf import entry reached",
+    "verifier ready",
+    "4 thread rounds completed, failures=0",
+    "result PASS; x86-cef-exit=0",
+    "WoW64 guest window 0x7900000000 shown in device log",
+    "post-probe native jit26_detach breakpoint reported unhandled; app later killed, absence verified"
+  ],
+  "limits": [
+    "not libcef initialization",
+    "not real Steam login or Big Picture",
+    "not allocator correctness proof",
+    "not game launch or Bluetooth validation"
+  ],
+  "next_test": "Build24 official complete win32 client in isolated Steam32Lab; no updater/auth bypass",
+  "build24_preflight": {
+    "final_debug_macho_sha256": "ebbc96d8783403166a9fa04e7a2d4a914a70e7d48697c2c3ee38e29ab8856f25",
+    "client_inventory_sha256": "0954a8b6c76c2f388a2dcf1bb4e764ecd8b55889f4594eaea197b0466faa70c9",
+    "final_launch_marker_verified": true,
+    "signed_and_installed": true,
+    "full_client_launch_attempted": false
+  },
+  "build25_preflight": {
+    "final_debug_macho_sha256": "5961477ed4ef185df6062a8954a7ab029a2a3c67c75b2050b208fcb440f7cf21",
+    "full_build": "PASS",
+    "final_launch_marker_verified": true,
+    "all_private_bundled_client_hashes_match_manifest_inventory": true,
+    "signature_deep_strict": "PASS",
+    "install": "later authoritative inventory confirms25 after CLI timeout",
+    "full_client_launch_attempted": true,
+    "actual_installed_build": 25
+  },
+  "full_client_log_sha256": "6ae2dc41797b6560b4fd80e00843ede2e8e9cbbe39f4dce88290e4d9c2e50f8b",
+  "bootstrap_sha256": "482a32ea6d60e608c1b5c835c84958b176aae81ddb84c7b525fcd5444898abe4",
+  "gdi_attempt_invalid_jit_sha256": "3aab637eaae988e11688feebe7ea70f521e5a729ec39af1117a20c74987f6bf9",
+  "full_client_result": {
+    "exit": "0xc0000005",
+    "helper_started": false,
+    "interactive_login": false,
+    "fault": "gdi32 RVA0x1ff61 get_gdi_client_ptr; kr2 PROTECTION_FAILURE",
+    "hypothesis": "master GDI table address truncated in WoW child; existing section option test pending"
+  },
+  "gdi_comparison": {
+    "configuration": "existing MADEIRA_GDI_SHARED_SECTION=1; lab only",
+    "native_log_sha256": "a65aee0d64a4f29b00e033b2b1bdce1f1686b5e627df5e18fb612ea899fb5452",
+    "bootstrap_sha256": "44a2350eda08a1a6c4c64a64260a4a91b8d9278734f557e136501e594ede1ef5",
+    "observed": [
+      "section master and child guest-window view published",
+      "real Steam updater window observed via Device Hub",
+      "229240KB download complete",
+      "12:27:32 installing update"
+    ],
+    "limits": [
+      "post-update binaries not yet pinned",
+      "no helper/BrowserReady/login success",
+      "no game/Big Picture validation"
+    ],
+    "next": "poll the existing live updater; do not start overlapping experiments"
+  },
+  "post_update_cef_files": {
+    "steamwebhelper.exe": {
+      "sha256": "8dba99d204779a30a88a794d1a88d7e76355d004d876ed4bb29da7c3d5a4fc70",
+      "bytes": 6524056
+    },
+    "libcef.dll": {
+      "sha256": "b2dc73b55ca1d6a44a594e97b4ddd57bd19e79b2d09521faf2dfb83f51e2a94e",
+      "bytes": 186918040
+    },
+    "chrome_elf.dll": {
+      "sha256": "0c91bfdbb22d20ea153869a3dc7379d54a7380faee300d0fd6809fce491a3677",
+      "bytes": 1064088
+    }
+  },
+  "installed_manifest_sha256": "51967b20db3d05ac953cabc882e3a916e0a871973adc710471fd47b51e83d2e8",
+  "after_update_native_sha256": "6f5f955f4c288c0f8cfc928bd2f6a1568b6cace3487b92885f8d77bc61752b88",
+  "after_update_result": "CEF126 initialization, then crashpad_client_win.cc144 self-termination; existing child gate refused crashpad",
+  "build26": {
+    "final_macho_sha256": "662f567e4333ea0c6705dbac63fec17db3028f6a2cf3a6c2bdebde252d0ae292",
+    "final_crashpad_marker_verified": true,
+    "native_build": "37 units PASS",
+    "host_gate_and_regressions": "PASS ASan/UBSan",
+    "installed": true,
+    "observed_pid": 13931,
+    "private_native_log_sha256": "9d61a1249f1ab6c708e47bd10e9371c7aa12ef84508b93eda82fc7485690c469",
+    "cef_log_sha256": "e024e4c76f40d7ae75cbf2c54b573f093f436eaa9ee95f4aee8067a44812dcc6",
+    "steamui_html_sha256": "1fe80b70feab07a59404d4e552db1cc743b157952daefedbdd84c31e111459e7",
+    "observed": [
+      "experimental exact Crashpad admission marker",
+      "GDI section and child guest-window views",
+      "BrowserReady in actual Valve steamui_html log",
+      "genuine Steam account/password/QR login window seen through Device Hub"
+    ],
+    "unverified": [
+      "login field/button interaction",
+      "Steam authentication",
+      "library",
+      "Big Picture",
+      "Bluetooth controller",
+      "game launch/return"
+    ],
+    "next": "preserve current process; user completes legitimate sign-in; then validate interaction/auth and genuine Big Picture"
+  }
+}

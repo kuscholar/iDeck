@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-22",
+  "steam_run_build": 11,
+  "steam_run_source": "bbcd7ce",
+  "device_log": {
+    "bytes": 3745635,
+    "sha256": "d384095a41ec134fb65e689f49c6feffd04dda0113bc867a05263a96aa57a658"
+  },
+  "cef_log": {
+    "bytes": 1856,
+    "sha256": "0ae0dd678f552f85c19290b3dc16a8739fdde3ea3ab20a25b97ee0a106e9f32f"
+  },
+  "primary_pool_mib": 624,
+  "secondary_pool_mib": 256,
+  "total_image_pool_mib": 880,
+  "region_C_mib": 352,
+  "region_C_execution": "Accepted RX/RW mappings and FEX EC_CODE carves; main tail_reserved=0",
+  "first_fault": {
+    "module": "chrome_elf.dll",
+    "rva": "0xd7e3e",
+    "exception": "0x80000003",
+    "instruction": "int3; int3; ud2",
+    "refcount_diagnostic": "existing brp-contain: offender=0, caller=chrome_elf+0x65bb4",
+    "analysis": "Caller branches after lock cmpxchg clear-bit loop reports old count with held bit clear. Function at +0x9c1e0 frees a non-null pointer, excluding a static sentinel. FLS/thread teardown is a lead, not a proven cause.",
+    "first_exception_log_line_zero_based": 14776,
+    "first_exhaustion_log_line_zero_based": 17529
+  },
+  "device_chrome_elf": {
+    "bytes": 1405592,
+    "sha256": "6358830f96f36efa7516b3277cf69c1f132f97d4d93c365ccf061a7cf11e1e39"
+  },
+  "device_chrome_elf_matches_downloaded": true,
+  "hypothesis_update": "Capacity option was effective in this run. First helper assertion precedes pool exhaustion, so capacity alone is not the root cause. Do not suppress checks.",
+  "probe_run_build_12": {
+    "log": {
+      "bytes": 235465,
+      "sha256": "f4b875701d011dc97668108f72ada1c223a587f19b5257c8ca1cdca3bcf259e2"
+    },
+    "results": {
+      "bytes": 3993,
+      "sha256": "7ecc2af10ccf996af632a250deab7f4da6e513128b2c7b26a6a6e525556e0730"
+    },
+    "atomic": "PASS failures=0 counter=200000 expected=200000; exit=0",
+    "child_shared_mapping": "PASS wait=0 child_exit=0 shared_match=1; exit=0"
+  },
+  "probe_run_build_13": {
+    "log": {
+      "bytes": 368394,
+      "sha256": "63d732b358f1807f2db375236755df5f92c52c99649f630df979a9b38a992352"
+    },
+    "results": {
+      "bytes": 12821,
+      "sha256": "969f3c6d95d4195a7ce7c64001f0a68fa6c176a068247136d479e02ed4eeacde"
+    },
+    "automatic_paired_JIT": "PASS: explicit diagnostic launch argument triggered normal built-in paired JIT, then probes",
+    "atomic": "PASS; exit=0",
+    "child_shared_mapping": "PASS; exit=0",
+    "official_chrome_elf_import_heap_threads": "PASS: entry, verifier, four rounds of four worker threads with zero failures; exit=0"
+  },
+  "probe_artifacts": {
+    "atomic_x64_PE": {
+      "bytes": 90624,
+      "sha256": "0dbe33eeb1ba61492f351df91ea1a94034583b5cc237843a63b105985871776d"
+    },
+    "process_x64_PE": {
+      "bytes": 94208,
+      "sha256": "101931cb9189c09a0570efaddad36a762d25eb50ddf26a5661213480d5975b83"
+    },
+    "chrome_elf_import_x64_PE": {
+      "bytes": 91648,
+      "sha256": "df5067d9f5f059d9c7a38855c4725bbff59ba6bf77adc2df95e45feb58c85ed3"
+    }
+  },
+  "final_build": 13,
+  "final_signed_artifacts": {
+    "host_executable": {
+      "bytes": 92208,
+      "sha256": "720a88dda8a6786b64b94d612e45dc963b70cfd2d751611c9f0de267b3de7505"
+    },
+    "linked_debug_dylib": {
+      "bytes": 66049088,
+      "sha256": "c0b8e198fde864395aa1c97f608af7c8d34697b4165548de44bfafff5f5b00db"
+    }
+  },
+  "control_boundary": "x86-64 macOS control compiled but arch invocation failed Bad CPU type; no Windows control available. Device tests are narrow, not complete PA or FEX validation.",
+  "Steam_UI": "NOT WORKING: no BrowserReady/interactive login; Big Picture remains gated"
+}

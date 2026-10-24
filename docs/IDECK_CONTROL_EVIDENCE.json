@@ -1,0 +1,162 @@
+{
+  "build": 45,
+  "base_revision": "944d2ca",
+  "scope": "isolated iDeck only; no FEX, Valve binary or authentication cache modifications",
+  "changes": {
+    "HUD": "explicit full-screen layout, safe-area-clamped default top-right, draggable persisted normalized center",
+    "Steam_menu": "fixed-command Windows helper focuses genuine Steam and injects Ctrl+1; Esc removed",
+    "exit_game": "normal WM_CLOSE to foreground/unambiguous standard Steam library game window, wait for real process exit then open Big Picture; no force kill",
+    "account": "native confirmation then genuine steam://changeuser UI; no credentials/token/cache manipulation",
+    "virtual_controller": "reserved player1 before Steam enumeration even with overlay hidden; generic HID + XInput for Steam session; ensure a controller layout when enabled"
+  },
+  "local_checks": [
+    "full Xcode45",
+    "Windows helper i386 -Wall -Wextra -Werror",
+    "deep strict signing",
+    "final debug dylib and bundled PE markers",
+    "production safe-area placement/persistence calculation and finite-command host checks",
+    "existing input mapping/touch/gamepad/launcher/keyboard regressions"
+  ],
+  "device": {
+    "install": "succeeded in existing isolated bundle",
+    "launch": "explicit genuine Big Picture launch succeeded",
+    "control_bridge": "ready ready",
+    "Windows_controller_status": "xinput=1 buttons=0000 hid_gamepads=1",
+    "UI_validation": "pending user drag/virtual navigation/Steam menu checks; Mac CUA reports locked",
+    "account_switch": "not invoked by agent; no credential automation",
+    "game_return": "not tested on device yet"
+  },
+  "helper_sha256": "567f79fe70f0faf0b931d31e1064bc2f6fc5549d631a3fa89bb509e4ab117ba8",
+  "debug_macho_sha256": "bbaf435c4faa2052a3c3a3a69ad444ea9b42fc983bf12f6cc2ab3edf189f91fe",
+  "ready_sha256": "e800348d9d264664b7da0a65bd9caec2694924f95f8c341aaefb4c1d3f832199",
+  "input_sha256": "91f6927d4f3105a1d0044653b45f3e3a498aef2ecd1bd0da61407f4d9332144d",
+  "limits": [
+    "graceful close may require confirming a game save dialog",
+    "automatic game selection limited to visible standard steamapps/common game windows; ambiguous games require foreground selection",
+    "command dispatch acknowledgement is not proof a Steam UI opened",
+    "controller API enumeration is not proof Steam accepted touch button events"
+  ],
+  "build45_feedback": {
+    "user_report": "Steam menu still ineffective; other requested UI/controller outcomes not specified",
+    "latest_ack": "no-game",
+    "limitation": "latest result belongs to exit-game; it does not establish menu command dispatch"
+  },
+  "build46": {
+    "base_revision": "abf24db",
+    "observed_failure": "Build45 Steam menu user report",
+    "hypothesis": "CEF KeyboardEvent.code has no Digit1 because injected KEYBDINPUT.wScan is zero",
+    "discriminating_test": "Same Ctrl+1 shortcut with MapVirtualKeyW-derived scan codes; physical Steam menu test pending",
+    "source_evidence": [
+      "Pinned Wine win32u/message.c preserves wScan for non-SCANCODE input",
+      "Exact shipped Steam UI TranslateKey uses event.code and maps ctrl+Digit1 to STEAM_GUIDE"
+    ],
+    "patch": "Populate scan code for each fixed helper key; preserve key-up and modifier release",
+    "helper_sha256": "cf0509245adf690c73ca17f2f263f64321f29fbdc8bfb8b73f30b921e12610b7",
+    "local_checks": [
+      "full Xcode46",
+      "i386 helper Werror",
+      "deep strict signing",
+      "iDeck launcher and keyboard host regressions"
+    ],
+    "device_validation": "User reports Steam menu/change account disabled. Private native log confirms helper i386 pid0068/tid006c crashes before readiness in wow64.dll+0x1b724 writing address0x480; CPU reserved state absent. Menu scan-code fix not UI-tested.",
+    "linked_helper": "Final bundled i386 PE imports MapVirtualKeyW and SendInput"
+  },
+  "build47": {
+    "base_revision": "834f92b",
+    "observed_failure": "helper pre-entry i386 WoW64 initialization fault; no readiness ACK, controls disabled",
+    "hypothesis": "separate x64 helper avoids the failing i386 startup path",
+    "patch": "Compile only our helper x86_64 and validate machine8664 before copying; keep Steam i386/client/auth and existing command semantics",
+    "helper_sha256": "025ad1e2ee420a53a4a2b5ea217a00bb91a0fe85132bc0c6db17878c223f9ab4",
+    "private_build46_log_sha256": "66c193d3aa9ed77c5cbe68301f55d18a963dfede0298b1103ccd6b6bddbb41ea",
+    "local_checks": [
+      "full Xcode47",
+      "helper coff-x86-64 inspected",
+      "deep strict signing",
+      "launcher/iDeck/keyboard regressions"
+    ],
+    "device_validation": "Installed; first session JIT allocation failed before Wine and PID later absent. Fresh launch PID21130 reached actual ready ready ACK; physical enabled/menu UI result pending.",
+    "ready_sha256": "e800348d9d264664b7da0a65bd9caec2694924f95f8c341aaefb4c1d3f832199",
+    "user_feedback": "Steam menu works; change-account action has no effect."
+  },
+  "build48": {
+    "base_revision": "e37f0d6",
+    "user_request": "Move account switching to iDeck launcher; Big Picture uses selected Steam account",
+    "changes": [
+      "Launcher Sign in / Change Steam account action",
+      "Account launch passes fixed steam://changeuser directly to exact validated Steam exe with -bigpicture, avoids ShellExecute registry route",
+      "Remove old HUD account action; reindex controller navigation",
+      "One-time migration disables auto-start to expose launcher; user can opt back in"
+    ],
+    "authentication": "Genuine Steam account UI only; no native password fields, -login credentials, login-cache editing or token transfer",
+    "checks": [
+      "full Xcode48",
+      "deep strict signing",
+      "final debug dylib launcher label",
+      "launcher positive account URI/negative ordinary URI and no-credential argument tests",
+      "iDeck/keyboard regressions"
+    ],
+    "device": "installed same isolated bundle; ordinary no-argument launch succeeded; account action not invoked by agent; physical chooser/login/selected account continuity pending user",
+    "debug_macho_sha256": "a0a6879741ec059131d26e0f3e26c7160240f370e8e5749f45c6adde48391630",
+    "user_feedback": "After entering Steam account/login window, controller and mouse have no effect. Touch response and physical vs virtual controller clarification pending."
+  },
+  "build49": {
+    "base_revision": "7008a6a",
+    "observed": "User locates failure in guest Steam window; Windows helper status still xinput1/buttons0/hid1. No proof of a button edge reaching Steam. Prior log reports pad=none at launch.",
+    "hypothesis": "Steam initial login/browser window lacks foreground activation; helper previously focused only on explicit menu command",
+    "minimal_patch": "Try focus once successfully after first visible Steam window; no continuing refocus after success. Record startup foreground match and sampled controller-change counter. Clear only own stale diagnostic files at fresh launch.",
+    "limits": [
+      "Does not establish that focus caused reported failure",
+      "500ms sampled controller changes may miss short presses",
+      "Does not add gamepad navigation to Steam screens that do not support it",
+      "Mouse hardware/AssistiveTouch availability still unverified"
+    ],
+    "checks": [
+      "full Xcode49",
+      "x64 helper Werror",
+      "strict signing",
+      "final PE focus imports/status strings",
+      "existing launcher/iDeck/keyboard checks"
+    ],
+    "helper_sha256": "acc30f3f335594eb001baa878636137a3e5ea9333b5600a734fa3290eeb1c8cc",
+    "device": "Installed and explicit normal Big Picture launch succeeded without requesting account switch. Actual startup_focus1/foreground_matches1; xinput1/hid1/observed_changes0 at rest. User effect pending; zero resting sample is not failed input proof.",
+    "focus_sha256": "73f91c28ef9e88fac4d5c72e177f3fbed5f6c5f43af9a7f41d15a4f5311b70ae",
+    "input_sha256": "39dcb7f9d7314579e2bb02d7f46c5449c05b8a9dca76ede46b945b6c85bbcb44",
+    "user_feedback": "Input works; user can enter credentials. User approved the Steam Guard request on official mobile Steam, but iDeck remained stalled."
+  },
+  "build50": {
+    "base_revision": "7bb79ca",
+    "observed_failure": [
+      "Steam login log remains WaitingForCredentials; no current-session Success/OK",
+      "webhelper at10:27:41 reports killing an unresponsive browser",
+      "CM WebSocket connection completed; later Try another CM/Failure ignored since client not waiting for logon response",
+      "Two early auxiliary WoW64 native faults and a later Crashpad vector-front-empty fatal are separate observations, not proven primary auth cause"
+    ],
+    "hypothesis": "Fresh login inside direct Big Picture flow may stall the browser; first authenticate in ordinary genuine desktop Steam, then transition to Big Picture",
+    "patch": [
+      "iDeck product startup/account mode omit -bigpicture initially",
+      "Observe only new complete exact Steam Success/OK state lines after session launch; ignore historical success and partial lines",
+      "Only after that state and ready helper, request fixed steam://open/bigpicture",
+      "Helper dispatches fixed URI to the running Steam executable via CreateProcess, avoids stale URI registry when process found",
+      "Explicit no-account-switch desktop experiment argument for on-device test"
+    ],
+    "privacy": "No credentials entered by agent; no token/cache copy, auth bypass, user identifiers or arbitrary payload in published evidence",
+    "checks": [
+      "Xcode50 full build",
+      "x64 helper Werror",
+      "deep strict signing",
+      "final debug Mach-O success marker and helper dispatch/imports inspected",
+      "host tests historical success ignored, chunked lines, log rotation, negative states/credential text rejected",
+      "account and loginFirst batches omit Big Picture and credential flags; existing launcher/keyboard gates pass"
+    ],
+    "private_evidence_sha256": {
+      "native-private.txt": "fdc9905fd650600fe1086cee17ac550ce09da558b88b97f66b9d93808e77ea8e",
+      "connection_log.txt": "c9d7b9257ee2c2abf88c87b3e65b53c78a94b0773882fdc08fd785571c19d846",
+      "steamui_login.txt": "2d71bc96edb09e32d7a69cf6fa7cecdea274a127d27c47d69378e1103ab31ab6",
+      "webhelper.txt": "76034ba02a4ec2268b6566c4a90fc08b15aa292d92dfafcc3f33a84528642a16",
+      "webhelper_js.txt": "7b7851503fc34c75849d1538e0bea7a11083e391739315e0e23f997a4ddab61e"
+    },
+    "device": "Signed, installed and launched explicit desktop-login mode PID21478. Actual batch omits -bigpicture and changeuser; helper ready ready. Fresh authentication and transition user test pending.",
+    "helper_sha256": "0590e476aa347a79ac629071d6384d283f9148f83321bd40162bb902cfe6812f",
+    "debug_macho_sha256": "d62804b0d5bb82bf5877ce109f81864a0e5967232df8b6d9f13fe89b18a044a9"
+  }
+}

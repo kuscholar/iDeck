@@ -1,0 +1,46 @@
+{
+  "product": "iDeck",
+  "build": "30",
+  "bundle": "com.kuschqin.madeira.steamui",
+  "state": "installed on Kusch and ordinary launch alive; visual/UI acceptance pending manual Mac unlock",
+  "debug_macho_sha256": "8f0fc04f3b2ea0dc215277744c089bcd07f803e1da52b7653db309003ca859be",
+  "local_checks": [
+    "full Xcode compile PASS",
+    "deep strict signature PASS",
+    "linked launcher/menu/keyboard markers verified",
+    "production readiness/architecture/autostart tests PASS",
+    "existing launcher and input routing regressions PASS",
+    "touch controller merge/lifecycle regression PASS",
+    "hardware keyboard/mouse/scan/focus regression PASS",
+    "gamepad ABI/concurrency/rumble regression PASS",
+    "controller ownership retained on return from JIT; full recompile PASS"
+  ],
+  "device_requirements_pending": [
+    "launcher/setup on ordinary launch",
+    "JIT handoff in product shell",
+    "full-screen Big Picture rendering",
+    "touch/controller navigation",
+    "floating menu keyboard/virtual pad/settings",
+    "play/return and relaunch persistence"
+  ],
+  "installed_verification": {
+    "date_utc": "2026-10-24",
+    "display_name": "iDeck",
+    "bundle_version": "30",
+    "ordinary_launch_arguments": [],
+    "last_verified_pid": 17464,
+    "ordinary_launch_log_sha256": "ac1a6368a891080981fb2165ea32a9a8b536e1edb54d08fd6e1f429f0209b264",
+    "observations": [
+      "no previous Madeira process in full inventory",
+      "install completed successfully",
+      "apps inventory confirms iDeck version30",
+      "ordinary launch succeeded and same PID independently alive",
+      "startup log has no diagnostic/Steam/JIT launch markers"
+    ],
+    "limits": [
+      "no visual launcher assertion from CLI launch",
+      "Mac locked; Device Hub cannot control until manual unlock",
+      "no new full-screen/menu/controller/gameplay acceptance claim"
+    ]
+  }
+}

@@ -1,0 +1,190 @@
+# Reference repos (not part of the project, just for research)
+box64/
+LiveContainer/
+MeloNX/
+# research/ holds upstream clones kept for study; they are not part of the
+# project (Madeira's own components live at the top level).
+research/angle/
+research/attesor/
+research/box64/
+research/dxvk/
+research/FEX/
+research/gamescope/
+research/LiveContainer/
+research/MoltenVK/
+research/ProjectChampollion/
+research/Proton/
+research/StikDebug/
+research/vkd3d-proton/
+research/Winlator-Ludashi/
+research/*.md
+
+# Build artifacts
+app/build/
+app/DerivedData/
+build/DerivedData/
+build/xcode-derived/
+FEX/build-ios/
+build/ntdll-unix/obj/
+build/wineserver/obj/
+
+# Compiled libraries (rebuilt from build scripts)
+app/Madeira/libntdll_unix.a
+app/Madeira/libwineserver.a
+app/libwineserver.a
+app/Madeira/libdxmt_combined.a
+app/Madeira/libwin32u_unix.a
+app/libwin32u_unix.a
+# On-device pairing (build/rppairing-ios/build.sh)
+app/Madeira/libmadeira_rppairing.a
+build/rppairing-ios/target/
+# FFmpeg (build/ffmpeg/build.sh): static archives and build tree (the source
+# tarball in build/ffmpeg/src/ is tracked, like build/gnutls-ios/src/)
+app/Madeira/libavformat.a
+app/Madeira/libavcodec.a
+app/Madeira/libswresample.a
+app/Madeira/libavutil.a
+build/ffmpeg/obj/
+
+# win32u-unix build artifacts
+build/win32u-unix/obj/
+
+# DXMT build artifacts
+build/dxmt-ios/obj/
+build/dxmt-ios/shader-headers/
+build/dxmt-ios/libdxmt_unix.a
+build/dxmt-ios/libdxmt_combined.a
+
+# D3D11 triangle test — compiled DXBC shaders + host-side HLSL compiler
+build/d3d11-triangle/vs.dxbc
+build/d3d11-triangle/ps.dxbc
+build/d3d11-triangle/vs_dxbc.h
+build/d3d11-triangle/ps_dxbc.h
+build/d3d11-triangle/hlsl_compile.exe
+build/d3d11-triangle/triangle.exe
+
+# DXMT test-suite per-test build output
+tests/dxmt/out/
+
+# Wineboot subprocesses — dormant while Phase 3+ uses a pre-seeded prefix
+# and skips wineboot. Rebuilt from the wine submodule if needed (requires
+# bison 3.x + llvm-dlltool). services.exe + rpcss.exe graduated to tracked
+# with the 2026-07-07 rpcss milestone (SCM + COM are live now).
+app/Madeira/aarch64-windows/plugplay.exe
+app/Madeira/aarch64-windows/svchost.exe
+app/Madeira/aarch64-windows/winedevice.exe
+
+# Toolchains (pulled by build scripts)
+toolchains/
+
+# Xcode
+*.xcuserdata
+*.xcworkspace
+xcuserdata/
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Console/crash logs (large, device-specific)
+console-log.txt
+crash-log.txt
+crash-log,txt
+stikdebug-log.txt
+
+# Superseded build dirs
+wine-ios-build/
+
+# wine/ is now a submodule — don't ignore it
+
+# StikDebug scripts (reference only)
+MeloNX.js
+build/gnutls-ios/src/*
+!build/gnutls-ios/src/*.tar.*
+!build/gnutls-ios/src/SHA256SUMS
+
+build/gnutls-ios/obj/
+
+# Reference/scratch material — not build inputs.
+# research/* rather than research/, so specific subdirectories can be
+# re-included; git will not descend into a directory ignored with a trailing
+# slash, which makes any negation inside it silently ineffective.
+research/*
+!research/remote-metal/
+!research/metal-blend-test/
+*.bak
+photorec.se2
+.DS_Store
+
+# Build/deploy artifacts (regenerable; keep them out of history)
+*.ipa
+clean-prefix/
+tests/x64/asmconf_gen/
+tests/x64/asmconf_obj/
+
+# Wine Mono, fetched (hash-checked) by build/wine-mono/fetch.sh and bundled by
+# build/wine-mono/bundle.sh; the scripts are tracked, the payload is not.
+build/wine-mono/wine-mono-*
+
+# Microsoft Visual C++ runtime redistributables.
+# Microsoft-authored binaries, redistributable only under the Visual Studio
+# redistributable terms and only unmodified. Not ours to ship -- obtain them
+# yourself, see tools/fetch-vcruntime.md.
+app/Madeira/x86_64-vcruntime/*.dll
+research/remote-metal/host/rmetald
+research/remote-metal/guest/rmtest
+
+# remote-metal test binaries (built by run-tests.sh)
+research/remote-metal/guest/rmtest
+research/remote-metal/guest/rmreplay
+research/remote-metal/guest/rmres
+research/remote-metal/guest/rmclient_test
+research/remote-metal/host/rmetald
+
+# madeira-d3d12 build products and host binary snapshots (regenerable)
+build/madeira-d3d12/out/
+build/madeira-d3d12/out-ios/
+build/madeira-d3d12/out-pe/
+research/remote-metal/host/rmetald.*
+
+# Apple Metal Shader Converter dynamic library: TRACKED (decision 2026-09-16).
+# Apple's installer agreement 2.B permits distributing it solely for shader
+# conversion, which is its only use here; see app/Madeira/d3d12/NOTICE.txt.
+
+# Licence copies generated into the bundle by build/stage-licenses.sh (from COPYING and LICENSE-EXCEPTION.md)
+app/Madeira/licenses/LICENSE-MADEIRA-GPL-3.0.txt
+app/Madeira/licenses/LICENSE-MADEIRA-EXCEPTION.txt
+madeira-d3d12/tests/offline/sm51/
+build/stub-dlls/
+
+# The i386 farm (32-bit Wine + DXMT DLLs) is built from the pinned submodules by
+# build/wine-i386/build.sh (docs/WOW64.md section 9); it is not committed.
+app/Madeira/i386-windows/*
+!app/Madeira/i386-windows/.gitkeep
+
+# Madeira Dock: built from madeira-dock by build/madeira-dock/build.sh
+app/Madeira/arm64ec-windows/dockhost.exe
+app/Madeira/arm64ec-windows/dock-notices.txt
+
+# faultrep.dll: build/faultrep/build.sh (its install goes into the tracked farm)
+build/faultrep/out/
+
+# iDeck public source repository: no compiled/runtime payloads
+*.dll
+*.exe
+*.a
+*.dylib
+*.metallib
+*.ipa
+*.mobileprovision
+*.p12
+*.p8
+*.xcarchive/
+app/Madeira/prefix-template.tar.gz
+app/Frameworks/StikJIT.xcframework/ios-arm64/StikJIT.framework/StikJIT
+private/
+Steam32OfficialClient/
+**/Steam32OfficialClient/
+**/loginusers.vdf
+**/ssfn*

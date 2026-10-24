@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-24",
+  "source_snapshot": "b6ea0dc11543973148c3f54ef81f44724333d4da",
+  "copied_source_files_missing": [],
+  "intentional_changed_inherited_files": [
+    ".gitignore",
+    "CONTRIBUTING.md",
+    "README.md",
+    "THIRD-PARTY-NOTICES.md",
+    "app/Madeira.xcodeproj/project.pbxproj",
+    "app/Madeira/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png"
+  ],
+  "license_texts": "LICENSE/COPYING/exception/dependency license copies retained; source file copyright headers unchanged",
+  "public_dependency_commit_access": "All four recorded parent submodule commits verified via GitHub API",
+  "checks": [
+    "iDeck launcher/login observer production host tests PASS",
+    "Steam launcher/diagnostics host tests PASS",
+    "Steam keyboard host tests PASS",
+    "WoW PEB ownership ASan/UBSan PASS",
+    "Public staged forbidden extensions/private-key/token pattern scan PASS",
+    "Original top-level core license files byte-identical",
+    "Icon visually inspected; opaque1024x1024 export checked"
+  ],
+  "limits": [
+    "Public source snapshot is not a clean full build or IPA release certification",
+    "Full app not rebuilt from new standalone checkout without restoring remaining generated dependencies",
+    "Inherited whitespace in unmodified upstream/license files retained",
+    "Binary distribution/source/relink/Apple review remains required"
+  ],
+  "icon_sha256": "be9237592eb8cbba1bd74e75e41556c8ab1014c7b6b6c6d68bbb97d870ae69c6"
+}
