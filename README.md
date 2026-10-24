@@ -1,131 +1,140 @@
-<p align="center"><img src="docs/assets/ideck/icon.png" width="156" alt="iDeck cyan and blue iD controller icon"></p>
+<p align="center">
+  <img src="docs/assets/ideck/icon.png" width="156" alt="iDeck">
+</p>
 <h1 align="center">iDeck</h1>
-<p align="center"><strong>Your next handheld might already be in your pocket.</strong><br>Real Steam. Local PC games. A little iPhone ambition.</p>
-<p align="center">🎮 Steam Big Picture · 🍎 iOS & iPadOS · ⚙️ Powered by Madeira · 🧪 Experimental</p>
-<p align="center"><a href="#meet-your-pocket-pc-gaming-experiment">The idea</a> · <a href="#what-actually-works">Current status</a> · <a href="#bring-your-own-curiosity">Build & setup</a> · <a href="CREDITS.md">Credits</a> · <a href="COPYING">License</a></p>
+<p align="center"><strong>iDeck brings the SteamOS experience to iOS</strong></p>
+<p align="center">
+  <a href="docs/GETTING_STARTED.md"><img src="https://img.shields.io/badge/Platform-iOS%20%26%20iPadOS-007AFF" alt="iOS and iPadOS"></a>
+  <a href="docs/IDECK.md"><img src="https://img.shields.io/badge/Status-Experimental-orange" alt="Experimental"></a>
+  <a href="https://github.com/willfaust/Madeira"><img src="https://img.shields.io/badge/Powered%20by-Madeira-28C7D9" alt="Powered by Madeira"></a>
+  <a href="COPYING"><img src="https://img.shields.io/badge/License-GPL--3.0--or--later-blue" alt="GPL-3.0-or-later"></a>
+</p>
 
-## Meet your pocket PC gaming experiment
+iDeck brings Valve's real Steam client in Big Picture to your iPhone and iPad,
+with compatible Windows PC games running locally through **Madeira, Wine, FEX
+and Metal**. Connect a controller, open your library, and give that backlog a
+new home in your pocket.
 
-You know that Steam backlog you keep promising to play?
-**What if your iPhone could take a shift?**
+Inspired by [DroidDeck](https://github.com/Droid-Deck/DroidDeck)'s mobile Steam
+experience, built on [Will Faust's Madeira](https://github.com/willfaust/Madeira).
+No gaming PC stream is required.
 
-iDeck is building a Steam Deck-style experience for iPhone and iPad: open the
-app, connect a controller, and step into **Valve's actual Steam Big Picture**.
-Compatible Windows PC games run locally on your Apple device through Madeira's
-Wine/FEX/Metal stack. No gaming PC needs to stay awake in the other room.
+> **SteamOS experience, iOS underneath.** iDeck runs Windows Steam through
+> compatibility and instruction translation. It does not install Linux SteamOS,
+> and it does not make every game an ARM-native iOS app.
 
-The ambition: turn the device you already carry into a handheld for the games
-you already own. The current reality: an open-source experiment with some very
-exciting moments—and some very stubborn loading screens.
+## Requirements and setup
 
-> **Real Steam UI. Real local execution. Still a work in progress.**
-> iDeck runs Windows Steam through compatibility and instruction translation.
-> It brings a SteamOS-style experience; it does **not** install Linux SteamOS
-> or make every PC game an ARM-native iOS app.
+This is currently an **experimental source release**, not a download-and-play
+IPA. Development targets iPhone and iPad; actual device evidence so far comes
+from an **iPhone 15 Pro Max (A17 Pro)**. iPad support has not been validated.
+JIT is required through Madeira's authorized pairing/debug workflow. No jailbreak
+or private entitlement is assumed.
 
-## The handheld treatment
+Prepare the runtime, configure pairing and JIT, then launch Steam from iDeck.
+Steam handles sign-in, Steam Guard and saved login. The launcher also provides
+an account entry for choosing another Steam account. Game ownership and license
+checks stay with Valve.
 
-| | What we're building |
-|---|---|
-| 🛋️ **Big Picture, small device** | Steam's own controller-friendly interface, library and account system. |
-| 🎮 **Pick your controls** | Physical controllers, direct touch and an on-screen virtual controller. |
-| 🫧 **One little floating button** | Move it where you want. Open the keyboard, adjust controls, summon the Steam menu or request a graceful game exit. |
-| 🔑 **Your account stays with Steam** | Genuine sign-in and Steam Guard. Saved login belongs to the local Steam client. |
-| 🛠️ **Open the hood** | Source, compatibility experiments, diagnostic programs and evidence you can inspect. |
+Read [setup and missing prerequisites](docs/GETTING_STARTED.md) before building.
+The tested legacy Windows Steam client/CEF is not bundled, and a supported clean
+acquisition/setup flow remains unfinished. Obtain software through legitimate
+owner channels; do not copy another installation's authentication cache.
 
-These are implemented product paths, **not a promise that every path works in
-every game**. Read the status below before packing away your other handheld.
+## Your phone, with a handheld habit
 
-## What actually works?
+- **The real Big Picture.** Steam's own interface, account system and library.
+- **Play locally.** Compatible PC games execute on the device through Madeira's
+  runtime; there is no required gaming PC in the other room.
+- **Bring your controller.** Physical controller integration, direct touch and an
+  on-screen virtual controller are implemented, with validation still in progress.
+- **Keep the little button handy.** Move the floating iDeck button wherever it
+  suits you. Open the keyboard, show controls, adjust their layout, open the Steam
+  menu or request a graceful game exit.
+- **Keep your Steam session.** Saved authentication stays in Steam's local prefix.
+  iDeck does not enter your credentials or replace Steam's authentication.
 
-The test bench so far is an **iPhone 15 Pro Max with an A17 Pro**. iPad is a
-development target; it has not been validated in this project yet.
+## Compatibility and current status
 
-| Status | Evidence so far |
-|---|---|
-| ✅ **Steam sign-in** | Genuine login, Steam Guard approval and saved-login reuse observed on the test iPhone. |
-| ✅ **Big Picture & library** | The real interface and library browsing have worked in earlier builds. |
-| ✅ **A PC game on an iPhone** | Game startup observed; gameplay also reported by the tester. This is not a broad compatibility list. |
-| ✅ **Input progress** | Tester confirmed text entry and the floating menu's Steam-menu action. |
-| 🧪 **Startup & transitions** | Still unreliable. Recent logs reached successful login and `BrowserReady`; those events alone do not prove an interactive home screen. |
-| 🧪 **Controller coverage** | Windows recognizes the virtual controller. Full Steam/game input behavior and Bluetooth validation remain open. |
-| 🧪 **The full couch session** | Reliable game return, long-session stability and iPad testing still need work. |
+Real Steam login, saved-login reuse, Big Picture and library browsing have been
+observed on the test iPhone. A PC game has started locally, with gameplay also
+reported by the tester. Text entry and the floating menu's Steam action have
+received positive device feedback.
 
-**JIT is required**, using Madeira's authorized pairing/debug workflow. No
-jailbreak or private entitlement is assumed. Compatibility varies by game;
-anti-cheat support and “your entire library works” are not promised. Steam
-ownership, authentication and license checks remain in place.
+There are still rough edges: startup and post-login transitions can hang.
+Windows enumerating a controller is not proof that every Steam/game input path
+works. Bluetooth, reliable game return, longer sessions and iPad testing remain
+open. Recent logs reached successful login and `BrowserReady`; those events alone
+do not prove an interactive home screen.
 
-For the receipts, see [technical status](docs/IDECK.md),
-[POC results](docs/BIG_PICTURE_POC_RESULTS.md) and
-[login/transition evidence](docs/IDECK_LOGIN_TRANSITION_EVIDENCE.json).
+Compatibility is per game. Broad library support and anti-cheat compatibility
+are not promised. This is an experiment for people who enjoy opening the hood—
+including when the loading screen decides to become the main character.
 
-## How does that fit in a phone?
+See [technical status](docs/IDECK.md), [POC results](docs/BIG_PICTURE_POC_RESULTS.md)
+and [login/transition evidence](docs/IDECK_LOGIN_TRANSITION_EVIDENCE.json).
 
-The native iOS shell handles setup and controls. Madeira provides the runtime:
-Wine supplies Windows compatibility, FEX translates x86 instructions to ARM64,
-and the graphics stack connects supported rendering paths to Metal. Steam and
-the game run on the device.
-
-**Will Faust's Madeira is the foundation of this project.** Most of the runtime
-and build system is its work. iDeck adds the handheld launcher experience,
-Steam UI integration, input work and compatibility experiments; it does not claim
-to have invented the stack underneath.
-
-[Meet the projects and contributors →](CREDITS.md) ·
-[Exact source snapshot and component pins →](docs/PROVENANCE.json)
-
-[DroidDeck](https://github.com/Droid-Deck/DroidDeck) inspired the mobile Steam
-handheld experience. iDeck takes the Madeira route on iOS, rather than DroidDeck's
-Android/ARM64 Proton implementation. No DroidDeck code or artwork was imported
-for this snapshot.
-
-## Bring your own curiosity
-
-**This is a source release for tinkerers, not a download-and-play app yet.**
-There is no public IPA, and a fresh clone is not a one-command build. Runtime
-resources and proprietary dependencies need separate preparation.
+## Build
 
 ```sh
 git clone --recurse-submodules https://github.com/kuscholar/iDeck.git
 cd iDeck
 ```
 
-Start with [build & setup prerequisites](docs/GETTING_STARTED.md), then
-[Madeira's build instructions](docs/BUILDING.md) and [JIT setup](docs/JIT.md).
-The Xcode project is still `app/Madeira.xcodeproj`, with scheme `Madeira`, to
-preserve the inherited build system. On your Home Screen, it's **iDeck** with
-the cyan-and-blue **iD** icon.
+Follow [Getting started](docs/GETTING_STARTED.md), [Building](docs/BUILDING.md)
+and [JIT setup](docs/JIT.md). The public snapshot excludes compiled runtime
+payloads and requires separately prepared dependencies; this is not a one-command
+clean build yet.
 
-Use your own development team and a unique app identifier; the source defaults
-to `com.kuscholar.ideck.steamui`. Keep existing Madeira installs and their data
-separate. Obtain Steam through Valve's legitimate channels and sign in yourself.
-Steam/CEF, games, account caches, signing profiles and the proprietary Apple
-runtime library are not included in this public repository. The tested legacy
-Steam client is not bundled, either.
+The inherited Xcode project is `app/Madeira.xcodeproj`, scheme `Madeira`. The
+app displays **iDeck** with the cyan-and-blue **iD** icon. Select your own Apple
+development team and a unique identifier; the source defaults to
+`com.kuscholar.ideck.steamui`. Keep existing Madeira installs and their data
+separate.
 
-Found a reproducible failure? [Open an issue](https://github.com/kuscholar/iDeck/issues)
-with the build, device, steps and **redacted** diagnostics. Keep passwords, tokens,
-Steam Guard details and account identifiers out of reports. A useful bug report
-gets us closer to fewer loading screens.
+No public IPA, Steam/CEF client, games, account caches, signing profiles or
+proprietary Apple runtime library is included. Read the
+[distribution requirements](docs/DISTRIBUTION.md) before sharing a built package.
 
-## Open source, with proper credit
+## Feedback
+
+[Open an issue](https://github.com/kuscholar/iDeck/issues) with your device,
+build, steps to reproduce and redacted diagnostics. Tell us what actually
+appeared on screen, not just whether compilation passed. Never attach passwords,
+tokens, Steam Guard details, pairing files or account identifiers.
+
+## Credits
+
+**Madeira is the foundation of iDeck.** Will Faust and the Madeira contributors
+created the substantial runtime, graphics/device integration and build system
+used here. iDeck adds its launcher experience, Steam UI integration, input work,
+diagnostics and compatibility experiments; it does not claim authorship of that
+underlying stack.
+
+Thanks to the Wine, FEX-Emu, DXMT, StikJIT/StikDebug, idevice and other upstream
+contributors, and to the historical CEF research in
+[deezhizyu/madeira](https://github.com/deezhizyu/madeira).
+
+[DroidDeck](https://github.com/Droid-Deck/DroidDeck) inspired the product direction
+and this README's straightforward structure. iDeck uses Madeira's iOS runtime,
+not DroidDeck's Android/ARM64 Proton implementation. No DroidDeck code or artwork
+was imported for this snapshot; the README text here is written for iDeck.
+
+Full attribution: [CREDITS.md](CREDITS.md), [NOTICE](NOTICE),
+[third-party notices](THIRD-PARTY-NOTICES.md) and
+[exact source/component provenance](docs/PROVENANCE.json).
+
+## License
 
 The iDeck-authored additions use **GPL-3.0-or-later**, with the existing
 [Madeira Converter Exception](LICENSE-EXCEPTION.md) for work whose rights holders
-grant it. Upstream files keep their own terms, including LGPL, MIT, BSD and MPL.
-Original copyright and license notices are retained.
+grant it. Upstream files keep their own licenses, including LGPL, MIT, BSD and
+MPL. Original copyright and license notices are retained; see [COPYING](COPYING).
 
-Read [CREDITS](CREDITS.md), [NOTICE](NOTICE),
-[third-party notices](THIRD-PARTY-NOTICES.md) and [COPYING](COPYING).
-Public IPA distribution remains subject to corresponding-source, relinking and
-proprietary-library review; see [distribution requirements](docs/DISTRIBUTION.md).
-Publishing source is not a blanket clearance to redistribute an assembled app.
+Source publication does not resolve every obligation for distributing a built
+IPA. Corresponding-source, relinking and proprietary-library requirements remain
+in [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md).
 
 Steam, SteamOS and Steam Deck are Valve trademarks. iPhone, iPad, iOS and Metal
 are Apple trademarks. iDeck is independent and is not affiliated with or endorsed
 by Valve, Apple, Madeira or DroidDeck.
-
----
-
-<p align="center"><strong>A big library. A small screen. Let's see how far this goes.</strong></p>
