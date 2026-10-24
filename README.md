@@ -56,6 +56,19 @@ owner channels; do not copy another installation's authentication cache.
 
 ## Compatibility and current status
 
+> **Game support is limited.** Expect only a limited selection of games to work
+> with this experimental runtime—not your entire Steam library. A game may fail
+> to start, render incorrectly, crash, or need device-specific settings.
+
+For upstream game reports, check **[Madeira's official Discord](https://discord.gg/4t5mNjwCn7)**
+and **[Madeira game compatibility reports on GitHub](https://github.com/willfaust/Madeira/issues?q=is%3Aissue%20compatibility)**.
+Madeira's current [official README](https://github.com/willfaust/Madeira#readme)
+does not publish a standalone supported-games table. These are upstream report
+sources, **not an iDeck-supported-games list**: results depend on the device,
+OS, runtime version and settings, and a game working in Madeira does not guarantee
+it works in iDeck's Steam Big Picture path.
+
+
 Real Steam login, saved-login reuse, Big Picture and library browsing have been
 observed on the test iPhone. A PC game has started locally, with gameplay also
 reported by the tester. Text entry and the floating menu's Steam action have
