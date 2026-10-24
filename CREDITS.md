@@ -46,6 +46,5 @@ experiment does not modify FEX.
 The kuscholar iDeck derivative adds the product launcher, Steam UI experiments,
 controller/input integration, movable menu, diagnostic tests and original branding.
 Changes and evidence are recorded in `docs/BIG_PICTURE_POC_RESULTS.md` and the
-`IDECK_*` documents. Icon generated with OpenAI Imagegen under project direction;
-its prompt/provenance is in `docs/assets/ideck/README.md`. No official brand logo
-is part of the new icon.
+`IDECK_*` documents. Current iD app icon supplied by the project owner; the previous Imagegen design
+is retained as design history. Asset provenance is in `docs/assets/ideck/README.md`.

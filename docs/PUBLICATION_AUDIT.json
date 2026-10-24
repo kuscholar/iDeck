@@ -27,5 +27,6 @@
     "Inherited whitespace in unmodified upstream/license files retained",
     "Binary distribution/source/relink/Apple review remains required"
   ],
-  "icon_sha256": "be9237592eb8cbba1bd74e75e41556c8ab1014c7b6b6c6d68bbb97d870ae69c6"
+  "icon_sha256": "36c91c9dc30a37211ea1af769ee8c6dcb69802f6f4be97147d3a9f99b0b7785d",
+  "icon_update": "2026-10-24 user-supplied iD image, opaque1024px export; prior generated design retained as history"
 }

@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/assets/ideck/icon.png" width="156" alt="iDeck handheld icon"></p>
+<p align="center"><img src="docs/assets/ideck/icon.png" width="156" alt="iDeck cyan and blue iD controller icon"></p>
 <h1 align="center">iDeck</h1>
 <p align="center"><strong>Your iPhone. Your iPad. Your PC games.</strong><br>Genuine Steam Big Picture, running locally on iOS and iPadOS.</p>
 <p align="center"><a href="COPYING">GPL-3.0-or-later</a> · <a href="CREDITS.md">Built on Madeira</a> · <a href="docs/GETTING_STARTED.md">Build & setup</a> · <a href="docs/IDECK.md">Technical status</a></p>
@@ -52,8 +52,8 @@ cd iDeck
 ```
 
 The Xcode project remains `app/Madeira.xcodeproj` and the scheme `Madeira` to
-preserve the inherited build system. The app displays **iDeck**, has an original
-icon, and defaults to its own `com.kuscholar.ideck.steamui` development identifier.
+preserve the inherited build system. The app displays **iDeck**, uses the cyan/blue **iD** controller icon supplied
+for this project, and defaults to its own `com.kuscholar.ideck.steamui` development identifier.
 Select your own development team. Do not overwrite an existing Madeira app or copy
 its authentication caches. Obtain Steam through Valve's legitimate channels and
 sign in yourself; the previously tested legacy client is not bundled here.

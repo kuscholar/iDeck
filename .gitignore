@@ -188,3 +188,6 @@ Steam32OfficialClient/
 **/Steam32OfficialClient/
 **/loginusers.vdf
 **/ssfn*
+
+# Local toolchain may also be a symlink
+/toolchains
