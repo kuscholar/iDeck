@@ -1,4 +1,16 @@
-# Madeira licensing: the assembled iOS app (working document of 2026-09-16, updated 2026-09-24; not legal advice)
+# iDeck release review
+
+The iDeck alpha's engineering review and supplied distribution materials are
+recorded in [release/LICENSING_REVIEW.md](release/LICENSING_REVIEW.md).
+No lawyer review is claimed. The lawyer-review requirement in the inherited
+working document below is retained as historical upstream release guidance;
+it is not added to the component licenses as a new distribution condition.
+The user-authorized iDeck alpha uses the documented source, notice, relink and
+signing checks as its release criteria. Component license obligations remain.
+
+---
+
+# Madeira licensing: inherited assembled-app working document (2026-09-24)
 
 This is a working document by the Madeira author, not legal advice. It
 records what the shipped app contains, under which terms, and which

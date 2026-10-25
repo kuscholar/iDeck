@@ -1,0 +1,1501 @@
+{
+  "target": "aarch64-apple-ios",
+  "packages": [
+    {
+      "name": "aead",
+      "version": "0.5.2",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/traits",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "aes",
+      "version": "0.8.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/block-ciphers",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "async-stream",
+      "version": "0.3.6",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/async-stream",
+      "authors": [
+        "Carl Lerche <me@carllerche.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "base64",
+      "version": "0.21.7",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/marshallpierce/rust-base64",
+      "authors": [
+        "Alice Maz <alice@alicemaz.com>",
+        "Marshall Pierce <marshall@mpierce.org>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "base64",
+      "version": "0.22.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/marshallpierce/rust-base64",
+      "authors": [
+        "Marshall Pierce <marshall@mpierce.org>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "base64",
+      "version": "0.23.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/marshallpierce/rust-base64",
+      "authors": [
+        "Marshall Pierce <marshall@mpierce.org>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "base64ct",
+      "version": "1.8.3",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "block-buffer",
+      "version": "0.10.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/utils",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "block-padding",
+      "version": "0.3.3",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/utils",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "bytes",
+      "version": "1.12.1",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/bytes",
+      "authors": [
+        "Carl Lerche <me@carllerche.com>",
+        "Sean McArthur <sean@seanmonstar.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "cbc",
+      "version": "0.1.2",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/block-modes",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "cfg-if",
+      "version": "1.0.5",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/cfg-if",
+      "authors": [
+        "Alex Crichton <alex@alexcrichton.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "chacha20",
+      "version": "0.10.2",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/stream-ciphers",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "chacha20",
+      "version": "0.9.1",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/stream-ciphers",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "chacha20poly1305",
+      "version": "0.10.1",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/AEADs/tree/master/chacha20poly1305",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "cipher",
+      "version": "0.4.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/traits",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "const-oid",
+      "version": "0.9.6",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats/tree/master/const-oid",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "cpufeatures",
+      "version": "0.2.17",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/utils",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "crypto-common",
+      "version": "0.1.7",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/traits",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "curve25519-dalek",
+      "version": "4.1.3",
+      "declared_license": "BSD-3-Clause",
+      "repository": "https://github.com/dalek-cryptography/curve25519-dalek/tree/main/curve25519-dalek",
+      "authors": [
+        "Isis Lovecruft <isis@patternsinthevoid.net>",
+        "Henry de Valence <hdevalence@hdevalence.ca>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "der",
+      "version": "0.7.10",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats/tree/master/der",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "deranged",
+      "version": "0.5.8",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/jhpratt/deranged",
+      "authors": [
+        "Jacob Pratt <jacob@jhpratt.dev>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-Apache",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "digest",
+      "version": "0.10.7",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/traits",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "ed25519",
+      "version": "2.2.3",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/signatures/tree/master/ed25519",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "ed25519-dalek",
+      "version": "2.2.0",
+      "declared_license": "BSD-3-Clause",
+      "repository": "https://github.com/dalek-cryptography/curve25519-dalek/tree/main/ed25519-dalek",
+      "authors": [
+        "isis lovecruft <isis@patternsinthevoid.net>",
+        "Tony Arcieri <bascule@gmail.com>",
+        "Michael Rosenberg <michael@mrosenberg.pub>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "equivalent",
+      "version": "1.0.2",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/indexmap-rs/equivalent",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-channel",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-core",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-executor",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-io",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-sink",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-task",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "futures-util",
+      "version": "0.3.34",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "generic-array",
+      "version": "0.14.7",
+      "declared_license": "MIT",
+      "repository": "https://github.com/fizyk20/generic-array.git",
+      "authors": [
+        "Bart\u0142omiej Kami\u0144ski <fizyk20@gmail.com>",
+        "Aaron Trent <novacrazy@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "getrandom",
+      "version": "0.2.17",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/getrandom",
+      "authors": [
+        "The Rand Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "getrandom",
+      "version": "0.4.3",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/getrandom",
+      "authors": [
+        "The Rand Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "hashbrown",
+      "version": "0.17.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/hashbrown",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "hkdf",
+      "version": "0.12.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/KDFs/",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "hmac",
+      "version": "0.12.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/MACs",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "idevice",
+      "version": "0.1.68",
+      "declared_license": "MIT",
+      "repository": "https://github.com/jkcoxson/idevice",
+      "authors": [
+        "Jackson Coxson"
+      ],
+      "supplemental": "idevice-0.1.68",
+      "license_files": [
+        "LICENSE-MIT.txt",
+        "ORIGIN.txt"
+      ]
+    },
+    {
+      "name": "idevice-srp",
+      "version": "0.6.0",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/PAKEs",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "indexmap",
+      "version": "2.14.2",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/indexmap-rs/indexmap",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "inout",
+      "version": "0.1.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/utils",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "itoa",
+      "version": "1.0.18",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/dtolnay/itoa",
+      "authors": [
+        "David Tolnay <dtolnay@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "lazy_static",
+      "version": "1.5.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang-nursery/lazy-static.rs",
+      "authors": [
+        "Marvin L\u00f6bel <loebel.marvin@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "libc",
+      "version": "0.2.190",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/libc",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "libm",
+      "version": "0.2.16",
+      "declared_license": "MIT",
+      "repository": "https://github.com/rust-lang/compiler-builtins",
+      "authors": [
+        "Alex Crichton <alex@alexcrichton.com>",
+        "Amanieu d'Antras <amanieu@gmail.com>",
+        "Jorge Aparicio <japaricious@gmail.com>",
+        "Trevor Gross <tg@trevorgross.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE.txt"
+      ]
+    },
+    {
+      "name": "madeira_rppairing",
+      "version": "0.1.0",
+      "declared_license": "GPL-3.0-or-later",
+      "repository": null,
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "notices.py"
+      ]
+    },
+    {
+      "name": "md-5",
+      "version": "0.10.6",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/hashes",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "memchr",
+      "version": "2.8.3",
+      "declared_license": "Unlicense OR MIT",
+      "repository": "https://github.com/BurntSushi/memchr",
+      "authors": [
+        "Andrew Gallant <jamslam@gmail.com>",
+        "bluss"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYING",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "mio",
+      "version": "1.2.3",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/mio",
+      "authors": [
+        "Carl Lerche <me@carllerche.com>",
+        "Thomas de Zeeuw <thomasdezeeuw@gmail.com>",
+        "Tokio Contributors <team@tokio.rs>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "num-bigint",
+      "version": "0.4.8",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-num/num-bigint",
+      "authors": [
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "num-bigint-dig",
+      "version": "0.8.6",
+      "declared_license": "MIT/Apache-2.0",
+      "repository": "https://github.com/dignifiedquire/num-bigint",
+      "authors": [
+        "dignifiedquire <dignifiedquire@gmail.com>",
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "num-conv",
+      "version": "0.2.2",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/jhpratt/num-conv",
+      "authors": [
+        "Jacob Pratt <jacob@jhpratt.dev>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-Apache",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "num-integer",
+      "version": "0.1.47",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-num/num-integer",
+      "authors": [
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "num-iter",
+      "version": "0.1.46",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-num/num-iter",
+      "authors": [
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "num-traits",
+      "version": "0.2.19",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-num/num-traits",
+      "authors": [
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "once_cell",
+      "version": "1.21.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/matklad/once_cell",
+      "authors": [
+        "Aleksey Kladov <aleksey.kladov@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "opaque-debug",
+      "version": "0.3.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/utils",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "pem-rfc7468",
+      "version": "0.7.0",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats/tree/master/pem-rfc7468",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "pin-project-lite",
+      "version": "0.2.17",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/taiki-e/pin-project-lite",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "pkcs1",
+      "version": "0.7.5",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats/tree/master/pkcs1",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "pkcs8",
+      "version": "0.10.2",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats/tree/master/pkcs8",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "plist",
+      "version": "1.10.1",
+      "declared_license": "MIT",
+      "repository": "https://github.com/ebarnard/rust-plist/",
+      "authors": [
+        "Ed Barnard <eabarnard@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENCE"
+      ]
+    },
+    {
+      "name": "plist-macro",
+      "version": "0.1.6",
+      "declared_license": "MIT",
+      "repository": "https://github.com/jkcoxson/plist_macro",
+      "authors": [
+        "Jackson Coxson"
+      ],
+      "supplemental": "plist-macro-0.1.6",
+      "license_files": [
+        "LICENSE-MIT.txt",
+        "UPSTREAM-DECLARATION.txt"
+      ]
+    },
+    {
+      "name": "poly1305",
+      "version": "0.8.0",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/universal-hashes",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "powerfmt",
+      "version": "0.2.0",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/jhpratt/powerfmt",
+      "authors": [
+        "Jacob Pratt <jacob@jhpratt.dev>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-Apache",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "ppv-lite86",
+      "version": "0.2.21",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/cryptocorrosion/cryptocorrosion",
+      "authors": [
+        "The CryptoCorrosion Contributors"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "quick-xml",
+      "version": "0.42.0",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tafia/quick-xml",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-MIT.md"
+      ]
+    },
+    {
+      "name": "rand",
+      "version": "0.10.3",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/rand",
+      "authors": [
+        "The Rand Project Developers",
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYRIGHT",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rand",
+      "version": "0.8.8",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/rand",
+      "authors": [
+        "The Rand Project Developers",
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYRIGHT",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rand_chacha",
+      "version": "0.3.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/rand",
+      "authors": [
+        "The Rand Project Developers",
+        "The Rust Project Developers",
+        "The CryptoCorrosion Contributors"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYRIGHT",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rand_core",
+      "version": "0.10.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/rand_core",
+      "authors": [
+        "The Rand Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYRIGHT",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rand_core",
+      "version": "0.6.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-random/rand",
+      "authors": [
+        "The Rand Project Developers",
+        "The Rust Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYRIGHT",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "ring",
+      "version": "0.17.14",
+      "declared_license": "Apache-2.0 AND ISC",
+      "repository": "https://github.com/briansmith/ring",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE",
+        "LICENSE-BoringSSL",
+        "LICENSE-other-bits",
+        "src/polyfill/once_cell/LICENSE-APACHE",
+        "src/polyfill/once_cell/LICENSE-MIT",
+        "third_party/fiat/LICENSE"
+      ]
+    },
+    {
+      "name": "rsa",
+      "version": "0.9.10",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/RSA",
+      "authors": [
+        "RustCrypto Developers",
+        "dignifiedquire <dignifiedquire@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rustls",
+      "version": "0.23.45",
+      "declared_license": "Apache-2.0 OR ISC OR MIT",
+      "repository": "https://github.com/rustls/rustls",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-ISC",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rustls-pki-types",
+      "version": "1.15.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rustls/pki-types",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "rustls-webpki",
+      "version": "0.103.15",
+      "declared_license": "ISC",
+      "repository": "https://github.com/rustls/webpki",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "serde",
+      "version": "1.0.229",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/serde-rs/serde",
+      "authors": [
+        "Erick Tryzelaar <erick.tryzelaar@gmail.com>",
+        "David Tolnay <dtolnay@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "serde_core",
+      "version": "1.0.229",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/serde-rs/serde",
+      "authors": [
+        "Erick Tryzelaar <erick.tryzelaar@gmail.com>",
+        "David Tolnay <dtolnay@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.151",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/serde-rs/json",
+      "authors": [
+        "Erick Tryzelaar <erick.tryzelaar@gmail.com>",
+        "David Tolnay <dtolnay@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "sha1",
+      "version": "0.10.7",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/hashes",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "sha2",
+      "version": "0.10.9",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/hashes",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "signature",
+      "version": "2.2.0",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/traits/tree/master/signature",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "siphasher",
+      "version": "1.0.4",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/jedisct1/rust-siphash",
+      "authors": [
+        "Frank Denis <github@pureftpd.org>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "COPYING",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "slab",
+      "version": "0.4.12",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/slab",
+      "authors": [
+        "Carl Lerche <me@carllerche.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "smallvec",
+      "version": "1.16.2",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/servo/rust-smallvec",
+      "authors": [
+        "The Servo Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "socket2",
+      "version": "0.6.5",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/socket2",
+      "authors": [
+        "Alex Crichton <alex@alexcrichton.com>",
+        "Thomas de Zeeuw <thomasdezeeuw@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "spin",
+      "version": "0.9.9",
+      "declared_license": "MIT",
+      "repository": "https://github.com/mvdnes/spin-rs.git",
+      "authors": [
+        "Mathijs van de Nes <git@mathijs.vd-nes.nl>",
+        "John Ericson <git@JohnEricson.me>",
+        "Joshua Barretto <joshua.s.barretto@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "spki",
+      "version": "0.7.3",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/formats/tree/master/spki",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "subtle",
+      "version": "2.6.1",
+      "declared_license": "BSD-3-Clause",
+      "repository": "https://github.com/dalek-cryptography/subtle",
+      "authors": [
+        "Isis Lovecruft <isis@patternsinthevoid.net>",
+        "Henry de Valence <hdevalence@hdevalence.ca>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "thiserror",
+      "version": "2.0.21",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/dtolnay/thiserror",
+      "authors": [
+        "David Tolnay <dtolnay@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "time",
+      "version": "0.3.55",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/time-rs/time",
+      "authors": [
+        "Jacob Pratt <open-source@jhpratt.dev>",
+        "Time contributors"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-Apache",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "time-core",
+      "version": "0.1.9",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/time-rs/time",
+      "authors": [
+        "Jacob Pratt <open-source@jhpratt.dev>",
+        "Time contributors"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-Apache",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "tokio",
+      "version": "1.53.1",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/tokio",
+      "authors": [
+        "Tokio Contributors <team@tokio.rs>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "tokio-rustls",
+      "version": "0.26.6",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rustls/tokio-rustls",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "tracing",
+      "version": "0.1.44",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/tracing",
+      "authors": [
+        "Eliza Weisman <eliza@buoyant.io>",
+        "Tokio Contributors <team@tokio.rs>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "tracing-core",
+      "version": "0.1.36",
+      "declared_license": "MIT",
+      "repository": "https://github.com/tokio-rs/tracing",
+      "authors": [
+        "Tokio Contributors <team@tokio.rs>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE",
+        "src/spin/LICENSE"
+      ]
+    },
+    {
+      "name": "typenum",
+      "version": "1.20.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/paholg/typenum",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE",
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "universal-hash",
+      "version": "0.5.1",
+      "declared_license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/RustCrypto/traits",
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "untrusted",
+      "version": "0.9.0",
+      "declared_license": "ISC",
+      "repository": "https://github.com/briansmith/untrusted",
+      "authors": [
+        "Brian Smith <brian@briansmith.org>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE.txt"
+      ]
+    },
+    {
+      "name": "uuid",
+      "version": "1.27.0",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/uuid-rs/uuid",
+      "authors": [
+        "Ashley Mannix<ashleymannix@live.com.au>",
+        "Dylan DPC<dylan.dpc@gmail.com>",
+        "Hunar Roop Kahlon<hunar.roop@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "x25519-dalek",
+      "version": "2.0.1",
+      "declared_license": "BSD-3-Clause",
+      "repository": "https://github.com/dalek-cryptography/curve25519-dalek/tree/main/x25519-dalek",
+      "authors": [
+        "Isis Lovecruft <isis@patternsinthevoid.net>",
+        "DebugSteven <debugsteven@gmail.com>",
+        "Henry de Valence <hdevalence@hdevalence.ca>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "zerocopy",
+      "version": "0.8.59",
+      "declared_license": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "repository": "https://github.com/google/zerocopy",
+      "authors": [],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-BSD",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "zeroize",
+      "version": "1.9.0",
+      "declared_license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/RustCrypto/utils",
+      "authors": [
+        "The RustCrypto Project Developers"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    {
+      "name": "zmij",
+      "version": "1.0.23",
+      "declared_license": "MIT",
+      "repository": "https://github.com/dtolnay/zmij",
+      "authors": [
+        "David Tolnay <dtolnay@gmail.com>"
+      ],
+      "supplemental": null,
+      "license_files": [
+        "LICENSE-MIT"
+      ]
+    }
+  ],
+  "missing_license_text": []
+}

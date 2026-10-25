@@ -43,6 +43,15 @@ class PackageChecks(unittest.TestCase):
         with self.assertRaises(ValueError):
             audit.audit(self.package([('Payload/Other.app/Info.plist', b'bad')]))
 
+    def test_adhoc_resources_can_be_explicitly_allowed(self):
+        path = self.package([('Payload/Test.app/_CodeSignature/CodeResources', b'resources')])
+        self.assertTrue(audit.audit(path)['findings'])
+        self.assertEqual(audit.audit(path, allow_signature_resources=True)['findings'], [])
+
+    def test_allowing_signature_resources_still_rejects_profiles(self):
+        path = self.package([('Payload/Test.app/embedded.mobileprovision', b'profile')])
+        self.assertTrue(audit.audit(path, allow_signature_resources=True)['findings'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,10 @@
 # Building iDeck from source
 
+For the packaged alpha, see [IPA installation](INSTALL_IPA.md). The release's
+source and relink companion assets contain inputs omitted from Git and avoid
+depending on the maintainer's private directory. A complete clean-machine build
+of every Madeira runtime component remains unverified.
+
 The public snapshot is source-only and is **not yet a self-contained clean-room
 one-command build**. The private development checkout is not a reproducible
 public dependency source. Follow docs/BUILDING.md and preserve its component
@@ -14,9 +19,11 @@ pins; read docs/DISTRIBUTION.md before sharing binaries.
    archive and prefix-template artifacts listed in PUBLIC_SOURCE_EXCLUSIONS.json.
    Reconstruct the Wine prefix using the documented prefix/bootstrap scripts;
    no authenticated development prefix is provided.
-4. Build/fetch the exact StikJIT1.9.0 component from its official source/release,
-   as documented in JIT.md, and honor its MPL/idevice notices. Obtain Apple's
-   proprietary converter only under Apple's agreement; it is not published here.
+4. Build StikJIT1.9.0 with pinned idevice source using
+   [the release recipe](../build/stikjit-source/README.md); honor its MPL/idevice
+   notices. Obtain Apple's converter under its own agreement, or use the
+   separately licensed library in the IPA for its permitted shader-conversion
+   purpose. It is excluded from the Git source tree.
 5. Supply a legitimate full Steam client/CEF tree in the app's isolated prefix.
    Current experiments use an older32-bit Windows Steam version; no supported
    clean acquisition/download installer is delivered in this snapshot. Do not

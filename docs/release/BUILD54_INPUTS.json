@@ -1,0 +1,28 @@
+{
+  "build": 54,
+  "version": "0.1.3",
+  "ipa": "iDeck-0.1.3-alpha.1-build54.ipa",
+  "ipa_sha256": "4148a7d2f4c7ff3013f492e438944f09560ed2b2294f56ec81c2b11682007125",
+  "ipa_bytes": 166127052,
+  "ipa_files": 1211,
+  "excluded_payload_findings": [],
+  "signature": "ad-hoc; no signing certificate/team/profile; user must re-sign",
+  "phone_installation": "skipped at explicit owner request",
+  "main_link_inputs": 103,
+  "compiler_log_sha256": "5ffc0b54884dbbc52c96a5a606991f23a3f2ef389ed209d25125f97b15e36607",
+  "source_components": {
+    "wine_current": "9129e9684daaeae70da9435e7c6060e59392634e",
+    "wine_i386_official_release": "4f5b19718f4de88ecc5cb0dc08b119497a67ba8f",
+    "dxmt_current": "128b297c6e9a00014408dc68b4c2c2373b5813de",
+    "dxmt_i386_official_release": "35a4db11bd1bda380c5176a3bc6c1878f7192101",
+    "FEX": "f59cab95659e8add0c88f0c76ec1cf483c536dbf",
+    "LLVM": "8dfdcc7b7bf66834a761bd8de445840ef68e4d1a",
+    "StikJIT": "32287268fa5824f9edce4cb359f5833ce0cf7b00",
+    "idevice_ffi": "d32c8189c51c2789496b0768039419c3705498c3"
+  },
+  "limits": [
+    "No fresh on-device JIT/gameplay or third-party sideloader validation",
+    "No full clean-machine runtime rebuild claim",
+    "Engineering license review, not lawyer opinion"
+  ]
+}

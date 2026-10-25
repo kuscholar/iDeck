@@ -1,0 +1,21 @@
+The upstream published crate declares the license and authors below.
+The crate and its pinned repository tree do not ship a separate license text.
+iDeck selects MIT where the declaration offers MIT OR Apache-2.0.
+The standard MIT permission/disclaimer text is reproduced in LICENSE-MIT.txt.
+No new copyright year or authorship is asserted. Original source notices remain.
+
+Published source VCS: f8cec65e865cb48301d33b2244bec45a2f3d2bc2
+
+[package]
+name = "ns-keyed-archive"
+version = "0.1.5"
+edition = "2024"
+authors = ["Jackson Coxson"]
+description = "A library to encode/decode NSKeyedArchive binary plists"
+repository = "https://github.com/jkcoxson/ns_keyed_archive"
+license = "MIT OR Apache-2.0"
+keywords = ["apple", "plist", "NSKeyedArchive", "decoder", "encoder"]
+
+[dependencies]
+plist = "1.7.0"
+nskeyedarchiver_converter = "0.1.3"

@@ -1,0 +1,21 @@
+The upstream published crate declares the license and authors below.
+The crate and its pinned repository tree do not ship a separate license text.
+iDeck selects MIT where the declaration offers MIT OR Apache-2.0.
+The standard MIT permission/disclaimer text is reproduced in LICENSE-MIT.txt.
+No new copyright year or authorship is asserted. Original source notices remain.
+
+Published source VCS: d1d48559ddc8e9bd263f36180bbe1d4f2a3d55e5
+
+[package]
+name = "plist-macro"
+description = "Macros and utilities for manipulating plists"
+version = "0.1.6"
+edition = "2024"
+authors = ["Jackson Coxson"]
+license = "MIT"
+documentation = "https://docs.rs/idevice"
+repository = "https://github.com/jkcoxson/plist_macro"
+keywords = ["plist", "apple"]
+
+[dependencies]
+plist = { version = "1.8" }

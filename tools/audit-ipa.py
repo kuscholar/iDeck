@@ -10,7 +10,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 
 
-def audit(path):
+def audit(path, allow_signature_resources=False):
     findings, files, nested = [], [], []
     forbidden = {'steam.exe', 'steamwebhelper.exe', 'libcef.dll', 'loginusers.vdf',
                  'localconfig.vdf', 'embedded.mobileprovision'}
@@ -21,7 +21,7 @@ def audit(path):
             findings.append({'path': name, 'reason': 'unsafe archive path'})
         if (p.name.lower() in forbidden or p.name.lower().startswith('ssfn')
                 or p.suffix.lower() in {'.p12', '.p8', '.key', '.mobileprovision'}
-                or '_CodeSignature' in p.parts):
+                or ('_CodeSignature' in p.parts and not allow_signature_resources)):
             findings.append({'path': name, 'reason': 'excluded payload or signing material'})
 
     with zipfile.ZipFile(path) as z:
@@ -62,8 +62,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('ipa', type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--allow-signature-resources', action='store_true',
+                        help='Allow CodeResources for an independently verified ad-hoc signed package')
     args = parser.parse_args()
-    result = audit(args.ipa)
+    result = audit(args.ipa, allow_signature_resources=args.allow_signature_resources)
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(f"Inventoried {len(result['files'])} files; {len(result['findings'])} findings")
     raise SystemExit(1 if result['findings'] else 0)

@@ -1,0 +1,17 @@
+{
+  "stikjit_revision": "32287268fa5824f9edce4cb359f5833ce0cf7b00",
+  "idevice_revision": "d32c8189c51c2789496b0768039419c3705498c3",
+  "idevice_version": "0.1.68",
+  "framework_sha256": "c20c4612772b1d5e7373e2334a332b6d37dbb2f447eac5e4b86b33cb53867403",
+  "imported_symbols_checked": 17,
+  "missing_imported_symbols": [],
+  "build": "Swift and Rust source build; no phone test requested",
+  "cargo_lock_sha256": "3c1a7710f0cd02f9100e91b97c9f8abc6546f115f7f3255551c990628aea0e16",
+  "offline_archive_rebuild": "PASS: exported source trees, vendored Cargo.lock dependencies, CARGO_NET_OFFLINE=true; component rebuild only, not full runtime clean-machine claim",
+  "offline_build_log_sha256": "cae2e0d7e8b4d7f76c4d089454a178bf414388551287897644063bf4cdbf45a5",
+  "full_app_build": "Build54 full Xcode compile PASS; no phone installation at owner request",
+  "crate_notice_inventory": {
+    "normal_input_packages": 162,
+    "missing_license_texts": 0
+  }
+}

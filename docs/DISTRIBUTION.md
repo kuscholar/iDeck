@@ -1,12 +1,14 @@
 # iDeck licensing and distribution scope
 
-Review date: 2026-10-24. This is an engineering license inventory and release gate,
+Review date: 2026-10-25. This is an engineering license inventory and release gate,
 not a guarantee of legal clearance for every combination or jurisdiction.
 
 The [2026-10-25 IPA audit](IPA_RELEASE_AUDIT.md) records actual converter-license,
 historical runtime provenance, source archival, relinking and signing checks.
 It supersedes an earlier blanket claim that the converter had no identified
-redistribution basis; it does not mark every assembled-work issue resolved.
+redistribution basis. Build 54's component review and supplied materials are
+recorded in [release/LICENSING_REVIEW.md](release/LICENSING_REVIEW.md); no lawyer
+opinion or universal clearance is claimed.
 
 ## This public repository
 
@@ -43,7 +45,10 @@ THIRD-PARTY-NOTICES and all submodule notices when redistributing.
 
 ## Before publishing an IPA or runtime package
 
-No public binary release is approved by this source publication. First:
+Source publication alone does not fulfill binary obligations. For the Build 54
+alpha the following requirements were addressed by the companion source/relink
+assets, regenerated notices, source-built StikJIT and recorded component review.
+Future packages must repeat the relevant checks for their actual inputs:
 
 1. Resolve the upstream notice's open assembled-work/Apple exception questions.
    An exception applies only to code whose holder granted it, not all dependencies.

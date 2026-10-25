@@ -1,0 +1,4 @@
+MIT license retrieved verbatim from idevice v0.1.68 workspace root.
+Revision: d32c8189c51c2789496b0768039419c3705498c3
+https://github.com/jkcoxson/idevice/blob/d32c8189c51c2789496b0768039419c3705498c3/LICENSE.txt
+The published idevice crate omits that workspace-root file.

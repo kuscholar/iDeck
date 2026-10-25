@@ -30,7 +30,7 @@ while i<len(args):
   objs=Path(args[i+1]).read_text().splitlines()
   for n,obj in enumerate(objs):new.append(stage(Path(obj.strip('"')),f'objects/{n:04d}-{Path(obj.strip(chr(34))).name}'))
   i+=2;continue
- if a=='-Xlinker' and args[i+1] in ['-object_path_lto','-dependency_info','-add_ast_path']:
+ if a=='-Xlinker' and args[i+1] in ['-object_path_lto','-dependency_info','-add_ast_path','-map']:
   assert args[i+2]=='-Xlinker';i+=4;continue
  if a=='-o':new.extend(['-o','@ROOT@/Madeira.debug.dylib']);i+=2;continue
  if a.startswith('-l') and a not in ['-lc++','-lz','-lsqlite3','-llzma']:

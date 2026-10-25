@@ -30,8 +30,11 @@ No gaming PC stream is required.
 
 ## Requirements and setup
 
-This is currently an **experimental source release**, not a download-and-play
-IPA. Development targets iPhone and iPad; actual device evidence so far comes
+An **experimental IPA alpha** is available in
+[Releases](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.1),
+with source, license notices and relink materials alongside it.
+You sign it with your own Apple ID; [start here](docs/INSTALL_IPA.md).
+Development targets iPhone and iPad; actual device evidence so far comes
 from an **iPhone 15 Pro Max (A17 Pro)**. iPad support has not been validated.
 JIT is required through Madeira's authorized pairing/debug workflow. No jailbreak
 or private entitlement is assumed.

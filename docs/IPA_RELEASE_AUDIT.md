@@ -1,6 +1,7 @@
 # IPA release preparation — 2026-10-25
 
-Status: **private candidate; public binary release not yet cleared**.
+Status: **Build 54 engineering release checks completed; alpha assets prepared**.
+See the completion record below. The earlier Build 53 findings are retained.
 The owner requested skipping phone installation validation. That test is not
 claimed, and its absence is not the remaining source-distribution gate.
 
@@ -8,6 +9,32 @@ Candidate: version 0.1.3, Build 53, source snapshot
 `6fad3df2929dda0a0c9cbd49e84663be788390f0`.
 SHA-256: `547189dcb8c94cb5c20b1fcdc50de124b16bbf89194812f8fd2f3a2e0d64a304`.
 This audit does not relabel an old binary as newly rebuilt.
+
+## Build 54 completion
+
+- Rebuilt StikJIT 1.9.0 with idevice v0.1.68 from fixed source commits and the
+  upstream Cargo.lock, replacing the opaque precompiled FFI archive.
+- Rebuilt the same component from exported source trees and vendored dependencies
+  with `CARGO_NET_OFFLINE=true`. This verifies the source package's StikJIT path;
+  it is not a claim of a fresh-machine rebuild of the entire Madeira runtime.
+- Recorded 162 normal target input packages with zero missing license texts.
+  Nested notices and the six explicit supplemental notices are retained.
+- All 17 Swift imports used by the prior helper are provided by the new framework.
+  Full Build 54 Xcode compilation passed with the rebuilt component and new notices.
+- Included corrected Wine license notices and LLVM-MinGW runtime notices in
+  the actual app. Source archives, pinned manifests and a Build 54 relink kit
+  accompany the IPA. The portable relink recipe was executed successfully.
+- Packaged the alpha with certificate-free ad-hoc signatures, retaining the
+  helper and debugging entitlement requests. Profiles, pairing data, Steam/CEF,
+  games and local Wine Mono are excluded. Recipients must re-sign it themselves.
+- Completed the component-by-component
+  [engineering licensing review](release/LICENSING_REVIEW.md). No external
+  lawyer opinion is represented as obtained. The inherited recommendation
+  is no longer presented as a component-license condition.
+
+The remaining limits are testing boundaries, not undisclosed completed checks:
+the owner requested skipping phone installation; different-account sideloading,
+JIT and gameplay were not revalidated for this alpha. The release is experimental.
 
 ## Completed checks
 
@@ -47,7 +74,7 @@ This audit does not relabel an old binary as newly rebuilt.
   No credentials or profiles belong in public assets. This was the maintainer's
   existing identity, not Sideloadly/AltStore or a different tester's account.
 
-## Remaining gates
+## Build 53 investigation and gates (superseded by completion above)
 
 394 candidate `.dll`/`.exe`/`.dylib` files exactly match blobs in the working
 Madeira baseline `ee9fd2f4c21229dfce31a25c211d44df267336d8`. That establishes

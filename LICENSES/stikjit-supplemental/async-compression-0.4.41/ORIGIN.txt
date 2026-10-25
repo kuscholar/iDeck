@@ -1,0 +1,3 @@
+Exact published-crate VCS commit: 269174b4be20e3cfcbb7e7fa4d7d9596183e287b
+Source: https://github.com/Nullus157/async-compression/tree/269174b4be20e3cfcbb7e7fa4d7d9596183e287b
+License files retrieved verbatim from that repository root.

@@ -1,0 +1,38 @@
+The upstream published crate declares the license and authors below.
+The crate and its pinned repository tree do not ship a separate license text.
+iDeck selects MIT where the declaration offers MIT OR Apache-2.0.
+The standard MIT permission/disclaimer text is reproduced in LICENSE-MIT.txt.
+No new copyright year or authorship is asserted. Original source notices remain.
+
+Published source VCS: 265379167ab3f9a5664621a7f1c0f494b2ac7c96
+
+[package]
+name = "plist_ffi"
+version = "0.1.6"
+edition = "2024"
+description = "C FFI for the amazing plist crate, compatible with libplist"
+authors = ["Jackson Coxson"]
+license = "MIT"
+documentation = "https://docs.rs/plist_ffi"
+repository = "https://github.com/jkcoxson/plist_ffi"
+keywords = ["plist", "apple"]
+
+
+[dependencies]
+plist = { version = "1.7" }
+serde_json = { version = "1" }
+libc = { version = "0.2" }
+
+[build-dependencies]
+cbindgen = { version = "0.29" }
+cc = { version = "1.2" }
+
+[features]
+danger = []
+default = ["danger"]
+
+[lib]
+crate-type = ["rlib", "staticlib", "cdylib"]
+
+[package.metadata.docs.rs]
+all-features = true
