@@ -1,0 +1,14 @@
+{
+  "source_filename": "video_first_1m10s.gif",
+  "source_sha256": "bc171ab080f9e9049544c14286f501ddc03ad086cb84721e5b7414619ae4d21f",
+  "output": "demo-1.5x.gif",
+  "output_sha256": "94f9d2049b8d4521f50f01c5694f37999d4b06fe99a6f9c3a1b6e329b3d2f93b",
+  "width": 384,
+  "height": 831,
+  "frames": 560,
+  "source_duration_seconds": 70.01,
+  "output_duration_seconds": 46.67,
+  "actual_speed": 1.5001071352046282,
+  "method": "GIF GCE delay adjustment only, cumulative centisecond rounding. Image data, palette, disposal and loop extension preserved byte-for-byte.",
+  "file_bytes": 20502521
+}
