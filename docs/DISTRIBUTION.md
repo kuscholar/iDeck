@@ -3,6 +3,11 @@
 Review date: 2026-10-24. This is an engineering license inventory and release gate,
 not a guarantee of legal clearance for every combination or jurisdiction.
 
+The [2026-10-25 IPA audit](IPA_RELEASE_AUDIT.md) records actual converter-license,
+historical runtime provenance, source archival, relinking and signing checks.
+It supersedes an earlier blanket claim that the converter had no identified
+redistribution basis; it does not mark every assembled-work issue resolved.
+
 ## This public repository
 
 This is a **source snapshot**, with exact origin/revisions in PROVENANCE.json.
