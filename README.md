@@ -24,7 +24,7 @@ No gaming PC stream is required.
 > and it does not make every game an ARM-native iOS app.
 
 <p align="center">
-  <img src="docs/assets/ideck/demo-1.5x.gif" width="320" alt="iDeck demo: launching Steam and a PC game on iPhone, played at 1.5× speed">
+  <img src="docs/assets/ideck/demo-1.5x.gif" width="80%" alt="iDeck demo: launching Steam and a PC game on iPhone, played at 1.5× speed">
   <br><sub>On-device demo · 1.5× playback speed · Experimental build</sub>
 </p>
 
