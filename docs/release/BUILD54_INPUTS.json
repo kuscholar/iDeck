@@ -2,8 +2,8 @@
   "build": 54,
   "version": "0.1.3",
   "ipa": "iDeck-0.1.3-alpha.1-build54.ipa",
-  "ipa_sha256": "4148a7d2f4c7ff3013f492e438944f09560ed2b2294f56ec81c2b11682007125",
-  "ipa_bytes": 166127052,
+  "ipa_sha256": "d75b62ea992348ff59fd191c63878fc5c8e47d27542ae6d24aeea035c911db95",
+  "ipa_bytes": 166134714,
   "ipa_files": 1211,
   "excluded_payload_findings": [],
   "signature": "ad-hoc; no signing certificate/team/profile; user must re-sign",
@@ -24,5 +24,7 @@
     "No fresh on-device JIT/gameplay or third-party sideloader validation",
     "No full clean-machine runtime rebuild claim",
     "Engineering license review, not lawyer opinion"
-  ]
+  ],
+  "pairing_input_packages": 108,
+  "pairing_missing_license_texts": 0
 }

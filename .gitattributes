@@ -1,1 +1,4 @@
+# Generated/retained upstream license texts preserve their original whitespace.
 app/Frameworks/StikJIT.xcframework/** -whitespace
+app/Madeira/legal/LICENSES-*.txt -whitespace
+LICENSES/stikjit-supplemental/** -whitespace
