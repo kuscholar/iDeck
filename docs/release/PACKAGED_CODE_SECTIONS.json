@@ -6,5 +6,9 @@
   "stikjit": {
     "section_hashes_equal": true,
     "section_count": 36
+  },
+  "apple_converter": {
+    "section_hashes_equal": true,
+    "section_count": 14
   }
 }

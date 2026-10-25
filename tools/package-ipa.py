@@ -18,6 +18,8 @@ p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('app', type=Path)
 p.add_argument('output', type=Path)
 p.add_argument('--entitlements', required=True, type=Path)
+p.add_argument('--licenses', type=Path,
+               default=Path(__file__).resolve().parents[1] / 'LICENSES')
 args = p.parse_args()
 assert args.app.suffix == '.app'
 assert not args.output.exists(), 'Refusing to overwrite an existing package'
@@ -30,6 +32,11 @@ with tempfile.TemporaryDirectory(prefix='ideck-package-') as temp:
     payload.mkdir()
     app = payload / args.app.name
     shutil.copytree(args.app, app)
+    assert args.licenses.is_dir(), 'Complete component license directory required'
+    shutil.copytree(args.licenses, app / 'licenses/components', dirs_exist_ok=True)
+    source_root = Path(__file__).resolve().parents[1]
+    for name in ['CREDITS.md', 'NOTICE']:
+        shutil.copyfile(source_root / name, app / 'legal' / name)
     # Mono is fetched separately; do not accidentally ship a local development copy.
     shutil.rmtree(app / 'wine-mono', ignore_errors=True)
     for profile in app.rglob('*.mobileprovision'):
