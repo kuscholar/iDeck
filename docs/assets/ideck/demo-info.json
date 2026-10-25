@@ -1,7 +1,7 @@
 {
   "source_filename": "video_first_1m10s.gif",
   "source_sha256": "bc171ab080f9e9049544c14286f501ddc03ad086cb84721e5b7414619ae4d21f",
-  "output": "demo-1.5x.gif",
+  "output": "demo-landscape-ccw90-1.5x.gif",
   "output_sha256": "2f46c4aa3e6fe5610f095abe8105cc27b05208d567c73399b2c444fccf098118",
   "width": 831,
   "height": 384,
@@ -9,7 +9,7 @@
   "source_duration_seconds": 70.01,
   "output_duration_seconds": 46.67,
   "actual_speed": 1.5001071352046282,
-  "method": "Original 1.5x GIF decoded, each full frame rotated90 degrees counterclockwise, GIF encoded preserving every frame duration and loop.",
+  "method": "Regenerated directly from supplied portrait original: rotate90 degrees counterclockwise, cumulative1.5x timing. Verified every decoded frame exactly equals the rotated source. New landscape filename avoids reusing old README media URL.",
   "file_bytes": 43228216,
   "rotation": "90 degrees counterclockwise",
   "rotation_validation_max_frame_channel_mean_error": 0
