@@ -3660,6 +3660,10 @@ struct ContentView: View {
                 setenv("MADEIRA_SCREEN_W", String(plan.width), 1)
                 setenv("MADEIRA_SCREEN_H", String(plan.height), 1)
                 setenv("MADEIRA_JITLESS", "1", 1)
+                // Genuine Steam bypasses LibraryEntry.applyEnvironment. Publish the
+                // same physical/touch XInput snapshot to WGI-only games as well.
+                setenv("MADEIRA_WGI_HOST_PADS", MadeiraConfig.get("env.MADEIRA_WGI_HOST_PADS") ?? "1", 1)
+                setenv("MADEIRA_INPUT_FOREGROUND", MadeiraConfig.get("env.MADEIRA_INPUT_FOREGROUND") ?? "1", 1)
                 winios_display_mode_changed(Int32(plan.width), Int32(plan.height))
                 if IDeckState.enabled {
                     InputSettings.shared.touchMode = true

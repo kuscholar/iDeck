@@ -156,3 +156,55 @@ remain pending actual game execution; do not infer them from this trace.
 
 Private ratatan-stable63.txt SHA-256:
 11c568979d311d092449c2895a2de803d3142627162ddb60d466a4c64c403397.
+
+## Build 64: saved display mode and WGI input
+
+User screenshot confirms the game reached its actual main menu on Build 63;
+this is user-provided visual evidence, not agent-driven gameplay validation.
+The new native trace verifies fullscreen arguments first create a 1424x656
+borderless window, then the game moves it to x=72 with width=1280. Registry
+read-only inspection finds the saved Unity fullscreen mode 3 (windowed), width
+1280 and window position 72. The source startup flags were present; repeatedly
+adding those flags alone is therefore not a demonstrated solution.
+
+The virtual pad was connected and accepting touches, but the game selects
+Windows.Gaming.Input and the Steam session did not enable its host-pad bridge.
+The original native library's game profile supplied this setting; genuine Steam
+launch bypasses that profile.
+
+Build 64 starts Steam sessions with MADEIRA_WGI_HOST_PADS=1 and
+MADEIRA_INPUT_FOREGROUND=1 by default, preserving explicit configuration values.
+The existing Wine host-pad provider exposes the same physical/touch XInput
+snapshot to WGI. Other launch paths are unchanged. Physical and virtual
+in-game input still require actual game-side confirmation.
+
+The existing x64 control helper prepares only five Ratatan Unity display
+DWORDs before Steam's game launch: fullscreen mode 1, current-desktop width and
+height, and matching window width/height. It requires the exact existing
+RatataArts/Ratatan registry key and validates all five original values. It
+backs them up first to HKCU\\Software\\iDeck\\Backups\\RatatanDisplayV1 and
+marks backup complete only after all originals were saved. A completed backup
+is never replaced by later launches. Backup errors prevent any game-key write;
+partial game-setting write failure is reported. No other game/save/account key
+is read or changed. Set env.MADEIRA_RATATAN_FULLSCREEN=0 to disable this saved
+preference preparation; original values remain available in the backup key.
+The earlier command-line fullscreen policy is separate and respects an explicit
+-screen-fullscreen option.
+
+Production helper host tests pass ASan/UBSan for exact keys, ordinary/opt-out
+isolation, backup failure, backup-before-mutation and original preservation on
+repeat. x64 helper compilation passes -Wall -Wextra -Werror; full Xcode Build 64
+and launch policy checks pass. Linked helper contains the display status marker.
+Device visual/fullscreen and virtual-pad gameplay results remain pending.
+
+Build 64 deep signing, installation and launch succeeded. The actual helper
+status reads `ratatan_display_preferences=applied width=1424 height=656
+backup=RatatanDisplayV1`. Native trace identifies Build 64; it is still the
+pre-game phase, so WGI game enumeration and final window geometry are pending.
+The user has been asked to enter the game and test virtual directional/A input.
+
+| Private evidence | SHA-256 |
+| --- | --- |
+| ratatan-input-native.txt | 9c8be83a941561c98c946b271bfe1f68fede19b9b3d85dbc9c96457a138f777c |
+| ratatan-display64.txt | e5aef66c378acf1914f8117b58570b9ab3863ee45c167a1f5862620ef8db3815 |
+| ratatan-stable64.txt | f79271cdeb6521103c253c78f82b21fb10286d3d450b92d745bb5c7fe01c52cb |

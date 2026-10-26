@@ -11,6 +11,7 @@
 #include <wctype.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 static const char *request_path="C:\\ideck-command.txt",*ack_path="C:\\ideck-command-result.txt";
 static void ack(const char *id,const char *result) {
     FILE *f=fopen("C:\\ideck-command-result.tmp","w");if(!f)return;
@@ -113,10 +114,45 @@ static void input_status(void) {
         last_connected=connected;last_buttons=buttons;last_hid=hid;
     }
 }
+/* Ratatan reapplies its saved Unity display preferences after startup flags.
+ * Change display-only values through the registry API, preserving their exact
+ * original DWORDs in a separate key before any mutation. No game/save payloads. */
+static void prepare_ratatan_display(void) {
+    const char *session=getenv("MADEIRA_STEAM_UI_SESSION"),*opt=getenv("MADEIRA_RATATAN_FULLSCREEN");
+    const char *sw=getenv("MADEIRA_SCREEN_W"),*sh=getenv("MADEIRA_SCREEN_H");
+    int width=sw?atoi(sw):0,height=sh?atoi(sh):0;
+    if(!session||strcmp(session,"1")||(opt&&!strcmp(opt,"0"))||width<640||width>3840||height<360||height>2160)return;
+    static const WCHAR *names[]={L"Screenmanager Fullscreen mode_h3630240806",
+        L"Screenmanager Resolution Width_h182942802",L"Screenmanager Resolution Height_h2627697771",
+        L"Screenmanager Resolution Window Width_h2524650974",L"Screenmanager Resolution Window Height_h1684712807"};
+    DWORD desired[]={1,(DWORD)width,(DWORD)height,(DWORD)width,(DWORD)height};
+    DWORD original[5],type,size,marker=0;HKEY game_key,backup;
+    if(RegOpenKeyExW(HKEY_CURRENT_USER,L"Software\\RatataArts\\Ratatan",0,KEY_QUERY_VALUE|KEY_SET_VALUE,&game_key))return;
+    for(unsigned i=0;i<5;i++) {
+        size=sizeof(DWORD);
+        if(RegQueryValueExW(game_key,names[i],NULL,&type,(BYTE*)&original[i],&size)||type!=REG_DWORD||size!=sizeof(DWORD)) {RegCloseKey(game_key);return;}
+    }
+    if(RegCreateKeyExW(HKEY_CURRENT_USER,L"Software\\iDeck\\Backups\\RatatanDisplayV1",0,NULL,0,KEY_QUERY_VALUE|KEY_SET_VALUE,NULL,&backup,NULL)) {RegCloseKey(game_key);return;}
+    size=sizeof(marker);
+    LONG result=RegQueryValueExW(backup,L"Complete",NULL,&type,(BYTE*)&marker,&size);
+    if(result==ERROR_FILE_NOT_FOUND) {
+        int ok=1;
+        for(unsigned i=0;i<5;i++)if(RegSetValueExW(backup,names[i],0,REG_DWORD,(BYTE*)&original[i],sizeof(DWORD)))ok=0;
+        marker=1;
+        if(!ok||RegSetValueExW(backup,L"Complete",0,REG_DWORD,(BYTE*)&marker,sizeof(marker))) {RegCloseKey(backup);RegCloseKey(game_key);return;}
+    } else if(result||type!=REG_DWORD||size!=sizeof(marker)||marker!=1) {RegCloseKey(backup);RegCloseKey(game_key);return;}
+    int ok=1;
+    for(unsigned i=0;i<5;i++)if(RegSetValueExW(game_key,names[i],0,REG_DWORD,(BYTE*)&desired[i],sizeof(DWORD)))ok=0;
+    RegCloseKey(backup);RegCloseKey(game_key);
+    FILE *f=fopen("C:\\ideck-display-status.txt","w");
+    if(f){fprintf(f,"ratatan_display_preferences=%s width=%d height=%d backup=RatatanDisplayV1\n",ok?"applied":"failed",width,height);fclose(f);}
+}
+
 int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
     (void)instance;(void)previous;(void)line;(void)show;
     HANDLE mutex=CreateMutexW(NULL,FALSE,L"Local\\iDeckControl");
     if(!mutex||GetLastError()==ERROR_ALREADY_EXISTS)return 0;
+    prepare_ratatan_display();
     char last[37]="",id[37],command[32],pending[37]="";HANDLE exiting=NULL;ULONGLONG deadline=0;
     if(read_request(id,command))strcpy(last,id); /* Never replay a stale action on startup. */
     ack("ready","ready");

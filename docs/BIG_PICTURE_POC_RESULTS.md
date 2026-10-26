@@ -1642,3 +1642,18 @@ current-desktop Unity args unless the user supplies fullscreen settings.
 native trace confirms 192 MiB policy. Steam waits at ShowInterstitials, so game
 execution/visual validation is pending user response, not a claimed success.
 Detailed evidence, hypotheses, opt-out and limits: IDECK_RATATAN_STARTUP.md.
+
+### Build 64: Ratatan main menu, remaining display/input defects
+
+User screenshot now confirms actual Ratatan main menu. Native window first
+covers 1424x656 then changes to {72,0,1352,656}; saved Unity mode is windowed(3).
+Virtual XInput accepts touches, but game selects Windows.Gaming.Input and Steam
+launch lacked the library profile's WGI host-pad enable. Build 64 supplies WGI
+and foreground defaults only on genuine Steam launch (explicit cfg overrides
+win), and backs up five display DWORDs before setting Ratatan fullscreen/current
+resolution via registry API. Source/binary game files and saves untouched.
+Host backup/failure/override tests, x64 Werror helper, full Xcode, final marker,
+strict signature and install pass. Actual helper confirms preferences applied
+and backup complete. Final full-screen appearance/WGI enumeration/in-game touch
+controls remain pending user test; preserve running session. Exact hashes,
+rollback/opt-out and limits in IDECK_RATATAN_STARTUP.md.

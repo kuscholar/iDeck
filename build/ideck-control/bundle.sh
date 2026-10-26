@@ -9,4 +9,4 @@ if ! command -v "$compiler" >/dev/null 2>&1; then
 fi
 mkdir -p "$(dirname "$out")"
 "$compiler" -O2 -Wall -Wextra -Werror -municode -mwindows -Wl,--no-insert-timestamp \
-  "$root/build/ideck-control/ideck-control.c" -lshell32 -luser32 -o "$out"
+  "$root/build/ideck-control/ideck-control.c" -lshell32 -luser32 -ladvapi32 -o "$out"
