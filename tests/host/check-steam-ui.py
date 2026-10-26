@@ -84,6 +84,32 @@ let preservedText = try String(contentsOf: sentinel, encoding: .utf8)
 assert(preservedText == "preserve")
 let importedPlan = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true)
 assert(importedPlan.windowsDirectory == "C:\\Steam32BundleLab")
+
+assert(importedPlan.batch.contains("-nobootstrapperupdate") && importedPlan.batch.contains("-skipinitialbootstrap"))
+for base in [source32, bundled32] {
+ try FileManager.default.createDirectory(at: base.appendingPathComponent("config"), withIntermediateDirectories: true)
+}
+try "existing-account".write(to: bundled32.appendingPathComponent("config/loginusers.vdf"), atomically: true, encoding: .utf8)
+try "do-not-copy".write(to: source32.appendingPathComponent("config/loginusers.vdf"), atomically: true, encoding: .utf8)
+let upgraded = bundled32.appendingPathComponent("steam.exe")
+var upgradeData = try Data(contentsOf: upgraded);upgradeData[132]=0x64;upgradeData[133]=0x86;try upgradeData.write(to: upgraded)
+let extraCEF = bundled32.appendingPathComponent("bin/cef/cef.win64")
+try FileManager.default.createDirectory(at: extraCEF, withIntermediateDirectories: true)
+try "rollback".write(to: extraCEF.appendingPathComponent("public-helper.txt"), atomically: true, encoding: .utf8)
+let backup = try SteamUIExperiment.restorePinnedX86(source: source32, prefix: root, flag: "1", bundleID: "test.steamui")
+assert(SteamUIExperiment.isX86PE(upgraded))
+let savedUpgrade = try Data(contentsOf: backup.appendingPathComponent("steam.exe"))
+assert(savedUpgrade == upgradeData)
+assert(!FileManager.default.fileExists(atPath: extraCEF.path))
+assert(FileManager.default.fileExists(atPath: backup.appendingPathComponent("bin/cef/cef.win64/public-helper.txt").path))
+let accountAfterRepair = try String(contentsOf: bundled32.appendingPathComponent("config/loginusers.vdf"), encoding: .utf8)
+assert(accountAfterRepair == "existing-account")
+assert(!FileManager.default.fileExists(atPath: backup.appendingPathComponent("config").path))
+assert(FileManager.default.fileExists(atPath: sentinel.path))
+do { _ = try SteamUIExperiment.restorePinnedX86(source: source32, prefix: root, flag: "1", bundleID: "test.working"); fatalError("repair isolation") } catch {}
+try FileManager.default.createSymbolicLink(at: source32.appendingPathComponent("untrusted.dll"), withDestinationURL: sentinel)
+do { _ = try SteamUIExperiment.restorePinnedX86(source: source32, prefix: root, flag: "1", bundleID: "test.steamui"); fatalError("repair followed symlink") } catch {}
+try FileManager.default.removeItem(at: source32.appendingPathComponent("untrusted.dll"))
 for disabledBigPictureFlag: String? in [nil, "0", "true"] {
  do { _ = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true, bigPicture: true, bigPictureFlag: disabledBigPictureFlag); fatalError("Big Picture must be explicitly gated") } catch {}
 }
@@ -157,6 +183,17 @@ var probeData = try Data(contentsOf: probeURL);probeData[132] = 0x4c;probeData[1
 let swiftProbeArguments = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.steamui", swiftshader: true)
 assert(swiftProbeArguments == "/c C:\\swiftshader32-probe.exe")
 do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.working", swiftshader: true); fatalError("ordinary app accepted probe") } catch {}
+
+let platformURL = root.appendingPathComponent("drive_c/platform32-probe.exe")
+do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.steamui", platform: true); fatalError("missing platform probe accepted") } catch {}
+try pe("platform-fixture.exe", machine: 0x8664)
+try FileManager.default.moveItem(at: client.appendingPathComponent("platform-fixture.exe"), to: platformURL)
+do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.steamui", platform: true); fatalError("x64 platform probe accepted") } catch {}
+try probeData.write(to: platformURL)
+let platformArgs = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.steamui", platform: true)
+assert(platformArgs == "/c C:\\platform32-probe.exe")
+do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.working", platform: true); fatalError("ordinary platform accepted") } catch {}
+do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "0", bundleID: "test.steamui", platform: true); fatalError("disabled platform accepted") } catch {}
 
 print("PASS: feature flag, app isolation, complete x64 client, fixed command, dimensions, sanitized milestones")
 '''

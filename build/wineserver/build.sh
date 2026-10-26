@@ -108,6 +108,7 @@ PATCHED_FILES=(
     "hidpad_ios:hidpad_ios.c:hidpad_ios.o"
     "hidparse_ios:$REPO_ROOT/build/hidpad/hidparse_ios.c:hidparse_ios.o"
     "storage_device_ios:storage_device_ios.c:storage_device_ios.o"
+    "registry_ios:registry_ios.c:registry.o"
 )
 
 if [ ! -f "$OBJ_DIR/libwineserver.a" ]; then
@@ -202,6 +203,7 @@ REPLACEMENTS=(
     "hidpad_ios.o:hidpad_ios.o"     # ml2101
     "hidparse_ios.o:hidparse_ios.o" # ml2101
     "storage_device_ios.o:storage_device_ios.o"
+    "registry_ios.o:registry.o"
 )
 
 for entry in "${REPLACEMENTS[@]}"; do

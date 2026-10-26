@@ -2,3 +2,6 @@
 app/Frameworks/StikJIT.xcframework/** -whitespace
 app/Madeira/legal/LICENSES-*.txt -whitespace
 LICENSES/stikjit-supplemental/** -whitespace
+
+# Unified patches retain the required context prefix on empty lines.
+build/wine-pe/steam-ui-machine-attributes.patch -whitespace

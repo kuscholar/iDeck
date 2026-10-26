@@ -31,6 +31,11 @@ No whole-directory authorship is claimed. Copyright holders named in individual
 files retain their rights. FEX's no-AI-contribution policy is respected: the iDeck
 experiment does not modify FEX.
 
+The GetMachineTypeAttributes compatibility backport is adapted from Brendan
+Shanks' LGPL Wine MR10558, posted 2026-04-03. Original authorship and LGPL terms
+are retained in `build/wine-pe/steam-ui-machine-attributes.patch` and documented
+in [the 64-bit installation investigation](docs/IDECK_64BIT_INSTALL.md).
+
 ## Research and experience inspiration
 
 - [deezhizyu/madeira](https://github.com/deezhizyu/madeira): historical Steam/CEF

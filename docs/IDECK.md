@@ -168,3 +168,15 @@ transition on every normal reopen. Build50 fresh Steam authentication succeeded,
 but live transition did not complete; its JS persona error is not proven causal.
 Build51 also isolates current-process PEB32 queries from sibling startup globals.
 On-device UI and longer stability remain separate validation gates.
+
+## 64-bit-only installation capability
+
+See [the investigation and reproducible backport](IDECK_64BIT_INSTALL.md) and
+[redacted device evidence](IDECK_64BIT_INSTALL_EVIDENCE.json). The unmodified
+Valve platform DLL reported Is64BitOS=false on the previous ARM64/Wine setup.
+Build58's API/enumeration repair changes that same-device result to true.
+Build59 restores/pins the legitimate x86 client after its automatic migration
+to a failing 64-bit CEF path, preserving account/game data. A fresh same-prefix
+session logs saved-login success and uses the original cef.win7 helper. Actual
+Ratatan installation/download acceptance remains pending user/device UI access;
+these API and login results alone are not a completed installation test.

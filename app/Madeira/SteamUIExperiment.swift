@@ -18,9 +18,13 @@ enum SteamUIExperiment {
         let productDefault = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true ? "1" : nil
         return allowed(flag: MadeiraConfig.get(flag) ?? productDefault, bundleID: Bundle.main.bundleIdentifier)
     }
-    static func prepareProbe(prefix: URL, flag: String?, bundleID: String?, fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false) throws -> String {
+    static func prepareProbe(prefix: URL, flag: String?, bundleID: String?, fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false) throws -> String {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
         let drive = prefix.appendingPathComponent("drive_c")
+        if platform {
+            guard isX86PE(drive.appendingPathComponent("platform32-probe.exe")) else { throw Failure.incompleteProbe }
+            return "/c C:\\platform32-probe.exe"
+        }
         if swiftshader {
             guard isX86PE(drive.appendingPathComponent("swiftshader32-probe.exe")) else { throw Failure.incompleteProbe }
             return "/c C:\\swiftshader32-probe.exe"
@@ -68,11 +72,12 @@ enum SteamUIExperiment {
         let height: Int
         let bigPicture: Bool
         var accountChooser = false
+        var frozenX86 = false
         var batch: String {
             ["@echo off", "start \"\" \"C:\\windows\\system32\\services.exe\"",
              "if exist C:\\ideck-control.exe start \"\" C:\\ideck-control.exe",
              "cd /d \"\(windowsDirectory)\"",
-             "\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")"]
+             "\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\(frozenX86 ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")"]
                 .joined(separator: "\r\n") + "\r\n"
         }
         var arguments: String { "/desktop=steamui,\(width)x\(height) cmd /c C:\\madeira-steam-ui.cmd" }
@@ -113,6 +118,62 @@ enum SteamUIExperiment {
         try FileManager.default.copyItem(at: source, to: temporary)
         try FileManager.default.moveItem(at: temporary, to: target)
     }
+    /// Explicit maintenance only: restore verified public client resources after
+    /// an architecture-triggered client upgrade. Never copy account/game data.
+    static func restorePinnedX86(source: URL, prefix: URL, flag: String?, bundleID: String?) throws -> URL {
+        guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
+        guard try source.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw Failure.incompleteClient }
+        let source = source.resolvingSymlinksInPath()
+        let fm = FileManager.default
+        guard source.standardizedFileURL == source.resolvingSymlinksInPath(),
+              ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"].allSatisfy({ isX86PE(source.appendingPathComponent($0)) }) else { throw Failure.incompleteClient }
+        let target = prefix.resolvingSymlinksInPath().appendingPathComponent("drive_c/Steam32BundleLab")
+        guard target.path == target.resolvingSymlinksInPath().path, fm.fileExists(atPath: target.path) else { throw Failure.incompleteClient }
+        let publicFolders: Set<String> = ["bin", "clientui", "controller_base", "friends", "graphics", "public", "resource", "steam", "steamui", "tenfoot", "win64"]
+        let privateNames: Set<String> = ["config", "userdata", "steamapps", "logs", "appcache", "htmlcache", "dumps", "steam.cfg", "loginusers.vdf", "config.vdf", "localconfig.vdf"]
+        guard let files = fm.enumerator(atPath: source.path) else { throw Failure.incompleteClient }
+        var resources: [String] = []
+        for case let relative as String in files {
+            let file = source.appendingPathComponent(relative)
+            let components = relative.split(separator: "/").map(String.init)
+            guard let first = components.first else { continue }
+            if privateNames.contains(first.lowercased()) || first.lowercased().hasPrefix("ssfn") || first.hasPrefix(".") || (components.count > 1 && !publicFolders.contains(first)) {
+                files.skipDescendants(); continue
+            }
+            let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+            guard values.isSymbolicLink != true else { throw Failure.incompleteClient }
+            if values.isRegularFile == true { resources.append(relative) }
+        }
+        guard Set(resources).isSuperset(of: ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"]) else { throw Failure.incompleteClient }
+        // Validate every destination before changing anything; exclude symlink traversal.
+        for name in resources {
+            let destination = target.appendingPathComponent(name)
+            guard destination.standardizedFileURL == destination.resolvingSymlinksInPath() else { throw Failure.incompleteClient }
+        }
+        let backup = prefix.appendingPathComponent("client-rollbacks/" + UUID().uuidString)
+        try fm.createDirectory(at: backup, withIntermediateDirectories: true)
+        for name in resources {
+            let destination = target.appendingPathComponent(name), saved = backup.appendingPathComponent(name)
+            if fm.fileExists(atPath: destination.path) {
+                try fm.createDirectory(at: saved.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try fm.copyItem(at: destination, to: saved)
+            }
+        }
+        for name in resources {
+            let destination = target.appendingPathComponent(name)
+            try fm.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try Data(contentsOf: source.appendingPathComponent(name)).write(to: destination, options: .atomic)
+        }
+        for folder in ["bin/cef/cef.win64", "bin/cef/cef.win7x64", "bin/cef/cef.win7.x64"] {
+            let extra = target.appendingPathComponent(folder)
+            if fm.fileExists(atPath: extra.path), !fm.fileExists(atPath: source.appendingPathComponent(folder).path) {
+                let saved = backup.appendingPathComponent(folder)
+                try fm.createDirectory(at: saved.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try fm.moveItem(at: extra, to: saved)
+            }
+        }
+        return backup
+    }
     static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false) throws -> Plan {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
         guard !bigPicture || bigPictureFlag == "1" else { throw Failure.disabled }
@@ -128,7 +189,7 @@ enum SteamUIExperiment {
                 return isPE(cef.appendingPathComponent("steamwebhelper.exe"), machine: x86Client ? 0x014c : 0x8664) && isPE(cef.appendingPathComponent("libcef.dll"), machine: x86Client ? 0x014c : 0x8664)
             }
             guard hasCEF else { continue }
-            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser)
+            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client)
             try plan.batch.write(to: drive.appendingPathComponent("madeira-steam-ui.cmd"), atomically: true, encoding: .utf8)
             return plan
         }

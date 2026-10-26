@@ -1,0 +1,57 @@
+{
+  "phase": "64-bit-only installation diagnosis",
+  "wine_revision": "9129e9684daaeae70da9435e7c6060e59392634e",
+  "baseline_build": 57,
+  "patched_build": 58,
+  "observed_user_failure": "Ratatan and Monster Hunter Wilds Install made a sound without opening installation. Tomb Raider could download/install. Hiding virtual controls did not fix it.",
+  "root_contract": "Valve Is64BitOS returns false on ARM64 when GetMachineTypeAttributes is absent, despite IsWow64Process succeeding. Wine also accepts AMD64 mappings on ARM64 but omits AMD64 from the published machine list.",
+  "device_before": "platform32 pointer_bits=32\ncurrent wow1_ok=1 wow1=1\ncurrent wow2_ok=1 guest=014c native=aa64\ncurrent peb_status=00000000 peb_nonzero=1 length=4\ncurrent architectures_status=00000000 length=16 0007aa64 001a014c 001201c4 00000000 00000000 00000000 00000000 00000000\nduplicate wow1_ok=1 wow1=1\nduplicate wow2_ok=1 guest=014c native=aa64\nduplicate peb_status=00000000 peb_nonzero=1 length=4\nduplicate architectures_status=00000000 length=16 0007aa64 001a014c 001201c4 00000000 00000000 00000000 00000000 00000000\nsystem_arch=0 native_arch=9\nvalve_Plat_IsWOW64=1\nvalve_Is64BitOS=0\namd64_guest_supported_status=00000000 value=0\ncomplete\n",
+  "device_after": "platform32 pointer_bits=32\ncurrent wow1_ok=1 wow1=1\ncurrent wow2_ok=1 guest=014c native=aa64\ncurrent peb_status=00000000 peb_nonzero=1 length=4\ncurrent architectures_status=00000000 length=20 0007aa64 001a014c 001201c4 00128664 00000000 00000000 00000000 00000000\nduplicate wow1_ok=1 wow1=1\nduplicate wow2_ok=1 guest=014c native=aa64\nduplicate peb_status=00000000 peb_nonzero=1 length=4\nduplicate architectures_status=00000000 length=20 0007aa64 001a014c 001201c4 00128664 00000000 00000000 00000000 00000000\nsystem_arch=0 native_arch=9\namd64_machine_attributes_hr=00000000 value=00000001\nvalve_Plat_IsWOW64=1\nvalve_Is64BitOS=1\namd64_guest_supported_status=00000000 value=1\ncomplete\n",
+  "before_sha256": "a313603f23e92a70c7fea54d1fada51df15bad23be8748eb5db81a8b7ba1323d",
+  "after_sha256": "66290a2ad0372ba6be4b38396df0df6ac9588549d46a9f6de69988ab7f436a50",
+  "valve_tier0_sha256": "a55dd102547933009247095a8bab8885f8e76aef12b423721490b4d259ab6a17",
+  "valve_tier0_unchanged": true,
+  "patch_artifacts": {
+    "kernel32.dll": "4112b9b2d2e9f9b6a54e1e7ad92a964260970666e445e27939c06c08325e2988",
+    "kernelbase.dll": "b822d9ae18d2097c61bda24b96c75796e8618bc91a34f83c0fe0008e322e910a",
+    "libwineserver.a": "701d0fbd431edbe74592569a153a145bdd41d96b6cb0913a608c894b8dac9703",
+    "patch": "8fea206e1b3aff6897cc54dc0ba64206ff5b6d69e1d18b50c8248afcd22213b9"
+  },
+  "upstream_reference": "https://list.winehq.org/hyperkitty/list/wine-gitlab@list.winehq.org/thread/ZQBFNVIXTGEJCOETMJKKS3AGOCV3B5UT/",
+  "upstream_author": "Brendan Shanks",
+  "adaptation": "GetMachineTypeAttributes backport uses legacy class181 and normalizes AMD64-on-ARM64 root-namespace flags. Isolated server enumeration adds AMD64 while preserving ARM64 as native.",
+  "regressions": [
+    "Machine attribute production backport ASan/UBSan: native,x86,AMD64,unsupported and query failure PASS",
+    "Machine list production policy ASan/UBSan: isolation,identity,capacity,duplicates PASS",
+    "Launcher and Steam launch/pseudo-process host regressions PASS",
+    "Full Build58 compile, final linked marker, both final PE hashes and deep signing PASS",
+    "Explicit client restore: account sentinel preserved, public binary rollback, extra CEF quarantine, isolation and symlink refusal PASS",
+    "Backport applies cleanly to pinned Wine source PASS",
+    "6 release-tool tests PASS; no new release published"
+  ],
+  "installation_acceptance": "PENDING physical Install/download validation. Mac Device Hub reported locked and user unlock/phone test questions are pending. Build59 session preserved, PID must be revalidated before further action.",
+  "limits": [
+    "No Valve/FEX source or binary changes",
+    "No DRM/authentication bypass",
+    "Raw device logs and binaries remain outside Git",
+    "Build57 had independent VPN/JIT and address-pool startup failures; stale probe output was explicitly excluded"
+  ],
+  "client_migration": {
+    "build58": "Steam automatically replaced steam.exe with AMD64 and repeatedly started 64-bit CEF. No new login/install acceptance.",
+    "original_steam_exe_sha256": "1d2fbcc0402dc5a1f64b2e1d924e6e38e1dd76197c0246ddf89094fb86fda915",
+    "migrated_steam_exe_sha256": "f8a4ca44008c516eebecafaa4bc26772b2a6eb0fef8034bce56a3311e21ab705",
+    "build59": "Actual explicit public-file restore completed; original official i386 steam.exe SHA256 restored. First same-process JIT start failed due independent pool layout. Fresh normal Steam launch reached new saved-login Success/OK at 2026-10-26 01:38:42. Native snapshot confirms cef.win7 helper and zero cef.win64 helper paths. Logs still show no Ratatan download task; interactive installation not yet verified.",
+    "build60": "Final source avoids starting Wine in the same process as large-file maintenance. Full Xcode Build60 passed; not installed over the active Build59 test session."
+  },
+  "saved_login_evidence": {
+    "state": "Success - OK",
+    "timestamp": "2026-10-26 01:38:42",
+    "raw_log_sha256": "b74e8e36d2006072e70b02eb25f07a17901f6b2fea1a005a09a94a8359d4081a"
+  },
+  "cef_selection": {
+    "cef_win7_helper_paths": 2,
+    "cef_win64_helper_paths": 0,
+    "snapshot_sha256": "960ce0143619a872a30359646d1f660c6692bd21f9279d705335a1f80efe1b7c",
+    "snapshot_resumed": true
+  }
+}
