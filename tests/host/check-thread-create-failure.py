@@ -98,7 +98,8 @@ allocs = re.findall(r'virtual_alloc_thread_stack\(', its)
 steps = re.findall(r'ios_its_step = "([^"]+)";\s*\n\s*if \(\(status = virtual_alloc_thread_stack\(', its)
 assert len(allocs) == 5 and steps == ['kernel stack', 'WoW64 64-bit stack', 'WoW64 32-bit stack', 'emulator stack', 'stack'], \
     (len(allocs), steps)
-create = thread[thread.index('NTSTATUS WINAPI NtCreateThreadEx('):]
+# The public API now wraps the original implementation for categorical diagnostics.
+create = thread[thread.index('static NTSTATUS WINAPI ios_steam_ui_original_create_thread('):]
 create = create[:create.index('\n}\n')]
 assert 'ios_note_thread_create_failure( "TEB", status, 0, stack_reserve, stack_commit );' in create
 assert 'ios_note_thread_create_failure( ios_its_step, status, 0, stack_reserve, stack_commit );' in create

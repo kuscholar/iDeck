@@ -1614,3 +1614,17 @@ POSIX60 and produced an empty file; do not infer absence of faults or process
 exit from it. Login/UI evidence hashes recorded. Keep session alive for physical
 UI confirmation; next discriminate whether home/library renders and navigation
 works before changing runtime again. No account re-login needed based on logs.
+
+## iDeck Ratatan follow-up, 2026-10-26, Builds 61/62
+
+Standalone iDeck source baseline 4ad061b; primary Madeira and historical research
+checkout untouched. User confirms downloading/installing Ratatan now works,
+but startup stalls. Artifact-backed baseline shows FEX host-band exhaustion
+and failed thread initialization; worker count reduction alone in Build 61
+still fails. Build 62 changes the existing checked spill-window order only in
+isolated Steam sessions. All 37 native units, full Xcode build, final linked
+marker, signature and in-place install verified. Device session saved login
+succeeds but Steam waits at ShowInterstitials before game launch. Mac locked;
+user UI response pending. Preserve that session, do not call this a completed
+runtime fix. Exact evidence, hashes, regressions, opt-out, and next acceptance
+criteria: `IDECK_RATATAN_STARTUP.md`. No FEX/Valve binary changes or new release.

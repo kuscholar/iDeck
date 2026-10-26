@@ -73,11 +73,12 @@ enum SteamUIExperiment {
         let bigPicture: Bool
         var accountChooser = false
         var frozenX86 = false
+        var ratatanThreadTest = false
         var batch: String {
             ["@echo off", "start \"\" \"C:\\windows\\system32\\services.exe\"",
              "if exist C:\\ideck-control.exe start \"\" C:\\ideck-control.exe",
              "cd /d \"\(windowsDirectory)\"",
-             "\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\(frozenX86 ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")"]
+             "\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\(frozenX86 ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")\(ratatanThreadTest ? " -applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2" : "")"]
                 .joined(separator: "\r\n") + "\r\n"
         }
         var arguments: String { "/desktop=steamui,\(width)x\(height) cmd /c C:\\madeira-steam-ui.cmd" }
@@ -174,9 +175,10 @@ enum SteamUIExperiment {
         }
         return backup
     }
-    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false) throws -> Plan {
+    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false) throws -> Plan {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
         guard !bigPicture || bigPictureFlag == "1" else { throw Failure.disabled }
+        guard !ratatanThreadTest || (x86Client && !accountChooser && !loginFirst) else { throw Failure.disabled }
         guard (640...3840).contains(width), (360...2160).contains(height) else { throw Failure.invalidSize }
         let drive = prefix.appendingPathComponent("drive_c")
         for relative in (x86Client ? ["Steam32BundleLab", "Steam32Lab"] : ["Program Files (x86)/Steam", "Program Files/Steam"]) {
@@ -189,7 +191,7 @@ enum SteamUIExperiment {
                 return isPE(cef.appendingPathComponent("steamwebhelper.exe"), machine: x86Client ? 0x014c : 0x8664) && isPE(cef.appendingPathComponent("libcef.dll"), machine: x86Client ? 0x014c : 0x8664)
             }
             guard hasCEF else { continue }
-            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client)
+            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client, ratatanThreadTest: ratatanThreadTest)
             try plan.batch.write(to: drive.appendingPathComponent("madeira-steam-ui.cmd"), atomically: true, encoding: .utf8)
             return plan
         }

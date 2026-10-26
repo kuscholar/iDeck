@@ -27328,6 +27328,36 @@ static NTSTATUS ios_sc_glued_pools( void **pick, SIZE_T *sz, ULONG type, ULONG p
     return STATUS_SUCCESS;
 }
 
+/* iDeck: do not consume FEX's host band while the existing guest spill
+ * window is free. Both attempts use the ordinary Wine view/mapping checks.
+ * This changes order only, never invents capacity or grants an overlap. */
+static NTSTATUS ios_steam_ui_steer_allocate( void **ret, SIZE_T *size_ptr, ULONG type, ULONG protect )
+{
+    const char *session = getenv("MADEIRA_STEAM_UI_SESSION");
+    const char *option = getenv("MADEIRA_STEAM_UI_GUEST_SPILL_FIRST");
+    int guest_first = session && !strcmp(session, "1") && (!option || strcmp(option, "0"));
+    ULONG_PTR first_lo = guest_first ? 0x7400000000ULL : ios_steer_slot;
+    ULONG_PTR first_hi = guest_first ? ios_spill_cap : (ULONG_PTR)host_addr_space_limit;
+    ULONG_PTR second_lo = guest_first ? ios_steer_slot : 0x7400000000ULL;
+    ULONG_PTR second_hi = guest_first ? (ULONG_PTR)host_addr_space_limit : ios_spill_cap;
+    void *saved = *ret;
+    SIZE_T wanted = *size_ptr;
+    NTSTATUS status = allocate_virtual_memory(ret, size_ptr, type, protect, first_lo, first_hi, 0, 0);
+    if (status)
+    {
+        *ret = saved; *size_ptr = wanted;
+        status = allocate_virtual_memory(ret, size_ptr, type, protect, second_lo, second_hi, 0, 0);
+    }
+    if (!status && guest_first)
+    {
+        static unsigned logs;
+        if (logs++ < 32)
+            dprintf(2, "[ideck-guest-spill-first] base=%p size=0x%lx fex_band=%u\n",
+                    *ret, (unsigned long)*size_ptr, (ULONG_PTR)*ret >= ios_steer_slot);
+    }
+    return status;
+}
+
 NTSTATUS WINAPI NtAllocateVirtualMemory( HANDLE process, PVOID *ret, ULONG_PTR zero_bits,
                                          SIZE_T *size_ptr, ULONG type, ULONG protect )
 {
@@ -27897,38 +27927,13 @@ NTSTATUS WINAPI NtAllocateVirtualMemory( HANDLE process, PVOID *ret, ULONG_PTR z
                  * described the EMPTY range [ios_spill_cap, 0) and every steer failed with
                  * *ret = 0x0. The upper bound has to be a real address: use the host VA
                  * ceiling, which is_beyond_limit treats as EXCLUSIVE. */
-                NTSTATUS sst = allocate_virtual_memory( ret, size_ptr, type, protect,
-                                                        ios_steer_slot,
-                                                        (ULONG_PTR)host_addr_space_limit,
-                                                        0, 0 );
-                /* ml171: 16GB is not enough. Surviving longer spawns more threads, so
-                 * the reserve count went 27 -> 55 (28160MB) and BOTH the steer slot and
-                 * furniture reported va-scan FAILED maxgap=0 before the NULL deref.
-                 * Fall back to the 0x7400000000 slot, which this run left UNGRANTED —
-                 * pools landed on 0x7000000000, 0x73ffff0000 and 0x7800000000, matching
-                 * the 3-pool census. That doubles steer capacity to ~32GB. */
-                if (sst)
-                {
-                    *ret = saved; *size_ptr = want;
-                    sst = allocate_virtual_memory( ret, size_ptr, type, protect,
-                                                   0x7400000000ULL, ios_spill_cap, 0, 0 );
-                }
-                /* ml173: both steer slots full -> reclaim ranges owned by threads that
-                 * have since exited, then retry once. This is what makes the steer
-                 * region sustainable: the reserves leak per-thread, so without this any
-                 * fixed capacity is exhausted by a long enough run. */
+                NTSTATUS sst = ios_steam_ui_steer_allocate(ret, size_ptr, type, protect);
+                /* Keep the existing dead-owner reclamation, then retry the same
+                 * checked order once. Never reclaim a live owner's range. */
                 if (sst && ios_steer_reclaim_dead())
                 {
                     *ret = saved; *size_ptr = want;
-                    sst = allocate_virtual_memory( ret, size_ptr, type, protect,
-                                                   ios_steer_slot,
-                                                   (ULONG_PTR)host_addr_space_limit, 0, 0 );
-                    if (sst)
-                    {
-                        *ret = saved; *size_ptr = want;
-                        sst = allocate_virtual_memory( ret, size_ptr, type, protect,
-                                                       0x7400000000ULL, ios_spill_cap, 0, 0 );
-                    }
+                    sst = ios_steam_ui_steer_allocate(ret, size_ptr, type, protect);
                 }
                 if (!sst && ios_steer_n < IOS_STEER_MAX)
                 {

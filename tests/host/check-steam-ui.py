@@ -57,6 +57,12 @@ for name in ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.ex
 try FileManager.default.moveItem(at: client.appendingPathComponent("x86-fixture"), to: root.appendingPathComponent("drive_c/Steam32Lab"))
 let p32 = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true)
 assert(p32.windowsDirectory == "C:\\Steam32Lab")
+assert(!p32.batch.contains("-applaunch"))
+let threadTest = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true, ratatanThreadTest: true)
+assert(threadTest.batch.contains("-applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2"))
+do { _ = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", ratatanThreadTest: true); fatalError("x64 client must refuse experiment") } catch {}
+do { _ = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true, accountChooser: true, ratatanThreadTest: true); fatalError("account switch must refuse game auto launch") } catch {}
+
 let dll32 = root.appendingPathComponent("drive_c/Steam32Lab/bin/cef/cef.win7/libcef.dll")
 var mixed = try Data(contentsOf: dll32)
 mixed[132] = 0x64; mixed[133] = 0x86
