@@ -1,3 +1,5 @@
+[English](README.md) · [简体中文](README.zh-CN.md)
+
 <p align="center">
   <img src="docs/assets/ideck/icon.png" width="156" alt="iDeck">
 </p>
@@ -28,26 +30,69 @@ No gaming PC stream is required.
   <br><sub>On-device demo · 1.5× playback speed · Experimental build</sub>
 </p>
 
-## Requirements and setup
+## Install the alpha and help test
 
-An **experimental IPA alpha** is available in
-[Releases](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.1),
-with source, license notices and relink materials alongside it.
-You sign it with your own Apple ID; [start here](docs/INSTALL_IPA.md).
-Development targets iPhone and iPad; actual device evidence so far comes
-from an **iPhone 15 Pro Max (A17 Pro)**. iPad support has not been validated.
-JIT is required through Madeira's authorized pairing/debug workflow. No jailbreak
-or private entitlement is assumed.
+Grab the IPA and `SHA256SUMS` from [Releases](https://github.com/kuscholar/iDeck/releases).
+The published **v0.1.3-alpha.1 is Build 54**. The six-step launcher below was added
+in **Build 55**; use a build containing that change to see the checklist.
 
-Prepare the runtime, configure pairing and JIT, then launch Steam from iDeck.
-Steam handles sign-in, Steam Guard and saved login. The launcher also provides
-an account entry for choosing another Steam account. Game ownership and license
-checks stay with Valve.
+1. **Download and verify.** Compare the IPA's SHA-256 with `SHA256SUMS`.
+2. **Sign and sideload.** Use your own Apple ID with a tool such as
+   [Sideloadly](https://sideloadly.io/) or
+   [AltStore Classic](https://faq.altstore.io/altstore-classic/your-altstore).
+   Free development signing is an option; follow the tool's account limits and
+   refresh instructions. Keep `MadeiraJITHelper.appex`, sign all nested code,
+   and retain development debugging permission (`get-task-allow`). A signature
+   alone does not enable JIT. These signers are options, not a verified support list.
+3. **Trust and open.** Connect/trust the device and complete Apple's developer
+   and trust prompts when requested. Back up saves before upgrading an existing
+   install; deleting the app can delete its local Steam data and games.
+4. **Prepare Steam and JIT.** Follow the checklist below. The IPA includes the
+   local runtime but **does not include Steam/CEF, games or a Steam account**.
+5. **Test in stages.** Check launcher readiness → enter genuine Steam and complete
+   Steam Guard yourself → browse Library → try a compatible game → return to
+   Steam → reopen iDeck to check saved login. Try touch, keyboard and your
+   controller separately. Report the first failing stage, not just “it hangs”.
 
-Read [setup and missing prerequisites](docs/GETTING_STARTED.md) before building.
-The tested legacy Windows Steam client/CEF is not bundled, and a supported clean
-acquisition/setup flow remains unfinished. Obtain software through legitimate
-owner channels; do not copy another installation's authentication cache.
+Target: **iOS 26+**, with JIT through Madeira's authorized pairing/debug workflow.
+Device evidence comes from **iPhone 15 Pro Max (A17 Pro)**; iPad remains unvalidated.
+No jailbreak is required. See [full IPA installation instructions](docs/INSTALL_IPA.md)
+for signing details and limitations, or [source setup](docs/GETTING_STARTED.md).
+
+## Before Steam: six green checks
+
+On Build 55 or newer containing the checklist, open the launcher and tap
+**Check all prerequisites**. Work down the vertical steps; each has a checkmark
+or a missing-condition action:
+
+| Step | What you need to do |
+| --- | --- |
+| 1 · Local runtime | Tap **Prepare runtime** to initialize the local Windows environment. Existing files are preserved. |
+| 2 · Steam & browser files | Supply a complete compatible Windows Steam client with its CEF/browser files in iDeck's own prefix. Use **Add Steam files** for guidance; if a build supplies resources, **Prepare Steam** copies them. |
+| 3 · Development signing | Use a development signature that permits debugging. Re-sign if the check reports missing permission. |
+| 4 · JIT setup | Open JIT setup. Configure Built-in StikJIT with this device's pairing file, or the supported external StikDebug workflow. Pairing approval is yours to complete. |
+| 5 · Device connection | Connect LocalDevVPN when requested so the local debug connection is reachable. Recheck after returning to iDeck. |
+| 6 · JIT for this session | Tap **Enable JIT** and return to iDeck. A new app process needs JIT again; an existing/consumed runtime session may require a fresh app session. |
+
+The checker observes prerequisites; it does not sign the app, enable JIT or
+start Steam for you. Checks rerun when you return or finish a JIT request.
+**6/6 ready** unlocks manual **Launch Steam Big Picture**. It is not a guarantee
+that Steam login, rendering or a particular game will work. Build 54 has the
+earlier setup controls rather than this checklist.
+
+Sign in inside Valve's real Steam UI and approve Steam Guard yourself. Steam
+owns saved login and license checks. Use the launcher's **Sign in / Change Steam
+account** entry for another account; iDeck opens Steam's own account flow.
+Automatic startup can be changed in iDeck settings; it still requires JIT for
+each new app process.
+
+**Steam setup is still a technical-tester task.** The experiment uses an older
+32-bit Windows Steam client; a supported clean acquisition/setup flow remains
+unfinished. Follow [setup](docs/GETTING_STARTED.md) and
+[client preparation notes](tests/steam-ui/README.md), using legitimate owner
+channels. Do not copy another installation's authentication cache. A complete
+client must be in one supported directory (`wine/drive_c/Steam32BundleLab` or
+`wine/drive_c/Steam32Lab`); scattered files from different clients do not count.
 
 ## Your phone, with a handheld habit
 
@@ -113,8 +158,9 @@ development team and a unique identifier; the source defaults to
 `com.kuscholar.ideck.steamui`. Keep existing Madeira installs and their data
 separate.
 
-No public IPA, Steam/CEF client, games, account caches, signing profiles or
-proprietary Apple runtime library is included. Read the
+The Git checkout excludes compiled runtime payloads, Steam/CEF, games, account
+caches, signing profiles and the proprietary Apple converter. The alpha IPA
+and its source/license/relink companion assets are distributed separately. Read the
 [distribution requirements](docs/DISTRIBUTION.md) before sharing a built package.
 
 ## Feedback
