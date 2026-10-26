@@ -5,7 +5,7 @@ and SHA-256 checksums. The IPA has no developer certificate or profile.
 
 ## Source package
 
-`iDeck-0.1.3-alpha.1-source.tar.gz` contains the release's Git source snapshot,
+`iDeck-0.1.3-alpha.2-source.tar.gz` contains the release's Git source snapshot,
 pinned current component source archives, additional historical Wine/DXMT sources
 for the original i386 farm, pinned LLVM source, and exported StikJIT/idevice
 source with locked vendored Rust dependencies. `SOURCE_MANIFEST.json` records
@@ -32,7 +32,7 @@ rebuild or supplied sources for that broader test.
 
 ## Relink package
 
-`iDeck-0.1.3-alpha.1-relink.tar.gz` contains 103 exact inputs from Build 54's
+`iDeck-0.1.3-alpha.2-relink.tar.gz` contains 103 exact inputs from Build 56's
 main-library link, a hash manifest, portable link arguments and `relink.py`.
 To replace an LGPL library, build its source for the matching iOS arm64 target
 using its supplied recipe, replace the appropriate archive in `libraries/`, then:
@@ -47,20 +47,20 @@ that file in `Payload/Madeira.app`, and use your own main/helper profiles with
 key, provisioning profile or login cache is needed or supplied.
 
 The portable link command was run successfully. A modified static-library symbol
-was also linked and verified during preparation. This is local evidence; phone
-installation was skipped as requested. See [IPA installation](../INSTALL_IPA.md).
+was also linked and verified during preparation. This is local evidence; Build 56 has no fresh phone installation/gameplay
+validation. Build 55 checklist observation is recorded separately. See [IPA installation](../INSTALL_IPA.md).
 
 ## Rebuild the application shell
 
 After staging the documented runtime resources (available in the IPA) and native
-archives (in the relink companion), the actual Build 54 invocation was:
+archives (in the relink companion), the actual Build 56 invocation was:
 
 ```sh
 LLVM_MINGW=/path/to/llvm-mingw-20260421-ucrt-macos-universal \
 xcodebuild -project app/Madeira.xcodeproj -scheme Madeira \
   -configuration Debug -destination 'generic/platform=iOS' \
   -derivedDataPath /new/private/build \
-  CODE_SIGNING_ALLOWED=NO CURRENT_PROJECT_VERSION=54 \
+  CODE_SIGNING_ALLOWED=NO CURRENT_PROJECT_VERSION=56 \
   IPHONEOS_DEPLOYMENT_TARGET=26.0 \
   MADEIRA_BUNDLE_IDENTIFIER=com.kuschqin.madeira.steamui \
   LD_GENERATE_MAP_FILE=YES build

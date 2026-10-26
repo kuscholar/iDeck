@@ -24,8 +24,8 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 ## 安装 Alpha，一起测试
 
 从 [Releases](https://github.com/kuscholar/iDeck/releases) 下载 IPA 和 `SHA256SUMS`。
-当前公开的 **v0.1.3-alpha.1 是 Build 54**；下文的六步检查启动器从 **Build 55**
-加入，需要包含该改动的构建才能看到。不要因为旧版没有检查按钮而误判安装失败。
+**v0.1.3-alpha.2（Build 56）** 包含下文的六步检查启动器和中英文说明。
+旧版 v0.1.3-alpha.1（Build 54）使用之前的启动器。
 
 1. **下载并校验。** 对照 `SHA256SUMS` 检查 IPA 的 SHA-256。Mac 可运行
    `shasum -a 256 下载的文件.ipa`。

@@ -33,8 +33,8 @@ No gaming PC stream is required.
 ## Install the alpha and help test
 
 Grab the IPA and `SHA256SUMS` from [Releases](https://github.com/kuscholar/iDeck/releases).
-The published **v0.1.3-alpha.1 is Build 54**. The six-step launcher below was added
-in **Build 55**; use a build containing that change to see the checklist.
+**v0.1.3-alpha.2 (Build 56)** includes the six-step launcher and bilingual setup
+guide. The older v0.1.3-alpha.1 (Build 54) uses the previous launcher.
 
 1. **Download and verify.** Compare the IPA's SHA-256 with `SHA256SUMS`.
 2. **Sign and sideload.** Use your own Apple ID with a tool such as

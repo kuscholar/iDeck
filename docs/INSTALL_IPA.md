@@ -1,7 +1,7 @@
 # iDeck alpha IPA
 
-Download `iDeck-0.1.3-alpha.1-build54.ipa` and `SHA256SUMS` from the
-[alpha release](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.1).
+Download `iDeck-0.1.3-alpha.2-build56.ipa` and `SHA256SUMS` from the
+[alpha release](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.2).
 The IPA is certificate-free ad-hoc signed. You must re-sign it with **your own**
 Apple development account/profile for your device. No paid account is required
 just to use the usual free-account development-signing route; its expiry and
@@ -32,11 +32,17 @@ evidence is from an iPhone 15 Pro Max; iPad and general game support are not
 validated. Some startup/login transitions and games can fail. See the upstream
 [Madeira compatibility information](https://github.com/willfaust/Madeira#readme).
 
-Build 54 passed local compilation, source-built dependency, relink, package and
-signing checks. Phone installation was skipped at the owner's request. No
-fresh different-account, Sideloadly/AltStore, JIT or gameplay test is claimed
-for this package; the tools above are installation options rather than a
-certified compatibility list.
+Build 56 includes the sequential prerequisite checklist and bilingual README.
+Open the launcher and tap **Check all prerequisites**; follow the action beside
+each incomplete step. See the [English guide](../README.md#before-steam-six-green-checks)
+or [中文说明](../README.zh-CN.md#打开-steam-前点亮六个勾).
+
+Build 56 passed local compilation, launcher-policy tests, relink, packaging and
+nested ad-hoc signature checks. The preceding Build 55 was installed on Kusch
+and its checklist was visually observed at 6/6 ready. That is earlier-build
+evidence, not a fresh Build 56 device/JIT/gameplay test. No different-account
+Sideloadly/AltStore validation is claimed; these are installation options rather
+than a certified compatibility list. Preserve the helper extension when signing.
 
 ## Modify and re-sign on macOS
 

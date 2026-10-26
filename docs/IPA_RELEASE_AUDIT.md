@@ -1,5 +1,19 @@
 # IPA release preparation — 2026-10-25
 
+## Build 56 follow-up release
+
+[v0.1.3-alpha.2](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.2)
+adds the sequential launcher and bilingual setup guide. Full compilation, host
+checks, exact Build 56 relink and certificate-free packaging passed. The 20
+native static-library inputs match the reviewed Build 54 inputs. Main, StikJIT
+and converter Mach-O sections match their build/input copies after packaging.
+See [Build 56 evidence](release/BUILD56_EVIDENCE.json).
+
+Build 55 was installed on Kusch and its checklist was visually observed at 6/6.
+Build 56 has no fresh device/JIT/gameplay or third-party signer validation. The
+Build 54 records below are historical and are not new Build 56 test results.
+
+
 Status: **Build 54 engineering release checks completed; alpha assets prepared**.
 See the completion record below. The earlier Build 53 findings are retained.
 The owner requested skipping phone installation validation. That test is not
