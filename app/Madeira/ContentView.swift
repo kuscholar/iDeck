@@ -1298,7 +1298,7 @@ struct ContentView: View {
                 if IDeckState.enabled && ideck.running {
                     sessionBody.navigationBarHidden(true)
                 } else if IDeckState.enabled && !ideckAdvanced {
-                    IDeckLauncher(start: { startIDeck() }, account: { startIDeck(accountChooser: true) }, setupJIT: { jitCoordinator.showSetup = true },
+                    IDeckLauncher(start: { startIDeck() }, account: { startIDeck(accountChooser: true) }, setupJIT: { jitCoordinator.showSetup = true }, enableJIT: { enableJIT() },
                                   diagnostics: { ideckAdvanced = true })
                 } else if library.enabled && library.current != nil {
                     sessionBody

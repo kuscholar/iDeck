@@ -7,6 +7,22 @@ licensing. Madeira's licenses, exception and component attribution still apply.
 
 ## User flow
 
+The launcher presents six sequential prerequisite checks: local runtime,
+complete Steam/CEF files, development signing, JIT configuration, device
+connection, and active JIT with a fresh session. **Check all prerequisites**
+re-evaluates current observations; its results are not persisted as proof.
+It offers the next action for each missing condition. Returning to the app or
+finishing a JIT request runs the checks again. The check button does not start
+Steam, enable JIT or change network settings. Account login stays inside Steam
+and is explicitly outside the launcher's preflight checks.
+
+Manual launch/account entry waits for all checks. Existing opt-in automatic
+startup still uses the established JIT-on-launch path. Steam clients in either
+`Steam32BundleLab` or `Steam32Lab` must be complete within the same directory;
+files from different installations cannot combine into a passing result.
+Runtime preparation works with an already supplied client and does not require
+a second bundled copy or overwrite the user's Steam/login/save data.
+
 1. Open iDeck. Prepare its runtime/official Steam resources once in the launcher.
 2. Configure the existing Madeira device pairing/JIT flow. Credentials, passcodes
    and pairing approval remain the user's responsibility.

@@ -6,6 +6,31 @@ root = Path(__file__).resolve().parents[2]
 s = (root / 'app/Madeira/SteamUIExperiment.swift').read_text()
 policy = s[s.index('enum SteamUIExperiment {'):s.index('\n@MainActor\nfinal class SteamUIEvidence')]
 test = r'''
+
+func flight(runtime: Bool = true, steam: Bool = true, signing: Bool? = true,
+            builtIn: Bool = true, helper: Bool = true, paired: Bool = true,
+            external: Bool = false, connection: Bool = true, jit: Bool = true,
+            fresh: Bool = true) -> IDeckPreflight {
+    IDeckPreflight(runtime: runtime, steam: steam, signing: signing, builtIn: builtIn,
+        helper: helper, paired: paired, externalJIT: external, connection: connection,
+        jitReady: jit, freshSession: fresh)
+}
+assert(flight().canLaunch)
+assert(!flight(runtime: false).canLaunch)
+assert(!flight(steam: false).canLaunch)
+assert(!flight(jit: false).canLaunch)
+assert(!flight(fresh: false).canLaunch)
+assert(flight(connection: false).canLaunch) // Active JIT needs no second loopback connection.
+assert(flight(helper: false, paired: false, connection: false).canLaunch) // Observed active JIT is evidence.
+assert(!flight(signing: nil, jit: false).canLaunch)
+assert(flight(signing: nil, jit: false).results[2].status == .needsAction)
+assert(flight(signing: false, jit: false).results[2].status == .needsAction)
+assert(flight(builtIn: false, helper: false, paired: false, external: true, jit: false).results[3].status == .needsAction)
+assert(flight(builtIn: true, helper: true, paired: true, jit: false).results[3].status == .passed)
+assert(flight(builtIn: true, helper: false, paired: true, jit: false).results[3].status == .needsAction)
+assert(flight(builtIn: true, helper: true, paired: false, jit: false).results[3].status == .needsAction)
+assert(flight(connection: false, jit: false).results[4].status == .needsAction)
+assert(flight().results.map(\.id) == IDeckPrerequisite.allCases)
 let screen=CGSize(width:932,height:430)
 let corner=IDeckOverlayPosition.center(size:screen,saved:CGPoint(x:-1,y:-1),left:59,top:0,right:59,bottom:21)
 assert(corner.x==841 && corner.y==32)
@@ -70,9 +95,19 @@ try pe(files.last!, machine: 0x14c)
 assert(IDeckRules.clientReady(prefix: prefix))
 try FileManager.default.removeItem(at: prefix.appendingPathComponent("system.reg"))
 assert(!IDeckRules.clientReady(prefix: prefix))
+assert(IDeckRules.steamClientReady(prefix: prefix)) // Registry and Steam checks are independent.
+try Data().write(to: prefix.appendingPathComponent("system.reg"))
+let fallback = prefix.appendingPathComponent("drive_c/Steam32Lab")
+try FileManager.default.moveItem(at: client, to: fallback)
+assert(IDeckRules.clientReady(prefix: prefix)) // The real launcher's second supported location.
+try FileManager.default.createDirectory(at: client, withIntermediateDirectories: true)
+let splitCEF = client.appendingPathComponent(files.last!)
+try FileManager.default.createDirectory(at: splitCEF.deletingLastPathComponent(), withIntermediateDirectories: true)
+try FileManager.default.moveItem(at: fallback.appendingPathComponent(files.last!), to: splitCEF)
+assert(!IDeckRules.steamClientReady(prefix: prefix)) // Never combine files from different clients.
 '''
 with tempfile.TemporaryDirectory() as temp:
     p = Path(temp); (p/'main.swift').write_text('import Foundation\nenum MadeiraConfig { static func get(_ key: String) -> String? { nil } }\n' + policy + test)
-    subprocess.run(['swiftc',str(p/'main.swift'),'-o',str(p/'check')],check=True)
+    subprocess.run(['swiftc','-module-cache-path',str(p/'module-cache'),str(p/'main.swift'),'-o',str(p/'check')],check=True)
     subprocess.run([str(p/'check')],check=True)
 print('PASS: production iDeck complete-client readiness, architecture and no-overlap auto-start gates')

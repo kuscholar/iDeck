@@ -198,12 +198,70 @@ enum IDeckRules {
     static func shouldAutoStart(setup: Bool, ready: Bool, automatic: Bool, arguments: [String]) -> Bool {
         setup && ready && automatic && !arguments.contains { $0.hasPrefix("madeira-") }
     }
-    static func clientReady(prefix: URL) -> Bool {
-        let client = prefix.appendingPathComponent("drive_c/Steam32BundleLab")
-        return FileManager.default.fileExists(atPath: prefix.appendingPathComponent("system.reg").path) &&
-            ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"]
-                .allSatisfy { SteamUIExperiment.isX86PE(client.appendingPathComponent($0)) }
+    static func runtimeReady(prefix: URL) -> Bool {
+        FileManager.default.fileExists(atPath: prefix.appendingPathComponent("system.reg").path)
     }
+    static func steamClientReady(prefix: URL) -> Bool {
+        ["Steam32BundleLab", "Steam32Lab"].contains { folder in
+            let client = prefix.appendingPathComponent("drive_c/" + folder)
+            return ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"]
+                .allSatisfy { SteamUIExperiment.isX86PE(client.appendingPathComponent($0)) }
+        }
+    }
+    static func clientReady(prefix: URL) -> Bool {
+        runtimeReady(prefix: prefix) && steamClientReady(prefix: prefix)
+    }
+}
+
+
+// Observations, never a persisted "setup complete" flag, determine each checkmark.
+enum IDeckPrerequisite: String, CaseIterable, Identifiable {
+    case runtime, steam, signing, pairing, connection, jit
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .runtime: return "Local runtime"
+        case .steam: return "Steam & browser files"
+        case .signing: return "Development signing"
+        case .pairing: return "JIT setup"
+        case .connection: return "Device connection"
+        case .jit: return "JIT for this session"
+        }
+    }
+}
+struct IDeckPrerequisiteResult: Identifiable {
+    enum Status { case unchecked, checking, passed, needsAction }
+    let id: IDeckPrerequisite
+    var status: Status
+    var detail: String
+}
+struct IDeckPreflight {
+    let runtime: Bool
+    let steam: Bool
+    let signing: Bool?
+    let builtIn: Bool
+    let helper: Bool
+    let paired: Bool
+    let externalJIT: Bool
+    let connection: Bool
+    let jitReady: Bool
+    let freshSession: Bool
+
+    var results: [IDeckPrerequisiteResult] {
+        func result(_ id: IDeckPrerequisite, _ passed: Bool, _ yes: String, _ no: String) -> IDeckPrerequisiteResult {
+            .init(id: id, status: passed ? .passed : .needsAction, detail: passed ? yes : no)
+        }
+        let configured = jitReady || (builtIn && helper && paired)
+        return [
+            result(.runtime, runtime, "The local Windows runtime is prepared.", "Prepare the local runtime first. Existing files are preserved."),
+            result(.steam, steam, "Steam, steamclient, steamwebhelper and CEF are present with the correct architecture.", "Add a complete compatible Windows Steam client, including its browser files."),
+            result(.signing, signing == true || jitReady, "This copy permits the debugging required by JIT.", signing == false ? "Re-sign with a development profile that allows debugging." : "Signing could not be verified. Enable JIT to verify this session."),
+            result(.pairing, configured, jitReady ? "JIT is confirmed for this session." : "Built-in helper and a saved pairing file are present. Activation verifies the pairing.", builtIn ? (helper ? "Pair this device or import its pairing file in JIT setup." : "The built-in JIT helper is unavailable. Check JIT setup.") : (externalJIT ? "StikDebug is installed. Enable JIT to verify its external pairing." : "Install StikDebug or select Built-in StikJIT in JIT setup.")),
+            result(.connection, connection || jitReady, connection ? "The device's local debug connection is reachable." : "JIT is already active; reconnect when enabling a new session.", "Connect LocalDevVPN, then check again."),
+            result(.jit, jitReady && freshSession, "JIT is active and a fresh Steam session can start.", !freshSession ? "A session is active or has already used this app run. Reopen iDeck before a new launch." : "Enable JIT, return to iDeck, then check again.")
+        ]
+    }
+    var canLaunch: Bool { results.allSatisfy { $0.status == .passed } }
 }
 
 @MainActor
@@ -286,6 +344,67 @@ import UIKit
     @Published var ready = false
     @Published var autoStart = UserDefaults.standard.object(forKey: "iDeckAutoStart") as? Bool ?? true {
         didSet { UserDefaults.standard.set(autoStart, forKey: "iDeckAutoStart") }
+    }
+    @Published private(set) var checkingPrerequisites = false
+    @Published private(set) var lastChecked: Date?
+    @Published private(set) var prerequisites = IDeckPrerequisite.allCases.map {
+        IDeckPrerequisiteResult(id: $0, status: .unchecked, detail: "Not checked yet")
+    }
+    var prerequisitesPassed: Bool {
+        !checkingPrerequisites && prerequisites.allSatisfy { $0.status == .passed }
+    }
+    var bundledRuntimeAvailable: Bool {
+        guard let root = Bundle.main.resourceURL else { return false }
+        return ["aarch64-windows/cmd.exe", "aarch64-windows/explorer.exe", "i386-windows/ntdll.dll"]
+            .allSatisfy { FileManager.default.fileExists(atPath: root.appendingPathComponent($0).path) }
+            && SteamUIExperiment.isX64PE(root.appendingPathComponent("ideck-control.exe"))
+    }
+    var bundledSteamAvailable: Bool {
+        guard let source = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient") else { return false }
+        return FileManager.default.fileExists(atPath: source.path)
+    }
+    private func preflight(connection: Bool) -> IDeckPreflight {
+        let signing = SigningStatus.current
+        let helper = Bundle.main.builtInPlugInsURL?.appendingPathComponent(MadeiraBuiltInJIT.helperFile)
+        return IDeckPreflight(
+            runtime: bundledRuntimeAvailable && IDeckRules.runtimeReady(prefix: prefix),
+            steam: IDeckRules.steamClientReady(prefix: prefix),
+            signing: signing.known ? signing.debuggable : nil,
+            builtIn: JITCoordinator.shared.resolvedMethod == .builtIn,
+            helper: MadeiraBuiltInJIT.isAvailable && helper.map { FileManager.default.fileExists(atPath: $0.path) } == true,
+            paired: JITPairingFileStore.isImported,
+            externalJIT: StikJITHelper.isAvailable,
+            connection: connection, jitReady: StikJITHelper.ready,
+            freshSession: !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken)
+    }
+    func checkPrerequisites() {
+        guard !checkingPrerequisites, !preparing else { return }
+        checkingPrerequisites = true
+        prerequisites = IDeckPrerequisite.allCases.map { .init(id: $0, status: .unchecked, detail: "Waiting to check") }
+        Task { @MainActor in
+            var connection = false
+            for (index, step) in IDeckPrerequisite.allCases.enumerated() {
+                prerequisites[index] = .init(id: step, status: .checking, detail: "Checking…")
+                await Task.yield()
+                if step == .connection {
+                    connection = await withCheckedContinuation { continuation in
+                        LoopbackProbe.check { result in continuation.resume(returning: result.reachable) }
+                    }
+                }
+                prerequisites[index] = preflight(connection: connection).results[index]
+                if step == .runtime && !bundledRuntimeAvailable {
+                    prerequisites[index].detail = "Runtime files are missing from this installation. Reinstall iDeck."
+                }
+            }
+            // Re-evaluate together so a JIT handoff during a check cannot leave stale green rows.
+            prerequisites = preflight(connection: connection).results
+            if !bundledRuntimeAvailable {
+                prerequisites[0].detail = "Runtime files are missing from this installation. Reinstall iDeck."
+            }
+            refresh()
+            lastChecked = Date()
+            checkingPrerequisites = false
+        }
     }
     var setupDone: Bool { UserDefaults.standard.bool(forKey: "iDeckSetupComplete") }
     var prefix: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("wine") }
@@ -392,11 +511,11 @@ import UIKit
                             throw NSError(domain: "iDeck", code: 3, userInfo: [NSLocalizedDescriptionKey: "Runtime preparation failed. Your files have been preserved."])
                         }
                     }
-                    guard let source = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient"), fm.fileExists(atPath: source.path) else {
-                        throw NSError(domain: "iDeck", code: 4, userInfo: [NSLocalizedDescriptionKey: "This build needs the verified official Steam client resources. See iDeck build instructions."])
+                    if !IDeckRules.steamClientReady(prefix: target),
+                       let source = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient"), fm.fileExists(atPath: source.path) {
+                        try SteamUIExperiment.importBundledX86(source: source, prefix: target,
+                            flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? "1", bundleID: Bundle.main.bundleIdentifier)
                     }
-                    try SteamUIExperiment.importBundledX86(source: source, prefix: target,
-                        flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? "1", bundleID: Bundle.main.bundleIdentifier)
                 }.value
                 for (key, value) in [SteamUIExperiment.flag: "1", SteamUIExperiment.bigPictureFlag: "1",
                     "env.MADEIRA_GDI_SHARED_SECTION": "1", "env.MADEIRA_STEAM_UI_ALLOW_CRASHPAD": "1",
@@ -410,6 +529,7 @@ import UIKit
                 if ready { UserDefaults.standard.set(true, forKey: "iDeckSetupComplete") }
             } catch { self.error = error.localizedDescription }
             preparing = false
+            checkPrerequisites()
         }
     }
 }
@@ -418,80 +538,186 @@ struct IDeckLauncher: View {
     let start: () -> Void
     let account: () -> Void
     let setupJIT: () -> Void
+    let enableJIT: () -> Void
     let diagnostics: () -> Void
     @ObservedObject private var state = IDeckState.shared
     @ObservedObject private var jit = JITCoordinator.shared
-    @State private var selection = 2
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var selection = 0
+    @State private var showSetupHelp = false
+    private var launchEnabled: Bool { state.prerequisitesPassed && !state.preparing && !jit.busy }
+    private var passedCount: Int { state.prerequisites.filter { $0.status == .passed }.count }
+    private var sessionAvailable: Bool {
+        !state.running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
+    }
+    private func act(on step: IDeckPrerequisite) {
+        guard !state.checkingPrerequisites, !state.preparing, !jit.busy else { return }
+        switch step {
+        case .runtime: if state.bundledRuntimeAvailable { state.prepare() } else { showSetupHelp = true }
+        case .steam: if state.bundledSteamAvailable { state.prepare() } else { showSetupHelp = true }
+        case .signing, .pairing: setupJIT()
+        case .connection: LocalDevVPN.open()
+        case .jit: if sessionAvailable { enableJIT() } else { diagnostics() }
+        }
+    }
+    private func actionTitle(_ step: IDeckPrerequisite) -> String {
+        switch step {
+        case .runtime: return state.bundledRuntimeAvailable ? "Prepare runtime" : "Setup instructions"
+        case .steam: return state.bundledSteamAvailable ? "Prepare Steam" : "Add Steam files"
+        case .signing, .pairing: return "Open JIT setup"
+        case .connection: return LocalDevVPN.actionTitle
+        case .jit: return sessionAvailable ? "Enable JIT" : "View diagnostics"
+        }
+    }
     private func accept() {
         switch selection {
-        case 0: if !state.ready { state.prepare() }
-        case 1: setupJIT()
-        case 2: if state.ready && !jit.busy { start() }
-        case 3: if state.ready && !jit.busy { account() }
+        case 0: state.checkPrerequisites()
+        case 1...6:
+            let row = state.prerequisites[selection - 1]
+            if row.status == .needsAction { act(on: row.id) }
+        case 7: if launchEnabled { start() }
+        case 8: if launchEnabled { account() }
         default: state.autoStart.toggle()
         }
     }
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack(spacing: 14) {
-                    Image(systemName: "gamecontroller.fill").font(.largeTitle).foregroundStyle(.cyan)
-                    VStack(alignment: .leading) {
-                        Text("iDeck").font(.largeTitle.bold())
-                        Text("Your Steam library. On your iPhone.").foregroundStyle(.secondary)
+    private func stepRow(_ row: IDeckPrerequisiteResult, number: Int) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            VStack(spacing: 6) {
+                Group {
+                    switch row.status {
+                    case .passed: Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                    case .needsAction: Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.orange)
+                    case .checking: ProgressView().frame(width: 28, height: 28)
+                    case .unchecked:
+                        Text("\(number)").font(.caption.bold()).frame(width: 28, height: 28)
+                            .background(Color.secondary.opacity(0.12), in: Circle())
                     }
+                }.font(.title2).frame(width: 30, height: 30).accessibilityHidden(true)
+                if number < state.prerequisites.count {
+                    Rectangle().fill(row.status == .passed ? Color.green.opacity(0.4) : Color.secondary.opacity(0.2))
+                        .frame(width: 2).frame(minHeight: 42)
                 }
-                Text("Complete setup once, then launch Steam Big Picture locally. Steam handles sign-in and remembers this device when you choose Remember me.")
-                GroupBox("1 · Runtime & Steam") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Label(state.ready ? "Runtime ready" : "Prepare the local runtime", systemImage: state.ready ? "checkmark.circle.fill" : "shippingbox")
-                        if !state.ready {
-                            Button(state.preparing ? "Preparing…" : "Prepare iDeck") { state.prepare() }
-                                .disabled(state.preparing).buttonStyle(.borderedProminent)
-                            if state.preparing { ProgressView() }
+            }
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text(row.id.title).font(.headline)
+                    Spacer()
+                    if row.status == .passed { Text("Ready").font(.caption).foregroundStyle(.green) }
+                }
+                Text(row.detail).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                if row.status == .needsAction {
+                    Button(actionTitle(row.id)) { act(on: row.id) }
+                        .buttonStyle(.bordered).disabled(state.checkingPrerequisites || state.preparing || jit.busy)
+                }
+            }.padding(.bottom, 20)
+        }
+        .padding(10)
+        .background(selection == number ? Color.accentColor.opacity(0.08) : Color.clear, in: RoundedRectangle(cornerRadius: 14))
+        .id(number)
+        .accessibilityElement(children: .contain)
+    }
+    var body: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 22) {
+                    HStack(spacing: 14) {
+                        Image(systemName: "gamecontroller.fill").font(.largeTitle).foregroundStyle(.cyan)
+                        VStack(alignment: .leading) {
+                            Text("iDeck").font(.largeTitle.bold())
+                            Text("Your Steam library. On your iPhone.").foregroundStyle(.secondary)
                         }
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                }
-                GroupBox("2 · Device & JIT") {
+                    }
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Use Madeira’s existing device pairing and JIT setup. iDeck requests JIT again when a new session needs it.")
-                        Button("Configure pairing & JIT", action: setupJIT).buttonStyle(.bordered)
-                        if let message = jit.status { Text(message).font(.caption).foregroundStyle(.secondary) }
-                        if let message = jit.error { Text(message).foregroundStyle(.orange) }
-                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Before you launch").font(.title2.bold())
+                        Text("Follow the steps below. A green checkmark means the condition was verified on this device.")
+                            .font(.subheadline).foregroundStyle(.secondary)
+                        Button { state.checkPrerequisites() } label: {
+                            HStack {
+                                if state.checkingPrerequisites { ProgressView().tint(.white) }
+                                Label(state.checkingPrerequisites ? "Checking prerequisites…" : "Check all prerequisites", systemImage: "checklist")
+                            }.frame(maxWidth: .infinity).padding(8)
+                        }.buttonStyle(.borderedProminent)
+                            .disabled(state.checkingPrerequisites || state.preparing || jit.busy).id(0)
+                        if let checked = state.lastChecked, !state.checkingPrerequisites {
+                            HStack {
+                                Text("\(passedCount) of \(state.prerequisites.count) ready")
+                                Spacer()
+                                Text(checked, style: .time)
+                            }.font(.caption).foregroundStyle(.secondary)
+                        }
+                        if state.prerequisitesPassed {
+                            Label("All prerequisites are ready. You can launch Steam.", systemImage: "checkmark.seal.fill")
+                                .foregroundStyle(.green).font(.subheadline)
+                        } else if !state.checkingPrerequisites,
+                                  let next = state.prerequisites.first(where: { $0.status == .needsAction }) {
+                            Text("Next: \(next.id.title)").font(.subheadline.weight(.semibold))
+                        }
+                    }
+                    VStack(spacing: 0) {
+                        ForEach(Array(state.prerequisites.enumerated()), id: \.element.id) { index, row in
+                            stepRow(row, number: index + 1)
+                        }
+                    }
+                    if state.preparing { ProgressView("Preparing runtime…") }
+                    if let message = jit.status { Text(message).font(.caption).foregroundStyle(.secondary) }
+                    if let message = jit.error { Text(message).foregroundStyle(.orange) }
+                    if let error = state.error { Text(error).foregroundStyle(.orange) }
+                    Button(action: start) {
+                        Label(jit.busy ? "Enabling JIT…" : "Launch Steam Big Picture", systemImage: "play.fill")
+                            .font(.headline).frame(maxWidth: .infinity).padding(12)
+                    }.buttonStyle(.borderedProminent).disabled(!launchEnabled).id(7)
+                    GroupBox("Steam account") {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Sign in or change accounts in Steam after launch. Account login is verified by Steam, after these device checks.")
+                                .font(.subheadline).foregroundStyle(.secondary)
+                            Button("Sign in / Change Steam account", action: account)
+                                .buttonStyle(.bordered).disabled(!launchEnabled)
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+                    }.id(8)
+                    Toggle("Open Big Picture automatically next time", isOn: $state.autoStart).id(9)
+                    Text("Connect a controller, or tap directly on Steam. The floating iDeck button opens the keyboard, virtual controller and options.")
+                        .font(.subheadline).foregroundStyle(.secondary)
+                    Text("Powered by Madeira · Genuine Windows Steam. Compatibility is experimental.")
+                        .font(.caption).foregroundStyle(.secondary)
+                    Button("Advanced diagnostics", action: diagnostics).font(.caption)
+                }.padding(24).padding(.bottom, 48).frame(maxWidth: 660).frame(maxWidth: .infinity)
+            }.background(Color(.systemGroupedBackground))
+                .onChange(of: selection) { _, value in
+                    withAnimation { proxy.scrollTo(value, anchor: .center) }
                 }
-                Button(action: start) {
-                    Label(jit.busy ? "Enabling JIT…" : "Launch Steam Big Picture", systemImage: "play.fill")
-                        .font(.headline).frame(maxWidth: .infinity).padding(12)
-                }.buttonStyle(.borderedProminent).disabled(!state.ready || state.preparing || jit.busy)
-                GroupBox("Steam account") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Sign in or choose another account in Steam’s own account screen. Big Picture uses that same Steam session. iDeck does not store your password.")
-                        Button("Sign in / Change Steam account", action: account)
-                            .buttonStyle(.bordered).disabled(!state.ready || state.preparing || jit.busy)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                }
-                Toggle("Open Big Picture automatically next time", isOn: $state.autoStart)
-                if let error = state.error { Text(error).foregroundStyle(.orange) }
-                Text("Connect a controller, or tap directly on Steam. The floating iDeck button opens the keyboard, virtual controller and options.").foregroundStyle(.secondary)
-                Text("Powered by Madeira · Genuine Windows Steam, not Linux SteamOS. This proof of concept uses Valve’s legacy 32-bit client; compatibility is experimental.").font(.caption).foregroundStyle(.secondary)
-                Button("Advanced diagnostics", action: diagnostics).font(.caption)
-            }.padding(24).frame(maxWidth: 660)
-                .frame(maxWidth: .infinity)
-        }.background(Color(.systemGroupedBackground))
+        }
         .onAppear {
-            state.refresh()
+            state.checkPrerequisites()
             LibraryController.shared.configure(enabled: true, ownsInput: true)
         }
+        .onChange(of: scenePhase) { _, phase in if phase == .active { state.checkPrerequisites() } }
+        .onChange(of: jit.busy) { _, busy in if !busy { state.checkPrerequisites() } }
         .onDisappear { LibraryController.shared.configure(enabled: true, ownsInput: false) }
         .onReceive(LibraryController.shared.commands) { command in
+            guard !showSetupHelp else { return }
             if command == "up" { selection = max(0, selection - 1) }
-            if command == "down" { selection = min(4, selection + 1) }
+            if command == "down" { selection = min(9, selection + 1) }
             if command == "accept" { accept() }
         }
         .overlay(alignment: .bottom) {
-            Text(["Controller: Prepare runtime", "Controller: Pairing & JIT", "Controller: Launch Big Picture", "Controller: Steam account", "Controller: Auto-start"][selection])
-                .font(.caption).padding(8).background(.regularMaterial, in: Capsule()).padding(8)
+            Text((["Check prerequisites"] + IDeckPrerequisite.allCases.map(\.title) + ["Launch Steam", "Steam account", "Auto-start"])[selection])
+                .font(.caption).padding(8).background(.regularMaterial, in: Capsule()).padding(8).allowsHitTesting(false)
+        }
+        .sheet(isPresented: $showSetupHelp, onDismiss: { state.checkPrerequisites() }) {
+            NavigationStack {
+                Form {
+                    Section("Runtime") {
+                        Text("Prepare runtime creates the local environment without replacing existing files. Missing app runtime files require a complete iDeck build.")
+                    }
+                    Section("Steam client") {
+                        Text("Use a legitimate compatible Windows Steam client. In Files → iDeck → wine → drive_c, place the complete client folder at Steam32BundleLab or Steam32Lab, then check again.")
+                        Text("Steam, steamclient.dll, steamwebhelper and libcef must belong to the same compatible 32-bit client. A single steam.exe is insufficient.")
+                        Link("Read setup instructions", destination: URL(string: "https://github.com/kuscholar/iDeck/blob/main/docs/GETTING_STARTED.md")!)
+                    }
+                    Section("Account") { Text("Complete sign-in and Steam Guard inside Steam. These checks never read your password or verify account login.") }
+                }.navigationTitle("Setup help")
+                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showSetupHelp = false } } }
+            }
         }
     }
 }
