@@ -107,3 +107,52 @@ is corrected; the production thread implementation remains unchanged.
 | ratatan-stable62b.txt | 8ea34fefba32500e34b59d7f648480d4a3332a4511a5ced9486a91e77850fefe |
 | ratatan-build62.log | 16ade040d2db66baab9e351ada361d709315c20130a374a4d48ceb7bce82ac1f |
 | ratatan-gameprocess62.txt | 8a151b7561f3d8a4142e805d506a17d0d65a23c460fea2086646cbc1efdd0e12 |
+
+## Build 62 white-window follow-up / Build 63
+
+User supplied a white, decorated Ratatan window over Steam. The fresh session
+(PID 5910, installation EB38D165; historical identifiers only) actually spawns
+Ratatan. Its 14 recorded ~512 MiB guest spill grants land in [0x74,0x78),
+not FEX's host band. The observed thread-state/call-return failures are absent
+from this snapshot. Unity advances through PhysX, WebRTC and WGI, then logs
+`SteamAPI_Init() failed` and input shutdown. This does not prove gameplay.
+
+The original actionable failure is earlier in the native trace:
+`steamclient64.dll` needs a 0x18c0000 executable image copy, but the pool is
+exhausted (head cursor 0x158c4000, tail reserved 0x20100000, total 0x37100000).
+The load returns STATUS_NO_MEMORY. The client DLL is required for the game's
+legitimate Steamworks initialization; no authentication/DRM behavior is bypassed.
+The ID3D11Fence warning alone is not assigned as the cause.
+
+Build 63 tests an existing pool policy with a larger default image-headroom
+target: 192 MiB for isolated Steam sessions, 48 MiB for ordinary sessions.
+Explicit MADEIRA_POOL_HEAD_RESERVE_MB values still win, including 48 for opt-out.
+The pool is not enlarged; new browser code buffers must fit a smaller budget
+so later game/Steamworks images have room. Region C and live code are unchanged.
+Actual allocation and SteamAPI success remain acceptance criteria, because a
+budget target alone cannot guarantee every future game's imports fit.
+
+The old fullscreen migration belonged to Madeira's native library profile;
+genuine Steam game launch bypasses that profile. Build 63 adds equivalent Unity
+borderless/current-desktop arguments only to the exact Steam Ratatan path,
+only within the isolated Steam session. Existing child-argument configuration
+and an explicit -screen-fullscreen option take precedence. Other game.exe
+programs are unchanged. No game binary, save or Steam launch configuration is
+rewritten. Production policy tests cover path/case/slashes, ordinary sessions,
+explicit user overrides, dimension bounds and truncation, under ASan/UBSan.
+
+Private white-window evidence SHA-256:
+- ratatan-white-native.txt: a5ccd502cd633ccc049d7f46c49378b0366b19797f02ff39b5ae43c380945df1
+- ratatan-white-player.txt: edbceefc57fbcd5f5e6aa8e8e2fbf542545151b199a9fc3f1343ed9330ddc450
+
+Build 63: all 37 native units and full Xcode compile pass. Pool placement,
+spill-order, pool-split, thread-create diagnostics, launch policy and fullscreen
+policy regressions pass. Final Mach-O contains the fullscreen marker; deep
+strict signature verification and in-place installation pass. Actual 08:39
+native trace confirms Build 63 and 192 MiB image headroom. Saved Steam session
+is preserved. At 08:39:33 Steam again awaits user response to ShowInterstitials
+before game creation. Fullscreen appearance and successful Steamworks/gameplay
+remain pending actual game execution; do not infer them from this trace.
+
+Private ratatan-stable63.txt SHA-256:
+11c568979d311d092449c2895a2de803d3142627162ddb60d466a4c64c403397.

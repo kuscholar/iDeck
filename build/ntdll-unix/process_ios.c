@@ -1255,6 +1255,40 @@ static const char *child_extra_args( const char *spec, const WCHAR *image, int i
     return spec;
 }
 
+/* iDeck's genuine Steam launch bypasses the native library's per-game
+ * display profile. Apply the same Unity borderless mode only to Ratatan's
+ * installed Steam path, respecting an explicit user fullscreen option. */
+static int ios_ratatan_fullscreen_args( const char *session, const WCHAR *image, int image_len,
+                                       const WCHAR *command, int command_len, int width, int height,
+                                       char *out, size_t capacity )
+{
+    static const char suffix[] = "\\steamapps\\common\\ratatan\\game.exe";
+    static const char option[] = "-screen-fullscreen";
+    int n = sizeof(suffix) - 1, i, j, written;
+    if (!session || strcmp(session, "1") || !image || image_len < n ||
+        width < 640 || width > 3840 || height < 360 || height > 2160) return 0;
+    for (i = 0; i < n; i++)
+    {
+        WCHAR c = image[image_len - n + i];
+        if (c == '/') c = '\\';
+        if (c >= 'A' && c <= 'Z') c += 'a' - 'A';
+        if (c != (unsigned char)suffix[i]) return 0;
+    }
+    for (i = 0; command && i + (int)sizeof(option) - 1 <= command_len; i++)
+    {
+        if (i && command[i-1] != ' ' && command[i-1] != '\t' && command[i-1] != '"') continue;
+        for (j = 0; option[j]; j++)
+        {
+            WCHAR c = command[i+j];
+            if (c >= 'A' && c <= 'Z') c += 'a' - 'A';
+            if (c != (unsigned char)option[j]) break;
+        }
+        if (!option[j] && (i+j == command_len || command[i+j] == ' ' || command[i+j] == '=')) return 0;
+    }
+    written = snprintf(out, capacity, "-screen-fullscreen 1 -window-mode borderless -popupwindow -screen-width %d -screen-height %d", width, height);
+    return written > 0 && (size_t)written < capacity;
+}
+
 /* madeira-bcd: consoles without a window. kernelbase's alloc_console starts
  * conhost.exe with a window unless the program asked for none
  * (CREATE_NO_WINDOW appends --headless). In a Dock session explorer's desktop
@@ -1989,6 +2023,17 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
     {
         const char *extra = child_extra_args( getenv( "MADEIRA_CHILD_ARGS" ), params->ImagePathName.Buffer,
                                               params->ImagePathName.Length / sizeof(WCHAR) );
+        char display_args[160];
+        if (!extra && ios_ratatan_fullscreen_args(getenv("MADEIRA_STEAM_UI_SESSION"),
+                params->ImagePathName.Buffer, params->ImagePathName.Length / sizeof(WCHAR),
+                params->CommandLine.Buffer, params->CommandLine.Length / sizeof(WCHAR),
+                getenv("MADEIRA_SCREEN_W") ? atoi(getenv("MADEIRA_SCREEN_W")) : 0,
+                getenv("MADEIRA_SCREEN_H") ? atoi(getenv("MADEIRA_SCREEN_H")) : 0,
+                display_args, sizeof(display_args)))
+        {
+            extra = display_args;
+            dprintf(2, "[ideck-ratatan-display] applying current-desktop borderless fullscreen\n");
+        }
         if (extra)
         {
             int cl_len = params->CommandLine.Length / sizeof(WCHAR), n = (int)strlen( extra ), k;

@@ -1628,3 +1628,17 @@ succeeds but Steam waits at ShowInterstitials before game launch. Mac locked;
 user UI response pending. Preserve that session, do not call this a completed
 runtime fix. Exact evidence, hashes, regressions, opt-out, and next acceptance
 criteria: `IDECK_RATATAN_STARTUP.md`. No FEX/Valve binary changes or new release.
+
+### Ratatan white window, Build 63
+
+Build 62 fresh device trace places guest spill outside FEX's band and proceeds
+past Unity graphics initialization, but fails the later steamclient64.dll
+executable copy with STATUS_NO_MEMORY; game logs SteamAPI_Init failure and
+shutdown. User screenshot shows decorated white window. Build 63 defaults the
+existing image-headroom budget to 192 MiB for isolated Steam sessions (ordinary
+48 MiB and explicit overrides preserved) and applies Ratatan-only borderless
+current-desktop Unity args unless the user supplies fullscreen settings.
+37 native units/full compile, linked marker, strict signing/install pass; actual
+native trace confirms 192 MiB policy. Steam waits at ShowInterstitials, so game
+execution/visual validation is pending user response, not a claimed success.
+Detailed evidence, hypotheses, opt-out and limits: IDECK_RATATAN_STARTUP.md.

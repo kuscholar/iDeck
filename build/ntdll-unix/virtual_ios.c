@@ -292,6 +292,15 @@ static size_t ios_pool_parse_head_reserve( const char *value )
     return (size_t)mb << 20;
 }
 
+/* Steam plus a later x64 game share the pool. Keep space for late Steamworks
+ * images instead of letting browser JIT buffers take nearly all of the tail.
+ * Explicit configuration and ordinary sessions retain their existing policy. */
+static size_t ios_pool_session_head_reserve( const char *value, const char *session )
+{
+    return ios_pool_parse_head_reserve(value ? value :
+        (session && !strcmp(session, "1") ? "192" : NULL));
+}
+
 /* The offset a head allocation of `size` gets with the bump cursor at `cur`:
  * `cur`, or the end of the hole when [cur, cur + size) would reach into it. */
 static size_t ios_pool_hole_head_place( size_t cur, size_t size, size_t hole_off, size_t hole_end )
@@ -16921,7 +16930,8 @@ static inline int mprotect_exec( void *base, size_t size, int unix_prot )
                 }
                 /* 48 to 256 MB of image headroom in the FEX pool-tail budget;
                  * 48/default keeps the existing policy. Region C is unchanged. */
-                ios_pool_head_reserve = ios_pool_parse_head_reserve( getenv( "MADEIRA_POOL_HEAD_RESERVE_MB" ) );
+                ios_pool_head_reserve = ios_pool_session_head_reserve( getenv( "MADEIRA_POOL_HEAD_RESERVE_MB" ),
+                                                                    getenv( "MADEIRA_STEAM_UI_SESSION" ) );
                 dprintf( 2, "[pool-head] code-buffer budget targets %lu MB of image headroom (region C and recycled buffers unchanged)\n",
                          (unsigned long)(ios_pool_head_reserve >> 20) );
                 /* madeira-bcd pool-low: region C (see ios_jit_low_rx_global). Taken only

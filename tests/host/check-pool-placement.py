@@ -28,6 +28,7 @@ def function(signature):
 helpers = ''.join(function(sig) for sig in (
     'static int ios_pool_big_layout(',
     'static size_t ios_pool_parse_head_reserve(',
+    'static size_t ios_pool_session_head_reserve(',
     'static size_t ios_pool_hole_head_place(',
     'static size_t ios_pool_hole_tail_start(',
     'static size_t ios_pool_hole_between(',
@@ -43,7 +44,7 @@ reclaim = function('void ios_jit_reclaim_process( void *peb )')
 assert 'off < ios_pool_big_off + ios_pool_big_size && off + size > ios_pool_big_off' in reclaim
 assert 'ios_pool_big_taken = 0;' in reclaim and 'ios_pool_big_freed_at = time( NULL );' in reclaim
 assert reclaim.index('ios_pool_big_taken = 0;') < reclaim.index('ios_pool_free_put(')
-assert 'ios_pool_parse_head_reserve( getenv( "MADEIRA_POOL_HEAD_RESERVE_MB" ) )' in source
+assert 'ios_pool_session_head_reserve( getenv( "MADEIRA_POOL_HEAD_RESERVE_MB" )' in source
 assert 'const char *lower = getenv( "MADEIRA_POOL_BIG_SLOT_BELOW" );' in source
 assert 'int below = lower && !strcmp( lower, "1" );' in source
 assert 'if (!fits && below)' in source, 'an unavailable lower slot must try the existing upper placement'
@@ -238,6 +239,12 @@ int main(void)
     CHECK(ios_pool_parse_head_reserve("48") == 48 * MB);
     CHECK(ios_pool_parse_head_reserve("128") == 128 * MB);
     CHECK(ios_pool_parse_head_reserve("256") == 256 * MB);
+    CHECK(ios_pool_session_head_reserve(NULL, NULL) == 48 * MB);
+    CHECK(ios_pool_session_head_reserve(NULL, "0") == 48 * MB);
+    CHECK(ios_pool_session_head_reserve(NULL, "1") == 192 * MB);
+    CHECK(ios_pool_session_head_reserve("48", "1") == 48 * MB);
+    CHECK(ios_pool_session_head_reserve("128", "1") == 128 * MB);
+    CHECK(ios_pool_session_head_reserve("invalid", "1") == 48 * MB);
     CHECK(ios_pool_code_cap(total, (size_t)-1, 0, 0, 0, 48 * MB) == 16 * MB);
     CHECK(ios_pool_code_cap(total, 0, (size_t)-1, 0, 0, 48 * MB) == 16 * MB);
     for (int i = 0; i < 10000; i++)
