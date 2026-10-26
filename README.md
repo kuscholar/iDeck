@@ -4,7 +4,7 @@
   <img src="docs/assets/ideck/icon.png" width="156" alt="iDeck">
 </p>
 <h1 align="center">iDeck</h1>
-<p align="center"><strong>iDeck brings the SteamOS experience to iOS</strong></p>
+<p align="center"><strong>iDeck brings the Steam Big Picture experience to iOS</strong></p>
 <p align="center">
   <a href="docs/GETTING_STARTED.md"><img src="https://img.shields.io/badge/Platform-iOS%20%26%20iPadOS-007AFF" alt="iOS and iPadOS"></a>
   <a href="docs/IDECK.md"><img src="https://img.shields.io/badge/Status-Experimental-orange" alt="Experimental"></a>
