@@ -1657,3 +1657,61 @@ strict signature and install pass. Actual helper confirms preferences applied
 and backup complete. Final full-screen appearance/WGI enumeration/in-game touch
 controls remain pending user test; preserve running session. Exact hashes,
 rollback/opt-out and limits in IDECK_RATATAN_STARTUP.md.
+
+### Re-signing / JIT shortcut repair, local Build 65 (uncommitted)
+
+Tester reports Shortcuts destination-output error and approximately one minute
+waiting. Verified old scheme inference disagrees with actual registered scheme
+after bundle rename, and suffix gate disables a marked iDeck product. Read
+registered schemes and retain product marker across re-signing; preserve ordinary
+Madeira isolation. Correct signed shortcut outputs to explicit text while native
+VPN stays in Store Content; stop offering outdated cloud import. Host regression
+and signed archive checks pass. Full custom-ID unsigned Build 65 and actual final
+metadata/helper/payload checks pass. No affected-tester/device validation claimed;
+Build 64 phone session not replaced. Workaround, exact reproduction, hashes and
+limits: IDECK_JIT_RESIGN.md. User prohibits commit/push outside weekdays22:00–08:00
+or weekends; current daytime changes remain uncommitted/unpushed. No automation
+was created. AGENTS.md and an explicit-request memory note preserve the rule.
+
+### Local Build 66: initial CM TLS failure handling
+
+Reporter iOS27.2/0.1.3, LeiShen+Karing supplies old Connection failed/TLS text and
+Dock offline result52. Exact native WebSocket ping wrapper discards error codes;
+initial connect failure leaked transport and did not penalize CM selection.
+Add bounded distinct-CM failover for recoverable transport failures, cleanup,
+safe domain/code errors and stale-task callback guard. Trust errors/cancellation
+fail closed, normal TLS unchanged, no entitlement bypass. Production-loop/
+actual-selection scripted tests and existing Cloud save regression tests pass;
+full custom-ID unsigned Build66 and linked marker checks pass. No accelerator
+or affected-device runtime validation; phone64 untouched. Full evidence and
+remaining discriminator in IDECK_ACCELERATOR_TLS.md. Work remains uncommitted/
+unpushed per user time restriction, no new automation.
+
+## Steam logout/recovery follow-up (local Build 67)
+
+- User: Steam crashed during account switching; next launch failed Steam/browser
+  prerequisite. Device enumeration worked; executable copy failed CoreDevice4000,
+  connection reset54. No crash/root-file evidence; logout cause remains unknown.
+- Confirmed code defect: failed prerequisite offered preparation, but existing
+  client import returned early on an existing incomplete/incompatible directory.
+- Added per-file categorical diagnostics and an explicit launcher recovery action,
+  compatible bundled/user-imported source selection, active-session refusal,
+  public-file backups, post-write validation, failure rollback, and mandatory
+  fresh app process after successful repair. No account/game/save deletion.
+- Production host steam-ui and iDeck policy checks pass. See
+  IDECK_STEAM_RECOVERY.md. No on-device success claimed. Current source baseline
+  remains 0ec1eb7 with earlier JIT/CM fixes preserved locally; no commit/push.
+- Full unsigned iOS Build67 succeeded; actual Info.plist version67 and linked
+  Madeira.debug.dylib repair-action/error markers verified. git diff --check
+  passes. Not signed/installed; affected device repair remains unverified.
+- Local time Monday2026-10-26 17:06EDT is outside the allowed Git window;
+  changes remain uncommitted/unpushed. Next: retrieve affected client headers
+  and logout crash log on restored device connection, then install/test recovery
+  with real compatible client resources and re-test Valve account switching.
+- Follow-up device evidence: copied current Steam32BundleLab/steam.exe and
+  Documents/Steam32OfficialRepair/steam.exe successfully. Current installed
+  client PE machine is AMD64 0x8664; retained repair source is i386 0x014c.
+  Confirms incompatible client architecture explains readiness failure, but
+  does not establish logout crash causal chain. Build67 rebuilt for existing
+  com.kuschqin.madeira.steamui, signed/deep-verified, and installed successfully
+  without uninstall. Private artifacts: .madeira-install/ideck-repair67.

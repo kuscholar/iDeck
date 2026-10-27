@@ -49,6 +49,14 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 签名细节见 [IPA 安装说明（英文）](docs/INSTALL_IPA.md)，
 源码准备见 [Getting started（英文）](docs/GETTING_STARTED.md)。
 
+### JIT 提示无法确定快捷指令输出的目标 App？
+
+旧版在更换 Bundle ID 重签后可能生成错误的回跳地址。可先关闭可选的
+**Madeira JIT shortcut**，手动连接 **LocalDevVPN**，返回后点击 **Enable JIT**。
+修复后的源码会读取实际注册的回跳信息；更新 App 后，还需从 App 内导入新版
+签名快捷指令并替换旧副本。此修复尚未包含在已发布的 Build 56 IPA 中。
+详见 [JIT 排错说明](docs/JIT.md#shortcut-destination-errors-after-re-signing)。
+
 ## 打开 Steam 前：点亮六个勾
 
 使用包含新启动器的 Build 55 或更新构建，打开 iDeck，点击
@@ -155,3 +163,17 @@ iDeck 自行编写的新增部分使用 **GPL-3.0-or-later**；现有
 
 Steam、SteamOS、Steam Deck 为 Valve 商标；iPhone、iPad、iOS、Metal 为 Apple 商标。
 iDeck 为独立项目，不隶属于 Valve、Apple、Madeira 或 DroidDeck，也未获得其背书。
+
+
+### Build 67 · v0.1.3-alpha.3
+
+Steam recovery is now available in the launcher: **Repair Steam files** restores
+compatible program files while retaining account data, installed games and saves.
+If this build has no bundled client, supply your own complete compatible client
+in `iDeck/Steam32OfficialRepair` using Files. Reopen iDeck after repair.
+See [recovery details](docs/IDECK_STEAM_RECOVERY.md).
+
+新版包含 Steam 文件修复入口、64 位游戏安装识别和 JIT 重签名回调修复。
+更新后如使用旧版 Madeira JIT 快捷指令，请从 iDeck 重新导入并替换同名指令；
+应用升级不会自动替换已导入的快捷指令。TLS 恢复仅经本地故障模拟验证，
+不保证解决所有加速器问题。IPA 仍不包含 Steam、账号或游戏，需自行开发签名。

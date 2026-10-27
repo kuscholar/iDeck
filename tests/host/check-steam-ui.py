@@ -7,9 +7,23 @@ root = Path(__file__).resolve().parents[2]
 src = (root / 'app/Madeira/SteamUIExperiment.swift').read_text()
 policy = src[src.index('enum SteamUIExperiment {'):src.index('\n@MainActor\nfinal class SteamUIEvidence')]
 main = r'''
-assert(SteamUIExperiment.callbackScheme(bundleID: "com.kuschqin.madeira.steamui") == "madeira-steamui")
-assert(SteamUIExperiment.callbackScheme(bundleID: "com.kuschqin.madeira.d7kzkwd692") == "madeira")
-assert(SteamUIExperiment.callbackScheme(bundleID: nil) == "madeira")
+let registered = ["madeira-steamui"]
+for id in ["com.kuschqin.madeira.steamui", "com.kuscholar.ideck.steamui.TEAM123", "org.example.custom"] {
+    assert(SteamUIExperiment.callbackScheme(bundleID: id, registeredSchemes: registered) == "madeira-steamui")
+    assert(SteamUIExperiment.allowed(flag: "1", bundleID: id, product: true))
+    assert(!SteamUIExperiment.allowed(flag: "0", bundleID: id, product: true))
+}
+// Exact old failure: a renamed app declared only madeira-steamui but chose madeira.
+let renamedID = "com.kuscholar.ideck.steamui.TEAM123"
+let oldCallback = renamedID.hasSuffix(".steamui") ? "madeira-steamui" : "madeira"
+assert(!registered.contains(oldCallback))
+assert(registered.contains(SteamUIExperiment.callbackScheme(bundleID: renamedID, registeredSchemes: registered)!))
+assert(!SteamUIExperiment.allowed(flag: "1", bundleID: nil, product: true))
+assert(!SteamUIExperiment.allowed(flag: "1", bundleID: "org.example.custom", product: false))
+assert(SteamUIExperiment.callbackScheme(bundleID: "org.example.custom", registeredSchemes: ["madeira-steamui", "org.example.custom"]) == "org.example.custom")
+assert(SteamUIExperiment.callbackScheme(bundleID: "org.example.custom", registeredSchemes: ["bad scheme", "$(PRODUCT_BUNDLE_IDENTIFIER)", ""]) == nil)
+assert(SteamUIExperiment.callbackScheme(bundleID: nil, registeredSchemes: []) == nil)
+assert(SteamUIExperiment.callbackScheme(bundleID: nil, registeredSchemes: ["madeira"]) == "madeira")
 let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
 try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
 defer { try? FileManager.default.removeItem(at: root) }
@@ -104,6 +118,18 @@ try FileManager.default.createDirectory(at: extraCEF, withIntermediateDirectorie
 try "rollback".write(to: extraCEF.appendingPathComponent("public-helper.txt"), atomically: true, encoding: .utf8)
 let backup = try SteamUIExperiment.restorePinnedX86(source: source32, prefix: root, flag: "1", bundleID: "test.steamui")
 assert(SteamUIExperiment.isX86PE(upgraded))
+assert(IDeckRules.clientIssues(prefix: root).isEmpty)
+let missingBrowser = bundled32.appendingPathComponent("bin/cef/cef.win7/libcef.dll")
+let browserData = try Data(contentsOf: missingBrowser)
+try FileManager.default.removeItem(at: missingBrowser)
+// Invalidate fallback too, so diagnostics describe the installed broken client.
+let fallbackBrowser = source32.appendingPathComponent("bin/cef/cef.win7/libcef.dll")
+try FileManager.default.removeItem(at: fallbackBrowser)
+assert(IDeckRules.clientIssues(prefix: root).contains { $0.contains("libcef.dll: missing") })
+try browserData.write(to: fallbackBrowser)
+_ = try SteamUIExperiment.restorePinnedX86(source: source32, prefix: root, flag: "1", bundleID: "test.steamui")
+assert(SteamUIExperiment.isX86PE(missingBrowser))
+
 let savedUpgrade = try Data(contentsOf: backup.appendingPathComponent("steam.exe"))
 assert(savedUpgrade == upgradeData)
 assert(!FileManager.default.fileExists(atPath: extraCEF.path))
@@ -204,11 +230,12 @@ do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "0", bundleID: "
 print("PASS: feature flag, app isolation, complete x64 client, fixed command, dimensions, sanitized milestones")
 '''
 info = plistlib.loads((root/'app/Madeira/Info.plist').read_bytes())
-assert info['CFBundleURLTypes'][0]['CFBundleURLSchemes'] == ['madeira-steamui']
+assert info['CFBundleURLTypes'][0]['CFBundleURLSchemes'] == ['$(PRODUCT_BUNDLE_IDENTIFIER)', 'madeira-steamui']
 network = (root/'app/Madeira/JITNetwork.swift').read_text()
-assert all('SteamUIExperiment.callbackScheme)://jit-network/'+x in network for x in ('success','error','cancel'))
-assert 'url.scheme == SteamUIExperiment.callbackScheme' in network
-assert 'localdevvpn://enable?scheme=\\(SteamUIExperiment.callbackScheme)' in (root/'app/Madeira/JITSetup.swift').read_text()
+assert all('callbackScheme)://jit-network/'+x in network for x in ('success','error','cancel'))
+assert 'url.scheme?.caseInsensitiveCompare(scheme) == .orderedSame' in network
+assert 'guard let callbackScheme = SteamUIExperiment.callbackScheme else' in network
+assert 'URLQueryItem(name: "scheme", value: scheme)' in (root/'app/Madeira/JITSetup.swift').read_text()
 with tempfile.TemporaryDirectory() as td:
     td=Path(td); swift=td/'main.swift'
     swift.write_text('import Foundation\nenum MadeiraConfig { static func get(_ key: String) -> String? { nil } }\n'+policy+main)

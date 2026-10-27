@@ -4,7 +4,7 @@
   <img src="docs/assets/ideck/icon.png" width="156" alt="iDeck">
 </p>
 <h1 align="center">iDeck</h1>
-<p align="center"><strong>iDeck brings the SteamOS experience to iOS</strong></p>
+<p align="center"><strong>iDeck brings the Steam Big Picture experience to iOS</strong></p>
 <p align="center">
   <a href="docs/GETTING_STARTED.md"><img src="https://img.shields.io/badge/Platform-iOS%20%26%20iPadOS-007AFF" alt="iOS and iPadOS"></a>
   <a href="docs/IDECK.md"><img src="https://img.shields.io/badge/Status-Experimental-orange" alt="Experimental"></a>
@@ -58,6 +58,16 @@ Target: **iOS 26+**, with JIT through Madeira's authorized pairing/debug workflo
 Device evidence comes from **iPhone 15 Pro Max (A17 Pro)**; iPad remains unvalidated.
 No jailbreak is required. See [full IPA installation instructions](docs/INSTALL_IPA.md)
 for signing details and limitations, or [source setup](docs/GETTING_STARTED.md).
+
+### JIT shortcut destination error?
+
+On an older build, re-signing with a different Bundle ID can break the
+Shortcuts return URL. As a temporary workaround, turn off the optional
+**Madeira JIT shortcut**, connect **LocalDevVPN** manually, then return and tap
+**Enable JIT**. The corrected source uses registered callback metadata; replace
+the imported shortcut with the corrected signed local copy after updating.
+This fix is not yet included in the published Build 56 IPA.
+See [JIT troubleshooting](docs/JIT.md#shortcut-destination-errors-after-re-signing).
 
 ## Before Steam: six green checks
 
@@ -205,3 +215,17 @@ in [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md).
 Steam, SteamOS and Steam Deck are Valve trademarks. iPhone, iPad, iOS and Metal
 are Apple trademarks. iDeck is independent and is not affiliated with or endorsed
 by Valve, Apple, Madeira or DroidDeck.
+
+
+### Build 67 · v0.1.3-alpha.3
+
+Steam recovery is now available in the launcher: **Repair Steam files** restores
+compatible program files while retaining account data, installed games and saves.
+If this build has no bundled client, supply your own complete compatible client
+in `iDeck/Steam32OfficialRepair` using Files. Reopen iDeck after repair.
+See [recovery details](docs/IDECK_STEAM_RECOVERY.md).
+
+新版包含 Steam 文件修复入口、64 位游戏安装识别和 JIT 重签名回调修复。
+更新后如使用旧版 Madeira JIT 快捷指令，请从 iDeck 重新导入并替换同名指令；
+应用升级不会自动替换已导入的快捷指令。TLS 恢复仅经本地故障模拟验证，
+不保证解决所有加速器问题。IPA 仍不包含 Steam、账号或游戏，需自行开发签名。

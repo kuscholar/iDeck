@@ -53,6 +53,7 @@ actor SteamConnection {
     private let wsDelegate = SteamWebSocketDelegate()
     private let serverList = CMServerList()
     private var currentEndpoint: String?
+    private var activeConnect: UUID?
     private var messageHandler: ((Data) -> Void)?
     private var disconnectHandler: ((Error?) -> Void)?
 
@@ -63,7 +64,45 @@ actor SteamConnection {
     // MARK: - Connect
 
     func connect() async throws {
-        let server = try await serverList.getServer()
+        disconnect()
+        let generation = UUID()
+        activeConnect = generation
+        var tried = Set<String>()
+        var lastFailure: Error?
+        for attempt in 1...3 {
+            try Task.checkCancellation()
+            guard activeConnect == generation else { throw CancellationError() }
+            let server: CMServerList.CMServer
+            do { server = try await serverList.getServer(excluding: tried) }
+            catch { throw lastFailure ?? error }
+            guard activeConnect == generation else { throw CancellationError() }
+            tried.insert(server.endpoint)
+            do {
+                try await connect(to: server)
+                guard activeConnect == generation else { throw CancellationError() }
+                await serverList.markSuccess(endpoint: server.endpoint)
+                guard activeConnect == generation else { throw CancellationError() }
+                guard let task = webSocketTask else { throw CancellationError() }
+                scheduleReceive(task)
+                SteamLog.trace("WebSocket connected — ready for protocol messages")
+                return
+            } catch {
+                guard activeConnect == generation else { throw CancellationError() }
+                clearTransport()
+                if Task.isCancelled || (error as NSError).code == NSURLErrorCancelled && (error as NSError).domain == NSURLErrorDomain {
+                    throw CancellationError()
+                }
+                await serverList.markFailed(endpoint: server.endpoint)
+                let failure = SteamCMTransportPolicy.sanitized(error)
+                SteamLog.event("[steam-cm-transport] attempt=\(attempt) reason=\(failure)")
+                lastFailure = failure
+                guard attempt < 3, SteamCMTransportPolicy.canTryAnotherServer(error) else { throw failure }
+            }
+        }
+        throw lastFailure ?? SteamError.noServersAvailable
+    }
+
+    private func connect(to server: CMServerList.CMServer) async throws {
         currentEndpoint = server.endpoint
         SteamLog.trace("Connecting to CM: \(server.url)")
 
@@ -88,16 +127,13 @@ actor SteamConnection {
         try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
             task.sendPing { error in
                 if let error {
-                    cont.resume(throwing: SteamError.connectionFailed(error.localizedDescription))
+                    cont.resume(throwing: error)
                 } else {
                     cont.resume()
                 }
             }
         }
 
-        await serverList.markSuccess(endpoint: server.endpoint)
-        scheduleReceive(task)
-        SteamLog.trace("WebSocket connected — ready for protocol messages")
     }
 
     // MARK: - Receive
@@ -128,7 +164,7 @@ actor SteamConnection {
                 if !isNormalClose {
                     SteamLog.trace("WS receive error: \(error.localizedDescription)")
                 }
-                Task { await self.handleDisconnect(error: isNormalClose ? nil : error) }
+                Task { await self.handleDisconnect(task: task, error: isNormalClose ? nil : error) }
             }
         }
     }
@@ -169,10 +205,12 @@ actor SteamConnection {
         self.disconnectHandler = handler
     }
 
-    private func handleDisconnect(error: Error?) {
+    private func handleDisconnect(task: URLSessionWebSocketTask, error: Error?) {
         // Only fire disconnect once per connection — clear webSocketTask to prevent repeat
-        guard webSocketTask != nil else { return }
-        webSocketTask = nil
+        guard webSocketTask === task else { return }
+        let endpoint = currentEndpoint
+        clearTransport()
+        currentEndpoint = endpoint // reconnect() must still mark the disconnected CM as failed
         if let error {
             SteamLog.trace("Connection lost: \(error.localizedDescription)")
         } else {
@@ -183,12 +221,17 @@ actor SteamConnection {
 
     // MARK: - Disconnect
 
-    func disconnect() {
+    private func clearTransport() {
         webSocketTask?.cancel(with: .goingAway, reason: nil)
         webSocketTask = nil
         urlSession?.invalidateAndCancel()
         urlSession = nil
         currentEndpoint = nil
+    }
+
+    func disconnect() {
+        activeConnect = nil
+        clearTransport()
         SteamLog.trace("Disconnected")
     }
 

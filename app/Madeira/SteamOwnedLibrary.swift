@@ -1102,6 +1102,7 @@ final class SteamOwnedLibrary: ObservableObject {
         case SteamError.chunkDecodeFailed(let format): return "decode-\(format)"
         case SteamError.manifestFetchFailed: return "manifest"
         case SteamError.chunkDownloadFailed: return "chunk"
+        case SteamError.transportFailed(let domain, let code): return "cm-\(domain)-\(code)"
         case let url as URLError: return "url-\(url.code.rawValue)"
         default: return String(describing: type(of: error))
         }

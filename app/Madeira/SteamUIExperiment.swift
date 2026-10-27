@@ -7,12 +7,24 @@ enum SteamUIExperiment {
     static let flag = "env.MADEIRA_EXPERIMENTAL_STEAM_UI"
     static let bigPictureFlag = "env.MADEIRA_EXPERIMENTAL_BIG_PICTURE"
     static let sessionKey = "MADEIRA_STEAM_UI_SESSION"
-    static func callbackScheme(bundleID: String?) -> String {
-        bundleID?.hasSuffix(".steamui") == true ? "madeira-steamui" : "madeira"
+    // Re-signing can change the bundle ID without changing the registered
+    // schemes. Use the installed Info.plist contract, never infer a scheme
+    // from an old experimental bundle suffix.
+    static func callbackScheme(bundleID: String?, registeredSchemes: [String]) -> String? {
+        let schemes = registeredSchemes.filter {
+            $0.range(of: #"^[A-Za-z][A-Za-z0-9+.-]*$"#, options: .regularExpression) != nil
+        }
+        if let bundleID, let own = schemes.first(where: { $0.caseInsensitiveCompare(bundleID) == .orderedSame }) { return own }
+        return schemes.first(where: { $0 == "madeira-steamui" }) ?? schemes.first(where: { $0 == "madeira" }) ?? schemes.first
     }
-    static var callbackScheme: String { callbackScheme(bundleID: Bundle.main.bundleIdentifier) }
-    static func allowed(flag: String?, bundleID: String?) -> Bool {
-        flag == "1" && bundleID?.hasSuffix(".steamui") == true
+    static var callbackScheme: String? {
+        let types = Bundle.main.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] ?? []
+        return callbackScheme(bundleID: Bundle.main.bundleIdentifier,
+            registeredSchemes: types.flatMap { $0["CFBundleURLSchemes"] as? [String] ?? [] })
+    }
+    static func allowed(flag: String?, bundleID: String?, product: Bool = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true) -> Bool {
+        guard flag == "1", let bundleID, !bundleID.isEmpty else { return false }
+        return product || bundleID.hasSuffix(".steamui")
     }
     static var enabled: Bool {
         let productDefault = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true ? "1" : nil
@@ -88,7 +100,7 @@ enum SteamUIExperiment {
         var errorDescription: String? {
             switch self {
             case .disabled: return "Steam UI requires the experimental .steamui app and its feature flag."
-            case .incompleteClient: return "A complete 64-bit Windows Steam client, steamwebhelper and libcef are required in this experimental app's own prefix."
+            case .incompleteClient: return "Steam client or browser files are missing or incompatible. Return to the iDeck launcher and choose Repair Steam files."
             case .incompleteProbe: return "All x64 runtime probes must be present in the experimental app's own drive_c and matching CEF directory."
             case .invalidSize: return "Unsupported experimental desktop size."
             }
@@ -138,7 +150,7 @@ enum SteamUIExperiment {
             let file = source.appendingPathComponent(relative)
             let components = relative.split(separator: "/").map(String.init)
             guard let first = components.first else { continue }
-            if privateNames.contains(first.lowercased()) || first.lowercased().hasPrefix("ssfn") || first.hasPrefix(".") || (components.count > 1 && !publicFolders.contains(first)) {
+            if components.contains(where: { privateNames.contains($0.lowercased()) || $0.lowercased().hasPrefix("ssfn") }) || first.lowercased().hasPrefix("ssfn") || first.hasPrefix(".") || (components.count > 1 && !publicFolders.contains(first)) {
                 files.skipDescendants(); continue
             }
             let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
@@ -160,18 +172,38 @@ enum SteamUIExperiment {
                 try fm.copyItem(at: destination, to: saved)
             }
         }
-        for name in resources {
-            let destination = target.appendingPathComponent(name)
-            try fm.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
-            try Data(contentsOf: source.appendingPathComponent(name)).write(to: destination, options: .atomic)
-        }
-        for folder in ["bin/cef/cef.win64", "bin/cef/cef.win7x64", "bin/cef/cef.win7.x64"] {
-            let extra = target.appendingPathComponent(folder)
-            if fm.fileExists(atPath: extra.path), !fm.fileExists(atPath: source.appendingPathComponent(folder).path) {
-                let saved = backup.appendingPathComponent(folder)
-                try fm.createDirectory(at: saved.deletingLastPathComponent(), withIntermediateDirectories: true)
-                try fm.moveItem(at: extra, to: saved)
+        var written: [String] = []
+        var moved: [String] = []
+        do {
+            for name in resources {
+                let destination = target.appendingPathComponent(name)
+                try fm.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+                written.append(name)
+                try Data(contentsOf: source.appendingPathComponent(name)).write(to: destination, options: .atomic)
             }
+            for folder in ["bin/cef/cef.win64", "bin/cef/cef.win7x64", "bin/cef/cef.win7.x64"] {
+                let extra = target.appendingPathComponent(folder)
+                if fm.fileExists(atPath: extra.path), !fm.fileExists(atPath: source.appendingPathComponent(folder).path) {
+                    let saved = backup.appendingPathComponent(folder)
+                    try fm.createDirectory(at: saved.deletingLastPathComponent(), withIntermediateDirectories: true)
+                    try fm.moveItem(at: extra, to: saved)
+                    moved.append(folder)
+                }
+            }
+            guard IDeckRules.clientIssues(prefix: prefix).isEmpty else { throw Failure.incompleteClient }
+        } catch {
+            // Best-effort rollback after a failed write. Keep the complete public
+            // backup even if low storage also prevents a rollback write.
+            for name in written.reversed() {
+                let destination = target.appendingPathComponent(name), saved = backup.appendingPathComponent(name)
+                if fm.fileExists(atPath: saved.path) {
+                    if let data = try? Data(contentsOf: saved) { try? data.write(to: destination, options: .atomic) }
+                } else { try? fm.removeItem(at: destination) }
+            }
+            for folder in moved.reversed() {
+                try? fm.moveItem(at: backup.appendingPathComponent(folder), to: target.appendingPathComponent(folder))
+            }
+            throw error
         }
         return backup
     }
@@ -264,13 +296,24 @@ enum IDeckRules {
     static func runtimeReady(prefix: URL) -> Bool {
         FileManager.default.fileExists(atPath: prefix.appendingPathComponent("system.reg").path)
     }
-    static func steamClientReady(prefix: URL) -> Bool {
-        ["Steam32BundleLab", "Steam32Lab"].contains { folder in
-            let client = prefix.appendingPathComponent("drive_c/" + folder)
-            return ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"]
-                .allSatisfy { SteamUIExperiment.isX86PE(client.appendingPathComponent($0)) }
+    static let clientFiles = ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"]
+    static func clientIssues(prefix: URL) -> [String] {
+        let fm = FileManager.default
+        let folders = ["Steam32BundleLab", "Steam32Lab"]
+        let reports = folders.map { folder -> [String] in
+            let root = prefix.appendingPathComponent("drive_c/" + folder)
+            return clientFiles.compactMap { name in
+                let file = root.appendingPathComponent(name)
+                if !fm.fileExists(atPath: file.path) { return folder + "/" + name + ": missing" }
+                if SteamUIExperiment.isX64PE(file) { return folder + "/" + name + ": unsupported 64-bit client update" }
+                return SteamUIExperiment.isX86PE(file) ? nil : folder + "/" + name + ": invalid or unsafe file"
+            }
         }
+        if reports.contains(where: { $0.isEmpty }) { return [] }
+        // Prefer the installed product client; avoid irrelevant missing fallback files.
+        return fm.fileExists(atPath: prefix.appendingPathComponent("drive_c/Steam32BundleLab").path) ? reports[0] : reports[1]
     }
+    static func steamClientReady(prefix: URL) -> Bool { clientIssues(prefix: prefix).isEmpty }
     static func clientReady(prefix: URL) -> Bool {
         runtimeReady(prefix: prefix) && steamClientReady(prefix: prefix)
     }
@@ -414,7 +457,7 @@ import UIKit
         IDeckPrerequisiteResult(id: $0, status: .unchecked, detail: "Not checked yet")
     }
     var prerequisitesPassed: Bool {
-        !checkingPrerequisites && prerequisites.allSatisfy { $0.status == .passed }
+        !repairRequiresRestart && !checkingPrerequisites && prerequisites.allSatisfy { $0.status == .passed }
     }
     var bundledRuntimeAvailable: Bool {
         guard let root = Bundle.main.resourceURL else { return false }
@@ -438,7 +481,7 @@ import UIKit
             paired: JITPairingFileStore.isImported,
             externalJIT: StikJITHelper.isAvailable,
             connection: connection, jitReady: StikJITHelper.ready,
-            freshSession: !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken)
+            freshSession: !repairRequiresRestart && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken)
     }
     func checkPrerequisites() {
         guard !checkingPrerequisites, !preparing else { return }
@@ -464,6 +507,9 @@ import UIKit
             if !bundledRuntimeAvailable {
                 prerequisites[0].detail = "Runtime files are missing from this installation. Reinstall iDeck."
             }
+            if !IDeckRules.steamClientReady(prefix: prefix) {
+                prerequisites[1].detail = IDeckRules.clientIssues(prefix: prefix).joined(separator: "\n") + "\nRepair Steam files below. Account data and games are preserved."
+            }
             refresh()
             lastChecked = Date()
             checkingPrerequisites = false
@@ -473,6 +519,47 @@ import UIKit
     var prefix: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("wine") }
     func refresh() {
         ready = IDeckRules.clientReady(prefix: prefix)
+    }
+    @Published private(set) var repairRequiresRestart = false
+    var canRepairSteam: Bool {
+        !preparing && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
+    }
+    func repairSteam() {
+        guard Self.enabled, canRepairSteam else { return }
+        preparing = true; error = nil
+        let target = prefix
+        let bundled = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient")
+        let imported = target.deletingLastPathComponent().appendingPathComponent("Steam32OfficialRepair")
+        let source = [bundled, imported].compactMap { $0 }.first { root in
+            IDeckRules.clientFiles.allSatisfy { SteamUIExperiment.isX86PE(root.appendingPathComponent($0)) }
+        }
+        guard let source else {
+            error = "No compatible repair source is available. In Files, copy a complete compatible Windows Steam client to iDeck/Steam32OfficialRepair, then try Repair Steam files again. Do not delete wine or reinstall iDeck; your games and account data are preserved."
+            preparing = false; return
+        }
+        let bundleID = Bundle.main.bundleIdentifier
+        Task {
+            do {
+                _ = try await Task.detached(priority: .userInitiated) {
+                    let client = target.appendingPathComponent("drive_c/Steam32BundleLab")
+                    if FileManager.default.fileExists(atPath: client.path) {
+                        return try SteamUIExperiment.restorePinnedX86(source: source, prefix: target, flag: "1", bundleID: bundleID)
+                    }
+                    try SteamUIExperiment.importBundledX86(source: source, prefix: target, flag: "1", bundleID: bundleID)
+                    return client
+                }.value
+                guard IDeckRules.steamClientReady(prefix: target) else { throw SteamUIExperiment.Failure.incompleteClient }
+                repairRequiresRestart = true
+                autoStart = false
+                error = "Steam files repaired. Account data, games and saves were preserved; replaced public files have a rollback copy. Close and reopen iDeck before enabling JIT or launching Steam."
+                LogStore.shared.log("[ideck-repair] public client restored; reopen required; private data preserved")
+            } catch {
+                self.error = "Steam repair did not complete. Your account, games and saves were not removed. Check free storage and the repair source, then retry."
+                LogStore.shared.log("[ideck-repair] failed; retry available", level: .error)
+            }
+            preparing = false
+            checkPrerequisites()
+        }
     }
     @Published var controlReady = false
     @Published var controlBusy = false
@@ -617,7 +704,7 @@ struct IDeckLauncher: View {
         guard !state.checkingPrerequisites, !state.preparing, !jit.busy else { return }
         switch step {
         case .runtime: if state.bundledRuntimeAvailable { state.prepare() } else { showSetupHelp = true }
-        case .steam: if state.bundledSteamAvailable { state.prepare() } else { showSetupHelp = true }
+        case .steam: state.repairSteam()
         case .signing, .pairing: setupJIT()
         case .connection: LocalDevVPN.open()
         case .jit: if sessionAvailable { enableJIT() } else { diagnostics() }
@@ -626,7 +713,7 @@ struct IDeckLauncher: View {
     private func actionTitle(_ step: IDeckPrerequisite) -> String {
         switch step {
         case .runtime: return state.bundledRuntimeAvailable ? "Prepare runtime" : "Setup instructions"
-        case .steam: return state.bundledSteamAvailable ? "Prepare Steam" : "Add Steam files"
+        case .steam: return "Repair Steam files"
         case .signing, .pairing: return "Open JIT setup"
         case .connection: return LocalDevVPN.actionTitle
         case .jit: return sessionAvailable ? "Enable JIT" : "View diagnostics"
@@ -719,6 +806,13 @@ struct IDeckLauncher: View {
                     VStack(spacing: 0) {
                         ForEach(Array(state.prerequisites.enumerated()), id: \.element.id) { index, row in
                             stepRow(row, number: index + 1)
+                        }
+                    }
+                    GroupBox("Steam recovery") {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Repair missing or incompatible Steam/browser program files without deleting accounts, games or saves. Replaced public files are backed up. Close Steam and reopen iDeck first if a session has already started.").font(.caption).foregroundStyle(.secondary)
+                            Button("Repair Steam files") { state.repairSteam() }
+                                .buttonStyle(.bordered).disabled(!state.canRepairSteam || jit.busy || state.checkingPrerequisites || state.repairRequiresRestart)
                         }
                     }
                     if state.preparing { ProgressView("Preparing runtime…") }

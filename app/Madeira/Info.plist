@@ -34,6 +34,7 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 				<string>madeira-steamui</string>
 			</array>
 		</dict>

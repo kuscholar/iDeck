@@ -158,22 +158,12 @@ enum LoopbackProbe {
     static var vpnInterfaceUp: Bool { route()?.isLocalDevVPN ?? false }
 }
 
-/// The Madeira JIT shortcut, two ways to add it. `iCloudLink` opens Shortcuts straight at
-/// Add Shortcut, but needs a connection: iOS opens a shortcut directly only from an iCloud
-/// link (its import-shortcut URL refuses any other). The bundled copy
-/// (app/Madeira/Madeira JIT.shortcut, a signed export) installs with none, but only the
-/// share sheet can hand a file to Shortcuts: iOS gives Shortcuts that file only when the
-/// user picks it there. Shortcuts names an import after the file, "Madeira JIT".
-///
-/// The link lives only while the shared shortcut stays in its owner's library: deleting
-/// it there breaks the link ("Shortcut Not Found"), as happened to the first one.
-///
-/// THE TWO MUST BE THE SAME SHORTCUT: change it, then share a new iCloud link and export
-/// a new file (Share › Options › Anyone › Save to Files), and replace both here. The
-/// file's signing certificate expires on 26 Oct 2027. iOS 27 and later only: it keeps the
-/// previous VPN with Store Content, which iOS 26 lacks.
+/// The signed bundled shortcut is the import source. Share it to Shortcuts,
+/// replacing the older Madeira JIT workflow. Do not offer the historical
+/// iCloud workflow: it returns a VPN content object instead of explicit text.
+/// Editable source: tools/shortcuts/Madeira JIT.plist; sign with Apple's CLI.
+/// iOS 27 and later: Store Content preserves the previous VPN in Shortcuts.
 enum JITShortcutFile {
-    static let iCloudLink = URL(string: "https://www.icloud.com/shortcuts/0cd955d14dd240e3aa3fed5fa9248a37")!
     static var url: URL? { Bundle.main.url(forResource: "Madeira JIT", withExtension: "shortcut") }
     static var supported: Bool {
         ProcessInfo.processInfo.isOperatingSystemAtLeast(OperatingSystemVersion(majorVersion: 27, minorVersion: 0, patchVersion: 0))
@@ -283,6 +273,10 @@ enum JITShortcutFile {
 
     private func run(_ input: String, completion: @escaping (Outcome) -> Void) {
         finish(.failed("superseded"))
+        guard let callbackScheme = SteamUIExperiment.callbackScheme else {
+            completion(.failed("This installation has no valid callback URL scheme. Reinstall a complete iDeck build, or connect LocalDevVPN manually and disable the JIT shortcut."))
+            return
+        }
         var c = URLComponents()
         c.scheme = "shortcuts"
         c.host = "x-callback-url"
@@ -291,9 +285,9 @@ enum JITShortcutFile {
             URLQueryItem(name: "name", value: Self.name),
             URLQueryItem(name: "input", value: "text"),
             URLQueryItem(name: "text", value: input),
-            URLQueryItem(name: "x-success", value: "\(SteamUIExperiment.callbackScheme)://jit-network/success"),
-            URLQueryItem(name: "x-error", value: "\(SteamUIExperiment.callbackScheme)://jit-network/error"),
-            URLQueryItem(name: "x-cancel", value: "\(SteamUIExperiment.callbackScheme)://jit-network/cancel")
+            URLQueryItem(name: "x-success", value: "\(callbackScheme)://jit-network/success"),
+            URLQueryItem(name: "x-error", value: "\(callbackScheme)://jit-network/error"),
+            URLQueryItem(name: "x-cancel", value: "\(callbackScheme)://jit-network/cancel")
         ]
         guard let url = c.url else { completion(.failed("bad shortcut URL")); return }
         LogStore.shared.log("[jit-shortcut] run input=\(input)")
@@ -309,7 +303,7 @@ enum JITShortcutFile {
     /// madeira://jit-network/{success|error|cancel}, from Shortcuts' x-callback-url.
     @discardableResult
     func handle(_ url: URL) -> Bool {
-        guard url.scheme == SteamUIExperiment.callbackScheme, url.host == "jit-network" else { return false }
+        guard let scheme = SteamUIExperiment.callbackScheme, url.scheme?.caseInsensitiveCompare(scheme) == .orderedSame, url.host == "jit-network" else { return false }
         let query = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
         let value = { (name: String) in query.first { $0.name == name }?.value ?? "" }
         switch url.path {

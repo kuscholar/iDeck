@@ -82,13 +82,11 @@ shortcut_page = onboarding[onboarding.index('private var shortcutPage'):onboardi
 require('case .shortcut: shortcutPage' in onboarding and 'JITShortcutOffer' not in onboarding
         and onboarding.count('finishJIT()') == 3 and 'jitPath = .shortcut' in onboarding,
         "setup offers it on its own page after any of the three JIT guides, so the guides fit on one screen")
-require('UIApplication.shared.open(JITShortcutFile.iCloudLink)' in shortcut_page and 'ShareLink(item: url)' in shortcut_page
-        and 'UIApplication.shared.open(JITShortcutFile.iCloudLink)' in setup and 'ShareLink(item: url)' in setup,
-        "setup's page and Settings › JIT add it from its iCloud link (straight to Add Shortcut), "
-        "and Madeira's copy through the share sheet with no connection")
-require('static let iCloudLink = URL(string: "https://www.icloud.com/shortcuts/' in net
-        and 'THE TWO MUST BE THE SAME SHORTCUT' in net,
-        'the iCloud link and the bundled file are kept as one shortcut')
+require('JITShortcutFile.iCloudLink' not in shortcut_page and 'ShareLink(item: url)' in shortcut_page
+        and 'JITShortcutFile.iCloudLink' not in setup and 'ShareLink(item: url)' in setup,
+        "setup and settings import the corrected signed local workflow instead of the historical cloud version")
+require('tools/shortcuts/Madeira JIT.plist' in net,
+        'the shortcut has a reviewable source and one signed bundled import')
 require("Keychain" in onboarding and "stays in Madeira's Documents folder" not in onboarding,
         "setup no longer says the pairing file is in Documents")
 

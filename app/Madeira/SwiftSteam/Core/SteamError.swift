@@ -29,6 +29,8 @@ enum SteamError: LocalizedError, Equatable {
     // Connection
     case noServersAvailable
     case connectionFailed(String)
+    /// Safe transport identity only; no URL, headers or credential-bearing error payload.
+    case transportFailed(domain: String, code: Int)
     case connectionTimeout
     case disconnected
     /// The CM refused the logon with this EResult. Lets callers tell a revoked
@@ -74,6 +76,19 @@ enum SteamError: LocalizedError, Equatable {
             return "No Steam servers are available."
         case .connectionFailed(let reason):
             return "Connection failed: \(reason)"
+        case .transportFailed(let domain, let code):
+            if domain == NSURLErrorDomain {
+                switch URLError.Code(rawValue: code) {
+                case .secureConnectionFailed:
+                    return "Steam CM TLS handshake failed (\(code)). Check the accelerator route and try again. Certificate verification remains enabled."
+                case .serverCertificateHasBadDate, .serverCertificateUntrusted, .serverCertificateHasUnknownRoot, .serverCertificateNotYetValid:
+                    return "Steam CM certificate validation failed (\(code)). Check the device clock and HTTPS interception settings; do not disable certificate verification."
+                case .clientCertificateRejected, .clientCertificateRequired:
+                    return "Steam CM requested or rejected a client certificate (\(code)). Check the proxy or accelerator route."
+                default: break
+                }
+            }
+            return "Steam CM connection failed (\(domain), \(code))."
         case .connectionTimeout:
             return "Steam did not respond in time. Check your internet connection and try again."
         case .disconnected:
@@ -113,4 +128,23 @@ enum SteamError: LocalizedError, Equatable {
 enum SteamGuardType: String, Codable {
     case email = "email"
     case device = "device"          // Steam Mobile Authenticator
+}
+
+/// An endpoint/route negotiation failure can be isolated by trying another CM.
+/// Explicit trust failures and cancellation must not be hidden by retries.
+enum SteamCMTransportPolicy {
+    static func canTryAnotherServer(_ error: Error) -> Bool {
+        let failure = error as NSError
+        guard failure.domain == NSURLErrorDomain else { return false }
+        switch URLError.Code(rawValue: failure.code) {
+        case .timedOut, .cannotFindHost, .cannotConnectToHost, .networkConnectionLost,
+             .dnsLookupFailed, .secureConnectionFailed: return true
+        default: return false
+        }
+    }
+    static func sanitized(_ error: Error) -> SteamError {
+        let failure = error as NSError
+        let domain = [NSURLErrorDomain, NSPOSIXErrorDomain].contains(failure.domain) ? failure.domain : "other"
+        return .transportFailed(domain: domain, code: failure.code)
+    }
 }

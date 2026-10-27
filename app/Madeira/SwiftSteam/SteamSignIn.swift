@@ -105,6 +105,7 @@ enum SteamSignIn {
         case SteamError.rsaKeyFetchFailed: return "rsa"
         case SteamError.protobufError: return "protobuf"
         case SteamError.authenticationFailed: return "refused"
+        case SteamError.transportFailed(let domain, let code): return "cm-\(domain)-\(code)"
         case let url as URLError: return "url-\(url.code.rawValue)"
         default: return String(describing: type(of: error))
         }

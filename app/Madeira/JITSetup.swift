@@ -493,7 +493,12 @@ final class JITCoordinator: ObservableObject {
 enum LocalDevVPN {
     static let appStore = URL(string: "https://apps.apple.com/us/app/localdevvpn/id6755608044")!
     /// `enable` connects the VPN; `scheme` has LocalDevVPN return to Madeira a second later.
-    static let connect = URL(string: "localdevvpn://enable?scheme=\(SteamUIExperiment.callbackScheme)")!
+    static var connect: URL {
+        var parts = URLComponents()
+        parts.scheme = "localdevvpn"; parts.host = "enable"
+        if let scheme = SteamUIExperiment.callbackScheme { parts.queryItems = [URLQueryItem(name: "scheme", value: scheme)] }
+        return parts.url!
+    }
 
     static var isInstalled: Bool { UIApplication.shared.canOpenURL(URL(string: "localdevvpn://")!) }
     static var actionTitle: String { isInstalled ? "Connect LocalDevVPN" : "Get LocalDevVPN" }
@@ -560,15 +565,11 @@ struct JITSettingsSection: View {
                     .font(.caption).foregroundStyle(.secondary)
             }
             if JITShortcutFile.supported, let url = JITShortcutFile.url {
-                Button {
-                    LogStore.shared.log("[jit-shortcut] add: iCloud link")
-                    UIApplication.shared.open(JITShortcutFile.iCloudLink)
-                } label: {
-                    Label("Add the \(JITNetworkShortcut.name) shortcut", systemImage: "plus.square.on.square")
-                }
                 ShareLink(item: url) {
-                    Label("No internet connection? Add local copy", systemImage: "square.and.arrow.up")
+                    Label("Add or update the \(JITNetworkShortcut.name) shortcut", systemImage: "square.and.arrow.up")
                 }
+                Text("Choose Shortcuts in the share sheet and replace the existing Madeira JIT shortcut. Keep its name unchanged.")
+                    .font(.caption).foregroundStyle(.secondary)
             }
             Toggle("\(JITNetworkShortcut.name) shortcut", isOn: $shortcut.enabled)
         } header: {

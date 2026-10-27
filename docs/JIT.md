@@ -183,7 +183,8 @@ again through the shortcut (on the JIT setup page it runs the shortcut, then
 checks the loopback). Without it, the alert offers **Connect LocalDevVPN**.
 
 An app can only run a shortcut by opening the Shortcuts app, so each run leaves
-Madeira for a moment and returns through `madeira://jit-network/…`
+iDeck for a moment and returns through its registered URL scheme,
+`<registered-scheme>://jit-network/…`
 (x-callback-url). Between **Enable JIT** and the game starting, cellular data
 stays off.
 
@@ -201,23 +202,27 @@ word for it.
 
 ### Getting the shortcut
 
-On iOS 27 and later, setup shows **Connect automatically** on its own page
-after any JIT guide, with **Add the shortcut** and the **Use it for JIT**
-switch, and **Settings → JIT** has **Add the Madeira JIT shortcut**. Both open its iCloud link, which takes Shortcuts straight to **Add
-Shortcut**, but needs a connection: iOS opens a shortcut directly only from an
-iCloud link. Without one, **No internet connection? Add local copy** shares
-the bundled `app/Madeira/Madeira JIT.shortcut` (a signed export): choose the
-**Shortcuts** app in the share sheet, then **Add Shortcut**. Only the share sheet
-can hand a file to Shortcuts: iOS gives Shortcuts the file only when the user
-picks it there. Either way it is named **Madeira JIT**; then turn it on.
+On iOS 27 and later, **Add the shortcut** in setup or **Add or update the
+Madeira JIT shortcut** in Settings shares the signed bundled file. Choose
+**Shortcuts** in the share sheet, then import it. Replace the existing
+**Madeira JIT** workflow rather than keeping an older copy or renaming the
+new copy. Updating the app does not replace a workflow already imported into
+Shortcuts. The old iCloud workflow is no longer offered because it returned
+a VPN content item; the corrected workflow explicitly returns text.
 
-The iCloud link lives only while the shared shortcut stays in its owner's
-library: deleting it there breaks the link. The iCloud link and the bundled
-file must be the same shortcut. After changing
-it, share a new iCloud link and export a new file (**Share** → **Options** →
-**Anyone** → **Save to Files**), and replace both (`JITShortcutFile` in
-`JITNetwork.swift`, and the file, keeping its name). The file's signing
-certificate expires on 26 Oct 2027.
+Reviewable source is `tools/shortcuts/Madeira JIT.plist`. To regenerate:
+
+```sh
+cp 'tools/shortcuts/Madeira JIT.plist' '/tmp/Madeira JIT.shortcut'
+shortcuts sign --mode anyone --input '/tmp/Madeira JIT.shortcut' \
+  --output 'app/Madeira/Madeira JIT.shortcut'
+python3 tests/host/check-jit-shortcut-file.py
+```
+
+Use Apple's official `shortcuts sign`; never hand-modify the signed archive.
+The signer may update WFWorkflowClientVersion; if that is the only source
+mismatch, update that metadata in the source to the signer's value and repeat
+the check. Actions and other properties must match exactly.
 
 Its steps, to make it by hand (name it exactly **Madeira JIT**):
 
@@ -229,7 +234,8 @@ Its steps, to make it by hand (name it exactly **Madeira JIT**):
    2. **Store Content**: *Current VPN*, named `previous VPN`.
    3. **If** *Text* contains `cellular`: **Set Cellular Data** *Off*. End If.
    4. LocalDevVPN's **Connect** action (or **Set VPN** → *Connect* → LocalDevVPN).
-   5. **Stop and Output** *Current VPN*.
+   5. **Text** containing *Current VPN*, then **Stop and Output** that **Text**.
+      Keep the native VPN object in Store Content; only the callback output is text.
 3. **Otherwise**
    1. **If** *Text* contains `cellular`: **Set Cellular Data** *On*. End If.
    2. **If** *Text* contains `vpn-off`: LocalDevVPN's **Disconnect** action (or
@@ -238,9 +244,34 @@ Its steps, to make it by hand (name it exactly **Madeira JIT**):
       VPN`, then **Set VPN** → *Connect* → that stored content, wired straight in
       (no Text in between). End If.
 4. End If.
+5. **Text** (empty), then **Stop and Output** that Text for the done branch.
 
 Then turn on **Settings → JIT → Madeira JIT shortcut**. Without the shortcut,
 leave it off: Shortcuts would only report that the shortcut is missing.
+
+## Shortcut destination errors after re-signing
+
+If Shortcuts says **The destination app for this shortcut’s output could not
+be determined**, older iDeck code could choose `madeira://` solely because a
+custom/re-signed bundle ID no longer ended in `.steamui`, while the app only
+registered `madeira-steamui://`. It could also disable the product launcher for
+the same reason. The corrected source reads CFBundleURLTypes from the actual
+installed app, prefers the app's declared unique bundle-ID scheme, and uses
+IDeckEnabled to retain the product shell after re-signing. Missing callback
+metadata fails immediately with an actionable message, before opening Shortcuts.
+See [root-cause evidence](IDECK_JIT_RESIGN.md) for exact validation limits.
+
+For an existing installation, disable the optional **Madeira JIT shortcut**,
+connect **LocalDevVPN** manually with Wi-Fi enabled, return and press **Enable
+JIT**. This avoids the shortcut-return failure; signing, pairing, and the helper
+still need to be valid. After installing corrected code, replace the old imported
+shortcut from the app's updated local copy before enabling the shortcut again.
+iOS 26 should use the manual LocalDevVPN route (Store Content needs iOS 27).
+
+A 60-second wait at the shortcut stage is not proof Steam/game code ran. If the
+app reaches Steam but hangs there, collect the first failed stage, iOS/build,
+selected JIT method and a redacted diagnostic log. Never share pairing keys,
+Steam passwords/tokens or provisioning profiles publicly.
 
 ## Signing and installation
 

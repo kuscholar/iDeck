@@ -531,9 +531,8 @@ struct OnboardingView: View {
     }
 
     /// The Madeira JIT shortcut (iOS 27; JITShortcutFile), on its own page so the JIT
-    /// guides fit on one screen. Add it from its iCloud link (straight to Add Shortcut)
-    /// or, with no internet connection, the local copy through the share sheet; then turn
-    /// it on.
+    /// guides fit on one screen. Import the signed bundled copy through the share sheet,
+    /// replacing an older copy, then turn it on.
     /// It drives LocalDevVPN with LocalDevVPN's own Shortcuts action.
     private var shortcutPage: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -546,19 +545,14 @@ struct OnboardingView: View {
                 point(2, "Tap **Add the shortcut**, then **Add Shortcut** in Shortcuts.")
                 point(3, "Turn on **Use it for JIT**.", done: shortcut.enabled)
             }
-            Button {
-                LogStore.shared.log("[jit-shortcut] add: iCloud link")
-                UIApplication.shared.open(JITShortcutFile.iCloudLink)
-            } label: {
-                Label("Add the shortcut", systemImage: "plus.square.on.square")
-                    .fontWeight(.semibold).frame(maxWidth: .infinity, minHeight: 36)
-            }
-            .buttonStyle(.bordered).controlSize(.large)
             if let url = JITShortcutFile.url {
                 ShareLink(item: url) {
-                    Text("No internet connection? Add local copy, then choose the Shortcuts app in the share sheet that pops up.")
-                        .font(.footnote).frame(maxWidth: .infinity)
+                    Label("Add the shortcut", systemImage: "square.and.arrow.up")
+                        .fontWeight(.semibold).frame(maxWidth: .infinity, minHeight: 36)
                 }
+                .buttonStyle(.bordered).controlSize(.large)
+                Text("Choose Shortcuts in the share sheet. Replace an older Madeira JIT shortcut rather than creating a second copy.")
+                    .font(.footnote)
             }
             Toggle("Use it for JIT", isOn: $shortcut.enabled)
                 .padding(.horizontal, 14).padding(.vertical, 10)
