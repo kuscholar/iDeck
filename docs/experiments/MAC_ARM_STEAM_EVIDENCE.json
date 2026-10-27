@@ -1,0 +1,63 @@
+{
+  "manifestVersion": "1792618285",
+  "sourceBaseline": "2c5d466bd408dab5771a025e6b5dc408a20ecdeb",
+  "device": {
+    "model": "iPhone 15 Pro Max",
+    "os": "iOS 27.0",
+    "build": "24A435"
+  },
+  "milestones": {
+    "minimalMacProbeRenderingAndTouch": "device-verified",
+    "nativeSteamEntry": "device-verified",
+    "cefInitialization": "unverified",
+    "interactiveLogin": "unverified",
+    "windowsDepot": "unverified",
+    "gameLaunchAndReturn": "unverified"
+  },
+  "privateEvidence": [
+    {
+      "path": ".madeira-install/mac-arm-steam-official/steam_client_osx.manifest",
+      "sha256": "507ebd03173b44aa41ebaf7c3abd5771599699a5446c9d9a51e00702c4477a40"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch1.log",
+      "sha256": "1ba2970e5de96732218ed9810cea043006f0b3ef4f7c3410180c34c61f27de05"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch1.ips",
+      "sha256": "b5cee3f179a48c2e0bbd6e8d78f49e5b4f2f06eacfdc076ccedef9e0948f7707"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch2-semget.log",
+      "sha256": "6a918fafbd816dff2f4a156321b0073a0124347168d078a8f81a67a872a04362"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch2-semget.ips",
+      "sha256": "1e371e2c49d941d8e03de8d2bbe7fe9b343b365d403c4f3d9fb5a51bebe3d9d2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch3-sem-local.log",
+      "sha256": "f29da9b919407cb3331e22af5db766546910951ac3d288e22619b9e90af1dfde"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch4-sem-undo.log",
+      "sha256": "e5a396485af537b69400d5b127abd6d266f36f5162e4e3d803b2ac29f747bcf5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch5-font.log",
+      "sha256": "19fec664a0defb59ca79ef19743c00a53d2b9ec1707f6735392e17629b007bb3"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch6-inhibitbootstrap.log",
+      "sha256": "7f4745721d88563544d0360ba4b504de2aba9f4ee17001c90cabf12f3d2c1597"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch7-exec-diagnostic.log",
+      "sha256": "92986b99410537ad8e7aa083334f3ca31f9899f600befa2de358a5653d39e919"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sem-host-test2.log",
+      "sha256": "fcb803d38f61946959ccde7c0b563422235f05caee481962b166b1ecebe404e8"
+    }
+  ]
+}

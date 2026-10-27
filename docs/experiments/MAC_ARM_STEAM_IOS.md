@@ -112,3 +112,105 @@
   architectures without using or changing an existing user account. Treat
   missing ARM64 as an unresolved acquisition gate, not a proven absence. If
   copying, use a private isolated source and preserve existing Steam state.
+
+## 2026-10-27: official ARM64 client acquisition and startup failures
+
+- Source baseline `2c5d466`. Origin/experiment branch checked before work; no
+  uncommitted work existed in this worktree. Working iDeck/main is untouched.
+- Retrieved the official HTTPS `steam_client_osx` update manifest, version
+  **1792618285**, and all23 default packages, verifying each size and SHA256
+  against that manifest. This is HTTPS provenance plus integrity, not an
+  independent verification of Valve's kvsign signature. Fetching does not
+  require login. New fetch/staging scripts reproduce acquisition outside Git.
+- Main `steam_osx`, `steamclient.dylib`, Steam Helper and CEF all contain ARM64
+  and x86_64. The earlier Intel-only DMG bootstrapper is not representative of
+  the updated client. Main SHA256 `57bf5908b17144687f3b64434dd4f59df291981a57e48276e5f4964b87ca33b7`,
+  client dylib `b9d62be2ac64b77dc77e1d19eefcf3880df99495c7db85b30623095310b6a6bd`,
+  Helper `8047352bdbd37800dc3ff4d82920c0c9a285c4d578b2b57c796346c467b00f90`,
+  CEF `4bee8be5d09633bf5d875228357b0e9aa10b06c15dd405821927dfe2d832862b`.
+- Staged a credential-free bundle from the official packages. Seven legacy or
+  optional Intel-only binaries were excluded from conversion, listed in
+  experiments/mac-arm-steam/README.md; no claim those functions work. The
+  remaining56 Mach-O files were thinned/retagged with public MIT converter
+  c2562a3. Generated shims contain many placeholders (340 AppKit symbols plus
+  others), not complete API implementations. No authentication was attempted;
+  security/authentication placeholders require audit before account testing.
+- Conversion first stopped at AppleDouble metadata during signing. Removed
+  only that metadata from the converted copy; fixed the moved steam.sh link
+  and three helper dylib links, explicitly selected login keychain, signed
+  nested code/bundles and verified deeply/strictly. The independent probe app
+  was upgraded to the Steam experiment; working iDeck67 and Madeira8 remained.
+
+### Experiment 1: exact first device fault
+
+- iPhone15ProMax/iOS27.0: install and launch succeeded; official ARM64 code
+  entered its startup. Process terminated SIGSYS12. Crash report identifies
+  `libsystem_kernel.dylib semget`, with return into steam_osx RVA0x231730.
+  An earlier optional crashhandler preload error about thread_bss file offset
+  is also present; it is not the terminating frame and remains unresolved.
+- Hypothesis: iOS disallows the required SystemV semaphore syscall. A diagnostic
+  override logs only count/flags, returns ENOSYS and does not fabricate success.
+  Device shows count1 flags0x7b6/0x780, synchronization assertions, then a second
+  SIGSYS at semop. These are actual IPC failures, not CEF initialization.
+
+### Experiments 2–4: real process-local semaphore subset
+
+- Implemented bounded keyed semaphore objects using pthread mutex/condition,
+  atomic batches, NOWAIT, zero/decrement waits, SETVAL/GETVAL and removal wakeup.
+  First device run reaches beyond semget/semop SIGSYS and reveals SEM_UNDO0x1000
+  requests, initially rejected. Added single-host-process SEM_UNDO semantics:
+  thread exit does not undo; at host process exit the entire local registry
+  vanishes. No cross-process, fork or pseudo-process lifetime behavior claimed.
+  Unknown flags/commands remain explicit errors. Limitations in component README.
+- ASan/UBSan production-code host tests passed atomic failure/no partial update,
+  blocked waiter release, removal EIDRM, stale IDs,128slot exhaustion/reuse,
+  unsupported flags and thread exit without process undo. iOS Werror compile
+  passed. Linked dylib exports semget/semctl/semop, deep signature verified.
+- Device regression: no SEM_UNDO unsupported errors and no semaphore SIGSYS in
+  that run; next terminating error is an ObjectiveC missing
+  `+[NSFont labelFontOfSize:]`. This is startup progress, not usable Steam.
+- Corrected a test command detail: a `--` placed AFTER bundle ID had been passed
+  into Steam argv. Correct devicectl invocation puts it BEFORE bundle ID. The
+  corrected argv was captured; no claim this alone caused the runtime advance.
+
+### Experiments 5–7: font call and native re-exec
+
+- Added only the observed missing NSFont class method through UIFont's public
+  system font; preserves an existing implementation. Linked marker and actual
+  device constructor log `labelFontOfSize bridge=1` confirm inclusion.
+- Device then progressed through updater setup (several generated AppKit control
+  methods still placeholders), changed into its cache Steam.AppBundle path and
+  exited255 with `exec failed: Bad address`. No login/CEF window observed.
+- Single-hypothesis launch with the native client's recognized inhibitbootstrap
+  option still attempted the same transition, then exit0. Exit0 is NOT success.
+  Cached MacOS directory actually contains only public/package directories,
+  without steam_osx; correct cached-client layout is not established.
+- Added a read-only execv interceptor that forwards the call unchanged and logs
+  only executable basename and result/errno. It has been built, deeply signed
+  and installed. Launch7 was refused CoreDevice10002/FBS Locked; no execv trace
+  yet. Asked user to unlock once; do not repeatedly relaunch while still locked.
+- Next: after unlock launch the installed diagnostic once with corrected argv,
+  distinguish null/missing executable path from sandbox re-exec restrictions.
+  No instruction bytes, FEX/Wine/DXMT, licensing or authentication checks were
+  modified. Optional crashhandler zero-fill metadata and native Helper process
+  architecture/IPC remain subsequent concerns. CEF/login not reached.
+
+### Reproduction and status
+
+- `experiments/mac-arm-steam/README.md` documents fetch/stage and local tests.
+  All proprietary payloads and raw device logs remain in `.madeira-install`,
+  outside the Git checkout; hashes in MAC_ARM_STEAM_EVIDENCE.json.
+- Offline manifest and archive boundary tests (7 cases), real semaphore
+  concurrency tests under ASan/UBSan, iOS compile and deep signature passed.
+  New staging script reproduced source construction from verified packages.
+- Reusable existing runtime interfaces: wineserver_start(prefix) then readiness,
+  wine_process_start(prefix), wine_process_is_running and initial-process exit
+  reports. ContentView owns JIT pool/session/environment and Metal display
+  lifecycle. A future Steam Play bridge must validate executable/working-dir/
+  AppID/arguments before this path; directly calling wine_process_start is not
+  enough for coexistence/return. SwiftSteam's owned-depot downloader is separate
+  from native Steam authentication/session. No such integration is implemented.
+- Compatibility matrix: minimal macOS AppKit/Metal probe + touch PASS on device;
+  ARM64 Steam main entry PASS; single-process semaphore subset PARTIAL; genuine
+  CEF/login/library/Windows depot/gameplay/return/relaunch NOT VALIDATED. No
+  performance comparison, stable IPA or final GO is justified at this stage.
