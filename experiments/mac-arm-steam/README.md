@@ -74,3 +74,11 @@ bundles and app in that order with your own matching profile. Neither this
 private converted Steam bundle nor its IPA may be published in the source repo.
 The only installed target is the dedicated experimental probe app ID. Never
 reuse the production iDeck ID. Current deployment still exits before CEF.
+
+The reference converter moves the main executable to the iOS bundle root while
+its `_NSGetExecutablePath` shim advertises `Mac/Contents/MacOS/<executable>`.
+After conversion, `fix-mac-executable-layout.py <experimental-copy.app>` adds the
+missing internal symlink to the actual root executable, refusing conflicting
+paths. Re-sign the app afterwards. Offline fixture tests:
+`python3 experiments/mac-arm-steam/test-executable-layout.py`.
+This is a tested local layout contract, not device proof of re-exec support.

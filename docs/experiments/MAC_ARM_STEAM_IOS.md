@@ -214,3 +214,36 @@
   ARM64 Steam main entry PASS; single-process semaphore subset PARTIAL; genuine
   CEF/login/library/Windows depot/gameplay/return/relaunch NOT VALIDATED. No
   performance comparison, stable IPA or final GO is justified at this stage.
+
+## 2026-10-27 04:10 EDT scheduled continuation: path-contract discriminator
+
+- Revalidated clean experiment worktree and origin at114635d; remote experiment
+  head matched. One fresh lock-state query: passcodeRequired=true,
+  unlockedSinceBoot=true. Did not repeat installs/launches or the existing
+  unlock request. Current installed diagnostic remains the execv-observer build.
+- Independent read-only examination of the exact official ARM64 main executable
+  found one execv call site: it calls realpath$DARWIN_EXTSN, stores the returned
+  pointer as argv[0], and passes that pointer directly as execv's path, without
+  a NULL guard at that boundary (preferred addresses0x100029bf4–0x100029c00).
+  A native host reproduction of execv(NULL, argv) returned-1/EFAULT without
+  executing a process. This makes the earlier Bad address insufficient evidence
+  of an iOS exec policy restriction. No private raw disassembly is committed.
+- The actual reference shim `libSystem.m::_NSGetExecutablePath` advertises
+  `<app>/Mac/Contents/MacOS/steam_osx`, while converter moves the main executable
+  to `<app>/steam_osx`. The converted bundle lacked the advertised steam_osx
+  path. Previous steam.sh/helper links were corrected, but this separate logical
+  executable link was missing. This is a reproduced bundle/shim contract defect;
+  it has not yet been confirmed as the path used in the device's re-exec call.
+- Minimal candidate: add only the missing in-bundle logical executable symlink
+  to the existing signed root executable, with strict path/parent/link guards.
+  No instruction bytes, licensing/authentication or exec result are changed.
+  New fix-mac-executable-layout.py is idempotent and refuses conflicting files
+  or links; three offline fixture tests passed, including the missing-path
+  reproduction and symlink conflict/escape rejection. Actual converted artifact
+  now resolves the advertised path to the root executable. Re-signed candidate
+  and deep strict signature verification pass; NOT installed/device-tested.
+- Next after unlock: preserve the already installed exec observer if a control
+  trace is desired, then deploy candidate and compare. The first changed device
+  failure distinguishes this path-contract correction from the still-unproven
+  iOS self-exec restriction. Do not treat the candidate or host test as CEF/UI
+  success. Native Helper spawning and other missing APIs remain unresolved.
