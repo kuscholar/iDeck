@@ -1,3 +1,16 @@
+# Latest release: v0.1.3-alpha.3 / Build 67
+
+See [Build67 evidence](release/BUILD67_EVIDENCE.json) for this package's exact
+hash, source revision, section checks, 103-input relink and validation limits.
+The developer-signed Build67 was installed on Kusch and the user confirmed the
+in-app Steam file repair restored use. The public ad-hoc IPA is not separately
+installed, and affected accelerator TLS behavior is not device-validated.
+The Build54/56 review below is historical; their unchanged dependency source
+archives/notices are retained. Build67 application/native changes and the LGPL
+Wine machine-attributes patch/build recipe are supplied in its source archive.
+
+---
+
 # IPA release preparation — 2026-10-25
 
 ## Build 56 follow-up release

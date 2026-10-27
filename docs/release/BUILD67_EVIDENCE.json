@@ -1,0 +1,39 @@
+{
+  "release": "v0.1.3-alpha.3",
+  "build": 67,
+  "code_revision": "c90a16c8e0e83385f3d5225b5d0b61cd998be91e",
+  "ipa_sha256": "8cc51d547c9c61903b2b13db87543a6b7d044c731e5ac83b37110675c0b66093",
+  "ipa_files": 1245,
+  "excluded_findings": [],
+  "section_checks": {
+    "Madeira.debug.dylib": {
+      "equal": true,
+      "sections": 49
+    },
+    "Frameworks/StikJIT.framework/StikJIT": {
+      "equal": true,
+      "sections": 36
+    },
+    "d3d12/libmetalirconverter.dylib": {
+      "equal": true,
+      "sections": 14
+    }
+  },
+  "relink_inputs": 103,
+  "checks": [
+    "Full iOS Build67 passed",
+    "103-input portable relink passed",
+    "10 focused host regressions passed",
+    "6 release-tool tests passed",
+    "Apple signed shortcut payload and source equality verified",
+    "Nested ad-hoc signatures and IPA scoped inventory passed"
+  ],
+  "device_evidence": "Build67 development-signed install/launch succeeded on Kusch; user confirmed application repair restored use. Release ad-hoc IPA not separately installed.",
+  "limits": [
+    "No affected iOS27.2 LeiShen/Karing TLS runtime test",
+    "No different-account sideloader test",
+    "No exhaustive game/controller regression or logout crash root-cause proof",
+    "No full clean-machine runtime rebuild claim"
+  ],
+  "component_sources": "Same pinned dependency source archives as alpha.2; current application archive includes new native code and Wine machine-attributes patch/build recipe."
+}

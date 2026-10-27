@@ -1715,3 +1715,15 @@ unpushed per user time restriction, no new automation.
   does not establish logout crash causal chain. Build67 rebuilt for existing
   com.kuschqin.madeira.steamui, signed/deep-verified, and installed successfully
   without uninstall. Private artifacts: .madeira-install/ideck-repair67.
+
+
+## v0.1.3-alpha.3 packaging
+
+Build67 compiled from code revision c90a16c; a documentation-only follow-up records
+packaging evidence. User confirmed Steam recovery restored use after installation.
+1245-file public IPA audit passed with no excluded-payload findings; packaged
+main/StikJIT/converter section hashes match build products (49/36/14 sections).
+103-input portable relink and ten host regression scripts/six release-tool tests
+passed. Source, dependency pins, LGPL patches and relink materials accompany IPA.
+No affected-accelerator TLS fix, exhaustive game regression or resolved logout
+crash claimed. User Demo.gif excluded from this release commit/source archive.
