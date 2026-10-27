@@ -43,3 +43,22 @@
   UI; use only a supported authorized signing flow. Retry profile generation
   only when account availability changes, then verify exact profile, device,
   free slot and probe signature before installing isolated app.
+
+## 2026-10-27: comparison with prior successful installs
+
+- User reported Xcode login available in other sessions and Mac unlocked.
+  Reviewed the prior iDeck Build67 deployment: it explicitly reused an existing
+  development identity and the two exact iDeck app/helper profiles, then signed
+  and installed with the same bundle ID. That does not demonstrate issuance of
+  a profile for this new, isolated experiment. The OrionTV workflow likewise
+  uses the login keychain and a matching existing app profile; those identities
+  must not be reassigned to this probe or its container.
+- Automatic provisioning for the probe previously returned No Accounts and no
+  profile; current CLI runs as `kuschqin` in an Aqua session using
+  `/Applications/Xcode.app`. The computer-control surface still reported the
+  Mac locked, despite the user's report. Treat that as a tool observation, not
+  proof the physical desktop is locked. Xcode account/team UI has not been
+  observed, and no account or keychain changes were attempted.
+- Next: obtain access to Xcode Accounts in the logged-in interactive session,
+  or use an Apple-issued development profile explicitly matching the isolated
+  probe ID. Preserve the installed apps and do not substitute their IDs.
