@@ -6,6 +6,9 @@
 <h1 align="center">iDeck</h1>
 <p align="center"><strong>iDeck brings the Steam Big Picture experience to iOS</strong></p>
 <p align="center">
+  <a href="https://discord.gg/aQdsaJyTM"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2FaQdsaJyTM%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&label=Discord&logo=discord&logoColor=white&color=5865F2&style=for-the-badge" alt="Join the iDeck Discord"></a>
+</p>
+<p align="center">
   <a href="docs/GETTING_STARTED.md"><img src="https://img.shields.io/badge/Platform-iOS%20%26%20iPadOS-007AFF" alt="iOS and iPadOS"></a>
   <a href="docs/IDECK.md"><img src="https://img.shields.io/badge/Status-Experimental-orange" alt="Experimental"></a>
   <a href="https://github.com/willfaust/Madeira"><img src="https://img.shields.io/badge/Powered%20by-Madeira-28C7D9" alt="Powered by Madeira"></a>
@@ -174,6 +177,10 @@ and its source/license/relink companion assets are distributed separately. Read 
 [distribution requirements](docs/DISTRIBUTION.md) before sharing a built package.
 
 ## Feedback
+
+<p align="center">
+  <a href="https://discord.gg/aQdsaJyTM"><b>Join the iDeck community on Discord</b></a>
+</p>
 
 [Open an issue](https://github.com/kuscholar/iDeck/issues) with your device,
 build, steps to reproduce and redacted diagnostics. Tell us what actually

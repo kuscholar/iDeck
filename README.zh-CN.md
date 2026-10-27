@@ -5,6 +5,9 @@
 </p>
 <h1 align="center">iDeck</h1>
 <p align="center"><strong>iDeck brings the SteamOS experience to iOS</strong><br>让你的 iPhone，也有掌机的打开方式。</p>
+<p align="center">
+  <a href="https://discord.gg/aQdsaJyTM"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2FaQdsaJyTM%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&label=Discord&logo=discord&logoColor=white&color=5865F2&style=for-the-badge" alt="加入 iDeck Discord 社区"></a>
+</p>
 
 把手柄接上，打开 Steam 游戏库，给积灰的游戏一个住进兜里的机会。
 iDeck 通过 **Madeira、Wine、FEX 和 Metal**，在 iPhone / iPad 本地运行
@@ -132,6 +135,10 @@ Xcode 工程仍为 `app/Madeira.xcodeproj`，scheme 为 `Madeira`；App 显示�
 分发构建前请阅读 [分发要求](docs/DISTRIBUTION.md)。
 
 ## 反馈与贡献
+
+<p align="center">
+  <a href="https://discord.gg/aQdsaJyTM"><b>加入 iDeck Discord 社区</b></a>
+</p>
 
 欢迎 [提交 Issue](https://github.com/kuscholar/iDeck/issues)，附设备、系统、构建号、
 复现步骤和脱敏诊断。说明实际看到的界面，以及安装、JIT、登录、游戏库、游戏运行中的
