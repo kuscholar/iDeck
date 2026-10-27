@@ -62,3 +62,53 @@
 - Next: obtain access to Xcode Accounts in the logged-in interactive session,
   or use an Apple-issued development profile explicitly matching the isolated
   probe ID. Preserve the installed apps and do not substitute their IDs.
+
+## 2026-10-27: physical device graphics probe
+
+- User supplied the account/team; Xcode GUI visibly showed the Personal Team.
+  Previous CLI `No Accounts` did not mean the GUI account was absent. Opened
+  the isolated `ProfileProbe` project in Xcode, selected Kusch and built. Its
+  temporary source lacked a UIKit link and failed to link, but the GUI did
+  provision a matching iOS development profile for the separate probe bundle,
+  with get-task-allow and the target device. No credentials were recorded.
+- Signed the public reference probe and shims with that profile and existing
+  development identity. Default keychain selection failed `errSecInternalComponent`;
+  explicitly selecting the existing login keychain succeeded and `codesign
+  --verify --deep --strict` passed. The installed bundle is separate from iDeck
+  and Madeira. It carries iOS LC_BUILD_VERSION min17 SDK27.1; no entitlement
+  beyond the basic development identity and get-task-allow was requested.
+- Actual physical device test, iPhone 15 Pro Max iOS27.0 (24A435): independent
+  probe install and launch succeeded. Console captured `PROBE main`, UIKit shim
+  foreground and `applicationDidFinishLaunching`, macOS-compiled metallib
+  loaded, `PROBE pipeline OK` and scene active. Captured device screenshot
+  shows the expected colored triangle; render and native entry are observed.
+  Console observer timed out after 25 seconds; a fresh device process list
+  still showed the probe process, so observer timeout is not process exit.
+  Private screenshot SHA256 `fe9035ec233db87b47b826a2beb2eb10e635aa8d0d9029aa5673b3cdcd0e4e8b`;
+  private console log SHA256 `5889f7bca48f20e38abcfdc711528868a97801a4c10552e3433ef2cfd78085bb`.
+- Touch interaction has not yet been evidenced; user was asked to tap the
+  triangle. This proves only the minimal probe, not Steam, authentication,
+  CEF, helper process creation, game installation, or performance. Next: verify
+  touch via device log or framebuffer change; then obtain and inventory Valve's
+  official macOS client privately and identify actual architectures/dependencies.
+- Follow-up real-device touch test: relaunched the same isolated probe under a
+  fresh bounded console observer. After the user tapped, actual console output
+  recorded `PROBE mouseDown` and changing hue, confirming UIKit touch reached
+  the macOS-compiled AppKit callback. Private raw log SHA256
+  `b06f258fa94ceb7e8143b665351e1aee8025adf040efd3a33b7c886e8787c698`.
+  This supersedes the prior touch-unverified status. The observer may end while
+  the app remains active; no Steam functionality is implied.
+- Retrieved Valve's official macOS installer link from
+  https://store.steampowered.com/about/ into private experimental storage.
+  The downloaded DMG SHA256 is
+  `e1abfbaaa7be3e0f48a0e0d4c313233e05861b1d26af32830ddc838be88f2691`.
+  Its read-only mounted `Steam.app/Contents/MacOS/steam_osx` is **x86_64 only**,
+  SHA256 `4d59bc0779fceaf1ee0c50ed564a7301424c6b5f73b958fc80afc8812c5b03cd`,
+  bundle version 6.0. The image was detached after inspection. This is the
+  distributed bootstrapper, not proof about a fully updated or beta client;
+  do not call it an ARM64 Steam client. No Valve binary is committed.
+- Next discriminator: locate a legitimate fully updated native ARM64 macOS
+  Steam installation or official beta package and inspect all main/helper
+  architectures without using or changing an existing user account. Treat
+  missing ARM64 as an unresolved acquisition gate, not a proven absence. If
+  copying, use a private isolated source and preserve existing Steam state.
