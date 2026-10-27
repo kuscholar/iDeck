@@ -20,3 +20,26 @@
 - Signing attempt: a minimal independent Xcode project requested automatic iOS development signing for `com.kuschqin.ideck.maclab.macprobe` with team D7KZKWD692. Xcode build failed with `No Accounts` and `No profiles ... were found`. No new profile or device installation resulted. User asked to sign into Xcode Accounts; do not repeat unchanged signing attempt until login state changes. Private build log: `/private/tmp/ideck-profile-probe/build.log` (do not publish raw profile/signing material). Existing working bundle IDs were not reused.
 - Source investigation: NotProton's `dylib/hooks/hook_spawn.c` filters environment then calls original posix_spawn; it still expects actual child processes and is not an iOS pseudo-process implementation. Ullage's `docs/platform-selection.md` reports a macOS experiment in which a platform override did not select the Windows depot and uses a global Windows platform setting; its result is not an iOS validation and may affect other app installs. SwiftSteam/SteamOwnedLibrary already implements owned-depot downloads and can be evaluated as a separate fallback. Do not conflate its account state with Steam's native client.
 - Next: after Xcode login, repeat only the isolated profile-generation step, verify actual app slot availability, then sign/install/launch the probe and capture the first result. Continue independent process/IPC research meanwhile. Steam login, library, game execution and return remain untested.
+
+## 2026-10-26: signing retry after user reported login
+
+- User reported that they had logged in and authorized use of that session.
+  Retried the same isolated Xcode automatic-signing project for
+  `com.kuschqin.ideck.maclab.macprobe`; Xcode again reported `No Accounts` and
+  no matching development profile. This is the actual command result, not a
+  conclusion about which account or application the user signed into.
+- Requested Xcode UI inspection; computer control reported the Mac locked and
+  could not unlock it. Asked the user to unlock so the account and selected
+  developer team can be inspected. No credential entry, lock bypass, install,
+  or mutation of an existing app was attempted. Log stays private at
+  `/private/tmp/ideck-profile-probe/build-after-login.log`.
+- Additional reference-source evidence: NotProton explicitly preserves its
+  dylib insertion for `steam_osx` and `Steam Helper`, while calling original
+  exec/spawn APIs. Ullage includes an exec-based helper. Neither establishes
+  an in-process Steam helper on iOS. The probe's `main.m` exercises AppKit
+  application/window setup, Metal device creation and mouse/touch handling;
+  these are targets to validate on device, not observed device results.
+- Next: after native Mac unlock, inspect Xcode Accounts and developer team via
+  UI; use only a supported authorized signing flow. Retry profile generation
+  only when account availability changes, then verify exact profile, device,
+  free slot and probe signature before installing isolated app.
