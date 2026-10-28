@@ -49,6 +49,33 @@ production C++ source files remain unchanged except for the two pool constants.
 The builder runs the upstream LASTCHANGE hook and verifies its real pinned
 commit, rather than inventing version stamps.
 
+The same treatment retains the exact Windows service-resolver/common,
+Sandbox common/buildflags and NaCl buildflag target bodies. Their unrelated
+integration tests and unused renderer targets are omitted from this component
+build. Unsafe-developer mode is explicitly false; production security flags
+in the retained targets are unchanged. Windows compilation remains a gate.
+
+## Actual native layout evidence
+
+Kusch Build83 simultaneously reserved all six proposed disjoint regions,
+57GiB+128KiB total, with exact fixed/no-overwrite results and successful
+cleanup. Build84 repeated with maximum RW protection and successfully
+zero-tested, wrote and read twelve freshly allocated edge data pages, leaving
+the BRP guards untouched, then released every mapping. The host fixtures also
+check every slot/edge refusal, wrong returned address and cleanup failures.
+
+```sh
+python3 tests/host/check-cef64-layout.py
+```
+
+These tests do not give Wine ownership of the regions and do not prove
+full-range physical backing, executable permission, FEX consumption or CEF/UI
+success. Production remains unchanged. Explicit device diagnostic:
+`madeira-cef64-layout-diagnostics` plus `MADEIRA_CEF64_LAYOUT_PROBE=1` for
+reserve-only, or `backing` for the bounded own-page test. No Steam/JIT/login
+is started. Raw results stay private; hashes are in
+docs/IDECK_CEF64_SOURCE_EVIDENCE.json.
+
 Next build/test gates: resolve focused GN dependencies and Windows toolchain;
 build the DLL; verify PE AMD64/imports/exports and changed allocation constants;
 run an isolated load/heap/thread probe; then use a separate test directory on

@@ -1981,3 +1981,28 @@ stopped at missing build-time Rust inputs, then selected supported C++-only
 GN configuration; attempt3 currently in progress. These are build-system
 results, not DLL/CEF/device success. Source artifact packaging retains notices
 and refuses to publish a component before its Windows load/VA test passes.
+
+
+Actual Build83 phone discriminator PASSES: all six disjoint full-sized native
+NONE/NONE fixed-no-overwrite regions, total0xe40020000 (57GiB+128KiB), held
+simultaneously; every requested base exact, every cleanup0. Includes full8GiB
+V8 cage,15GiB arena capacity, both16GiB CEF pools and both1GiB source-ELF pools
+with real BRP guards. This proves before-main simultaneous CAPACITY only;
+no guest ownership, commits, FEX consumption or CEF/login/rendering claim.
+User data retained; old idle PID2744 ignored TERM, actual SIGKILL exit verified
+before in-place83 install and explicit native-only diagnostic launch. No JIT
+or Steam needed for this test. Numeric artifact hash/slots in source evidence.
+
+Build84 ACTUAL backing discriminator passes: same six full-sized reservations
+held concurrently with maxRW,12own data pages at region edges become RW and
+pass zero/write/read checks; BRP guards untouched; all cleanup0. Only these
+12pages committed, not57GiB of physical RAM. Before-main timing and no JIT/
+Steam remain explicit. This validates capacity plus bounded backing, not
+executable permissions, guest ownership transfer, FEX or interactive64CEF.
+
+Windows source attempt5 reached bounded100-input discovery, before compiling:
+unreferenced Sandbox tests and NaCl process_type pulled renderer/Mojo graph.
+New metadata retains exact upstream required target bodies only, with checked
+source hashes, original compiler/security flags, and unsafe-developer=false.
+Native83/84 capacity/backing are independent actual device passes; they do not
+prove this source component builds or links into an actual Steam helper.

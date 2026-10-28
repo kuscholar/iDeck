@@ -15,8 +15,8 @@
     "Full82 Xcode and final Mach-O marker",
     "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
-  "windows_build": "Corrected focused graph prepared for next run; no DLL/device pass yet",
-  "on_device": "not tested; existing Build81 Steam download/session preserved",
+  "windows_build": "Next corrected focused-dependency build pending; no DLL load/Steam claim",
+  "on_device": "Build83 simultaneous native capacity passes; source DLL/FEX/CEF not tested. Same app upgraded preserving data.",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
   "limitations": [
@@ -41,6 +41,10 @@
     {
       "id": 40628717575,
       "result": "Cancelled after identifying crash-reporting also requires content_descriptors. Focused graph now keeps both exact upstream header-only source sets, without Content/UI runtime targets."
+    },
+    {
+      "id": 40628994232,
+      "result": "No DLL produced; bounded100-source discovery limit reached because unused Sandbox integration tests and NaCl process_type target pulled renderer/Mojo graph. Retain exact required Sandbox and NaCl target bodies only; keep original flags and production sources."
     }
   ],
   "diagnostic_build82": {
@@ -52,5 +56,56 @@
     "probe_PE_machine": "0x8664",
     "probe_PE_sha256": "68cc0826c474fbbe52357a865133ff51a7afefc9816ba35c63b201b9d789efd8",
     "scope": "Explicit madeira-cef64-component-diagnostics selects existing isolated wine-steam64, loads only staged source-built DLL, writes numeric/known-symbol results. No Steam launch or account action."
+  },
+  "simultaneous_layout83": {
+    "device": "Kusch iPhone15ProMax",
+    "build": 83,
+    "launch_pid": 2930,
+    "actual_native_result": "six fixed no-overwrite NONE/NONE reservations held simultaneously; every actual base equals requested; all six cleanup calls return0; result0",
+    "bytes": 61203415040,
+    "native_result_sha256": "03b23b6cb946d49ff91d2a3d6eb87033c8e9c6d7d1156553b00b0cd8dcee4039",
+    "private_result": "../.madeira-install/steam64-current/cef64-layout83-results.txt",
+    "slots": [
+      {
+        "base": "0x7100000000",
+        "size": "0x40000000",
+        "purpose": "1GiB source-ELF regular"
+      },
+      {
+        "base": "0x717fff0000",
+        "size": "0x40010000",
+        "purpose": "1GiB source-ELF BRP plus64KiBguard"
+      },
+      {
+        "base": "0x7200000000",
+        "size": "0x200000000",
+        "purpose": "full8GiB V8 cage"
+      },
+      {
+        "base": "0x7400000000",
+        "size": "0x3c0000000",
+        "purpose": "15GiB FEX arena capacity"
+      },
+      {
+        "base": "0x77ffff0000",
+        "size": "0x400010000",
+        "purpose": "16GiB CEF BRP plus64KiBguard"
+      },
+      {
+        "base": "0x7c00000000",
+        "size": "0x400000000",
+        "purpose": "16GiB CEF regular"
+      }
+    ],
+    "limit": "Before-main native capacity only, released immediately; not committed physical memory, not ownership transfer to runtime, not FEX consumer/CEF/UI success. Native profile unchanged. No Steam launch or account actions.",
+    "installed": true
+  },
+  "backing_layout84": {
+    "build": 84,
+    "result": "PASS on actual Kusch: all six full-sized regions held concurrently with maxRW;12fresh own edge pages zero/write/read match; no guard touched; all cleanup0",
+    "native_result_sha256": "7a75ec5f624524073d6bd60f9cfdf24d757cf2e351f0f51be3023198d9ebb122",
+    "private_result": "../.madeira-install/steam64-current/cef64-layout84-backing.txt",
+    "limit": "Only12data pages committed; not full physical capacity, executable permission, guest ownership/FEX/CEF/UI success. No JIT or Steam started.",
+    "linked_binary_markers": "v2 backing mode plus explicit argument/environment gate verified in final debug dylib; fullXcode/deep signing/in-place install"
   }
 }

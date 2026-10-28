@@ -910,6 +910,7 @@ unsigned madeira_early_intruder_tag, madeira_early_intruder_prot;
 
 #include <crt_externs.h>
 #include "../../build/diagnostics/steam_ui_vm_probe.h"
+#include "../../build/diagnostics/cef64_layout_probe.h"
 /* Explicit read-only timing discriminator. All mappings are NONE, no-overwrite,
  * released by the existing bounded probe. Never active on ordinary launch. */
 __attribute__((constructor(100), used)) static void ideck_early_vm_probe(void)
@@ -918,14 +919,19 @@ __attribute__((constructor(100), used)) static void ideck_early_vm_probe(void)
     int argc = *_NSGetArgc(), requested = 0;
     for (int i = 1; i < argc; ++i)
         if (argv[i] && !strcmp(argv[i], "madeira-steam64-early-vm-experiment")) requested = 1;
+    const char *layout = getenv("MADEIRA_CEF64_LAYOUT_PROBE");
+    int layout_mode = ideck_cef64_layout_mode(layout, argc, argv);
+    int backing = layout_mode == 2;
+    if (layout_mode) requested = 2;
     if (!requested) return;
     const char *home = getenv("HOME");
     char path[4096];
-    if (!home || snprintf(path, sizeof(path), "%s/Documents/steam64-early-vm-results.txt", home) >= sizeof(path)) return;
+    if (!home || snprintf(path, sizeof(path), "%s/Documents/%s", home,
+        requested == 2 ? (backing ? "cef64-layout-backing-results.txt" : "cef64-layout-results.txt") : "steam64-early-vm-results.txt") >= sizeof(path)) return;
     FILE *out = fopen(path, "w");
     if (!out) return;
     fputs("early-vm timing=before-main-swiftui-metal-wine; linked-framework-initializers-may-already-have-run\n", out);
-    int result = madeira_steam_ui_vm_probe(out);
+    int result = requested == 2 ? madeira_cef64_layout_probe(out, backing) : madeira_steam_ui_vm_probe(out);
     fprintf(out, "early-vm result=%d\n", result);
     fclose(out);
 }

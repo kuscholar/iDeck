@@ -22,7 +22,10 @@ INITIAL = ["base", "build", "build_overrides", "buildtools", "chrome/chrome_elf"
            "sandbox", "testing", "tools/clang", "tools/grit", "tools/win", "tools/rust",
            "third_party/abseil-cpp", "third_party/crashpad", "third_party/zlib",
            "third_party/libc++", "third_party/libc++abi", "third_party/llvm-libc",
-           "third_party/ninja", "third_party/mini_chromium"]
+           "third_party/ninja", "third_party/mini_chromium", "components/nacl/common",
+           "components/gwp_asan", "third_party/protobuf", "third_party/icu",
+           "third_party/libxml", "third_party/google_benchmark", "third_party/googletest",
+           "third_party/re2", "third_party/double_conversion", "third_party/modp_b64"]
 
 
 def run(root, *args):
@@ -72,6 +75,62 @@ def focused_content_build(data):
     return ("\n".join(text.splitlines()[:3]) + "\n\n" + "\n\n".join(targets) + "\n").encode()
 
 
+def gn_target(text, kind, name):
+    token = f'{kind}("{name}") {{'
+    if text.count(token) != 1:
+        raise ValueError(f"non-unique GN target {name}")
+    start = text.index(token)
+    i = start + len(token)
+    depth, quoted, comment = 1, False, False
+    while i < len(text):
+        c = text[i]
+        if comment:
+            comment = c != "\n"
+        elif quoted:
+            if c == "\\":
+                i += 1
+            elif c == '"':
+                quoted = False
+        elif c == "#":
+            comment = True
+        elif c == '"':
+            quoted = True
+        elif c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if not depth:
+                return text[start:i + 1]
+        i += 1
+    raise ValueError("unbalanced GN block")
+
+
+def focused_header_dependencies(root):
+    # Exact upstream production target bodies, with their original security
+    # flags and source lists. Omit only unrelated targets that cause GN to
+    # resolve integration tests or a complete NaCl/Mojo/renderer build.
+    specs = [
+        ("sandbox/win/BUILD.gn", "99da532832da7c342b9e25fc0fe60daefe23697ceaa979b1adb267a5a6ae279b", [],
+         [("source_set", "service_resolver"), ("source_set", "common")]),
+        ("sandbox/BUILD.gn", "7f194b2b631573d5a89cb90fe8021b1d389c7bf8d2904a9570b275598cec0e75",
+         ["//build/buildflag_header.gni", "//sandbox/features.gni"],
+         [("source_set", "sandbox_export"), ("source_set", "common"), ("buildflag_header", "sandbox_buildflags")]),
+        ("components/nacl/common/BUILD.gn", "15dd627dcc9128c0583004c63da99402c91f37b55609844af2fd225c73b3d2fa",
+         ["//build/buildflag_header.gni", "//components/nacl/features.gni", "//components/nacl/toolchain.gni"],
+         [("buildflag_header", "buildflags")])
+    ]
+    for name, expected, imports, targets in specs:
+        path = root / name
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != expected:
+            raise ValueError(f"unknown focused dependency {name}")
+        original = data.decode()
+        text = "\n".join(original.splitlines()[:3]) + "\n\n"
+        text += "\n".join(f'import("{p}")' for p in imports) + "\n\n"
+        text += "\n\n".join(gn_target(original, kind, target) for kind, target in targets) + "\n"
+        path.write_bytes(text.encode())
+
+
 def prepare(root):
     if run(root, "git", "rev-parse", "HEAD") != REVISION:
         raise ValueError("checkout does not match pinned Chromium revision")
@@ -87,6 +146,7 @@ def prepare(root):
     elf_build.write_bytes(focused_elf_build(elf_build.read_bytes()))
     content_build = root / "content/public/common/BUILD.gn"
     content_build.write_bytes(focused_content_build(content_build.read_bytes()))
+    focused_header_dependencies(root)
     (root / "BUILD.gn").write_text('group("default") { deps = [ "//chrome/chrome_elf:chrome_elf" ] }\n')
     # gclient normally generates this. The focused target does not require
     # Android, private/internal sources or optional browser test datasets.
@@ -103,6 +163,7 @@ def prepare(root):
 target_cpu = "x64"
 is_debug = false
 is_official_build = false
+is_unsafe_developer_build = false
 use_unofficial_version_number = false
 is_component_build = false
 symbol_level = 0
