@@ -70,6 +70,21 @@ int wmain(int argc, wchar_t **argv)
             return 5;
         }
     }
+    /* Public Chromium126 install_details.h Payload prefix; no account fields.
+     * Matching this source-built object's version/size is only one ABI gate,
+     * not proof that Valve's consumer or crash-reporting contracts work. */
+    struct payload_prefix { SIZE_T size; const char *version; const SIZE_T *mode; };
+    typedef const struct payload_prefix *(__cdecl *payload_function)(void);
+    FARPROC payload_export = GetProcAddress(dll, "GetInstallDetailsPayload");
+    payload_function payload_get;
+    _Static_assert(sizeof(payload_get) == sizeof(payload_export), "Windows ABI pointer size");
+    memcpy(&payload_get, &payload_export, sizeof(payload_get));
+    const struct payload_prefix *payload = payload_get();
+    if (!payload || payload->size != 80 || !payload->version || !payload->mode) return 9;
+    const int version_match = !strcmp(payload->version, "126.0.6478.183");
+    printf("cef64-load-probe install-payload-size=%zu version-match=%d mode-size=%zu\n",
+           payload->size, version_match, *payload->mode);
+    if (!version_match || !*payload->mode || *payload->mode > 4096) return 10;
     n_after = snapshot(after);
     if (!n_after) return 6;
     for (unsigned i = 0; i < n_after; ++i) {

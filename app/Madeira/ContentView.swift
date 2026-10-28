@@ -3624,9 +3624,14 @@ struct ContentView: View {
     private func startCEF64ComponentProbe() {
         guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
               wineserver_is_running() == 0, !StikJITHelper.poolTaken else { return }
+        guard madeira_cef64_hold_state() >= 0 else {
+            logStore.log("[cef64-owned] native reservation failed; isolated probe refused", level: .error)
+            return
+        }
         do {
             let args = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: SteamUIExperiment.runtimePrefix,
-                flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier)
+                flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier,
+                ownedContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1")
             steamUIStarting = true
             setenv("MADEIRA_EXE", "cmd.exe", 1)
             setenv("MADEIRA_ARGS", args, 1)
@@ -3649,6 +3654,10 @@ struct ContentView: View {
         guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
               wineserver_is_running() == 0, !StikJITHelper.poolTaken else {
             logStore.log("[steam-ui] launch refused: isolated experimental app, JIT and a fresh session are required", level: .error)
+            return
+        }
+        guard madeira_cef64_hold_state() >= 0 else {
+            logStore.log("[cef64-owned] native reservation failed; Steam launch refused, reopen without experiment to use the working layout", level: .error)
             return
         }
         let prefix = SteamUIExperiment.runtimePrefix

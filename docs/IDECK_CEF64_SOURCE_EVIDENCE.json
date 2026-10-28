@@ -5,7 +5,7 @@
   "hypothesis": "Source-build ONLY chrome_elf with 1GiB regular/BRP pools to remove 30GiB reservation demand; retain Valve libcef unchanged.",
   "observation": "Actual Build71 initial four pools share one guest PEB; first two from chrome_elf, second two libcef. Stock upstream same-version DLL also requests two16GiB pools.",
   "discriminating_test": "Build source DLL; Windows before/after VirtualQuery allocation census requires two1GiB pools and zero new16GiB pools, plus15 actual Valve-imported ELF exports. Then isolated actual-device test; no UI success claim from load.",
-  "patch": "Two checked compile-time constants in external disposable source checkout only; no runtime integration or Valve/FEX/auth modifications.",
+  "patch": "Source component changes only two allocator constants. Separate opt-in native/Wine ownership-transfer experiment in Build85, ordinary mode unchanged; no FEX source or Valve binary modifications.",
   "host_checks": [
     "Exact upstream allocator headerSHA256 and only two modified constants",
     "Unknown/already-patched header rejection; assertions/configurable size unchanged",
@@ -16,7 +16,7 @@
     "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
   "windows_build": "Actual C++ compilation reached231/1661; pinned RC hook restored, next source build pending. No component runtime pass.",
-  "on_device": "Build83 simultaneous native capacity passes; source DLL/FEX/CEF not tested. Same app upgraded preserving data.",
+  "on_device": "Build83 capacity and84 bounded backing passed. Build85 installed; explicit ownership probe launch refused by native lock. No Windows ownership/FEX consumption/CEF result yet.",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
   "limitations": [
@@ -123,5 +123,33 @@
     "private_result": "../.madeira-install/steam64-current/cef64-layout84-backing.txt",
     "limit": "Only12data pages committed; not full physical capacity, executable permission, guest ownership/FEX/CEF/UI success. No JIT or Steam started.",
     "linked_binary_markers": "v2 backing mode plus explicit argument/environment gate verified in final debug dylib; fullXcode/deep signing/in-place install"
+  },
+  "owned_layout85": {
+    "build": 85,
+    "starting_revision": "245d91093ac4070133845e3e305c61391c2080fc plus native source patch in this commit",
+    "activation": "MADEIRA_CEF64_SOURCE_LAYOUT=1 AND explicit steam64/component diagnostic argument; Wine also requires isolated wine-steam64 and Steam UI session1",
+    "native": "Six fixed no-overwrite holds before main, rollback on any failure; maxRW except FEX maxALL. Single atomic claim, no unmap/remap during Wine create_view adoption, existing-view and actual bounds/alignment checks.",
+    "guest_discriminator": "Own AMD64 PE five reserve/query/two-edge commit+zero/write/read/release tests and duplicate-claim refusal; no Valve/network. Requires fresh automatic paired JIT session.",
+    "checks": [
+      "37 native compilation units passed",
+      "Full unsigned Xcode85 build passed",
+      "Final debug dylib markers inspected",
+      "Deep strict signing with existing matching profiles passed",
+      "Host ASan/UBSan production native hold rollback and16-thread single-claim race passed",
+      "Host production Wine adoption function bounds/alignment/duplicate/view-failure rollback passed",
+      "Production Swift probe mode, ordinary-prefix and feature flag refusal passed",
+      "Existing layout/native-VM host regressions passed"
+    ],
+    "installed": true,
+    "actual_launch": "refused CoreDevice10002/FBS Locked; no process launched",
+    "signed_debug_dylib_sha256": "ec5ffb5f8e620c3a0a96b30dc70b8907453149e65a25b557a386c09c32fbd669",
+    "limitations": [
+      "No device executable/ownership/FEX consumption validation",
+      "Single-use claims are not recycled for restarted helpers; fresh app session required",
+      "Fixed geometry measured only on Kusch, not other devices",
+      "Existing iOS jumbo-hint fallback is a compatibility policy, not proof of general Windows fixed-address semantics",
+      "Legacy conflicting arena caps/off options and dynamic browser pool growth remain unvalidated",
+      "Not a product release or long-term stability claim"
+    ]
   }
 }

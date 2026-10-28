@@ -42,12 +42,13 @@ enum SteamUIExperiment {
         let productDefault = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true ? "1" : nil
         return allowed(flag: MadeiraConfig.get(flag) ?? productDefault, bundleID: Bundle.main.bundleIdentifier)
     }
-    static func prepareCEF64ComponentProbe(prefix: URL, flag: String?, bundleID: String?) throws -> String {
+    static func prepareCEF64ComponentProbe(prefix: URL, flag: String?, bundleID: String?, ownedContract: Bool = false) throws -> String {
         guard allowed(flag: flag, bundleID: bundleID), prefix.lastPathComponent == "wine-steam64" else { throw Failure.disabled }
         let drive = prefix.appendingPathComponent("drive_c")
         guard isX64PE(drive.appendingPathComponent("steam64-cef-load-probe.exe")),
-              isX64PE(drive.appendingPathComponent("iDeckCEF64SourceProbe/chrome_elf.dll")) else { throw Failure.incompleteProbe }
-        let batch = "@echo off\r\nC:\\steam64-cef-load-probe.exe C:\\iDeckCEF64SourceProbe\\chrome_elf.dll > C:\\madeira-cef64-load-results.txt 2>&1\r\necho probe-exit=%errorlevel% >> C:\\madeira-cef64-load-results.txt\r\n"
+              ownedContract || isX64PE(drive.appendingPathComponent("iDeckCEF64SourceProbe/chrome_elf.dll")) else { throw Failure.incompleteProbe }
+        let argument = ownedContract ? "--owned-contract" : "C:\\iDeckCEF64SourceProbe\\chrome_elf.dll"
+        let batch = "@echo off\r\nC:\\steam64-cef-load-probe.exe \(argument) > C:\\madeira-cef64-load-results.txt 2>&1\r\necho probe-exit=%errorlevel% >> C:\\madeira-cef64-load-results.txt\r\n"
         try batch.write(to: drive.appendingPathComponent("madeira-cef64-load.cmd"), atomically: true, encoding: .utf8)
         return "/c C:\\madeira-cef64-load.cmd"
     }

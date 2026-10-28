@@ -2015,3 +2015,16 @@ contract PE compiles Werror; it has no Valve or network dependencies. Build85
 installed in-place, launch refused due native phone lock; no runtime adoption
 result. Existing auth/games preserved. Await unlock while continuing Windows
 component work.
+
+Build85 native/Wine ownership transfer is now built, linked, deep-signed and
+installed. Exact dual-gated native holds feed checked one-time Wine views and
+the existing FEX arena publication path.37native units/fullXcode pass; host
+ASan/UBSan actual boot rollback/16thread claim race and actual Wine adoption
+bounds/alignment/live-view/duplicate/create-failure rollback pass. Production
+Swift own-contract no-Valve mode passes prefix/flag checks. Actual launch
+REFUSED CoreDevice10002/FBS Locked: no Windows contract or FEX/CEF pass.
+User unlock request pending; no repeated launches/installs. Signed final
+debug dylib hash and limitations in IDECK_CEF64_SOURCE_EVIDENCE.json. Claims
+are single-use/native lifetime; not a finished restart-safe broker or general
+fixed-hint Windows semantics proof. Next run own Windows contract before
+source-DLL load, then genuine matched64CEF. Preserve hybrid/auth/games.

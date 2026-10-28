@@ -12,6 +12,10 @@ extern "C" {
 // Opaque handle to a dual-mapped JIT region
 typedef struct JITRegion JITRegion;
 
+// Explicit CEF64 source-layout experiment: 0 inactive, 1 all native holds
+// owned, -1 boot reservation failed. Never infer ownership from an address.
+int madeira_cef64_hold_state(void);
+
 // Create a dual-mapped JIT region of the given size.
 // Returns NULL on failure. Size is rounded up to page boundary.
 // The region has two views of the same physical memory:

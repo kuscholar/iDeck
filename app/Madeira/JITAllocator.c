@@ -911,6 +911,62 @@ unsigned madeira_early_intruder_tag, madeira_early_intruder_prot;
 #include <crt_externs.h>
 #include "../../build/diagnostics/steam_ui_vm_probe.h"
 #include "../../build/diagnostics/cef64_layout_probe.h"
+
+/* Explicit full64 source-component experiment. All regions are reserved before
+ * Wine and remain natively owned until its checked single-transfer API adopts
+ * them. No ordinary launch can enable this from an environment variable alone. */
+static unsigned ideck_cef64_held_mask, ideck_cef64_claimed_mask;
+static int ideck_cef64_hold_status;
+int madeira_cef64_hold_state(void) { return __atomic_load_n(&ideck_cef64_hold_status, __ATOMIC_ACQUIRE); }
+int madeira_cef64_hold_get(unsigned slot, uint64_t *base, uint64_t *size)
+{
+    if (slot >= 6 || madeira_cef64_hold_state() != 1 ||
+        !(__atomic_load_n(&ideck_cef64_held_mask, __ATOMIC_ACQUIRE) & (1u << slot))) return 0;
+    *base = ideck_cef64_slots[slot].base;
+    *size = ideck_cef64_slots[slot].size;
+    return 1;
+}
+int madeira_cef64_hold_claim(unsigned slot)
+{
+    uint64_t base, size;
+    if (!madeira_cef64_hold_get(slot, &base, &size)) return 0;
+    unsigned bit = 1u << slot;
+    return !(__atomic_fetch_or(&ideck_cef64_claimed_mask, bit, __ATOMIC_ACQ_REL) & bit);
+}
+void madeira_cef64_hold_unclaim(unsigned slot)
+{
+    if (slot < 6) __atomic_fetch_and(&ideck_cef64_claimed_mask, ~(1u << slot), __ATOMIC_ACQ_REL);
+}
+
+__attribute__((constructor(99), used)) static void ideck_cef64_boot_holds(void)
+{
+    const char *option = getenv("MADEIRA_CEF64_SOURCE_LAYOUT");
+    char **argv = *_NSGetArgv();
+    int argc = *_NSGetArgc(), requested = 0;
+    if (!option || strcmp(option, "1")) return;
+    for (int i = 1; i < argc; ++i)
+        if (argv[i] && (!strcmp(argv[i], "madeira-steam64-experiment") ||
+                        !strcmp(argv[i], "madeira-steam64-big-picture-experiment") ||
+                        !strcmp(argv[i], "madeira-cef64-component-diagnostics"))) requested = 1;
+    if (!requested) return;
+    __atomic_store_n(&ideck_cef64_hold_status, -1, __ATOMIC_RELEASE);
+    for (unsigned i = 0; i < 6; ++i) {
+        vm_address_t actual = ideck_cef64_slots[i].base;
+        kern_return_t kr = vm_map(mach_task_self(), &actual, ideck_cef64_slots[i].size, 0,
+            VM_FLAGS_FIXED, MEMORY_OBJECT_NULL, 0, FALSE, VM_PROT_NONE,
+            i == 3 ? VM_PROT_ALL : VM_PROT_READ | VM_PROT_WRITE, VM_INHERIT_NONE);
+        if (kr != KERN_SUCCESS || actual != ideck_cef64_slots[i].base) {
+            if (kr == KERN_SUCCESS) vm_deallocate(mach_task_self(), actual, ideck_cef64_slots[i].size);
+            for (unsigned j = 0; j < i; ++j)
+                vm_deallocate(mach_task_self(), ideck_cef64_slots[j].base, ideck_cef64_slots[j].size);
+            dprintf(2, "[cef64-owned] boot reservation failed slot=%u kr=%d; no layout adopted\n", i, kr);
+            return;
+        }
+    }
+    __atomic_store_n(&ideck_cef64_held_mask, 0x3f, __ATOMIC_RELEASE);
+    __atomic_store_n(&ideck_cef64_hold_status, 1, __ATOMIC_RELEASE);
+    dprintf(2, "[cef64-owned] all six exact disjoint native regions held; no guest claims yet\n");
+}
 /* Explicit read-only timing discriminator. All mappings are NONE, no-overwrite,
  * released by the existing bounded probe. Never active on ordinary launch. */
 __attribute__((constructor(100), used)) static void ideck_early_vm_probe(void)

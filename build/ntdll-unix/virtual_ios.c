@@ -7685,11 +7685,23 @@ static void *user_space_limit    = (void *)0x7fffffff0000;  /* top of the user a
  * the ~512MB-per-thread FEXCore LookupCache reservation to shrink first; VA
  * freed elsewhere just gets absorbed by furniture growth. */
 #include "steam64_layout.h"
+extern int madeira_cef64_hold_state(void);
+extern int madeira_cef64_hold_get(unsigned slot, uint64_t *base, uint64_t *size);
+extern int madeira_cef64_hold_claim(unsigned slot);
+extern void madeira_cef64_hold_unclaim(unsigned slot);
+static int ios_cef64_owned_layout(void)
+{
+    const char *session = getenv("MADEIRA_STEAM_UI_SESSION");
+    const char *prefix = getenv("WINEPREFIX");
+    size_t len = prefix ? strlen(prefix) : 0;
+    return session && !strcmp(session, "1") && len >= 13 &&
+        !strcmp(prefix + len - 13, "/wine-steam64") && madeira_cef64_hold_state() == 1;
+}
 static int ios_steam64_layout(void)
 {
     return steam64_layout_enabled(getenv("MADEIRA_STEAM_UI_SESSION"), getenv("MADEIRA_STEAM64_COMPACT_LAYOUT"));
 }
-#define ios_furniture_ceiling ((ULONG_PTR)(ios_steam64_layout() ? STEAM64_FURNITURE_END : UINT64_C(0x73ffff0000)))
+#define ios_furniture_ceiling ((ULONG_PTR)((ios_steam64_layout() || ios_cef64_owned_layout()) ? STEAM64_FURNITURE_END : UINT64_C(0x73ffff0000)))
 /* replaced constant: */   /* ml132: 3-pool geometry, now with ios_spill_cap bounding the downside */
 
 /* ml168: running total of 256MB..1GB MEM_RESERVE grants, used ONLY as a pressure
@@ -23413,7 +23425,9 @@ void virtual_init(void)
 
     /* ml433 (#72): hold back the only 8GB-aligned stretch in the guest band
      * before top-down placement can put furniture in it — see IOS_CAGE_BASE. */
-    if (anon_mmap_fixed( (void *)(uintptr_t)IOS_CAGE_BASE, IOS_CAGE_REAL_SIZE, PROT_NONE, 0 ) != MAP_FAILED)
+    if (ios_cef64_owned_layout())
+        dprintf(2, "[cef64-owned] full8GiB cage held by checked native owner; legacy partial cage skipped\n");
+    else if (anon_mmap_fixed( (void *)(uintptr_t)IOS_CAGE_BASE, IOS_CAGE_REAL_SIZE, PROT_NONE, 0 ) != MAP_FAILED)
     {
         ios_cage_holdback_live = 1;
         dprintf( 2, "[cage] holdback reserved 0x%llx+0x%llx rev=ml433\n",
@@ -26084,6 +26098,42 @@ void virtual_set_large_address_space(void)
  *
  * NtAllocateVirtualMemory[Ex] implementation.
  */
+#include "cef64_owned_slots.h"
+/* virtual_mutex is held. Adopt the exact, already-backed native reservation as
+ * one real Wine view. No unmap/remap gap, alternate size, soft grant or overlap.
+ * Claims never recycle during this experiment's native app lifetime. */
+static int ios_cef64_adopt_view(struct file_view **out, void **base, SIZE_T size, ULONG type, ULONG protect,
+                              unsigned vprot, ULONG_PTR low, ULONG_PTR high, ULONG_PTR alignment,
+                              ULONG attributes, NTSTATUS *status)
+{
+    PEB *peb;
+    RTL_USER_PROCESS_PARAMETERS *pp;
+    uint64_t held_base, held_size;
+    int slot;
+    if (!ios_cef64_owned_layout()) return 0;
+    peb = ios_jit_current_peb();
+    pp = peb ? peb->ProcessParameters : NULL;
+    if (!pp || !cef64_owned_caller((const uint16_t *)pp->ImagePathName.Buffer,
+                                  pp->ImagePathName.Length / sizeof(WCHAR))) return 0;
+    slot = cef64_owned_slot((uintptr_t)*base, size, type, protect, low, high, alignment, attributes);
+    if (slot < 0) return 0;
+    *status = STATUS_NO_MEMORY;
+    if (!madeira_cef64_hold_get(slot, &held_base, &held_size) || held_size != size ||
+        (low && held_base < low) || (high && (held_base > high || size - 1 > high - held_base)) ||
+        (alignment && (held_base & (alignment - 1))) || find_view_range((void *)(uintptr_t)held_base, size) ||
+        !madeira_cef64_hold_claim(slot))
+    {
+        dprintf(2, "[cef64-owned] REFUSED slot=%d request-size=0x%lx; ownership/bounds/claim contract\n", slot, (unsigned long)size);
+        return 1;
+    }
+    *status = create_view(out, (void *)(uintptr_t)held_base, size, vprot);
+    if (*status) madeira_cef64_hold_unclaim(slot);
+    else *base = (void *)(uintptr_t)held_base;
+    dprintf(2, "[cef64-owned] ADOPT slot=%d exact=%p+0x%lx peb=%p status=0x%x; native backing preserved\n",
+            slot, (void *)(uintptr_t)held_base, (unsigned long)size, peb, (unsigned)*status);
+    return 1;
+}
+
 static NTSTATUS allocate_virtual_memory( void **ret, SIZE_T *size_ptr, ULONG type, ULONG protect,
                                          ULONG_PTR limit_low, ULONG_PTR limit_high,
                                          ULONG_PTR align, ULONG attributes )
@@ -26161,6 +26211,8 @@ static NTSTATUS allocate_virtual_memory( void **ret, SIZE_T *size_ptr, ULONG typ
 
             if (vprot & VPROT_WRITECOPY) status = STATUS_INVALID_PAGE_PROTECTION;
             else if (is_dos_memory) status = allocate_dos_memory( &view, vprot );
+            else if (ios_cef64_adopt_view(&view, &base, size, type, protect, vprot,
+                                          limit_low, limit_high, align, attributes, &status)) {}
             else status = map_view( &view, base, size, type, vprot, limit_low, limit_high,
                                     align ? align - 1 : granularity_mask );
 
@@ -28111,7 +28163,7 @@ NTSTATUS WINAPI NtAllocateVirtualMemory( HANDLE process, PVOID *ret, ULONG_PTR z
                  * SOFT-grant the cage deep inside the dead zone. Commits ride
                  * the guard view (see [cage-commit] in the soft handler); the
                  * collision to watch is BRP growing 8GB up from its bottom. */
-                if (st2 && *size_ptr == 0x100000000ULL && !sc_helper)
+                if (st2 && *size_ptr == 0x100000000ULL && !sc_helper && !ios_cef64_owned_layout())
                 {
                     static const uint64_t cage4_slots[] = { 0x7600000000ULL, 0x7500000000ULL };
                     unsigned ci;
@@ -28157,7 +28209,7 @@ NTSTATUS WINAPI NtAllocateVirtualMemory( HANDLE process, PVOID *ret, ULONG_PTR z
                     *size_ptr = sz;
                     st = STATUS_SUCCESS;
                 }
-                else if (ios_soft_n < IOS_SOFT_MAX && *size_ptr >= 0x400000000ULL && !sc_helper)
+                else if (ios_soft_n < IOS_SOFT_MAX && *size_ptr >= 0x400000000ULL && !sc_helper && !ios_cef64_owned_layout())
                 {
                     /* ml151: every real placement failed. Hand PA a 16GB-aligned
                      * slot nobody has taken and record it SOFT — see ios_soft.
@@ -28781,6 +28833,18 @@ void ios_reserve_fex_arena(void)
         SIZE_T size = plan[i].size;
         void *base;
         kern_return_t kr;
+
+        if (ios_cef64_owned_layout())
+        {
+            uint64_t held_base, held_size;
+            if (i || !madeira_cef64_hold_get(3, &held_base, &held_size) ||
+                !madeira_cef64_hold_claim(3)) break;
+            addr = held_base;
+            size = held_size;
+            dprintf(2, "[cef64-owned] FEX adopts exact held arena base=%p size=0x%llx\n",
+                    (void *)(uintptr_t)addr, (unsigned long long)size);
+            goto sc_arena_placed;
+        }
 
         if (ios_steam64_layout())
         {

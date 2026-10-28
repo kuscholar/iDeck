@@ -83,3 +83,42 @@ Kusch before touching the preserved working browser files. Keep original
 component hashes and rollback. A build or successful DLL load is not Steam UI
 success. Publish source, exact build inputs and applicable BSD notices if the
 experiment reaches binary distribution.
+
+## Opt-in ownership discriminator (Build85)
+
+The six native holds have a separate experimental ownership-transfer path.
+Enable `MADEIRA_CEF64_SOURCE_LAYOUT=1` together with an explicit
+`madeira-cef64-component-diagnostics` launch argument. The native constructor
+requires both; Wine additionally requires Steam UI session1 and the isolated
+`wine-steam64` prefix. Ordinary launches keep their existing layout.
+
+Set `MADEIRA_CEF64_OWNED_CONTRACT_PROBE=1` for the first test. Build the own
+AMD64 PE from `load-probe.c` and `owned-contract.h`, stage it as
+`drive_c/steam64-cef-load-probe.exe` in that prefix, and start a fresh paired
+JIT session. The fixed batch writes `drive_c/madeira-cef64-load-results.txt`.
+It reserves/queries all five guest regions, commits two data pages per region,
+checks zero/write/read, rejects a duplicate, and releases its own views. It
+loads no Valve module and does not authenticate or launch Steam. All five
+exact addresses and every check must pass. Inspect the native log separately
+to confirm that FEX actually consumes the published15GiB arena.
+
+```sh
+python3 tests/host/check-cef64-native-owner.py
+python3 tests/host/check-cef64-owned-slots.py
+python3 tests/host/check-cef64-owned-transfer.py
+python3 tests/host/check-steam-ui.py
+```
+
+These host checks compile the production native hold/claim code and Wine
+adoption function with fixtures, including rollback and a16thread claim race.
+They do not prove actual iOS permissions or Windows API behavior. Build85
+compiled37native units and the full app, passed linked-marker/deep-signing
+checks, and installed; the first launch was refused because Kusch was locked.
+No ownership/FEX-consumption/device CEF result is available yet.
+
+This is not a finished general-purpose broker: claims are single-use for the
+native app lifetime; helper restart/reclamation, conflicting legacy arena
+options, fixed-address hint semantics, dynamic pool growth and other hardware
+remain gates. A failed boot hold refuses this experimental Steam/probe launch;
+reopen without the explicit option to use the preserved working layout. Do not
+silently grant overlapping ranges or weaken Chromium failure checks.

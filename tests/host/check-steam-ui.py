@@ -72,6 +72,12 @@ assert(componentArguments == "/c C:\\madeira-cef64-load.cmd")
 let componentBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
 assert(!componentBatch.contains("steam.exe") && !componentBatch.contains("steamwebhelper") && componentBatch.contains("probe-exit=%errorlevel%"))
 try FileManager.default.removeItem(at: componentDLL)
+let ownedArguments = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true)
+assert(ownedArguments == componentArguments)
+let ownedBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
+assert(ownedBatch.contains(" --owned-contract") && !ownedBatch.contains("chrome_elf.dll") && !ownedBatch.contains("steam.exe"))
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: root, flag: "1", bundleID: "test.steamui", ownedContract: true); fatalError("owned probe ordinary prefix") } catch {}
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: nil, bundleID: "test.steamui", ownedContract: true); fatalError("owned probe flag") } catch {}
 try FileManager.default.createSymbolicLink(at: componentDLL, withDestinationURL: client.appendingPathComponent("steam.exe"))
 do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui"); fatalError("component probe DLL symlink") } catch {}
 try pe("bin/cef/cef.win7x64/steamwebhelper.exe"); refused("1", "test.steamui")
