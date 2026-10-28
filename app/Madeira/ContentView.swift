@@ -1408,6 +1408,7 @@ struct ContentView: View {
                     }
                 }
                 let automaticATL = ProcessInfo.processInfo.arguments.contains("madeira-atlthunk-diagnostics")
+                let automaticCEF64Component = ProcessInfo.processInfo.arguments.contains("madeira-cef64-component-diagnostics")
                 let automaticPlatform = ProcessInfo.processInfo.arguments.contains("madeira-platform-diagnostics")
                 let automaticSwiftshader = ProcessInfo.processInfo.arguments.contains("madeira-swiftshader-diagnostics")
                 let automaticKeyedEvent = ProcessInfo.processInfo.arguments.contains("madeira-keyed-event-diagnostics")
@@ -1434,7 +1435,8 @@ struct ContentView: View {
                     automaticProbeRequested = true
                     DispatchQueue.main.async {
                         launchAfterJIT = {
-                            if automaticNativeVM { startSteamUINativeVMProbe() }
+                            if automaticCEF64Component { startCEF64ComponentProbe() }
+                            else if automaticNativeVM { startSteamUINativeVMProbe() }
                             else if automaticATL { startSteamUIProbe(atlThunk: true) }
                             else if automaticSteamUI { startSteamUIExperiment(x86Client: automaticX86Client, bigPicture: automaticBigPicture, loginFirst: automaticLoginFirst, ratatanThreadTest: automaticRatatan) }
                             else { startSteamUIProbe(fls: automaticFLS, reservation: automaticReservation, x86CEF: automaticX86CEF, keyedEvent: automaticKeyedEvent, swiftshader: automaticSwiftshader, platform: automaticPlatform) }
@@ -3617,6 +3619,21 @@ struct ContentView: View {
             logStore.log(atlThunk ? "[steam-ui-probe] begin isolated ATL thunk allocation/callback/free; no Steam client" : platform ? "[steam-ui-probe] begin read-only Windows architecture and Valve platform query" : swiftshader ? "[steam-ui-probe] begin isolated official SwiftShader Vulkan initialization; no Steam client" : x86CEF ? "[steam-ui-probe] begin official x86 chrome_elf heap/thread probe; no Steam client" : reservation ? "[steam-ui-probe] begin reserve-only ownership test; no Steam client" : fls ? "[steam-ui-probe] begin synthetic FLS lifetime test; no Steam client" : "[steam-ui-probe] begin synthetic atomic and process tests; no Steam client")
             runWineFullSequence(steamUI: true)
         } catch { logStore.log("[steam-ui-probe] " + error.localizedDescription, level: .error) }
+    }
+
+    private func startCEF64ComponentProbe() {
+        guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
+              wineserver_is_running() == 0, !StikJITHelper.poolTaken else { return }
+        do {
+            let args = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: SteamUIExperiment.runtimePrefix,
+                flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier)
+            steamUIStarting = true
+            setenv("MADEIRA_EXE", "cmd.exe", 1)
+            setenv("MADEIRA_ARGS", args, 1)
+            unsetenv("MADEIRA_DESKTOP")
+            logStore.log("[cef64-component] isolated source-built DLL load/VA contract probe; Steam is not started")
+            runWineFullSequence(steamUI: true)
+        } catch { logStore.log("[cef64-component] probe refused: \(error.localizedDescription)", level: .error) }
     }
 
     private func startIDeck(accountChooser: Bool = false) {

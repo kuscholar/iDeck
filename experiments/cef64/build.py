@@ -5,8 +5,13 @@ SPDX-License-Identifier: GPL-3.0-or-later
 Madeira Converter Exception: see LICENSE-EXCEPTION.md
 """
 import argparse
+import hashlib
+import json
+import os
 from pathlib import Path
 import re
+import shutil
+import struct
 import subprocess
 import sys
 import urllib.request
@@ -70,6 +75,10 @@ def build(root):
         data = z.read("gn.exe")
     (gn_dir / "gn.exe").write_bytes(data)
     subprocess.run([sys.executable, "tools/clang/scripts/update.py", "--package", "clang"], cwd=root, check=True)
+    subprocess.run([sys.executable, "build/util/lastchange.py", "--source-dir", str(root),
+                    "--filter", ".", "-o", "build/util/LASTCHANGE"], cwd=root, check=True)
+    if "2e81dea53f5ecdc1c057e4c70ecd66151987296a" not in (root / "build/util/LASTCHANGE").read_text():
+        raise RuntimeError("generated revision metadata does not identify pinned source")
     output = root / "out/ideck-elf"
     log = root / "ideck-elf-build.log"
     command_with_sources(root, [str(gn_dir / "gn.exe"), "gen", "out/ideck-elf"], cwd=root, log=log)
@@ -82,6 +91,35 @@ def build(root):
     subprocess.run(["cmake", "--build", str(probe_output), "--config", "Release"], check=True)
     command_with_sources(root, [str(probe_output / "Release/cef64-load-probe.exe"), str(output / "chrome_elf.dll")],
                          cwd=output, log=log, attempts=1)
+    # This output is produced ONLY after the real Windows load/VA test passes.
+    # Include public source provenance and notices; never stage a Valve tree,
+    # Windows SDK, credentials, signing profile or device log as an artifact.
+    artifact = root / "ideck-elf-artifact"
+    artifact.mkdir(exist_ok=True)
+    dll = output / "chrome_elf.dll"
+    data = dll.read_bytes()
+    pe = struct.unpack_from("<I", data, 0x3c)[0]
+    if data[pe:pe+4] != b"PE\0\0" or struct.unpack_from("<H", data, pe+4)[0] != 0x8664:
+        raise RuntimeError("unexpected non-AMD64 output")
+    shutil.copyfile(dll, artifact / dll.name)
+    for parent, dirs, files in os.walk(root):
+        dirs[:] = [d for d in dirs if d not in (".git", "out", "ideck-elf-artifact", "llvm-build")]
+        for name in files:
+            if name.startswith(("LICENSE", "COPYING", "NOTICE")) and not Path(parent, name).is_symlink():
+                source = Path(parent, name)
+                destination = artifact / "notices" / source.relative_to(root)
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, destination)
+    shutil.copyfile(root / "ideck-elf-source.json", artifact / "source.json")
+    shutil.copyfile(output / "args.gn", artifact / "args.gn")
+    for name in ("prepare.py", "build.py", "load-probe.c", "CMakeLists.txt", "README.md"):
+        shutil.copyfile(probe_source / name, artifact / name)
+    for name in ("LICENSE", "LICENSE-EXCEPTION.md"):
+        shutil.copyfile(probe_source.parents[1] / name, artifact / ("IDeck-" + name))
+    (artifact / "validation.json").write_text(json.dumps({
+        "pe_machine": "0x8664", "sha256": hashlib.sha256(data).hexdigest(),
+        "windows_load_va_and_15_exports": "passed", "ios": "not tested",
+        "steam_ui": "not tested", "product_release": False}, indent=2) + "\n")
 
 
 if __name__ == "__main__":

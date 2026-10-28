@@ -8,11 +8,13 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 
 REVISION = "2e81dea53f5ecdc1c057e4c70ecd66151987296a"
 HEADER = "base/allocator/partition_allocator/src/partition_alloc/partition_address_space.h"
 HEADER_SHA256 = "96faadaf33cafc64caba2d404838e765453dd45f3cc6d8747d7278c6faebdf34"
+ELF_BUILD_SHA256 = "f6281136b55e978bf476832ff2b6d59a3f49640d40050833b6109228100ec680"
 INITIAL = ["base", "build", "build_overrides", "buildtools", "chrome/chrome_elf",
            "chrome/install_static", "chrome/common", "chrome/app/theme",
            "components/crash", "components/version_info", "content/public/common",
@@ -39,6 +41,22 @@ def patch_header(data):
     return text.encode()
 
 
+def focused_elf_build(data):
+    """Omit unrelated test targets; retain the actual header-only dependency."""
+    if hashlib.sha256(data).hexdigest() != ELF_BUILD_SHA256:
+        raise ValueError("unrecognized chrome_elf build graph")
+    text = data.decode().split('test("chrome_elf_unittests")', 1)[0]
+    text, count = re.subn(r'static_library\("test_stubs"\) \{.*?^\}\n', '', text, count=1, flags=re.S | re.M)
+    if count != 1 or text.count('"//content/public/common:result_codes"') != 1:
+        raise ValueError("unexpected component dependency graph")
+    text = text.replace('import("//testing/test.gni")\n', '')
+    text = text.replace('"//content/public/common:result_codes"', '":content_result_codes"')
+    # The upstream target is exactly this one-header source_set. Defining it
+    # here avoids resolving the unused full Content/UI target graph.
+    text += '\nsource_set("content_result_codes") { sources = [ "//content/public/common/result_codes.h" ] }\n'
+    return text.encode()
+
+
 def prepare(root):
     if run(root, "git", "rev-parse", "HEAD") != REVISION:
         raise ValueError("checkout does not match pinned Chromium revision")
@@ -50,6 +68,8 @@ def prepare(root):
     subprocess.run(["git", "sparse-checkout", "set", *INITIAL], cwd=root, check=True)
     header = root / HEADER
     header.write_bytes(patch_header(header.read_bytes()))
+    elf_build = root / "chrome/chrome_elf/BUILD.gn"
+    elf_build.write_bytes(focused_elf_build(elf_build.read_bytes()))
     (root / "BUILD.gn").write_text('group("default") { deps = [ "//chrome/chrome_elf:chrome_elf" ] }\n')
     # gclient normally generates this. The focused target does not require
     # Android, private/internal sources or optional browser test datasets.

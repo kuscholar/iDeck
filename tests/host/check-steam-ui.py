@@ -10,7 +10,7 @@ main = r'''
 let docs64 = URL(fileURLWithPath: "/test-documents")
 assert(!SteamUIExperiment.usesSteam64(arguments: []))
 assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: []).lastPathComponent == "wine")
-for arg in ["madeira-steam64-experiment", "madeira-steam64-big-picture-experiment"] {
+for arg in ["madeira-steam64-experiment", "madeira-steam64-big-picture-experiment", "madeira-cef64-component-diagnostics"] {
  assert(SteamUIExperiment.usesSteam64(arguments: [arg]))
  assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: [arg]).lastPathComponent == "wine-steam64")
 }
@@ -54,6 +54,26 @@ refused(nil, "test.steamui"); refused("1", "test.working")
 assert(!FileManager.default.fileExists(atPath: root.appendingPathComponent("drive_c/madeira-steam-ui.cmd").path))
 refused("1", "test.steamui")
 try pe("steam.exe"); try pe("steamclient64.dll"); refused("1", "test.steamui")
+let componentPrefix = root.appendingPathComponent("wine-steam64")
+let componentDrive = componentPrefix.appendingPathComponent("drive_c")
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: root, flag: "1", bundleID: "test.steamui"); fatalError("component probe ordinary prefix") } catch {}
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui"); fatalError("component probe missing inputs") } catch {}
+try FileManager.default.createDirectory(at: componentDrive.appendingPathComponent("iDeckCEF64SourceProbe"), withIntermediateDirectories: true)
+let componentExe = componentDrive.appendingPathComponent("steam64-cef-load-probe.exe")
+let componentDLL = componentDrive.appendingPathComponent("iDeckCEF64SourceProbe/chrome_elf.dll")
+let componentPE = try Data(contentsOf: client.appendingPathComponent("steam.exe"))
+try componentPE.write(to: componentExe)
+try componentPE.write(to: componentDLL)
+for flag: String? in [nil, "0", "true"] {
+ do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: flag, bundleID: "test.steamui"); fatalError("component probe flag") } catch {}
+}
+let componentArguments = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui")
+assert(componentArguments == "/c C:\\madeira-cef64-load.cmd")
+let componentBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
+assert(!componentBatch.contains("steam.exe") && !componentBatch.contains("steamwebhelper") && componentBatch.contains("probe-exit=%errorlevel%"))
+try FileManager.default.removeItem(at: componentDLL)
+try FileManager.default.createSymbolicLink(at: componentDLL, withDestinationURL: client.appendingPathComponent("steam.exe"))
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui"); fatalError("component probe DLL symlink") } catch {}
 try pe("bin/cef/cef.win7x64/steamwebhelper.exe"); refused("1", "test.steamui")
 try pe("bin/cef/cef.win7x64/libcef.dll")
 let p = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui")

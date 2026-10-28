@@ -42,6 +42,13 @@ core-pool constants. No FEX or proprietary binary is patched. It narrows the
 root GN target to chrome_elf; use Chromium's pinned GN, LLVM and DEPS inputs.
 Do not disable allocator/BRP checks or fabricate reservations on failure.
 
+The focused BUILD.gn overlay omits unrelated test targets and relocates the
+unchanged one-header `content/public/common:result_codes` dependency into the
+ELF build file. This avoids generating the complete unused Content/UI graph;
+production C++ source files remain unchanged except for the two pool constants.
+The builder runs the upstream LASTCHANGE hook and verifies its real pinned
+commit, rather than inventing version stamps.
+
 Next build/test gates: resolve focused GN dependencies and Windows toolchain;
 build the DLL; verify PE AMD64/imports/exports and changed allocation constants;
 run an isolated load/heap/thread probe; then use a separate test directory on

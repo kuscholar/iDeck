@@ -37,7 +37,7 @@ jobs:
           python tests/host/check-cef64-source.py "$env:RUNNER_TEMP/original-header.h"
       - name: Build focused source component
         run: python experiments/cef64/build.py "$env:RUNNER_TEMP/chromium126"
-      - name: Retain source-only build evidence
+      - name: Retain build evidence and validated source component
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -49,3 +49,4 @@ jobs:
             ${{ runner.temp }}/chromium126/ideck-elf-build.log
             ${{ runner.temp }}/chromium126/LICENSE
             ${{ runner.temp }}/chromium126/AUTHORS
+            ${{ runner.temp }}/chromium126/ideck-elf-artifact/**

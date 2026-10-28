@@ -1972,3 +1972,12 @@ tests pending. No runtime/binary/FEX/auth change; live Build81 download left
 untouched. Source/evidence: experiments/cef64, IDECK_CEF64_SOURCE_EVIDENCE.json.
 Next discriminate actual source-built DLL reserve sizes on Windows, then
 isolated iOS load and genuine64CEF startup; no login/UI success assumed.
+
+Build82 adds an explicit isolated source-component probe, full Xcode/final
+linked marker/deep signing pass; NOT installed while source DLL build pending.
+Production Swift missing-input/symlink/prefix/flag and no-Steam command checks
+pass, existing hybrid/input/TEB/readiness checks pass. Windows attempts1/2
+stopped at missing build-time Rust inputs, then selected supported C++-only
+GN configuration; attempt3 currently in progress. These are build-system
+results, not DLL/CEF/device success. Source artifact packaging retains notices
+and refuses to publish a component before its Windows load/VA test passes.

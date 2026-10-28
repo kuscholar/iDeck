@@ -9,7 +9,7 @@ enum SteamUIExperiment {
     static let sessionKey = "MADEIRA_STEAM_UI_SESSION"
     // Explicit migration experiment: separate registry, Steam/auth and save tree.
     static func usesSteam64(arguments: [String]) -> Bool {
-        arguments.contains("madeira-steam64-experiment") || arguments.contains("madeira-steam64-big-picture-experiment")
+        arguments.contains("madeira-steam64-experiment") || arguments.contains("madeira-steam64-big-picture-experiment") || arguments.contains("madeira-cef64-component-diagnostics")
     }
     static var steam64: Bool { usesSteam64(arguments: ProcessInfo.processInfo.arguments) }
     static func runtimePrefix(documents: URL, arguments: [String]) -> URL {
@@ -41,6 +41,15 @@ enum SteamUIExperiment {
     static var enabled: Bool {
         let productDefault = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true ? "1" : nil
         return allowed(flag: MadeiraConfig.get(flag) ?? productDefault, bundleID: Bundle.main.bundleIdentifier)
+    }
+    static func prepareCEF64ComponentProbe(prefix: URL, flag: String?, bundleID: String?) throws -> String {
+        guard allowed(flag: flag, bundleID: bundleID), prefix.lastPathComponent == "wine-steam64" else { throw Failure.disabled }
+        let drive = prefix.appendingPathComponent("drive_c")
+        guard isX64PE(drive.appendingPathComponent("steam64-cef-load-probe.exe")),
+              isX64PE(drive.appendingPathComponent("iDeckCEF64SourceProbe/chrome_elf.dll")) else { throw Failure.incompleteProbe }
+        let batch = "@echo off\r\nC:\\steam64-cef-load-probe.exe C:\\iDeckCEF64SourceProbe\\chrome_elf.dll > C:\\madeira-cef64-load-results.txt 2>&1\r\necho probe-exit=%errorlevel% >> C:\\madeira-cef64-load-results.txt\r\n"
+        try batch.write(to: drive.appendingPathComponent("madeira-cef64-load.cmd"), atomically: true, encoding: .utf8)
+        return "/c C:\\madeira-cef64-load.cmd"
     }
     static func prepareProbe(prefix: URL, flag: String?, bundleID: String?, fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false, atlThunk: Bool = false) throws -> String {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }

@@ -10,9 +10,12 @@
     "Exact upstream allocator headerSHA256 and only two modified constants",
     "Unknown/already-patched header rejection; assertions/configurable size unchanged",
     "Load-probe AMD64 compilation with -Wall -Wextra -Werror",
-    "Python syntax and git diff --check"
+    "Python syntax and git diff --check",
+    "Production Swift probe missing-input/symlink/wrong-prefix/flag refusal and fixed no-Steam command",
+    "Full82 Xcode and final Mach-O marker",
+    "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
-  "windows_build": "pending",
+  "windows_build": "Next attempt pending: focused graph and official generated metadata correction; no compile/load success yet",
   "on_device": "not tested; existing Build81 Steam download/session preserved",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
@@ -21,5 +24,29 @@
     "Smaller capacity and entropy effects require review",
     "No complete64CEF or current-client success",
     "No iPad-capacity resolution"
-  ]
+  ],
+  "source_build_runs": [
+    {
+      "id": 40627421046,
+      "result": "No runtime component produced; missing Rust metadata script in focused checkout."
+    },
+    {
+      "id": 40627570301,
+      "result": "No runtime component produced; unused Rust toolchain package stamp unavailable."
+    },
+    {
+      "id": 40627790404,
+      "result": "No DLL produced; GN expanded unrelated Content/UI targets, then stopped at missing generated LASTCHANGE/committime. New focused graph omits ELF test targets and preserves exact one-header dependency; official lastchange hook added with exact-revision check."
+    }
+  ],
+  "diagnostic_build82": {
+    "full_xcode": "passed",
+    "final_linked_marker": "cef64-component isolated source-built DLL load/VA contract probe",
+    "signed_debug_dylib_sha256": "97f3824d8fd6b7ed17f5e918da7e0b9069e6cc8221164854c46f5e01d08fd1a3",
+    "deep_signing": "passed using existing matching app/helper profiles and login keychain",
+    "installed": false,
+    "probe_PE_machine": "0x8664",
+    "probe_PE_sha256": "68cc0826c474fbbe52357a865133ff51a7afefc9816ba35c63b201b9d789efd8",
+    "scope": "Explicit madeira-cef64-component-diagnostics selects existing isolated wine-steam64, loads only staged source-built DLL, writes numeric/known-symbol results. No Steam launch or account action."
+  }
 }
