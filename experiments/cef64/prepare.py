@@ -16,7 +16,7 @@ HEADER_SHA256 = "96faadaf33cafc64caba2d404838e765453dd45f3cc6d8747d7278c6faebdf3
 INITIAL = ["base", "build", "build_overrides", "buildtools", "chrome/chrome_elf",
            "chrome/install_static", "chrome/common", "chrome/app/theme",
            "components/crash", "components/version_info", "content/public/common",
-           "sandbox", "testing", "tools/clang", "tools/grit", "tools/win",
+           "sandbox", "testing", "tools/clang", "tools/grit", "tools/win", "tools/rust",
            "third_party/abseil-cpp", "third_party/crashpad", "third_party/zlib",
            "third_party/libc++", "third_party/libc++abi", "third_party/llvm-libc",
            "third_party/ninja", "third_party/mini_chromium"]

@@ -46,9 +46,13 @@ def command_with_sources(root, command, *, cwd, log, attempts=100):
             target = root / filename[2:] if filename.startswith("//") else Path(filename)
         else:
             match = re.search(r"ninja: error: '([^']+)'.*missing and no known rule", result.stdout)
-            if not match:
-                raise subprocess.CalledProcessError(result.returncode, command)
-            target = cwd / match.group(1)
+            if match:
+                target = cwd / match.group(1)
+            else:
+                match = re.search(r"can't open file ['\"]([^'\"]+)['\"].*\[Errno 2\]", result.stdout)
+                if not match:
+                    raise subprocess.CalledProcessError(result.returncode, command)
+                target = Path(match.group(1))
         ensure_source(root, target.resolve().relative_to(root))
     raise RuntimeError("bounded source-discovery limit reached")
 
