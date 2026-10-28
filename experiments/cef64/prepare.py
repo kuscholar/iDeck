@@ -139,7 +139,10 @@ def prepare(root):
     dirty = run(root, "git", "status", "--porcelain", "--untracked-files=no")
     if dirty:
         raise ValueError("source checkout contains changes; preserve and inspect it")
-    subprocess.run(["git", "sparse-checkout", "set", *INITIAL], cwd=root, check=True)
+    # Some pinned dependencies are gitlinks, materialized separately by the
+    # bounded source resolver. Git's cone validator otherwise rejects them as
+    # non-directory entries before any source can be fetched.
+    subprocess.run(["git", "sparse-checkout", "set", "--skip-checks", *INITIAL], cwd=root, check=True)
     header = root / HEADER
     header.write_bytes(patch_header(header.read_bytes()))
     elf_build = root / "chrome/chrome_elf/BUILD.gn"
