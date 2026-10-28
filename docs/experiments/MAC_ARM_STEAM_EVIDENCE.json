@@ -455,6 +455,14 @@
     {
       "path": ".madeira-install/mac-arm-steam-official/heartbeat29-staging-regression.log",
       "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat30-lock-state.log",
+      "sha256": "6c8ad1c439430c84c9c46be583f0e8718c1fc0ca3a3b5c6e9662d3c008a929b2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat30-official-notice-source-links.json",
+      "sha256": "e9ae76f5ed4dfe5c6a1fa2446bca3a4eaa1f1b6b65739f3dd94c381ebc10a896"
     }
   ],
   "nativeProcessDiscriminator": {
@@ -786,5 +794,15 @@
       "experiments/mac-arm-steam/test-exec-diagnostic.c": "10b41a51990f47e69483b08f1696448a808201bf9b0fd521309904d2f21a9859",
       "experiments/mac-arm-steam/test-local.sh": "308e4c53942e6b80a0b3d74f3be0caeddac339d1fbf9bf67bc834345405731b7"
     }
+  },
+  "heartbeat20261028_0534": {
+    "sourceParent": "147c7a84ed3c6422236f80ffc3908bc1933db295",
+    "phoneLocked": true,
+    "deviceProbeRun": false,
+    "deviceOperations": "one read-only lock check; no install, launch or lock bypass",
+    "independentResearch": "read five official bundled legal/license notice files for compatible CEF source location; no compatible buildable source link found in inspected files",
+    "noticeLimit": "not exhaustive global proof; legal notice availability does not establish ABI compatibility or binary distribution permission",
+    "deliverable": "consolidated evidence-backed compatibility/limitations matrix; no new runtime success",
+    "next": "already installed10 Helper-load probe after native unlock; compatible source-built smaller CEF and Helper IPC remain independent gates"
   }
 }

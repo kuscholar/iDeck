@@ -795,3 +795,30 @@
 - Next on actual native unlock: launch ALREADY installed10 once with only
   IDeckNativeHelperLoadProbe=1 and current app URL, collect categorical result.
   Do not mistake constructor exit or CEF load for an interactive Steam window.
+
+## 2026-10-28 05:34 EDT: unchanged device gate; source-location and matrix review
+
+- Verified origin/branch/worktree, clean research HEAD and current remote all
+ 147c7a84ed3c6422236f80ffc3908bc1933db295. One fresh native lock query still
+  shows passcodeRequired=true. No install/launch, stale PID action, lock bypass
+  or repeated notification. Installed10 confirmation from prior run remains the
+  latest version evidence; do not repeat the old installation-timeout diagnosis.
+- Independent source-location check reads five official bundled legal/license
+  notice files, including ThirdPartyLegalNotices-Chromium.html. No matching
+  Steam-custom buildable CEF source location found among the inspected links.
+  This is not exhaustive global evidence and does not establish redistribution
+  permission. No third-party samples or executables fetched/run. Private report
+  records source-file hashes; no Valve notice contents copied into Git.
+- Added MAC_ARM_STEAM_COMPATIBILITY.md to consolidate the requested compatibility,
+  limitations and current continue/no-go assessment with per-milestone evidence.
+  Distinguishes geometry from actual CEF, host-only observer hardening from
+  installed10, process survival from rendering, and working Windows product from
+  this native experiment. No unsupported auth/game/performance claims.
+- Runtime code and installed app unchanged; no reason to rerun identical host
+  tests for this documentation-only update. JSON parses, evidence hashes and
+  document links checked. Current source parent147c7a8; device/iOS last actual
+  verified27.0(24A435), not guessed from user's older report.
+- Next still requires native unlock for the already installed10 loader probe.
+  Keep source-built compatible smaller CEF and Helper IPC/lifecycle research
+  separate; no new successful native Steam milestone in this run. Check local
+  time before each scoped commit/push; no main merge or waiting automation.

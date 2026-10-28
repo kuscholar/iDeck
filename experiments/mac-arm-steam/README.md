@@ -297,3 +297,5 @@ all four calls without executing any host process. This source-only hardening
 postdates installed Build10; it has not been linked/deployed or device-tested.
 A fresh query later confirmed Build10 installed despite the old timeout; do not
 reinstall it blindly. Its Helper-load probe still awaits a native phone unlock.
+
+Current milestone and limitations: [evidence matrix](../../docs/experiments/MAC_ARM_STEAM_COMPATIBILITY.md).
