@@ -2028,3 +2028,20 @@ debug dylib hash and limitations in IDECK_CEF64_SOURCE_EVIDENCE.json. Claims
 are single-use/native lifetime; not a finished restart-safe broker or general
 fixed-hint Windows semantics proof. Next run own Windows contract before
 source-DLL load, then genuine matched64CEF. Preserve hybrid/auth/games.
+
+Windows source-control milestone PASSES in run40632409115 (245d910): actual
+AMD64 DLL build and actual Windows loader/VirtualQuery tests find15exports
+and two1GiB private pools with no new16GiB reservation. DLL SHA256
+7dee97bd5ea0a363a68304b71ea4f8d9cbdac0647f716db59639f79f51989cab.
+Public source/notices retained, downloaded artifact hash reverified. This is
+NOT genuine Steam64CEF or device success and DLL is not staged into Steam.
+
+Further source audit isolates a compatibility gate: ordinary Chromium uses
+ChromeCrashReporterClient, while exact matching published CEF uses its own
+configuration/handler/optional-argument contract. No observed device fault
+of this DLL yet, no causal claim. New CEF-aware variant applies complete
+hash-pinned crashpad_1995.patch at CEF a5d51ba9... (requires same Chromium
+tag); ten-file pristine apply and exact retained production GN targets pass
+host tests. Real Git ancestry generates CEF version. Next Windows browser+
+renderer DLL load/payload/VA gate, then isolated iPhone ownership/component
+load. Build85 unlock gate unchanged; no repeated launch or credential action.

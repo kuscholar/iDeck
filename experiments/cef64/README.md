@@ -33,19 +33,19 @@ files in this checkout. Never apply this script to a working Chromium tree.
 ```sh
 git clone --depth 1 --filter=blob:none --sparse --branch 126.0.6478.183 \
   https://github.com/chromium/chromium.git chromium126
-python experiments/cef64/prepare.py chromium126
+python experiments/cef64/prepare.py chromium126 --cef-glue
 ```
 
 The preparation script requires exact upstream HEAD and an unmodified tracked
 tree, checks the original allocator-header SHA256, and changes only the two
-core-pool constants. No FEX or proprietary binary is patched. It narrows the
+core-pool constants in the allocator. No FEX or proprietary binary is patched. It narrows the
 root GN target to chrome_elf; use Chromium's pinned GN, LLVM and DEPS inputs.
 Do not disable allocator/BRP checks or fabricate reservations on failure.
 
 The focused BUILD.gn overlay omits unrelated test targets and relocates the
 unchanged one-header `content/public/common:result_codes` dependency into the
 ELF build file. This avoids generating the complete unused Content/UI graph;
-production C++ source files remain unchanged except for the two pool constants.
+Allocator C++ source remains unchanged except for the two pool constants.
 The builder runs the upstream LASTCHANGE hook and verifies its real pinned
 commit, rather than inventing version stamps.
 
@@ -53,7 +53,29 @@ The same treatment retains the exact Windows service-resolver/common,
 Sandbox common/buildflags and NaCl buildflag target bodies. Their unrelated
 integration tests and unused renderer targets are omitted from this component
 build. Unsafe-developer mode is explicitly false; production security flags
-in the retained targets are unchanged. Windows compilation remains a gate.
+in the retained targets are unchanged.
+
+### CEF crash-contract variant
+
+Control build [40632409115](https://github.com/kuscholar/iDeck/actions/runs/40632409115)
+successfully compiled the AMD64 DLL. Its actual Windows load test found all15
+required exports and two1GiB private pools, with no new16GiB reservation.
+This is not Steam or device success. It uses stock Chromium crash integration.
+
+Source inspection confirms that CEF instead uses `CefCrashReporterClient`,
+reads its crash configuration, and supplies different handler/optional-argument
+contracts. The `--cef-glue` variant applies the complete published
+[CEF crashpad patch](https://github.com/chromiumembedded/cef/blob/a5d51ba9db7ee74a523dc247bd09ec91ba4d7446/patch/patches/crashpad_1995.patch)
+at exact CEF revisiona5d51ba9db7ee74a523dc247bd09ec91ba4d7446, whose compatibility
+file requires this same Chromium tag. All ten patched files, the patch hash
+and exact retained CEF/crash target bodies are checked. Official version
+generation uses actual Git ancestry; BSD notices remain with upstream code.
+No crash check is suppressed. This is a separate compatibility hypothesis,
+not an observed explanation for a device failure of the control DLL.
+
+The CEF-aware Windows build and browser/renderer load tests must pass before
+that variant can be staged. Matching payload/export checks do not establish
+Valve's complete runtime contract; genuine helper/CEF/UI tests remain gates.
 
 ## Actual native layout evidence
 

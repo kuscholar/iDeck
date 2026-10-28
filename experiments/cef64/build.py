@@ -110,6 +110,14 @@ def build(root):
     subprocess.run(["cmake", "--build", str(probe_output), "--config", "Release"], check=True)
     command_with_sources(root, [str(probe_output / "Release/cef64-load-probe.exe"), str(output / "chrome_elf.dll")],
                          cwd=output, log=log, attempts=1)
+    source_manifest = json.loads((root / "ideck-elf-source.json").read_text())
+    cef_glue = bool(source_manifest.get("cef_revision"))
+    if cef_glue:
+        # Exercise non-browser DllMain too, which invokes the published CEF
+        # CrashReporterClient path. No Steam config, credentials or network.
+        command_with_sources(root, [str(probe_output / "Release/cef64-load-probe.exe"),
+                                    str(output / "chrome_elf.dll"), "--type=renderer"],
+                             cwd=output, log=log, attempts=1)
     # This output is produced ONLY after the real Windows load/VA test passes.
     # Include public source provenance and notices; never stage a Valve tree,
     # Windows SDK, credentials, signing profile or device log as an artifact.
@@ -131,13 +139,14 @@ def build(root):
                 shutil.copyfile(source, destination)
     shutil.copyfile(root / "ideck-elf-source.json", artifact / "source.json")
     shutil.copyfile(output / "args.gn", artifact / "args.gn")
-    for name in ("prepare.py", "build.py", "load-probe.c", "owned-contract.h", "CMakeLists.txt", "README.md"):
+    for name in ("prepare.py", "cef_glue.py", "build.py", "load-probe.c", "owned-contract.h", "CMakeLists.txt", "README.md"):
         shutil.copyfile(probe_source / name, artifact / name)
     for name in ("LICENSE", "LICENSE-EXCEPTION.md"):
         shutil.copyfile(probe_source.parents[1] / name, artifact / ("IDeck-" + name))
     (artifact / "validation.json").write_text(json.dumps({
         "pe_machine": "0x8664", "sha256": hashlib.sha256(data).hexdigest(),
         "windows_load_va_and_15_exports": "passed", "ios": "not tested",
+        "cef_crash_glue": cef_glue, "windows_render_child_load": "passed" if cef_glue else "not tested",
         "steam_ui": "not tested", "product_release": False}, indent=2) + "\n")
 
 

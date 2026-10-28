@@ -45,9 +45,9 @@ def patch_header(data):
     return text.encode()
 
 
-def focused_elf_build(data):
+def focused_elf_build(data, expected_sha=ELF_BUILD_SHA256):
     """Omit unrelated test targets; retain the actual header-only dependency."""
-    if hashlib.sha256(data).hexdigest() != ELF_BUILD_SHA256:
+    if hashlib.sha256(data).hexdigest() != expected_sha:
         raise ValueError("unrecognized chrome_elf build graph")
     text = data.decode().split('test("chrome_elf_unittests")', 1)[0]
     text, count = re.subn(r'static_library\("test_stubs"\) \{.*?^\}\n', '', text, count=1, flags=re.S | re.M)
@@ -192,4 +192,10 @@ treat_warnings_as_errors = false
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("checkout", type=Path)
-    prepare(parser.parse_args().checkout.resolve())
+    parser.add_argument("--cef-glue", action="store_true", help="also retain the pinned published CEF crash-reporting integration")
+    options = parser.parse_args()
+    checkout = options.checkout.resolve()
+    prepare(checkout)
+    if options.cef_glue:
+        from cef_glue import prepare_cef_glue
+        prepare_cef_glue(checkout)

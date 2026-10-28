@@ -29,12 +29,13 @@ jobs:
         run: |
           git config --global core.longpaths true
           git clone --config core.autocrlf=false --depth 1 --filter=blob:none --sparse --branch 126.0.6478.183 https://github.com/chromium/chromium.git "$env:RUNNER_TEMP/chromium126"
-      - name: Prepare only two allocator constants
-        run: python experiments/cef64/prepare.py "$env:RUNNER_TEMP/chromium126"
+      - name: Prepare reduced pools and published CEF integration
+        run: python experiments/cef64/prepare.py "$env:RUNNER_TEMP/chromium126" --cef-glue
       - name: Check exact source patch
         run: |
           python -c "import os,pathlib,subprocess; r=pathlib.Path(os.environ['RUNNER_TEMP']); (r/'original-header.h').write_bytes(subprocess.check_output(['git','-C',str(r/'chromium126'),'show','HEAD:base/allocator/partition_allocator/src/partition_alloc/partition_address_space.h']))"
           python tests/host/check-cef64-source.py "$env:RUNNER_TEMP/original-header.h"
+          python tests/host/check-cef64-cef-glue.py "$env:RUNNER_TEMP/chromium126" "$env:RUNNER_TEMP/chromium126/cef"
       - name: Build focused source component
         run: python experiments/cef64/build.py "$env:RUNNER_TEMP/chromium126"
       - name: Retain build evidence and validated source component

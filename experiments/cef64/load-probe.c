@@ -57,8 +57,9 @@ int wmain(int argc, wchar_t **argv)
     HMODULE dll;
     unsigned n_before, n_after, small_pools = 0;
     setvbuf(stdout, NULL, _IONBF, 0);
-    if (argc != 2) return 2;
+    if (argc != 2 && (argc != 3 || wcscmp(argv[2], L"--type=renderer"))) return 2;
     if (!wcscmp(argv[1], L"--owned-contract")) return cef64_owned_contract();
+    printf("cef64-load-probe process-mode=%s\n", argc == 3 ? "renderer" : "browser");
     n_before = snapshot(before);
     if (!n_before) return 3;
     puts("cef64-load-probe before-load");
