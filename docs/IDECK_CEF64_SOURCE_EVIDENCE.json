@@ -15,7 +15,7 @@
     "Full82 Xcode and final Mach-O marker",
     "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
-  "windows_build": "Next attempt pending: focused graph and official generated metadata correction; no compile/load success yet",
+  "windows_build": "Corrected focused graph prepared for next run; no DLL/device pass yet",
   "on_device": "not tested; existing Build81 Steam download/session preserved",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
@@ -37,6 +37,10 @@
     {
       "id": 40627790404,
       "result": "No DLL produced; GN expanded unrelated Content/UI targets, then stopped at missing generated LASTCHANGE/committime. New focused graph omits ELF test targets and preserves exact one-header dependency; official lastchange hook added with exact-revision check."
+    },
+    {
+      "id": 40628717575,
+      "result": "Cancelled after identifying crash-reporting also requires content_descriptors. Focused graph now keeps both exact upstream header-only source sets, without Content/UI runtime targets."
     }
   ],
   "diagnostic_build82": {

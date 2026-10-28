@@ -15,6 +15,7 @@ REVISION = "2e81dea53f5ecdc1c057e4c70ecd66151987296a"
 HEADER = "base/allocator/partition_allocator/src/partition_alloc/partition_address_space.h"
 HEADER_SHA256 = "96faadaf33cafc64caba2d404838e765453dd45f3cc6d8747d7278c6faebdf34"
 ELF_BUILD_SHA256 = "f6281136b55e978bf476832ff2b6d59a3f49640d40050833b6109228100ec680"
+CONTENT_BUILD_SHA256 = "074d07bdb209a5043b83499c3cf76cf24b9d4218bef2c4a5b8f16235224d3467"
 INITIAL = ["base", "build", "build_overrides", "buildtools", "chrome/chrome_elf",
            "chrome/install_static", "chrome/common", "chrome/app/theme",
            "components/crash", "components/version_info", "content/public/common",
@@ -57,6 +58,20 @@ def focused_elf_build(data):
     return text.encode()
 
 
+def focused_content_build(data):
+    """Keep the two original header-only targets needed by crash reporting."""
+    if hashlib.sha256(data).hexdigest() != CONTENT_BUILD_SHA256:
+        raise ValueError("unrecognized Content build graph")
+    text = data.decode()
+    targets = []
+    for name in ("result_codes", "content_descriptors"):
+        matches = re.findall(r'source_set\("' + name + r'"\) \{.*?^\}', text, re.S | re.M)
+        if len(matches) != 1:
+            raise ValueError("unexpected header-only dependency")
+        targets.append(matches[0])
+    return ("\n".join(text.splitlines()[:3]) + "\n\n" + "\n\n".join(targets) + "\n").encode()
+
+
 def prepare(root):
     if run(root, "git", "rev-parse", "HEAD") != REVISION:
         raise ValueError("checkout does not match pinned Chromium revision")
@@ -70,6 +85,8 @@ def prepare(root):
     header.write_bytes(patch_header(header.read_bytes()))
     elf_build = root / "chrome/chrome_elf/BUILD.gn"
     elf_build.write_bytes(focused_elf_build(elf_build.read_bytes()))
+    content_build = root / "content/public/common/BUILD.gn"
+    content_build.write_bytes(focused_content_build(content_build.read_bytes()))
     (root / "BUILD.gn").write_text('group("default") { deps = [ "//chrome/chrome_elf:chrome_elf" ] }\n')
     # gclient normally generates this. The focused target does not require
     # Android, private/internal sources or optional browser test datasets.
@@ -86,6 +103,7 @@ def prepare(root):
 target_cpu = "x64"
 is_debug = false
 is_official_build = false
+use_unofficial_version_number = false
 is_component_build = false
 symbol_level = 0
 chrome_pgo_phase = 0
