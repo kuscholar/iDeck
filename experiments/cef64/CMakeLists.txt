@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.20)
+project(ideck_cef64_load_probe C)
+add_executable(cef64-load-probe load-probe.c)
+set_property(TARGET cef64-load-probe PROPERTY C_STANDARD 11)
+if(MSVC)
+  target_compile_options(cef64-load-probe PRIVATE /W4 /WX)
+endif()

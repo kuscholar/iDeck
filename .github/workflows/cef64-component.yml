@@ -1,0 +1,51 @@
+name: Experimental CEF64 component
+on:
+  push:
+    branches: [experiment/steam64-hybrid]
+    paths:
+      - experiments/cef64/**
+      - .github/workflows/cef64-component.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cef64-component-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  chrome-elf:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    env:
+      DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          submodules: false
+      - name: Install pinned Ninja
+        run: python -m pip install ninja==1.11.1.1
+      - name: Fetch exact public upstream source
+        run: |
+          git config --global core.longpaths true
+          git clone --config core.autocrlf=false --depth 1 --filter=blob:none --sparse --branch 126.0.6478.183 https://github.com/chromium/chromium.git "$env:RUNNER_TEMP/chromium126"
+      - name: Prepare only two allocator constants
+        run: python experiments/cef64/prepare.py "$env:RUNNER_TEMP/chromium126"
+      - name: Check exact source patch
+        run: |
+          python -c "import os,pathlib,subprocess; r=pathlib.Path(os.environ['RUNNER_TEMP']); (r/'original-header.h').write_bytes(subprocess.check_output(['git','-C',str(r/'chromium126'),'show','HEAD:base/allocator/partition_allocator/src/partition_alloc/partition_address_space.h']))"
+          python tests/host/check-cef64-source.py "$env:RUNNER_TEMP/original-header.h"
+      - name: Build focused source component
+        run: python experiments/cef64/build.py "$env:RUNNER_TEMP/chromium126"
+      - name: Retain source-only build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cef64-component-experiment
+          if-no-files-found: warn
+          retention-days: 7
+          path: |
+            ${{ runner.temp }}/chromium126/ideck-elf-source.json
+            ${{ runner.temp }}/chromium126/ideck-elf-build.log
+            ${{ runner.temp }}/chromium126/LICENSE
+            ${{ runner.temp }}/chromium126/AUTHORS

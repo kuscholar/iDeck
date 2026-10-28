@@ -86,7 +86,13 @@
     "validation": "37native units/0failed; fullXcode81; final native+helper markers; strictsign/install; host redirect/input/TEB gates passed",
     "device": "Actual Unity graphics/input configuration window visually confirmed after legitimate Steam launch. Game-confirm request failed before delivery with CoreDevice4000 at23:00; device disconnected. No confirmed ACK, gameplay or game-crash evidence.",
     "main_baseline": "e3d845edd4cf46a247baea6d2cc398d7ba71812d unchanged",
-    "actual_game_PE_machine": "0x8664"
+    "actual_game_PE_machine": "0x8664",
+    "user_report": {
+      "recorded_at": "2026-10-27T23:08:26.495053-04:00",
+      "report": "Hot Roads ran successfully",
+      "evidence_level": "Direct user confirmation; actual game PE AMD64 was independently verified earlier. No new gameplay log/screenshot or duration measurement collected.",
+      "conclusion": "Core AMD64 Steam-main to AMD64 game execution proof of concept succeeds using the official i386 CEF hybrid; not full AMD64 CEF or current-client/stability/iPad validation."
+    }
   },
   "research_commit": "0c4b01e",
   "resume_gate": "Reconnected/unlocked Kusch; revalidate actual app identity and visible configuration dialog, then send only game-specific confirmation. Preserve prefix/auth/install. Do not treat disconnect as process death; no repeat installs."

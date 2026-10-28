@@ -515,3 +515,48 @@ fresh visible game configuration (do not automate EULA/credentials), then use
 the gated game-confirm command. Do not resume against a stalePID. Source-only
 research0c4b01e was committed and pushed to experiment/steam64-hybrid after
 separate22:58/22:59 EDT time checks. Main e3d845e and public release unchanged.
+
+
+## User-confirmed game execution
+
+The user subsequently reports: Hot Roads ran successfully. Combined with the
+previous independently verified AMD64 Steam main/steamclient64, real BPM,
+official installation and actual game PE Machine8664, this establishes the
+core AMD64 Steam-main → AMD64-game proof of concept by direct user confirmation.
+No new device gameplay artifact or duration was collected; do not relabel it
+as an agent-observed gameplay run. The architecture is still pinned January2026
+AMD64 Steam main plus official i386 CEF. Full AMD64 CEF, current update channel,
+long-session stability, reliable UI Play/controller/return and the affected
+iPad's address-space problem remain separate validation gates.
+
+## Full AMD64 CEF continuation: source-built support component
+
+User explicitly requests the long-term full64CEF solution after confirming the
+hybrid game run. Preserve that working path and the current phone download;
+do not report this continuation as completion.
+
+Fresh audit of actual Build71 shows all four initial pool requests have the
+same guest PEB: chrome_elf owns the first two16GiB pools, libcef the next two.
+Reducing renderer process count cannot remove these four same-process asks.
+The public CEF126.2.18+g3647d39 minimal Windows64 archive was downloaded from
+the official CEF build index; size193688875 and publishedSHA1
+eedf2390f5d6bebc199fdd3b40fa8b0c953d6281 verified. Its unchanged chrome_elf
+SHA2567a96d50d91310903f591478e7d1513be5689f1ecf59fe752fbaa6cb4ba8820ce
+also reserves16GiB regular and16GiB+guard BRP at init, independently verified
+by disassembly RVAs41503/41540. Thus a stock same-version swap is not enough.
+
+New discriminator: build ONLY upstream chrome_elf at exact Chromium
+2e81dea53f5ecdc1c057e4c70ecd66151987296a (126.0.6478.183), changing its two
+core-pool constants to1GiB while retaining mask derivation, BRP and all failure
+checks. This avoids replacing Valve's custom libcef/API extensions. All15 ELF
+names imported by actual Valve libcef are present in the upstream export list;
+this is name compatibility only, not install-details/crashpad ABI validation.
+Capacity/entropy and behavior must be tested; not yet a safe product change.
+
+The checked preparation script refuses wrong HEAD, tracked modifications and
+unknown header bytes. Host exact-patch checks pass (two constants only;
+configurable pool and assertions unchanged; malformed/already-patched inputs
+refused). A sparse source checkout on external easystore is prepared, separate
+from all runtime/Valve files. Windows source build and device tests remain
+pending. No app/runtime, FEX, Valve binary, entitlement or authentication change
+was made. See experiments/cef64/README.md for inputs, build isolation and gates.

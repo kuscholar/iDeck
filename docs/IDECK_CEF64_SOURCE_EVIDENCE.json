@@ -1,0 +1,25 @@
+{
+  "phase": "Full AMD64 CEF support-component experiment",
+  "starting_revision": "ca698ef05d332d432b438fa914f4162140d760f0",
+  "chromium_revision": "2e81dea53f5ecdc1c057e4c70ecd66151987296a",
+  "hypothesis": "Source-build ONLY chrome_elf with 1GiB regular/BRP pools to remove 30GiB reservation demand; retain Valve libcef unchanged.",
+  "observation": "Actual Build71 initial four pools share one guest PEB; first two from chrome_elf, second two libcef. Stock upstream same-version DLL also requests two16GiB pools.",
+  "discriminating_test": "Build source DLL; Windows before/after VirtualQuery allocation census requires two1GiB pools and zero new16GiB pools, plus15 actual Valve-imported ELF exports. Then isolated actual-device test; no UI success claim from load.",
+  "patch": "Two checked compile-time constants in external disposable source checkout only; no runtime integration or Valve/FEX/auth modifications.",
+  "host_checks": [
+    "Exact upstream allocator headerSHA256 and only two modified constants",
+    "Unknown/already-patched header rejection; assertions/configurable size unchanged",
+    "Load-probe AMD64 compilation with -Wall -Wextra -Werror",
+    "Python syntax and git diff --check"
+  ],
+  "windows_build": "pending",
+  "on_device": "not tested; existing Build81 Steam download/session preserved",
+  "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
+  "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
+  "limitations": [
+    "Export names do not prove install-details/crash-reporting ABI compatibility",
+    "Smaller capacity and entropy effects require review",
+    "No complete64CEF or current-client success",
+    "No iPad-capacity resolution"
+  ]
+}

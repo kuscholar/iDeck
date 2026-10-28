@@ -1950,3 +1950,25 @@ reinstall, relogin or repeatedly launch while disconnected. Fresh device/app/
 visible-dialog check precedes any next command. Reviewed source-only research
 0c4b01e pushed to experiment/steam64-hybrid inside verified allowed time window;
 no main merge/release/Valve payload. User Demo.gif left untouched/untracked.
+
+
+User now confirms Hot Roads ran successfully. Its actual PE was already
+verified8664, and Steam main/steamclient64 genuine AMD64. Core Steam64-main
+→ game64 execution PoC now succeeds by USER REPORT, supplementing prior
+artifact-backed launch/configuration evidence. No new gameplay artifact,
+duration/controller/game-return proof. Still historical pinned AMD64main plus
+official i386CEF; not full64CEF/current-client or iPad-capacity resolution.
+
+
+## Full AMD64 CEF continuation after user-confirmed game run
+
+User requests continued full64CEF work. At research ca698ef, fresh source and
+Build71 trace audit isolates two16GiB pools each in chrome_elf and libcef of
+the same guest PEB. Official upstream CEF126 stock chrome_elf also requests
+two16GiB pools, so stock swapping is not the fix. Prepared separate pinned
+source-only chrome_elf1GiB-pool experiment, exact-header/two-constant tests
+pass, load/VA/15-export probe compiles AMD64 Werror. Windows build and device
+tests pending. No runtime/binary/FEX/auth change; live Build81 download left
+untouched. Source/evidence: experiments/cef64, IDECK_CEF64_SOURCE_EVIDENCE.json.
+Next discriminate actual source-built DLL reserve sizes on Windows, then
+isolated iOS load and genuine64CEF startup; no login/UI success assumed.
