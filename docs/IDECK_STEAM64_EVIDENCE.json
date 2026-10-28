@@ -1,0 +1,89 @@
+{
+  "source_base": "e3d845e",
+  "scope": "uncommitted isolated Steam64 experiment",
+  "platform": "Kusch iPhone15ProMax iOS27.0",
+  "steam_main_version": 1769025840,
+  "cef_i386_version": 1769731672,
+  "cef": "126.0.6478.183",
+  "schemas": {
+    "old32": 169,
+    "matched_old64": 169,
+    "equal": true,
+    "current_oct64": 162,
+    "current_equal": false
+  },
+  "authentication": "actual Steam log Success/OK 17:10:04; user credentials and Guard only",
+  "big_picture": "Actual Build76 visually confirmed Welcome to Big Picture over home tiles; physical A ineffective; navigation unverified",
+  "atl": {
+    "control_build": 75,
+    "overlay_repack_build": 76,
+    "xcode_source_build": 75,
+    "direct_callbacks": 64,
+    "user_destroy_callbacks": 64,
+    "control": "PASS128 with two pool+1004 native protection faults",
+    "overlay": "PASS128 with zero store-undecoded/pool protection faults; unrelated native type6 teardown trap remains",
+    "causal_limit": "does not prove Steam spinner root cause fixed"
+  },
+  "sha256": {
+    "matched64-device-steam.exe": "59a148465588c1edccde1f049343d2745835fdb80052669b870783538ce1e6c9",
+    "atl75-results.txt": "53ca2affe73a8c8b2e507e35d0a48490039afddeadba4922216cdf2e30e80cf6",
+    "native75-atl.txt": "56588b81bf9c0387dcd010b3fb2df8b00a082b347e4badf144cdab03327e65a7",
+    "atl76-results.txt": "4e2f206c635100d1f1c9b9cac9addcb55a1881caa233b28619b5ea5354c8c496",
+    "native76-atl.txt": "3c91970e2a26dc0f30078d4b89f28f7103756203eedea2a37dbb0f46b604fdeb",
+    "steam-ui-atlthunk32.exe": "1dcc374d1698d5dbed1586889941301e953d8237296f29b43fe2ea87ef5d8b11",
+    "signed75/Madeira.app/i386-windows/atlthunk.dll": "7454d6cd4d57ca2a6982175c47e1f8996738d79634f841a0575b398ef9ddabaa",
+    "signed76/Madeira.app/i386-windows/atlthunk.dll": "a9e1a6a61b1dfe18a6634ec90ad2f5fe5b9885410b8317593fdd873833c0fee1",
+    "auth74-steamui_login.txt": "1a13d516971085d6cbeff4dbd766837ac430c32ee0935b34687ff550c93054ef",
+    "native74-after-auth-bpm.txt": "fa08a995276e61b63a8df87d2f36950cd183c3d533feadb4b7b511c3d9a5578d",
+    "native76-welcome-stuck.txt": "4e2cc1487c56528a994461c86d391a97d3f76153c8f48b529ef4fba778ecf4c7",
+    "controller76.txt": "a124f8dae89b163f0f6a6d00a667d20487546ccb1144954017dcfe6ed74b54c5",
+    "signed77/Madeira.app/Madeira.debug.dylib": "a640c513a75f17b3317560738fc87bc3f124aa9edfe6c3135357e797d978784c",
+    "signed77/Madeira.app/ideck-control.exe": "8fc2d480bb3352cea8c77611de2021a1a02786a32a046202a45b0af554913fd0",
+    "native78-reported-stuck.txt": "afbb84a5785685cb17a900de594033aa65609b27967ba64890ca8df050d13ca2",
+    "signed80/Madeira.app/Madeira.debug.dylib": "c13cc12d2849dd495ed5c67bf01d9492078d0fe22700d8cdef85c7e1d042ad93",
+    "signed80/Madeira.app/ideck-control.exe": "0d4ab579f9430c19fdb58bdd8c5d5421550d82b8092cf0db8757eb17d7c3415e",
+    "hotroads80-manifest.acf": "0c6134e9c0ed5839a2b3c4bcb177c8f867e33918eef87e4e4aa4ab17e3a87bd0",
+    "native80-play-attempt.txt": "68813621560867b89852945b75a1076562cb0de2b8e37fcc6486d7115800b2aa",
+    "native80-applaunch.txt": "34e260316b7eca6f426608b8085944cae306fefc9e69c64c2389035c9cf009db",
+    "gameprocess80.txt": "f010f8af54ca21d752da5602b1d03958f886a87580439434252bd2aa474391b5",
+    "native80-game-config.txt": "2ad6b7cd18d53560473168d709dccd0277a0c1b099cc8dac139bb22bcda048a2",
+    "gameprocess80-game-config.txt": "5bff1873ca2e46ffead2f0771bc84b793534d88be8a27df8b3e2fc13cad5515c",
+    "signed81/Madeira.app/Madeira.debug.dylib": "cf7749f66d28246f6fc60e0056f384686a658453287ed9f0d1b5a2d335e77f4a",
+    "signed81/Madeira.app/ideck-control.exe": "27c44ad50c103facd2796ed00abccf2e26e058f71df8b37207b5e388c5794725"
+  },
+  "build77": {
+    "patch": "bounded own gamepad/hit counters; fixed Enter/Right/Escape diagnostic commands require isolated prefix and two flags",
+    "validation": "full Xcode77, x64 helper Werror, production gate ASan/UBSan, linked native/helper markers, strict signing/install pass",
+    "device": "Visible authenticated home after fixed Enter; fixed Right visibly moves selected game tile. User reported prior virtual A ineffective. Bounded native logs show touch active1/accepting1 press/release pairs; helper500ms sampling still zero changes, which cannot exclude short40\u201380ms taps. Physical held-button discriminator pending.",
+    "held_A": "User held A17:54:27\u201331, actual XInput change counter0->2; no selection activation. Windows receives gamepad but Steam UI response remains absent."
+  },
+  "build78": {
+    "scope": "same overlay/client; one-variable SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS=1 runtime experiment",
+    "checks": "fullXcode78/final debug+PE markers/strictsign/install pass",
+    "device": "User reports freeze. Exact native fault b9980e48 at ownTEB180c; not sole-root cause. Native touch bits correctly merged. Keyboard Enter opened details, later Escape did not return."
+  },
+  "build80": {
+    "patch": "Native Mach own-TEB signed immediate LDRSW read at180c only; exact session/prefix/register/field/encoding gate. Registry supplies faulting thread TEB; no borrowed global fallback.",
+    "local": "37 native units; fullXcode80; observed instruction ASan/UBSan; signed integer cases; final native/helper markers",
+    "device": "Saved-auth BPM and official game installation confirmed. Native80-play-attempt contains actual own-TEB signed-load-completed marker and no original UNHANDLED in that bounded snapshot. Play attempts produced no gameprocess entry; game launch not yet validated.",
+    "game_install": {
+      "appid": 1819280,
+      "game": "Hot Roads",
+      "StateFlags": 4,
+      "SizeOnDisk": 221125214,
+      "BytesToDownload": 50725216,
+      "BytesDownloaded": 50725216,
+      "buildid": 7695775,
+      "source": "actual Steam appmanifest from isolated prefix, no agent auth or license bypass"
+    },
+    "resume": "2026-10-27 22:47 EDT: former process absent. New supported Steam -applaunch1819280 trial started with the same bundle/native fix, UI fallback0 and SDLbackground0. JIT confirmed. No new interactive/game success claim from launch ACK.",
+    "applaunch_result": "Steam gameprocess at22:51:11 adds app1819280/hr.exe; actual Unity configuration window visually observed over BPM. Game process execution confirmed; main-menu/gameplay still pending."
+  },
+  "source_branch": "experiment/steam64-hybrid",
+  "build81": {
+    "patch": "same native fix plus cleanup of only new redirect buffers on early denials; fixed Enter may target only an unambiguous visible standard Steam game window under lab gates",
+    "validation": "37native units/0failed; fullXcode81; final native+helper markers; strictsign/install; host redirect/input/TEB gates passed",
+    "device": "fresh legitimate Steam -applaunch1819280 started; game/main-menu gate pending",
+    "main_baseline": "e3d845edd4cf46a247baea6d2cc398d7ba71812d unchanged"
+  }
+}

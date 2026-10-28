@@ -7684,7 +7684,13 @@ static void *user_space_limit    = (void *)0x7fffffff0000;  /* top of the user a
  * gives this 31GB window more headroom than ml123 had), but a third pool needs
  * the ~512MB-per-thread FEXCore LookupCache reservation to shrink first; VA
  * freed elsewhere just gets absorbed by furniture growth. */
-static const ULONG_PTR ios_furniture_ceiling = 0x73ffff0000;   /* ml132: 3-pool geometry, now with ios_spill_cap bounding the downside */
+#include "steam64_layout.h"
+static int ios_steam64_layout(void)
+{
+    return steam64_layout_enabled(getenv("MADEIRA_STEAM_UI_SESSION"), getenv("MADEIRA_STEAM64_COMPACT_LAYOUT"));
+}
+#define ios_furniture_ceiling ((ULONG_PTR)(ios_steam64_layout() ? STEAM64_FURNITURE_END : UINT64_C(0x73ffff0000)))
+/* replaced constant: */   /* ml132: 3-pool geometry, now with ios_spill_cap bounding the downside */
 
 /* ml168: running total of 256MB..1GB MEM_RESERVE grants, used ONLY as a pressure
  * signal for the steering valve in NtAllocateVirtualMemory. Steam/CEF makes 2 x
@@ -28775,6 +28781,20 @@ void ios_reserve_fex_arena(void)
         SIZE_T size = plan[i].size;
         void *base;
         kern_return_t kr;
+
+        if (ios_steam64_layout())
+        {
+            if (i) break; /* no silent fallback to the old conflicting arena */
+            addr = STEAM64_FEX_BASE;
+            size = STEAM64_FEX_SIZE;
+            kr = mach_vm_map(mach_task_self(), &addr, size, 0xffff, VM_FLAGS_FIXED,
+                             MEMORY_OBJECT_NULL, 0, 0, PROT_NONE, VM_PROT_ALL, VM_INHERIT_COPY);
+            dprintf(2, "[steam64-layout] real FEX reserve base=0x%llx size=0x%llx kr=%d; furniture_end=0x%llx\n",
+                    (unsigned long long)addr, (unsigned long long)size, kr,
+                    (unsigned long long)STEAM64_FURNITURE_END);
+            if (kr != KERN_SUCCESS) break;
+            goto sc_arena_placed;
+        }
 
         /* madeira-bcd: env.MADEIRA_SC_PA_POOLS = 1 moves the first candidate 4 GB
          * up and holds the 4 GB below it (ios_sc_pa_hold_arena); without it this

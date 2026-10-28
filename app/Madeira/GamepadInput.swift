@@ -147,11 +147,17 @@ final class GamepadInput: @unchecked Sendable {
     @MainActor func touch(owner: UUID, control: UUID, value: GamepadSample?) {
         guard Self.touchEnabled else { return }
         queue.async { [self] in
+            let diagnostic = ProcessInfo.processInfo.arguments.contains("madeira-steam64-input-diagnostics") && steam64TouchSamples < 24
             guard active || value == nil else { return }
             touchState.update(owner: owner, control: control, value: value)
+            if diagnostic {
+                steam64TouchSamples += 1
+                LogStore.shared.log("[ideck-touch] sample=\(steam64TouchSamples) active=\(active ? 1 : 0) accepting=\(touchState.acceptingInput ? 1 : 0) pressed=\(value == nil ? 0 : 1) requested=\(value?.buttons ?? 0) merged=\(touchState.sample.buttons)")
+            }
             sample()
         }
     }
+    private var steam64TouchSamples = 0
 
     /// Keyboard-and-mouse mode (PadKeyboardMouse): nil keeps XInput. Set on the
     /// main actor by the library for its session; read on `queue`.

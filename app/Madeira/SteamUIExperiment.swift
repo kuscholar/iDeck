@@ -7,6 +7,18 @@ enum SteamUIExperiment {
     static let flag = "env.MADEIRA_EXPERIMENTAL_STEAM_UI"
     static let bigPictureFlag = "env.MADEIRA_EXPERIMENTAL_BIG_PICTURE"
     static let sessionKey = "MADEIRA_STEAM_UI_SESSION"
+    // Explicit migration experiment: separate registry, Steam/auth and save tree.
+    static func usesSteam64(arguments: [String]) -> Bool {
+        arguments.contains("madeira-steam64-experiment") || arguments.contains("madeira-steam64-big-picture-experiment")
+    }
+    static var steam64: Bool { usesSteam64(arguments: ProcessInfo.processInfo.arguments) }
+    static func runtimePrefix(documents: URL, arguments: [String]) -> URL {
+        documents.appendingPathComponent(usesSteam64(arguments: arguments) ? "wine-steam64" : "wine")
+    }
+    static var runtimePrefix: URL {
+        runtimePrefix(documents: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0], arguments: ProcessInfo.processInfo.arguments)
+    }
+
     // Re-signing can change the bundle ID without changing the registered
     // schemes. Use the installed Info.plist contract, never infer a scheme
     // from an old experimental bundle suffix.
@@ -30,9 +42,13 @@ enum SteamUIExperiment {
         let productDefault = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true ? "1" : nil
         return allowed(flag: MadeiraConfig.get(flag) ?? productDefault, bundleID: Bundle.main.bundleIdentifier)
     }
-    static func prepareProbe(prefix: URL, flag: String?, bundleID: String?, fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false) throws -> String {
+    static func prepareProbe(prefix: URL, flag: String?, bundleID: String?, fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false, atlThunk: Bool = false) throws -> String {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
         let drive = prefix.appendingPathComponent("drive_c")
+        if atlThunk {
+            guard prefix.lastPathComponent == "wine-steam64", isX86PE(drive.appendingPathComponent("steam-ui-atlthunk32.exe")) else { throw Failure.incompleteProbe }
+            return "/c C:\\steam-ui-atlthunk32.exe"
+        }
         if platform {
             guard isX86PE(drive.appendingPathComponent("platform32-probe.exe")) else { throw Failure.incompleteProbe }
             return "/c C:\\platform32-probe.exe"
@@ -207,11 +223,7 @@ enum SteamUIExperiment {
         }
         return backup
     }
-    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false) throws -> Plan {
-        guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
-        guard !bigPicture || bigPictureFlag == "1" else { throw Failure.disabled }
-        guard !ratatanThreadTest || (x86Client && !accountChooser && !loginFirst) else { throw Failure.disabled }
-        guard (640...3840).contains(width), (360...2160).contains(height) else { throw Failure.invalidSize }
+    static func clientDirectory(prefix: URL, x86Client: Bool) -> String? {
         let drive = prefix.appendingPathComponent("drive_c")
         for relative in (x86Client ? ["Steam32BundleLab", "Steam32Lab"] : ["Program Files (x86)/Steam", "Program Files/Steam"]) {
             let root = drive.appendingPathComponent(relative)
@@ -223,6 +235,17 @@ enum SteamUIExperiment {
                 return isPE(cef.appendingPathComponent("steamwebhelper.exe"), machine: x86Client ? 0x014c : 0x8664) && isPE(cef.appendingPathComponent("libcef.dll"), machine: x86Client ? 0x014c : 0x8664)
             }
             guard hasCEF else { continue }
+            return relative
+        }
+        return nil
+    }
+    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false) throws -> Plan {
+        guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
+        guard !bigPicture || bigPictureFlag == "1" else { throw Failure.disabled }
+        guard !ratatanThreadTest || (x86Client && !accountChooser && !loginFirst) else { throw Failure.disabled }
+        guard (640...3840).contains(width), (360...2160).contains(height) else { throw Failure.invalidSize }
+        let drive = prefix.appendingPathComponent("drive_c")
+        if let relative = clientDirectory(prefix: prefix, x86Client: x86Client) {
             let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client, ratatanThreadTest: ratatanThreadTest)
             try plan.batch.write(to: drive.appendingPathComponent("madeira-steam-ui.cmd"), atomically: true, encoding: .utf8)
             return plan
@@ -313,16 +336,64 @@ enum IDeckRules {
         // Prefer the installed product client; avoid irrelevant missing fallback files.
         return fm.fileExists(atPath: prefix.appendingPathComponent("drive_c/Steam32BundleLab").path) ? reports[0] : reports[1]
     }
-    static func steamClientReady(prefix: URL) -> Bool { clientIssues(prefix: prefix).isEmpty }
+    static func steamClientReady(prefix: URL) -> Bool { SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: true) != nil }
     static func clientReady(prefix: URL) -> Bool {
         runtimeReady(prefix: prefix) && steamClientReady(prefix: prefix)
     }
 }
 
 
+// Necessary capacity check, not a reservation or proof CEF will initialize.
+struct IDeckAddressCapacity {
+    let mapEnd: UInt64
+    let freeBytes: UInt64
+    var minMapGB: UInt64 = 48
+    var minFreeGB: UInt64 = 8
+    var allowsWindow: Bool {
+        minMapGB <= UInt64.max >> 30 && minFreeGB <= (UInt64.max - (1 << 32)) >> 30
+            && mapEnd >= minMapGB << 30 && freeBytes >= (1 << 32) + (minFreeGB << 30)
+    }
+    var detail: String {
+        allowsWindow ? "A 4 GiB WoW64 window plus the configured margin fits the current free-VA total. Runtime reservation may still fail."
+            : "Insufficient virtual address space for 32-bit Steam: \(freeBytes >> 20) MiB free; one child needs 4096 MiB plus \(minFreeGB) GiB headroom (minimum map \(minMapGB) GiB). This is address space, not free storage or physical RAM. Reopen iDeck and check again. This signing/device layout may be unsupported; do not lower the guard or reinstall Steam to bypass it."
+    }
+}
+
+/// Reads only newly appended bytes, independently of the paused UI log tail.
+struct IDeckStartupObservation {
+    let file: URL
+    private var offset: UInt64
+    private var partial = ""
+    init(file: URL) {
+        self.file = file
+        offset = (try? FileManager.default.attributesOfItem(atPath: file.path)[.size] as? NSNumber)?.uint64Value ?? 0
+    }
+    static func failedWindow(_ line: String) -> Bool {
+        line.contains("[Wine child] BOOT FAILED at stage 'guest-window-reserve'")
+            && line.contains("0xc0000017")
+    }
+    mutating func failed() -> Bool {
+        guard let handle = try? FileHandle(forReadingFrom: file) else { return false }
+        defer { try? handle.close() }
+        guard let end = try? handle.seekToEnd() else { return false }
+        if end < offset { offset = 0; partial = "" }
+        guard end > offset else { return false }
+        try? handle.seek(toOffset: offset)
+        // Sequential bounded reads: never skip the failure between busy log tails.
+        for _ in 0..<16 {
+            guard let data = try? handle.read(upToCount: 65536), !data.isEmpty else { break }
+            offset += UInt64(data.count)
+            let lines = (partial + String(decoding: data, as: UTF8.self)).components(separatedBy: "\n")
+            partial = String((lines.last ?? "").suffix(4096))
+            if lines.dropLast().contains(where: Self.failedWindow) { return true }
+        }
+        return false
+    }
+}
+
 // Observations, never a persisted "setup complete" flag, determine each checkmark.
 enum IDeckPrerequisite: String, CaseIterable, Identifiable {
-    case runtime, steam, signing, pairing, connection, jit
+    case runtime, steam, signing, pairing, connection, jit, addressSpace
     var id: String { rawValue }
     var title: String {
         switch self {
@@ -332,6 +403,7 @@ enum IDeckPrerequisite: String, CaseIterable, Identifiable {
         case .pairing: return "JIT setup"
         case .connection: return "Device connection"
         case .jit: return "JIT for this session"
+        case .addressSpace: return "32-bit address space"
         }
     }
 }
@@ -352,13 +424,14 @@ struct IDeckPreflight {
     let connection: Bool
     let jitReady: Bool
     let freshSession: Bool
+    var capacity: IDeckAddressCapacity? = nil
 
     var results: [IDeckPrerequisiteResult] {
         func result(_ id: IDeckPrerequisite, _ passed: Bool, _ yes: String, _ no: String) -> IDeckPrerequisiteResult {
             .init(id: id, status: passed ? .passed : .needsAction, detail: passed ? yes : no)
         }
         let configured = jitReady || (builtIn && helper && paired)
-        return [
+        var rows = [
             result(.runtime, runtime, "The local Windows runtime is prepared.", "Prepare the local runtime first. Existing files are preserved."),
             result(.steam, steam, "Steam, steamclient, steamwebhelper and CEF are present with the correct architecture.", "Add a complete compatible Windows Steam client, including its browser files."),
             result(.signing, signing == true || jitReady, "This copy permits the debugging required by JIT.", signing == false ? "Re-sign with a development profile that allows debugging." : "Signing could not be verified. Enable JIT to verify this session."),
@@ -366,6 +439,9 @@ struct IDeckPreflight {
             result(.connection, connection || jitReady, connection ? "The device's local debug connection is reachable." : "JIT is already active; reconnect when enabling a new session.", "Connect LocalDevVPN, then check again."),
             result(.jit, jitReady && freshSession, "JIT is active and a fresh Steam session can start.", !freshSession ? "A session is active or has already used this app run. Reopen iDeck before a new launch." : "Enable JIT, return to iDeck, then check again.")
         ]
+        rows.append(.init(id: .addressSpace, status: capacity?.allowsWindow == false ? .needsAction : .passed,
+            detail: capacity?.detail ?? "Address-space snapshot unavailable; the runtime will check again. JIT alone does not prove a 32-bit child can start."))
+        return rows
     }
     var canLaunch: Bool { results.allSatisfy { $0.status == .passed } }
 }
@@ -379,8 +455,10 @@ final class SteamUIEvidence {
     private var ticks = 0
     private var firstPresent: UInt64 = 0
     private var sawRunning = false
+    private var startup: IDeckStartupObservation?
     func start(prefix: URL, bigPicture: Bool = false) {
         timer?.invalidate(); offsets = [:]; reported = []; ticks = 0; sawRunning = false
+        startup = IDeckStartupObservation(file: LogStore.shared.runtimeLogURL)
         firstPresent = winios_surface_present_count()
         for base in ["Program Files (x86)/Steam", "Program Files/Steam", "Steam32Lab", "Steam32BundleLab"] {
             for file in ["logs/cef_log.txt", "logs/webhelper.txt", "logs/console_log.txt"] {
@@ -396,6 +474,9 @@ final class SteamUIEvidence {
     }
     private func poll() {
         ticks += 1
+        if startup?.failed() == true && reported.insert("guest-window-failed").inserted {
+            IDeckState.shared.startupFailure = "Steam could not start a 32-bit child (guest-window-reserve, STATUS_NO_MEMORY 0xc0000017). No 4 GiB guest window could be reserved with the required headroom. Close and reopen iDeck, then check 32-bit address space. Repairing Steam files or freeing disk space does not fix this limit. See advanced diagnostics; do not bypass the reservation guard."
+        }
         let running = wine_process_is_running() != 0
         if running { sawRunning = true }
         for (url, offset) in Array(offsets) {
@@ -445,6 +526,7 @@ import UIKit
     @Published var running = false
     @Published var preparing = false
     @Published var error: String?
+    @Published var startupFailure: String?
     @Published var menu = false
     var menuRect = CGRect.zero
     @Published var ready = false
@@ -474,14 +556,15 @@ import UIKit
         let helper = Bundle.main.builtInPlugInsURL?.appendingPathComponent(MadeiraBuiltInJIT.helperFile)
         return IDeckPreflight(
             runtime: bundledRuntimeAvailable && IDeckRules.runtimeReady(prefix: prefix),
-            steam: IDeckRules.steamClientReady(prefix: prefix),
+            steam: SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: !SteamUIExperiment.steam64) != nil,
             signing: signing.known ? signing.debuggable : nil,
             builtIn: JITCoordinator.shared.resolvedMethod == .builtIn,
             helper: MadeiraBuiltInJIT.isAvailable && helper.map { FileManager.default.fileExists(atPath: $0.path) } == true,
             paired: JITPairingFileStore.isImported,
             externalJIT: StikJITHelper.isAvailable,
             connection: connection, jitReady: StikJITHelper.ready,
-            freshSession: !repairRequiresRestart && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken)
+            freshSession: !repairRequiresRestart && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken,
+            capacity: SteamUIExperiment.steam64 ? nil : IDeckAddressSpace.current())
     }
     func checkPrerequisites() {
         guard !checkingPrerequisites, !preparing else { return }
@@ -507,8 +590,11 @@ import UIKit
             if !bundledRuntimeAvailable {
                 prerequisites[0].detail = "Runtime files are missing from this installation. Reinstall iDeck."
             }
-            if !IDeckRules.steamClientReady(prefix: prefix) {
+            if !SteamUIExperiment.steam64 && !IDeckRules.steamClientReady(prefix: prefix) {
                 prerequisites[1].detail = IDeckRules.clientIssues(prefix: prefix).joined(separator: "\n") + "\nRepair Steam files below. Account data and games are preserved."
+            }
+            if let relative = SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: !SteamUIExperiment.steam64) {
+                prerequisites[1].detail += " Selected client: drive_c/" + relative + "."
             }
             refresh()
             lastChecked = Date()
@@ -516,9 +602,9 @@ import UIKit
         }
     }
     var setupDone: Bool { UserDefaults.standard.bool(forKey: "iDeckSetupComplete") }
-    var prefix: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("wine") }
+    var prefix: URL { SteamUIExperiment.runtimePrefix }
     func refresh() {
-        ready = IDeckRules.clientReady(prefix: prefix)
+        ready = IDeckRules.runtimeReady(prefix: prefix) && SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: !SteamUIExperiment.steam64) != nil
     }
     @Published private(set) var repairRequiresRestart = false
     var canRepairSteam: Bool {
@@ -708,6 +794,7 @@ struct IDeckLauncher: View {
         case .signing, .pairing: setupJIT()
         case .connection: LocalDevVPN.open()
         case .jit: if sessionAvailable { enableJIT() } else { diagnostics() }
+        case .addressSpace: diagnostics()
         }
     }
     private func actionTitle(_ step: IDeckPrerequisite) -> String {
@@ -717,16 +804,17 @@ struct IDeckLauncher: View {
         case .signing, .pairing: return "Open JIT setup"
         case .connection: return LocalDevVPN.actionTitle
         case .jit: return sessionAvailable ? "Enable JIT" : "View diagnostics"
+        case .addressSpace: return "View diagnostics"
         }
     }
     private func accept() {
         switch selection {
         case 0: state.checkPrerequisites()
-        case 1...6:
+        case 1...7:
             let row = state.prerequisites[selection - 1]
             if row.status == .needsAction { act(on: row.id) }
-        case 7: if launchEnabled { start() }
-        case 8: if launchEnabled { account() }
+        case 8: if launchEnabled { start() }
+        case 9: if launchEnabled { account() }
         default: state.autoStart.toggle()
         }
     }
@@ -822,7 +910,7 @@ struct IDeckLauncher: View {
                     Button(action: start) {
                         Label(jit.busy ? "Enabling JIT…" : "Launch Steam Big Picture", systemImage: "play.fill")
                             .font(.headline).frame(maxWidth: .infinity).padding(12)
-                    }.buttonStyle(.borderedProminent).disabled(!launchEnabled).id(7)
+                    }.buttonStyle(.borderedProminent).disabled(!launchEnabled).id(8)
                     GroupBox("Steam account") {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Sign in or change accounts in Steam after launch. Account login is verified by Steam, after these device checks.")
@@ -830,8 +918,8 @@ struct IDeckLauncher: View {
                             Button("Sign in / Change Steam account", action: account)
                                 .buttonStyle(.bordered).disabled(!launchEnabled)
                         }.frame(maxWidth: .infinity, alignment: .leading)
-                    }.id(8)
-                    Toggle("Open Big Picture automatically next time", isOn: $state.autoStart).id(9)
+                    }.id(9)
+                    Toggle("Open Big Picture automatically next time", isOn: $state.autoStart).id(10)
                     Text("Connect a controller, or tap directly on Steam. The floating iDeck button opens the keyboard, virtual controller and options.")
                         .font(.subheadline).foregroundStyle(.secondary)
                     Text("Powered by Madeira · Genuine Windows Steam. Compatibility is experimental.")
@@ -853,7 +941,7 @@ struct IDeckLauncher: View {
         .onReceive(LibraryController.shared.commands) { command in
             guard !showSetupHelp else { return }
             if command == "up" { selection = max(0, selection - 1) }
-            if command == "down" { selection = min(9, selection + 1) }
+            if command == "down" { selection = min(10, selection + 1) }
             if command == "accept" { accept() }
         }
         .overlay(alignment: .bottom) {

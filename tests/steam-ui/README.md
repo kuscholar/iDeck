@@ -596,3 +596,113 @@ parent native correction of WoW GROUP_AFFINITY output attributes (12 ->16 bytes)
 `python3 tests/host/check-steam-ui-affinity32.py` exercises production decoding with
 ASan/UBSan, exact unaligned12-byte allocation, all fields preserved, ordinary/native
 and malformed gates. This does not prove Steam UI stability or Bluetooth/game return.
+
+## AMD64 Steam / i386 browser architecture discriminator
+
+`hybrid-webhelper.c` is an opt-in experiment, not a shipping Steam replacement.
+It tests current official AMD64 Steam with an older official i386 CEF helper.
+This is a **hybrid**, not successful full AMD64 CEF or a low-VA iPad fix. Current
+win64 manifest is1792618285 and the frozen official win32 manifest is1769731672;
+both browser libraries identify as126.0.6478.183, but IPC compatibility remains
+an experimental question. All proprietary files stay outside Git.
+
+Compile with an existing LLVM-MinGW toolchain:
+
+```sh
+x86_64-w64-mingw32-clang -O2 -Wall -Wextra -Werror -municode -mwindows -static \
+  tests/steam-ui/hybrid-webhelper.c -o /private/staging/hybrid-webhelper.exe
+python3 tests/host/check-steam64-hybrid.py
+```
+
+In the isolated `wine-steam64` prefix only, back up the original official
+`cef.win64/steamwebhelper.exe` and verify its hash first. Stage the complete,
+package-verified official i386 `cef.win7` tree plus its official i386 SDL3.dll
+beside it. Place the own-built shim at the original win64 helper path. Preserve
+every original file for restoration; do not patch Valve DLLs or import login
+caches. The shim refuses execution unless `MADEIRA_STEAM64_HYBRID=1`. It forwards
+the untouched argument suffix and waits for the real child, reporting numeric
+lifecycle events only to `C:\madeira-steam64-hybrid-results.txt`. Original argv
+strings are never logged. Actual child architecture, browser IPC/BrowserReady,
+visible login and input must be verified separately on the device.
+
+Reference strategy: [notpop/steam-on-m1-wine](https://github.com/notpop/steam-on-m1-wine)
+uses a wrapper to launch the official helper with extra flags on macOS. Our
+separately authored discriminator instead tests a different browser architecture;
+that project's reported Mac results do not validate iOS or this hybrid.
+
+Build74 replaces the wrapper discriminator with direct native image selection:
+restore the official64 helper first, then explicitly enable
+`MADEIRA_STEAM64_DIRECT_CEF32=1` for the isolated64-bit launch. The Wine hook
+also requires the Steam UI session flag and `/wine-steam64` prefix. It opens
+the official i386 helper directly and returns that child's real PID to Steam.
+Do not use the wrapper and direct route together. Normal update verification
+can remain enabled. `python3 tests/host/check-steam64-cef32-redirect.py` checks
+the production triple gate and lossless UTF16 path/argument transformation with
+ASan/UBSan; host success does not prove browser IPC compatibility.
+
+
+### i386 ATL thunk / iOS host-page diagnostic
+
+The isolated Build75 entry runs no Steam process. Compile the synthetic probe:
+
+```sh
+"$LLVM_MINGW/bin/i686-w64-mingw32-clang" -O2 -Wall -Wextra -Werror \
+  tests/steam-ui/atlthunk32-probe.c -o /private/path/steam-ui-atlthunk32.exe -luser32
+```
+
+Stage it ONLY into the existing isolated wine-steam64/drive_c. Launch with both
+`madeira-atlthunk-diagnostics madeira-steam64-experiment` using the paired JIT
+flow. Collect drive_c/madeira-atlthunk-results.txt and a bounded native snapshot.
+PASS128 requires64 direct calls/free and64 hidden USER-window callbacks/free.
+An exception observer reports own stage/offset then CONTINUE_SEARCH; no assertion
+or exception is bypassed. First run the original bundled Wine DLL as control.
+
+To build the LGPL i386 overlay from pinned Wine headers/build tools:
+
+```sh
+LLVM_MINGW=/private/toolchains/llvm-mingw \
+  bash build/atlthunk/build.sh /private/wine-build /private/new/i386-windows/atlthunk.dll
+```
+
+The output must be new; preserve the original DLL. In a disposable unsigned app
+copy replace ONLY i386-windows/atlthunk.dll, verify Machine014c, the four exports
+and FreeData counter offset4004, then re-sign the whole app and re-run the SAME
+probe. Source default4096 preserves Wine behavior; this iOS build explicitly
+selects16384. Keep compiled/runtime/signing/account artifacts outside Git.
+Xcode does not automatically build/apply this diagnostic overlay. Device test
+results must be recorded before claiming the Wine page-layout hypothesis fixed.
+
+### Steam64 input boundary diagnostics
+
+Build77+ accepts `madeira-steam64-input-diagnostics` together with the explicit
+Steam64 Big Picture argument. Native logs bound own control hit/touch samples to
+24; no keyboard text or arbitrary guest payload is recorded. Build78 additionally
+records requested and post-merge button bits. These are observations, not an
+input fix. The 500ms helper's `observed_changes` can miss quick taps; use a held
+button when comparing API-level delivery to physical input.
+
+The existing helper has finite diagnostic commands: `diagnostic-confirm`,
+`diagnostic-left/right/up/down`, `diagnostic-back`. Each requires BOTH
+MADEIRA_STEAM_UI_SESSION=1 and MADEIRA_STEAM64_INPUT_DIAGNOSTICS=1 plus exact
+`/wine-steam64` prefix suffix. Commands use mapped Windows scan codes and release
+the key. No arbitrary key/text/URI/shell command is accepted. Test the real gate
+with `python3 tests/host/check-steam64-input.py`. A key-sent ACK alone does not
+prove UI response; record the visible selection/detail change separately.
+
+One-variable focus trial: pass SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS=1 at launch.
+[SDL's documentation](https://wiki.libsdl.org/SDL3/SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS)
+defines the default as disabled for background apps. This is a hypothesis for
+Steam main versus CEF window ownership, not a validated remedy. Keep the normal
+Steam policy and other SDL drivers unchanged during the comparison.
+
+Build81 adds `diagnostic-game-confirm` under the same lab gate. It sends only a
+balanced Enter to the foreground or unambiguous visible standard Steam game
+window (`steamapps/common`), never to a Steam sign-in window. Inspect the visible
+dialog first; do not automate acceptance of EULAs, purchases or credentials.
+
+Optional `MADEIRA_STEAM64_MENU_KEYS=1` additionally requires that diagnostic gate.
+It maps unchanged XInput A/B, D-pad/left-stick to Steam's keyboard navigation
+only while the exact visible foreground `Steam Big Picture Mode` window belongs
+to steam.exe/steamwebhelper.exe. No keys are sent to games or other windows;
+XInput/HID snapshots remain unchanged. This is an experimental workaround, OFF
+by default, and requires device validation. Ordinary launch keeps prior behavior.

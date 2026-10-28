@@ -12,6 +12,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "steam64-menu-keys.h"
 static const char *request_path="C:\\ideck-command.txt",*ack_path="C:\\ideck-command-result.txt";
 static void ack(const char *id,const char *result) {
     FILE *f=fopen("C:\\ideck-command-result.tmp","w");if(!f)return;
@@ -85,8 +86,51 @@ static UINT key(WORD vk,DWORD flags) {
     INPUT input={0};input.type=INPUT_KEYBOARD;input.ki.wVk=vk;
     /* CEF derives KeyboardEvent.code from the Windows scan code. Wine preserves
      * a zero wScan for injected virtual keys; Ctrl+1 then has no Digit1 code. */
-    input.ki.wScan=(WORD)MapVirtualKeyW(vk,MAPVK_VK_TO_VSC);
-    input.ki.dwFlags=flags;return SendInput(1,&input,sizeof(input));
+    UINT scan=MapVirtualKeyW(vk,MAPVK_VK_TO_VSC_EX);
+    input.ki.wScan=(WORD)(scan&0xff);
+    input.ki.dwFlags=flags|((scan&0xff00)==0xe000?KEYEVENTF_EXTENDEDKEY:0);
+    return SendInput(1,&input,sizeof(input));
+}
+static int input_diagnostic_allowed(void) {
+    const char *session=getenv("MADEIRA_STEAM_UI_SESSION");
+    const char *enabled=getenv("MADEIRA_STEAM64_INPUT_DIAGNOSTICS");
+    const char *prefix=getenv("WINEPREFIX");
+    static const char suffix[]="/wine-steam64";
+    size_t n=prefix?strlen(prefix):0;
+    return session&&!strcmp(session,"1")&&enabled&&!strcmp(enabled,"1")&&
+           n>=sizeof(suffix)-1&&!strcmp(prefix+n-(sizeof(suffix)-1),suffix);
+}
+static int steam64_menu_keys(void) {
+    const char *mode=getenv("MADEIRA_STEAM64_MENU_KEYS");
+    return mode&&!strcmp(mode,"1")&&input_diagnostic_allowed();
+}
+static int menu_navigation(void) {
+    static struct steam64_menu_state state;
+    static unsigned events;
+    static HMODULE module;
+    typedef DWORD (WINAPI *GetState)(DWORD,XINPUT_STATE *);
+    static GetState get;
+    WCHAR title[80],path[1024];DWORD pid=0;HWND foreground=GetForegroundWindow();
+    int focused=foreground&&IsWindowVisible(foreground)&&GetWindowTextW(foreground,title,80)&&
+                !wcscmp(title,L"Steam Big Picture Mode");
+    if(focused) {
+        GetWindowThreadProcessId(foreground,&pid);
+        focused=image(pid,path);
+        if(focused){const WCHAR *name=wcsrchr(path,L'\\');name=name?name+1:path;
+            focused=!wcscmp(name,L"steam.exe")||!wcscmp(name,L"steamwebhelper.exe");}
+    }
+    if(!get){module=LoadLibraryW(L"xinput1_4.dll");get=module?(GetState)(void *)GetProcAddress(module,"XInputGetState"):NULL;}
+    XINPUT_STATE pad={0};int connected=get&&get(0,&pad)==ERROR_SUCCESS;
+    unsigned actions=steam64_menu_step(&state,pad.Gamepad.wButtons,pad.Gamepad.sThumbLX,pad.Gamepad.sThumbLY,
+                                     GetTickCount64(),focused,connected);
+    static const WORD keys[]={VK_RETURN,VK_ESCAPE,VK_LEFT,VK_RIGHT,VK_UP,VK_DOWN};
+    for(unsigned i=0;i<6;i++)if(actions&(1u<<i)) {
+        /* Balanced pulses cannot leave a held key behind when a game takes focus. */
+        key(keys[i],0);key(keys[i],KEYEVENTF_KEYUP);events++;
+    }
+    if(actions){FILE *f=fopen("C:\\ideck-steam64-menu-status.txt","w");
+        if(f){fprintf(f,"steam64_menu_keys=1 focused=%d events=%u actions=%u\n",focused,events,actions);fclose(f);}}
+    return focused;
 }
 static void focus_status(int focused) {
     FILE *f=fopen("C:\\ideck-focus-status.txt","w");
@@ -157,6 +201,7 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
     if(read_request(id,command))strcpy(last,id); /* Never replay a stale action on startup. */
     ack("ready","ready");
     unsigned input_ticks=0;int initial_focus=0;
+    int menu_keys=steam64_menu_keys();
     for(;;) {
         if(!(input_ticks++%5)) {
             /* Steam is started after this helper. Its first login/browser window
@@ -185,6 +230,26 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
                 } else ack(id,"steam-window-unavailable");
             } else if(!strcmp(command,"big-picture")) {
                 ack(id,open_steam(L"steam://open/bigpicture")?"big-picture-requested":"steam-open-failed");
+            } else if(!strcmp(command,"diagnostic-confirm")||!strcmp(command,"diagnostic-right")||!strcmp(command,"diagnostic-left")||
+                      !strcmp(command,"diagnostic-up")||!strcmp(command,"diagnostic-down")||!strcmp(command,"diagnostic-back")) {
+                if(!input_diagnostic_allowed()){ack(id,"diagnostic-disabled");continue;}
+                if(!focus_steam()){ack(id,"steam-window-unavailable");continue;}
+                WORD vk=!strcmp(command,"diagnostic-confirm")?VK_RETURN:
+                        !strcmp(command,"diagnostic-right")?VK_RIGHT:
+                        !strcmp(command,"diagnostic-left")?VK_LEFT:
+                        !strcmp(command,"diagnostic-up")?VK_UP:
+                        !strcmp(command,"diagnostic-down")?VK_DOWN:VK_ESCAPE;
+                UINT sent=key(vk,0);Sleep(150);sent+=key(vk,KEYEVENTF_KEYUP);
+                ack(id,sent==2?"diagnostic-key-sent":"input-unavailable");
+            } else if(!strcmp(command,"diagnostic-game-confirm")) {
+                if(!input_diagnostic_allowed()){ack(id,"diagnostic-disabled");continue;}
+                HWND window=GetForegroundWindow();game=NULL;game_pid=0;ambiguous=0;
+                if(game_window(window))game=window;
+                else EnumWindows(find_game,0);
+                if(!game||ambiguous){ack(id,ambiguous?"multiple-games":"no-game");continue;}
+                if(GetForegroundWindow()!=game&&!SetForegroundWindow(game)){ack(id,"game-focus-failed");continue;}
+                UINT sent=key(VK_RETURN,0);Sleep(150);sent+=key(VK_RETURN,KEYEVENTF_KEYUP);
+                ack(id,sent==2?"diagnostic-game-key-sent":"input-unavailable");
             } else if(!strcmp(command,"change-account")) {
                 ack(id,open_steam(L"steam://changeuser")?"account-ui-requested":"steam-open-failed");
             } else if(!strcmp(command,"exit-game")) {
@@ -199,6 +264,7 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
                 strcpy(pending,id);deadline=GetTickCount64()+20000;ack(id,"close-requested");
             } else ack(id,"invalid-command");
         }
-        Sleep(100);
+        int menu_focused=menu_keys?menu_navigation():0;
+        Sleep(menu_focused?8:100);
     }
 }

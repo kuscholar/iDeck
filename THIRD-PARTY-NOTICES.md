@@ -10,6 +10,13 @@ are authoritative. Older GPL-fork descriptions below are historical and must not
 be used to relicense this pinned Wine source. Madeira-derived native files keep
 their own file notices. All original notices are retained below.
 
+The isolated Steam64 research overlay `build/atlthunk/atlthunk_ios.c` is derived
+from the pinned Wine `dlls/atlthunk/atlthunk.c`, Copyright2019 Jacek Caban for
+CodeWeavers, LGPL-2.1-or-later. Its original notice is retained; iDeck changes
+separate executable and mutable pages for an iOS16KiB host page. The overlay
+is experimental, separately built, and requires the same Wine source/licensing
+materials when distributed. No Valve binary is included in this repository.
+
 ---
 
 # Third-party components

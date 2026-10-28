@@ -45,3 +45,19 @@ xcodebuild -project app/Madeira.xcodeproj -scheme Madeira \
 This command is a build invocation, not proof the missing assets are prepared.
 No iPad success or general game compatibility is implied. See IDECK.md and the
 POC evidence for actual device results and remaining failures.
+
+## Legacy client and iPad address-space limitation
+
+The currently validated Big Picture route requires a complete matching legacy
+32-bit client/CEF tree. Valve ended 32-bit Windows support on January1,2026;
+iDeck does not provide a maintained way to acquire that old client. A current
+64-bit installation plus an old steam.exe bootstrapper is insufficient. Do not
+use third-party repacks or copy account caches. This remains a limitation for
+new users, rather than a generally supported setup flow.
+
+JIT alone is insufficient on VA-limited installations. Each32-bit child needs
+4GiB of virtual address space plus runtime headroom. The new address-space check
+can reject an insufficient snapshot; runtime checks still decide later/fragmented
+reservations. A green Wine desktop is not Steam initialization. See
+[issue1 diagnosis and limits](IDECK_IPAD_ADDRESS_SPACE.md). No general iPad
+compatibility or entitlement-based workaround is claimed.

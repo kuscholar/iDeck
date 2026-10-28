@@ -7,6 +7,13 @@ root = Path(__file__).resolve().parents[2]
 src = (root / 'app/Madeira/SteamUIExperiment.swift').read_text()
 policy = src[src.index('enum SteamUIExperiment {'):src.index('\n@MainActor\nfinal class SteamUIEvidence')]
 main = r'''
+let docs64 = URL(fileURLWithPath: "/test-documents")
+assert(!SteamUIExperiment.usesSteam64(arguments: []))
+assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: []).lastPathComponent == "wine")
+for arg in ["madeira-steam64-experiment", "madeira-steam64-big-picture-experiment"] {
+ assert(SteamUIExperiment.usesSteam64(arguments: [arg]))
+ assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: [arg]).lastPathComponent == "wine-steam64")
+}
 let registered = ["madeira-steamui"]
 for id in ["com.kuschqin.madeira.steamui", "com.kuscholar.ideck.steamui.TEAM123", "org.example.custom"] {
     assert(SteamUIExperiment.callbackScheme(bundleID: id, registeredSchemes: registered) == "madeira-steamui")
@@ -71,6 +78,8 @@ for name in ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.ex
 try FileManager.default.moveItem(at: client.appendingPathComponent("x86-fixture"), to: root.appendingPathComponent("drive_c/Steam32Lab"))
 let p32 = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true)
 assert(p32.windowsDirectory == "C:\\Steam32Lab")
+assert(SteamUIExperiment.clientDirectory(prefix: root, x86Client: true) == "Steam32Lab")
+assert(IDeckRules.steamClientReady(prefix: root))
 assert(!p32.batch.contains("-applaunch"))
 let threadTest = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true, ratatanThreadTest: true)
 assert(threadTest.batch.contains("-applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2"))
@@ -82,6 +91,8 @@ var mixed = try Data(contentsOf: dll32)
 mixed[132] = 0x64; mixed[133] = 0x86
 try mixed.write(to: dll32)
 do { _ = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true); fatalError("mixed CEF architecture refused") } catch {}
+assert(!IDeckRules.steamClientReady(prefix: root))
+assert(SteamUIExperiment.clientDirectory(prefix: root, x86Client: true) == nil)
 mixed[132] = 0x4c; mixed[133] = 0x01
 try mixed.write(to: dll32)
 
@@ -226,6 +237,20 @@ let platformArgs = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", b
 assert(platformArgs == "/c C:\\platform32-probe.exe")
 do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "1", bundleID: "test.working", platform: true); fatalError("ordinary platform accepted") } catch {}
 do { _ = try SteamUIExperiment.prepareProbe(prefix: root, flag: "0", bundleID: "test.steamui", platform: true); fatalError("disabled platform accepted") } catch {}
+
+let atlPrefix = root.appendingPathComponent("wine-steam64")
+let atlProbe = atlPrefix.appendingPathComponent("drive_c/steam-ui-atlthunk32.exe")
+func atlRefused(_ prefix: URL, _ flag: String = "1", _ bundle: String = "test.steamui") {
+ do { _ = try SteamUIExperiment.prepareProbe(prefix: prefix, flag: flag, bundleID: bundle, atlThunk: true); fatalError("invalid ATL probe accepted") } catch {}
+}
+atlRefused(atlPrefix)
+try FileManager.default.createDirectory(at: atlProbe.deletingLastPathComponent(), withIntermediateDirectories: true)
+var atlData = probeData;atlData[132] = 0x64;atlData[133] = 0x86
+try atlData.write(to: atlProbe);atlRefused(atlPrefix)
+try probeData.write(to: atlProbe)
+let atlArgs = try SteamUIExperiment.prepareProbe(prefix: atlPrefix, flag: "1", bundleID: "test.steamui", atlThunk: true)
+assert(atlArgs == "/c C:\\steam-ui-atlthunk32.exe")
+atlRefused(root);atlRefused(atlPrefix, "0");atlRefused(atlPrefix, "1", "test.working")
 
 print("PASS: feature flag, app isolation, complete x64 client, fixed command, dimensions, sanitized milestones")
 '''

@@ -1727,3 +1727,215 @@ main/StikJIT/converter section hashes match build products (49/36/14 sections).
 passed. Source, dependency pins, LGPL patches and relink materials accompany IPA.
 No affected-accelerator TLS fix, exhaustive game regression or resolved logout
 crash claimed. User Demo.gif excluded from this release commit/source archive.
+
+## Issue1 local Build68 — iPad WoW capacity failure
+
+- Reporter trace: guest-window-reserve c0000017, only639MiB free VA, cannot
+  reserve4GiB plus8GiB margin. Not a local device reproduction; mapping owners
+  and the underlying cause of the limited free VA remain unmeasured here.
+- Confirmed defect: no capacity prerequisite or visible child-boot error; the
+  Wine desktop and main running flag can survive a failed Steam child.
+- Patch: read-only actual-map/free-hole snapshot, seventh capacity prerequisite,
+  direct/automatic launch check, bounded current-log child-failure observation
+  independent of suppressed UI tail, native alert, one shared client-directory
+  selector and no implicit import replacing a valid fallback selection.
+- Host production tests passed: startup/capacity boundary/639MiB/margins/overflow,
+  partial writes/busy logs/rotation/negative events; Steam policy/ASan diagnostic
+  checks and prerequisite/lifecycle regressions. Full unsigned iOS Build68
+  succeeded; actual Info68 and linked failure/capacity markers verified.
+- Private build log/evidence: .madeira-install/ideck-issue1-build68.log and
+  ideck-issue1-build68-evidence.json. No installation, affected-iPad or new
+  entitlement/current64-bit-Steam runtime validation. No allocator guard removed,
+  FEX/Valve edits, automatic logout, credential or issue-comment submission.
+- docs/IDECK_IPAD_ADDRESS_SPACE.md records scope, Valve's retirement notice,
+  incomplete legacy-client acquisition and the next mapping-census experiment.
+  This fixes silent failure/reporting and prevents knowingly impossible launches;
+  it is not a capacity expansion or claim the affected iPad can now run Steam.
+- Weekday daytime: local changes remain uncommitted/unpushed per user rule.
+
+
+## Current64-bit migration — Builds69/70
+
+User replaced target with current64-bit Steam; implemented explicit isolated
+wine-steam64 arguments, preserved ordinary wine baseline/auth/games. Latest
+Valve HTTPS win64 manifest1792618285 verified; all four core client/CEF images
+AMD64. Signed/installed69, actual JIT/main Steam/updater execution; official
+update completed, cef.win64 launched and hit libcef RVA6923404 after real pool
+capacity failures. No login/BrowserReady/Big Picture success. See IDECK_STEAM64.
+
+Attempted clean relaunch DID NOT create a new PID; same25625/log retained.
+SIGTERM intercepted, SIGKILL timed out; do not claim fresh reproduction. Need
+verified process exit before next trial. Normal unsigned70 compilation passes.
+Host launch/isolation/checklist policies pass. Existing CUA/CLI signing method
+reviewed; account GUI already logged in, manual certificate/profile resign works.
+Independent GUI device probe explicitly reports Personal Team does not support
+Extended Virtual Addressing. No repeated login/purchase requests. User requested
+remembering verified signing method; small authorized memory note added.
+Raw artifacts private steam64-current; no Git commit/push during daytime.
+
+
+User physically closed app; old process absence confirmed. Genuine clean PID25956
+post-update launch repeats CEF allocation failure and fatal libcef+6923404.
+It excludes updater retention as sufficient explanation. Two16GiB PA ranges,
+16GiB FEX arena and8GiB cage hold leave no third16GiB slot in the current high
+64GiB band. Private clean-evidence.json pins bases/callers/hashes. No root fix,
+login or Big Picture success claimed. Need disjoint alternative arena/pool
+layout or supported reduction; no assertion suppression or overlapping grants.
+
+
+Build71 disjoint compact layout compiled37native units/fulliOS, exact final
+marker/signing verified. Real phone FEX4GiB reserve succeeded and consumer wired;
+third16GiBPA pool succeeds for first time. Fourth16GiBguard pool fails,32GiB
+fallback/fatal remains. Four pools64GiB plus FEX4/cage8/furniture cannot fit the
+current64GiBhighband. Not a login/BPM fix. Private layout71-evidence.json pins
+hashes; no FEX edits, fakegrants or check suppression. Windows Chromium126 does
+not include the iOS dynamic-pool-size path. Further progress needs additional
+real VA or compatible source-built smaller-pool browser; do not blindly retry
+or promise allocator movement alone can fit it. No day-timecommit/push.
+
+
+Build72 installed and early-constructor native probe completed. Same62requests,
+8successes54failures; no extra16GiB aligned region found beforemain. Full source
+CEF6478 reference inspected against actual AMD64webhelper77imports:8names absent
+from upstream headers, so stock rebuilt CEF not a proven compatible replacement.
+Current64Steam remains uncompleted; additional-real-VA or matching Valve ABI
+source/build needed. Current personal-team extendedVA request unsupported;
+internaldisk5.6GiB vs officialCEF150–200GB. No fakeAPI/hash, check suppression,
+proprietary patch or purchased service. Failed compact layout made explicitly
+opt-in in source; source follow-up needs compilation. All raw artifacts private.
+
+
+## 2026-10-27 continuation — actual AMD64 main / official i386 CEF workaround
+
+Source base e3d845e plus uncommitted isolated experiments. Primary Madeira and
+ordinary iDeck wine prefix remain preserved. Builds73/74 restore ordinary VA
+geometry for hybrid i386 execution; compact64 layout is explicitly opt-in.
+The direct-child redirect is triple-gated session1, DIRECT_CEF32=1 and exact
+wine-steam64 prefix; only the exact official64webhelper path is redirected to
+the official i386 sibling, preserving arguments and the original caller's
+actual childPID. All37native units and full Xcode74 compile; final linked
+diagnostic marker and strict development signing verified. No FEX/Valve edits.
+
+Observed failure: current October AMD64 main + frozen i386 helper initializes
+CEF but no real browser window. Discriminator: audit their embedded public
+HTML IPC schema, then compare a historical official AMD64 snapshot.169 vs162
+messages, changed CMsgBrowserCreate field numbering; not a packet-level proof
+of sole cause. Jan22 AMD64 client1769025840 and Jan29 i386 CEF1769731672 have169
+identical schemas, both CEF126. Steam's own HTTPS updater installed the matched
+older snapshot; device steam.exe read-back SHA matches officialAMD64 package.
+This is a pinned old-client compatibility experiment, not latest64CEF success.
+
+Actual Build74 visible genuine login; user credentials/Guard only. Steam-owned
+log17:10:04 Success/OK confirms authentication. User cancelled Steam Service
+Error, then spinner. Native loader identifies steamclient64 and i386 libcef.
+Post-auth exact fault is Wine i386 atlthunk.dll RVA1310, atomic increment to
+pool+1004. Guest4KiB code and mutable metadata share host16KiB protection page.
+Not a KERN_MEMORY_ERROR; journal reports PROTECTION_FAILURE currentprot5.
+Code-buffer guard warnings predate successful login, so no exhaustion claim.
+
+Build75 synthetic probe tests64 direct ATL callbacks/free plus64 USER-window
+destroy callbacks/free. First attempt failed BEFORE Wine at JIT placement; a
+fresh session runs originalDLL and PASSES128, while reproducing two identical
+metadata protection/undecoded-atomic faults. Thus those native faults may be
+recovered and MUST NOT be claimed the sole spinner cause.
+
+Minimal LGPL Wine overlay pads thunk code to16KiB, keeps mutable fields in the
+next native page, preserves original copyright/export ABI and default4KiB
+source behavior. Build76 is a disposable repackage of full Xcode75 with only
+version and i386 DLL overlay changed; strictsign/install passed. SAME probe
+PASSES128; data offset4104→16392, shared-native-page1→0, both protection faults
+and undecoded atomic stores disappear. Both runs retain unrelated type6 native
+teardown trap. No assertion/protection suppression, retry workaround or FEX
+patch. Overlay does not auto-apply in Xcode; reproducible private overlay
+instructions in tests/steam-ui/README.
+
+Fresh Build76 direct-bigpicture restart retains saved auth: actual17:40:14
+Success/OK, BrowserReady, SP BPM window. DeviceHub visually shows Welcome to
+Big Picture over actual game tiles at17:41. This establishes visible genuine
+authenticated BPM with AMD64main/i386CEF. NOT fullAMD64CEF, interactive
+navigation, game launch or affected-iPad repair. Missing-persona JS errors
+remain but did not prevent this visiblehome. First UI took about90seconds.
+Existing fixed Steam Menu command acknowledged, but remote DeviceHub mouse
+click/keyboard delivery is not established; requested physical A/navigation
+verification without restarting the active session.
+
+Evidence: docs/IDECK_STEAM64_EVIDENCE.json contains redacted SHA256/versions and
+A/B boundaries; private .madeira-install/steam64-current contains manifests,
+matched64-device-steam.exe, native74-after-auth-bpm.txt, auth74-steamui_login.txt,
+atl75/76-results.txt, native75/76-atl.txt, native76-bpm.txt, logs76-stable, and
+full build/sign/install/launch journals. No raw account logs or Valve payloads
+are in Git. Regression: production Swift launch/probe-isolation tests (including
+ATL missing/wrong-architecture/wrongprefix/flag/ordinaryapp gates), native
+ASan/UBSan categorical events, iDeck readiness tests passed; final PE counter
+offset4004 and original/patched SHA checked.
+
+Next: preserve this live saved-login session, pass welcome with physical input,
+verify library navigation, then installed-game execution/return. Keep the
+latest-AMD64CEF capacity limitation separate. Full64target remains incomplete
+until these gates, and hybrid alone still requires a viable32bit VA window.
+No commit/push during Tuesday daytime per the user's global time rule.
+
+
+Build77 continuation: user reports virtualA ineffective on76. New bounded
+hit/touch counters and triple-gated fixedEnter/Right/Escape test helper compile
+with full Xcode77 and x64Werror. Actual gate ASan/UBSan and linked MachO/PE
+markers verified; signing/install succeeded. Fixed Enter actually dismisses
+welcome; next screenshot shows unobscured home. Fixed Right visibly changes
+selected game tile. Therefore interactive keyboard navigation in real BPM
+with AMD64main/i386CEF is confirmed. Remote mouse/control-delivery and native
+virtual-pad response remain distinct. Actual native touch records active1,
+accepting1, four40–80ms press/release pairs.500ms helper counter0 cannot exclude
+these short edges; asked one3second held-A discriminator. Preserve live session;
+no credential/game/cache mutation. New source and private A/B artifacts remain
+uncommitted/unpushed during Tuesday daytime.
+
+
+Held-A completed: native active/accepting1,4second hold; helper XInput sampled
+change counter0→2, no game activation. SDL logs independently identify Xbox360
+controller and genericHID. This locates remaining input response after Windows
+API delivery, not missing iOS detection. Build78 adds post-merge bits and finite
+left/up/down directions (same triple gate), fullcompile/sign/install and markers
+pass. Only runtime policy change under test is documented SDL background events1;
+saved-auth actualhome displayed again. No controller-success claim yet.
+
+
+Build78 reported freeze captured a SECOND actual failure: native fault
+address180c, x18zero, instructionb9980e48, registered ownTEB7931520000,
+PEB7900310000, exact wow64.dll callerRVA1c854. Disk PE disassembly shows
+ldrsw x8,[x18,#180c]; then add x8,x18,x8; then store Win32 data. Wine defines
+signed WowTebOffset at180c. Native x18-zero decoder lacked unsigned-immediate
+LDRSW, while other load variants existed. Minimal experiment fills only this
+own-registered-TEB field under exact Steam64/session/encoding/offset gates; it
+uses existing state restore (including realx18) and PC+4, preserves sign
+extension and every other register. No global/sibling TEB borrowed, no FEX or
+Valve patch. Recorded native journal proves the defect, not sole cause of all
+UI stalls. Host observed-instruction/refusal/sign tests ASan/UBSan pass.
+
+Full37native units and fullXcode80 compile; final debugdylib marker verified,
+strictsign/install passed. First native build adapter lacked generated headers
+and failed2units; corrected adapter READS primary Wine generated headers only,
+then37/0 passes. No primary source/output modified. Old79 helper-only signed
+trial was prepared but NOT installed. Build80 launches saved prefix with SDL
+background0 and optional menu-key fallback0, isolating native fix. Need fresh
+UI/navigation and actual marker/fault evidence before device-success claim.
+
+
+Build80 final afternoon evidence: actual246second snapshot exercises new native
+TEB signed-load marker with no original UNHANDLED in that bounded run. Hot
+Roads official appmanifest StateFlags4/build7695775/221125214bytes confirms
+installation. Play inputs did NOT produce a gameprocess entry; no game-running
+claim.22:47 EDT continuation confirms old app absent, starts supported Steam
+-applaunch1819280 on same saved prefix. JIT confirmed, first36second snapshot
+not yet game success. Experimental changes isolated to new local branch
+experiment/steam64-hybrid; main e3d845e remains baseline, no compiled/Valve/auth
+payloads staged. Recheck time before separate commit/push operations.
+
+
+Fresh80 supported-applaunch discriminates UI dispatch: actual22:51:11 Steam
+log tracks app1819280 hr.exe, DeviceHub visually shows Unity screen-resolution
+configuration window over BPM. Steam-controlled real game process confirmed;
+main-menu/gameplay/return not validated. Preparing81 fixed Enter for only
+foreground/unambiguous visible steamapps/common game window under the existing
+lab triple gate. Never focus/account-type text. Also reviewed redirect early
+denials now release the three new path buffers.37native units/host input gates
+pass; full81 build follows. No primary source/runtime resources modified.

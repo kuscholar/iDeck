@@ -908,6 +908,28 @@ unsigned long madeira_early_pool_base, madeira_early_pool_size;
 unsigned long madeira_early_intruder_base, madeira_early_intruder_size;   /* ml1135 */
 unsigned madeira_early_intruder_tag, madeira_early_intruder_prot;
 
+#include <crt_externs.h>
+#include "../../build/diagnostics/steam_ui_vm_probe.h"
+/* Explicit read-only timing discriminator. All mappings are NONE, no-overwrite,
+ * released by the existing bounded probe. Never active on ordinary launch. */
+__attribute__((constructor(100), used)) static void ideck_early_vm_probe(void)
+{
+    char **argv = *_NSGetArgv();
+    int argc = *_NSGetArgc(), requested = 0;
+    for (int i = 1; i < argc; ++i)
+        if (argv[i] && !strcmp(argv[i], "madeira-steam64-early-vm-experiment")) requested = 1;
+    if (!requested) return;
+    const char *home = getenv("HOME");
+    char path[4096];
+    if (!home || snprintf(path, sizeof(path), "%s/Documents/steam64-early-vm-results.txt", home) >= sizeof(path)) return;
+    FILE *out = fopen(path, "w");
+    if (!out) return;
+    fputs("early-vm timing=before-main-swiftui-metal-wine; linked-framework-initializers-may-already-have-run\n", out);
+    int result = madeira_steam_ui_vm_probe(out);
+    fprintf(out, "early-vm result=%d\n", result);
+    fclose(out);
+}
+
 __attribute__((constructor(101), used)) static void madeira_early_va_claim(void)
 {
     const vm_address_t win = 0x140000000ul, winsz = 0x8000000ul;       /* 128MB, see ml1037 */

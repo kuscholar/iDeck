@@ -16,6 +16,11 @@ func flight(runtime: Bool = true, steam: Bool = true, signing: Bool? = true,
         jitReady: jit, freshSession: fresh)
 }
 assert(flight().canLaunch)
+var noVA = flight()
+noVA.capacity = IDeckAddressCapacity(mapEnd: 63 << 30, freeBytes: 639 << 20)
+assert(!noVA.canLaunch)
+assert(noVA.results.last?.id == .addressSpace && noVA.results.last?.status == .needsAction)
+
 assert(!flight(runtime: false).canLaunch)
 assert(!flight(steam: false).canLaunch)
 assert(!flight(jit: false).canLaunch)

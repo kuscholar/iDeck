@@ -41,6 +41,7 @@
 #include <mach/mach.h>
 #include <mach-o/dyld.h>
 #include <mach-o/getsect.h>
+#include "steam64_teb_ldrsw.h"
 
 /* iOS-Madeira ml674: XZR/WZR AS A STORE SOURCE MUST READ ZERO.
  *
@@ -2654,6 +2655,21 @@ static void *ios_mach_exception_thread( void *arg )
                                 state.__x[18] = thread_teb;
                             else if (rt != 31) state.__x[rt] = *(uint64_t *)ea;
                             emulated = 1; break;
+                        case 0xb9800000: /* LDRSW Xt: own TEB.WowTebOffset */
+                            /* Enclosing gate requires this Mach thread's
+                             * registered TEB, x18==0 and a data fault. Admit
+                             * only this field in the isolated Steam64 lab;
+                             * never borrow a sibling TEB or hide a null deref. */
+                            if (steam64_teb_ldrsw_matches(getenv("MADEIRA_STEAM_UI_SESSION"),
+                                    getenv("WINEPREFIX"),insn,state.__x[18],fault_addr))
+                            {
+                                uint64_t value=steam64_teb_ldrsw_value(*(int32_t *)ea);
+                                if(rt!=31)state.__x[rt]=value;
+                                emulated=1;
+                                static unsigned observed;
+                                if(observed++<8)dprintf(2,"[steam64-teb-ldrsw] own registered TEB field; signed load completed\n");
+                            }
+                            break;
                         case 0xb9400000: /* LDR Wt (zero-extend) */
                             if (rt != 31) state.__x[rt] = *(uint32_t *)ea;
                             emulated = 1; break;
