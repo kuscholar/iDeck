@@ -15,7 +15,7 @@
     "Full82 Xcode and final Mach-O marker",
     "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
-  "windows_build": "Next corrected focused-dependency build pending; no DLL load/Steam claim",
+  "windows_build": "GN succeeds, progressing Ninja dependency inputs. No source DLL/CEF runtime pass.",
   "on_device": "Build83 simultaneous native capacity passes; source DLL/FEX/CEF not tested. Same app upgraded preserving data.",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
@@ -45,6 +45,14 @@
     {
       "id": 40628994232,
       "result": "No DLL produced; bounded100-source discovery limit reached because unused Sandbox integration tests and NaCl process_type target pulled renderer/Mojo graph. Retain exact required Sandbox and NaCl target bodies only; keep original flags and production sources."
+    },
+    {
+      "id": 40630637865,
+      "result": "Preparation stopped at Git sparse cone validation of ICU gitlink; fixed --skip-checks, pinned submodule resolver retained."
+    },
+    {
+      "id": 40631080562,
+      "result": "GN succeeded:774targets/203files. First Ninja missing libc++ input was incorrectly resolved relative to source root instead of -C output dir; bounded resolver correction prepared. No DLL yet."
     }
   ],
   "diagnostic_build82": {

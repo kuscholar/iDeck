@@ -52,7 +52,10 @@ def command_with_sources(root, command, *, cwd, log, attempts=100):
         else:
             match = re.search(r"ninja: error: '([^']+)'.*missing and no known rule", result.stdout)
             if match:
-                target = cwd / match.group(1)
+                # Ninja's missing inputs are relative to its -C build dir,
+                # not Python's working directory (which remains source root).
+                ninja_dir = Path(command[command.index("-C") + 1]) if "-C" in command else cwd
+                target = ninja_dir / match.group(1)
             else:
                 match = re.search(r"can't open file ['\"]([^'\"]+)['\"].*\[Errno 2\]", result.stdout)
                 if not match:
