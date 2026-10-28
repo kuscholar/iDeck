@@ -79,6 +79,9 @@ not an observed explanation for a device failure of the control DLL.
 The CEF-aware Windows build and browser/renderer load tests must pass before
 that variant can be staged. Matching payload/export checks do not establish
 Valve's complete runtime contract; genuine helper/CEF/UI tests remain gates.
+The focused CEF target also explicitly depends on the original V8 buildflags
+generator required by `content_switches.h`; it does not synthesize that header
+or build a replacement V8 snapshot. See [the build recipe](../../docs/CEF64_BUILDING.md).
 
 ## Actual native layout evidence
 

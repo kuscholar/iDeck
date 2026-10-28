@@ -81,6 +81,11 @@
       "id": 40634577387,
       "head": "a4897ec550f60015ffdd550840feea3a07889680",
       "result": "CEF prepare and exact patch tests pass. GN stops at100 input limit because shared Chrome/common buildflags metadata also resolves whole Chrome/UI/PDF/runtime libraries. Next keep exact original Chrome/media/UI buildflag target bodies and production options only. No CEF-aware DLL yet."
+    },
+    {
+      "id": 40636094452,
+      "head": "f015171bc1293180890c3ca9583113334ab5fb73",
+      "result": "GN succeeds with focused buildflag targets and1680-edge C++ compile advances to final81edges. content_switches.h needs real generated tools/v8_context_snapshot/buildflags.h; add its original generator target and explicit CEF static-library dependency, no header stub."
     }
   ],
   "diagnostic_build82": {
@@ -215,7 +220,8 @@
     "observation": "Published CEF uses CefCrashReporterClient configuration/handler/optional-argument contracts instead of stock ChromeCrashReporterClient. Source mismatch, not an observed device fault of the control DLL.",
     "hypothesis": "Retaining the complete published CEF crash integration is necessary for genuine helper compatibility.",
     "test": "Exact ten-file published patch and original production GN target bodies pass host checks; Windows CEF-aware browser and renderer load/payload/VA tests pending. No crash assertions suppressed.",
-    "header_graph": "Chrome/common, media and ui/base target bodies/hash pins checked; remove unrelated runtime targets from their shared BUILD files, without changing production flag values."
+    "header_graph": "Chrome/common, media and ui/base target bodies/hash pins checked; remove unrelated runtime targets from their shared BUILD files, without changing production flag values.",
+    "v8_generator": "Retain original hash-checked V8 buildflag target and its options; add the actual generated-header edge required by content_switches.h. No V8 snapshot or libcef replacement."
   },
   "control_toolchain": {
     "run": 40633251602,
@@ -245,5 +251,17 @@
     "installed": false,
     "device_result": "Not tested; installed85 ownership discriminator retained and lock state passcodeRequired=true reconfirmed once after source builds. No lock bypass or repeated launch.",
     "limitations": "Actual64V8 builtins/jump reach and general fixed-hint semantics remain unverified; no UI success claim."
+  },
+  "official_mode_static": {
+    "official_original_sha256": "b253997ec12d825ff5a560072fc71a4bc381887ff65410f55f7db5ec46d6be43",
+    "candidates": [
+      {
+        "rva": "0x106260",
+        "size": 192,
+        "index": 0,
+        "public_base_app_name": "Chromium"
+      }
+    ],
+    "scope": "Static RO constants; matches observed source-built mode-size192, not full cross-module/runtime ABI validation"
   }
 }

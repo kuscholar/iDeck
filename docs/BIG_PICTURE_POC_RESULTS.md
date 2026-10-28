@@ -2069,3 +2069,13 @@ NOT proof it works on device.86 prepared, NOT installed over pending85.
 One read-only lock check after source builds still passcodeRequired=true;
 no repeated launch/install, no credential action. Actual V8 reach and full
 CEF/UI remain gates. Main baselines unchanged; user's Demo.gif untouched.
+
+CEF-aware run40636094452 now passes GN and performs1680-edge C++ compilation,
+advancing to final81edges. Exact failure is missing generated V8 buildflags
+from content_switches.h, not a CEF runtime fault. Retain hash-checked original
+generator/options and add explicit CEF static-library dependency; do not stub
+the header. Host source/target checks pass. Full research recipe added in
+CEF64_BUILDING.md with explicit control-vs-CEF and local-vs-device boundaries.
+Static official ELF install-mode constant atRVA106260 has size192/index0/
+Chromium, matching observed control; payload-size80/version also matched.
+These static/public prefix fields are not a complete Valve ABI/device pass.

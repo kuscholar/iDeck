@@ -46,7 +46,8 @@ with tempfile.TemporaryDirectory() as directory:
     cpp = (temp / 'chrome/chrome_elf/crash/crash_helper.cc').read_text()
     assert 'CefCrashReporterClient::InitializeCrashReportingForProcess();' in cpp
     target = cef_glue.focused_cef_target(cef_build).decode()
-    assert gn_target(target, 'static_library', 'chrome_elf_set') == gn_target(cef_build.decode(), 'static_library', 'chrome_elf_set')
+    assert target.count(cef_glue.V8_GENERATOR_DEP) == 1
+    assert gn_target(target, 'static_library', 'chrome_elf_set').replace(cef_glue.V8_GENERATOR_DEP, '') == gn_target(cef_build.decode(), 'static_library', 'chrome_elf_set')
     for bad in (b'', cef_build + b'\n'):
         try:
             cef_glue.focused_cef_target(bad)

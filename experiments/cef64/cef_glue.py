@@ -24,7 +24,10 @@ BUILD_FLAGS = {
     "ui/base/BUILD.gn": ("6bf961b872eac7e81d3600cf1abba08d2ddf0861c58a6c49a42985a969522a73", "buildflags", [
         "//build/buildflag_header.gni", "//build/config/features.gni", "//build/config/ui.gni",
         "//build/config/linux/gtk/gtk.gni", "//build/config/ozone.gni", "//ui/base/ui_features.gni", "//ui/qt/qt.gni"]),
+    "tools/v8_context_snapshot/BUILD.gn": ("6958a78560e72a8a083cf6b34f7dc3be0e6536ec4632d4ae8e2426deda77498f", "buildflags", [
+        "//build/buildflag_header.gni", "//tools/v8_context_snapshot/v8_context_snapshot.gni"]),
 }
+V8_GENERATOR_DEP = '  deps += [ "//tools/v8_context_snapshot:buildflags" ]\n'
 
 
 def focused_cef_target(data):
@@ -32,6 +35,9 @@ def focused_cef_target(data):
         raise ValueError("unrecognized CEF build metadata")
     original = data.decode()
     target = gn_target(original, "static_library", "chrome_elf_set")
+    # Full CEF normally also builds this generated header through other
+    # targets. Make content_switches.h's actual dependency explicit here.
+    target = target[:-1] + V8_GENERATOR_DEP + "}"
     return ("\n".join(original.splitlines()[:3]) + "\n\n" + target + "\n").encode()
 
 
@@ -73,7 +79,7 @@ def prepare_cef_glue(root):
         raise ValueError("CEF checkout already exists; do not overwrite it")
     # Retain history: upstream version generation uses real branch ancestry and
     # commit counts. Do not invent a CEF version from a shallow commit count.
-    subprocess.run(["git", "clone", "--config", "core.autocrlf=false", "--filter=blob:none", "--no-checkout",
+    subprocess.run(["git", "clone", "--config", "core.autocrlf=false", "--config", "core.longpaths=true", "--filter=blob:none", "--no-checkout",
                     "https://github.com/chromiumembedded/cef.git", str(cef)], check=True)
     subprocess.run(["git", "checkout", "--detach", CEF_REVISION], cwd=cef, check=True)
     if run(cef, "git", "rev-parse", "HEAD") != CEF_REVISION:
@@ -95,7 +101,7 @@ def prepare_cef_glue(root):
     # The original header targets share BUILD files with whole Chrome/UI/PDF
     # libraries. Keep only their checked target bodies, not unused runtimes.
     # Selecting media/base brings parent media metadata without its test data.
-    subprocess.run(["git", "sparse-checkout", "add", "media/base", "ui/base"], cwd=root, check=True)
+    subprocess.run(["git", "sparse-checkout", "add", "media/base", "ui/base", "tools/v8_context_snapshot"], cwd=root, check=True)
     for name in BUILD_FLAGS:
         path = root / name
         path.write_bytes(focused_buildflag_file(name, path.read_bytes()))
