@@ -71,6 +71,9 @@ symbol_level = 0
 chrome_pgo_phase = 0
 enable_nacl = false
 enable_base_tracing = false
+# This C++-only component does not use Chromium's optional Rust conversions.
+enable_rust = false
+enable_cxx = false
 use_remoteexec = false
 use_thin_lto = false
 treat_warnings_as_errors = false
