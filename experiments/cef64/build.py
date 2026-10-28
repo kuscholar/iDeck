@@ -58,9 +58,13 @@ def command_with_sources(root, command, *, cwd, log, attempts=100):
                 target = ninja_dir / match.group(1)
             else:
                 match = re.search(r"can't open file ['\"]([^'\"]+)['\"].*\[Errno 2\]", result.stdout)
-                if not match:
-                    raise subprocess.CalledProcessError(result.returncode, command)
-                target = Path(match.group(1))
+                if match:
+                    target = Path(match.group(1))
+                else:
+                    match = re.search(r"fatal error: '([^']+)' file not found", result.stdout)
+                    if not match:
+                        raise subprocess.CalledProcessError(result.returncode, command)
+                    target = root / match.group(1)
         ensure_source(root, target.resolve().relative_to(root))
     raise RuntimeError("bounded source-discovery limit reached")
 
@@ -115,7 +119,7 @@ def build(root):
                 shutil.copyfile(source, destination)
     shutil.copyfile(root / "ideck-elf-source.json", artifact / "source.json")
     shutil.copyfile(output / "args.gn", artifact / "args.gn")
-    for name in ("prepare.py", "build.py", "load-probe.c", "CMakeLists.txt", "README.md"):
+    for name in ("prepare.py", "build.py", "load-probe.c", "owned-contract.h", "CMakeLists.txt", "README.md"):
         shutil.copyfile(probe_source / name, artifact / name)
     for name in ("LICENSE", "LICENSE-EXCEPTION.md"):
         shutil.copyfile(probe_source.parents[1] / name, artifact / ("IDeck-" + name))
