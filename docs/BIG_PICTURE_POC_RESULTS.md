@@ -1939,3 +1939,14 @@ foreground/unambiguous visible steamapps/common game window under the existing
 lab triple gate. Never focus/account-type text. Also reviewed redirect early
 denials now release the three new path buffers.37native units/host input gates
 pass; full81 build follows. No primary source/runtime resources modified.
+
+
+Build81 installed/signed/fullcompiled; actual hr.exe AMD64 Machine8664 and
+private SHA pinned in evidence. Genuine Steam again reaches Unity graphics/
+input configuration.23:00 game-confirm command fails before delivery with
+CoreDevice4000 disconnect; no game-key ACK, no gameplay/return/crash proof.
+One reconnect/unlock handoff pending. Preserve prefix/account/game; don't
+reinstall, relogin or repeatedly launch while disconnected. Fresh device/app/
+visible-dialog check precedes any next command. Reviewed source-only research
+0c4b01e pushed to experiment/steam64-hybrid inside verified allowed time window;
+no main merge/release/Valve payload. User Demo.gif left untouched/untracked.

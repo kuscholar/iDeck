@@ -496,3 +496,22 @@ on existing early-denial returns. Clean up only those three new allocations on
 each such return; normal behavior and old allocations are unchanged. Native
 recompile/full app follow-up required. Research progress stays on the isolated
 experiment branch; no public release or main-baseline merge.
+
+
+## Build81 device gate at23:00 EDT
+
+Actual installed hr.exe read back privately: Machine8664/AMD64, SHA256
+1ab8b32689605e7a8290664d0e209001c86be860d8136f206b1c70253b7d45d2.
+Build81 full37native/Xcode/final-marker/sign/install passes and repeats actual
+Unity graphics/input configuration UI after Steam's legitimate -applaunch.
+The fixed game confirmation request then FAILED BEFORE DELIVERY: CoreDevice
+4000 disconnected immediately after connection. No confirmed action ACK and
+no main-menu/gameplay/return proof. DeviceHub lost display concurrently; this
+is NOT proof the game crashed or the confirmation caused the disconnect.
+
+Asked for one reconnect/unlock handoff; preserve current account/game state,
+no reinstall/relogin/reboot requests. Next revalidate live app identity and
+fresh visible game configuration (do not automate EULA/credentials), then use
+the gated game-confirm command. Do not resume against a stalePID. Source-only
+research0c4b01e was committed and pushed to experiment/steam64-hybrid after
+separate22:58/22:59 EDT time checks. Main e3d845e and public release unchanged.
