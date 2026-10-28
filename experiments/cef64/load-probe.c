@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <stdint.h>
 #include <stdio.h>
+#include "owned-contract.h"
 
 struct allocation { uintptr_t base; SIZE_T bytes; };
 static struct allocation before[8192], after[8192];
@@ -57,6 +58,7 @@ int wmain(int argc, wchar_t **argv)
     unsigned n_before, n_after, small_pools = 0;
     setvbuf(stdout, NULL, _IONBF, 0);
     if (argc != 2) return 2;
+    if (!wcscmp(argv[1], L"--owned-contract")) return cef64_owned_contract();
     n_before = snapshot(before);
     if (!n_before) return 3;
     puts("cef64-load-probe before-load");

@@ -2006,3 +2006,12 @@ New metadata retains exact upstream required target bodies only, with checked
 source hashes, original compiler/security flags, and unsafe-developer=false.
 Native83/84 capacity/backing are independent actual device passes; they do not
 prove this source component builds or links into an actual Steam helper.
+
+Windows attempts8/9 now compile actual C++ (193 then231 of1661edges),
+not merely GN. Missing pinned googletest include and upstream rc_win binary
+are distinct build-input failures; resolver and hash-verified official RC
+hook address them. No DLL or CEF success. Own AMD64 reserve/commit/query/free
+contract PE compiles Werror; it has no Valve or network dependencies. Build85
+installed in-place, launch refused due native phone lock; no runtime adoption
+result. Existing auth/games preserved. Await unlock while continuing Windows
+component work.

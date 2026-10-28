@@ -15,7 +15,7 @@
     "Full82 Xcode and final Mach-O marker",
     "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
-  "windows_build": "GN succeeds, progressing Ninja dependency inputs. No source DLL/CEF runtime pass.",
+  "windows_build": "Actual C++ compilation reached231/1661; pinned RC hook restored, next source build pending. No component runtime pass.",
   "on_device": "Build83 simultaneous native capacity passes; source DLL/FEX/CEF not tested. Same app upgraded preserving data.",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
@@ -53,6 +53,14 @@
     {
       "id": 40631080562,
       "result": "GN succeeded:774targets/203files. First Ninja missing libc++ input was incorrectly resolved relative to source root instead of -C output dir; bounded resolver correction prepared. No DLL yet."
+    },
+    {
+      "id": 40631457351,
+      "result": "Actual Ninja compilation reached193/1661; missing pinned googletest header stopped compilation. Bounded source resolver now follows Clang header diagnostics to tracked source/gitlinks."
+    },
+    {
+      "id": 40631947131,
+      "result": "Actual Ninja compilation reached231/1661; Chromium rc.py could not find its public hash-pinned resource compiler. Reproduce official rc_win hook and verify SHA1 6f85dcbb9eb8e31022cf3064dc7f1d129a8f0ad7. No DLL or Windows/device CEF success."
     }
   ],
   "diagnostic_build82": {

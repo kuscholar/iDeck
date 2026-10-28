@@ -82,6 +82,18 @@ def build(root):
         data = z.read("gn.exe")
     (gn_dir / "gn.exe").write_bytes(data)
     subprocess.run([sys.executable, "tools/clang/scripts/update.py", "--package", "clang"], cwd=root, check=True)
+    # Chromium's rc.py invokes its own checked-in resource compiler before
+    # comparing the result with Microsoft's SDK rc.exe. Reproduce the pinned
+    # public rc_win DEPS hook; the official SDK alone does not supply this file.
+    rc_dir = root / "build/toolchain/win/rc/win"
+    rc_hash = (rc_dir / "rc.exe.sha1").read_text().strip()
+    if rc_hash != "6f85dcbb9eb8e31022cf3064dc7f1d129a8f0ad7":
+        raise RuntimeError("unexpected resource compiler pin")
+    with urllib.request.urlopen("https://storage.googleapis.com/chromium-browser-clang/rc/" + rc_hash) as response:
+        rc_bytes = response.read()
+    if hashlib.sha1(rc_bytes).hexdigest() != rc_hash:
+        raise RuntimeError("resource compiler download hash mismatch")
+    (rc_dir / "rc.exe").write_bytes(rc_bytes)
     subprocess.run([sys.executable, "build/util/lastchange.py", "--source-dir", str(root),
                     "--filter", ".", "-o", "build/util/LASTCHANGE"], cwd=root, check=True)
     if "2e81dea53f5ecdc1c057e4c70ecd66151987296a" not in (root / "build/util/LASTCHANGE").read_text():
