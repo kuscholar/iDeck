@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check real published CEF patch against pristine pinned Chromium files.
 
-Usage: check-cef64-cef-glue.py /path/to/Chromium126 /path/to/CEF-pinned-source
+Usage: check-cef64-cef-glue.py /path/to/Chromium126 /path/to/CEF-pinned-source [original-gn-cache]
 Does not modify either input checkout or run a downloaded executable.
 """
 import hashlib
@@ -16,9 +16,9 @@ sys.dont_write_bytecode = True
 import cef_glue
 from prepare import focused_elf_build, gn_target
 
-if len(sys.argv) != 3:
+if len(sys.argv) not in (3, 4):
     raise SystemExit(__doc__)
-chromium, cef = (Path(p).resolve() for p in sys.argv[1:])
+chromium, cef = (Path(p).resolve() for p in sys.argv[1:3])
 patch = cef / 'patch/patches/crashpad_1995.patch'
 cef_build = subprocess.check_output(['git', 'show', 'HEAD:BUILD.gn'], cwd=cef) if (cef / '.git').exists() else (cef / 'BUILD.gn').read_bytes()
 assert hashlib.sha256(patch.read_bytes()).hexdigest() == cef_glue.PATCH_SHA256
@@ -53,4 +53,9 @@ with tempfile.TemporaryDirectory() as directory:
             raise AssertionError('unknown CEF metadata accepted')
         except ValueError:
             pass
+for filename, (_, target, _) in cef_glue.BUILD_FLAGS.items():
+    data = (Path(sys.argv[3]) / filename).read_bytes() if len(sys.argv) == 4 else subprocess.check_output(['git', 'show', 'HEAD:' + filename], cwd=chromium)
+    focused = cef_glue.focused_buildflag_file(filename, data).decode()
+    assert gn_target(focused, 'buildflag_header', target) == gn_target(data.decode(), 'buildflag_header', target)
+    assert 'component(' not in focused and 'fuzzer_test(' not in focused
 print('PASS: entire hash-pinned published CEF crash patch applies to ten pristine Chromium files; exact production CEF/crash GN targets retained; no runtime or Valve ABI claim')

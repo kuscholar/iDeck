@@ -27919,7 +27919,11 @@ NTSTATUS WINAPI NtAllocateVirtualMemory( HANDLE process, PVOID *ret, ULONG_PTR z
              * path grants it). If the guest has already cycled 32 grants of
              * this shape, placement cannot satisfy it — deny outright so V8
              * fails NAMED in cef_log instead of eating the FEX band. */
-            if (!*ret && !limit && (type & MEM_RESERVE) && !(type & MEM_COMMIT)
+            /* The owned source layout places its real ELF BRP pool throughout
+             * [0x7180000000,0x71c0000000). This old fixed CodeRange service
+             * cannot serve that occupied interval. Use normal checked Wine
+             * placement in this experiment; V8 still enforces jump reach. */
+            if (!ios_cef64_owned_layout() && !*ret && !limit && (type & MEM_RESERVE) && !(type & MEM_COMMIT)
                 && protect == PAGE_NOACCESS
                 && *size_ptr >= 0x20000000 && *size_ptr <= 0x20100000)
             {

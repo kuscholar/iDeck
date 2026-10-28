@@ -76,6 +76,11 @@
       "id": 40634322760,
       "head": "0c165bb464c7620044cfd6eb07e88e1ca8edf2fb",
       "result": "CEF source cloning/full ten-file patch/version generation passed. Temporary test fixture inherited Windows global auto-CRLF, changing GN byte hash; real checkout explicitly false was correct. Host A/B reproduces true=358 CRLF, SHA b2695d..., false=0 CRLF, exact expected9ea7d1... . Fixture now forces false; no allocator/CEF runtime claim."
+    },
+    {
+      "id": 40634577387,
+      "head": "a4897ec550f60015ffdd550840feea3a07889680",
+      "result": "CEF prepare and exact patch tests pass. GN stops at100 input limit because shared Chrome/common buildflags metadata also resolves whole Chrome/UI/PDF/runtime libraries. Next keep exact original Chrome/media/UI buildflag target bodies and production options only. No CEF-aware DLL yet."
     }
   ],
   "diagnostic_build82": {
@@ -209,6 +214,36 @@
     "patch_sha256": "28c7eb14cb25305c392586888f271edde9ce56406d7282fd0e2ddd0a89d0ffdd",
     "observation": "Published CEF uses CefCrashReporterClient configuration/handler/optional-argument contracts instead of stock ChromeCrashReporterClient. Source mismatch, not an observed device fault of the control DLL.",
     "hypothesis": "Retaining the complete published CEF crash integration is necessary for genuine helper compatibility.",
-    "test": "Exact ten-file published patch and original production GN target bodies pass host checks; Windows CEF-aware browser and renderer load/payload/VA tests pending. No crash assertions suppressed."
+    "test": "Exact ten-file published patch and original production GN target bodies pass host checks; Windows CEF-aware browser and renderer load/payload/VA tests pending. No crash assertions suppressed.",
+    "header_graph": "Chrome/common, media and ui/base target bodies/hash pins checked; remove unrelated runtime targets from their shared BUILD files, without changing production flag values."
+  },
+  "control_toolchain": {
+    "run": 40633251602,
+    "llvm_pin": "llvmorg-19-init-9433-g76ea5feb-1",
+    "gn_pin": "df98b86690c83b81aedc909ded18857296406159",
+    "ninja": "1.11.1.1",
+    "msvc_include_versions": [
+      "14.44.35207"
+    ],
+    "windows_sdk_include_versions": [
+      "10.0.22621.0"
+    ],
+    "scope": "Observed paths in actual public Windows build log; not cross-toolchain reproducibility proof"
+  },
+  "legacy_route86": {
+    "build": 86,
+    "observation": "Old kernel-picked512MiB V8 CodeRange service [0x7180000000,0x71c0000000) is wholly occupied by new real source-ELF BRP. Static interval conflict, not a device V8 failure observation.",
+    "minimal_patch": "Skip only the legacy fixed-zone service under the exact owned-layout gate; use normal checked Wine placement and preserve V8 reach checks. Ordinary mode unchanged.",
+    "verification": [
+      "37native units pass",
+      "Full Xcode86 passes",
+      "Deep strict existing-profile signing passes",
+      "Final signed NtAllocateVirtualMemory disassembly contains8 owned-layout queries versus7 in85, confirming linked new branch"
+    ],
+    "signed_debug_dylib_sha256": "b094fd4ef15e0c340b84e1cbc9113b47d6715476d79fd7761a8dab2756fe983e",
+    "disassembly_sha256": "49039fbdb0a155975256d90f776b00176c693e812256d54bf5cd616736bbb86b",
+    "installed": false,
+    "device_result": "Not tested; installed85 ownership discriminator retained and lock state passcodeRequired=true reconfirmed once after source builds. No lock bypass or repeated launch.",
+    "limitations": "Actual64V8 builtins/jump reach and general fixed-hint semantics remain unverified; no UI success claim."
   }
 }

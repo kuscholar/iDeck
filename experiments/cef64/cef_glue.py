@@ -17,6 +17,14 @@ CEF_REVISION = "a5d51ba9db7ee74a523dc247bd09ec91ba4d7446"
 PATCH_SHA256 = "28c7eb14cb25305c392586888f271edde9ce56406d7282fd0e2ddd0a89d0ffdd"
 PATCHED_ELF_BUILD_SHA256 = "9ea7d1278b35248ee77df7030dcccc9094b469fee4d659c1b058149c6c089051"
 CEF_BUILD_SHA256 = "61184106c1693c073a08e775ca30f8b864d8c815bcdd3a724363f85531eeb7fe"
+BUILD_FLAGS = {
+    "chrome/common/BUILD.gn": ("d1bb1fd2be93e16022892174d34e66d694a0ef35d31bbc3fc50327fdf7cea782", "buildflags", [
+        "//build/buildflag_header.gni", "//chrome/browser/downgrade/buildflags.gni", "//chrome/common/features.gni"]),
+    "media/BUILD.gn": ("d7a6dd248b5eccbdec11b4c23021a10edda688f9017c51100fc752ae898422db", "media_buildflags", None),
+    "ui/base/BUILD.gn": ("6bf961b872eac7e81d3600cf1abba08d2ddf0861c58a6c49a42985a969522a73", "buildflags", [
+        "//build/buildflag_header.gni", "//build/config/features.gni", "//build/config/ui.gni",
+        "//build/config/linux/gtk/gtk.gni", "//build/config/ozone.gni", "//ui/base/ui_features.gni", "//ui/qt/qt.gni"]),
+}
 
 
 def focused_cef_target(data):
@@ -25,6 +33,25 @@ def focused_cef_target(data):
     original = data.decode()
     target = gn_target(original, "static_library", "chrome_elf_set")
     return ("\n".join(original.splitlines()[:3]) + "\n\n" + target + "\n").encode()
+
+
+def focused_buildflag_file(name, data):
+    expected, target, imports = BUILD_FLAGS[name]
+    if hashlib.sha256(data).hexdigest() != expected:
+        raise ValueError("unrecognized CEF buildflag dependency " + name)
+    original = data.decode()
+    if imports is None:
+        # Media's preamble contains only imports and conditional CDM imports.
+        # Retain it verbatim except unused test templates; flag values remain
+        # derived from the original production options.
+        prefix = original.split('buildflag_header("media_buildflags")', 1)[0]
+        prefix = "\n".join(line for line in prefix.splitlines() if not line.startswith('import("//testing/')) + "\n"
+    else:
+        prefix = "\n".join(original.splitlines()[:3]) + "\n\n"
+        prefix += "\n".join('import("' + path + '")' for path in imports) + "\n\n"
+        if name == "chrome/common/BUILD.gn":
+            prefix += 'assert(enable_supervised_users)\nassert(!is_fuchsia, "Fuchsia shouldn\'t use anything in //chrome")\n\n'
+    return (prefix + gn_target(original, "buildflag_header", target) + "\n").encode()
 
 
 def prepare_cef_glue(root):
@@ -65,6 +92,13 @@ def prepare_cef_glue(root):
     elf_build.write_bytes(focused_elf_build(elf_build.read_bytes(), PATCHED_ELF_BUILD_SHA256))
     cef_build = cef / "BUILD.gn"
     cef_build.write_bytes(focused_cef_target(cef_build.read_bytes()))
+    # The original header targets share BUILD files with whole Chrome/UI/PDF
+    # libraries. Keep only their checked target bodies, not unused runtimes.
+    # Selecting media/base brings parent media metadata without its test data.
+    subprocess.run(["git", "sparse-checkout", "add", "media/base", "ui/base"], cwd=root, check=True)
+    for name in BUILD_FLAGS:
+        path = root / name
+        path.write_bytes(focused_buildflag_file(name, path.read_bytes()))
     # The official tool defaults to depot_tools git.bat on Windows. Use the
     # already working Git on PATH instead; keep real ancestry/version logic.
     subprocess.run([sys.executable, "-c", "import sys; sys.path.insert(0, 'tools'); "
@@ -74,5 +108,6 @@ def prepare_cef_glue(root):
         raise ValueError("generated CEF version does not identify pinned source")
     manifest.update({"cef_revision": CEF_REVISION, "cef_crash_patch_sha256": PATCH_SHA256,
                      "cef_glue": "complete upstream crashpad_1995.patch plus exact chrome_elf_set target",
+                     "focused_buildflag_headers": list(BUILD_FLAGS),
                      "scope": "only chrome_elf with upstream CEF crash integration; no libcef or Valve binary changes"})
     manifest_file.write_text(json.dumps(manifest, indent=2) + "\n")

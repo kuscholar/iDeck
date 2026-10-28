@@ -2054,3 +2054,18 @@ auto-CRLF. Actual checkout was explicitly false and correctly patched. Host
 A/B reproduces358CRLF/wronghash vs0CRLF/exact9ea7d127...; force false per
 fixture command, keep strict source hashes. Windows CEF-aware compilation and
 device ownership/CEF/UI still pending; no stock DLL staged into Steam.
+
+CEF-aware run40634577387 passes source/patch checks but GN reaches bounded100
+inputs: shared chrome/common header metadata also resolves unused Chrome/UI/
+PDF libraries. Keep exact original Chrome/media/UI buildflag target bodies
+and their production options; hashes/host comparisons pass, no flags disabled.
+
+Separate static layout check: old512MiB CodeRange service targets exactly
+[0x7180000000,0x71c0000000), wholly inside new ELF BRP. Build86 skips only
+that old service in owned mode, leaving normal checked Wine placement/V8
+reach checks.37native/fullXcode/deep signing pass. Final signed Mach-O
+NtAllocateVirtualMemory has8 owned-layout queries vs7 in85; branch included,
+NOT proof it works on device.86 prepared, NOT installed over pending85.
+One read-only lock check after source builds still passcodeRequired=true;
+no repeated launch/install, no credential action. Actual V8 reach and full
+CEF/UI remain gates. Main baselines unchanged; user's Demo.gif untouched.
