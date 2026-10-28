@@ -12,7 +12,8 @@
     "cefInitialization": "unverified",
     "interactiveLogin": "unverified",
     "windowsDepot": "unverified",
-    "gameLaunchAndReturn": "unverified"
+    "gameLaunchAndReturn": "unverified",
+    "nativeSteamUIDylib": "device-loaded; no interactive UI"
   },
   "privateEvidence": [
     {
@@ -58,6 +59,732 @@
     {
       "path": ".madeira-install/mac-arm-steam-official/sem-host-test2.log",
       "sha256": "fcb803d38f61946959ccde7c0b563422235f05caee481962b166b1ecebe404e8"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch8-unlocked-control.log",
+      "sha256": "b9a67785c9da5e6e0ba4d4a81ed732db93529a1d816a4cb88e46756a6f2934b5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch9-layout-candidate.log",
+      "sha256": "5f5b35f2ff8a4929033c1f158b851719f2f69cc107e5ec3bcd13605c3f652350"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch10-exec-observer2.log",
+      "sha256": "8218f91d68902b0f14e584cdc300663b0ec8909bd1ae7909431fd284d8d18b8b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch11-second-stage-env.log",
+      "sha256": "73c37a8e8800ca3878a53d781a2a5dd12b9521c6dbe482c4ea4d44505771bc4e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch12-casefold-probe.log",
+      "sha256": "bb42268f04922d2e8673d5f723adb70887915355f922d7cab4000b97f6dd7029"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch13-case-view.log",
+      "sha256": "23592d013995495aefa0eb54ced22d372d92a314f03aca7dc734b91bb912f619"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch14-framework-alias.log",
+      "sha256": "96086720d6b93c03e1a4d30548360a7a8dcf7f769dd46bc21877ed4702a3f65b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch14.ips",
+      "sha256": "8a38cc98d1289ab63ecacd8d16053460788eabc546eb3dae0196979a9a335ec4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch15-pixel-encoding.log",
+      "sha256": "fe9f2659fd269ce7fa66be952afc34f3accb651f2471932bf7b1060f683aae91"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch15.ips",
+      "sha256": "775ffe90c7ad75ca71dba8b5e60737829f056b04a985e80c3ffe9327ddc91bf5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch16-mode-object.log",
+      "sha256": "11fa96b3e417193127d93425f3b1568a6eb3e1cd06cbd19f918d393e36ff429d"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch16.ips",
+      "sha256": "ded31dcbfacbe57a3c1a5d94c3625f49f76e40d853fcb58451a13e550971746a"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch17-bitmap.log",
+      "sha256": "4cf3c33bb7a9e877e8333b9fd731b5175030b9ac9275802b19745594a8dd2943"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch18-process-observer.log",
+      "sha256": "f4d3c1c37941c568df5e5778ef842d495426d99e1babe694f2911a5c4fc864de"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch19-native-spawn-probe.log",
+      "sha256": "3430e5738b8d6c396102269decdf598f2e1159d29d8cb5dbafbf41977b337ae6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch19.ips",
+      "sha256": "92bbbcc20e7592d25c69200d60574e41fdd3cb4af8956b55b57fedb8bf477928"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-font-data.log",
+      "sha256": "6f302ec48cf3b476558b3365f52c75ebe0fbce694bfc1778cc00e57100339eec"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/local-regression-latest.log",
+      "sha256": "c57159d92d1ef83fc3a03af3f4d09b311f74f2aa39cccda588747aa8673f9a67"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/repro-overrides-final-build.log",
+      "sha256": "df854c911558a7100796a238e927dadc19455a4791a86eb3b80b0450c624473a"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-overrides-final.log",
+      "sha256": "f73eec914ad73729d1216766c9033a4c793925bd4e3b632f5913fc7b7777d28f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/tier0-process-disassembly.txt",
+      "sha256": "8a8f34a62034eaaf07968fbede51fdbeb2837079f472330d546316dbdc262f27"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/tier0-lifecycle-disassembly.txt",
+      "sha256": "d2c569df2971ecc64608f99935722b447b8a6fc2b5dd320b5ebcde68f264d75e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-cef-load-build2.log",
+      "sha256": "f83f41d328a729618c83a8796adacf75b8e4cc607e23516574210c5fe015d36f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch20-cef-load.log",
+      "sha256": "df153d478fadcf8476dfb87caf29ae559bed26bdd1f43e823e7926f020c2d3a4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch20.ips",
+      "sha256": "c2468d4d467ba1c832ba62ac8896f8fd9e6b13548a264631aaa766bcd5d1291b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch21-lldb.txt",
+      "sha256": "642f2f5bbf5e03b61f0ee0401ba18dd406edaea3b047d5d199cf0dc5a967a101"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch22-lldb.txt",
+      "sha256": "f947f970aa69de1a532b1c89c9c13bfe3214d1822c6e0244e47be542d546df91"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch22.ips",
+      "sha256": "4afb7bf7ee65476fcb47d1db376369d248cbe5d157257cca469c6ac485680f9b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/cef-reserve-fatal-disassembly.txt",
+      "sha256": "6716686b4a7452b3c5180f41b272ff5bfd8f53a4a0fc322707a9797150b63c5a"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-native-vm4.log",
+      "sha256": "7f2db3c70e50c6bfa06b8d8391303e2b46e35629f0dd3c480f78dcc2cb27ecd7"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-vm4.log",
+      "sha256": "f73eec914ad73729d1216766c9033a4c793925bd4e3b632f5913fc7b7777d28f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-vm4.log",
+      "sha256": "c60cd567ff727c9d70f9df74810be5d07e645bb43c754bcbec01c114e1795c2e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch23-native-vm.log",
+      "sha256": "4e493ba57653f3b167d732bb5594999d183444c59d264d8d8e80c3add1c084a4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/memory-capability-unsigned-build-fixed.log",
+      "sha256": "41700a1cd53c0f001481a1a24d39cf41a0ef7bcdc1c1cfac0fb70e434e2f30a8"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch23-vm-results.txt",
+      "sha256": "c48dacab0589054199f11033e71b8e1795b2aeb8d9675929ae4ee29e721f1669"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-staging-tests-final.log",
+      "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/memory-capability-authorized-build.log",
+      "sha256": "7b8a078a8e18cfdfa19a309a6610472292b4403e2f3344d9049fc73b46a2db3d"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/memory-capability-xcode-ui.txt",
+      "sha256": "090fd256e5c9cd8bccbb8a6d1010662d7e7b3020794e150879925ffa9af66e39"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/apple-capabilities-ios.html",
+      "sha256": "edce439574a0892a157cede89078c77943cb0dcf286df506c46a6a4d559a77e0"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/chromium126-pool-source-verification.json",
+      "sha256": "a0d371183fc68ce76d823e49c06a19f7fbc4f62555efee69cd868f1f760dde91"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/cef-abi-comparison.json",
+      "sha256": "e3953a5bb4ccfdb26827c92b829a0a26694e2286db6dfe5c641447131f48b4a1"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/cef-abi-audit-console.txt",
+      "sha256": "e3953a5bb4ccfdb26827c92b829a0a26694e2286db6dfe5c641447131f48b4a1"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-small-pool5.log",
+      "sha256": "a3d2bf10f9b3747abdb462e284914a4c529c83ded0c7f9381ddfbb0deed18efc"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-small-pool5.log",
+      "sha256": "f73eec914ad73729d1216766c9033a4c793925bd4e3b632f5913fc7b7777d28f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-small-pool5.log",
+      "sha256": "8b3a52a07116647b4617219956397a4ad365cfe47ac3c1b09e022a2a6356936f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch24-small-pool.log",
+      "sha256": "5b0e86e165d3fac551753fa992b55fc6b514ca45008983d8563ebba9c85f78db"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-process-observer6.log",
+      "sha256": "3b397d0fcdd7a885d1dcf0eddea6f0d9716a7950d0517596ade15cbf9b1bf1d3"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-process-observer6.log",
+      "sha256": "a9b3d59485b0a652d08a02e3f5d1982089698c9cacf0b7d7fce882112d095d5f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-process-observer6.log",
+      "sha256": "a601e30dc8d78e4ce2fdaec9f192638d34043359dfd3370eadaaa2b854bc2d58"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch25-process-observer6.log",
+      "sha256": "af53d9cbdf87640e27fc74461cf8a36e3c56c9185e0c87e9eaf249cec7d77100"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-font7.log",
+      "sha256": "fa43ac990f933e7f42f4c935ae40802bc8492aaad741b4df28f05dd0f4d0859c"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-font7.log",
+      "sha256": "2148d694bb87d991cebb6ebd3e21cb97b33c72ef04869f47bf22e01df50dbc5e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-font7.log",
+      "sha256": "76ce93ec7512f7195072ccf3b6f22699177df9da26d56a8db2d33ec68c0008ef"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch26-font7.log",
+      "sha256": "d49c7c5bca3d70f48eb1886e35827cecfc3856215feda61925cdd52f108e7e57"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch26-font7.ips",
+      "sha256": "86deb185b41cc92f94a05c3639f9cf5e91d87238f34ff5a12f095e1738756966"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/host-contracts-observer-font7.log",
+      "sha256": "70842fb0500f44efb37a3b7860c308e17d2cf3cd3d045b415fb62c9401b1b19e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-power8.log",
+      "sha256": "13c4ec2916efe2a7bcdfcd244c93ff6442c979d8a64c1d4305b63196c1862fe3"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-power8.log",
+      "sha256": "5ccc5e8ad4d59e6cc0ff6b68d21bf074f2e48b58c2fdfaf3ba14b400b9cfd6e6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-power8.log",
+      "sha256": "423e59e554066ec029b78d5af03acf2eb58d0f36aa1c54b78ea0fee8630cc690"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch27-power8.log",
+      "sha256": "39d8dcaf4390dbaf1fd72ac3483a9c5f0d3996a33b760de706f43d2edc5d5ccd"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/host-contracts-power8.log",
+      "sha256": "76272e47529c896788a232c2c1f913a7d872af4b990f61e7251d5315e838cad5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/process-build8-identity.log",
+      "sha256": "c2cef953438ecab1c736a94b82c9d89ae0cf7a6f91b62acea6af9021111b9187"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/terminate-build8.log",
+      "sha256": "3e98879c980bf06d01749d6df78023ab71e02668a5d68ba588e17bb77ef70b62"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/helper-ipc-imports-build8.txt",
+      "sha256": "6afe7ef66f1bbed856baf45d947e41f4716c15374f1a010191b351b64b2814d9"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/millennium-source-index.json",
+      "sha256": "87a36c86a82b9a478143778da120473784cd0950ddc095aa0a8f853c0613c57e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/millennium-source-audit/LICENSE.md",
+      "sha256": "f01d1b8bce439ee29491817247a38611c41f7d1de4360b5577d4498d103fbf8b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/millennium-source-audit/src/bootstrap/macos/child_process_hook.cc",
+      "sha256": "63072956a7e487bdbd5ffff80033e32b1397295e3ed26efb5d0922596fa70560"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/millennium-source-audit/src/bootstrap/macos/tier0_proxy.cc",
+      "sha256": "2eeab9aedde65ee58f7ad1848a738639509fc89ff367bc110bf2f10b66c73dd9"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/millennium-source-audit/src/instrumentation/internal/steam_hooks.cc",
+      "sha256": "accf835008a0036b917416d3c78ae111f1cbf8e30bef604161c74769d4f51378"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-converted/ideck-process-observer.json",
+      "sha256": "4022e8167292a6416c39201fff8c3bd250cbcd7592153dd19b9d4dc3164d84c6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-converted/ideck-power-shim.json",
+      "sha256": "c62e29515756bb6f556ddf103ba735ad82755024eceb29dc71bbf6c2d7733295"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/xnu-vm-source/index.json",
+      "sha256": "60512ab96bab7f85465bb4a7aa3965c6a370b24012ccd56dedac3e0e62aa33c9"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/xnu-vm-source/kern_mman.c",
+      "sha256": "6a48f2aabb0c9f71835db0a6ef2c4c3853444665d19a439b510181e943068394"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/xnu-vm-source/vm_map.c",
+      "sha256": "25e61323f40fa0d5dc3da5b01f8eb2e1dc78f5338b41a7a43e7d86ad04cae039"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/xnu-vm-source/vm_user.c",
+      "sha256": "7fbaad4de220bc78bee3881a0696fd94ec6d9a81dec0e4fe68878fb8c41ff01c"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/xnu-vm-source/vm_statistics.h",
+      "sha256": "834b85450d28b76b657f451c9e3eadb35b39a561e269023dadf9e29ca51fd329"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-vm-range9.log",
+      "sha256": "1ee17ce282bff1f1043d50da263469cc2222338cba9171e2c5769780225a2252"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-vm-range9.log",
+      "sha256": "6dab979888913af9e457fd6f9e0ca28e74045d49b0d2b74cc50b5e70e150b3c6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-vm-range9.log",
+      "sha256": "c6d22568744d85788efc47a12d0134f0b77c1dacda1b9e7da9f4a0c6c13030b2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch28-vm-range9.log",
+      "sha256": "6f4ab35d66bfebb00fa68b08130f75f2f902726cb890d547d16a58ea005c6308"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/host-contracts-vm-range9.log",
+      "sha256": "e963ec24588d173a0ed213a92fbee1eb6c42c93751c80e004d1366eaebcf4206"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/staging-regression-vm-range9.log",
+      "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/cef-custom-public-code-search.json",
+      "sha256": "68c35dc50d8d6b432c0c41aadc2320a36ac4f9a2c6dcd8fe9897459bc29b0636"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/cef-reduced-motion-public-search.json",
+      "sha256": "fe8ca1425ebf3a9c269496da086f30913a5dfa01b60e6ee2c2c48dc77a014350"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/cef-extension-cpp-public-search.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-helper-load10.log",
+      "sha256": "083205c7b11d62bbfc745d2a1c5a460d5bb33f93f2e3e11af35268e6a0a5593f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-helper-load10.log",
+      "sha256": "aff991771e3a5a9309fd4a5c0efb1c25d53533e94770ee38a0c1bb2db5ae39cc"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-helper-load10.log",
+      "sha256": "1fdc47aff527bf8837dab757794d59b3330f2014fa4b9a55e947c58d73aa5e7f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/installed-state-after-build10-timeout.json",
+      "sha256": "cc078143bc37be0cdd2cbbdf8aca1db8f32de5a293fe5a970f169b153e1195b0"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/installed-state-after-build10-timeout.log",
+      "sha256": "6ac534102da81be70a36f2eb9d7ab6f5b77a6abb408a672a2e7ab105c1c850e7"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/shim-receipt-helper-load10.json",
+      "sha256": "776eef53a6ce281201e2287d84c76a3d738e50d20eefc0bba16c2edf3dd7335b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/signed-binary-hashes-helper-load10.json",
+      "sha256": "a24c26e858a638e7e9ee1ef3b008bbf427c2d938c6ddb109d3c2f3db532bfde6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/helper-entry-contract-build10.json",
+      "sha256": "bd3ac492bb6663c64b7cbec61a1217103b93f33dd26903b117f0694f8fd884ba"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/host-contracts-helper-load10.log",
+      "sha256": "e963ec24588d173a0ed213a92fbee1eb6c42c93751c80e004d1366eaebcf4206"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat29-installed-state.json",
+      "sha256": "2dfc15926db689f465d207029faa1f01ee7ebf19d70cf724a455d49a6dcabfbb"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat29-installed-state.log",
+      "sha256": "5258743aca22589201a8d2bce260d97dddb999110dff84aad9aa7b9cf2cb82aa"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat29-lock-state.log",
+      "sha256": "6c8ad1c439430c84c9c46be583f0e8718c1fc0ca3a3b5c6e9662d3c008a929b2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat29-host-regression.log",
+      "sha256": "44d2948e8c708f35dff93328bc253f014dd90bdd27ad7ae311efd0413ce8aef8"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat29-staging-regression.log",
+      "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
     }
-  ]
+  ],
+  "nativeProcessDiscriminator": {
+    "sourceBaseline": "2d82b99b5ae4d71fa7f7d9c4b848658802b73621",
+    "sourceState": "local uncommitted changes; outside user Git window",
+    "fork": {
+      "result": -1,
+      "errno": 1,
+      "caller": "libtier0_s.dylib+0xbe80"
+    },
+    "selfPosixSpawn": {
+      "result": 1,
+      "childCreated": false
+    },
+    "scope": "current signed experimental app on actual iPhone; no broader iOS configuration claim",
+    "cefInitialized": false,
+    "nextPreparedBuild": "Build5 installed; actual geometry diagnostic only; no assumed live lab PID",
+    "latestDeploymentGate": "User chooses no-EVA route. Small aligned layout PASS on device; matching Steam-custom CEF source/ABI still unresolved."
+  },
+  "preparedShimSHA256": {
+    "libShim_libSystem.dylib": "cdb569de2361638da4a5a29179dea6a5a4eca7407332acade6face3a3068acd1",
+    "libShim_AppKit.dylib": "7f816f35984ed12f60a014e5a588fa0aeb08384ded1309a17ffdd1f391a20947",
+    "libShim_CoreGraphics.dylib": "31a949ebe8ec8b62b4e2f5c3b73b9a1154d295ed770d98d101b8a1e29e281b0c"
+  },
+  "localSourceSHA256": {
+    "experiments/mac-arm-steam/README.md": "191efadee5e025a0755d474f673d1c2da9b9b6bec3e78266c147ec41310c1079",
+    "experiments/mac-arm-steam/appkit-font.m": "0e6b1c1e8e8920009cb368aa9abde6a514d176f000cd189da4f201caa258ee4c",
+    "experiments/mac-arm-steam/bitmap-image-rep.m": "ece981878b21b2d4d29816947d8288093285bc6fe61f32149ac81f5bc0dca6ea",
+    "experiments/mac-arm-steam/casefold-path.m": "a6a21ab11dbfc78d54f978c89d33c5698d0e5d04754b5bbb45929e5bca79f0a0",
+    "experiments/mac-arm-steam/casefold-probe.m": "c441337a706949c09a21caad6e5d31dbd5667763494253882a4d67d1bc85f488",
+    "experiments/mac-arm-steam/cef-load-probe.m": "eea613d6b2cd464d5cc2758f1b6bd7f93b33c1e05011770885eac6b8f5339645",
+    "experiments/mac-arm-steam/display-mode-object.m": "f1cd6312b02bda99d156fae61c2c0a5f96ee2002a5f071afc922887927a19102",
+    "experiments/mac-arm-steam/display-pixel-encoding.m": "f355db177c36d5c58874d30d0e3e86e83116983ee10ed2051b09e3ffaf8b049d",
+    "experiments/mac-arm-steam/exec-diagnostic.c": "9718592c2314050d0c68604682ae0df949cc4ba1734f595feedb96b35bee668c",
+    "experiments/mac-arm-steam/font-matrix-constant.m": "13a1c7c0dfbcd121ab86abac82ab49cd054d7f449e8b42277a497c5d6a434e73",
+    "experiments/mac-arm-steam/native-process-probe.c": "e670735f53984eb4992265743495979248642b89724d6d2f42390f35da874766",
+    "experiments/mac-arm-steam/native-small-pool-probe.c": "019f11eb73a66cfa4f0e92fbd6e0467fe9b27474cf1fe25c0d3dbb0bb36f6344",
+    "experiments/mac-arm-steam/native-vm-probe.c": "a3b84411bbafc661d8d681cdaca11dbd82bc25c079b11fe69e53ea37d3da1f50",
+    "experiments/mac-arm-steam/pool-layout.c": "b63791553b27a5318e2a49f4bae72a87bbeb922e265ee2cda76b7f1960122f10",
+    "experiments/mac-arm-steam/pool-layout.h": "e760c9d838c306f12c3c3455910a09bca45efab8a3dad03647c53ba134250ccc",
+    "experiments/mac-arm-steam/test-bitmap-image-rep.m": "2f26b308da935d424ff904a1c26e9a777c3bf6335b6dd8ec28bd49d003423810",
+    "experiments/mac-arm-steam/test-build-staging.py": "206a78ff46a5b9dcea3ed45dc33b0d2955fdd2c1683ac53727372e8281b03c46",
+    "experiments/mac-arm-steam/test-cef-abi-audit.py": "776105984151e6b9ecd20bc1264543c7954bc00c21868577ca1862c6c46766e2",
+    "experiments/mac-arm-steam/test-display-mode-object.m": "072fe5cd4083473531860401cb1bb3b46e915a480fe1662c920af7867b246193",
+    "experiments/mac-arm-steam/test-display-pixel-encoding.m": "935446b6f5e166e9f79839a25717eaba5639fe37024476961c049e6151d0c709",
+    "experiments/mac-arm-steam/test-executable-layout.py": "db341b5781b26c394a99d03885fad8cc3e2d326896605532e39b7b01539c51fb",
+    "experiments/mac-arm-steam/test-font-matrix-constant.m": "f26f80d9287da2a412c6ade3838cb9bcd285721e15ed1069d33b5ede639289c3",
+    "experiments/mac-arm-steam/test-local.sh": "cb3dc023026a7a593977614f08c9d3bbb316a815c3b0f4ca90e12c16b973f6ac",
+    "experiments/mac-arm-steam/test-pool-layout.c": "2ddd8d8714bd1fd8acbeab20a8b2cc7fe49d3501164604ac9ebf2e40c4b14088",
+    "experiments/mac-arm-steam/volume-case-view.m": "c943807279d9fab95da5cd4254d64e1bd2777c3214119be89201d09f1ba6d237",
+    "scripts/experiments/audit-mac-cef-abi.py": "8f151406f29974fb15746387472828daa5af4c857f73aae46c172525b35e45b1",
+    "scripts/experiments/build-mac-steam-overrides.py": "a4e465f0f932eea63123a5deb4bce2bb2f58894f946ba5ea9e9c0918ca557169",
+    "scripts/experiments/fix-mac-executable-layout.py": "7b64c1ae442cce6a362914a990d5e4f71d0c2d950a6c39ce88891bc658141005"
+  },
+  "cefConstructorVMDiscriminator": {
+    "build2": "installed/device-run; load did NOT complete",
+    "cefInitAPI": "not called",
+    "mmapBytes": 17179869184,
+    "mmapErrno": 12,
+    "crashComparison": {
+      "launch20.ips": {
+        "signingFlagsHex": "0x22002305",
+        "debugged": false,
+        "cefFatalRVA": "0x3b4dda0"
+      },
+      "launch22.ips": {
+        "signingFlagsHex": "0x32002005",
+        "debugged": true,
+        "cefFatalRVA": "0x3b4dda0"
+      }
+    },
+    "build4": "installed and actual VM-only launch23 diagnostic completed",
+    "vmRange": {
+      "min": "0x102c54000",
+      "max": "0x7180000000",
+      "taskInfoCount": 93
+    },
+    "vmReservations": {
+      "4096": "success/unmapped",
+      "1073741824": "success/unmapped",
+      "17179869184": "ENOMEM12",
+      "34359738368": "ENOMEM12"
+    },
+    "profileGrant": "user approved; actual Xcode GUI refuses EVA for Personal Team; no grant",
+    "capabilityProject": "local unsigned compile PASS; NOT installed; no account operation",
+    "build3": "INVALID stale artifact; no VM test launch"
+  },
+  "buildStagingRegression": {
+    "baseline": "2d82b99b5ae4d71fa7f7d9c4b848658802b73621 plus local changes",
+    "firstComponentFailure": "PASS preserves all finals/Info; invalidates old receipt; cleans pending",
+    "secondComponentFailure": "PASS same after first successful compile",
+    "completeSuccess": "PASS 3 ARM64 outputs and receipt SHA256 match",
+    "scope": "host real-compiler synthetic fixtures only; no signing/provisioning/install",
+    "authorization": "EVA authorized; actual Xcode Personal Team eligibility failure replaces prior approval gate"
+  },
+  "evaCapabilityRequest": {
+    "userAuthorization": "explicitly granted for isolated lab only",
+    "authorizedCLI": "failed No Accounts + old profile missing capability; not proof GUI logout",
+    "actualXcodeGUI": "build failed: Personal development teams do not support Extended Virtual Addressing",
+    "visibleTeams": "Personal Team only; no eligible paid team listed",
+    "officialTable": "EVA yes ADP/ADEP, empty Apple Developer/free-account column; exact HTML inspected",
+    "newProfileGranted": false,
+    "installedLabBuild": "4 unchanged",
+    "currentGate": "Personal Team ineligible; user has no eligible team and selects no-EVA research. Do not repeat membership/approval questions.",
+    "sourceAlternative": "Chromium126 iOS small-pool build branch inspected and official sources hash-verified; not a runtime fix for existing Mac binary",
+    "runtimeValidation": "no new device run or success claim"
+  },
+  "freeSigningRoute": {
+    "userDecision": "no eligible team; continue without EVA, no repeated membership requests",
+    "labBuild": "5 installed and actual launch24 geometry-only diagnostic completed",
+    "geometry": {
+      "poolBytes": 268435456,
+      "count": 2,
+      "chunkBytes": 536887296,
+      "guardBytes": 16384,
+      "disjoint": true,
+      "maskBoundaries": true,
+      "releasedAll": true,
+      "memoryWritten": false,
+      "cefIntegrated": false
+    },
+    "abi": {
+      "mode": "static read-only; CEF not initialized",
+      "cefSHA256": "a3d3be3a1349a07ca40f68bbbc57f3a9b08c106209f3b599bbb129d308970433",
+      "version": {
+        "cefMajor": 126,
+        "cefMinor": 0,
+        "cefPatch": 0,
+        "cefCommitNumber": 3171,
+        "chromeMajor": 126,
+        "chromeMinor": 0,
+        "chromeBuild": 6478,
+        "chromePatch": 183
+      },
+      "publicABIIdentifiers": {
+        "platform": "3bf3a90aebd22f3098ae1f2040d618be71553754",
+        "universal": "908f7378d71977393cee4bc349055b7365c3673c",
+        "cefCommit": "bbb75964a9f4095daf2926163a63cbf11af56565"
+      },
+      "upstreamHeaderSHA256": "874bea19afa3d678b1336b91e7f798a4c6ea5bf9febe0c999ca58ac17c8839b4",
+      "upstreamPlatformHash": "e585e190387e31a71267207b66d175e213991470",
+      "upstreamUniversalHash": "ed1dfa5ff8a041241f8fb72eb7454811f358f0d3",
+      "platformHashMatches": false,
+      "universalHashMatches": false,
+      "helperAndFrameworkCEFSymbolsNotInUpstreamLoader": [
+        "cef_generate_gpu_report",
+        "cef_is_gpu_compositing_disabled",
+        "cef_is_hardware_acceleration_enabled",
+        "cef_set_force_device_scale_factor",
+        "cef_set_minimum_font_size",
+        "cef_set_preferred_contrast",
+        "cef_set_reduced_motion_enabled"
+      ],
+      "limits": [
+        "Symbol differences are candidate extensions, not proof every symbol is mandatory.",
+        "Matching hashes/symbols alone would not prove full runtime or struct ABI compatibility.",
+        "Never override cef_api_hash or suppress a compatibility check to use a mismatched build."
+      ]
+    },
+    "upstreamComparisonRevision": "a5d51ba9db7ee74a523dc247bd09ec91ba4d7446",
+    "matchingSteamSource": "not located in checked public sources; not proof of global absence",
+    "limits": "geometry is not PartitionAlloc/CEF; original CEF16GiB failure and native Helper process model remain",
+    "nextGate": "compatible Steam-custom CEF source/API baseline before source-wide small-pool build"
+  },
+  "nativeProcessAndOptionalAPIExperiments": {
+    "sourceCommit": "2d82b99b5ae4d71fa7f7d9c4b848658802b73621",
+    "uncommittedSource": true,
+    "reference": {
+      "repo": "https://github.com/SteamClientHomebrew/Millennium",
+      "revision": "d6a7822a43744b6290a0e059bdd032d9b9a2ec94",
+      "license": "MIT",
+      "use": "read-only boundary research; no source copied; no plugin/debug-port injection adopted",
+      "limitation": "still depends on real native child process; not an iOS solution"
+    },
+    "build6": {
+      "bundle": "isolated macprobe",
+      "observer": "10 consumer dependency edits; __TEXT,__text unchanged; original tier0 unchanged",
+      "actualHelperFlags": "0xa",
+      "actualHelperArgumentCount": 25,
+      "helperResult": 0,
+      "errno": 1,
+      "forkReturnSite": "libtier0_s.dylib+0xbe80",
+      "singleProcessSwitchObserved": false,
+      "lastFailure": "UICTFont maximumAdvancement unrecognized selector"
+    },
+    "build7": {
+      "minimalPatch": "real CoreText maximum horizontal glyph advances for observed named UIFont",
+      "deviceResult": "previous missing maximumAdvancement selector absent in bounded trace; not full font compatibility",
+      "crash": "EXC_BAD_ACCESS KERN_INVALID_ADDRESS 0x0",
+      "topFrames": [
+        "libdispatch dispatch_set_context",
+        "IOKit IONotificationPortSetDispatchQueue+104",
+        "steamclient.dylib+0x98b6b8"
+      ],
+      "faultArgument": "x0=0; x1 resolves gDummyPort",
+      "sourceContract": "reference IORegisterForSystemPower returns fake nonzero session and gDummyPort; native IOKit then consumes invalid port"
+    },
+    "build8": {
+      "minimalPatch": "documented IO_OBJECT_NULL registration failure; null port/notifier; no fake port or power capability",
+      "signedInstalledLaunched": true,
+      "runtime": "marker confirms unsupported registration; prior fake-port crash absent during 25s trace; exact isolated process still alive after observer timeout",
+      "visual": "Device Hub screenshot observed black screen; no interactive Steam UI",
+      "presentations": "shim reports fps=0; do not infer CEF success",
+      "cleanup": "exact app path/PID identity verified before bounded diagnostic termination"
+    },
+    "hostRegressions": "full test-local.sh PASS including ASan/UBSan redaction, unchanged args/result/errno, glyph bounds/scaling, power failure/null-output contracts; iOS Werror sources compile; builder parser 5 tests pass",
+    "helperImports": [
+      "bootstrap_look_up",
+      "bootstrap_port",
+      "mach_msg",
+      "mach_port_allocate",
+      "mach_port_deallocate",
+      "mach_port_mod_refs",
+      "mach_port_type",
+      "getpid",
+      "shm_open",
+      "shm_unlink",
+      "mmap",
+      "socket"
+    ],
+    "importLimit": "static imports are not evidence all functions executed; missing single-process literal is not proof no mode exists",
+    "remaining": [
+      "native fork/spawn blocked in measured sandbox",
+      "official CEF16GiB reservation ENOMEM before initialization",
+      "no matching Steam-custom CEF buildable source located in checked sources",
+      "no native login/library/Windows depot/game/return validation"
+    ],
+    "nextExperiment": "Obtain compatible source/API baseline for source-wide smaller CEF pools; specify and test Helper IPC ownership before attempting in-host execution. Do not repeat denied native spawn, fake success/PID, alter allocator masks in binaries or spoof API hash.",
+    "localSourceFingerprints": {
+      "experiments/mac-arm-steam/launch-summary.c": "62686b9bc4dd979d4989faad6604ad20370f816b4f31ae1546c221de1cc5343d",
+      "experiments/mac-arm-steam/launch-summary.h": "6d5311c0b0c38c1290f595fc890607b54ce08166b8cf693bd2d7b9271b1f486a",
+      "experiments/mac-arm-steam/tier0-process-observer.c": "d6e90647e3007508f9c9fd8491859b42998bdf4a4fea38bce38c1b40d5be40bf",
+      "experiments/mac-arm-steam/test-launch-summary.c": "a8337cad7b6e0b9741c44df117039f20a205de59fb02742920d8eaaf56917c13",
+      "experiments/mac-arm-steam/test-tier0-observer.c": "3710819194ef54b451b83181918d0e4a7c02e570eae380e02eb73934f1920e58",
+      "experiments/mac-arm-steam/font-advancement.m": "bd9e621edc7b2805892ec661d221cd430fc7f10d7e119e30f73343ef0fc1ef30",
+      "experiments/mac-arm-steam/appkit-font.m": "aa6b1b4b03b436620c7cdb60529fc88a3323b0efd66c13f0b03714554d0a8c50",
+      "experiments/mac-arm-steam/test-font-advancement.m": "55cfc39e78f683df8ee0e21c66c857ec6ff15adb11c07438ae316332d297818a",
+      "experiments/mac-arm-steam/power-registration.c": "708d84c2ae4d12d37c9e74c290893d8e4c1961e9619309ad6dd7a3dd7e69a7fe",
+      "experiments/mac-arm-steam/test-power-registration.c": "1974161a0d724dcb919bf0f1f3c5ba84af38608f0187430b3ea44cf06025aef4",
+      "experiments/mac-arm-steam/test-local.sh": "ad21deaebad17c09444d61cdd70ae9fcec7197bca64c913f2828660b7bcabbc5",
+      "experiments/mac-arm-steam/test-process-observer-builder.py": "ac3dc31aff74d029a807804c8f40b2fe5a85b067fa9ac718d4cc92d642084c49",
+      "scripts/experiments/build-mac-process-observer.py": "a1bf4223937dda32a3915cdef10b5460d80f24fc55d26ee4b0249f33c1a223f6",
+      "scripts/experiments/build-mac-power-shim.py": "d66b8b24788de7e73838ddd81499f0fc601dc3016dd17d3d2a5bd7c8aafaa2a8",
+      "scripts/experiments/build-mac-steam-overrides.py": "78c77b434722d452373873f6205727b1ac25326c9b3aaab451227c749a6e19ff"
+    }
+  },
+  "vmRangeAndHelperEntryFollowup": {
+    "sourceCommit": "2d82b99b5ae4d71fa7f7d9c4b848658802b73621",
+    "uncommittedSource": true,
+    "publicSource": {
+      "repo": "https://github.com/apple-oss-distributions/xnu",
+      "revision": "f6217f891ac0bb64f3d375211650a4c1ff8ca1ea",
+      "limits": "comparison source only; not a claim it matches running iOS kernel; protected regions never removed or changed"
+    },
+    "build9": {
+      "signedInstalledDeviceRun": true,
+      "diagnosticOnly": true,
+      "inventoryComplete": true,
+      "regionCount": 137,
+      "mappedBytes": 474750828544,
+      "noAccessMappedBytes": 413396074496,
+      "largestUnmappedGapBytes": 6442450944,
+      "taskSpanBytes": 483109666816,
+      "vmMap1GiB": {
+        "result": 0,
+        "cleanup": true
+      },
+      "vmMap8GiB": {
+        "result": 3,
+        "name": "KERN_NO_SPACE"
+      },
+      "vmMap16GiB": {
+        "result": 3,
+        "name": "KERN_NO_SPACE"
+      },
+      "mmap8GiB": {
+        "errno": 12,
+        "name": "ENOMEM"
+      },
+      "memoryWritten": false,
+      "cefIntegrated": false,
+      "exit": 0,
+      "limits": "region scan is not an atomic global snapshot; top-level occupied regions are conservatively treated as unavailable; this measures this installed lab session only, not all iOS apps/devices"
+    },
+    "apiCorrection": "iOS SDK explicitly rejects mach/mach_vm.h. Final probe uses SDK-declared vm_map/vm_region_64/vm_deallocate; compile-time LP64 assertion and iOS Werror compilation pass. No manual private MIG declarations.",
+    "helperStaticContract": {
+      "filetype": "MH_EXECUTE",
+      "lcMainFileOffset": 847956,
+      "directCEFDependency": true,
+      "entryCalled": false
+    },
+    "build10": {
+      "compiledSigned": true,
+      "finalMarkerAndDeepSignatureVerified": true,
+      "installation": "command timed out at60s; subsequent successful installed-app query still reports Build9",
+      "deviceLoaderProbeRun": false,
+      "noRetry": true,
+      "limits": "Do not claim Helper dlopen accepted or rejected on device; static filetype is not runtime evidence"
+    },
+    "publicCEFSearch": {
+      "exactGenerateGPUReportHits": 3,
+      "exactReducedMotionHits": 2,
+      "cppImplementationHits": 0,
+      "hitsAreImplementations": false,
+      "limits": "indexed search is incomplete; unrelated binary analysis reports are not compatible source; no downloaded/executed samples"
+    },
+    "regressions": "test-local.sh PASS for both additions; actual iOS Werror probe sources; real compiler first/second failure staging preserves outputs; synthetic full-success3-shim hashes pass",
+    "next": "At fresh device availability recheck installed version/pending state; if already10 skip reinstall, otherwise install prepared10 once, then run ONLY IDeckNativeHelperLoadProbe=1. Compatible CEF source-wide small-pool rebuild and actual Helper IPC/lifecycle remain independent requirements.",
+    "sourceFingerprints": {
+      "experiments/mac-arm-steam/native-vm-range-probe.c": "a105feec7b2e6f3787cb065a4ac4cda90db4f9aa1245129f9467c563ebdc2fbf",
+      "experiments/mac-arm-steam/helper-load-probe.m": "ed66878d1fcd7ddac01f9c3b4a0f7dfc7db773094ef5a70d1ffa47e87cbb0957",
+      "scripts/experiments/build-mac-steam-overrides.py": "6ec74132fe240425c2eb2e020a1b344096749a20b8a5833654828ab2ad8156ed",
+      "experiments/mac-arm-steam/test-local.sh": "b00579f743a57b672dd41a6ac41a0cf15ef292bdbc8b2053c307c0a54a0bb267"
+    }
+  },
+  "heartbeat20261028": {
+    "sourceParent": "2d82b99b5ae4d71fa7f7d9c4b848658802b73621",
+    "installedLabVersionObserved": "10",
+    "priorTimeoutCorrection": "Fresh query proves installation eventually completed; no reinstall needed",
+    "phoneLockObserved": true,
+    "helperProbeExecuted": false,
+    "deviceOperations": "read-only installed-app and lock queries only; no launch/reinstall/lock bypass",
+    "independentPatch": "native exec/fork/spawn observers now preserve incoming errno as well as outgoing and redact unknown executable/module basenames",
+    "hostTest": "ASan/UBSan mocked resolver checks all4 arguments/results/error paths; no actual exec/fork/spawn; full test-local and real staging regression pass",
+    "binaryBoundary": "patch is host/iOS-compile verified SOURCE ONLY; installed Build10 predates it; no device validation claimed",
+    "next": "After native unlock, use already installed Build10 with ONLY IDeckNativeHelperLoadProbe=1; retain original native CEF/IPC gates",
+    "fingerprints": {
+      "experiments/mac-arm-steam/exec-diagnostic.c": "0c529eed23491a1b739fb2bfeba31dbb53cc7054767249eafb9d9a1590725dd0",
+      "experiments/mac-arm-steam/test-exec-diagnostic.c": "10b41a51990f47e69483b08f1696448a808201bf9b0fd521309904d2f21a9859",
+      "experiments/mac-arm-steam/test-local.sh": "308e4c53942e6b80a0b3d74f3be0caeddac339d1fbf9bf67bc834345405731b7"
+    }
+  }
 }

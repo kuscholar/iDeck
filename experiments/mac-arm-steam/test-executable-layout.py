@@ -32,6 +32,20 @@ class LayoutTests(unittest.TestCase):
         logical.unlink(); logical.symlink_to('/outside')
         with self.assertRaises(ValueError): mod.fix_layout(self.app)
         self.assertEqual(str(logical.readlink()),'/outside')
+    def test_framework_alias(self):
+        frameworks=self.app/'Mac/Contents/Frameworks';frameworks.mkdir()
+        (frameworks/'library').write_bytes(b'framework')
+        self.assertTrue(mod.fix_layout(self.app))
+        self.assertEqual((self.app/'Mac/Contents/MacOS/Frameworks/library').read_bytes(),b'framework')
+        self.assertFalse(mod.fix_layout(self.app))
+    def test_preserve_framework_alias_conflict(self):
+        (self.app/'Mac/Contents/Frameworks').mkdir()
+        alias=self.app/'Mac/Contents/MacOS/Frameworks';alias.symlink_to('/outside')
+        with self.assertRaises(ValueError): mod.fix_layout(self.app)
+        self.assertEqual(str(alias.readlink()),'/outside')
+    def test_reject_framework_target_escape(self):
+        (self.app/'Mac/Contents/Frameworks').symlink_to('/outside')
+        with self.assertRaises(ValueError): mod.fix_layout(self.app)
     def test_reject_parent_link(self):
         parent = self.app/'Mac/Contents/MacOS'; parent.rmdir(); parent.symlink_to(self.app)
         with self.assertRaises(ValueError): mod.fix_layout(self.app)

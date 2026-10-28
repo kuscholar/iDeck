@@ -28,23 +28,41 @@ def fix_layout(app):
     if not parent.is_dir() or parent != parent.resolve():
         raise ValueError('Unexpected logical executable parent')
     logical = parent / executable
+    changed = False
     if logical.is_symlink():
         if logical.resolve() != main:
             raise ValueError('Existing executable link points elsewhere; preserve it')
-        return False
-    if logical.exists():
+    elif logical.exists():
         raise ValueError('Existing logical executable is preserved; inspect it first')
-    logical.symlink_to('../../../' + executable)
+    else:
+        logical.symlink_to('../../../' + executable)
+        changed = True
     if logical.resolve(strict=True) != main:
         raise ValueError('Executable link did not resolve to signed root binary')
-    return True
+    frameworks = app / 'Mac/Contents/Frameworks'
+    alias = parent / 'Frameworks'
+    if frameworks.is_symlink():
+        raise ValueError('Frameworks target must be a real in-bundle directory')
+    if frameworks.is_dir():
+        if alias.is_symlink():
+            if alias.resolve() != frameworks:
+                raise ValueError('Existing Frameworks link points elsewhere; preserve it')
+        elif alias.exists():
+            raise ValueError('Existing MacOS/Frameworks is preserved; inspect it first')
+        else:
+            alias.symlink_to('../Frameworks')
+            changed = True
+        if alias.resolve(strict=True) != frameworks:
+            raise ValueError('Frameworks link did not resolve inside the bundle')
+    return changed
+
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('app', type=Path)
     args = parser.parse_args()
-    print('Logical executable link added; re-sign before installation' if fix_layout(args.app) else 'Logical executable already resolves to root binary')
+    print('Logical bundle links added; re-sign before installation' if fix_layout(args.app) else 'Logical bundle links already resolve correctly')
 
 
 if __name__ == '__main__':
