@@ -61,6 +61,9 @@ Control build [40632409115](https://github.com/kuscholar/iDeck/actions/runs/4063
 successfully compiled the AMD64 DLL. Its actual Windows load test found all15
 required exports and two1GiB private pools, with no new16GiB reservation.
 This is not Steam or device success. It uses stock Chromium crash integration.
+Repeat control build40633251602 also passed the actual payload gate
+(size80, version-match1, mode-size192) and reproduced the identical DLL SHA256
+`7dee97bd5ea0a363a68304b71ea4f8d9cbdac0647f716db59639f79f51989cab`.
 
 Source inspection confirms that CEF instead uses `CefCrashReporterClient`,
 reads its crash configuration, and supplies different handler/optional-argument

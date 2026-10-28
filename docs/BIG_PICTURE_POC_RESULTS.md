@@ -2045,3 +2045,12 @@ tag); ten-file pristine apply and exact retained production GN targets pass
 host tests. Real Git ancestry generates CEF version. Next Windows browser+
 renderer DLL load/payload/VA gate, then isolated iPhone ownership/component
 load. Build85 unlock gate unchanged; no repeated launch or credential action.
+
+Run40633251602 control repeats actual Windows success and adds payload-size80,
+version-match1, mode-size192. Re-downloaded DLL has identical SHA256 to run10.
+CEF-aware run40634322760 passes clone/full published patch/version generation;
+test fixture then fails because outside checkout it inherits Windows global
+auto-CRLF. Actual checkout was explicitly false and correctly patched. Host
+A/B reproduces358CRLF/wronghash vs0CRLF/exact9ea7d127...; force false per
+fixture command, keep strict source hashes. Windows CEF-aware compilation and
+device ownership/CEF/UI still pending; no stock DLL staged into Steam.

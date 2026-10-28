@@ -31,8 +31,11 @@ with tempfile.TemporaryDirectory() as directory:
         target = temp / filename
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(subprocess.check_output(['git', 'show', 'HEAD:' + filename], cwd=chromium))
-    subprocess.run(['git', 'apply', '-p0', '--check', str(patch)], cwd=temp, check=True)
-    subprocess.run(['git', 'apply', '-p0', str(patch)], cwd=temp, check=True)
+    # This temporary fixture is outside the cloned repository. On Windows it
+    # would otherwise inherit the runner's global auto-CRLF setting instead of
+    # the real source checkout's explicit core.autocrlf=false.
+    subprocess.run(['git', '-c', 'core.autocrlf=false', 'apply', '-p0', '--check', str(patch)], cwd=temp, check=True)
+    subprocess.run(['git', '-c', 'core.autocrlf=false', 'apply', '-p0', str(patch)], cwd=temp, check=True)
     patched = (temp / 'chrome/chrome_elf/BUILD.gn').read_bytes()
     focused = focused_elf_build(patched, cef_glue.PATCHED_ELF_BUILD_SHA256).decode()
     assert '//cef:chrome_elf_set' in focused and '//cef/libcef/features' in focused

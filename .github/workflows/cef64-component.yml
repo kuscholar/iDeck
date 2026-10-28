@@ -4,6 +4,8 @@ on:
     branches: [experiment/steam64-hybrid]
     paths:
       - experiments/cef64/**
+      - tests/host/check-cef64-source.py
+      - tests/host/check-cef64-cef-glue.py
       - .github/workflows/cef64-component.yml
   workflow_dispatch:
 permissions:

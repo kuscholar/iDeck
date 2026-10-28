@@ -15,7 +15,7 @@
     "Full82 Xcode and final Mach-O marker",
     "Existing iDeck readiness/hybrid/input/TEB ASan/UBSan regressions"
   ],
-  "windows_build": "Control DLL built and Windows load/allocation/15-export test passed; stronger public payload ABI check and separate CEF-aware variant remain gates.",
+  "windows_build": "Two control builds passed actual Windows load/VA/15-export tests; second also payload-size80/version-match1/mode-size192. Byte-identical DLL. CEF-aware variant source preparation passes; Windows fixture corrected, compilation pending.",
   "on_device": "Build83 capacity and84 bounded backing passed. Build85 installed; explicit ownership probe launch refused by native lock. No Windows ownership/FEX consumption/CEF result yet.",
   "private_artifacts": "../.madeira-install/steam64-current/cef-public126 and cef64-prepare.log",
   "external_source_checkout": "/Volumes/easystore/Research/iDeck-cef64-chromium126",
@@ -66,6 +66,16 @@
       "id": 40632409115,
       "head": "245d91093ac4070133845e3e305c61391c2080fc",
       "result": "PASS: actual focused1661-edge AMD64 build, actual Windows DLL load, all15 exports, two1GiB new private pools and no new16GiB reservation. No CEF/Steam/iOS validation."
+    },
+    {
+      "id": 40633251602,
+      "head": "1fd7b5bad9a9ab89926203faedb4d3ed022a8b53",
+      "result": "PASS actual Windows payload-size80/version-match1/mode-size192 plus load/15exports/two1GiB pools. DLL SHA identical to run40632409115."
+    },
+    {
+      "id": 40634322760,
+      "head": "0c165bb464c7620044cfd6eb07e88e1ca8edf2fb",
+      "result": "CEF source cloning/full ten-file patch/version generation passed. Temporary test fixture inherited Windows global auto-CRLF, changing GN byte hash; real checkout explicitly false was correct. Host A/B reproduces true=358 CRLF, SHA b2695d..., false=0 CRLF, exact expected9ea7d1... . Fixture now forces false; no allocator/CEF runtime claim."
     }
   ],
   "diagnostic_build82": {
@@ -174,7 +184,14 @@
     ],
     "build_log_sha256": "3ed46036eab4427afd99ec2d972074134a0148b9741def4222206a70d32f8c74",
     "steam_staged": false,
-    "note": "Stock Chromium crash client; do not treat as proven Valve/CEF-compatible."
+    "note": "Stock Chromium crash client; do not treat as proven Valve/CEF-compatible.",
+    "repeat_run": 40633251602,
+    "payload_gate": {
+      "size": 80,
+      "version_match": true,
+      "mode_size": 192
+    },
+    "byte_identical_repeat": true
   },
   "official_payload_static": {
     "official_original_sha256": "b253997ec12d825ff5a560072fc71a4bc381887ff65410f55f7db5ec46d6be43",
