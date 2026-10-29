@@ -53,3 +53,16 @@ IPA's `Madeira.debug.dylib` with the output. Obtain your own main/helper develop
 profiles and use `tools/resign-app.py` from the source asset; see
 [the audit](IPA_RELEASE_AUDIT.md). Recipients can modify and debug those changes.
 Your own identity/profiles are required; the maintainer's key is not.
+
+## Automatic Steam acquisition builds
+
+The `feature/automatic-steam-client-install` source adds Download & Install Steam
+in prerequisite2; the previously published IPA does not yet include it. After
+runtime preparation, the action downloads the complete matching client/CEF
+straight from Valve and validates all public files. No desktop or Files import
+is needed for that acquisition path. It needs free storage and no active Wine/
+JIT-pool session. Reopen iDeck after completion before enabling JIT. If interrupted,
+Retry reuses verified packages; manual repair/import remains available. Read
+[AUTOMATIC_STEAM_INSTALL.md](AUTOMATIC_STEAM_INSTALL.md) for verified source hashes,
+legacy-client support/licensing limits and outstanding device acceptance gates.
+Do not describe a successful build or green prerequisite as Steam login success.

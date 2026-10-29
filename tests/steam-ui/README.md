@@ -596,3 +596,14 @@ parent native correction of WoW GROUP_AFFINITY output attributes (12 ->16 bytes)
 `python3 tests/host/check-steam-ui-affinity32.py` exercises production decoding with
 ASan/UBSan, exact unaligned12-byte allocation, all fields preserved, ordinary/native
 and malformed gates. This does not prove Steam UI stability or Bluetooth/game return.
+
+## Complete native client acquisition tests
+
+Run `python3 tests/host/check-steam-client-install.py` for synthetic production
+extractor/transaction fixtures. `--real /private/verified-packages` rechecks all19
+Valve archives and extracts the entire6233-file client without executing it.
+`tools/test-steam-client-native.swift` exercises the production URLSession/actor
+from a brand-new private host directory; it is a test driver, not another installer.
+Never pass a live Wine prefix or commit its output. The new launcher has the same
+production action and pinned public metadata. See AUTOMATIC_STEAM_INSTALL.md for
+fresh-container device acceptance and rollback/source-unavailable test gates.

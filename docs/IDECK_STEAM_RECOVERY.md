@@ -58,3 +58,19 @@ the existing repair source is i386 (0x014c). This explains the architecture
 check failure. Build67 was signed, installed in place and launched; the user
 confirmed the in-app repair restored use. The logout crash causal chain is
 still unverified. No general account-switch crash fix is claimed.
+
+## Automatic download and transactional repair (feature branch)
+
+`feature/automatic-steam-client-install` adds **Download & Install Steam** to
+prerequisite2 and **Repair Steam Files** for existing clients. It uses all19
+pinned Valve packages, not Dock's three component archives. Manual repair/import
+uses the same complete catalog validator. The earlier four-PE maintenance helpers
+remain for historical explicit diagnostics; the launcher verifies the full client
+on its background actor before turning step2 green or scheduling auto-start.
+
+The source/whole-file SHA pins, actual availability results, storage budget,
+verified-package cache, safe streaming extraction, cancellation, durable journal,
+rollback, preserved directories and support/licensing limits are documented in
+[AUTOMATIC_STEAM_INSTALL.md](AUTOMATIC_STEAM_INSTALL.md). The previous sections
+record Build67 behavior; they do not describe the automatic installer's full-file
+checks. No prefix/account reset is required. After repair, reopen the app before JIT.

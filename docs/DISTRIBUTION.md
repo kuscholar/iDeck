@@ -77,3 +77,15 @@ binary-distribution issues. Those issues are not silently marked solved here.
 - LGPL2.1 section6: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 - MPL2.0: https://www.mozilla.org/en-US/MPL/2.0/
 - Component-specific copies are included in LICENSES and pinned submodules.
+
+## Automatic Steam downloader
+
+SteamClientPackages.json contains only public filenames, sizes and hashes. It is
+not a Steam binary payload or redistribution license. Release audits must continue
+to exclude Steam/CEF packages and extracted files, credentials, cache downloads,
+profiles, games and saves. Downloads go directly from Valve HTTPS to the user's
+app. Include downloader source and existing GPL/exception notices in corresponding
+source materials. Preserve Valve/CEF notices in downloaded files. Do not claim
+Valve endorsement, permission to redistribute, or supported legacy maintenance.
+The feature's device/login and unsupported-update release gates are tracked in
+AUTOMATIC_STEAM_INSTALL.md and its evidence JSON.

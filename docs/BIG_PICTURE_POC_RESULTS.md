@@ -1727,3 +1727,60 @@ main/StikJIT/converter section hashes match build products (49/36/14 sections).
 passed. Source, dependency pins, LGPL patches and relink materials accompany IPA.
 No affected-accelerator TLS fix, exhaustive game regression or resolved logout
 crash claimed. User Demo.gif excluded from this release commit/source archive.
+
+## 2026-10-28: automatic Steam acquisition feature (main-based isolated worktree)
+
+Branch `feature/automatic-steam-client-install`, base `e3d845e`, worktree
+`iDeck-main`; main and the original dirty steam64-cef64 experiment remain unchanged.
+Observed user gap: public IPA has no complete Steam/CEF client and local repair
+cannot acquire one. Hypothesis: the exact historical complete Win32 package set
+remains available directly from Valve and can be installed without JIT.
+
+Discriminating evidence: current official HTTPS steam_client_win32 returns200,
+8504bytes, SHA2564b8aa78d95dd7a1475c7849c3e783b136452d34be67342b53728799d697c4823,
+identical to saved version1769731672. All19 official archive HEAD/GET lengths and
+SHA256 pass. Independent reconstruction matches all6233 historical public file
+hashes, including CEF/webhelper and UI dependencies; not Dock-only.
+
+Minimal feature: pinned public metadata (compiled hash), native URLSession file
+transfers and redirect gate, size/SHA verification, file-backed64KiB ZIP/inflate,
+full file/PE validation, whole-verified-package cache, cancellation/retry,
+space/session checks, durable transaction/rollback and protected private paths.
+The existing launcher supplies real phases/bytes, inline Cancel, Retry, manual
+fallback and reopen requirement. Manual/automatic/preflight use full catalog
+validation off the UI executor. No Wine/FEX/DXMT/JIT runtime source changes.
+
+Verification: synthetic production parser/extractor/transaction tests pass,
+including wrong architecture, mixed metadata, unsafe paths/symlinks, CRC/bombs,
+missing/x64 repair, private sentinel preservation, fresh-write rollback,
+interrupted-journal recovery, cancellation/session refusal and storage. Full real
+archive extraction and native Swift URLSession fresh install pass; repeated
+complete install is a no-op. A further real network cancel/corrupt-cache/retry
+run restores a missing public file. Existing Steam/iDeck/keyboard/Dock ZIP/Cloud/
+CM/JIT network checks pass with recorded environment caveats. Full iOS Build96,
+linked Mach-O installer markers/catalog and deep signing pass.
+
+Device: separate iPad app installation refused the three free-profile app limit.
+No uninstall or iPhone overwrite. User explicitly approved replacing only the
+empty iPad test iDeck; signed Build96 same-bundle update and launch succeeded.
+Before update Documents had only the startup log, no Steam/runtime/auth/game
+files. Mac CUA remains locked. User was asked to tap Prepare runtime then
+Download & Install Steam, or unlock Mac for Device Hub control. Actual in-app
+network install, green step2, fresh-process JIT, login and Big Picture are
+**pending**, not inferred from build/host success.
+
+Private artifacts/hashes and exact source URLs are in
+AUTOMATIC_STEAM_INSTALL_EVIDENCE.json and AUTOMATIC_STEAM_INSTALL.md. Raw files
+remain outside Git. Original manifest RSA signatures are not independently
+verified; trust is pinned historical HTTPS metadata plus current matching manifest.
+Valve's32-bit support ended2026-01-01; existing frozen-launch update flags remain
+an unsupported-maintenance limitation. No mandatory update/auth/DRM bypass or
+Valve permission/maintained-client claim. No release published.
+
+Next: finish fresh-container iPad button-to-install acceptance and then ordinary
+fresh-process Steam startup; user handles JIT pairing and Steam credentials/Guard.
+Do not claim this high-priority feature is release-ready until those gates pass.
+
+Implementation committed as `9d21529` at Wednesday23:31EDT, within the user's
+allowed22:00–08:00 Git window. Final source timestamps precede the actual final
+Mach-O. Documentation/evidence follow separately. No release/main merge.

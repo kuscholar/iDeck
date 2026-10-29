@@ -180,3 +180,15 @@ to a failing 64-bit CEF path, preserving account/game data. A fresh same-prefix
 session logs saved-login success and uses the original cef.win7 helper. Actual
 Ratatan installation/download acceptance remains pending user/device UI access;
 these API and login results alone are not a completed installation test.
+
+## Automatic client acquisition (new feature branch)
+
+The current launcher source supports **Download & Install Steam** after local
+runtime preparation. It fetches and verifies all19 matching official Valve
+packages for legacy client1769731672, then installs transactionally in the same
+Steam32BundleLab directory. No second Steam architecture, account transfer or
+new JIT/runtime patch is introduced. Manual import remains a fallback; automatic
+and manual actions share full catalog validation. Older resource-bundling build
+instructions above are historical and optional, not necessary for this downloader.
+See [exact source, tests and remaining gates](AUTOMATIC_STEAM_INSTALL.md).
+No supported-maintained-client or fresh-device Big Picture success is implied.

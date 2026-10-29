@@ -60,6 +60,19 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 签名快捷指令并替换旧副本。此修复尚未包含在已发布的 Build 56 IPA 中。
 详见 [JIT 排错说明](docs/JIT.md#shortcut-destination-errors-after-re-signing)。
 
+### 一键准备 Steam（新功能分支）
+
+先点 **Prepare runtime**，再在第2步点 **Download & Install Steam**。
+iDeck 会通过 HTTPS 直接从 Valve 下载完整的固定版本 Steam/CEF，显示真实字节进度，
+逐一校验所有公开程序文件后再安装。支持取消、重试与已验证整包缓存；修复保留账号、
+游戏和存档。安装后先完全关闭并重新打开 iDeck，再启用 JIT。
+
+该功能位于 `feature/automatic-steam-client-install`，**此前发布的 IPA 尚不包含它**。
+主机完整下载/安装与 iOS 编译已通过，真机从按钮到大屏幕的验收仍待完成。
+使用的是已停止支持的旧版客户端，并非持续维护的最新版 Steam。
+若 Valve 不再提供必需包，App 会明确报错并保留手动导入入口。
+详见 [下载源、校验与限制](docs/AUTOMATIC_STEAM_INSTALL.md)。
+
 ## 打开 Steam 前：点亮六个勾
 
 使用包含新启动器的 Build 55 或更新构建，打开 iDeck，点击
@@ -68,7 +81,7 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 | 步骤 | 要做什么 |
 | --- | --- |
 | 1 · Local runtime（本地运行时） | 点击 **Prepare runtime** 初始化本地 Windows 环境，保留已有文件。 |
-| 2 · Steam & browser files（Steam 与浏览器文件） | 在 iDeck 自己的环境内放入完整、兼容的 Windows Steam 与 CEF 文件。**Add Steam files** 提供说明；若某构建自带资源，**Prepare Steam** 会复制资源。公开 IPA 不包含 Steam。 |
+| 2 · Steam & browser files（Steam 与浏览器文件） | 安装器功能构建可点 **Download & Install Steam** 或 **Repair Steam Files**，等待完整校验后重新打开 App。旧版已发布 IPA 仍需手动导入；IPA 本身不捆绑 Steam。 |
 | 3 · Development signing（开发签名） | 使用允许调试的开发签名；若提示缺少权限，需要重新签名。 |
 | 4 · JIT setup（JIT 配置） | 打开设置，使用内置 StikJIT 并配置本设备的配对文件，或使用支持的外部 StikDebug 流程。配对授权由你自行完成。 |
 | 5 · Device connection（设备连接） | 按提示连接 LocalDevVPN，使本地调试连接可达；返回 iDeck 后重新检查。 |
@@ -85,12 +98,11 @@ Build 54 使用旧的设置入口，没有这套六步检查。
 **Sign in / Change Steam account**，它会打开 Steam 自己的账号流程。
 可在 iDeck 设置中调整自动启动；即使开启自动启动，新 App 进程仍需要 JIT。
 
-**Steam 客户端准备仍面向技术测试者。** 当前实验使用较旧的 32 位 Windows Steam，
-完善的全新客户端获取/安装流程尚未完成。请阅读
-[源码与资源准备](docs/GETTING_STARTED.md) 和
-[客户端准备记录](tests/steam-ui/README.md)，通过合法渠道获取软件，
-不要使用他人的登录缓存。完整客户端应位于同一个受支持目录：
-`wine/drive_c/Steam32BundleLab` 或 `wine/drive_c/Steam32Lab`，不能拼凑不同安装的零散文件。
+**旧版 Steam 兼容性仍属实验。** 安装器固定使用 Windows 客户端 `1769731672` 的
+19 个匹配包，包含完整 CEF。Valve 已停止支持32位 Windows；成功下载不代表后续登录、
+更新一定可用。安装器不会绕过强制更新、认证或游戏许可；持续维护的客户端仍是独立的
+技术门槛。手动备用流程见 [准备说明](docs/GETTING_STARTED.md) 与
+[Steam 修复](docs/IDECK_STEAM_RECOVERY.md)，不要导入他人的登录缓存。
 
 ## 口袋里的掌机，有些什么？
 

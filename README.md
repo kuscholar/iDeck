@@ -72,6 +72,21 @@ the imported shortcut with the corrected signed local copy after updating.
 This fix is not yet included in the published Build 56 IPA.
 See [JIT troubleshooting](docs/JIT.md#shortcut-destination-errors-after-re-signing).
 
+### One button for Steam (new feature branch)
+
+After **Prepare runtime**, tap **Download & Install Steam** in step2. iDeck
+fetches the complete pinned Steam/CEF client directly from Valve over HTTPS,
+shows real byte progress, and verifies every public file before installation.
+Cancel and Retry keep verified packages cached. Repairs preserve accounts, games
+and saves; fully reopen iDeck after installation before enabling JIT.
+
+This is implemented in `feature/automatic-steam-client-install`, **not in the
+previously published IPA**. Host full-download/install and iOS build checks pass;
+fresh-device button-to-Big-Picture acceptance is still pending. The client is an
+unsupported legacy version, not a maintained current Steam release. If Valve's
+packages disappear, iDeck reports that and keeps manual import available.
+[Source, verification and current limits](docs/AUTOMATIC_STEAM_INSTALL.md).
+
 ## Before Steam: six green checks
 
 On Build 55 or newer containing the checklist, open the launcher and tap
@@ -81,7 +96,7 @@ or a missing-condition action:
 | Step | What you need to do |
 | --- | --- |
 | 1 · Local runtime | Tap **Prepare runtime** to initialize the local Windows environment. Existing files are preserved. |
-| 2 · Steam & browser files | Supply a complete compatible Windows Steam client with its CEF/browser files in iDeck's own prefix. Use **Add Steam files** for guidance; if a build supplies resources, **Prepare Steam** copies them. |
+| 2 · Steam & browser files | On the installer feature build, tap **Download & Install Steam** (or **Repair Steam Files**). Wait for verification, then fully reopen iDeck. Older published builds require manual client import; the IPA does not bundle Steam. |
 | 3 · Development signing | Use a development signature that permits debugging. Re-sign if the check reports missing permission. |
 | 4 · JIT setup | Open JIT setup. Configure Built-in StikJIT with this device's pairing file, or the supported external StikDebug workflow. Pairing approval is yours to complete. |
 | 5 · Device connection | Connect LocalDevVPN when requested so the local debug connection is reachable. Recheck after returning to iDeck. |
@@ -99,13 +114,13 @@ account** entry for another account; iDeck opens Steam's own account flow.
 Automatic startup can be changed in iDeck settings; it still requires JIT for
 each new app process.
 
-**Steam setup is still a technical-tester task.** The experiment uses an older
-32-bit Windows Steam client; a supported clean acquisition/setup flow remains
-unfinished. Follow [setup](docs/GETTING_STARTED.md) and
-[client preparation notes](tests/steam-ui/README.md), using legitimate owner
-channels. Do not copy another installation's authentication cache. A complete
-client must be in one supported directory (`wine/drive_c/Steam32BundleLab` or
-`wine/drive_c/Steam32Lab`); scattered files from different clients do not count.
+**Legacy Steam compatibility remains experimental.** The source installer pins
+Windows client `1769731672` and all19 matching packages, including CEF. Valve has
+ended 32-bit Windows support; acquisition success cannot guarantee continued
+login or updates. No mandatory update, authentication or license check is
+bypassed by the installer. A maintained-client path remains a separate blocker.
+Manual fallback and source details: [setup](docs/GETTING_STARTED.md),
+[Steam recovery](docs/IDECK_STEAM_RECOVERY.md). Never import another user's login cache.
 
 ## Your phone, with a handheld habit
 

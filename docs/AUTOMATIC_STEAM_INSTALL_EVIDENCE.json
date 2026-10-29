@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-29T03:30:36.169230+00:00",
+  "branch": "feature/automatic-steam-client-install",
+  "base": "e3d845edd4cf46a247baea6d2cc398d7ba71812d",
+  "client": {
+    "version": "1769731672",
+    "origin": "https://client-update.akamai.steamstatic.com/",
+    "manifestSHA256": "4b8aa78d95dd7a1475c7849c3e783b136452d34be67342b53728799d697c4823",
+    "current_official_manifest_matches_historical": true,
+    "metadataSHA256": "d44d58a17bd35d3b1a03b1adfd9a05d537251a4b986f02af43763d6c62ab934b",
+    "package_count": 19,
+    "download_bytes": 334243667,
+    "files": 6233,
+    "unique_expanded_bytes": 729535453,
+    "independent_full_archive_and_file_hash_validation": true,
+    "manifest_RSA_signature_verified": false
+  },
+  "host": {
+    "synthetic_production_install_tests": "PASS",
+    "production_streaming_extraction_all_official_packages": "PASS",
+    "production_URLSession_fresh_download_install": "PASS",
+    "existing_installation_no_op": "PASS",
+    "real_network_cancellation_corrupt_cache_rejection_retry_missing_file_repair": "PASS",
+    "Steam_launch": "NOT RUN on host"
+  },
+  "iOS": {
+    "build": 96,
+    "full_Xcode_build": "PASS",
+    "final_debug_dylib_sha256": "d66bc23f3b8e0f15d5d951cd043581168b2c2695a5b658c3c33749781ea4f464",
+    "bundled_catalog_sha256": "d44d58a17bd35d3b1a03b1adfd9a05d537251a4b986f02af43763d6c62ab934b",
+    "no_bundled_Steam_client": true,
+    "deep_strict_signature": "PASS",
+    "separate_iPad_bundle_install": "REFUSED: three free-profile app limit; no apps removed",
+    "same_bundle_iPad_update": "PASS after explicit user approval; container preserved",
+    "iPad_actual_launch": "PASS; actual private log Build96",
+    "starting_container": "Documents contained only madeira-log.txt; no runtime/client/auth/game import",
+    "iPhone_working_apps": "UNCHANGED; no install attempted over existing apps",
+    "on_device_download_button_install": "PENDING physical UI interaction; Mac CUA locked",
+    "on_device_login_Big_Picture": "NOT TESTED for downloaded client"
+  },
+  "regressions": {
+    "steam_ui": "PASS",
+    "ideck": "PASS",
+    "keyboard": "PASS",
+    "Dock_ZIP_registry": "PASS; pinned Dock git source cross-check skipped because submodule not initialized",
+    "JIT_network": "PASS (existing listener thread teardown emitted exception after numeric checks)",
+    "Steam_Cloud": "PASS",
+    "Steam_CM_transport": "PASS"
+  },
+  "limitations": [
+    "Legacy 32-bit Windows client unsupported by Valve; maintained-client path not established.",
+    "Inherited frozen launch uses nobootstrapperupdate/skipinitialbootstrap; no new suppression added. Mandatory update remains blocker.",
+    "No Valve redistribution permission/endorsement obtained; download only, no proprietary bundles.",
+    "Cache reuses whole verified packages; no byte-range/background download service.",
+    "Rollback can require free storage; failed recovery retains journal/backups and blocks launch.",
+    "Actual iOS download/install and Steam UI acceptance remain pending."
+  ],
+  "evidence_private_root": ".madeira-install/automatic-steam-install",
+  "private_artifact_hashes": {
+    "availability.json": {
+      "sha256": "5f341d3b1094213b9268348ca0e448b30e3cbfea65bbd6a84361ceef179e2bdd",
+      "bytes": 4819
+    },
+    "current-win32-manifest.json": {
+      "sha256": "fb04c0c9e3e628db4d6d47555d7b4478d4936b830dde77cc75de94452f8292ad",
+      "bytes": 182
+    },
+    "native-download-test2.log": {
+      "sha256": "98808f9323e2f48e9b1f517337b429b545f13bc4f972979bca0431fb5c829d66",
+      "bytes": 1995
+    },
+    "native-cancel-retry.log": {
+      "sha256": "a814f42400851984572a2a6e0ed07b6342fdf3e82f1dfca9e91ba09539882d1f",
+      "bytes": 2098
+    },
+    "build96-steamui.log": {
+      "sha256": "7d7e08aac56dbc1e44fe04ab53896c27c7e8e0bcd0da2b4ec6f613f09073f453",
+      "bytes": 182391
+    },
+    "sign96-steamui.log": {
+      "sha256": "bd5898fa995834134e94ac64b32d51c64f3c5c86d233756ddec2681184e853ea",
+      "bytes": 256
+    },
+    "install96-ipad.log": {
+      "sha256": "30f143a01110a934d61fd096e86eea0874b5505ca0985f259a6fe713e9ca0d28",
+      "bytes": 319
+    },
+    "ipad96-first-launch.txt": {
+      "sha256": "7d2311b7535c2f8c6a4a024794a1faa7746dbb767891862e5a1192abbb1b2912",
+      "bytes": 1166
+    }
+  },
+  "implementation_commit": "9d21529",
+  "source_hashes": {
+    "app/Madeira/SteamClientInstaller.swift": "5d8463884193e26c66aa9fdf8164f526bba6088eb92c3347fd7cbbc789c54a78",
+    "app/Madeira/SteamUIExperiment.swift": "7ff5db0908dd318aeb305381668a47c9891008559b444894d96ba893db73cb79",
+    "app/Madeira/ContentView.swift": "2edf4956e2c2df8ca03e658bd1eda65dde81365ae59f447bfaffc1a63f6ed0bd",
+    "app/Madeira/SteamClientPackages.json": "d44d58a17bd35d3b1a03b1adfd9a05d537251a4b986f02af43763d6c62ab934b"
+  },
+  "native_runtime_provenance": "Unchanged Build67 signed PE resources and release67 relink archives; no current steam64-cef64 experimental archives reused.",
+  "maintained_client_release_assessment": "BLOCKED: legacy client unsupported; existing frozen update policy is not a maintained-client solution.",
+  "feature_acceptance_assessment": "PENDING actual iOS button-triggered download/install and Steam startup; host end-to-end PASS."
+}

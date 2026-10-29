@@ -88,3 +88,12 @@ starting paired JIT/Steam: doing large file restoration before creating the JIT
 pool in the same process caused an independent address-window allocation failure
 in the first Build59 maintenance run. A fresh process then reached saved-login
 Success/OK at 2026-10-26 01:38:42 without updating the pinned client.
+
+## Automatic acquisition preserves the working x86 architecture
+
+The automatic installer feature is isolated from the AMD64 Steam/CEF experiments.
+It downloads the full pinned client1769731672, requires i386 key PEs and every
+catalogued resource hash, and transactionally repairs an incompatible auto-update.
+It does not add another update-suppression flag. Existing frozen-client startup
+flags remain an unsupported-maintenance limitation, not a long-term fix.
+See [AUTOMATIC_STEAM_INSTALL.md](AUTOMATIC_STEAM_INSTALL.md).

@@ -24,10 +24,13 @@ pins; read docs/DISTRIBUTION.md before sharing binaries.
    notices. Obtain Apple's converter under its own agreement, or use the
    separately licensed library in the IPA for its permitted shader-conversion
    purpose. It is excluded from the Git source tree.
-5. Supply a legitimate full Steam client/CEF tree in the app's isolated prefix.
-   Current experiments use an older32-bit Windows Steam version; no supported
-   clean acquisition/download installer is delivered in this snapshot. Do not
-   download third-party repacks or copy another installation's login cache.
+5. Build with SteamClientInstaller.swift and the pinned SteamClientPackages.json
+   resource (the Xcode target includes both). After Prepare runtime, use
+   Download & Install Steam. No Valve binaries need to be bundled or imported.
+   This branch downloads the full official pinned legacy client on device;
+   [verification and unfinished device/support gates](AUTOMATIC_STEAM_INSTALL.md)
+   remain explicit. Manual repair/import is available if Valve removes packages.
+   Do not use repacks or copy another installation's login cache.
 6. Open app/Madeira.xcodeproj, select Madeira and your own development team. The
    new app ID is com.kuscholar.ideck.steamui; use a suffix-compatible unique ID
    for your team. Internal filenames remain Madeira for build compatibility.
