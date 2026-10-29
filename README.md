@@ -36,7 +36,7 @@ No gaming PC stream is required.
 ## Install the alpha and help test
 
 Grab the IPA and `SHA256SUMS` from [Releases](https://github.com/kuscholar/iDeck/releases).
-**v0.1.3-alpha.2 (Build 56)** includes the six-step launcher and bilingual setup
+**v0.1.3-alpha.4 (Build 99)** includes the six-step launcher and bilingual setup
 guide. The older v0.1.3-alpha.1 (Build 54) uses the previous launcher.
 
 1. **Download and verify.** Compare the IPA's SHA-256 with `SHA256SUMS`.
@@ -69,7 +69,7 @@ Shortcuts return URL. As a temporary workaround, turn off the optional
 **Madeira JIT shortcut**, connect **LocalDevVPN** manually, then return and tap
 **Enable JIT**. The corrected source uses registered callback metadata; replace
 the imported shortcut with the corrected signed local copy after updating.
-This fix is not yet included in the published Build 56 IPA.
+This fix is included in Build99; older Build56 does not include it.
 See [JIT troubleshooting](docs/JIT.md#shortcut-destination-errors-after-re-signing).
 
 ### One button for Steam (new feature branch)
@@ -80,11 +80,12 @@ shows real byte progress, and verifies every public file before installation.
 Cancel and Retry keep verified packages cached. Repairs preserve accounts, games
 and saves; fully reopen iDeck after installation before enabling JIT.
 
-This is implemented in `feature/automatic-steam-client-install`, **not in the
-previously published IPA**. Host full-download/install and iOS build checks pass;
-fresh-device button-to-Big-Picture acceptance is still pending. The client is an
-unsupported legacy version, not a maintained current Steam release. If Valve's
-packages disappear, iDeck reports that and keeps manual import available.
+Included in **v0.1.3-alpha.4 (Build99)**. A Steam-free iPad container completed
+on-device download and full verification; the tester confirms Steam UI works on
+the iPhone after Build99's browser-thread fix. Older iPad8,1 cannot boot this
+runtime because its virtual address space is too small. Longer session stability
+remains unverified. The client is unsupported legacy software, not a maintained
+current Steam release; if Valve removes packages, manual import remains available.
 [Source, verification and current limits](docs/AUTOMATIC_STEAM_INSTALL.md).
 
 ## Before Steam: six green checks
@@ -96,7 +97,7 @@ or a missing-condition action:
 | Step | What you need to do |
 | --- | --- |
 | 1 · Local runtime | Tap **Prepare runtime** to initialize the local Windows environment. Existing files are preserved. |
-| 2 · Steam & browser files | On the installer feature build, tap **Download & Install Steam** (or **Repair Steam Files**). Wait for verification, then fully reopen iDeck. Older published builds require manual client import; the IPA does not bundle Steam. |
+| 2 · Steam & browser files | On Build99 or newer, tap **Download & Install Steam** (or **Repair Steam Files**). Wait for verification, then fully reopen iDeck. Older published builds require manual client import; the IPA does not bundle Steam. |
 | 3 · Development signing | Use a development signature that permits debugging. Re-sign if the check reports missing permission. |
 | 4 · JIT setup | Open JIT setup. Configure Built-in StikJIT with this device's pairing file, or the supported external StikDebug workflow. Pairing approval is yours to complete. |
 | 5 · Device connection | Connect LocalDevVPN when requested so the local debug connection is reachable. Recheck after returning to iDeck. |

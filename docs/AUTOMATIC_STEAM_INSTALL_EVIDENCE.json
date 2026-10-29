@@ -35,8 +35,8 @@
     "iPad_actual_launch": "PASS; actual private log Build96",
     "starting_container": "Documents contained only madeira-log.txt; no runtime/client/auth/game import",
     "iPhone_working_apps": "UNCHANGED; no install attempted over existing apps",
-    "on_device_download_button_install": "PENDING physical UI interaction; Mac CUA locked",
-    "on_device_login_Big_Picture": "NOT TESTED for downloaded client"
+    "on_device_download_button_install": "PASS iPad fresh Steam-free container: user invoked download; actual app log first failure23:31 then complete verified public client23:34:04; restart1. No manual Steam transfer.",
+    "on_device_login_Big_Picture": "iPhone existing-account upgrade: user reports Build99 usable after browser signed-load repair; not fresh iPhone-account acceptance. iPad launch blocked by17.4GB VA versus48GB requirement."
   },
   "regressions": {
     "steam_ui": "PASS",
@@ -99,5 +99,13 @@
   },
   "native_runtime_provenance": "Unchanged Build67 signed PE resources and release67 relink archives; no current steam64-cef64 experimental archives reused.",
   "maintained_client_release_assessment": "BLOCKED: legacy client unsupported; existing frozen update policy is not a maintained-client solution.",
-  "feature_acceptance_assessment": "PENDING actual iOS button-triggered download/install and Steam startup; host end-to-end PASS."
+  "feature_acceptance_assessment": "Actual native iPad download/install PASS; iPhone existing-account Steam UI user-confirmed after Build99. Old iPad runtime boot unsupported; maintained legacy-client security support unresolved.",
+  "user_confirmation": "2026-10-29 user says \u53ef\u4ee5\u4e86 and explicitly requests release after Build99 installed.",
+  "build99": {
+    "source_commit": "957b54c",
+    "debug_dylib_sha256": "e913acd44eb2983c6b797a6a03d5e031113e51a521f9ccc57d6e213acb0e68bc",
+    "signal_object_sha256": "520a0578dab099f797982ff0050aa46b200f4fe342ba0cb9eca0a014b63cd188",
+    "full_build_sign_install_launch": "PASS",
+    "user_UI_result": "works; sustained session/gameplay not established"
+  }
 }

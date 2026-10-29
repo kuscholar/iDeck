@@ -1848,3 +1848,15 @@ zero/XZR and nonmatching instruction tests pass ASan/UBSan.
 Single signal_arm64.o rebuilt with pinned existing Wine configured headers,
 replaces only that object in the Build67 native archive; original archive kept
 privately. Full Build99/device regression tracked after build/install.
+
+### Build99 user acceptance and alpha4 release preparation
+
+User confirms 可以了 after Build99 install and explicitly requests release.
+Actual iPad automatic acquisition completion log23:34:04 confirms verified public
+client in the previously Steam-free container, no manual Valve transfer. User
+performed JIT and Steam startup. iPad runtime boot remains blocked by measured
+17.4GB map/48GB guest-window gate; iPhone existing-account UI works by user report.
+No fresh-account or long-session gameplay claim. Prepare v0.1.3-alpha.4 Build99
+from feature branch, keep main and64bit experiments untouched. Include source,
+exact modified LGPL signal implementation, relink inputs, licenses and checksums;
+exclude proprietary Steam files/auth/profiles/keys. No security-update bypass added.

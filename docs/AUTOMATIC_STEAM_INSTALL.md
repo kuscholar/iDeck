@@ -154,3 +154,20 @@ unchanged. The iPad user-action gate is Prepare runtime → Download & Install S
 (or Mac unlock for Device Hub); no Steam binaries have been manually transferred.
 The source should not be described as release-ready until that acceptance and
 fresh-process JIT/login/Big Picture test actually complete.
+
+## Build99 release evidence update (2026-10-29)
+
+The previously pending acquisition test completed on iPad: user tapped the native
+action in a container with no Steam; actual log records fully verified completion
+at23:34:04, after an earlier failed/retried attempt. No Valve files were copied
+from the Mac. iPad launch exposed a genuine iOS26 weak pipe2 crash, fixed in97,
+then a17.4GB map limit blocking the32-bit guest window (minimum48GB). That device
+cannot be represented as a successful Steam boot.
+
+User explicitly authorized overwriting the iPhone experimental app, preserving
+its container. Build99 fixes an actual LDRSW TEB-load emulation omission which
+killed a browser thread after home entry; exact-opcode/neighbor regression tests,
+full build/sign/install pass. User confirms usable Steam and requests release.
+This is an existing-account iPhone result, not a fresh-account iPhone test or
+long-session/game compatibility guarantee. The unsupported legacy-client and
+inherited update-policy limitations above remain. The release is an alpha.

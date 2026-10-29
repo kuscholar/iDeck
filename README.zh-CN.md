@@ -27,7 +27,7 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 ## 安装 Alpha，一起测试
 
 从 [Releases](https://github.com/kuscholar/iDeck/releases) 下载 IPA 和 `SHA256SUMS`。
-**v0.1.3-alpha.2（Build 56）** 包含下文的六步检查启动器和中英文说明。
+**v0.1.3-alpha.4（Build 99）** 包含下文的六步检查启动器和中英文说明。
 旧版 v0.1.3-alpha.1（Build 54）使用之前的启动器。
 
 1. **下载并校验。** 对照 `SHA256SUMS` 检查 IPA 的 SHA-256。Mac 可运行
@@ -57,7 +57,7 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 旧版在更换 Bundle ID 重签后可能生成错误的回跳地址。可先关闭可选的
 **Madeira JIT shortcut**，手动连接 **LocalDevVPN**，返回后点击 **Enable JIT**。
 修复后的源码会读取实际注册的回跳信息；更新 App 后，还需从 App 内导入新版
-签名快捷指令并替换旧副本。此修复尚未包含在已发布的 Build 56 IPA 中。
+签名快捷指令并替换旧副本。此修复已包含在 Build99；旧版 Build56 不包含它。
 详见 [JIT 排错说明](docs/JIT.md#shortcut-destination-errors-after-re-signing)。
 
 ### 一键准备 Steam（新功能分支）
@@ -67,10 +67,10 @@ iDeck 会通过 HTTPS 直接从 Valve 下载完整的固定版本 Steam/CEF，�
 逐一校验所有公开程序文件后再安装。支持取消、重试与已验证整包缓存；修复保留账号、
 游戏和存档。安装后先完全关闭并重新打开 iDeck，再启用 JIT。
 
-该功能位于 `feature/automatic-steam-client-install`，**此前发布的 IPA 尚不包含它**。
-主机完整下载/安装与 iOS 编译已通过，真机从按钮到大屏幕的验收仍待完成。
-使用的是已停止支持的旧版客户端，并非持续维护的最新版 Steam。
-若 Valve 不再提供必需包，App 会明确报错并保留手动导入入口。
+该功能包含在 **v0.1.3-alpha.4（Build99）**。原本没有 Steam 的 iPad 容器已完成
+设备内下载与完整校验；测试者确认 Build99 修复浏览器线程异常后，iPhone 的 Steam 界面
+可以使用。旧款 iPad8,1 因虚拟地址空间不足仍无法启动运行时，长期稳定性尚未验证。
+使用的是已停止支持的旧版 Steam；若官方移除包，会报错并保留手动导入入口。
 详见 [下载源、校验与限制](docs/AUTOMATIC_STEAM_INSTALL.md)。
 
 ## 打开 Steam 前：点亮六个勾
@@ -81,7 +81,7 @@ iDeck 会通过 HTTPS 直接从 Valve 下载完整的固定版本 Steam/CEF，�
 | 步骤 | 要做什么 |
 | --- | --- |
 | 1 · Local runtime（本地运行时） | 点击 **Prepare runtime** 初始化本地 Windows 环境，保留已有文件。 |
-| 2 · Steam & browser files（Steam 与浏览器文件） | 安装器功能构建可点 **Download & Install Steam** 或 **Repair Steam Files**，等待完整校验后重新打开 App。旧版已发布 IPA 仍需手动导入；IPA 本身不捆绑 Steam。 |
+| 2 · Steam & browser files（Steam 与浏览器文件） | Build99 或更新构建可点 **Download & Install Steam** 或 **Repair Steam Files**，等待完整校验后重新打开 App。旧版已发布 IPA 仍需手动导入；IPA 本身不捆绑 Steam。 |
 | 3 · Development signing（开发签名） | 使用允许调试的开发签名；若提示缺少权限，需要重新签名。 |
 | 4 · JIT setup（JIT 配置） | 打开设置，使用内置 StikJIT 并配置本设备的配对文件，或使用支持的外部 StikDebug 流程。配对授权由你自行完成。 |
 | 5 · Device connection（设备连接） | 按提示连接 LocalDevVPN，使本地调试连接可达；返回 iDeck 后重新检查。 |
