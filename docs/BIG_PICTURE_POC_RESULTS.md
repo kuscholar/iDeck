@@ -1826,3 +1826,25 @@ cover idempotence/preservation/last-value overrides. Full Xcode/signing pass.
 This is a controlled candidate correction, not a claim Steam startup is fixed.
 Actual user-visible regression outcome remains to be collected after install.
 No credentials/cache reset, Valve binary/FEX/runtime changes for this hypothesis.
+
+### Build99 actual iPhone browser thread failure: missing LDRSW TEB emulation
+
+User98 reports real home entry followed by freeze. Actual log shows native
+footprint peak4391MiB and browser process0xc4 thread0xc8 faults at
+poolPC151eec29c, x18=0, address180c, opcode b9980e48. Trampoline preceding
+instructions retrieve the calibrated TSD slot908. Mach handler repeatedly logs
+UNRECOGNIZED, then aborts the thread after50 faults; Wine kills browser threads.
+This is an actual fault, not inferred from spinner or old JS errors. Subsequent
+helper process exists; whether all visible freeze behavior follows this fault
+remains a separate device regression question.
+
+Exact instruction is LDRSW X8,[X18,#0x180c], a signed32-to64 TEB field load.
+Existing Mach TEB handler implements unsigned LDR W/X but omits unsigned-offset
+LDRSW. Add narrowly decoded b9800000 family using memcpy+int32_t sign extension,
+inside existing validated x18/TEB fault gate. Preserve PC advance, XZR behavior,
+and all real exception paths. No blind mprotect/retry/assert suppression, no
+FEX or Valve binary changes. Production helper exact-opcode signed extrema,
+zero/XZR and nonmatching instruction tests pass ASan/UBSan.
+Single signal_arm64.o rebuilt with pinned existing Wine configured headers,
+replaces only that object in the Build67 native archive; original archive kept
+privately. Full Build99/device regression tracked after build/install.

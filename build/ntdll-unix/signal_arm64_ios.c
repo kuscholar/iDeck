@@ -24,6 +24,7 @@
 
 #ifdef __aarch64__
 
+#include "x18_signed_load.h"
 #include "config.h"
 
 #include <assert.h>
@@ -2641,6 +2642,11 @@ static void *ios_mach_exception_thread( void *arg )
                         int rt = insn & 0x1f;
                         int emulated = 0;
 
+                        uint64_t signed_word;
+                        if (ios_x18_ldrsw(insn, ea, &signed_word)) {
+                            if (rt != 31) state.__x[rt] = signed_word;
+                            emulated = 1;
+                        }
                         switch (insn & 0xffc00000)
                         {
                         /* unsigned-offset immediate loads, base x18 */
