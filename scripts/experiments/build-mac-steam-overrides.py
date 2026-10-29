@@ -79,7 +79,7 @@ def main():
                     text = text[:start] + '// iDeck CF ownership override\n' + text[end:]
                 out = tmp / name; out.write_text(text); sources[name] = out
         for component, own, reexport in [
-            ('libSystem', ['sysv-semaphore.c','native-process-probe.c','native-vm-probe.c','native-vm-range-probe.c','native-small-pool-probe.c','pool-layout.c','cef-load-probe.m','helper-load-probe.m','exec-diagnostic.c','casefold-path.m','casefold-probe.m','volume-case-view.m'], ['-Wl,-reexport_library,'+sdk+'/usr/lib/libSystem.B.tbd']),
+            ('libSystem', ['sysv-semaphore.c','native-process-probe.c','native-vm-probe.c','native-vm-range-probe.c','native-small-pool-probe.c','pool-layout.c','cef-load-probe.m','helper-load-probe.m','helper-path.c','synthetic-helper-probe.m','exec-diagnostic.c','casefold-path.m','casefold-probe.m','volume-case-view.m'], ['-Wl,-reexport_library,'+sdk+'/usr/lib/libSystem.B.tbd']),
             ('AppKit', ['appkit-font.m','font-advancement.m','font-matrix-constant.m','bitmap-image-rep.m'], ['-Wl,-reexport_framework,UIKit']),
             ('CoreGraphics', ['display-pixel-encoding.m','display-mode-object.m'], ['-Wl,-reexport_framework,CoreGraphics'])]:
             text = (converted/'shims'/('Shim_'+component+'.m')).read_text()

@@ -299,3 +299,30 @@ A fresh query later confirmed Build10 installed despite the old timeout; do not
 reinstall it blindly. Its Helper-load probe still awaits a native phone unlock.
 
 Current milestone and limitations: [evidence matrix](../../docs/experiments/MAC_ARM_STEAM_COMPATIBILITY.md).
+
+Build11 loader-probe correction: derive the target from real libSystem's native
+executable path, since NSBundle.bundlePath is intentionally redirected by the
+AppKit shim. Reject redirected logical executable paths and verify the actual
+ARM64 MH_EXECUTE file header before dlopen. Build10's unknown failure lacked
+this preflight and is not a loader-type result. Actual Build11 phone test verifies
+the target, then dlopen returns NULL with executable-rejection category1 and
+missing-image category1 (substring categories may overlap); entry-called0. An
+explicit diagnostic-result marker is authoritative for probe outcome; console
+transport/app exit status alone is insufficient. No native Steam UI success.
+
+Own loadable-bundle design discriminator:
+
+```sh
+python3 experiments/mac-arm-steam/test-synthetic-helper-bundle.py
+```
+
+Only iDeck-authored synthetic fixtures participate. The exact-hash/unique-marker
+metadata tool is NOT a Steam converter. It preserves instruction bytes and
+chained-fixup segment ordinals, refuses output conflicts, and requires normal
+signing. Six host tests cover guard/payload/ordinal/loader contracts. Build12
+actual iPhone `IDeckSyntheticHelperProbe=1` loads the signed metadata-adapted own
+Mac ARM64 bundle and checks constructor1/main0; executable-form counterpart
+fails to load. This probe calls no Steam entry, CEF or IPC and is not UI success.
+The Mac host accepting the original executable is not evidence iOS accepts it.
+Never apply the synthetic-only tool to Valve files; real Helper adaptation
+requires a separate exact-version private-copy audit and unresolved CEF/IPC work.

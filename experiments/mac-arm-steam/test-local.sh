@@ -39,9 +39,12 @@ xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined \
 xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined \
   experiments/mac-arm-steam/test-exec-diagnostic.c -o "$artifacts/exec-diagnostic"
 "$artifacts/exec-diagnostic"
+xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined \
+  experiments/mac-arm-steam/helper-path.c experiments/mac-arm-steam/test-helper-path.c -o "$artifacts/helper-path"
+"$artifacts/helper-path"
 # Device-only sources must also pass the actual iOS compiler/ABI checks.
 for source in casefold-path.m casefold-probe.m volume-case-view.m appkit-font.m \
-              tier0-process-observer.c launch-summary.c font-advancement.m power-registration.c native-process-probe.c native-vm-probe.c native-vm-range-probe.c native-small-pool-probe.c exec-diagnostic.c cef-load-probe.m helper-load-probe.m; do
+              tier0-process-observer.c launch-summary.c font-advancement.m power-registration.c native-process-probe.c native-vm-probe.c native-vm-range-probe.c native-small-pool-probe.c exec-diagnostic.c cef-load-probe.m helper-load-probe.m helper-path.c synthetic-helper-probe.m; do
   xcrun --sdk iphoneos clang -target arm64-apple-ios17.0 -fobjc-arc \
     -Wall -Wextra -Werror -c "experiments/mac-arm-steam/$source" -o "$artifacts/$source.o"
 done

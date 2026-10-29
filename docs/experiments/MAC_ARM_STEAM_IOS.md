@@ -822,3 +822,111 @@
   Keep source-built compatible smaller CEF and Helper IPC/lifecycle research
   separate; no new successful native Steam milestone in this run. Check local
   time before each scoped commit/push; no main merge or waiting automation.
+
+## 2026-10-28 10:37 EDT: actual Helper loader test and probe-path correction
+
+- Verified origin/experiment branch/worktree/remote atfbdb6eb2014072fc7d97730242e7326766752fac.
+  Phone natively unlocked; fresh installed-app query confirms10 and process list
+  has no active lab session. No overlapping debugger/build. Working apps untouched.
+- Ran installed10 with ONLY IDeckNativeHelperLoadProbe=1. It reports loaded0,
+  rejects-main-executable0. This is an UNKNOWN failure, not MH_EXECUTE rejection.
+  Source review identifies a diagnostic defect: pinned AppKit_RuntimeHooks.m
+  redirects NSBundle.bundlePath to the Mac root; probe appends another Mac
+  component. No target preflight and no raw error captured, so do not attribute
+  its unknown failure to the real Helper's filetype or claim runtime load success.
+  Console says exit0 despite a source path selecting _exit3; preserve that
+  discrepancy rather than infer probe success from transport exit status.
+- Minimal correction: derive root via _NSGetExecutablePath resolved directly in
+  real libSystem, bounded helper-path function rejects logical redirected paths,
+  and open/read preflight verifies exact ARM64 MH_EXECUTE header before dlopen.
+  No raw paths/error text or account payload logged. Explicit diagnostic-result
+  marker distinguishes result from transport exit. Own path ASan/UBSan test PASS
+  including exactly-one-Mac, redirected-path rejection and capacity/NULL checks.
+- Rebuilt all3 isolated shims (includes earlier observer errno hardening); final
+  preflight marker/unsigned input hashes verified; standard profile/deep strict
+  signing PASS. Actual isolated Build11 installation receipt success. Launch30
+  ONLY Helper-load switch: native-path=verified, preflight=arm64-MH_EXECUTE,
+  loaded0/rejects-main-executable1/missing-image1/entry-called0/diagnostic-result0.
+  Error categories can overlap within dyld path searches. Strong evidence this
+  preflighted Helper did not load via normal dlopen, NOT proof every relinked or
+  source-based in-process architecture is impossible. No Helper entry called.
+- Full local contract suite and actual iOS Werror compilation PASS. Real staging
+  tests PASS: first/second compiler failure preserves all final outputs/Info;
+  synthetic full success verifies3 pending outputs/receipt hashes. Signed
+  Build11 binary fingerprints and all raw logs retained privately; redacted
+  evidence index and compatibility matrix corrected. Earlier pending-unlock/
+  Build10 source-only statements are historical, superseded by this section.
+- No UI, authentication, CEF initialization, depots, games or session-return
+  milestone. Stock CEF constructor16GiB capacity gate remains independent from
+  this loader result. Any future loadable Helper adaptation needs isolated
+  copy/relink/metadata checks preserving instruction bytes and real IPC/lifecycle
+  semantics; a successful header edit would not solve CEF or process identity.
+  Avoid repeating unchanged native-spawn/stock-CEF failures.
+- New source/docs remain uncommitted/unpushed: weekday10:37 is outside the user's
+ 22:00–07:00 window. No waiting automation or main changes. Next work should
+  address a justified loadable Helper design and compatible source-wide smaller
+  CEF, without fake process success, ABI-hash spoofing or assertion suppression.
+
+## 2026-10-28 15:43–15:49 EDT: loadable-bundle design proven with own fixture
+
+- Verified research branch/origin/remote atfbdb6eb; local morning probe changes
+  preserved. One fresh lock check shows native unlock. No main/FEX/Wine/DXMT
+  edits, account entry, privilege requests or other working-app installation.
+- Hypothesis: after normal dlopen rejects actual unchanged Helper on iPhone,
+  an instruction-preserving executable-to-bundle layout can at least work for
+  an own minimal Mac ARM64 fixture under normal iOS development signing.
+  This is a loader design discriminator, NOT a replacement/mock Steam helper/UI.
+- Added own C fixture with unique marker, static constructor counter and explicit
+  getter; main increments a separate counter. Compile genuine macOS ARM64
+  executable, transform ONLY own fixture metadata, retarget platform with Xcode
+  vtool, re-sign normally. No CPU instructions changed or kernel/signing bypass.
+  Strict synthetic-only tool requires exact hash+own marker, bounds-checks load
+  commands/sections, refuses existing output or sidecar, and keeps binaries out
+  of source repo. It must NEVER be applied to Steam/CEF/third-party binaries.
+- Initial own transformation removed PAGEZERO; host dyld rejected it because
+  chained-fixup segment count/ordinals no longer matched. Corrected metadata
+  keeps the PAGEZERO segment slot but with zero vmsize, removes LC_MAIN and
+  LC_LOAD_DYLINKER, changes type to MH_BUNDLE and clears PIE. All post-command
+  payload/instruction bytes unchanged. This is specific tested fixture geometry,
+  not a universal executable conversion tool or a tested real Helper fix.
+- Host result is nuanced: current macOS dyld loads original own executable too;
+  do NOT infer iOS behavior from it. Corrected normally signed own bundle loads
+  on host, getter verifies constructor1/main0. Six tests cover payload/ordinal
+  preservation, wrong hash/marker, malformed bounds, sidecar preservation and
+  actual signed host loading. All PASS; complete local contracts/iOS Werror PASS.
+- Isolated Build12 compiles updated shims and includes two own Mac ARM64 fixture
+  copies (executable and bundle), vtool platform-retargeted to iOS. Text hashes
+  verified unchanged before signing. Final diagnostic marker, input receipt,
+  nested fixture signatures and deep/strict app signing PASS. Actual install
+  receipt success; launch31 only IDeckSyntheticHelperProbe=1.
+- Actual iPhone result: executable loaded0; bundle loaded1/fixture-verified1;
+  main-called0; diagnostic-result0, steam-entry0, cef0, process-emulation0.
+  Constructor count1/main count0 is checked by getter==100. Diagnostic exits0.
+  This establishes a real loadable-own-bundle milestone through standard signing,
+  not actual Helper hosting, native CEF/login/library/gameplay or IPC correctness.
+  No Valve binary was converted to a bundle or replaced in this run.
+- Next real Helper adaptation would need its OWN exact-version isolated-copy
+  metadata/relink audit: preserve instructions and chained-fixup segment indices,
+  handle actual loader-relative dependencies and normal signatures. Do not reuse
+  synthetic-only tool on Valve. CEF16GiB/source ABI and actual process/IPC/lifecycle
+  remain independent gates even if a Helper bundle loads. Do not fabricate PIDs,
+  skip assertions/authentication or claim a signed build proves runtime behavior.
+- Evidence/private fixture reports and hashes added to the index. Latest lab is
+  Build12, diagnostic completed; no assumed live process. All new work remains
+  uncommitted/unpushed outside weekday22:00–07:00. No waiting automation.
+
+## 2026-10-29 06:58 EDT: source regression and scoped publication audit
+
+- Revalidated origin/experiment branch/worktree and remote atfbdb6eb. Preserved
+  prior Build11/12 source/evidence changes. One native lock check shows locked;
+  no repeated install/launch, stale PID action, lock bypass or notification.
+- Reviewed new synthetic-only transformer, path resolver, fixtures and diagnostic
+  sources. Re-ran full local contract suite and six real synthetic metadata/
+  signed host-loader tests: PASS. No new on-device result; Build12 own-bundle
+  milestone is unchanged and does not establish genuine Helper/CEF success.
+- Publish only scoped text sources/tests/redacted docs if each immediate local
+  time check remains inside22:00–07:00. Do not rush or bypass the cutoff; leave
+  changes local if the window closes. No main merge or waiting automation.
+- Next: exact-version read-only real Helper metadata/dependency/fixup audit;
+  synthetic-only transformer remains prohibited for Valve binaries. Original
+  CEF capacity, compatible source ABI and real IPC/lifecycle gates still apply.

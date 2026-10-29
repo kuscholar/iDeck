@@ -463,6 +463,118 @@
     {
       "path": ".madeira-install/mac-arm-steam-official/heartbeat30-official-notice-source-links.json",
       "sha256": "e9ae76f5ed4dfe5c6a1fa2446bca3a4eaa1f1b6b65739f3dd94c381ebc10a896"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat31-lock-state.log",
+      "sha256": "0ae79824fc4d2b80fb708a9b225f891d340e5e7595b45428d9a7b2a638502bce"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat31-installed-state.json",
+      "sha256": "4f4ecdd5bfd10e9392bb23377a093b74e734468a06f2e146f1f6764bae7115f4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat31-process-preflight.log",
+      "sha256": "a2ebd64c262fbae55799ef64c1b20db1b07fa7c1446cd2a484c6f0cf75932ec3"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch29-helper-load10.log",
+      "sha256": "9be9dba95a1dfd42692fa4610e198a9645e0a6f98f6265b446e00e89a2e1082a"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-helper-load11.log",
+      "sha256": "c73f1b52d4ce6e5fae1dec0c523130ecbd02a3486338566d70c5ee3c5c5f35d3"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-helper-load11.log",
+      "sha256": "43503ab63e54f2a9810725d2f0ae47165f12ab8df47abf189dd164d93ded9c33"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-helper-load11.log",
+      "sha256": "702c6c33cd119164e3720de28dcfccde3d4b689f05404e50ca6d78552e56fd78"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/shim-receipt-helper-load11.json",
+      "sha256": "e0bf51ee43ddd7d7f0f4d8af0321cb5624544f9b5cc098ac8e3f4b136da8e816"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/signed-binary-hashes-helper-load11.json",
+      "sha256": "d53e76b9cda89f2311a29a50633657164aa63c1891c24717ccc7c85f69fd481d"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch30-helper-load11.log",
+      "sha256": "8fd5f025af61403a6851a5040d1cae0593369f2375ed3b7766c5c9ac02f6bbea"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat31-host-regression.log",
+      "sha256": "522e64f0b2661327bf936e2db355c6e2b97130eb319103b0fb6de3217c51810b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat31-staging-regression.log",
+      "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-lock-state.log",
+      "sha256": "0ae79824fc4d2b80fb708a9b225f891d340e5e7595b45428d9a7b2a638502bce"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-synthetic12.log",
+      "sha256": "63be3e9e59a583f3d952974fd5a4bdab8db44abd4a0b8aa46614e2dc5b3c87d4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-synthetic12.log",
+      "sha256": "c7f4be5dcb4d4bc6a3a73e1245bf0c70737c781cbbe3e0d2168a2b5e42ab63b5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/install-synthetic12.log",
+      "sha256": "b9b5a9897b28b2898ec366fe44e2be50af5f0a4cb7766236db1c64dcd44e3b04"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/shim-receipt-synthetic12.json",
+      "sha256": "21896766e25c6069f23314039ebad577082f02e1de6f42ad98a5203a7c4bb4aa"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/launch31-synthetic12.log",
+      "sha256": "bae432d24a25da56425e38200cf9ae515c67315e82745f9a87b7a44f7415387a"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-host-regression.log",
+      "sha256": "5cdd5a318c1b3aabbc9dcac8a4e7e12673920eeac708bc0cacfb9bd59ff5ff75"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-synthetic/synthetic-helper.v2.bundle.json",
+      "sha256": "c2af4d21a066216dcae5e97b7b4d91ad32c8253d06076c5a0cbeaa3866b3876c"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-synthetic/ios-fixture-receipt.json",
+      "sha256": "1c9cdf802808d59d61f821419d1353f64a2184907730a772769339bbe3ad6110"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-synthetic/synthetic-helper.bundle.json",
+      "sha256": "21fc9b93babc45c270ce3263aa71731be8ff4bec022f82d2be8de43314370f40"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-synthetic/host-result-v2.log",
+      "sha256": "c26e1a23ecbbb7afaf79ac70e1011ae81bf54faf7b9f576734e6d376476a7f79"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-synthetic/host-result.log",
+      "sha256": "e7e02427835aa35b5b93d5017f1f513c2183a8d7f6c3e9e54432c5e157be65c5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat32-synthetic/tests.log",
+      "sha256": "59c49522e9916bd955635b2c1dab90eda9f8891b74a68c226cd1b9f51eb69526"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat33-lock-state.log",
+      "sha256": "6c8ad1c439430c84c9c46be583f0e8718c1fc0ca3a3b5c6e9662d3c008a929b2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat33-host-regression.log",
+      "sha256": "bd03ad4114e25a0c456262910d2d050483c0b8375d7c00493613587ecb2d60b2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat33-synthetic-regression.log",
+      "sha256": "f8d9067bd3074725849d891299e4ea2dbf17b12a857c6cc617dc31e6623a909d"
     }
   ],
   "nativeProcessDiscriminator": {
@@ -804,5 +916,86 @@
     "noticeLimit": "not exhaustive global proof; legal notice availability does not establish ABI compatibility or binary distribution permission",
     "deliverable": "consolidated evidence-backed compatibility/limitations matrix; no new runtime success",
     "next": "already installed10 Helper-load probe after native unlock; compatible source-built smaller CEF and Helper IPC remain independent gates"
+  },
+  "helperLoadDeviceFollowup20261028": {
+    "sourceParent": "fbdb6eb2014072fc7d97730242e7326766752fac",
+    "build10": {
+      "launched": true,
+      "loaded": false,
+      "rejectCategory": false,
+      "validLoaderDiscriminator": false,
+      "reason": "probe uses NSBundle.bundlePath; pinned AppKit_RuntimeHooks redirects main bundle to Mac root, yielding duplicate Mac component; no target preflight; do not attribute unknown dlerror to actual Helper type",
+      "rawError": "not printed/captured; source diagnosis only"
+    },
+    "build11": {
+      "signedInstalledLaunched": true,
+      "exactNativeExecutablePath": true,
+      "helperHeaderPreflight": "ARM64 MH_EXECUTE",
+      "dlopenLoaded": false,
+      "rejectsExecutableCategory": true,
+      "missingImageCategoryAlsoPresent": true,
+      "entryCalled": false,
+      "diagnosticResultMarker": 0,
+      "limitations": "categorical dyld error substrings can overlap in search-path diagnostics; no raw text printed. This proves the preflighted Helper did not load through this normal dlopen attempt; not a universal rejection of all source-based in-process architectures."
+    },
+    "minimalPatch": "derive target from real libSystem _NSGetExecutablePath, reject logical redirected path, verify file header before dlopen; explicit result marker",
+    "regressions": "new native-path ASan/UBSan test, complete local contracts and actual iOS Werror compilation; real staging first/second compile failure and full synthetic success all pass",
+    "latestExecObserverPatch": "rebuilt with fbdb6eb source plus probe fix; final libSystem marker verified before signing; native exec forwarding patch is now linked, but this diagnostic exits before those native process APIs, so no real-call regression success claimed",
+    "remaining": "CEF16GiB and native process model gates unchanged; no entry, CEF initialize, login, library or gameplay success",
+    "next": "Any loadable Helper adaptation requires isolated copy/relink/Mach-O metadata audit and instruction-byte checks, then tested process/IPC ownership; current CEF constructor capacity failure remains independent prerequisite. Do not rerun unchanged spawn or stock CEF tests.",
+    "sourceFingerprints": {
+      "experiments/mac-arm-steam/helper-path.c": "7c952a85a33a26e9524745b8429e10098154810413c1f9834c59b92e8c3b1d9b",
+      "experiments/mac-arm-steam/helper-path.h": "8c733ede666d34e5a6577277806dc4a26a97f8b6b23c0b22ee030f11df2fd71f",
+      "experiments/mac-arm-steam/test-helper-path.c": "1cbadd20fdd4c40f66c77a9b644efc0e96c1ef13fbe87dd811af809fa007d9c6",
+      "experiments/mac-arm-steam/helper-load-probe.m": "e6b7745933ea0cb36775b6871e143e9c0c0c09e5d42514e95bb9aebdfd27d908",
+      "scripts/experiments/build-mac-steam-overrides.py": "47b89b02c3c6f86a24271825cd10c36b33abf22a8b06df8f5b6f9a9517d2dae7",
+      "experiments/mac-arm-steam/test-local.sh": "5ed35ec0df6249e3db39b5b16d6c18f30ba7860c660f6fcfd58fcfd7126da71e"
+    }
+  },
+  "syntheticLoadableHelper20261028": {
+    "sourceParent": "fbdb6eb2014072fc7d97730242e7326766752fac",
+    "sourceUncommitted": true,
+    "scope": "Own C fixture only; no Valve executable converted/replaced or entry called",
+    "hostOriginalExecutableLoaded": true,
+    "hostBundleLoaded": true,
+    "initialFailure": "Removing PAGEZERO changed segment ordinal and caused chained fixups seg_count validation failure; preserved ordinal with zero-sized PAGEZERO in corrected fixture",
+    "minimalMetadataChange": "MH_EXECUTE->MH_BUNDLE, remove LC_MAIN/LC_LOAD_DYLINKER, clear MH_PIE, zero PAGEZERO vmsize while preserving its segment slot; instruction bytes unchanged; normal re-sign",
+    "toolGuards": "exact input SHA and unique own-fixture marker; thinARM64; command/section bounds; refuse existing output/sidecar; prohibit outputs inside source repo; never for Valve binaries",
+    "regressions": "6 tests: entire post-command payload preservation, chained segment ordinals, wrong digest, missing marker, corrupt commands, sidecar preservation, normal host signed bundle load with constructor1/main0; complete local/iOS compile checks pass",
+    "build12": {
+      "signedInstalledLaunched": true,
+      "ownMacOSARM64FixturesRetargetedToIOS": true,
+      "instructionHashesUnchanged": true,
+      "normalPersonalTeamProfile": true,
+      "executableLoaded": false,
+      "bundleLoaded": true,
+      "fixtureVerified": true,
+      "constructorCalls": 1,
+      "mainCalls": 0,
+      "diagnosticResult": 0,
+      "steamEntry": false,
+      "cefLoaded": false,
+      "processEmulation": false
+    },
+    "meaning": "actual iPhone supports normal signed loading of this metadata-adapted own Mac ARM64 bundle; does not prove real Steam Helper can be hosted or its CEF/process/IPC contracts can work",
+    "next": "Separate exact-version isolated Helper metadata/relink design must preserve instruction and chained-fixup indices and resolve loader-relative dependencies; do not reuse the synthetic-only tool for Valve. Stock CEF capacity/source ABI and actual process semantics remain independent gates.",
+    "sourceFingerprints": {
+      "scripts/experiments/make-synthetic-helper-bundle.py": "7c4b56744e1efc9b94b939b0b118f7a6e54f682b91e16f5b2f7d1917463cf7ca",
+      "experiments/mac-arm-steam/synthetic-helper-fixture.c": "0f41e9e5e637e3f4132db771feb95c3465dc084b48af95908e3e91eefdb43ed8",
+      "experiments/mac-arm-steam/test-synthetic-helper-host.c": "fe3cd5ebed2c2791e17e7ff784a515e7d0f4d67a138665f43312f9d8f1ef6a8d",
+      "experiments/mac-arm-steam/test-synthetic-helper-bundle.py": "43ef00313ee0468c2ba6885873d7d176e27d8a6599b975885e9986a9db12256f",
+      "experiments/mac-arm-steam/synthetic-helper-probe.m": "e415910d534f73d1ddd4694f829b41737d72bb00b5f2b3d50fd46c319313809c",
+      "scripts/experiments/build-mac-steam-overrides.py": "357542d78dc0680700b0e2a13d4238f15815a4590fe75f3a69ad0fb50143efd5",
+      "experiments/mac-arm-steam/test-local.sh": "840454ab341943a93b75bbc3ac1fb1b3faec2da7782259c733660360f1657bac"
+    }
+  },
+  "heartbeat20261029_0658": {
+    "sourceParent": "fbdb6eb2014072fc7d97730242e7326766752fac",
+    "phoneLocked": true,
+    "newDeviceOperation": "one lock query only; no repeated installs/launches",
+    "runtimeMilestoneUnchanged": "Build12 own fixture bundle pass; real Helper/CEF UI still unresolved",
+    "validation": "full local suite and six synthetic metadata/host-loader regressions pass",
+    "next": "audit exact real Helper metadata/dependency/fixup requirements without applying the synthetic-only transformer to Valve; do not repeat stock CEF/native-spawn failures",
+    "publication": "check New York time separately before each commit and push; no operation after07:00 weekdays"
   }
 }
