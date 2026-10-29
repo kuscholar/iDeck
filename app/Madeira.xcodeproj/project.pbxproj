@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        C1000901 /* SteamClientInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2000901; };
+        C1000902 /* SteamClientPackages.json in Resources */ = {isa = PBXBuildFile; fileRef = C2000902; };
 		B1000901 /* SteamUIExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000901 /* SteamUIExperiment.swift */; };
 		A1000520 /* MadeiraDock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000520 /* MadeiraDock.swift */; };
 		A1000521 /* MadeiraDockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000521 /* MadeiraDockView.swift */; };
@@ -180,6 +182,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+        C2000901 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamClientInstaller.swift; sourceTree = "<group>"; };
+        C2000902 = {isa = PBXFileReference; lastKnownFileType = text.json; path = SteamClientPackages.json; sourceTree = "<group>"; };
 		B2000901 /* SteamUIExperiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamUIExperiment.swift; sourceTree = "<group>"; };
 		A2000520 /* MadeiraDock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MadeiraDock.swift"; sourceTree = "<group>"; };
 		A2000521 /* MadeiraDockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MadeiraDockView.swift"; sourceTree = "<group>"; };
@@ -440,6 +444,8 @@
 				A2000522 /* SteamKeyValues.swift */,
 				A2000523 /* SteamRuntime.swift */,
 				B2000901 /* SteamUIExperiment.swift */,
+                C2000901,
+                C2000902,
 				A2000524 /* DockInstallers.swift */,
 				A2000913 /* DockReset.swift */,
 				A2000510 /* SteamSignIn.swift */,
@@ -674,6 +680,7 @@
 				A1000040 /* prefix-template.tar.gz in Resources */,
 				A1000094 /* cacert.pem in Resources */,
 				A1000910 /* Assets.xcassets in Resources */,
+                C1000902,
 				B1000004 /* madeira-jit.js in Resources */,
 				B1000051 /* Madeira JIT.shortcut in Resources */,
 			);
@@ -770,6 +777,7 @@
 				A1000522 /* SteamKeyValues.swift in Sources */,
 				A1000523 /* SteamRuntime.swift in Sources */,
 				B1000901 /* SteamUIExperiment.swift in Sources */,
+                C1000901,
 				A1000524 /* DockInstallers.swift in Sources */,
 				A1000913 /* DockReset.swift in Sources */,
 				A1000510 /* SwiftSteam/SteamSignIn.swift in Sources */,

@@ -31,7 +31,15 @@ def digest(path):
 
 
 def parse_manifest(text, architecture="win64"):
-    tokens = re.findall(r'"[^"\r\n]*"|[{}]', text)
+    matches = list(re.finditer(r'"[^"\r\n]*"|[{}]', text))
+    consumed = 0
+    for match in matches:
+        if text[consumed:match.start()].strip():
+            raise ValueError('Unrecognized manifest syntax')
+        consumed = match.end()
+    if text[consumed:].strip():
+        raise ValueError('Unrecognized trailing manifest syntax')
+    tokens = [match.group() for match in matches]
     pos = 0
 
     def obj(nested=False):

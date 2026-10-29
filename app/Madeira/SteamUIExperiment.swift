@@ -298,6 +298,7 @@ enum IDeckRules {
     }
     static let clientFiles = ["steam.exe", "steamclient.dll", "bin/cef/cef.win7/steamwebhelper.exe", "bin/cef/cef.win7/libcef.dll"]
     static func clientIssues(prefix: URL) -> [String] {
+        if FileManager.default.fileExists(atPath: prefix.appendingPathComponent("steam-client-transaction.json").path) { return ["Interrupted Steam installation: use Repair Steam Files before launching."] }
         let fm = FileManager.default
         let folders = ["Steam32BundleLab", "Steam32Lab"]
         let reports = folders.map { folder -> [String] in
@@ -360,7 +361,7 @@ struct IDeckPreflight {
         let configured = jitReady || (builtIn && helper && paired)
         return [
             result(.runtime, runtime, "The local Windows runtime is prepared.", "Prepare the local runtime first. Existing files are preserved."),
-            result(.steam, steam, "Steam, steamclient, steamwebhelper and CEF are present with the correct architecture.", "Add a complete compatible Windows Steam client, including its browser files."),
+            result(.steam, steam, "The complete pinned Steam and CEF file set was verified.", "Add a complete compatible Windows Steam client, including its browser files."),
             result(.signing, signing == true || jitReady, "This copy permits the debugging required by JIT.", signing == false ? "Re-sign with a development profile that allows debugging." : "Signing could not be verified. Enable JIT to verify this session."),
             result(.pairing, configured, jitReady ? "JIT is confirmed for this session." : "Built-in helper and a saved pairing file are present. Activation verifies the pairing.", builtIn ? (helper ? "Pair this device or import its pairing file in JIT setup." : "The built-in JIT helper is unavailable. Check JIT setup.") : (externalJIT ? "StikDebug is installed. Enable JIT to verify its external pairing." : "Install StikDebug or select Built-in StikJIT in JIT setup.")),
             result(.connection, connection || jitReady, connection ? "The device's local debug connection is reachable." : "JIT is already active; reconnect when enabling a new session.", "Connect LocalDevVPN, then check again."),
@@ -448,6 +449,7 @@ import UIKit
     @Published var menu = false
     var menuRect = CGRect.zero
     @Published var ready = false
+    @Published private(set) var steamIntegrityVerified = false
     @Published var autoStart = UserDefaults.standard.object(forKey: "iDeckAutoStart") as? Bool ?? true {
         didSet { UserDefaults.standard.set(autoStart, forKey: "iDeckAutoStart") }
     }
@@ -474,7 +476,7 @@ import UIKit
         let helper = Bundle.main.builtInPlugInsURL?.appendingPathComponent(MadeiraBuiltInJIT.helperFile)
         return IDeckPreflight(
             runtime: bundledRuntimeAvailable && IDeckRules.runtimeReady(prefix: prefix),
-            steam: IDeckRules.steamClientReady(prefix: prefix),
+            steam: steamIntegrityVerified && IDeckRules.steamClientReady(prefix: prefix),
             signing: signing.known ? signing.debuggable : nil,
             builtIn: JITCoordinator.shared.resolvedMethod == .builtIn,
             helper: MadeiraBuiltInJIT.isAvailable && helper.map { FileManager.default.fileExists(atPath: $0.path) } == true,
@@ -492,6 +494,10 @@ import UIKit
             for (index, step) in IDeckPrerequisite.allCases.enumerated() {
                 prerequisites[index] = .init(id: step, status: .checking, detail: "Checking…")
                 await Task.yield()
+                if step == .steam && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken {
+                    // Hash all public resources off the UI executor, using the installer's exact rules.
+                    steamIntegrityVerified = (try? await SteamClientInstaller.shared.verifyInstalled(prefix: prefix)) == true
+                }
                 if step == .connection {
                     connection = await withCheckedContinuation { continuation in
                         LoopbackProbe.check { result in continuation.resume(returning: result.reachable) }
@@ -510,6 +516,9 @@ import UIKit
             if !IDeckRules.steamClientReady(prefix: prefix) {
                 prerequisites[1].detail = IDeckRules.clientIssues(prefix: prefix).joined(separator: "\n") + "\nRepair Steam files below. Account data and games are preserved."
             }
+            if IDeckRules.steamClientReady(prefix: prefix) && !steamIntegrityVerified {
+                prerequisites[1] = .init(id: .steam, status: .needsAction, detail: "The complete pinned Steam/CEF client could not be verified. Use Repair Steam Files; accounts and games are preserved.")
+            }
             refresh()
             lastChecked = Date()
             checkingPrerequisites = false
@@ -518,46 +527,73 @@ import UIKit
     var setupDone: Bool { UserDefaults.standard.bool(forKey: "iDeckSetupComplete") }
     var prefix: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("wine") }
     func refresh() {
-        ready = IDeckRules.clientReady(prefix: prefix)
+        ready = steamIntegrityVerified && IDeckRules.clientReady(prefix: prefix)
     }
     @Published private(set) var repairRequiresRestart = false
     var canRepairSteam: Bool {
         !preparing && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
     }
-    func repairSteam() {
-        guard Self.enabled, canRepairSteam else { return }
-        preparing = true; error = nil
-        let target = prefix
-        let bundled = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient")
-        let imported = target.deletingLastPathComponent().appendingPathComponent("Steam32OfficialRepair")
-        let source = [bundled, imported].compactMap { $0 }.first { root in
-            IDeckRules.clientFiles.allSatisfy { SteamUIExperiment.isX86PE(root.appendingPathComponent($0)) }
-        }
-        guard let source else {
-            error = "No compatible repair source is available. In Files, copy a complete compatible Windows Steam client to iDeck/Steam32OfficialRepair, then try Repair Steam files again. Do not delete wine or reinstall iDeck; your games and account data are preserved."
-            preparing = false; return
-        }
-        let bundleID = Bundle.main.bundleIdentifier
-        Task {
-            do {
-                _ = try await Task.detached(priority: .userInitiated) {
-                    let client = target.appendingPathComponent("drive_c/Steam32BundleLab")
-                    if FileManager.default.fileExists(atPath: client.path) {
-                        return try SteamUIExperiment.restorePinnedX86(source: source, prefix: target, flag: "1", bundleID: bundleID)
-                    }
-                    try SteamUIExperiment.importBundledX86(source: source, prefix: target, flag: "1", bundleID: bundleID)
-                    return client
-                }.value
-                guard IDeckRules.steamClientReady(prefix: target) else { throw SteamUIExperiment.Failure.incompleteClient }
-                repairRequiresRestart = true
-                autoStart = false
-                error = "Steam files repaired. Account data, games and saves were preserved; replaced public files have a rollback copy. Close and reopen iDeck before enabling JIT or launching Steam."
-                LogStore.shared.log("[ideck-repair] public client restored; reopen required; private data preserved")
-            } catch {
-                self.error = "Steam repair did not complete. Your account, games and saves were not removed. Check free storage and the repair source, then retry."
-                LogStore.shared.log("[ideck-repair] failed; retry available", level: .error)
+    @Published private(set) var steamInstallProgress: SteamClientProgress?
+    private var steamInstallTask: Task<Void, Never>?
+    var steamInstallActive: Bool { steamInstallTask != nil }
+    var steamInstallActionTitle: String {
+        FileManager.default.fileExists(atPath: prefix.appendingPathComponent("drive_c/Steam32BundleLab").path)
+            ? "Repair Steam Files" : "Download & Install Steam"
+    }
+    func cancelSteamInstall() { steamInstallTask?.cancel() }
+    private func publishSteamProgress(_ value: SteamClientProgress) {
+        guard steamInstallTask != nil else { return }
+        func order(_ phase: SteamClientProgress.Phase) -> Int {
+            switch phase {
+            case .existing, .checking: return 0
+            case .downloading, .browser, .verifying: return 1
+            case .installing: return 2
+            case .compatibility: return 3
+            case .complete: return 4
             }
-            preparing = false
+        }
+        if let current = steamInstallProgress, order(value.phase) < order(current.phase) { return }
+        steamInstallProgress = value
+    }
+    func repairSteam() { installSteam(manual: true) }
+    func installSteam(manual: Bool = false) {
+        guard Self.enabled, canRepairSteam, !repairRequiresRestart, !checkingPrerequisites, !JITCoordinator.shared.busy else { return }
+        preparing = true; error = nil; autoStart = false
+        steamInstallProgress = .init(phase: .checking)
+        let target = prefix
+        let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("SteamClientDownloadCache")
+        let bundleSource = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient")
+        let imported = target.deletingLastPathComponent().appendingPathComponent("Steam32OfficialRepair")
+        let source = manual ? [bundleSource, imported].compactMap { $0 }.first { FileManager.default.fileExists(atPath: $0.path) } : nil
+        if manual && source == nil {
+            preparing = false; steamInstallProgress = nil
+            error = "No manual repair source found. Use Download & Install Steam, or copy a complete matching client to iDeck/Steam32OfficialRepair."
+            return
+        }
+        steamInstallTask = Task {
+            do {
+                let changed = try await SteamClientInstaller.shared.run(prefix: target, cache: cache, source: source,
+                    sessionInactive: { await MainActor.run {
+                        !IDeckState.shared.running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken && !JITCoordinator.shared.busy
+                    } }, progress: { value in await MainActor.run { IDeckState.shared.publishSteamProgress(value) } })
+                steamIntegrityVerified = true
+                repairRequiresRestart = changed
+                if changed {
+                    error = "Steam installation verified. Accounts, games and saves were preserved. Fully close and reopen iDeck before enabling JIT or launching Steam."
+                }
+                LogStore.shared.log("[steam-client-install] complete verified public client; restart=\(changed ? 1 : 0)")
+            } catch is CancellationError {
+                steamInstallProgress = nil; error = "Steam installation cancelled. Existing files were preserved or rolled back. Verified package downloads are cached; tap Retry."
+            } catch let failure as URLError where failure.code == .cancelled {
+                steamInstallProgress = nil; error = "Download cancelled or interrupted. Tap Retry; verified packages are cached. Existing Steam files were kept."
+            } catch {
+                steamInstallProgress = nil
+                // Never surface request URLs, response bodies or account payloads.
+                if let known = error as? SteamClientError { self.error = known.localizedDescription }
+                else { self.error = "Steam installation did not complete. Check your connection and free storage, then tap Retry. Existing data and rollback copies were kept. Manual import is also available." }
+                LogStore.shared.log("[steam-client-install] failed; retry/manual recovery available", level: .error)
+            }
+            steamInstallTask = nil; preparing = false
             checkPrerequisites()
         }
     }
@@ -704,7 +740,7 @@ struct IDeckLauncher: View {
         guard !state.checkingPrerequisites, !state.preparing, !jit.busy else { return }
         switch step {
         case .runtime: if state.bundledRuntimeAvailable { state.prepare() } else { showSetupHelp = true }
-        case .steam: state.repairSteam()
+        case .steam: state.installSteam()
         case .signing, .pairing: setupJIT()
         case .connection: LocalDevVPN.open()
         case .jit: if sessionAvailable { enableJIT() } else { diagnostics() }
@@ -713,7 +749,7 @@ struct IDeckLauncher: View {
     private func actionTitle(_ step: IDeckPrerequisite) -> String {
         switch step {
         case .runtime: return state.bundledRuntimeAvailable ? "Prepare runtime" : "Setup instructions"
-        case .steam: return "Repair Steam files"
+        case .steam: return state.steamInstallActionTitle
         case .signing, .pairing: return "Open JIT setup"
         case .connection: return LocalDevVPN.actionTitle
         case .jit: return sessionAvailable ? "Enable JIT" : "View diagnostics"
@@ -755,6 +791,15 @@ struct IDeckLauncher: View {
                     if row.status == .passed { Text("Ready").font(.caption).foregroundStyle(.green) }
                 }
                 Text(row.detail).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                if row.id == .steam, let progress = state.steamInstallProgress {
+                    Text(progress.phase.rawValue).font(.subheadline.weight(.semibold))
+                    if let fraction = progress.fraction {
+                        ProgressView(value: fraction)
+                        Text("\(ByteCountFormatter.string(fromByteCount: progress.bytes, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: progress.total, countStyle: .file)) · \(Int(fraction * 100))%")
+                            .font(.caption).monospacedDigit()
+                    } else if state.steamInstallActive { ProgressView() }
+                    if state.steamInstallActive { Button("Cancel") { state.cancelSteamInstall() } }
+                }
                 if row.status == .needsAction {
                     Button(actionTitle(row.id)) { act(on: row.id) }
                         .buttonStyle(.bordered).disabled(state.checkingPrerequisites || state.preparing || jit.busy)
@@ -811,11 +856,32 @@ struct IDeckLauncher: View {
                     GroupBox("Steam recovery") {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Repair missing or incompatible Steam/browser program files without deleting accounts, games or saves. Replaced public files are backed up. Close Steam and reopen iDeck first if a session has already started.").font(.caption).foregroundStyle(.secondary)
-                            Button("Repair Steam files") { state.repairSteam() }
+                            Button(state.steamInstallActionTitle) { state.installSteam() }
+                                .buttonStyle(.borderedProminent).disabled(!state.canRepairSteam || jit.busy || state.checkingPrerequisites || state.repairRequiresRestart)
+                            Text("Downloads the complete pinned legacy client directly from Valve. This older Windows client is unsupported by Valve; continued sign-in is not guaranteed. No Steam files are bundled.").font(.caption).foregroundStyle(.secondary)
+                            Link("Steam Subscriber Agreement", destination: URL(string: "https://store.steampowered.com/subscriber_agreement/")!)
+                            Button("Use manual repair/import instead") { state.repairSteam() }
                                 .buttonStyle(.bordered).disabled(!state.canRepairSteam || jit.busy || state.checkingPrerequisites || state.repairRequiresRestart)
                         }
                     }
-                    if state.preparing { ProgressView("Preparing runtime…") }
+                    if state.preparing && !state.steamInstallActive { ProgressView("Preparing runtime…") }
+                    if let progress = state.steamInstallProgress {
+                        GroupBox("Steam installation") {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(progress.phase.rawValue).font(.headline)
+                                if let fraction = progress.fraction {
+                                    ProgressView(value: fraction)
+                                    Text("\(ByteCountFormatter.string(fromByteCount: progress.bytes, countStyle: .file)) / \(ByteCountFormatter.string(fromByteCount: progress.total, countStyle: .file)) · \(Int(fraction * 100))%")
+                                        .font(.caption).monospacedDigit()
+                                } else if state.steamInstallActive { ProgressView() }
+                                if state.steamInstallActive { Button("Cancel") { state.cancelSteamInstall() } }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    if state.error != nil && !state.preparing && !state.repairRequiresRestart {
+                        Button("Retry Steam download") { state.installSteam() }
+                            .disabled(!state.canRepairSteam || jit.busy || state.checkingPrerequisites)
+                    }
                     if let message = jit.status { Text(message).font(.caption).foregroundStyle(.secondary) }
                     if let message = jit.error { Text(message).foregroundStyle(.orange) }
                     if let error = state.error { Text(error).foregroundStyle(.orange) }
@@ -847,7 +913,10 @@ struct IDeckLauncher: View {
             state.checkPrerequisites()
             LibraryController.shared.configure(enabled: true, ownsInput: true)
         }
-        .onChange(of: scenePhase) { _, phase in if phase == .active { state.checkPrerequisites() } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { state.checkPrerequisites() }
+            if phase == .background && state.steamInstallActive { state.cancelSteamInstall() }
+        }
         .onChange(of: jit.busy) { _, busy in if !busy { state.checkPrerequisites() } }
         .onDisappear { LibraryController.shared.configure(enabled: true, ownsInput: false) }
         .onReceive(LibraryController.shared.commands) { command in
@@ -867,7 +936,7 @@ struct IDeckLauncher: View {
                         Text("Prepare runtime creates the local environment without replacing existing files. Missing app runtime files require a complete iDeck build.")
                     }
                     Section("Steam client") {
-                        Text("Use a legitimate compatible Windows Steam client. In Files → iDeck → wine → drive_c, place the complete client folder at Steam32BundleLab or Steam32Lab, then check again.")
+                        Text("Tap Download & Install Steam after preparing the runtime. It downloads and verifies the full pinned client directly from Valve. If the official source is unavailable, put the complete matching client in Files → iDeck → Steam32OfficialRepair and use manual repair.")
                         Text("Steam, steamclient.dll, steamwebhelper and libcef must belong to the same compatible 32-bit client. A single steam.exe is insufficient.")
                         Link("Read setup instructions", destination: URL(string: "https://github.com/kuscholar/iDeck/blob/main/docs/GETTING_STARTED.md")!)
                     }

@@ -1417,7 +1417,7 @@ struct ContentView: View {
                 let automaticX86Client = automaticLoginFirst || automaticBigPicture || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-x86-experiment")
                 let automaticSteamUI = automaticX86Client || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-experiment")
                 if IDeckState.enabled && !automaticSteamUI && !automaticX86CEF && !automaticNativeVM && !automaticReservation && !automaticFLS {
-                    ideck.refresh()
+                    ideck.checkPrerequisites()
                     if IDeckRules.shouldAutoStart(setup: ideck.setupDone, ready: ideck.ready,
                         automatic: ideck.autoStart, arguments: ProcessInfo.processInfo.arguments) && !automaticProbeRequested {
                         automaticProbeRequested = true
@@ -1435,6 +1435,14 @@ struct ContentView: View {
                         }
                         enableJIT()
                     }
+                }
+            }
+            .onChange(of: ideck.ready) { _, ready in
+                if IDeckState.enabled, ready, !automaticProbeRequested,
+                   IDeckRules.shouldAutoStart(setup: ideck.setupDone, ready: ready,
+                       automatic: ideck.autoStart, arguments: ProcessInfo.processInfo.arguments) {
+                    automaticProbeRequested = true
+                    startIDeck()
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: SteamSignIn.didChange)) { _ in
@@ -3585,7 +3593,7 @@ struct ContentView: View {
     /// listener in every broken run (ml579/580/584/585) and took the Start menu
     /// with it; launching directly also keeps cmd+conhost alive for the session.
     private func startSteamUINativeVMProbe() {
-        guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
+        guard SteamUIExperiment.enabled, !ideck.preparing, !ideck.repairRequiresRestart, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
               wineserver_is_running() == 0, !StikJITHelper.poolTaken else { return }
         steamUIStarting = true
         let resultFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -3596,7 +3604,7 @@ struct ContentView: View {
     }
 
     private func startSteamUIProbe(fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false) {
-        guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
+        guard SteamUIExperiment.enabled, !ideck.preparing, !ideck.repairRequiresRestart, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
               wineserver_is_running() == 0, !StikJITHelper.poolTaken else {
             logStore.log("[steam-ui-probe] launch refused: fresh isolated JIT session required", level: .error)
             return
@@ -3614,7 +3622,7 @@ struct ContentView: View {
     }
 
     private func startIDeck(accountChooser: Bool = false) {
-        guard !ideck.running, !jitCoordinator.busy, wine_process_is_running() == 0 else { return }
+        guard ideck.ready, !ideck.running, !ideck.preparing, !ideck.repairRequiresRestart, !jitCoordinator.busy, wine_process_is_running() == 0 else { return }
         ideck.error = nil
         UserDefaults.standard.set(true, forKey: "iDeckSetupComplete")
         let launch = { startSteamUIExperiment(x86Client: true, bigPicture: true, accountChooser: accountChooser, loginFirst: accountChooser) }
@@ -3623,7 +3631,7 @@ struct ContentView: View {
     }
 
     private func startSteamUIExperiment(x86Client: Bool = false, bigPicture: Bool = false, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false) {
-        guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
+        guard SteamUIExperiment.enabled, !ideck.preparing, !ideck.repairRequiresRestart, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
               wineserver_is_running() == 0, !StikJITHelper.poolTaken else {
             logStore.log("[steam-ui] launch refused: isolated experimental app, JIT and a fresh session are required", level: .error)
             return
