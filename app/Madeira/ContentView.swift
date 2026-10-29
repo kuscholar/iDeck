@@ -1369,6 +1369,10 @@ struct ContentView: View {
                 }
             }
             .onAppear {
+                if IDeckState.enabled && !ProcessInfo.processInfo.arguments.contains(where: { $0.hasPrefix("madeira-") }),
+                   MadeiraConfig.restoreProductBudgetIfNeeded() {
+                    logStore.log("[ideck-startup] removed historical reserve-only JIT budget; original config backed up")
+                }
                 jit_install_trap_handler()
                 entitlements = EntitlementStatus.check()
                 logEntitlementStatus()

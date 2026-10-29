@@ -18,6 +18,32 @@ import Foundation
 enum MadeiraConfig {
     static let fileName = "madeira.cfg"
 
+    /// Remove only the temporary budget written by the historical reserve-only
+    /// experiment. Ordinary/custom pool settings and every other key survive.
+    static func restoredProductBudget(_ text: String) -> String? {
+        let marker = "# Isolated reserve-only contract test; no CEF observer"
+        let lines = text.components(separatedBy: "\n")
+        guard lines.contains(marker), parse(text)["pool"] == "384" else { return nil }
+        return lines.filter { line in
+            if line == marker { return false }
+            let pair = parse(line)
+            return pair["pool"] == nil
+        }.joined(separator: "\n")
+    }
+    static func restoreProductBudgetIfNeeded() -> Bool {
+        guard let file = url, let original = try? String(contentsOf: file, encoding: .utf8),
+              let restored = restoredProductBudget(original) else { return false }
+        do {
+            let backup = file.deletingLastPathComponent().appendingPathComponent("madeira-reserve-budget-backup.cfg")
+            if !FileManager.default.fileExists(atPath: backup.path) {
+                try original.write(to: backup, atomically: true, encoding: .utf8)
+            }
+            try restored.write(to: file, atomically: true, encoding: .utf8)
+            return true
+        } catch { return false }
+    }
+
+
     /// Every switch that used to live in its own Documents/madeira-<key>.txt.
     static let legacyKeys = [
         "swap-mb", "swap-canary", "vram-mb", "pool", "totalphys", "inproc-sync", "wx",

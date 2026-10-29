@@ -1784,3 +1784,45 @@ Do not claim this high-priority feature is release-ready until those gates pass.
 Implementation committed as `9d21529` at Wednesday23:31EDT, within the user's
 allowed22:00–08:00 Git window. Final source timestamps precede the actual final
 Mach-O. Documentation/evidence follow separately. No release/main merge.
+
+### iPadOS26 startup crash: missing weak pipe2 (Build97)
+
+Actual downloaded-client iPad startup crashed three times before Steam/CEF entry.
+Latest00:20:53 ips: EXC_BAD_ACCESS/null then SIGABRT; server_pipe+44 is the
+instruction after its indirect call to pipe2. Wine server thread remains alive;
+the text "wineserver crashed" is therefore not reliable root-cause attribution.
+Final Build96 imports pipe2 weakly from libSystem. Actual iPhoneOS27 SDK declares
+pipe2 introduced in iOS27; target iPad runs26.7.1. This establishes a missing
+native API compatibility failure, not download corruption or jetsam.
+
+Build97 supplies a local pipe2 implementation using pipe/fcntl, preserving
+CLOEXEC/NONBLOCK, rejecting other flags and cleaning both descriptors on failure.
+No native fork/exec occurs in this in-process runtime; this emulation does not
+claim atomic CLOEXEC against arbitrary native concurrent fork. Existing iOS26
+Wine code already uses pipe/fcntl fallback, but its HAVE_PIPE2 path called the
+weak-null symbol before a fallback could occur. No Wine/FEX/DXMT source edits.
+Production-header real pipe read/write/flags/invalid/null host tests pass under
+ASan/UBSan; full Xcode Build97 passes. Final nm shows strong local __TEXT _pipe2,
+not undefined weak import. Device upgrade/runtime regression recorded separately;
+compilation alone does not establish the entire Steam boot succeeds.
+Private logs: automatic-steam-install/ipad-crash/{current.txt,crash.ips}.
+
+### Build98 iPhone spinner discriminator: retained reserve-only pool override
+
+User requested fix/rebuild after iPhone97 remained on Steam spinner. Private
+actual logs show current Success-OK and CEF Big Picture window creation, no
+identified fatal; latest renderer/compositor samples remain active. Not the iPad
+small-address-map refusal. Config readback has the historical exact header
+`# Isolated reserve-only contract test; no CEF observer` and `pool = 384` retained
+from the agent's prior address-space experiment. Actual97 allocates384MB plus
+272MB regionC; default product budget is896 before legitimate fit adaptation.
+No pool-exhaustion marker was captured, so reduced budget is NOT proven spinner
+root cause. Avoid attributing old persona errors or old CEF log entries to this run.
+
+Build98 removes only that exact marked384 override on ordinary iDeck app open,
+backing up original configuration, preserving all other keys and unmarked/user
+pool overrides. Explicit diagnostics excluded. Production migration fixture tests
+cover idempotence/preservation/last-value overrides. Full Xcode/signing pass.
+This is a controlled candidate correction, not a claim Steam startup is fixed.
+Actual user-visible regression outcome remains to be collected after install.
+No credentials/cache reset, Valve binary/FEX/runtime changes for this hypothesis.
