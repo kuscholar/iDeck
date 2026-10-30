@@ -575,6 +575,258 @@
     {
       "path": ".madeira-install/mac-arm-steam-official/heartbeat33-synthetic-regression.log",
       "sha256": "f8d9067bd3074725849d891299e4ea2dbf17b12a857c6cc617dc31e6623a909d"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat33-real-helper-layout.json",
+      "sha256": "47debf1e9790bacc33e569f9e6e4cbc70106386c20050218098a0b5eae7868d1"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-device-discovery.json",
+      "sha256": "dd58742bec20ea0a13cfb45d23caaea21c2161a3d2cdab17a1fee4785de123e5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-details.json",
+      "sha256": "fc50a3f1f0c7135fa6725d0c6d0fdfa0fb3c16fc16d8e6182dc0def9f73cdb13"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-installed-apps.json",
+      "sha256": "51901b56abf716706e1ee457af1ec4ce3efc9f84908c94b4b9b2e5ffc14d510f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-lock-state.log",
+      "sha256": "3a644b9793b767a3cd665f7bcbf827fcf0c6fe28d6c595e5cf390ce5ad4da76b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-build12-preflight.json",
+      "sha256": "790447c6463b66bac086ec029602ede9a575530be8a4fb3ff5a97f2c8e830478"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install12.log",
+      "sha256": "1fdc47aff527bf8837dab757794d59b3330f2014fa4b9a55e947c58d73aa5e7f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install12-recheck.json",
+      "sha256": "aa2b1917979a606d18cf14698bb7aad8115ad9838cd4e958cffe4c33239cb830"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install12-network.json",
+      "sha256": "af2b72b87b8063b65cf11d6fc4bf0e1675f1b90083f792c0c4a898d956fbe5bf"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install12-network.log",
+      "sha256": "ce8161ae18cfcff596f4811eeda36acf78cf3beb6bb1b2df727f42ca89f45cb4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install12-network-detail.log",
+      "sha256": "39a35d7547faddbed994a4c52a6623654c70480cfa6e1e3a16a261ce5d3d0fa6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-post-uninstall-apps.log",
+      "sha256": "131c098badc1b3a3f24be278cb4ac5ee8746ed1cf7f8161c50e22db79f3558bc"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-reconnect-discovery.json",
+      "sha256": "c9ed5fcc198b4f912f30d1c3a9a38dc1bd1a2d4a9ba3165db936a13bdcacf95f"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-probe-runner-host-regression.log",
+      "sha256": "10ab06b02a89fa1b3c44dfc39ede2a175a87be79a543d3f25c2781b7f535c1a2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-probe-runner-artifact-replay.json",
+      "sha256": "31a8d21b7cb3ed4329c60048f523361cf5414a676163d2451496142bdd9ee0a7"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-xcode-device-fallback.json",
+      "sha256": "23de84e579411701aaf461bd415a20fcefbb1c8db616bfcde93f9404ffc7f792"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-post-xcode-apps.log",
+      "sha256": "a513e3e917fce786b681a0d86c66f50d7dc8d24bbe761a235b5c0f4d8a31d66c"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/heartbeat34-ipad-state.log",
+      "sha256": "a889598adc79f694b7083938ccdc93bdcd438568d89370cb9c20128ffdd44df6"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-usb-ready-lock.log",
+      "sha256": "3a644b9793b767a3cd665f7bcbf827fcf0c6fe28d6c595e5cf390ce5ad4da76b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-usb-ready-apps.json",
+      "sha256": "b8ffa0889c7dd607490bab8d0c951d5d0335b5f5f4152c03f5ca098224f538ab"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install12-usb.json",
+      "sha256": "92f0ded3a1c92d849a0b754a35039289ae1669f432bd790b9c8ccd05520b2437"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-cef-preflight-app.json",
+      "sha256": "d9344334413f49e9d108504520857ba9c32df7b94492c7e5dda28ed953e28474"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-launch-cef-load12.log",
+      "sha256": "1fad67fdd6aeae8523f2d5c86819b7149e3d16795d852aeeb573ef795ca37d7b"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-cef-load12.ips",
+      "sha256": "46839c73e81b8a986c91b093019a04ff641522288f63f5c1b64f7b553ecc6b56"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/prepare-native-helper13-macos-directory.log",
+      "sha256": "68bc0cba081777173d076b01e4a739b49b6288298e8bf0ccb66b58b6d28bb6f2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/native-helper13-metadata-receipt.json",
+      "sha256": "7ae1256ce691243a5452ae3edf9efccbaa608fc7bbc01e8c2250787f903a27b2"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/native-helper13-shim-receipt.json",
+      "sha256": "719f653bc3e654ff29a2868f54758e8a1136ca350d908773c4ae98ecc31811f8"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/native-helper13-signed-hashes.json",
+      "sha256": "2703ec02c2eab3f7d1f4c15c88836a8031a2cb2d336b2c148189b539e89ba634"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/build-native-helper13.log",
+      "sha256": "b608944a19a03af3e0fafe8c1066dc8f3822bcce4af14be78ad881cac40af803"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/sign-native-helper13.log",
+      "sha256": "82e63bb0a6adcae6d2c9736db5476278abc573c9e1a96e0a24614c561b24968a"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-install-native-helper13.json",
+      "sha256": "c68366785ec9d1ceef796a1442ac4825e0d111fb4e4bcc72fd9196a6de62430e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-launch-native-helper13.log",
+      "sha256": "41a4dde176a568fb3e2bc25e6a08bc51776bf52cba3229beecf07effa169d67d"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-native-helper13.ips",
+      "sha256": "467ab8643854de3cefca58602d4313c584bc63fa5b86dca159c7a02a81bd5fe7"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-native-process13.log",
+      "sha256": "e395a2ae3cef6505892791a06f9399103474e602b82873911b5301bd5bec43d5"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-native-process13-identity.log",
+      "sha256": "912a9a13c019da2fe9fbbcb09a18b8851162cedd58275f36b3799e3e03b7bc67"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-native-process13-terminate.log",
+      "sha256": "aa2194e6ded8895bc005b91f706dd6484636f070d589ac476dba96781343b9c9"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/native-helper13-host-regression.log",
+      "sha256": "32e02641b3f23d784fb52a5b9df45638b5c756bb419a0de9d220af7335830cc4"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/native-helper13-staging-regression.log",
+      "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+    },
+    {
+      "path": ".madeira-install/mac-arm-steam-official/ipad-final-source-regression13.log",
+      "sha256": "f65b5b37e940b0ce211c6543067ce1a0045cfb160c60b477a2e10eca0a698037"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/processes.log",
+      "sha256": "66958b31c14a3ca56a65d7c08c0bd9393cea54e67c07e7ad7fca1dfd3ddf2d6d"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/report.json",
+      "sha256": "e83747214233d0392906140e809a784c2f9d1f27b165c109366417d050617029"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/launch.log",
+      "sha256": "7b1162e383fd5acec2a177d13963179a269256cb1f872d5aab9c5d7f7cc4676c"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/device.json",
+      "sha256": "57cadddf5746776d4adbdeb509295b836e0bdbe0e939f8a9416e02a06034166f"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/apps.json",
+      "sha256": "ca09add07f45077e6772f85447a4c74d4a598d2d2b7cfb423035d68aee1e4e4f"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/details.log",
+      "sha256": "e58a506c461d69386804ad998b266fd3b239abd6e65c246da66d79f2ac5ce4bd"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/apps.log",
+      "sha256": "94c500f7ccbd6aa21bc351cec93571ac661964860f5153fdaca77fa9477331b7"
+    },
+    {
+      "path": ".madeira-install/ipad-native-vm-range-20261029-1306/lock.log",
+      "sha256": "3a644b9793b767a3cd665f7bcbf827fcf0c6fe28d6c595e5cf390ce5ad4da76b"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/processes.log",
+      "sha256": "66958b31c14a3ca56a65d7c08c0bd9393cea54e67c07e7ad7fca1dfd3ddf2d6d"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/report.json",
+      "sha256": "359d62882bd72966a882718b182821713dafe411c45bb3066f33de817488bc46"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/launch.log",
+      "sha256": "34a51ac5602531f7978bfcd41cea83bdda5e54634e56089c15dac8ed0b59fefa"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/device.json",
+      "sha256": "9062245ab7846e7d891d61c53e6f60276e33ae999d0c4bca57bb9379a9815c5e"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/apps.json",
+      "sha256": "ad1e48f7628e6a8aeaf9f18015b443213f2b4bc4f4e16d8b7f571d740d559714"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/details.log",
+      "sha256": "dc8dc5b9370dfb8959d21689d39fb77b1d834b5e9aa9d9563cb6a19621780eb4"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/apps.log",
+      "sha256": "94c500f7ccbd6aa21bc351cec93571ac661964860f5153fdaca77fa9477331b7"
+    },
+    {
+      "path": ".madeira-install/ipad-native-synthetic-20261029-1307/lock.log",
+      "sha256": "3a644b9793b767a3cd665f7bcbf827fcf0c6fe28d6c595e5cf390ce5ad4da76b"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/processes.log",
+      "sha256": "db42fb8840c81f6a3b24ae31ad0e7fd45f9070de9c77ce0bf2a80f6a42477df4"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/report.json",
+      "sha256": "5439b59ba498e9d37d0eab81169e8c8b9d1f92fbbdbe2827c2cba2a1b8d38df4"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/launch.log",
+      "sha256": "ca9470790f43ec70479370d446ff416b40a4e97cc622825ffed3346b94407021"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/device.json",
+      "sha256": "0ac3f38c736eb056108d1ac486e79cf0eb29d285eb4a6f380c32a78a5613af43"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/apps.json",
+      "sha256": "05c548c97fe3ac25119df818f7f14da7c6ec38a60082de8c47aa2cb6c970eee1"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/details.log",
+      "sha256": "dc8dc5b9370dfb8959d21689d39fb77b1d834b5e9aa9d9563cb6a19621780eb4"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/apps.log",
+      "sha256": "94c500f7ccbd6aa21bc351cec93571ac661964860f5153fdaca77fa9477331b7"
+    },
+    {
+      "path": ".madeira-install/ipad-native-helper-20261029-1307/lock.log",
+      "sha256": "3a644b9793b767a3cd665f7bcbf827fcf0c6fe28d6c595e5cf390ce5ad4da76b"
     }
   ],
   "nativeProcessDiscriminator": {
@@ -997,5 +1249,255 @@
     "validation": "full local suite and six synthetic metadata/host-loader regressions pass",
     "next": "audit exact real Helper metadata/dependency/fixup requirements without applying the synthetic-only transformer to Valve; do not repeat stock CEF/native-spawn failures",
     "publication": "check New York time separately before each commit and push; no operation after07:00 weekdays"
+  },
+  "realHelperStaticLayoutFollowup": {
+    "sourceParent": "b6212bdae6d64aaac5e6dc6cb59916e739fc81b1",
+    "readOnly": true,
+    "helperSha256": "76374b69c4cb4d7ca0bb3c60f985eb766e90243ee3bc2d6605cf5cc2a67150c3",
+    "segmentCount": 5,
+    "fixups": [
+      "LC_DYLD_INFO_ONLY"
+    ],
+    "encryptedLoadCommandFlag": false,
+    "missingStaticCandidate": "@executable_path/../Frameworks/Chromium Embedded Framework.framework/Chromium Embedded Framework relative to root host",
+    "limits": "single static candidate only; not complete dyld resolution or proof of first fatal. LC_DYLD_INFO_ONLY differs from own fixture chained fixups. No real Helper conversion or entry call performed.",
+    "next": "exact-version private-copy bundle design must preserve rebase/bind segment indices and correct actual CEF dependency under host executable layout, then normal signing; measured CEF16GiB failure remains independent"
+  },
+  "ipadTarget20261029": {
+    "sourceParent": "b6212bdae6d64aaac5e6dc6cb59916e739fc81b1",
+    "userAuthorizedPhysicalIPadTesting": true,
+    "actualDevice": {
+      "marketingModel": "iPad Pro (11-inch)",
+      "productType": "iPad8,1",
+      "os": "iPadOS26.7.1",
+      "build": "23H30",
+      "physical": true,
+      "developerMode": "enabled",
+      "nativeUnlockObserved": true
+    },
+    "connection": "localNetwork; paired; DDI services available",
+    "preparedBuild": {
+      "version": "12",
+      "bundle": "com.kuschqin.ideck.maclab.macprobe",
+      "sizeApproxMiB": 607,
+      "existingProfileCoversTarget": true,
+      "profileChanges": false,
+      "deepStrictSignaturePass": true,
+      "finalVMAndSyntheticProbeMarkersVerified": true,
+      "iPadDeviceFamilySupported": true
+    },
+    "installation": {
+      "firstAttempt": "60s transfer timeout; fresh query no lab app",
+      "changedCondition": "verified607MB local-network transfer; bounded240s retry with detailed errors",
+      "actualFailure": "MIInstallerErrorDomain13; IXUserPresentableErrorDomain14; maximum installed free-development-profile apps",
+      "existingDeveloperApps": [
+        "HomePad",
+        "HomeViewPad",
+        "iDeck"
+      ],
+      "rootCause": "free-profile3app limit, not proof of invalid final signature",
+      "installed": false
+    },
+    "dataPreservation": "No existing app uninstalled/overwritten; no login/game/save or signing capability changes",
+    "runtime": "No iPad runtime execution or CEF success claimed",
+    "next": "User selects/backs up/removes one unused HomePad/HomeViewPad to free a slot; preserve existing iDeck. Then recheck availability/installation, install isolated12 and run separate bounded VM-range and own-bundle diagnostics before real Steam startup."
+  },
+  "ipadResumeAfterUserUninstall": {
+    "sourceParent": "b6212bdae6d64aaac5e6dc6cb59916e739fc81b1",
+    "userReport": "HomePad removed; not yet artifact-verified because app query unavailable",
+    "initialActualFailure": "CoreDevice4016 trusted-connectivity/services/power assertions unavailable; device list unavailable",
+    "alternateDiscovery": "xcdevice reports available network iPad, but subsequent CoreDevice app query15s times out; discovery is not usable device-service evidence",
+    "newInstallationAttempted": false,
+    "runtimeTestedOnIPad": false,
+    "requiredUserAction": "USB connect physical iPad to Mac, native unlock/keep awake and accept trust prompt if shown",
+    "independentSource": "one-probe runner enforces physical device, exact isolated bundle/audited12 version, native unlock, no existing lab session, private artifacts and exact diagnostic completion markers; no install/sign/unlock/terminate capability",
+    "validation": "8 runner tests and full local suite pass; replay of prior phone9/11/12 logs classifies markers only, NOT new iPad execution",
+    "fingerprints": {
+      "scripts/experiments/run-native-lab-probe.py": "545865aa9cfac71372b62815dd3fd880b6d84df743c129610b85967431c52b4c",
+      "experiments/mac-arm-steam/test-native-probe-runner.py": "05499a33d9845709c88e3732656d1e8d9ed8c9213ae832bb57c818696557ac4b",
+      "experiments/mac-arm-steam/test-local.sh": "a902a261f14ea0be598f6093bdc0b1d6d501e1cb8f305e5f16b3b45cbd20d70b"
+    }
+  },
+  "heartbeat20261029_1206": {
+    "sourceParent": "b6212bdae6d64aaac5e6dc6cb59916e739fc81b1",
+    "ipadService": "one fresh check still CoreDevice4016; no install/launch/repeated user request",
+    "runtimeUnchanged": true,
+    "automationContinuity": "existing305minute heartbeat prompt updated to latest user-selected physical iPad, existing slot/user-connect gate and exact probe/evidence boundaries; schedule/name/thread/status preserved",
+    "newCodeOrDeviceResult": false,
+    "gitPublication": "none; outside weekday22:00-07:00"
+  },
+  "ipadActualDeviceResults20261029": {
+    "sourceParent": "b6212bdae6d64aaac5e6dc6cb59916e739fc81b1",
+    "sourceUncommitted": true,
+    "target": "physical iPad8,1 iPadOS26.7.1(23H30)",
+    "slot": "fresh inventory confirms HomePad gone; HomeViewPad and working iDeck97 preserved",
+    "build12Installed": true,
+    "vm": {
+      "inventory": true,
+      "regions": 127,
+      "largestUnmappedGapBytes": 5771362304,
+      "taskSpanBytes": 14313553920,
+      "vmMap1GiB": {
+        "result": 0,
+        "cleanup": true
+      },
+      "vmMap8GiBResult": 3,
+      "vmMap16GiBResult": 3,
+      "mmap8GiBErrno": 12,
+      "memoryWritten": false,
+      "cefIntegrated": false
+    },
+    "ownBundle": {
+      "executableLoaded": false,
+      "bundleLoaded": true,
+      "fixtureVerified": true,
+      "constructorCalls": 1,
+      "mainCalls": 0,
+      "noSteamOrCEF": true
+    },
+    "unchangedHelper": {
+      "preflight": "ARM64 MH_EXECUTE",
+      "loaded": false,
+      "rejectionCategory": true,
+      "missingImageCategory": true,
+      "entryCalled": false
+    },
+    "directCEF": {
+      "loadReturned": false,
+      "reserveBytes": 17179869184,
+      "errno": 12,
+      "exception": "EXC_BREAKPOINT/SIGTRAP",
+      "module": "Chromium Embedded Framework",
+      "rva": "0x3b4dda0",
+      "initialization": "dyld constructors; not cef_initialize; no login"
+    },
+    "build13": {
+      "installed": true,
+      "candidate": "separate exact-version metadata-only private Helper copy beside native libraries; original Helper app unchanged",
+      "normalSigning": true,
+      "finalSignedCandidateTextHashVerified": true,
+      "originalHelperFullHashUnchanged": true,
+      "loaderChange": "MH_BUNDLE; entry/dyld loader commands removed; PAGEZERO size0 with original5 segment ordinals; LC_DYLD_INFO_ONLY payloads unchanged; CEF dependency loader-relative in-app path",
+      "candidateLoad": "preflight MH_BUNDLE then actual CEF constructors reached; dlopen did not return before same16GiB fatal; no completed Helper load claim",
+      "crashRVA": "CEF+0x3b4dda0",
+      "entryCalled": false,
+      "nativeSelfSpawn": {
+        "result": 1,
+        "created": false
+      },
+      "nativeSteamFork": {
+        "returnSite": "tier0+0xbe80",
+        "result": -1,
+        "errno": 1
+      },
+      "observerTimeout": "not app death; fresh exact app-path/PID identity verified before termination"
+    },
+    "tests": "5 synthetic metadata contracts; full local ASan/UBSan/iOS compile and real compiler failure/success staging pass; runner9 tests now explicitly permits audited12/13",
+    "reviewFailure": "one crash-list action was not executed due automatic-review usage failure; later fresh usage status ordinaryAllowed and normal approval succeeded; no bypass",
+    "limits": "No interactive native Steam UI/authentication/library/Windows depot/game/return/performance claim. Small-pool compatible CEF source/API and real process/IPC remain unresolved. No fixed/retry/mprotect/fake grant, API hash spoof or assertion suppression.",
+    "sourceFingerprints": {
+      "scripts/experiments/prepare-native-steam-helper-bundle.py": "fd0120611c86d82dc9a764485fd59406c4906da7ca075b30e1a00592913632cb",
+      "experiments/mac-arm-steam/test-native-helper-metadata.py": "7e813b394e3f891282318e31d6ee82f3d9e25d291292ce4699a85e4ac95efafe",
+      "experiments/mac-arm-steam/helper-load-probe.m": "12b40bd82942cbee55c1df2cd474b91e9c525386bd729328ef879a840f657b2d",
+      "scripts/experiments/run-native-lab-probe.py": "d0ef5b3d4daedc570d3270f981169e44f725f0879dcabc54c73d781e6ff542d7",
+      "experiments/mac-arm-steam/test-native-probe-runner.py": "cebae7a5fdfc5b3217b113abaa810c9a12c6294e94ba7a1f7b1edab582869817",
+      "experiments/mac-arm-steam/test-local.sh": "d6d1e1d34e387cf11ef829a0c5239b101cc349f30d70741a190a4883796291a7"
+    }
+  },
+  "ipadPartitionAllocSourceProbe20261029": {
+    "sourceParent": "b6212bdae6d64aaac5e6dc6cb59916e739fc81b1",
+    "gitState": "new scoped source/docs remain uncommitted under weekday22:00-07:00 rule",
+    "actualDevice": {
+      "model": "iPad8,1",
+      "os": "iPadOS26.7.1",
+      "build": "23H30"
+    },
+    "build": "14",
+    "bundle": "com.kuschqin.ideck.maclab.macprobe",
+    "kind": "standalone UIKit allocator test; no Valve payload",
+    "hypothesis": "Unmodified Chromium126 iOS small-pool path can execute real allocation/BRP-pool operations within no-EVA device VA limits",
+    "source": {
+      "tag": "126.0.6478.183",
+      "gitSubtree": "3e6d40abe3803b5f785a0adbd1030740cf1e8071",
+      "verifiedFiles": 362,
+      "compiledTranslationUnits": 62,
+      "modifiedUpstreamFiles": 0,
+      "build": "direct-clang standalone harness, explicit generated flag subset, not Valve CEF GN config",
+      "smallPoolSelection": "Actual upstream IsIOSTestProcess Runner suffix via PartitionAllocRunner executable; no platform or executable-name spoof of Valve binary"
+    },
+    "observed": {
+      "poolBytes": 268435456,
+      "poolsDisjoint": true,
+      "allocations": 398,
+      "frees": 398,
+      "workers": 4,
+      "failures": 0,
+      "poolsUninitialized": true,
+      "minimumAllocationBytes": 1,
+      "maximumAllocationBytes": 2097152,
+      "BRPSupport": true,
+      "BRPSlowChecks": true,
+      "DCHECK": true,
+      "expensiveDCHECK": true,
+      "CEFIntegrated": false
+    },
+    "signing": "existing standard Personal Team profile, no new capability/JIT/EVA; final linked markers and system dependencies verified; deep strict signing passes",
+    "installedBinarySHA256": "d41a531c88b62172ebbf4244c1118e671091a08defb665f791b58d308fc0b132",
+    "processState": "console25s timeout is not app death; exact installed14 path/PID subsequently observed. Probe UI remains after tests; no stale PID may be reused.",
+    "regressions": "all test-local host/sanitizer/iOS contracts PASS; modified-source, modified-header and symlink input rejection PASS; final script separately rebuilt unsigned probe successfully",
+    "limits": "No actual CEF/Steam UI/login/library/depot/game/return/performance success. BRP-pool allocations tested, not full raw_ptr dangling-reference semantics. Thread cache, malloc replacement, StarScan, pointer compression and MTE not tested. Upstream root/pool test teardown, not long-run leak proof.",
+    "next": "Find a reproducibly compatible CEF source/API build, propagate actual small-pool configuration through all allocator consumers, then initialize real CEF browser and investigate native Helper IPC. Do not substitute API hashes or smaller fake mmap grants.",
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/partitionalloc14-ipad-launch.log",
+        "sha256": "afce6e65c51e9579066d4023698a26fd0c6b4c0606f4e6e094eb77d434abfc78"
+      },
+      {
+        "path": ".madeira-install/partitionalloc14-install.json",
+        "sha256": "79c8f05f6c21b6ec2639dbedb5978fe5644f7530103e81a7b770c576d8e54b5f"
+      },
+      {
+        "path": ".madeira-install/partitionalloc14-installed-after.json",
+        "sha256": "4248718f5624da6d4729be169b083fe64d2e2d5e8284af83d83667aaf5d7f98d"
+      },
+      {
+        "path": ".madeira-install/partitionalloc14-process-after.log",
+        "sha256": "0d30d6361165fc3c3d6a36f0efd0176399725f018d74b255c3995b49ead25c7c"
+      },
+      {
+        "path": ".madeira-install/partitionalloc14-final-regression.log",
+        "sha256": "28b36e467aa9c507919faa6508dacc500bc7589ae307a464e397f1ca97816711"
+      },
+      {
+        "path": ".madeira-install/partitionalloc14-source-tests.log",
+        "sha256": "d38b6599acb669f0885be38325d46c3ec7b43bfc283ca1aa0ccea87946318460"
+      },
+      {
+        "path": ".madeira-install/partitionalloc14-repro-build.log",
+        "sha256": "8edb29d95e95ecb6ad299ba470e19d14daf48a729ae73403e14e2b39d1ef4c20"
+      },
+      {
+        "path": ".madeira-install/partitionalloc-probe14/build-receipt.json",
+        "sha256": "4676fae21fb5a591938c1f350b4169401248f1064bf79c0c1fd4a3fe8c423dc5"
+      },
+      {
+        "path": ".madeira-install/partitionalloc-probe14/signed-receipt.json",
+        "sha256": "ab3ff3cb2b4b278dd47be97bb915e67c76c4d0ea5e2038ce46462ad3320bb2b9"
+      },
+      {
+        "path": ".madeira-install/partitionalloc-probe14-repro/build-receipt.json",
+        "sha256": "7b562f84e86df9ae41813b3918a5a262ef8b571fe020b45dcf3c20dbc8d8f0c0"
+      },
+      {
+        "path": ".madeira-install/partitionalloc126/source-receipt.json",
+        "sha256": "53d7a70a8f494e90f9206395bde038ac8db79ba147611cc2f572f8d2ce0b7471"
+      }
+    ],
+    "sourceFingerprints": {
+      "scripts/experiments/build-partitionalloc-probe.py": "a9406ac8460aabae7cd826af71b7b43f4c742d3ad27e541f3da17e32d22977ba",
+      "experiments/mac-arm-steam/partitionalloc-probe.mm": "8b4a241554718eef84d013707098dbadde0d4f607a39a8bd57eb2f754fb08153",
+      "experiments/mac-arm-steam/test-partitionalloc-builder.py": "78d62559318f9d7ba7077f9d2a568d1320bf5ad3a3ea57ea192d0c65b3e245fe",
+      "experiments/mac-arm-steam/test-local.sh": "8837936fcee2ec857952d72c9afea46e70c13c479c1b1ea4923929879b4a5c26"
+    }
   }
 }

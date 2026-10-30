@@ -10,6 +10,9 @@ python3 experiments/mac-arm-steam/test-staging.py
 python3 experiments/mac-arm-steam/test-executable-layout.py
 python3 experiments/mac-arm-steam/test-cef-abi-audit.py
 python3 experiments/mac-arm-steam/test-process-observer-builder.py
+python3 experiments/mac-arm-steam/test-native-probe-runner.py
+python3 experiments/mac-arm-steam/test-native-helper-metadata.py
+python3 experiments/mac-arm-steam/test-partitionalloc-builder.py
 xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined -pthread \
   experiments/mac-arm-steam/sysv-semaphore.c \
   experiments/mac-arm-steam/test-sysv-semaphore.c -o "$artifacts/sem"

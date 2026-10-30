@@ -930,3 +930,267 @@
 - Next: exact-version read-only real Helper metadata/dependency/fixup audit;
   synthetic-only transformer remains prohibited for Valve binaries. Original
   CEF capacity, compatible source ABI and real IPC/lifecycle gates still apply.
+
+### Post-publication read-only Helper layout follow-up
+
+- Published prior reviewed sources/docs atb6212bdae6d64aaac5e6dc6cb59916e739fc81b1;
+  commit06:58:55 and separate push06:58:55 America/New_York checks both passed.
+  Remote equality verified; no force-push/main change.
+- Actual unchanged Helper metadata audit:5 segments, LC_DYLD_INFO_ONLY (NOT the
+  synthetic fixture's LC_DYLD_CHAINED_FIXUPS), encrypted load-command flag0.
+  Never infer arbitrary conversion support merely from that flag or own tests.
+  A future design must preserve rebase/bind segment indices as well.
+- Found a concrete layout requirement: direct CEF dependency is
+  @executable_path/../Frameworks/Chromium Embedded Framework.framework/Chromium
+  Embedded Framework. Resolving this single candidate relative to the root iOS
+  host executable finds no file; Helper originally expects its own executable
+  directory. This static check is not a full dyld search or proof of the exact
+  first fatal. Do not attribute all earlier error categories to MH_EXECUTE alone.
+- No proprietary bytes modified, no Helper entry or new device test. Exact audit
+  hash indexed privately. Next exact-version isolated-copy design must address
+  both loadable metadata and real CEF dependency layout; fixing these still
+  leaves measured stock CEF capacity and process/IPC gates unresolved.
+
+## 2026-10-29 09:35 EDT: user requests actual connected iPad
+
+- User explicitly changes immediate test target to local physical iPad. Preserve
+  full native Steam goal, branch isolation and existing working iDeck. Verified
+  experiment branch/origin/remote atb6212bd; existing local evidence changes kept.
+- Actual discovery excludes simulators: physical iPad Pro11-inch, productiPad8,1,
+  iPadOS26.7.1/build23H30; developer mode enabled, trusted/paired, native unlock
+  and DDI available. Private device identifiers/serial remain outside Git.
+- Prepared isolated Build12 exact bundle com.kuschqin.ideck.maclab.macprobe
+  supports iPad family2/minimum17. Existing standard profile already covers
+  the iPad, expiresNov3. No profile request/new capability/account login needed.
+  Deep strict signature and linked VM-range/own-bundle markers verified; signed
+  fingerprint report retained privately. Native probes need no FEX JIT step.
+- Physical iPad already has3developer apps: HomePad, HomeViewPad, iDeck97.
+  No assumption that a slot was free; attempted only independent lab install.
+  First60s command times out; fresh lab-app query empty. Checked actual transport:
+  localNetwork, prepared app607MB. Changed timeout to240s with detailed error
+  capture, not an unchanged blind retry. System then explicitly rejects fourth
+  free-profile app: MIInstallerErrorDomain13 / IXUserPresentableErrorDomain14,
+  max installed free-development-profile applications. Generic integrity text
+  is not the root diagnosis and is not proof valid final signature failed.
+- No working app uninstalled/overwritten, no auth/game/save copy, credential
+  automation, simulator substitution or device lock bypass. Asked user to back
+  up/remove one unused HomePad/HomeViewPad and notify; preserve working iDeck.
+  Experimental app NOT installed, and no iPad runtime success claimed.
+- Next after slot is available: recheck iPad availability and existing lab state;
+  install signed isolated12, run separate IDeckNativeVMRangeProbe and
+  IDeckSyntheticHelperProbe bounded sessions, collect real output. These own
+  diagnostics precede any genuine Steam/CEF comparison. iPhone results do not
+  prove this iPad/OS behavior. No repeated quota-failing installs meanwhile.
+- Evidence matrix and private hashes updated; no runtime source changes or reason
+  to repeat host tests. Weekday daytime: no commit/push/wait automation.
+
+## 2026-10-29 11:59 EDT: user removed HomePad; device service unavailable
+
+- User reports HomePad uninstalled. Preserve this as user report until actual
+  app inventory verifies slot; do not repeat the quota request or delete others.
+  Research branch/origin/remote remainb6212bd with existing local docs preserved.
+- Actual CoreDevice app query fails4016: trusted remote connectivity/services/
+  power assertions unavailable. Refresh device list marks physical iPad
+  unavailable. Asked for USB connection/native unlock/keep awake and trust prompt
+  if shown. No device install, app replacement, service restart or lock bypass.
+- Checked alternate supported Xcode discovery once: xcdevice reports available
+  network iPad26.7.1, but subsequent CoreDevice app query times out15s. Record the
+  disagreement; discovery availability does not prove usable install/debugging
+  services. No further identical unavailable-device retries or install claims.
+- Independent work: added run-native-lab-probe.py to execute exactly one explicit
+  diagnostic in an already installed audited12 lab. Requires physical device,
+  native unlock, exact isolated bundle/version/current URL, absence of existing
+  lab session, and new private .madeira-install artifact folder. No install,
+  signing, JIT, credential, unlock or process-termination operations. Working
+  iDeck or another build cannot silently substitute. Exact diagnostic markers
+  are required; console exit0 alone is not runtime success.
+- Eight runner tests PASS: wrong app/version/URL refusal, missing diagnostic
+  markers, inventory/cleanup and verified fixture requirements. Full local
+  contracts/iOS compilation PASS. Read-only replay recognizes prior PHONE9/11/12
+  artifact markers; explicitly not new iPad device evidence. No installed lab
+  binary change from the new host-side runner. No reason to rerun phone tests.
+- Next after USB/native access works: verify free slot and installed lab state,
+  install isolated12, then use the runner for separate vm-range and own-bundle
+  probes. Both must produce fresh actual iPad logs before making runtime claims.
+  All new source/docs remain local outside weekday22:00–07:00 commit window.
+
+## 2026-10-29 12:06 EDT: unchanged iPad connection; scheduled continuity corrected
+
+- Revalidated experiment branch/origin/remote atb6212bd; local user-work preserved.
+  One new iPad state query still fails CoreDevice4016 trusted-connectivity/power
+  assertion. No install/launch, unlock attempt, service restart, repeated prompt
+  or new device result. The user's pending USB/native access step is unchanged.
+- Updated the EXISTING305minute heartbeat prompt to respect the latest physical
+  iPad target, HomePad-removal report, existing isolated12 and runner, no simulator
+  substitution, no stale quota/phone-success claim and quiet unavailable gate.
+  Preserved schedule/name/thread/status and full original mission/time constraints;
+  no duplicate task, new wait automation or change to notification preferences.
+- No runtime edits or repeated tests for this state-only update. JSON/diff checks
+  pass. Daytime source/evidence remain uncommitted/unpushed. Next actual iPad
+  installation/testing still awaits usable trusted native device services.
+
+## 2026-10-29 13:05–13:22 EDT: real iPad tests and exact Helper candidate
+
+- User confirms connected/native-unlocked iPad. Branch/origin/remote revalidated
+  atb6212bd; local work preserved. Fresh physical iPad inventory confirms HomePad
+  removed, leaving HomeViewPad and working iDeck97. Existing standard profile/
+  signed12 preflight passes. Actual isolated12 install receipt succeeds; no
+  existing app overwritten, credential/cache/game/save transfer or new capability.
+- New runner actual iPad VM-range report: iPad8,1/iPadOS26.7.1,127 regions,
+  mapped6511230976bytes, no-access mapped5390336bytes, largest observed gap
+ 5771362304bytes, task span14313553920bytes. vm_map1GiB success+cleanup;
+ 8/16GiB return3 KERN_NO_SPACE; mmap8GiB errno12. Cleanup1/memory-written0/
+  cef-integrated0; this is a real device report, not prior phone replay.
+- Separate own-bundle run: executable loaded0; bundle loaded1/fixture-verified1,
+  constructor1/main0/Steam-entry0/CEF0/process-emulation0. Separate unchanged
+  real Helper run verifies native ARM64 MH_EXECUTE target then loaded0 with
+  executable1/missing-image1 categories. Neither is genuine interactive UI.
+- Actual direct native CEF load-only run: two16GiB mmap PROT_NONE failures,
+  errno12, followed by SIGTRAP before dlopen returns. Copied actual .ips confirms
+  EXC_BREAKPOINT at Chromium Embedded Framework+0x3b4dda0, during dyld initializers,
+  same RVA as phone. Do not interpret nearest symbolicated Rust names as a causal
+  function identity. No cef_initialize/login called. One crash-list request was
+  initially NOT executed because automatic approval review could not complete
+  due usage limit; later fresh ordinaryUsageAllowed status and normal review
+  succeeded. No approval or sandbox bypass was used.
+- Next single hypothesis: exact Helper loader metadata plus dependency layout
+  can progress beyond the unchanged-executable refusal, independently of CEF's
+  capacity. Added a SEPARATE exact-version preparer, not the synthetic-only tool.
+  Original signed converted Helper SHA76374b69... is required; thin ARM64, fixed
+ 5segments/LC_DYLD_INFO_ONLY, entry, encryption and section/stream bounds checked.
+  Preserve segment ordinals; zero PAGEZERO size; MH_BUNDLE, remove LC_MAIN and
+  LC_LOAD_DYLINKER/clearPIE. No instruction/bind/rebase payload modifications.
+- Candidate lives Mac/Contents/MacOS/IDeckNativeHelperLoad.bundle, beside real
+  dependencies. CEF import becomes @loader_path/../Frameworks/Chromium Embedded
+  Framework.framework/Chromium Embedded Framework, verified to resolve INSIDE
+  app. Original nested Helper app remains untouched. An earlier staged candidate
+  inside that Helper app was discarded after checking its own output hash;
+  it was never deployed, avoiding unnecessary re-signing of original Helper.
+- Five synthetic metadata tests PASS: exact payload/ordinal preservation, default
+  production-hash refusal for synthetic input, malformed bounds, changed segment
+  contract and unbacked bind stream. Complete local ASan/UBSan/iOS Werror and
+  real compiler failure/success staging regressions PASS. No signature bypass;
+  only ordinary existing developer signing. Final original Helper full SHA and
+  candidate text SHA verified after signing as well as before signing.
+- Isolated Build13 compiled, receipt/final marker checked, candidate+shims signed,
+  deep/strict app signature PASS; actual iPad install receipt success. Explicit
+  IDeckNativeHelperBundleProbe=1 only: verified ARM64 MH_BUNDLE preflight and
+  instructions-unchanged marker, then actual CEF constructors request16GiB,
+  fail ENOMEM and SIGTRAP. New .ips again CEF+0x3b4dda0. dlopen does NOT return,
+  no Helper entry called. This progresses loader validation/dependencies into
+  CEF initialization constructors but is NOT a completed Helper/CEF load or UI.
+- First independent iPad native-process session: legitimate self-posix_spawn
+  returns1(EPERM), created0. Existing diagnostic then continues genuine Steam
+  main; tier0 fork attempts return-1/errno1 at+0xbe80. Console observer25s timeout
+  is NOT process death; fresh exact installed app path/PID identity verified,
+  then only bounded lab process terminated. No auth or UI-success claim.
+- Updated runner supports only audited12/13 for existing unchanged probe
+  contracts, refuses11/14/ordinary iDeck. Nine host tests PASS; native13 candidate
+  was launched explicitly with exact install receipt, not an unreviewed runner
+  fallback. Prepared source fingerprints and all private install/launch/crash/
+  signed-output hashes indexed. Working apps/data remain intact.
+- Core end-to-end blockers on this iPad now artifact-backed: stock CEF fixed16GiB
+  constructor reservation and actual native process EPERM. Metadata alone does
+  not solve either. Need compatible source-built truly smaller allocator pools
+  and real IPC/lifecycle integration. No fake grants/PIDs, MAP_FIXED fallback,
+  mprotect retries, assertion suppression, ABI hash spoof, FEX or Valve-instruction
+  edits. Native UI/auth/library/depots/games/return and speed comparison incomplete.
+- Latest installed native lab13; diagnostic process ended; no assumed live PID.
+  New source/docs uncommitted/unpushed outside weekday22:00–07:00. No wait task.
+- Existing305minute heartbeat continuity now records actual iPad13 install/tests,
+  resolved signing-slot/connectivity gates and both measured blockers. Schedule,
+  notification settings, original mission and Git window preserved. Do not
+  replay obsolete install12/quota/unlock instructions over the current lab.
+
+
+### 2026-10-29 13:44–13:55 EDT; continuity finalized17:16 — actual Chromium126 allocator on iPad14
+
+- Parent/remote remain b6212bdae6d64aaac5e6dc6cb59916e739fc81b1 on
+  experiment/mac-arm-steam-ios, origin kuscholar/iDeck; remote freshly checked.
+  All prior uncommitted work preserved; no concurrent builder/device tool at
+  final check. No commit/push outside weekday22:00–07:00. Working iDeck97 and
+  primary checkout/data untouched. Fresh physical iPad8,1 /26.7.1(23H30) wired,
+  paired and unlocked; old isolated13 exact app-path identity checked before
+  terminating its one session. No authentication or credential operations.
+- Observed failure remains stock CEF constructor16GiB ENOMEM/fatal, plus native
+  child EPERM. Prior own geometry alone cannot establish allocator correctness.
+  Hypothesis: real Chromium126 iOS small-pool path can initialize ordinary+BRP
+  pools and perform correct allocations within the measured no-EVA VA capacity.
+- Inspected actual126 external_builds.md/BUILD.gn/config and source. The web search
+  surfaced an older Linux-only standalone GN recipe; the pinned126 tree does
+  NOT have that gn/ folder. Do not claim that older build recipe supports iOS.
+  Verified362 blobs (~3MB), subtree3e6d40abe3803b5f785a0adbd1030740cf1e8071;
+  two actual upstream build headers SHA-pinned. No full Chromium download/GN
+  installation, no upstream source edits. New direct-clang harness compiles62
+  real units; explicit generated standalone flags documented, not Valve CEF's
+  full config. Chromium BSD LICENSE/AUTHORS retained in rebuilt app.
+- Minimal new patch is an isolated UIKit executable and reproducible builder.
+  PartitionAllocRunner suffix selects actual upstream IsIOSTestProcess256MiB
+  pools; no instruction patch, runtime spoof or fake map. BRP+slow checks,
+  DCHECK+expensive DCHECK stay enabled. No EVA/JIT/new entitlement needed.
+  Initial own probe used private pool-size accessors and failed compilation;
+  corrected to public GetPoolInfo/mask/bases, never weaken upstream access/checks.
+- Build14 final linked marker/system-only libraries/iOS17 platform checked,
+  standard existing profile covers iPad; deep strict signing PASS. Actual install
+  receipt success. Console proves pool268435456/disjoint1, allocations398/frees398,
+  workers4/failures0/pools-uninitialized1/cef-integrated0. Actual requests1byte–2MiB
+  in normal+BRP pools, content and simultaneous requested-range isolation,
+  non-LIFO frees and concurrent workers. BRP raw_ptr lifetime semantics NOT tested.
+- Console25s transport timeout is not app death. Subsequent installed14 app and
+  exact executable process observed; completed test UI remains. Do not act on
+  recorded historical PID without identity revalidation. Current isolated lab
+  is standalone14, NOT Steam13. Original converted Steam13 remains on host.
+- Full host/sanitizer/iOS/staging test-local suite PASS. Source trust tests reject
+  tampered receipt/source/build-header and symlink; temporary-path root initially
+  needed canonicalization, fixed and all tests PASS. Final builder independently
+  rebuilds unsigned app successfully after guard/license-only changes; actual
+  signed/device binary and exact receipt hashes retained separately, not conflated.
+- Evidence paths/SHA256, exact source fingerprints/config and signed binary hash
+  are in MAC_ARM_STEAM_EVIDENCE.json ipadPartitionAllocSourceProbe20261029;
+  private raw partitionalloc14-* and partitionalloc-probe14* outside Git.
+- Conclusion: real small-pool allocator is now on-device verified, stronger than
+  geometry-only. It is iOS-compiled standalone PA, not stock macOS CEF or Steam.
+  No full allocator feature/stability/performance/CEF/browser success claim.
+  Next gate: reproducibly compatible CEF source/custom API, consistent allocator
+  build across consumers, then actual browser+Helper IPC/lifecycle. No hash spoof,
+  assertion suppression, smaller fake mapping, private entitlement or FEX edit.
+
+
+### 2026-10-29 23:34 EDT — user requests currently wired iPad Air preflight
+
+- Existing branch/HEAD/origin and all uncommitted work inspected and preserved.
+- New physical candidate is iPad13,1; existing iPad8,1 remains separately paired.
+  New candidate has no readable OS version/UDID/name and pairingState unsupported;
+  Xcode does not expose it as an available development target. Official single
+  CoreDevice pair attempt fails1014 with only RestorableDeviceRef representation.
+  USB product string iPad/id4779 observed; recovery/DFU/old OS is NOT established.
+- No install, launch, signing/profile change, reboot, restore, erase or working-app
+  action. Cannot verify profile coverage/free-app slots until normal pairing.
+  User asked to enter normal home screen, unlock/trust and report exact iPadOS.
+  This is a device-access gate, not proof the hardware cannot run the probe or
+  that genuine native Steam will work. Do not substitute old iPad/simulator.
+- Private evidence index:
+  - .madeira-install/ipad-air-preflight-20261029-2334/ideck-current-wired-devices.json SHA256 8f7f1c934d2f35712d4571f584d22b7c4907e288f048772a7171f6e31dcb304b
+  - .madeira-install/ipad-air-preflight-20261029-2334/ideck-xcdevice-current.json SHA256 23de84e579411701aaf461bd415a20fcefbb1c8db616bfcde93f9404ffc7f792
+  - .madeira-install/ipad-air-preflight-20261029-2334/ideck-air-details.log SHA256 2fd6d4916b986cbf1a66d29f4435f25044553cefe2b046d842f4b10cba47a19e
+  - .madeira-install/ipad-air-preflight-20261029-2334/ideck-air-pair-result.json SHA256 6f1efe5b7e9a0e9fff1d67246eaaa3896115a33a054628fa39c4b54f1ea2a805
+  - .madeira-install/ipad-air-preflight-20261029-2334/ideck-air-usb-ioreg.txt SHA256 7f3e60e6cba4e29e69d8857844d8c59aa0d255cf646e01aa21d8c01a8d3a6995
+
+
+### 2026-10-30 03:24 EDT — research snapshot review and target continuity
+
+- Branch/origin/remote revalidated at b6212bd; no overlapping build/tool.
+- Latest user target is newly wired iPad Air candidate iPad13,1, superseding
+  automatic preference for the old Pro. One read-only availability check still
+  shows pairing unsupported and OS unavailable. No repeated pair/install/unlock
+  request; no old-device substitution. Existing lab14 success is on iPad8,1 only.
+- Independently reviewed scoped source and redacted evidence; current full
+  test-local host/sanitizer/iOS/staging suite and real-source tamper tests PASS.
+  Private log .madeira-install/native-lab-reviewed-20261030.log. No new native
+  Steam/CEF runtime milestone. Compatible CEF source/API and native IPC remain
+  open; do not repeat proven stock failures or declare hardware unsuitable.
+- Fresh Air inventory private .madeira-install/mac-arm-heartbeat-20261030-0323/
+  ideck-air-heartbeat-20261030.json SHA256 9318cd3096a1fc6be8f091dda5b450e9022f43c86469ae42de1487800a5f82c8.
+- Preparing signed-off research snapshot only on experiment/mac-arm-steam-ios;
+  time checked separately immediately before commit and push. No main/submodule
+  change, Valve/runtime/signing payload, private device identity or raw log staged.

@@ -326,3 +326,99 @@ fails to load. This probe calls no Steam entry, CEF or IPC and is not UI success
 The Mac host accepting the original executable is not evidence iOS accepts it.
 Never apply the synthetic-only tool to Valve files; real Helper adaptation
 requires a separate exact-version private-copy audit and unresolved CEF/IPC work.
+
+Reproducible single-probe execution after isolated Build12 is installed:
+
+```sh
+python3 scripts/experiments/run-native-lab-probe.py \
+  --device YOUR_PHYSICAL_DEVICE_IDENTIFIER --probe vm-range \
+  --artifacts ../.madeira-install/NEW_PRIVATE_RUN_FOLDER
+```
+
+Use a different new private folder for `--probe synthetic-helper` or `helper-load`.
+The runner refuses simulator targets, ordinary iDeck, unreviewed app versions,
+locked devices and existing lab sessions; it never installs, signs, unlocks or
+terminates anything. Result markers, not console transport exit, determine
+whether the diagnostic completed. Raw device metadata/logs stay outside Git.
+`test-native-probe-runner.py` covers8 marker/identity/version/URL contracts.
+The initial iPad connection attempt failed before runtime; prior phone-artifact
+replay is not iPad execution evidence.
+
+Actual iPad results now exist: isolated12 VM-range/own-bundle/unchanged-Helper,
+then isolated13 exact Helper candidate and native-process tests. See latest
+research log/matrix; earlier connection/slot gates are historical. Runner now
+accepts only reviewed12/13, with9 host tests; no simulator or product app fallback.
+
+Exact real Helper private-copy loader discriminator (separate from own-fixture
+converter):
+
+```sh
+python3 experiments/mac-arm-steam/test-native-helper-metadata.py
+python3 scripts/experiments/prepare-native-steam-helper-bundle.py \
+  --converted /private/converted-output
+```
+
+The second command requires the exact audited converted Helper hash and isolated
+lab layout, refuses existing output/receipt, preserves original Helper and all
+instruction/bind/rebase payloads, and corrects only loader metadata/CEF path in
+its separate candidate. Verify unsigned receipt, normal signatures and final
+instruction hash before install. Use only explicit
+`IDeckNativeHelperBundleProbe=1` for its bounded load test; never combine probe
+switches. Actual iPad13 reaches genuine CEF constructors then16GiB ENOMEM/SIGTRAP;
+no dlopen completion, Helper entry, CEF browser, auth or UI success is claimed.
+The source-only metadata fixture tests do not execute Valve code.
+
+### Actual PartitionAlloc source probe (Build14)
+
+This is a separate UIKit test app using the same **isolated lab** bundle ID;
+it replaces only that lab binary, never working iDeck. It contains no Valve
+files and does not start Steam. The private converted Steam13 app remains on
+the host for a later justified experiment. Read current installed-app/process
+state before switching experiments; the old native runner intentionally refuses14.
+
+```sh
+python3 scripts/experiments/build-partitionalloc-probe.py --fetch \
+  --source ../.madeira-install/partitionalloc126 \
+  --output ../.madeira-install/NEW_PA_BUILD_FOLDER
+IDECK_PA126_SOURCE=../.madeira-install/partitionalloc126 \
+  python3 experiments/mac-arm-steam/test-partitionalloc-builder.py
+```
+
+The fetch verifies the pinned362-file Chromium126.0.6478.183 subtree/receipt and
+two build headers, about3MB, without a full Chromium/GN download. The build
+checks every source hash and compiles62 actual upstream units; no upstream
+instruction/source patch, fake pool grant or malloc interposition. Generated
+flags explicitly enable BRP, slow checks, DCHECK and expensive DCHECK. Other
+optional features (StarScan, MTE, thread cache, malloc replacement, pointer
+compression) are outside this probe. This is a minimal direct-clang harness,
+**not** Chromium's complete GN build or Valve CEF's build configuration.
+
+The executable is deliberately named `PartitionAllocRunner`: the *unmodified*
+upstream iOS `IsIOSTestProcess()` selector recognizes the `Runner` suffix and
+chooses256MiB pools. This public upstream test path needs neither EVA nor JIT.
+Retagging stock macOS CEF does not enable it; a compatible CEF source build
+remains necessary. Never rename the stock Steam executable and claim that its
+already compiled allocator has changed.
+
+Output is UNSIGNED. Check `build-receipt.json`, linked markers, iOS platform and
+system-only dependencies before normal development signing. Embed a currently
+valid profile covering the lab bundle and target device, sign with the existing
+standard lab entitlements, then `codesign --verify --deep --strict`. No new
+capability/profile may be assumed. With the prior lab session identified and
+ended, install only `PartitionAlloc.app`, then launch:
+
+```sh
+xcrun devicectl device install app --device YOUR_DEVICE_ID \
+  /private/path/PartitionAlloc.app
+xcrun devicectl device process launch --device YOUR_DEVICE_ID --console \
+  --timeout 25 -- com.kuschqin.ideck.maclab.macprobe
+```
+
+Actual physical iPad14 console: pool-bytes268435456, disjoint1, allocations398,
+frees398, workers4, failures0, pools-uninitialized1, cef-integrated0. Ordinary
+and BRP roots test sizes1byte through2MiB, content preservation, live requested
+interval separation and non-LIFO frees. This tests allocations *in* the BRP
+pool, not the complete `raw_ptr` dangling-reference protocol. Explicit root/pool
+test teardown is checked; no long-run leak/performance or full CEF claim.
+The UI remains visible after completion; a console timeout is not process death.
+Chromium BSD LICENSE and AUTHORS are included in the standalone build.
