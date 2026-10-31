@@ -2157,5 +2157,240 @@
     ],
     "cleanup": "After bounded run, fresh app19 identifier/version/path and exact current lab process revalidated; only isolated native Steam research process terminated, fresh process inventory confirms absence. Installed19/data retained; working apps untouched.",
     "finalReview": "Full host/sanitizer/iOS contracts, real compiler staging failures/success and Mac-only C control Werror build pass immediately before source-only checkpoint."
+  },
+  "ipadAirDebugCEFControl20261031": {
+    "sourceParent": "f3fcb402bdda92fce29f790ff967eca988f1570c",
+    "build": 19,
+    "target": "physical iPad Air4/iPad13,1 iPadOS27.2(24B119)",
+    "discriminator": "Fresh start-stopped, actual normal Xcode LLDB attach, then detach/continued same process, no entitlement or runtime code change.",
+    "firstAttempt": "Full remote symbol reads caused halt/detach timeouts; exact process cleanup verified. Console initially insufficient. Later exact .ips for that PID proves same CEF trap; do not label cleanup alone as cause or assume CEF never ran.",
+    "minimalAttempt": "LLDB no init, memory-module-load-level minimal, preload-symbols false; real dyld initial stop and settings verified. Later stop obtained; detach succeeds, same console immediately emits CEF begin/two16GiB ENOMEM then SIGTRAP.",
+    "actual": {
+      "CS_DEBUGGED": true,
+      "CEFModuleRVA": "0x3b4dda0",
+      "exception": "EXC_BREAKPOINT/SIGTRAP",
+      "mmapBytes": 17179869184,
+      "mmapFailureCount": 2,
+      "errno": 12,
+      "CEFLoaded": false,
+      "browserInitialized": false
+    },
+    "limits": "Attach/detach result, NOT continuous attached CEF validation. Nearest Rust symbol misleading, use module/RVA. Probe has no credentials. No private entitlement/codesign bypass.",
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/native-air-debug-control/start-stopped.json",
+        "sha256": "0be49edd5a68cebef0e709367d930f38342ec21e3e17526a26a2501666880b7c"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-control/lldb-console.json",
+        "sha256": "b28d9ab2582577b4db846bd5c67623f69cd18a57ea3a6853f6038ecfa25d0d52"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-control/lldb-process.log",
+        "sha256": "6624108477f4fc773d494a562f0f4c0dcefec4bfd166dbbbf22cb1fd066e6ece"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-control/first-control.ips",
+        "sha256": "525a3da91b886acbcffe72172d1137e8d7f5d6e6daf4e12c116de4ac2faac092"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-control/cleanup-empty.json",
+        "sha256": "baca13a94b4e788f8cf455225ce6ae320a59b0771bf0c14cba64293fcefb9458"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-minimal/console.log",
+        "sha256": "5e5ba4dad34d71b3e637ad470ac0fb7616a5ea3ddd9f11db47b8e38307a14e91"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-minimal/lldb-console.json",
+        "sha256": "d077e144e8a2508a42282fae4936f849c9a99f45bc94385046ee0e2977c7a92c"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-minimal/plan.json",
+        "sha256": "266f13a607cae42b4de5fc818718fe1960fd14a2b67a111415499e431b9ec1db"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-minimal/cef-after-debug.ips",
+        "sha256": "0e812d0c57627e888b9f54c9426834d0a59c33307f661d1dc898d19d7cfb7d41"
+      },
+      {
+        "path": ".madeira-install/native-air-debug-minimal/observer-result.json",
+        "sha256": "389af8216fd28e9bd5c766775fdaf4f8ac89dc66bba41a23cff05d29d33baac5"
+      }
+    ]
+  },
+  "macCompiledCompactAllocator20261031": {
+    "sourceParent": "f3fcb402bdda92fce29f790ff967eca988f1570c",
+    "target": "physical iPad Air4/iPad13,1 iPadOS27.2(24B119)",
+    "hypothesis": "A genuine macOS-targeted Chromium allocator can consistently select compact pool sizes in source, retain dynamic masks/checks across every consumer, and execute after metadata-only iOS retargeting. This differs from the earlier iOS-compiled Runner allocator.",
+    "source": {
+      "tag": "126.0.6478.183",
+      "subtree": "3e6d40abe3803b5f785a0adbd1030740cf1e8071",
+      "sourceUnits": 62,
+      "threePatchedFiles": {
+        "partition_alloc_config.h": {
+          "beforeSHA256": "d53abbb1880d6a321fe3acaf728ff716f1ae3ef17c09b607cf928946001a67de",
+          "afterSHA256": "ca8b6d9d13ea6dfa838e9a7645ddb92f4d8dca07bdb208e5ef7d396fed079e98"
+        },
+        "partition_address_space.h": {
+          "beforeSHA256": "96faadaf33cafc64caba2d404838e765453dd45f3cc6d8747d7278c6faebdf34",
+          "afterSHA256": "cf3572020b8b7cbeaad7de866e1d3dc1eed9a93407ee2ec16bd89677cf6e3852"
+        },
+        "partition_address_space.cc": {
+          "beforeSHA256": "f6d81cb46ed262ab1af6bd6488ff549144daa012857c5da7f1511a410c3222f0",
+          "afterSHA256": "b608f6b63ebe0ca6af29a523f7e47ba8e58dfa7feee98b864aa464dcdbd36171"
+        }
+      },
+      "singleDefinitionForAllConsumers": "IDECK_MAC_COMPACT_POOLS=1",
+      "original362BlobSourceUnchanged": true,
+      "generatedCopyEditsLicense": "Chromium BSD terms retained; no upstream checkout/submodule edits or submissions"
+    },
+    "implementation": "Same shared header defines compact Mac inline size selectors in every TU; dynamic mask layout retained. Generic iOS selector unchanged when opt-in absent. Actual Mac platform static_asserts and BRP/DCHECK/expensive-check asserts enabled. Own C ABI result plus UIKit dlopen host; null/size/reentry tested on Mac.",
+    "observedFailuresAndCorrections": [
+      "Initial Mac link lacked real Security framework for existing upstream SecTask queries; linked real framework, checked iOS SDK actually exports those symbols. No dummy Security status or new entitlement.",
+      "Glued prototype exposed undefined RegularPoolSize because public inline CorePoolsSize called a declaration whose definition was confined to another TU. Source header now defines compact selectors inline for this explicit Mac build; duplicate source definitions excluded in opt-in only. Checks were not suppressed.",
+      "Build20 initial result ABI1/64bytes was observed on device before adding glued telemetry. Final current source uses ABI2/72bytes; final21 and default20d rebuilds pass with current source snapshots. Do not conflate intermediate20 fingerprints with current source."
+    ],
+    "actualDevice": {
+      "build20": {
+        "MacTargetCode": true,
+        "glued": false,
+        "allocations": 398,
+        "frees": 398,
+        "workers": 4,
+        "failures": 0,
+        "poolBytesEach": 268435456,
+        "disjoint": true,
+        "cleanup": true,
+        "loadedAndExportCalled": true
+      },
+      "build21": {
+        "MacTargetCode": true,
+        "glued": true,
+        "allocations": 398,
+        "frees": 398,
+        "workers": 4,
+        "failures": 0,
+        "poolBytesEach": 268435456,
+        "disjoint": true,
+        "cleanup": true,
+        "loadedAndExportCalled": true,
+        "adjacentPoolsAndCombinedMaskChecks": true,
+        "afterObserverExactInstalledVersionAndProcessConfirmed": true
+      },
+      "newEVAorJIT": false,
+      "observer35SecondTimeoutIsNotAppDeath": true,
+      "visibleScreenshot": "not captured this experiment; device console and actual install/process artifacts only"
+    },
+    "currentBuild": {
+      "build": 21,
+      "scope": "Own UIKit host + real Mac-compiled Chromium allocator, glued dynamic core pools; no Valve payload",
+      "deepStrict": true,
+      "extraEntitlements": false,
+      "glued": true,
+      "moduleTextUnchangedAfterRetargetAndSign": true,
+      "moduleTextSHA256": "4b5f5b5aabff41bfe785cc332ff356cbc3f7840749df17596817d60cc26a498d",
+      "moduleSHA256": "690f0c9c925e3a478cdea81c28787dcad7b7f11c98c421f3db299f0d75e69da0",
+      "hostSHA256": "3a3ac61e0d91247f7509676f141ac668818f8d54b12f9916a799b19092c7952e",
+      "buildReceiptSHA256": "3b38be4fcaa63c1b74bdb1151bb45117f6c52c63ebaebf5917102d7efa91ac5e",
+      "finalExportAndMarkers": true,
+      "deviceRuntime": "pending"
+    },
+    "runtimeLimits": [
+      "NOT Steam or CEF integration; no native Steam UI/auth/library/depot/game/return claim",
+      "Standalone direct-clang configuration, NOT Valve GN/config/ABI",
+      "Thread cache, full raw_ptr lifetime, malloc interposition, pointer compression, StarScan/MTE, V8 sandbox/JIT and full browser allocation patterns untested",
+      "Never preload this compact allocator into precompiled CEF with fixed inline masks; rebuild all consumers consistently"
+    ],
+    "sourceFingerprints": {
+      "scripts/experiments/build-mac-compact-allocator.py": "87e44f0129c6aa6d38a3f5fcc599ecdd3e9061d57ef649a74c9ddf35d152ffaf",
+      "experiments/mac-arm-steam/mac-compact-allocator.h": "01db626571e0dd44200ecff6ecd2295138986c7a72cb853bdf69182b6e5df8cf",
+      "experiments/mac-arm-steam/mac-compact-allocator.cc": "83787fb8296c91d715efce4e900cf03a70d2980a1bb7559526554a8f228a479c",
+      "experiments/mac-arm-steam/mac-allocator-host.mm": "2e6faa7d548f8421a870814b9a1111038d4bd4e3f463c7ea9174576c06dfb21f",
+      "experiments/mac-arm-steam/test-mac-compact-builder.py": "aee737f7328e59632d9a0b1fe5ae0665694ecb2e9c929cec4655b0d90a0c1285",
+      "experiments/mac-arm-steam/test-local.sh": "cbac856086fda3d53ea0e60c4d4b470a4a94dc723c5336c380007978741bc278"
+    },
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/mac-compact-allocator20c/build-receipt.json",
+        "sha256": "e91532f5d0bd02287fdb91420e54dfdec0400db86f67692da9efff2beeab3130"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20c/signed-receipt.json",
+        "sha256": "db90bcd94f7306523b1ac39289709774a07c9b81a1900f1cc823986310b38704"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20c/host-run.log",
+        "sha256": "30dc5898b1dc81a82b8d9648b120879067543a503625859a048cb4130f22b545"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20c/install.json",
+        "sha256": "09d16a4765d00094a3e0f1039579e75ec9a800af150c05031bcf6ecb5b1bcaa5"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20c/console.log",
+        "sha256": "c32e03f2aa4ed8c6b4259398eac1e787a59f3ed3dbdd315204cf81b9308167d9"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20c/observer-result.json",
+        "sha256": "3cd709f9a23e0f1f80132d034dda9e0e1f74859561317a6e4f695b92adf57925"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/build-receipt.json",
+        "sha256": "3b38be4fcaa63c1b74bdb1151bb45117f6c52c63ebaebf5917102d7efa91ac5e"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/signed-receipt.json",
+        "sha256": "10ebd5fbb793110b2662f2207fa1b3e000226cc7bb7055dbea4cf84aa5052d45"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/host-run.log",
+        "sha256": "36176ba6b80e7ba49a4abfc9a5021008691dbb13390689d101e2a8b015221233"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/install.json",
+        "sha256": "4e6f698b52979a6ad0b8e4e0be81fccc0d3df5b63bfbe1cafa7ab364d23284c6"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/console.log",
+        "sha256": "36811512c8ecf8adff4904f3916ab9cbe553344d1a08acecd24d4570ff919108"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/observer-result.json",
+        "sha256": "6b645beb5ad80ffb29d34eef9a8fb30678d79beee38174ff3e629abd3d31909b"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/after-apps.json",
+        "sha256": "ae7abaa622d15f16fc7740329b8246cececd1dd051c184055b3ca7a7eff9f1d9"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c/after-processes.json",
+        "sha256": "934e4ca1fe8cf683f3b35d79fa148e9682059c40c83487867df369f861b69086"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20d/build-receipt.json",
+        "sha256": "f8aabd2ae5c41d7f0a2095e398369237be22e2d12a07824df7b77e54dab823b1"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20d/host-run.log",
+        "sha256": "73e823c1529b6748441abc389fe26dbdcdef8f7df8c383c3f364aebac37e3543"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator20-build.log",
+        "sha256": "32bbe9494d7c67f0efee0018847f16ae4287b205ce918488929bd90d328856f4"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21-build.log",
+        "sha256": "98486864ecc91532a22da0ec0d24fec7032a12da1effa3ea197b78faae249ae4"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator21c-build.log",
+        "sha256": "76c7795c4b9afe9a4aa5598a7fa0f3add1a7a35910400ddad372f1e40e44e9a2"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator-final-tests.log",
+        "sha256": "1a36a5f629d2a588287b9531c76314f48488302f17238f91680da261ecb73c88"
+      }
+    ]
   }
 }

@@ -576,3 +576,47 @@ Own `mac-cef-load-control.c` is optional Mac-only control: compile with
 copy with normal Mac development signature. It calls dlopen and public version/
 hash getters only, never cef_initialize or Steam main. Actual host pass is not
 iPad/CEF UI proof. Keep raw logs, profiles and all framework payload outside Git.
+
+### Real macOS-target compact allocator, private standalone20/21
+
+This experiment rebuilds the actual allocator as macOS ARM64, then metadata-
+retargets its own MH_BUNDLE to iOS. It does not modify or link any Valve file.
+
+```sh
+# Prepare the verified362-file source using the earlier allocator fetch workflow.
+python3 scripts/experiments/build-mac-compact-allocator.py \
+  --source ../.madeira-install/partitionalloc126 \
+  --output ../.madeira-install/NEW-mac-allocator-glued --glued
+python3 experiments/mac-arm-steam/test-mac-compact-builder.py
+```
+
+Use a new private output. The builder verifies original source/header/license
+hashes, copies the tree and changes only3 files under that private copy. These
+generated Chromium edits retain original BSD notices and use the same BSD terms.
+All62 Mac-target units and the entry point share IDECK_MAC_COMPACT_POOLS=1. This
+selects real256MiB pools with source-wide dynamic masks; no process-name spoof or
+smaller mapping returned for a larger request. The glued option also validates
+adjacency, public CorePoolsSize and combined core-pool masks. A real cross-TU
+link failure required defining compact selectors inline in the common header.
+
+It first runs a separate Mac host process (including null/size/reentry guards),
+then changes only platform metadata and public framework dependency paths.
+__text SHA256 must remain identical. Own source snapshots and input-change
+refusal keep the receipt tied to compiled sources. The generated app is UNSIGNED.
+Sign its MacCompactAllocator.bundle first, then the UIKit app, with the matching
+existing isolated profile; verify both deeply/strictly and final export/markers
+before install. No EVA/JIT capability is requested. Reuse ONLY the isolated lab
+bundle ID; check current process identity and finish prior test before upgrade.
+
+Actual Air20 intermediateABI1 independent pools and finalAir21 ABI2 glued pools
+pass load/entry/398alloc-free/4workers/0failures/disjoint/cleanup. Current source
+usesABI2/72bytes; its default20 rebuild also passes on Mac. The two intermediate
+source versions have separate receipts; final21 is the reproducible current
+device configuration.35s console timeout is not app death: actual installed21
+and its exact completed probe executable were subsequently observed alive.
+
+This is not CEF or Steam integration. Thread cache, complete raw_ptr lifetime,
+malloc replacement, pointer compression, StarScan/MTE, V8 sandbox/JIT and full
+browser allocations remain untested. Do not preload this into the precompiled
+CEF with mismatching inline masks. Matching custom source/API plus a complete
+consumer rebuild and actual Helper IPC remain separate necessary steps.

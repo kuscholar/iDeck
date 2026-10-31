@@ -1,8 +1,8 @@
 # Native macOS ARM64 Steam on iOS: evidence matrix
 
 This is an experimental route, separate from the working Windows Steam product.
-The full end-to-end goal is **not achieved**. Latest review: 2026-10-30, research
-parent `ad53b4083147539528c9e5c07cdc2d2641138884` plus local scoped changes.
+The full end-to-end goal is **not achieved**. Latest review: 2026-10-31, research
+parent `f3fcb402bdda92fce29f790ff967eca988f1570c` plus local scoped changes.
 The opening historical table concerns the isolated iPhone15ProMax/iOS27.0 lab;
 the dated sections below separately record physical iPad Pro26.7.1 and Air27.2
 results. All use ordinary Personal Team signing. Do not generalize observations
@@ -218,3 +218,31 @@ returns correct version/hashes without cef_initialize. ARM64 instructions and
 original source remain unchanged. Host loading success distinguishes this from
 a generally invalid download, but does not establish iPad address capacity,
 native Helper IPC or interactive browser success. See evidence index for limits.
+
+## Actual macOS-compiled compact allocator, Air20/21
+
+The allocator component now compiles as macOS ARM64 (IS_MAC1/IS_IOS0), then loads
+after instruction-preserving metadata retargeting in an ordinary signed UIKit
+host on the physical Air. This differs from the earlier iOS Runner configuration.
+All62 allocator units use one explicit opt-in and shared dynamic-mask headers;
+only3 pinned files are changed in a disposable copy, with original BSD notices.
+Original362 source blobs remain unmodified. Checks, BRP support and slow checks
+remain enabled; no fake map or precompiled Valve allocator changes.
+
+| Source configuration | Actual Mac host | Actual physical Air | Remaining limit |
+| --- | --- | --- | --- |
+| Independent compact pools | 398 alloc/free,4workers,0failures | Intermediate20 ABI1: load/entry/pass, two256MiB disjoint pools, cleanup1 | Current ABI2 default rebuild host-pass; do not conflate fingerprints |
+| Glued compact pools | 398 alloc/free,4workers,0failures | Final21 ABI2: same workload, adjacent pools and combined mask checks, cleanup1 | Component only; CEF/V8/IPC not integrated |
+
+The first glued link failed because a shared inline method called a size-selector
+definition hidden in another TU. Compact-Mac selectors are now defined inline
+in the shared header; other platform selection remains unchanged. No check
+suppression. Both configurations pass host tests and final21 device artifacts
+confirm true Mac-compiled code execution without EVA/JIT entitlements.
+
+Actual Air19 normal-debug attach/detach also preserves CS_DEBUGGED yet still
+fails two16GiB requests and traps at CEF+0x3b4dda0. This removes an untested
+normal-debug condition on this specific Air; it is not continuous-attached UI
+validation. Full source-compatible CEF/browser and actual Helper lifecycle remain
+necessary. Do not inject this compact component into stock CEF's fixed-mask code.
+No native Steam login/library/depot/gameplay/return or speedup claim follows.

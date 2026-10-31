@@ -1520,3 +1520,63 @@
   experiment, verified no matching process.19 remains installed with its data;
   working apps untouched. Final full host/sanitizer/iOS/staging and Mac control
   Werror compile pass again before checkpoint. No native completion claim.
+
+### 2026-10-31 00:16 EDT — Air debug control and real Mac-target compact allocator20/21
+
+- User requests immediate continuation. Verified experiment branch/origin/remote
+  f3fcb40, other worktrees unchanged. Actual Air still27.2(24B119). No waiting for
+  schedule and no overlapping device experiments. Explicit probes only, no auth.
+- New debugger discriminator: fresh signed19 start-stopped and real LLDB attach.
+  Default remote symbol reading warns no matching on-disk shared cache and halt/
+  detach time out. Exact probe identity revalidated before cleanup. Its later
+  .ips proves CEF trap at+3b4dda0 with CS_DEBUGGED; initial sparse console was not
+  proof constructors never ran. A separate minimal-module/no-preloaded-symbol
+  session obtains a real dyld stop and detaches successfully. Same process then
+  logs CEF begin, two16GiB ENOMEM, SIGTRAP. Actual .ips confirms CS_DEBUGGED and
+  exactCEF+3b4dda0. This is attach/detach, not continuous-attached CEF validation.
+  No grant/protection/code/signature bypass; normal debug still fails on Air.
+- Implemented the next source-rebuild component: actual macOS ARM64-targeted
+  Chromium126 PartitionAlloc, then metadata-only retarget to iOS and load from
+  own UIKit app. Unlike earlier iOS Runner probe, allocator TUs compile with
+  IS_MAC1/IS_IOS0 and explicit compile-time shared compact definition. All62
+  pinned units + own entry share patched headers/flags; original362 source blobs
+  remain byte-verified and untouched. Only3 files change in a disposable copy.
+- Initial actual Mac link exposes missing real Security.framework for upstream
+  SecTask queries; linked it and verified public iOS SDK exports. No dummy
+  signing-status implementation, new entitlement, MAP_JIT grant or JIT test.
+  Host Mac real allocator398 alloc/free/4workers/0failures passes. Instructions
+  before/after vtool+framework path retarget and after signing match.
+- Actual Air standalone20 install/run passes: dlopen1/entry1, compiled-mac1,
+  two256MiB independent pools, disjoint1,398alloc/free,4workers,0failures,cleaned1.
+  Source changes are isolated, no Valve payload.20 uses initial resultABI1;
+  final source evolves toABI2/72bytes for glued telemetry, distinguish receipts.
+- Glued pool source experiment initially fails REAL link: CorePoolsSize inline
+  calls RegularPoolSize whose definition is in another TU. Fixed shared header
+  selectors inline under explicit compact-Mac opt-in; excluded duplicate .cc
+  selectors for that opt-in only. Dynamic masks/checks preserved; no arithmetic
+  instruction patches. Public CorePoolsSize, adjacent base and core-mask interval
+  tests now link and run. Non-opted iOS selection unchanged.
+- Current default20d and glued21c Mac host builds both pass. Own source snapshots
+  saved before compile; change-during-build refusal and receipt fingerprints.
+  Null result, wrong capacity and repeated-entry contracts pass in Mac control.
+  Seven own synthetic patch/metadata tests and full host/sanitizer/iOS suite pass.
+- FINAL21 compiled symbols, Mac target static asserts,IOS metadata, instruction
+  hashes, existing profile and deep signature verified before installation.
+  Ended only exact completed20 probe; same isolated ID upgraded, container kept.
+  Actual Air21 console: build21/load1/entry1/pass1, glued1,398alloc/free,4workers,
+ 0failures,two256MiB pools,disjoint1,cleaned1. After35s observer timeout, fresh
+  actual21 installation and exact completed-probe process confirmed alive.
+  No screenshot was captured; device logs/install/process artifacts are evidence.
+- This is a useful source-side allocator component, NOT Steam/browser integration.
+  Do not preload it into stock CEF with fixed inline masks. Still need matched
+  custom CEF source/headers/semantics, all-consumer rebuild, browser/V8 allocation
+  validation and real Helper IPC/lifecycle. Threadcache/raw_ptr lifetime/malloc
+  replacement/pointer compression/StarScan/MTE/V8JIT untested here. No native
+  auth/library/depot/game/return/performance-success claim. Working iDeck intact.
+- Evidence macCompiledCompactAllocator20261031 and ipadAirDebugCEFControl20261031
+  holds hashes/source fingerprints; raw logs/binaries/profiles stay private.
+  New scale-interface public reference supplies a Linux caller signature only,
+  not a CEF implementation or matching headers; no code copied or executed.
+- Prepared CEF_SOURCE_REQUEST_DRAFT.md for existing Valve issue12226. Requested
+  explicit authorization before any upstream message; nothing sent. Continue
+  local verified work while pending. Do not treat elapsed time as approval.
