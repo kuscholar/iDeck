@@ -2408,5 +2408,129 @@
       "path": ".madeira-install/cef6478-header-experiment/source-request-published.json",
       "sha256": "303c9116b1a63645ee807bb2437c313970118e4798ae35a964301d9a5dcbe197"
     }
+  },
+  "macCompactRawPtrLifetimes20261031": {
+    "phase": "A source component, not native Steam/CEF integration",
+    "sourceParent": "02697f38e198eecdb012849471a537407d130377",
+    "target": "Physical user-selected iPad Air4/iPad13,1, iPadOS27.2(24B119)",
+    "build": 22,
+    "resultABI": 3,
+    "resultSizeBytes": 80,
+    "hypothesis": "Source-wide compact Mac pools retain correct BRP metadata and raw_ptr allocation quarantine/release semantics, including direct maps and interior pointers.",
+    "minimalPatch": "Own optional --raw-ptr-brp flag enables upstream USE_RAW_PTR_BACKUP_REF_IMPL consistently and adds the two unmodified upstream raw_ptr translation units. Same existing three generated private pool-source changes; no additional Chromium/Valve edits.",
+    "actualSourceUnits": 64,
+    "ordinaryExpensiveAndBRPSlowChecks": true,
+    "discriminatingTest": {
+      "sizes": [
+        1,
+        128,
+        4096,
+        2097152
+      ],
+      "cases": 5,
+      "contracts": [
+        "copy and move preserve ownership; moved-from pointer null",
+        "interior pointer retains allocation after allocator free",
+        "metadata alive bit clears; BRP quarantine count1 while retained",
+        "same-sized replacement never recycles retained slot",
+        "last reference release restores count/bytes0",
+        "final reference moved to worker and released there; join then count/bytes0"
+      ],
+      "noFreedPayloadDereference": true,
+      "noMetadataReadAfterFinalRelease": true
+    },
+    "actualAirResult": {
+      "loaded": 1,
+      "entry": 1,
+      "pass": 1,
+      "allocations": 407,
+      "frees": 407,
+      "workers": 4,
+      "failures": 0,
+      "poolBytes": 268435456,
+      "glued": 1,
+      "disjoint": 1,
+      "cleaned": 1,
+      "brpLifetimes": 5,
+      "CEFIntegrated": false
+    },
+    "observation": "35s console timeout, then fresh actual22 app inventory and exact matching completed-probe executable alive. Logs/install/process evidence only; no screenshot.",
+    "regressions": {
+      "actualMacDefaultNoRawPtr": "398 alloc/free,4workers,failures0,independent pools; ABI3,brp-lifetimes0",
+      "actualMacIndependentBRP": "407 alloc/free,4workers,failures0,independent pools; ABI3,brp-lifetimes5",
+      "actualMacGluedBRP": "407 alloc/free,4workers,failures0,glued pools; ABI3,brp-lifetimes5",
+      "existingFixtureSuite": "7 compact builder fixtures and complete existing host sanitizer/iOS/staging suite PASS; real allocator itself not sanitizer-instrumented"
+    },
+    "signing": "Existing matching normal profile/identity, no new entitlements/certificates. Retargeted module code hash unchanged after signing, deep-strict verifies. Only prior completed isolated21 replaced; working iDeck/account/games/saves untouched.",
+    "limitations": [
+      "Standalone generated flags, not Valve CEF GN config",
+      "Dangling-detection reporting flag remains existing standalone default; does not test Chromium reporting callbacks",
+      "Only five bounded raw_ptr cases, not all lifetime/race behavior; no concurrent mutations to one wrapper",
+      "Thread cache/malloc replacement/pointer compression/StarScan/MTE/V8JIT/browser integration untested",
+      "Stock CEF inline masks cannot use this component as injected replacement"
+    ],
+    "next": "Matching custom CEF source/API and full-consumer rebuild, then actual browser initialization and native Helper IPC/lifecycle. Valve issue still has only the authorized request at this check; no extra messages sent.",
+    "privateArtifacts": [
+      {
+        "path": ".madeira-install/mac-compact-allocator22/build-receipt.json",
+        "sha256": "1bd4382c08044aeacc25c5db8189a4eb372a69bb8fba57a2b914a4bd98be55c7"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/signed-receipt.json",
+        "sha256": "dad4dfea68f01b5be0db588f3529c1e545f5a87a0ffd5bda3debd061e01db0d3"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/host-run.log",
+        "sha256": "a0e973a9a2647a35fb457f53ec56dbf2b4d728ca6cbab9734d46d25dde4977fe"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/console.log",
+        "sha256": "c5757a0a0898b6a840fe57024d16493dd803bdc9f402eff4f9c787da231d2513"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/device-result.json",
+        "sha256": "d68ae3411c5069e049e315b804b77b44eda7a7cc879bc08a0e6bcc0bfd89fb1c"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/install.json",
+        "sha256": "df17e63eacd117ed4eda522e3abc4af4a58824dd80d93329590c757e98c4408f"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/apps-after.json",
+        "sha256": "05e74cd0944ac26e1ff11801453d443a095d2f1344bcdc1de1e7cb1105c7e6ea"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22/processes-after.json",
+        "sha256": "ad933a33bdaec858198f419140ad49faf9e95e47b11457555df947869af82ece"
+      }
+    ],
+    "additionalRegressionArtifacts": [
+      {
+        "path": ".madeira-install/mac-compact-allocator22-tests.log",
+        "sha256": "81a4b2bf7c56eec14f49d11f9a360ce60627b63da2f261600e6329052d36254d"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22-default/build-receipt.json",
+        "sha256": "95c5076a74e1474b15dfdb9b3489a4dbc539e3eed26cca5c3f27b03287df9e0a"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22-default/host-run.log",
+        "sha256": "a3820fce8f30978fe3e40766cdd946ac3d01e7a8a62b23b0c69217c26cce837b"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22-independent/build-receipt.json",
+        "sha256": "62631a18224c2d45bf1932db5eb470e4249797948e62839ba74aae5c15510f86"
+      },
+      {
+        "path": ".madeira-install/mac-compact-allocator22-independent/host-run.log",
+        "sha256": "cd58dcd3dc469b17f5c8c56a52ffb6293af8bd949eaf57e27748bc1b232594d9"
+      }
+    ],
+    "ownSourceFingerprints": {
+      "scripts/experiments/build-mac-compact-allocator.py": "ff7b853e737211edef1460e43504104ad4c019e131b672c10fe606b54dae2f7d",
+      "experiments/mac-arm-steam/mac-compact-allocator.cc": "8117b9ae4f3fd1b408e23099594d54421ff8bb218d73a2e8a69e531313aff8e0",
+      "experiments/mac-arm-steam/mac-compact-allocator.h": "1cf7e5188e9e7b45ea3cf359ddbce2d426cef6fc41146fa5b6e71e3206de0ad6",
+      "experiments/mac-arm-steam/mac-allocator-host.mm": "0b993e840498243c3529ffdcba7e1aa70dece335fd4e3bfee901c23cf0bc3fdc"
+    }
   }
 }

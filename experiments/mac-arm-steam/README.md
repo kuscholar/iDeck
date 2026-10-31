@@ -609,10 +609,9 @@ before install. No EVA/JIT capability is requested. Reuse ONLY the isolated lab
 bundle ID; check current process identity and finish prior test before upgrade.
 
 Actual Air20 intermediateABI1 independent pools and finalAir21 ABI2 glued pools
-pass load/entry/398alloc-free/4workers/0failures/disjoint/cleanup. Current source
-usesABI2/72bytes; its default20 rebuild also passes on Mac. The two intermediate
-source versions have separate receipts; final21 is the reproducible current
-device configuration.35s console timeout is not app death: actual installed21
+pass load/entry/398alloc-free/4workers/0failures/disjoint/cleanup. At that checkpoint the source
+usedABI2/72bytes; its default20 rebuild also passed on Mac. The two intermediate
+source versions have separate receipts; final21 was the device configuration for that checkpoint.35s console timeout is not app death: actual installed21
 and its exact completed probe executable were subsequently observed alive.
 
 This is not CEF or Steam integration. Thread cache, complete raw_ptr lifetime,
@@ -620,3 +619,25 @@ malloc replacement, pointer compression, StarScan/MTE, V8 sandbox/JIT and full
 browser allocations remain untested. Do not preload this into the precompiled
 CEF with mismatching inline masks. Matching custom source/API plus a complete
 consumer rebuild and actual Helper IPC remain separate necessary steps.
+
+### Bounded real raw_ptr BRP lifetime, standalone22
+
+```sh
+python3 scripts/experiments/build-mac-compact-allocator.py \
+  --source ../.madeira-install/partitionalloc126 \
+  --output ../.madeira-install/NEW-mac-allocator-brp --glued --raw-ptr-brp
+```
+
+The optional flag compiles the genuine raw_ptr BRP implementation and instance
+tracer unit (64total), using one common configuration across all consumers.
+Own tests cover1/128/4096/2MiB retained objects and a fifth cross-thread release.
+They verify allocation metadata before final release, real quarantine counters,
+non-reuse while retained and release when the last wrapper resets. No freed
+payload dereference, metadata access after final release or concurrent mutations
+to one wrapper.407 allocation/free requests,5cases and0failures pass on actual
+Air22 (glued) and Mac; independent pools pass on Mac. Default no-wrapper mode
+still expects398requests/0cases. New resultABI3/80bytes; receipts distinguish it
+from historical21. Existing checks remain enabled. No new entitlement or CEF.
+
+Dangling-report callbacks and full raw_ptr/race semantics remain untested. This
+is not permission to inject a source allocator into stock fixed-mask CEF.

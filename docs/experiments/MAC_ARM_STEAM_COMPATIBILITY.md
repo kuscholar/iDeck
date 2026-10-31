@@ -2,7 +2,7 @@
 
 This is an experimental route, separate from the working Windows Steam product.
 The full end-to-end goal is **not achieved**. Latest review: 2026-10-31, research
-parent `f3fcb402bdda92fce29f790ff967eca988f1570c` plus local scoped changes.
+parent `02697f38e198eecdb012849471a537407d130377` plus local scoped changes.
 The opening historical table concerns the isolated iPhone15ProMax/iOS27.0 lab;
 the dated sections below separately record physical iPad Pro26.7.1 and Air27.2
 results. All use ordinary Personal Team signing. Do not generalize observations
@@ -246,3 +246,19 @@ normal-debug condition on this specific Air; it is not continuous-attached UI
 validation. Full source-compatible CEF/browser and actual Helper lifecycle remain
 necessary. Do not inject this compact component into stock CEF's fixed-mask code.
 No native Steam login/library/depot/gameplay/return or speedup claim follows.
+
+## Actual bounded raw_ptr BRP lifetime, Air22
+
+The source-compiled Mac allocator now optionally builds real upstream raw_ptr
+BRP (64units, same consistent dynamic masks), with checks still enabled. Actual
+Air22 passes407 allocation/free requests and five bounded lifetime cases, including
+copy/move/interior references,2MiB direct maps and final release on a worker.
+Quarantine counters prove a retained slot stays unavailable after allocator free
+and is released after its final wrapper. No freed payload is dereferenced.
+Default no-wrapper and independent-pool BRP configurations pass on Mac only;
+actual device22 uses glued pools. ResultABI3/80bytes; historical21 staysABI2.
+
+This extends the component evidence only. Dangling-report callbacks, full
+raw_ptr/race semantics, thread cache and complete browser allocation patterns
+remain untested. Matching Valve custom source/ABI, full browser rebuild and
+native Helper IPC/lifecycle remain blocking gates; no native Steam UI follows.

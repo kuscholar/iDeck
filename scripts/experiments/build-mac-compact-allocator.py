@@ -88,6 +88,7 @@ def main():
     parser.add_argument('--source',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--glued',action='store_true',help='Exercise adjacent core pools and combined mask')
+    parser.add_argument('--raw-ptr-brp',action='store_true',help='Compile real raw_ptr BRP and verify retained allocation lifetimes')
     args=parser.parse_args();source=args.source.resolve();out=args.output.resolve();private=(REPO.parent/'.madeira-install').resolve()
     if not source.is_relative_to(private) or not out.is_relative_to(private) or out==private or out.exists() or out.is_relative_to(source) or source.is_relative_to(out):
         raise ValueError('Use new disjoint private output and pinned private source')
@@ -105,12 +106,13 @@ def main():
     gen=out/'gen';plan=(copied/'partition_alloc/BUILD.gn').read_text();all_flags={};seen=set()
     for name,body in re.findall(r'pa_buildflag_header\("(\w+)"\) \{(.*?)\n\}',plan,re.S):
         flags=re.findall(r'"([A-Z][A-Z_0-9]*)=',body);seen.update(flags)
-        values={f:int(f in pa.ONES or (args.glued and f=='GLUE_CORE_POOLS')) for f in flags};all_flags.update(values)
+        values={f:int(f in pa.ONES or (args.glued and f=='GLUE_CORE_POOLS') or (args.raw_ptr_brp and f=='USE_RAW_PTR_BACKUP_REF_IMPL')) for f in flags};all_flags.update(values)
         rel='partition_alloc/'+('partition_alloc_base/debug/' if name=='debugging_buildflags' else '')+name+'.h'
         path=gen/rel;path.parent.mkdir(parents=True,exist_ok=True)
         path.write_text('#include "partition_alloc/buildflag.h"\n'+''.join(f'#define PA_BUILDFLAG_INTERNAL_{f}() ({v})\n' for f,v in values.items()))
     if not pa.ONES.issubset(seen):raise ValueError('Buildflag contract changed')
     if all_flags.get('GLUE_CORE_POOLS')!=int(args.glued):raise ValueError('Glued pool flag missing')
+    if all_flags.get('USE_RAW_PTR_BACKUP_REF_IMPL')!=int(args.raw_ptr_brp):raise ValueError('raw_ptr flag missing')
     def initial(target):
         body=plan.split('component("'+target+'") {',1)[1].split('sources = [',1)[1].split(']',1)[0]
         return re.findall(r'"([^"]+\.(?:cc|mm))"',body)
@@ -121,6 +123,9 @@ def main():
         'threading/platform_thread_posix.cc','time/time_conversion_posix.cc','debug/stack_trace_mac.cc',
         'time/time_apple.mm','apple/foundation_util.mm','apple/mach_logging.cc','mac/mac_util.mm','system/sys_info_mac.mm']]
     if len(sources)!=62 or len(set(sources))!=62:raise ValueError('Source-list contract changed')
+    if args.raw_ptr_brp:sources+=['pointers/instance_tracer.cc','pointers/raw_ptr_backup_ref_impl.cc']
+    expected_allocations=407 if args.raw_ptr_brp else 398
+    expected_lifetimes=5 if args.raw_ptr_brp else 0
     sdk=subprocess.check_output(['xcrun','--sdk','macosx','--show-sdk-path'],text=True).strip()
     flags=['xcrun','clang++','-target','arm64-apple-macos14.0','-isysroot',sdk,'-std=c++20','-O1','-g',
         '-fno-exceptions','-fno-rtti','-fvisibility=hidden','-DHAVE_DLADDR','-DIS_PARTITION_ALLOC_IMPL=1',
@@ -136,7 +141,7 @@ def main():
     mac=out/'MacCompactAllocator.mac.bundle'
     subprocess.run(flags+['-bundle',*[str(x) for x in [*objects,obj]],'-framework','Foundation','-framework','CoreFoundation','-framework','Security','-o',str(mac)],check=True)
     # Real host execution happens in a separate process to give one allocator lifetime.
-    host=out/'control.c';host.write_text('#include <dlfcn.h>\n#include <stdio.h>\n#include "mac-compact-allocator.h"\nint main(int c,char**v){if(c!=2)return 2;void*h=dlopen(v[1],RTLD_NOW|RTLD_LOCAL);if(!h){fputs("host load failed\\n",stderr);return 3;}int(*run)(struct IDeckMacAllocatorResult*,uint64_t)=dlsym(h,"IDeckRunMacAllocator");if(!run)return 4;struct IDeckMacAllocatorResult r={0};if(run(0,sizeof r)!=2 || run(&r,sizeof r-1)!=2)return 5;int result=run(&r,sizeof r);if(result || r.abi!=2 || r.compiled_mac!=1 || r.allocations!=398 || r.frees!=398 || r.failures || r.pool_bytes!=(256u<<20) || !r.disjoint || !r.cleaned || r.glued!='+str(int(args.glued))+')return 6;return run(&r,sizeof r)==3?0:7;}\n')
+    host=out/'control.c';host.write_text('#include <dlfcn.h>\n#include <stdio.h>\n#include "mac-compact-allocator.h"\nint main(int c,char**v){if(c!=2)return 2;void*h=dlopen(v[1],RTLD_NOW|RTLD_LOCAL);if(!h){fputs("host load failed\\n",stderr);return 3;}int(*run)(struct IDeckMacAllocatorResult*,uint64_t)=dlsym(h,"IDeckRunMacAllocator");if(!run)return 4;struct IDeckMacAllocatorResult r={0};if(run(0,sizeof r)!=2 || run(&r,sizeof r-1)!=2)return 5;int result=run(&r,sizeof r);if(result || r.abi!=3 || r.compiled_mac!=1 || r.allocations!='+str(expected_allocations)+' || r.frees!='+str(expected_allocations)+' || r.failures || r.pool_bytes!=(256u<<20) || !r.disjoint || !r.cleaned || r.glued!='+str(int(args.glued))+' || r.brp_lifetimes!='+str(expected_lifetimes)+')return 6;return run(&r,sizeof r)==3?0:7;}\n')
     subprocess.run(['xcrun','clang','-Wall','-Wextra','-Werror','-I'+str(own_snapshot),str(host),'-o',str(out/'control')],check=True)
     with (out/'host-run.log').open('w') as log:subprocess.run([str(out/'control'),str(mac)],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=30)
     app=out/'MacAllocator.app';app.mkdir();bundle=app/'MacCompactAllocator.bundle';shutil.copyfile(mac,bundle)
@@ -152,13 +157,13 @@ def main():
     ios_sdk=subprocess.check_output(['xcrun','--sdk','iphoneos','--show-sdk-path'],text=True).strip()
     binary=app/'MacAllocatorHost'
     subprocess.run(['xcrun','clang++','-target','arm64-apple-ios17.0','-isysroot',ios_sdk,'-std=c++20','-fobjc-arc','-Wall','-Wextra','-Werror',str(own_snapshot/'mac-allocator-host.mm'),'-framework','UIKit','-framework','Foundation','-o',str(binary)],check=True)
-    build=21 if args.glued else 20
-    info={'CFBundleIdentifier':'com.kuschqin.ideck.maclab.macprobe','CFBundleName':'iDeck Mac Allocator','CFBundleDisplayName':'iDeck Mac Allocator','CFBundleExecutable':binary.name,'CFBundlePackageType':'APPL','CFBundleVersion':str(build),'CFBundleShortVersionString':'0.0.'+str(build),'IDeckMacAllocatorGlued':args.glued,'MinimumOSVersion':'17.0','UIDeviceFamily':[1,2],'UILaunchScreen':{},'UIRequiresFullScreen':True,'UIApplicationSceneManifest':{'UIApplicationSupportsMultipleScenes':False,'UISceneConfigurations':{'UIWindowSceneSessionRoleApplication':[{'UISceneConfigurationName':'Mac allocator','UISceneDelegateClassName':'IDeckMacAllocatorScene'}]}},'UISupportedInterfaceOrientations':['UIInterfaceOrientationPortrait','UIInterfaceOrientationLandscapeLeft','UIInterfaceOrientationLandscapeRight']}
+    build=22 if args.raw_ptr_brp else (21 if args.glued else 20)
+    info={'CFBundleIdentifier':'com.kuschqin.ideck.maclab.macprobe','CFBundleName':'iDeck Mac Allocator','CFBundleDisplayName':'iDeck Mac Allocator','CFBundleExecutable':binary.name,'CFBundlePackageType':'APPL','CFBundleVersion':str(build),'CFBundleShortVersionString':'0.0.'+str(build),'IDeckMacAllocatorGlued':args.glued,'IDeckMacAllocatorBRP':args.raw_ptr_brp,'MinimumOSVersion':'17.0','UIDeviceFamily':[1,2],'UILaunchScreen':{},'UIRequiresFullScreen':True,'UIApplicationSceneManifest':{'UIApplicationSupportsMultipleScenes':False,'UISceneConfigurations':{'UIWindowSceneSessionRoleApplication':[{'UISceneConfigurationName':'Mac allocator','UISceneDelegateClassName':'IDeckMacAllocatorScene'}]}},'UISupportedInterfaceOrientations':['UIInterfaceOrientationPortrait','UIInterfaceOrientationLandscapeLeft','UIInterfaceOrientationLandscapeRight']}
     (app/'Info.plist').write_bytes(plistlib.dumps(info))
     for name in ['LICENSE','AUTHORS']:shutil.copyfile(source/name,app/('Chromium-'+name+'.txt'))
     for name,digest in own_inputs.items():
         if pa.sha((REPO/name).read_bytes())!=digest:raise ValueError('Own source changed during build')
-    receipt={'state':'UNSIGNED, HOST PASS ONLY','sourceTag':pa.TAG,'subtree':pa.TREE,'sourceReceiptSHA256':pa.RECEIPT,'sourceEdits':patches,'allCompileDefinition':DEFINE+'=1','sourceUnits':sources,'buildFlags':all_flags,'moduleCompiledTarget':'arm64-apple-macos14.0','retargetedTextUnchanged':True,'moduleTextSHA256':before,'moduleSHA256':pa.sha(bundle.read_bytes()),'hostSHA256':pa.sha(binary.read_bytes()),'hostTest':'398 alloc/free,4workers,256MiB pools, checks enabled, zero failures','CEFIntegrated':False,'newEntitlements':False,'sourceFingerprints':own_inputs}
+    receipt={'state':'UNSIGNED, HOST PASS ONLY','sourceTag':pa.TAG,'subtree':pa.TREE,'sourceReceiptSHA256':pa.RECEIPT,'sourceEdits':patches,'allCompileDefinition':DEFINE+'=1','sourceUnits':sources,'buildFlags':all_flags,'moduleCompiledTarget':'arm64-apple-macos14.0','retargetedTextUnchanged':True,'moduleTextSHA256':before,'moduleSHA256':pa.sha(bundle.read_bytes()),'hostSHA256':pa.sha(binary.read_bytes()),'resultABI':3,'expectedAllocations':expected_allocations,'expectedBRPLifetimes':expected_lifetimes,'hostTest':'Actual allocation/content/concurrency/pool/quarantine contracts; checks enabled, zero failures','CEFIntegrated':False,'newEntitlements':False,'sourceFingerprints':own_inputs}
     (out/'build-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');print('Unsigned Mac-compiled allocator host:',app)
 
 

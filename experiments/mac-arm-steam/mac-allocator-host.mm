@@ -29,10 +29,12 @@ static __weak UILabel* activeLabel;
         Run run=library?(Run)dlsym(library,"IDeckRunMacAllocator"):nullptr;
         IDeckMacAllocatorResult result={};int code=run?run(&result,sizeof result):4;
         NSNumber* expected=NSBundle.mainBundle.infoDictionary[@"IDeckMacAllocatorGlued"];
-        BOOL pass=code==0 && result.abi==2 && result.compiled_mac==1 && result.allocations==398 && result.frees==398 && result.failures==0 && result.pool_bytes==(256u<<20) && result.disjoint && result.cleaned && result.glued==expected.unsignedLongLongValue;
+        BOOL brp=[NSBundle.mainBundle.infoDictionary[@"IDeckMacAllocatorBRP"] boolValue];
+        uint64_t expectedAllocations=brp?407:398;
+        BOOL pass=code==0 && result.abi==3 && result.brp_lifetimes==(brp?5u:0u) && result.compiled_mac==1 && result.allocations==expectedAllocations && result.frees==expectedAllocations && result.failures==0 && result.pool_bytes==(256u<<20) && result.disjoint && result.cleaned && result.glued==expected.unsignedLongLongValue;
         fprintf(stderr,"[ideck-mac-pa-host] loaded=%d entry=%d pass=%d code=%d error-text=REDACTED cef-integrated=0\n",library!=nullptr,run!=nullptr,pass,code);
         dispatch_async(dispatch_get_main_queue(),^{
-            status=pass?[NSString stringWithFormat:@"Mac allocator PASS\nmacOS ARM64 → iPad\n398 allocations / frees\n2 × 256 MiB pools (glued: %@)\nCEF and Steam NOT tested",result.glued?@"yes":@"no"]:@"Mac allocator FAILED\nSee private device evidence\nCEF and Steam NOT tested";
+            status=pass?[NSString stringWithFormat:@"Mac allocator PASS\nmacOS ARM64 → iPad\n%llu allocations / frees\nBRP lifetimes: %llu\n2 × 256 MiB pools (glued: %@)\nCEF and Steam NOT tested",(unsigned long long)result.allocations,(unsigned long long)result.brp_lifetimes,result.glued?@"yes":@"no"]:@"Mac allocator FAILED\nSee private device evidence\nCEF and Steam NOT tested";
             activeLabel.text=status;
         });
     });});

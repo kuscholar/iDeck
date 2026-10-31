@@ -7,8 +7,12 @@
 #include <cstdlib>
 #include <cstring>
 #include <thread>
+#include <utility>
 #include "partition_alloc/partition_alloc.h"
 #include "partition_alloc/partition_address_space.h"
+#if PA_BUILDFLAG(USE_RAW_PTR_BACKUP_REF_IMPL)
+#include "partition_alloc/pointers/raw_ptr.h"
+#endif
 namespace pa=partition_alloc;
 namespace pi=partition_alloc::internal;
 static_assert(BUILDFLAG(IS_MAC) && !BUILDFLAG(IS_IOS), "Must compile as macOS, not iOS");
@@ -41,12 +45,49 @@ static void Batch(pa::PartitionRoot* root,bool brp,unsigned seed) {
     }
     for(unsigned i:{2u,5u,0u,4u,1u,3u}){root->Free(objects[i]);++frees;}
 }
+#if PA_BUILDFLAG(USE_RAW_PTR_BACKUP_REF_IMPL)
+// Observe real BRP quarantine counters, never dereference a freed allocation.
+// Each wrapper has one owner at a time; the worker receives ownership by move.
+static unsigned BrpLifetimes(pa::PartitionRoot* root) {
+    unsigned cases=0;
+    for(size_t size:{size_t{1},size_t{128},size_t{4096},size_t{2*1024*1024}}) {
+        auto* pointer=static_cast<unsigned char*>(root->Alloc(size));++allocations;
+        auto slot=pa::PartitionAllocGetSlotStartAndSizeInBRPPool(reinterpret_cast<uintptr_t>(pointer));
+        auto* metadata=pa::PartitionRoot::InSlotMetadataPointerFromSlotStartAndSize(slot.slot_start,slot.size);
+        Check(metadata->IsAliveWithNoKnownRefs());
+        raw_ptr<unsigned char> first=pointer,copy=first,interior=pointer+size-1;
+        raw_ptr<unsigned char> moved=std::move(copy);
+        Check(copy==nullptr && moved.get()==pointer && !metadata->IsAliveWithNoKnownRefs());
+        root->Free(pointer);++frees;
+        Check(!metadata->IsAlive() && root->total_count_of_brp_quarantined_slots.load()==1);
+        Check(root->total_size_of_brp_quarantined_bytes.load()>=size);
+        void* replacement=root->Alloc(size);++allocations;
+        Check(replacement!=pointer); // Retained slot cannot be recycled.
+        root->Free(replacement);++frees;
+        first=nullptr;moved=nullptr;
+        Check(root->total_count_of_brp_quarantined_slots.load()==1);
+        interior=nullptr;
+        // Metadata may now be unmapped for direct maps: inspect counters only.
+        Check(root->total_count_of_brp_quarantined_slots.load()==0);
+        Check(root->total_size_of_brp_quarantined_bytes.load()==0);++cases;
+    }
+    auto* pointer=static_cast<unsigned char*>(root->Alloc(128));++allocations;
+    raw_ptr<unsigned char> retained=pointer;
+    root->Free(pointer);++frees;
+    Check(root->total_count_of_brp_quarantined_slots.load()==1);
+    std::thread release([owner=std::move(retained)]() mutable {owner=nullptr;});
+    release.join();
+    Check(retained==nullptr && root->total_count_of_brp_quarantined_slots.load()==0);
+    Check(root->total_size_of_brp_quarantined_bytes.load()==0);
+    return cases+1;
+}
+#endif
 extern "C" __attribute__((visibility("default")))
 int IDeckRunMacAllocator(IDeckMacAllocatorResult* result,uint64_t capacity) {
     if(!result || capacity!=sizeof(*result))return 2;
     *result={};
     if(used.exchange(true))return 3;
-    result->abi=2;result->compiled_mac=1;
+    result->abi=3;result->compiled_mac=1;
     fputs("[ideck-mac-pa126] begin=1 compiled-mac=1 source-compact=1 dcheck=1 cef-integrated=0\n",stderr);
     pa::PartitionAllocGlobalInit(OOM);
     {
@@ -75,6 +116,9 @@ int IDeckRunMacAllocator(IDeckMacAllocatorResult* result,uint64_t capacity) {
             for(unsigned pass=0;pass<8;++pass){Batch(normal_root,false,pass+i*31);Batch(brp_root,true,pass+i*17);}
         });
         for(auto& worker:workers)worker.join();
+#if PA_BUILDFLAG(USE_RAW_PTR_BACKUP_REF_IMPL)
+        result->brp_lifetimes=BrpLifetimes(brp_root);
+#endif
     }
     Check(allocations==frees);
     pi::PartitionAddressSpace::UninitForTesting();
@@ -82,9 +126,10 @@ int IDeckRunMacAllocator(IDeckMacAllocatorResult* result,uint64_t capacity) {
     pa::PartitionAllocGlobalUninitForTesting();
     result->allocations=allocations.load();result->frees=frees.load();result->failures=failures.load();
     result->cleaned=!pi::PartitionAddressSpace::IsInitialized();
-    fprintf(stderr,"[ideck-mac-pa126] complete=1 allocations=%llu frees=%llu workers=4 failures=%llu pool-bytes=%llu disjoint=%llu cleaned=%llu glued=%llu cef-integrated=0\n",
+    fprintf(stderr,"[ideck-mac-pa126] complete=1 allocations=%llu frees=%llu workers=4 failures=%llu pool-bytes=%llu disjoint=%llu cleaned=%llu glued=%llu brp-lifetimes=%llu cef-integrated=0\n",
         (unsigned long long)result->allocations,(unsigned long long)result->frees,
         (unsigned long long)result->failures,(unsigned long long)result->pool_bytes,
-        (unsigned long long)result->disjoint,(unsigned long long)result->cleaned,(unsigned long long)result->glued);
+        (unsigned long long)result->disjoint,(unsigned long long)result->cleaned,(unsigned long long)result->glued,
+        (unsigned long long)result->brp_lifetimes);
     return result->failures?1:0;
 }

@@ -1598,3 +1598,39 @@
 - Delivery is not maintainer acceptance, a source release, or working Steam.
   No response/source access inferred. Keep full native mission incomplete,
   current isolated21 component evidence separate from the actual CEF/UI gates.
+
+### 2026-10-31 08:01 EDT — actual compact-Mac raw_ptr BRP lifecycle, Air22
+
+- User requested immediate continuation. Branch/origin/worktree/remote02697f3
+  verified clean before edits; other worktrees preserved. Valve issue12226 still
+  only contains the authorized request; no response or additional message.
+- Hypothesis: compact dynamic masks preserve genuine raw_ptr BRP metadata and
+  deferred-free semantics, beyond earlier bare allocation tests. Added explicit
+  --raw-ptr-brp to own builder, two unmodified upstream pointer units (64total),
+  USE_RAW_PTR_BACKUP_REF_IMPL1 shared by all consumers, and own lifetime tests.
+  Same3 private BSD pool-source edits; no Valve/FEX/Wine/DXMT/product changes.
+- Cases1/128/4096/2MiB test real copy/move/interior references, original metadata
+  alive-state transition, count1 quarantine after allocator free, no retained-slot
+  reuse, and count/bytes0 after final release. Fifth case moves final reference
+  to worker and releases there. No freed payload dereference or metadata access
+  after final release; no unsynchronized mutation of the same wrapper.
+- Real Mac-target glued host PASS:407 allocations/frees,4workers,5lifetimes,
+  0failures. Same source default no-raw-pointer independent host PASS398/0cases;
+  independent BRP host PASS407/5cases. ABI3/80bytes distinguishes these new
+  receipts from historical21 ABI2/72bytes. Existing7 builder fixtures and full
+  host/sanitizer/iOS/staging suite PASS. Actual allocator not sanitizer-built.
+- Fresh user-selected Air physical access/unlocked confirmed. Ordinary existing
+  profile/identity and module text hash/deep signing verified. Identity-checked
+  completed21 upgraded ONLY in isolated lab to22; working apps/auth/games intact.
+- Actual Air22 console load1/entry1/pass1, two256MiB glued/disjoint pools,
+  407alloc/free,4workers,5BRPlifetimes,0failures,cleanup1. Observer35s timeout is
+  not process death: fresh installed22 and exact completed-probe path alive.
+  No screenshot; source/signed/install/log/process receipts private and hashed
+  in macCompactRawPtrLifetimes20261031.
+- Bounded lifetime test, not full raw_ptr/race/reporting semantics; standalone
+  dangling-report callbacks remain untested. Threadcache/malloc replacement/
+  pointer compression/StarScan/MTE/V8JIT/browser allocations untested. No CEF or
+  Steam integration/UI/auth/library/depot/game/return/performance success.
+- Next substantive integration still needs matched custom CEF source/semantics,
+  consistent full-consumer rebuild, then actual browser and native Helper IPC.
+  Do not inject this into stock fixed-mask CEF or repeat its unchanged fatal.

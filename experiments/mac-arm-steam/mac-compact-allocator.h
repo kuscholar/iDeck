@@ -8,12 +8,12 @@ extern "C" {
 #endif
 struct IDeckMacAllocatorResult {
     uint64_t abi, compiled_mac, allocations, frees, failures;
-    uint64_t pool_bytes, disjoint, cleaned, glued;
+    uint64_t pool_bytes, disjoint, cleaned, glued, brp_lifetimes;
 };
 #ifdef __cplusplus
-static_assert(sizeof(IDeckMacAllocatorResult)==72, "Fixed cross-platform result ABI");
+static_assert(sizeof(IDeckMacAllocatorResult)==80, "Fixed cross-platform result ABI");
 #else
-_Static_assert(sizeof(struct IDeckMacAllocatorResult)==72, "Fixed cross-platform result ABI");
+_Static_assert(sizeof(struct IDeckMacAllocatorResult)==80, "Fixed cross-platform result ABI");
 #endif
 int IDeckRunMacAllocator(struct IDeckMacAllocatorResult*, uint64_t);
 #ifdef __cplusplus
