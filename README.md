@@ -182,6 +182,16 @@ and its source/license/relink companion assets are distributed separately. Read 
   <a href="https://discord.gg/aQdsaJyTM"><b>Join the iDeck community on Discord</b></a>
 </p>
 
+### Discord Community
+
+The iDeck Discord server is an informal space for testers and enthusiasts to share experiences, discuss compatibility, report findings, and occasionally receive project updates.
+
+iDeck is a personal, non-commercial hobby project developed in my spare time. There is no dedicated support team, guaranteed response time, or commitment to ongoing maintenance, bug fixes, or feature development.
+
+Participation is entirely voluntary, and updates or responses are provided only when time and interest permit.
+
+### Bug reports
+
 [Open an issue](https://github.com/kuscholar/iDeck/issues) with your device,
 build, steps to reproduce and redacted diagnostics. Tell us what actually
 appeared on screen, not just whether compilation passed. Never attach passwords,

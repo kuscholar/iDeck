@@ -140,6 +140,16 @@ Xcode 工程仍为 `app/Madeira.xcodeproj`，scheme 为 `Madeira`；App 显示�
   <a href="https://discord.gg/aQdsaJyTM"><b>加入 iDeck Discord 社区</b></a>
 </p>
 
+### Discord 社区
+
+iDeck Discord 服务器是供测试者和爱好者交流的非正式空间，用于分享体验、讨论兼容性、反馈测试发现，并偶尔获取项目更新。
+
+iDeck 是我利用业余时间开发的个人、非商业兴趣项目。项目没有专门的支持团队，不保证回复时间，也不承诺持续维护、修复问题或开发新功能。
+
+参与完全自愿，项目更新和回复仅在时间与兴趣允许时提供。
+
+### 问题反馈
+
 欢迎 [提交 Issue](https://github.com/kuscholar/iDeck/issues)，附设备、系统、构建号、
 复现步骤和脱敏诊断。说明实际看到的界面，以及安装、JIT、登录、游戏库、游戏运行中的
 哪一步失败。不要上传密码、令牌、Steam Guard 信息、配对文件或账号标识。
