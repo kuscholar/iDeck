@@ -196,3 +196,32 @@ configs/attributes are restored. Next must be the independent device probe
 with both actual mode markers and oracle/exit checks, before full Steam.
 No private FEX source or binary has been published, and no long-term GO is
 claimed from host checks or the first successful return.
+
+## Rejecting propagated allocation failures in evidence checks
+
+An absent `FEXAlloc` fatal is insufficient: the second Build126 run propagated
+`STATUS_NO_MEMORY` through thread initialization without that fatal or the
+original IR invalid write. Analyze an existing private log with:
+
+```sh
+python3 tools/analyze-steam-ui-pools.py /private/path/native-log.txt \
+  --output /private/path/redacted-report.json --fail-on-fex-allocation-error
+python3 tests/host/check-fex-allocation-evidence.py
+```
+
+The optional strict flag exits2 for observed allocation/thread-init failures;
+exit0 means only that no recognized failure matched. It never proves Steam,
+gameplay, responsive UI, normal exit or long-term stability. The added schema2
+fields contain categories, numeric counters/censuses and bounded line-number
+samples, not arbitrary log payloads. Repeated diagnostics may describe one
+failed allocation; counts are not a live-allocation or leak census.
+
+Running this checker against retained actual artifacts detects the Build122
+failure through its census and Build126's second-cycle failure through four
+thread-init errors with status0xc0000017 plus20 repeated arena scans. The
+first-return Build126 snapshot has no matched allocation failure, which
+remains distinct from a complete runtime PASS. Raw logs remain private.
+
+A fresh07:55 EDT connection check still reports Kusch paired but disconnected;
+Build127 has not been installed or run. These parser/host checks add no new
+on-device validation and do not resolve the capacity hypothesis.

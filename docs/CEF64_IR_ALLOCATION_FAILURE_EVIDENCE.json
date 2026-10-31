@@ -274,5 +274,60 @@
       "original_CEF_config_readback_exact": true
     },
     "host_allocator_log_sha256": "57e4a94ab3b784e60a547dcd1f84cff4a68bacb2be30af109d7034fd7cb2f7b8"
+  },
+  "propagated_failure_checker_20261031": {
+    "run_time": "2026-10-31T08:00:28.004973-04:00",
+    "tool_revision_base": "6bc829719d26ec1c4a0ea122334d45e56b4f7369 plus local analyzer changes",
+    "strict_cli_expected_exit": 2,
+    "report_private_path": "../.madeira-install/steam64-current/fex-propagated-failure-audit.json",
+    "report_sha256": "9e939791ec9c5126b9e2ee79727c274d979f2136920f5d00d71d4e2a642be81e",
+    "reports": [
+      {
+        "input_name": "return122-ended-native.txt",
+        "sha256": "8a43a6b774073fc61022585e3b21a4c25da53a20215d89123545aa8b7b2f5754",
+        "assessment": "allocation-failure-observed",
+        "counters": {
+          "ir_buffer_rejections": 0,
+          "allocator_fatals": 0,
+          "thread_initialization_failures": 0,
+          "thread_state_unavailable": 0,
+          "census_allocation_failures": 1,
+          "owned_arena_scan_failures": 1
+        },
+        "thread_failure_statuses": {}
+      },
+      {
+        "input_name": "ir126-return-native.txt",
+        "sha256": "2a9a6e5ee78c4b004acf859695dbf42d28f68694d9b23836fb099ac8122f8b0b",
+        "assessment": "no-matched-failure",
+        "counters": {
+          "ir_buffer_rejections": 0,
+          "allocator_fatals": 0,
+          "thread_initialization_failures": 0,
+          "thread_state_unavailable": 0,
+          "census_allocation_failures": 0,
+          "owned_arena_scan_failures": 0
+        },
+        "thread_failure_statuses": {}
+      },
+      {
+        "input_name": "ir126-second-return-native.txt",
+        "sha256": "0d01a69a4e0a6f3f59816d71772041b04e44e4465f96c7d06f73b0ad6472acf4",
+        "assessment": "allocation-failure-observed",
+        "counters": {
+          "ir_buffer_rejections": 0,
+          "allocator_fatals": 0,
+          "thread_initialization_failures": 4,
+          "thread_state_unavailable": 0,
+          "census_allocation_failures": 1,
+          "owned_arena_scan_failures": 20
+        },
+        "thread_failure_statuses": {
+          "0xc0000017": 4
+        }
+      }
+    ],
+    "device_status": "Kusch paired but tunnel disconnected; current check07:55EDT; Build127 still not installed/tested",
+    "limits": "No matched failure is not success. No new on-device test performed. No private FEX source/binary publication."
   }
 }
