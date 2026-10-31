@@ -1,0 +1,66 @@
+{
+  "scope": "Build122 isolated full64 research; observed failure and host reproduction, NOT runtime fix or stable game/return",
+  "runtime_base_revision": "be8151a7bf5773b1013f275161b7db6149284bcc plus uncommitted local experimental code",
+  "FEX_revision": "f59cab95659e8add0c88f0c76ec1cf483c536dbf",
+  "FEX_source_modified": false,
+  "failure": {
+    "arena_bytes": 10200547328,
+    "requested_bytes": 16777216,
+    "free_bytes": 69079040,
+    "largest_aligned_gap_bytes": 14417920,
+    "wine_views": 1153,
+    "overlap_bytes": 0,
+    "module": "libarm64ecfex.dll / xtajit64.dll",
+    "fault_rva": "0xfe770",
+    "symbol": "FEXCore::IR::IREmitter::ResetWorkingList",
+    "invalid_write": "0x800010",
+    "invalid_list_base": "0x800000",
+    "bundle_module_sha256": "a32e1b21bf19b91d189b0675e215917c6e59f16f66ea126cf719226d5889c72c",
+    "device_disk_hash_independently_verified": false
+  },
+  "host_reproducer": {
+    "command": "python3 tests/host/reproduce-fex-ir-null-buffer.py",
+    "result": "Reproduced same NULL-backing pointer arithmetic with ASan/UBSan, no invalid dereference",
+    "source_header": "FEX/FEXCore/Source/Interface/IR/IntrusiveIRList.h",
+    "source_header_sha256": "3616323a8da290627ef986d51ef71ecdd744beccc70cdf42d0f04911c574dd2d",
+    "limits": "Allocation reply is synthetic; this does not identify every16MiBview, prove a leak or fix allocation capacity."
+  },
+  "cleanup": "Exact failed app absent; fresh restore diagnostic exits0; original config/attributes/readbacksPASS; auth/games/saves unchanged",
+  "artifacts": [
+    {
+      "private_path": "../.madeira-install/steam64-current/return122-startup-native.txt",
+      "bytes": 2314632,
+      "sha256": "b81a3dd42fb761122b8ae74693fbc6b48d97f941aeace38896f9b9200a596894"
+    },
+    {
+      "private_path": "../.madeira-install/steam64-current/return122-game-gameprocess.txt",
+      "bytes": 10362,
+      "sha256": "8b2322cdb5338cabad1ae298615236df973b46f6e07ef477ce798ccec19ae365"
+    },
+    {
+      "private_path": "../.madeira-install/steam64-current/return122-game-unity.txt",
+      "bytes": 10437,
+      "sha256": "002de5e94d36429cdfc5b8048b8e50fbf7ec8e401b3a9235cbfa0d68b668ab5f"
+    },
+    {
+      "private_path": "../.madeira-install/steam64-current/return122-ended-native.txt",
+      "bytes": 4876683,
+      "sha256": "8a43a6b774073fc61022585e3b21a4c25da53a20215d89123545aa8b7b2f5754"
+    },
+    {
+      "private_path": "../.madeira-install/steam64-current/fex122-fault-disassembly.txt",
+      "bytes": 1208,
+      "sha256": "b15a41553508f7f18bdc1938d9c5b95d9745783a9281174b7c351f6396d69d6d"
+    },
+    {
+      "private_path": "../.madeira-install/steam64-current/host122-ir-null-reproducer.log",
+      "bytes": 276,
+      "sha256": "8a6e7baec363e284bcd9a1ab851417636b991837d5463135838735a733345dbe"
+    },
+    {
+      "private_path": "../.madeira-install/steam64-current/cleanup122-after-ir-fault-complete.json",
+      "bytes": 221,
+      "sha256": "55d777a8a56518be2755782cd0c71b3a064d0c2d52ee44f7d80dbc9691e65e2d"
+    }
+  ]
+}
