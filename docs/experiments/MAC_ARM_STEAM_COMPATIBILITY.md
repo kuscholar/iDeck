@@ -1,11 +1,12 @@
 # Native macOS ARM64 Steam on iOS: evidence matrix
 
 This is an experimental route, separate from the working Windows Steam product.
-The full end-to-end goal is **not achieved**. Last reviewed 2026-10-28 against
-research parent `b6212bdae6d64aaac5e6dc6cb59916e739fc81b1` plus local iPad/Helper adaptation; all cited device results
-belong to the isolated native lab on iPhone 15 Pro Max, iOS 27.0 (24A435), using
-standard Personal Team development signing. Results do not generalize to other
-hardware, iOS versions or signing configurations.
+The full end-to-end goal is **not achieved**. Latest review: 2026-10-30, research
+parent `ad53b4083147539528c9e5c07cdc2d2641138884` plus local scoped changes.
+The opening historical table concerns the isolated iPhone15ProMax/iOS27.0 lab;
+the dated sections below separately record physical iPad Pro26.7.1 and Air27.2
+results. All use ordinary Personal Team signing. Do not generalize observations
+across these hardware/OS/input configurations.
 
 | Requirement or contract | Verified evidence | Status / remaining gate |
 | --- | --- | --- |
@@ -138,3 +139,82 @@ iDeck97 remains separate. The preserved converted Steam13 host app was not
 modified by this probe. Do not restore13 or repeat failed stock CEF merely to
 fill a run. Next discriminator requires a reproducibly compatible CEF source
 build/interface, followed by a real browser initialization and IPC experiment.
+
+## New physical iPad Air4, iPadOS27.2 (Build15)
+
+Official developer pairing and ordinary Personal Team provisioning now succeed
+for the specifically requested iPad13,1/27.2(24B119); no old Pro/simulator result
+substitution. User-authorized native developer trust completed via Device Hub.
+Trusted14 then traps in UIKit's missing-scene-lifecycle check before allocator
+entry. Own harness15 adopts UIScene/configuration/window manifest; upstream
+Chromium source/config and test operations unchanged. Actual Air15 console and
+visible UI confirm two256MiB disjoint pools,398 allocations/frees,4 workers,
+zero failures and final pool teardown. No EVA/JIT required. Native Steam/CEF
+is still not integrated or validated; scene-reconnect behavior not device-tested.
+Subsequent source inspection confirms the native AppKit shim already has its own
+scene delegate/manifest; copying the standalone fix into it is unnecessary.
+
+## Requested Air native16–18: distinct faults and bounded regression
+
+Native AppKit already adopts UIScene. Actual Air16 runs scene callbacks/steamui,
+but self-spawn/fork fail EPERM;1GiB VM succeeds while8/16GiB fail. A reused16
+process exposed recursive VGUI order-front/shim makeMainWindow and stack-guard
+protection failure; that attempt was not a new CEF test. Own focus17 correction
+passes synthetic subclass/reentry sanitizer tests. A genuinely fresh17 CEF load
+then proves the same16GiB ENOMEM/SIGTRAP at CEF+0x3b4dda0 on this Air.
+
+Normal17 reaches a different missing-NSEvent-factory nil-array exception at~121s.
+Own18 factory stores the real scalar ABI fields without suppressing invalid-type
+exceptions. Actual18 logs the factory marker and continues through150s sampling;
+prior nil-array exception absent in that trace. It still renders0fps and starts
+an update download. Later inventory has a different lab PID; no same-session
+survival/reentry or update-completion claim. Crash collection later times out,
+not proof of a crash. No native Steam browser/login/library success; API/source
+CEF and real native Helper IPC gates remain. See evidence index for hashes.
+
+## Custom CEF symbols are required by the observed Helper loader
+
+The newer static audit of the actual official ARM64 Helper verifies all seven
+previously identified custom APIs have required dlsym lookups: each null pointer
+branches to the shared loader return-zero epilogue. They are not optional in
+that observed initialization path. Fourteen synthetic negative/positive tests
+and the actual read-only audit pass. No CEF constructor or device process runs
+for this check. Original official file hashes differ from installed converted
+Helper hashes; both are separately recorded.
+
+A compatible source build therefore needs real semantics for these extensions,
+plus full structure/callback ABI compatibility; a matching symbol list alone is
+insufficient. No matching custom source was located in checked public sources.
+The [open source request](https://github.com/ValveSoftware/steam-for-linux/issues/12226)
+is context, not proof of global absence. Do not stub missing APIs or forge hashes.
+
+## Full public source fingerprint control
+
+The entire pinned public CEF extension repository is now inspected locally;
+this is still not Chromium or a built browser. Its real hash calculator
+reproduces the expected upstream hashes. Changing only one function parameter
+identifier changes those hashes while Clang reports an identical function type.
+Thus differing hashes establish different header fingerprints, not by themselves
+an exhaustive structural-ABI incompatibility proof. Actual Helper explicitly
+compares the platform hash before execution/initialization; checks stay intact.
+
+The full public126 source candidate still lacks7 required declarations and fails
+its two fingerprint comparisons. Own source-surface checker plus9 tests and full
+local regressions pass; passing a future surface check would still require
+semantic/layout/ownership and actual device tests. No matching custom source
+was located in bounded public or authenticated GitHub code searches. Native
+Steam remains incomplete; these host checks add no login or browser proof.
+
+## Native19 updater confound and host control
+
+Actual Air19 reads steam.cfg successfully twice but still checks/downloads the
+background manifest after~122s; installed/pending versions are0. This key is not
+a proven lab version pin, and cached packages do not prove installed code. All
+180s samples remain0fps; no CEF/login UI success. Later process identity changes
+without an explanatory new report in the visible crash list; cause unknown.
+
+A private normally ad-hoc-signed Mac copy of the same official CEF loads and
+returns correct version/hashes without cef_initialize. ARM64 instructions and
+original source remain unchanged. Host loading success distinguishes this from
+a generally invalid download, but does not establish iPad address capacity,
+native Helper IPC or interactive browser success. See evidence index for limits.

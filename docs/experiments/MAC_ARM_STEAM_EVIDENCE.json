@@ -1499,5 +1499,663 @@
       "experiments/mac-arm-steam/test-partitionalloc-builder.py": "78d62559318f9d7ba7077f9d2a568d1320bf5ad3a3ea57ea192d0c65b3e245fe",
       "experiments/mac-arm-steam/test-local.sh": "8837936fcee2ec857952d72c9afea46e70c13c479c1b1ea4923929879b4a5c26"
     }
+  },
+  "ipadAirPairedInstall20261030": {
+    "sourceRevision": "ad53b4083147539528c9e5c07cdc2d2641138884",
+    "target": "physical iPad Air4/iPad13,1",
+    "actualOS": "iPadOS27.2/24B119",
+    "pairing": "official Device Hub pairing completed by user; fresh details devMode enabled and lockState passcodeRequired false",
+    "signing": "CLI No Accounts not GUI logout; actual Xcode AirLab build used existing Personal Team session, new profile includes target expires2026-11-06; ordinary entitlements, no EVA/JIT",
+    "app": "standalone14 PartitionAlloc probe, no Valve binaries",
+    "installation": "actual success, isolated com.kuschqin.ideck.maclab.macprobe",
+    "launch": "REFUSED CoreDevice10002/FBS Security; post-install deep strict, application/profile/team/device entitlement checks all pass; native developer-app trust requested from user",
+    "runtimeVerified": false,
+    "workingAppChanged": false,
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/signed-receipt.json",
+        "sha256": "903cdbc08b9960c37bfac3e56653fb28ed576dd05ecdc1a9c0aabfa9cfd15e0f"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/install.json",
+        "sha256": "ef63e7b4dcba3047c06b5affa0c03e2546be6a88aaab887a62fcfb599402d5df"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/install.log",
+        "sha256": "6ff69ca330f835b0fc3023195191f784ee8f60f2688a540e9ddaa7c81decedf5"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/launch.log",
+        "sha256": "eafeda940b8d85b041866e41bebf4c08fc30f5872edc4bc2cd711d802b096ac2"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/launch-preflight-report.json",
+        "sha256": "e726b3cf69e783c443e4e9a9e557f1ae50316f71db4dce2c03a0aa47781bebce"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/device-details.json",
+        "sha256": "3293fea7b3528175107c6275c229ec67512aca580675c38d390ed7ccbd32a9fe"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/apps-before.json",
+        "sha256": "fc64139cfcc268a1166ca5052e84a17c6c78d64841c16bd292c3127ceb02eb38"
+      }
+    ]
+  },
+  "ipadAirSourceAllocator15_20261030": {
+    "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+    "appBuild": 15,
+    "device": "physical iPad Air4/iPad13,1",
+    "actualOS": "iPadOS27.2/24B119",
+    "nativeTrust": "explicit user action-time authorization, Device Hub Trust/Allow confirmed and trusted state visually verified; no credential entry",
+    "failureBeforePatch": {
+      "build": 14,
+      "signatureGateResolved": true,
+      "exception": "EXC_BREAKPOINT/SIGTRAP",
+      "module": "UIKitCore",
+      "topSymbol": "___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke",
+      "allocatorBegan": false
+    },
+    "hypothesis": "UIKit on this actual27.2 target traps on the old app-delegate-only test harness before allocator execution",
+    "minimalPatch": "Own probe uses UIWindowSceneDelegate/windowScene plus app configuration callback and scene manifest; process once gate and result retention. No upstream Chromium changes.",
+    "actualResult": {
+      "sceneConnected": true,
+      "poolBytes": 268435456,
+      "poolsDisjoint": true,
+      "allocations": 398,
+      "frees": 398,
+      "workers": 4,
+      "failures": 0,
+      "poolsUninitialized": true,
+      "visibleUI": "actual Device Hub screenshot shows Allocator test PASS",
+      "CEFIntegrated": false,
+      "newEVAorJIT": false
+    },
+    "binary": {
+      "build": 15,
+      "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+      "probeSHA256": "f2591d8cedbac8147ae97533956c11c2ecfe20a54ffef25ca4345efd1bcc3d00",
+      "builderSHA256": "d4f061a6635ec6de7c3d8aee6025b481fc8916ee3a79e085a78d1d86fbef9c36",
+      "signedBinarySHA256": "0022c30da313c36aa046e8ab9a7b1651d6097ba7d4024b928320b59de877f0e2",
+      "sceneManifestVerified": true,
+      "finalSceneMarkerVerified": true,
+      "deepStrictSignatureVerified": true,
+      "CEFIntegrated": false
+    },
+    "limits": "Only standalone source allocator. No native Steam browser/login/library/depot/game result; no full raw_ptr/thread-cache/malloc replacement/StarScan/MTE or scene-reconnection validation.",
+    "next": "Historical probe15 gate completed. Later native16..18 inspection confirms AppKit already has UIScene; see ipadAirNative16to18_20261030 for genuine CEF/process results and current next source/API/IPC gate.",
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc15/result.json",
+        "sha256": "614707a085a7ae9aef50630bda91fc06613e9338766953aaf3815bca6491c42d"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc15/signed-receipt.json",
+        "sha256": "760d1199d75c0567b65177c82ba2c9a957961865e7797c72b626346c163f2d04"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc15/install.json",
+        "sha256": "3d15139e9b3b411c06c446968335b3a625bb30cfe5fdaba27301207138ec552c"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc15/launch.log",
+        "sha256": "0fc885bb9820a869b80d40a10c6042733883f1fcdefa5a366f8d8a400613223d"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc15/apps-after.json",
+        "sha256": "f34eb11df95ec35132f0337f0ad09e9ae1e92f89c32c944472ae0992718c5685"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc15/processes-after.log",
+        "sha256": "11ade0bf735e4dde8373e575f7584712eeefebf25600b4ac1282da52d6323ecc"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/launch-trusted.log",
+        "sha256": "d23be29cf595efb3bf4a37a30854e75ff69695388ca9f183e1c731e37a52695a"
+      },
+      {
+        "path": ".madeira-install/ipad-air-partitionalloc14/launch-trusted.ips",
+        "sha256": "128335fdc6a1ed6cd3ee06b0eb323a4da092c4218b807d2da15c4b43e393e026"
+      },
+      {
+        "path": ".madeira-install/partitionalloc-probe15/build-receipt.json",
+        "sha256": "37c458dac0adc404024e9d62a4239767e59257336e707bfa40bcf95982f738eb"
+      },
+      {
+        "path": ".madeira-install/partitionalloc15-source-tests.log",
+        "sha256": "77dcb33031ce8dd1ba5b35ec0fc94e90b9bc1629041f4e8ca3306ec978641895"
+      },
+      {
+        "path": ".madeira-install/partitionalloc15-build.log",
+        "sha256": "a0f34156d5515dfbaecd414e76a4029166452ad6614d07311ec1c816834ae94f"
+      }
+    ],
+    "sourceFingerprints": {
+      "experiments/mac-arm-steam/partitionalloc-probe.mm": "f2591d8cedbac8147ae97533956c11c2ecfe20a54ffef25ca4345efd1bcc3d00",
+      "scripts/experiments/build-partitionalloc-probe.py": "d4f061a6635ec6de7c3d8aee6025b481fc8916ee3a79e085a78d1d86fbef9c36"
+    }
+  },
+  "ipadAirNative16to18_20261030": {
+    "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+    "device": "physical iPad Air4/iPad13,1",
+    "actualOS": "iPadOS27.2/24B119",
+    "nativeShimSceneInspection": "Pinned AppKit already has scene delegate/manifest; standalone15 scene fix was not ported redundantly.",
+    "native16": {
+      "actualVM": "largest observed gap6GiB; vm_map1GiB success/cleanup,8/16GiB KERN_NO_SPACE3, mmap8GiB ENOMEM12",
+      "actualProcess": "signed self-spawn EPERM1; Steam tier0 fork-1/EPERM1",
+      "normal": "steamui/scene callbacks, black/fps0",
+      "attributionCorrection": "Purported CEF attempt reused original native16 after SIGTERM; no CEF begin. Its stack-guard protection crash was recursive VGUI order-front/shim makeMainWindow, not a fresh CEF load."
+    },
+    "native17": {
+      "patch": "Direct main-window transition; state before delegate/observer notification, no virtual order-front redispatch. Exact pinned generated source only.",
+      "freshCEF": "New process prints load=begin; two16GiB requests ENOMEM12, SIGTRAP at CEF+0x3b4dda0 during constructors; no completed load/browser.",
+      "normal": "Different new normal run fails at about121s: absent NSEvent custom factory returns nil, NSApplication postEvent array insertion raises NSInvalidArgumentException. Not a clean150s pass.",
+      "reentryCorrection": "Home/app-icon actions crossed crash/new PID boundary; no same-session scene reconnect proof."
+    },
+    "native18": {
+      "build": 18,
+      "device": "physical iPad Air4/iPad13,1",
+      "actualOS": "iPadOS27.2/24B119",
+      "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+      "observation": {
+        "boundedSeconds": 150,
+        "observerExitCode": 2,
+        "observerTimeoutIsNotProcessDeath": true,
+        "actualEventFactoryMarker": true,
+        "prior121SecondNilEventExceptionObserved": false,
+        "frameRateObserved": 0,
+        "downloadUpdateProgressKB": 178283,
+        "downloadUpdateTotalKB": 289112,
+        "downloadCompletedInTrace": false
+      },
+      "laterState": {
+        "sameInstalledAppDifferentPIDObserved": true,
+        "originalPIDSurvivalNotEstablished": true,
+        "DeviceHubVisible": "home screen; no Steam UI visible",
+        "crashCollection": "CoreDevice service initialization timeout; no later crash or restart cause established",
+        "processTermination": "no action on later session of unknown launch provenance"
+      },
+      "limits": [
+        "No genuine native Steam login/browser/library success",
+        "No same-process scene reentry proof",
+        "Downloaded update/payload was not verified after observer ended; do not treat later session as identical input",
+        "No stability or end-to-end performance claim"
+      ],
+      "next": "Reconcile active lab/version/update state before new device run. Primary route still needs compatible source-built CEF and genuine Helper IPC/lifecycle; no repeat of unchanged stock failures."
+    },
+    "hostRegression": "ASan/UBSan production shared event factory + window focus fixtures; full host/iOS compiler suite; real compiler failure injection/final-output preservation and complete three-shim staging pass.",
+    "signedBinary": {
+      "build": 18,
+      "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+      "deepStrict": true,
+      "eventClassMethodAndFocusFunctionLinked": true,
+      "eventMarkerLinked": true,
+      "HelperOriginalUnchanged": true,
+      "AppKitSHA256": "0c037a9eced87a2c77eb282fb6c86827095690331a670de98bc08efc46620a05"
+    },
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/ipad-air-native16/prepare-receipt.json",
+        "sha256": "92f96fab4dfa9ea0302c4e132ee7c6255a5c5a4df7e1bc40d27b13571c4ba99b"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native16/signed-receipt.json",
+        "sha256": "7ead2903c6e8ff441477f9fb434988ea38b7bee73b89e075c4efaf0b2962188f"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native16/vm-range.log",
+        "sha256": "31ce6113fae4ee95d951fd73daf8b14057152f6934be85c7144f4b4f719213f8"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native16/native-main.log",
+        "sha256": "63d637275611a67f8d86dab423099eee4d97415175d6fea548bdc560e14e8944"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native16/cef-load.ips",
+        "sha256": "09703f29918f22df7b82e22cfa77d01bad6af79c72db9a4167fbf604bca9b383"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native17/ideck-shim-build.json",
+        "sha256": "940faaeda6cce52b6e77b718fe9a33942644b6bdbe5a172a6fbe068e8b0ea62d"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native17/signed-receipt.json",
+        "sha256": "767b289dac579d155f29e798243bae3e77230733777e4529f2d75740fb247e77"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native17/cef-load-fresh.log",
+        "sha256": "a9de68727182e80d7e62749c7ccd5e76d322131e8136f555894f52e53f632bed"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native17/cef-load-fresh.ips",
+        "sha256": "ac10e7c08e0e1210b5b7aa0dd9e026cc6de2fff6eac322aab3734210b7892512"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native17/main-regression150.log",
+        "sha256": "1b1b64afc05e5b4043ce84595868088c429840376579e640b6a34462c043ad84"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native17/main-regression.ips",
+        "sha256": "1dc903b6f4e008341b2d28dea5e279546ab51cee204ed7ac680836014fdab476"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/ideck-shim-build.json",
+        "sha256": "49ef4254f4250baa64d15b6278d937e82b927078622c61d7c4437f21cceebca7"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/signed-receipt.json",
+        "sha256": "50b7e044eeaabe532920d15049d5237ba717c4d32acb50ffb07852224a79cae8"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/install.json",
+        "sha256": "a7070c0c8d0c1fb1f4c2a9fd6a055675fb1e9edcf203a020b81b77ea2397612c"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/main-regression150.log",
+        "sha256": "b0bf9bb43b3a80e698066be3b40e63044b9bfc8c9e6c208326eac5987dba7066"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/result.json",
+        "sha256": "43069428ef4393fb52358c9e6a1e55c028984afc618d096eafa0d986e539f5e8"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/processes-later.json",
+        "sha256": "0cbdaa0bd77a2b1a73d26fbcf5c6098bf874c580f94294d0e24b9ca24dd948ad"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/crash-list-current.log",
+        "sha256": "52523d0a7c9a48fe5bbce3dcd92bc25e3e8bea86ed8bc0a96f6ad4298c4b0f30"
+      },
+      {
+        "path": ".madeira-install/air-other-event-regression18.log",
+        "sha256": "2f8cfbf202555055a82971be46f767a0621657c503fac4cc9b651f7a6a813d12"
+      },
+      {
+        "path": ".madeira-install/air-event-staging18.log",
+        "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+      }
+    ],
+    "sourceFingerprints": {
+      "scripts/experiments/build-mac-steam-overrides.py": "a3cc47b5b2b598015cc4ae4fb6bda80aa9b266fa01da580a13607e70703250fd",
+      "experiments/mac-arm-steam/window-main.m": "e8599d39c9136b8732ca75fafc1874650cdf0901449cc17961940048282b5f58",
+      "experiments/mac-arm-steam/test-window-main.m": "33991b2ad094a6d5fbfe3db967eb4aeb998bb305a8d4dd7d3ccc41d42e7d6e4b",
+      "experiments/mac-arm-steam/other-event.h": "e5c2fa3bc71e337aea8cd416cebd0897f5ac794ea4412a1a92d5ee8c4489525b",
+      "experiments/mac-arm-steam/test-other-event.m": "c23e95c34e46d8afb8f770765e955006407fa697ad8606635996729976ca4628",
+      "experiments/mac-arm-steam/test-local.sh": "de34648ca046f38ca2e59e0692975d81346f05357db0e123ce80de8e3b36e1a0"
+    },
+    "constraints": "Only isolated lab; no upstream reference/Valve instruction/FEX/Wine/DXMT or working product changes. No credentials entered or auth-cache transfer. Local uncommitted progress retained outside authorized Git window."
+  },
+  "cefRequiredLoaderAPIs20261030": {
+    "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+    "method": "Static read-only ARM64 official Helper loader-block audit, not a device run or CEF load.",
+    "hypothesis": "Seven shared Helper/CEF symbols absent from the checked upstream6478 loader might be optional. Determine whether observed Helper lookup blocks reject missing exports.",
+    "test": "Decode actual name-address computation, call to resolver using imported dlsym stub, pointer-table store/load, null check and return-zero failure epilogue. Require one block per name, common resolver/failure epilogue and distinct slots. Refuse unknown or ambiguous shapes.",
+    "result": {
+      "mode": "static read-only; CEF not initialized",
+      "helperSHA256": "8047352bdbd37800dc3ff4d82920c0c9a285c4d578b2b57c796346c467b00f90",
+      "arm64SliceSHA256": "dcaea7d1540ad45bae6137ae09fdd572ee93a0a522d8c03878fae07ec2162c37",
+      "customLookups": {
+        "cef_generate_gpu_report": {
+          "lookupRVA": 2651132,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984640,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        },
+        "cef_is_gpu_compositing_disabled": {
+          "lookupRVA": 2651084,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984632,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        },
+        "cef_is_hardware_acceleration_enabled": {
+          "lookupRVA": 2651036,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984624,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        },
+        "cef_set_force_device_scale_factor": {
+          "lookupRVA": 2650892,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984600,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        },
+        "cef_set_minimum_font_size": {
+          "lookupRVA": 2651324,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984672,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        },
+        "cef_set_preferred_contrast": {
+          "lookupRVA": 2651276,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984664,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        },
+        "cef_set_reduced_motion_enabled": {
+          "lookupRVA": 2651228,
+          "resolverRVA": 2664752,
+          "slotVA": 4298984656,
+          "failureReturnRVA": 2660840,
+          "nullLookupReturnsZero": true
+        }
+      },
+      "limits": [
+        "Narrow static loader-block evidence, not runtime CEF initialization.",
+        "Mandatory symbol presence does not prove full ABI or behavior compatibility.",
+        "Never skip lookups, stub custom semantics or spoof cef_api_hash."
+      ]
+    },
+    "regressions": "14 synthetic non-executed Mach-O tests pass; existing6 ABI audit tests pass; actual official fat Helper ARM64 audit succeeds; Python compile passes using temporary bytecode cache.",
+    "sourceSearch": "Fresh official repository/public source searches did not locate matching Valve custom126 source. Issue12226 remains an open request, not proof no source exists anywhere. Valve wiki returns403, no bypass attempted.",
+    "referenceURLs": [
+      "https://github.com/ValveSoftware/steam-for-linux/issues/12226",
+      "https://github.com/chromiumembedded/cef/blob/master/docs/branches_and_building.md",
+      "https://store.steampowered.com/legal"
+    ],
+    "limitations": [
+      "Static required-symbol contract for observed loader path; not proof it was reached on device. Actual CEF constructors still fail first.",
+      "Original official universal Helper was audited; its file/ARM64 hashes are not the retargeted/signed installed18 Helper hashes.",
+      "Names present or equal API hashes cannot prove struct layout, signature, callback ownership or functional semantics.",
+      "No new build/install/launch, authentication, UI or game success this experiment.",
+      "Only~3.4GiB workspace free observed; no large Chromium checkout initiated before source/API gate is resolved."
+    ],
+    "minimalPatch": "Own read-only audit + synthetic tests + regression command/docs. No runtime/source modifications to Valve/CEF/FEX/Wine/DXMT or installed app.",
+    "next": "A compatible source baseline needs genuinely implemented seven extensions plus full ABI verification and source-wide pool rebuild; fake exports/no-op stubs/hash overrides are not a solution.",
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/mac-arm-steam-official/cef-loader-required-apis.json",
+        "sha256": "018bdb59f89fe67dd776742eacedadf54f7e2b474fb7d98c8eb9359b71fe83cb"
+      },
+      {
+        "path": ".madeira-install/mac-arm-steam-official/cef-loader-audit-regressions.log",
+        "sha256": "699bb9df2f1091a9bd54504e810df7beb7629f03bb34353c20aa9cae4a3a627a"
+      }
+    ],
+    "sourceFingerprints": {
+      "scripts/experiments/audit-mac-cef-loader.py": "c2f7ef1b4c7a4f49444f10b33d29d75c785dabc5f0b532c50007bfae8c6acf3e",
+      "experiments/mac-arm-steam/test-cef-loader-audit.py": "3b4a66b224370016d8da29cda31af0cd40166134006b150b607b1d07f5f53788",
+      "experiments/mac-arm-steam/test-local.sh": "93f22913591a629e0b3f7b8f2a7e7c15c587989374b9cb76e0fc9002510c5a40"
+    }
+  },
+  "cefFullPublicSourceBaseline20261030": {
+    "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+    "publicSourcePin": "a5d51ba9db7ee74a523dc247bd09ec91ba4d7446",
+    "archive": {
+      "HTTPSURL": "https://codeload.github.com/chromiumembedded/cef/tar.gz/a5d51ba9db7ee74a523dc247bd09ec91ba4d7446",
+      "bytes": 2981426,
+      "SHA256": "1c447d9820cd6c09b7ff25b2d791708bc7e848f665df7bc5d07ffe831e9ec59b",
+      "regularSourceBytes": 15973429,
+      "members": 2297,
+      "previousEightPinnedFilesByteMatch": true,
+      "scope": "Full CEF extension repository, NOT full Chromium or a compiled browser."
+    },
+    "hypothesis": "Determine whether seven missing exports alone establish a sufficient replacement patch, and validate source fingerprint gate before an expensive browser build.",
+    "control": {
+      "mode": "source hash / host C ABI control only; no CEF/client executed",
+      "sourcePin": "a5d51ba9db7ee74a523dc247bd09ec91ba4d7446",
+      "baseline": {
+        "universal": "ed1dfa5ff8a041241f8fb72eb7454811f358f0d3",
+        "windows": "0d99d1b9b85b2efab91a39d6fc325bb6d56fd524",
+        "mac": "e585e190387e31a71267207b66d175e213991470",
+        "linux": "09d3e280ed38f7a082b794c56ff71c52f86f0ea8"
+      },
+      "identifierOnlyControl": {
+        "universal": "f7e6c3155346727747df3ea747c652c7e37e77f2",
+        "windows": "9b3ef1ca3d61820ac3af4352320a2cb86b858ef6",
+        "mac": "7cc66661637bb9e879f6a60f13883a200c0531a9",
+        "linux": "16be8fc0473e56a0e494f9409adc5af68c4e9457"
+      },
+      "clangFunctionType": "int (const cef_main_args_t *, const struct _cef_settings_t *, cef_app_t *, void *)",
+      "clangTypesIdentical": true,
+      "onlyChange": "one cef_initialize parameter identifier; no type/layout change",
+      "conclusion": "CEF126 API hash includes header text and parameter names. A mismatch demonstrates source fingerprint difference, not an exhaustive ABI incompatibility proof. Exact compatible source/header validation remains necessary without spoofing hashes.",
+      "sevenAPIsAloneExplainsDifference": "NOT established: original full declarations/argument names and other header changes unknown. No guessed custom implementation or generated Valve-matching hash.",
+      "actualHelperHashCheck": "Read-only official ARM64 disassembly shows four cef_api_hash(0)/strcmp comparisons against3bf3a90aebd22f3098ae1f2040d618be71553754, with check-failure branch for mismatch; includes wrappers corresponding to CefExecuteProcess and CefInitialize. No check patched.",
+      "headerCompileConfiguration": "Generated empty default mac client cef_config.h plus actual Chromium126.0.6478.183 net_error_list.h; AST parsing only, not Valve GN or full CEF build.",
+      "sourceHashes": {
+        "tools/cef_api_hash.py": "0da2d49c671d02375ddcca21605d65a4c7ac359294bde09cc2425c5026553e95",
+        "tools/file_util.py": "6828b86262dd88116e8fe98ff9c2259c67e15269b75eaa7537521bf143358c41",
+        "include/capi/cef_app_capi.h": "2a9c6f172620ac835ae9f0b0fdee4578cb152326ce7f2b8b6beacd994eb4d9cf",
+        "libcef_dll/wrapper/libcef_dll_wrapper.cc": "f42c63ec4b5ef2380957e49e13303d65e2f7661787452be4471f0e5a55d28008"
+      },
+      "netErrorHeaderSHA256": "e15cf74c6b031fb8f14404cadfa7a0f209c92777936d0e8a86eeb22f7ce20c49"
+    },
+    "actualPublicSurfaceResult": {
+      "platformMatches": false,
+      "universalMatches": false,
+      "missingRequiredDeclarations": [
+        "cef_generate_gpu_report",
+        "cef_is_gpu_compositing_disabled",
+        "cef_is_hardware_acceleration_enabled",
+        "cef_set_force_device_scale_factor",
+        "cef_set_minimum_font_size",
+        "cef_set_preferred_contrast",
+        "cef_set_reduced_motion_enabled"
+      ],
+      "surfaceGatePasses": false
+    },
+    "regressions": "9 source-surface tests incl. unreviewed-module non-execution and header symlink/oversize refusal; loader14 and ABI6 pass; full host/sanitizer/iOS compile test-local.sh passes. Public-source candidate correctly exits2 (surface rejection), not test failure.",
+    "initialHeaderCompileLimits": "First AST compile lacked generated cef_config.h; after explicit default mac client config it lacked Chromium net_error_list.h. Supplied actual pinned126.0.6478.183 header in disposable overlay; both final C header AST parses succeed. No fake empty Chromium enum or full build claim.",
+    "freshSearches": {
+      "officialSourceReferenceHEADs": "macos-on-ios-public c2562a3 and CyPort65e2e57 unchanged",
+      "GitHubAuthenticatedCodeIndex": "Exact platform hash0 hits; cef_generate_gpu_report language:C++0 hits. Broad symbol searches had only unrelated report metadata; no third-party binaries fetched or reports treated as source. No global-source-absence claim."
+    },
+    "deviceFollowup": "One current physical Air process query fails CoreDeviceService initialization timeout. No new install/launch/restart/termination or substitution of another device. Installed18/later unknown session preserved.",
+    "currentGate": "No validated matching custom126 headers/implementation. Precompiled native CEF still fails16GiB reservation and actual native fork/spawn failEPERM. New user instruction to continue until success does not authorize hash spoofing, private entitlements or losing working app isolation. No native UI/auth/library success.",
+    "next": "Find/reconstruct genuinely compatible source and exact declarations with semantics, then source-wide pool build and real Helper lifecycle. Full upstream source alone is not a working replacement. Keep mission incomplete and evidence-scoped.",
+    "sourceFingerprints": {
+      "scripts/experiments/audit-cef-source-surface.py": "eae8c2c49179a21eea51d8a494af8130103a8fb0264e540cca694d83851d3571",
+      "experiments/mac-arm-steam/test-cef-source-surface.py": "add831c7d0570d38ff5ce4eaeec1f3e122411feea8a74697865e441307e9c5fb",
+      "experiments/mac-arm-steam/test-local.sh": "2bb664f97368434fa72dc1c9613279fba3664731e84b7f0db01130cb60f3436e"
+    },
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/cef6478-header-experiment/result.json",
+        "sha256": "ebc533b818b887938b6f302bd56308ed78f782f8791ae5d1bbb12f033eb0f94e"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/surface-public-source-verified-parser.json",
+        "sha256": "911d6260beae9a51fa456b3eabdc79196ab7aa2577d529d9ef983c5c73a1a616"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/surface-regressions.log",
+        "sha256": "c9355a73146b15d80a2418cc7cf57f5ac60b2ad486c3be6c88330a09c74f520e"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/all-local-regressions.log",
+        "sha256": "656409a165dd7b669a321410da96eae8c7e8675fda713b629d251b8bffcb0980"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/type-baseline.json",
+        "sha256": "03a99ae49845a0ebb26496829ce4c290c108c99b665db9870fb3f67fbce00bc0"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/type-identifier-only.json",
+        "sha256": "0d26281970e7b76b9a785578ba8c29f19104dc6944afd19b550fc73bfd936597"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/search-platform-hash.json",
+        "sha256": "f5085428e07f16696dcbbdd7244586af33c94dee2dadcbbd03d6993326009315"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/search-custom-cpp.json",
+        "sha256": "f5085428e07f16696dcbbdd7244586af33c94dee2dadcbbd03d6993326009315"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/host-context.json",
+        "sha256": "725b18a110551ffcdb6d2a67d6adc326f70ee1926f413f9efe1544d76bcc12d3"
+      },
+      {
+        "path": ".madeira-install/cef6478-header-experiment/all-local-regressions-final.log",
+        "sha256": "bfb7936f4293b4521e8590cfe3e3352595418abf546c96c48f91fef11737d7e2"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native18/processes-followup.log",
+        "sha256": "52523d0a7c9a48fe5bbce3dcd92bc25e3e8bea86ed8bc0a96f6ad4298c4b0f30"
+      }
+    ]
+  },
+  "ipadAirNative19PinAndMacControl20261030": {
+    "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+    "hypothesis": "Prior updater may mix runtime/payload state; test documented launch-update config without CEF/native process patch. Independently test exact official framework constructors on Mac.",
+    "deviceResult": {
+      "build": 19,
+      "sourceParent": "ad53b4083147539528c9e5c07cdc2d2641138884",
+      "physicalTarget": "iPad Air4/iPad13,1 iPadOS27.2(24B119)",
+      "configuration": "BootStrapperInhibitUpdateOnLaunch=enable in root and Mac/Contents/MacOS steam.cfg; opt-in categorical observer",
+      "actual": {
+        "installSucceeded": true,
+        "newFreshNormalLaunch": true,
+        "observationSeconds": 180,
+        "configFopenSuccessRecords": 2,
+        "observerReturn": 2,
+        "timeoutIsNotAppDeath": true,
+        "allSampledFPS": 0,
+        "nativeForkReturnsEPERM": true,
+        "backgroundManifestCheckStillOccurs": true,
+        "downloadedManifestVersion": "1792618285",
+        "reportedInstalledVersion": 0,
+        "reportedExistingPendingVersion": 0,
+        "downloadCompleteLine": "manifest/download phase marker only; cache reused possible; not proof new payload installed",
+        "interactiveSteamUI": false
+      },
+      "interpretation": "Hypothesis not established: observed key does NOT suppress this background update check. Config read marker only identifies basename/open success, not exact source location, parsed key value or honor policy. No reliable version pin claim.",
+      "laterIdentity": "same installed19 path different process from observer; provenance unknown, no stale-PID actions",
+      "crashList": "Three old17/16 .ips only in current visible steam_osx listing; no new report found. Absence does not establish no crash/restart.",
+      "cacheInventory": "24 update cache objects in isolated container, including signed manifest, with no installed marker observed in this subdirectory. Earlier18 private bootstrap log completes289112KB download at18:11:21. No proof cached files were installed; no synthetic .installed marker written.",
+      "limits": [
+        "No CEF/browser/login/library/game success",
+        "No credential entry or account cache transfer",
+        "No fabricated update manifest/install marker, bypassed integrity, assertion or authentication check",
+        "Working iDeck unchanged"
+      ],
+      "next": "CEF source/ABI and real Helper lifecycle remain gating. Do not repeat native stock16GiB failure or claim updater config fixed UI."
+    },
+    "minimalPatch": "Own opt-in open/fopen observer preserving errno and limiting32 fixed categorical records; generated private shim only. Private cfg fixture on existing lab19; no product update policy.",
+    "hostControl": {
+      "scope": "Mac host-only load control, not iPad/browser proof",
+      "return": 0,
+      "CEFInitializeCalled": false,
+      "SteamMainCalled": false,
+      "credentialsUsed": false,
+      "ARM64TextUnchanged": true
+    },
+    "hostSigning": {
+      "originalUnsigned": true,
+      "sourceUnchanged": true,
+      "privateCopyAdHocSigned": true,
+      "ARM64TextUnchanged": true,
+      "deepStrictVerified": true,
+      "scope": "Normal Mac development signing only; not device entitlement/security changes"
+    },
+    "hostInterpretation": "Original official CEF package is unsigned. Initial verify refused it; made private ad-hoc-signed Mac copy using normal codesign; source file and ARM64 text preserved. Host dlopen now returns with actual126 versions/hashes. No cef_initialize/Steam/auth/UI called. This is not iPad loading proof or allocator-size fix.",
+    "regressions": "New observer ASan/UBSan and iOS Werror compile pass; full host/iOS test-local and three-shim staged compiler-failure preservation/success checks pass. FINAL linked observer marker/symbol/receipt verified then all shims/root signed and deep-strict verified; original Helper/root instructions/CEF unchanged.",
+    "signingCorrection": "Background sandbox visibility initially reported no identity and security cms decode error; official approved read-only keychain/profile check found matching existing profile identity. No account logout diagnosis, new cert/entitlement or keychain change. GUI Mac lock did not prevent authorized official elevated CLI device queries.",
+    "reference": "Bridgeplay UpdateBlock.swift at8e18aa819a98c2b288c1cf3af7395b45e2277f04; only key semantics referenced, no source copied. Its setting blocks security updates too; laboratory unauthenticated scope only, not product default.",
+    "sourceFingerprints": {
+      "experiments/mac-arm-steam/pin-config-observer.c": "db63c999d05512eaa0ffcfbf770f977396ee3175aca99d679b0b69b52908051b",
+      "experiments/mac-arm-steam/test-pin-config-observer.c": "98204d09bab002c547ae96bca6e0d4b0b21a2cb845669c09fd262191aeb55343",
+      "experiments/mac-arm-steam/mac-cef-load-control.c": "bb210a58013e1859eddde8a267a475d8b894283a606011946e46b218a38c6a2a",
+      "scripts/experiments/build-mac-steam-overrides.py": "619e231cd16a1ef69592fccccdc6aa3ec8cc34c592f0b44253250b01a1321bf0",
+      "experiments/mac-arm-steam/test-local.sh": "4c6d3cc068a6199d2fc5f5d0ad2805e8e2413e4a880d31640b62d99cd232cffc"
+    },
+    "privateEvidence": [
+      {
+        "path": ".madeira-install/ipad-air-native19/prepare-receipt.json",
+        "sha256": "fb5d13d1e0633dcffbfc6f3844242fe517a1c90fd647f9ac07b4c922d499dc87"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/signed-receipt.json",
+        "sha256": "f9908a21fcd86e0be719b8bb437c60d21e931d44fb73e926e86155d29d980cfb"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/ideck-shim-build.json",
+        "sha256": "5633229b60b4eb95d0c15517ed46f2bc81412bb95d9f50f6cd5a92c0d0f69fd2"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/install.json",
+        "sha256": "ce27e0111c713f0091e020f58a6ef841d746d73eeba85449ad78105d74e50bb8"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/normal180.log",
+        "sha256": "445d52ad7dd55204ff8c8e92173e6bce3f5751162e36def6587c20c704675ce4"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/observer-result.json",
+        "sha256": "017ee5ae359cfd4bcb259d5aa34516254ae7fd546e5b7a7f6b2355aa32cbd587"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/result.json",
+        "sha256": "4a72c8f0af6d4fe35ca3d2910cd4337d40dac0e9d1fc0ca15ae6e4d7308fef5f"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/latest-process-state.json",
+        "sha256": "2a04959eda4a233a42835433dc5a32a0cc4e7ca8c0a187dcfe41360b5dfcd6fa"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/latest-crash-list.json",
+        "sha256": "c90e3d17fa6d2fcacc230120f3d2f9eb680bec5e0d276286ac14313776fc848f"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/package-inventory.json",
+        "sha256": "ab88778335cd8e0e664c3df348fbb14c069a1653d7b051aa39c60e6c4830a32b"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/bootstrap-current-private.txt",
+        "sha256": "e69ca91f718bc67da4d3808c95736359c265ac67e0b9c0431544d186f341a63d"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/host-regressions.log",
+        "sha256": "45331ba825782367aeea7af92537bf888449941020e9123d5d4489fb1d4836fd"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/staging-regressions.log",
+        "sha256": "37eb06922f64566ee5a86a5d0de7f9372a5a4750be9f7cc35e1e9fd58c18bb6e"
+      },
+      {
+        "path": ".madeira-install/mac-cef-host-control/result.json",
+        "sha256": "20e83a2a964281097b0b91f2799b36f26024be3296ef487142d8627e0e242b49"
+      },
+      {
+        "path": ".madeira-install/mac-cef-host-control/run.log",
+        "sha256": "4de2f2fa6c1402ad64cd2956489b5d46668f62e93a4f57a21c7becca3f73ddb2"
+      },
+      {
+        "path": ".madeira-install/mac-cef-host-control/host-sign-receipt.json",
+        "sha256": "fe1c547eefb0668640e6defbb028021beb15b2cda587321b80d1888b3b2d9e5f"
+      },
+      {
+        "path": ".madeira-install/mac-cef-host-control/host-sign.log",
+        "sha256": "68db72eadda7bd9c9cf8d0f9238fc6cc3823694cb4ccf661727861907ef626e5"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/final-app-identity.json",
+        "sha256": "ec94e84a7f737d5a1b81f66a627b6ddd96c4770d81d9832c940ce67cd08403ea"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/final-preterminate-identity.json",
+        "sha256": "0c1c9969cd8f11a14fe7349cbcfdc8037758a573fcb2a261bc0dcbaae169a3d4"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/final-terminate-isolated-lab.json",
+        "sha256": "3364e96980fa9df595414dc862cc59b2f164d06e62fa6247f342b3f74e9cce56"
+      },
+      {
+        "path": ".madeira-install/ipad-air-native19/final-no-lab-process.json",
+        "sha256": "c32e28a753d9f9540c008c65226e437583f217f34d43fd51e10e593bdaaa85f3"
+      },
+      {
+        "path": ".madeira-install/native-lab-final-review-20261030/checks.log",
+        "sha256": "74599293cec9216dc2a45b29e4618db697400328378f625116fbf233d47af916"
+      }
+    ],
+    "cleanup": "After bounded run, fresh app19 identifier/version/path and exact current lab process revalidated; only isolated native Steam research process terminated, fresh process inventory confirms absence. Installed19/data retained; working apps untouched.",
+    "finalReview": "Full host/sanitizer/iOS contracts, real compiler staging failures/success and Mac-only C control Werror build pass immediately before source-only checkpoint."
   }
 }

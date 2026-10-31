@@ -368,7 +368,7 @@ switches. Actual iPad13 reaches genuine CEF constructors then16GiB ENOMEM/SIGTRA
 no dlopen completion, Helper entry, CEF browser, auth or UI success is claimed.
 The source-only metadata fixture tests do not execute Valve code.
 
-### Actual PartitionAlloc source probe (Build14)
+### Actual PartitionAlloc source probe (Build14/15)
 
 This is a separate UIKit test app using the same **isolated lab** bundle ID;
 it replaces only that lab binary, never working iDeck. It contains no Valve
@@ -422,3 +422,157 @@ pool, not the complete `raw_ptr` dangling-reference protocol. Explicit root/pool
 test teardown is checked; no long-run leak/performance or full CEF claim.
 The UI remains visible after completion; a console timeout is not process death.
 Chromium BSD LICENSE and AUTHORS are included in the standalone build.
+
+Build15 now uses a real `UIWindowSceneDelegate`, a matching scene manifest and
+the application delegate's configuration callback. The old Build14 launched on
+iPadOS26.7.1, but on the newly paired physical iPad Air4/iPadOS27.2 it trapped in
+UIKit `UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption` before any
+allocator marker. Do not disable that check or change the upstream allocator.
+See Apple's [scene lifecycle migration guide](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle).
+The scene creates its own window and a process-wide once gate prevents allocator
+test teardown from being repeated when a scene reconnects. Completion status is
+retained for a newly connected scene; multiwindow/scene reconnection behavior is
+not independently device-tested. The builder produces15 using the same commands.
+
+After user-authorized native developer trust, actual Air15 shows PASS and logs
+`scene-connected=1`, two256MiB disjoint pools, allocations398/frees398, four workers,
+zero failures, pool teardown1. Installed version and exact live executable were
+independently checked after the25s console timeout. No JIT/EVA, Steam or CEF.
+Developer trust and computer pairing are separate steps; never assume the latter
+authorizes or completes a device security confirmation.
+
+### Native Steam on Air, window-focus discriminator (Build16/17)
+
+The pinned native AppKit shim already has `ShimSceneDelegate` and a matching
+manifest; the standalone probe's scene fix must not be blindly copied into it.
+Native16 on physical Air27.2 enters real scene callbacks and loads `steamui`,
+but remains black; native self-spawn and Steam tier0 fork return EPERM. Its VM
+probe reserves/releases1GiB but rejects8/16GiB (KERN_NO_SPACE); mapped/task-span
+counts are not evidence of a large usable contiguous range.
+
+A later16 crash exposed a separate real failure: main-thread stack-guard
+KERN_PROTECTION_FAILURE with repeating VGUI `makeKeyAndOrderFront:` /
+shim `makeMainWindow` calls. Read-only disassembly confirms the VGUI subclass
+calls its super's order-front implementation and then requests main-window
+focus; the shim incorrectly called the overridable order-front selector again.
+The initial alleged CEF16 attempt reused that same PID after SIGTERM and had
+**no** CEF begin marker. It is not a valid fresh CEF experiment. Always verify
+the previous exact lab PID has exited before treating launch environment
+variables as a new test condition.
+
+Build17's own `window-main.m` changes main-window focus directly, updates state
+before callbacks and emits transition notifications once, without calling
+order-front. The exact pinned reference method is replaced only in a staged
+generated private-copy build. `test-window-main.m` reproduces the Steam subclass
+call direction, delegate/observer reentry and focus switches under ASan/UBSan.
+This is a narrow correction, not full NSWindow focus/visibility emulation.
+No upstream reference checkout, Valve instructions, FEX or product path changes.
+Full compiler failure-injection/success staging checks also pass:
+
+```sh
+python3 experiments/mac-arm-steam/test-build-staging.py \
+  /private/pinned-macos-on-ios-reference \
+  ../.madeira-install/mac-arm-steam-converted/shims
+```
+
+The real17 `IDeckWindowMakeMain` symbol was checked in the final dylib before
+normal signing/install. A genuinely new17 CEF load prints `load=begin`, fails
+the stock16GiB reservation with ENOMEM and traps; this fix does not make a
+source-built small allocator part of the precompiled Valve framework. No login
+or Big Picture claim. Read the latest research log for bounded normal-launch
+regression results and exact private evidence hashes before any further run.
+
+The actual17 normal launch progressed to VGUI's event queue, then failed after
+about121s: missing `otherEventWithType:...` resolved to the generic nil stub and
+`postEvent:atStart:` raised on nil insertion. The copied exception stack identifies
+that queue operation; this is distinct from the old focus stack-guard failure.
+Build18 supplies the real custom-event factory and scalar storage: allowed event
+types13..16, position, modifiers, timestamp, window number, signed16bit subtype
+and signed64bit data fields. Invalid types still raise an exception; no queue
+assertion/exception is suppressed and no arbitrary payload is logged. The
+obsolete graphics context parameter remains unused, per Apple's
+[factory contract](https://developer.apple.com/documentation/appkit/nsevent/otherevent%28with%3Alocation%3Amodifierflags%3Atimestamp%3Awindownumber%3Acontext%3Asubtype%3Adata1%3Adata2%3A%29?language=objc).
+The same `other-event.h` implementation is compiled into the shim and the host
+ABI fixture; tests cover signed boundary values, actual array insertion and
+invalid-type exceptions. Early host link and generic-id selector ambiguity
+errors were corrected by linking CoreGraphics and using typed NSEvent access;
+failed builds were never installed. See current evidence for18 device status.
+
+Do not assume `SIGTERM` ended the old Steam process: an attempted16 CEF launch
+reused it, and later a Device Hub app-icon click started another17 after its
+earlier crash. Installation preflight refused that active session. Only after
+fresh exact app-path/PID identification, bounded lab termination and an explicit
+empty-process check was18 installed. This does not authorize terminating a
+working game or reusing historical PIDs.
+
+Build18 on the physical Air executes the new event factory and continues through
+the150s bounded observation without the prior nil-event exception. All sampled
+frame rates remain0, and Steam starts an update download; no interactive browser
+result. Later process identity differs, so neither same-process survival nor
+scene reentry is established. Before any next launch, reconcile the current lab
+and downloaded update state; retain original official source fingerprints.
+Observer exit2/timeouts and CoreDevice collection failures are not app crashes.
+
+### Static required-API audit (no client execution)
+
+```sh
+python3 experiments/mac-arm-steam/test-cef-loader-audit.py
+python3 scripts/experiments/audit-mac-cef-loader.py \
+  --helper '/private/official/Steam.app/Contents/Frameworks/Steam Helper.app/Contents/MacOS/Steam Helper' \
+  --output /private/new-cef-loader-report.json
+```
+
+The tool selects one ARM64 slice, verifies its executable text mapping and the
+actual dlsym import stub, and rejects unknown/ambiguous lookup control flow.
+All seven observed custom APIs have required lookup/null-return checks in the
+audited official Helper. The report contains names/hashes/addresses, never a
+proprietary instruction dump. This does not run CEF, prove a browser works,
+supply missing API semantics or authorize substituting a mismatched framework.
+
+### Candidate source-surface gate
+
+```sh
+python3 experiments/mac-arm-steam/test-cef-source-surface.py
+python3 scripts/experiments/audit-cef-source-surface.py \
+  --source /private/pinned-cef-source \
+  --binary-metadata /private/cef-abi-comparison.json \
+  --output /private/new-source-surface-report.json
+```
+
+Use the captured genuine metadata from audit-mac-cef-abi.py. Exit2 means the
+candidate fails the surface gate; exit0 only passes this preliminary gate,
+not runtime/ABI/behavior validation. The public126 source actually exits2 with
+both hashes mismatched and7 declarations absent. Only two reviewed upstream
+hashing modules with exact SHA256 may execute, isolated from other candidate
+Python files; header symlinks/budget overflow and existing output are refused.
+The source and any generated hash header are never modified.
+
+CEF's real fingerprint includes declaration text/parameter names. A disposable
+identifier-only control changes the fingerprint while retaining the Clang C type.
+Do not use a mismatch alone to claim proven layout incompatibility, guess all
+custom edits from exported names, spoof a fingerprint or supply no-op APIs.
+A full CEF extension checkout is only~16MB here; full Chromium is separate and
+is not downloaded/built by this tool.
+
+### Native19 configuration observation and Mac control
+
+In a new private copy of18 (same isolated lab ID), build19 adds
+`BootStrapperInhibitUpdateOnLaunch=enable` in root `steam.cfg` and
+`Mac/Contents/MacOS/steam.cfg`. Rebuild three shims using the pinned builder,
+check its fresh receipt and final IDeckObservePinConfig symbol/marker, sign each
+shim then root with the matching existing Air profile; deep-strict verify.
+Archive older success receipts when rebuilding. Never install while another
+lab session is active; identify its current installed path, not a saved PID.
+
+Launch fresh with only `IDeckNativePinProbe=1`, plus the normal current-install
+STEAM_APP_BUNDLE_PATH and three fixed startup flags, for180s. The observer reports
+only config basename-category/open result/error (max32) and preserves errno.
+Actual19 reads config but still checks the background manifest: the proposed
+pin is NOT validated. Do not copy this into product defaults; it also delays
+Steam security updates. No account use in this lab.
+
+Own `mac-cef-load-control.c` is optional Mac-only control: compile with
+`xcrun clang -Wall -Wextra -Werror`, point it at a private official framework
+copy with normal Mac development signature. It calls dlopen and public version/
+hash getters only, never cef_initialize or Steam main. Actual host pass is not
+iPad/CEF UI proof. Keep raw logs, profiles and all framework payload outside Git.

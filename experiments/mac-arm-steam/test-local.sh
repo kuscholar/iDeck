@@ -9,6 +9,8 @@ python3 experiments/mac-arm-steam/test-manifest.py
 python3 experiments/mac-arm-steam/test-staging.py
 python3 experiments/mac-arm-steam/test-executable-layout.py
 python3 experiments/mac-arm-steam/test-cef-abi-audit.py
+python3 experiments/mac-arm-steam/test-cef-loader-audit.py
+python3 experiments/mac-arm-steam/test-cef-source-surface.py
 python3 experiments/mac-arm-steam/test-process-observer-builder.py
 python3 experiments/mac-arm-steam/test-native-probe-runner.py
 python3 experiments/mac-arm-steam/test-native-helper-metadata.py
@@ -17,12 +19,18 @@ xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined -pthread \
   experiments/mac-arm-steam/sysv-semaphore.c \
   experiments/mac-arm-steam/test-sysv-semaphore.c -o "$artifacts/sem"
 "$artifacts/sem"
-for contract in display-pixel-encoding display-mode-object bitmap-image-rep font-matrix-constant; do
+xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined \
+  experiments/mac-arm-steam/pin-config-observer.c experiments/mac-arm-steam/test-pin-config-observer.c -o "$artifacts/pin-observer"
+"$artifacts/pin-observer"
+for contract in display-pixel-encoding display-mode-object bitmap-image-rep font-matrix-constant window-main; do
   xcrun clang -fobjc-arc -Wall -Wextra -Werror -fsanitize=address,undefined \
     -framework Foundation "experiments/mac-arm-steam/$contract.m" \
     "experiments/mac-arm-steam/test-$contract.m" -o "$artifacts/$contract"
   "$artifacts/$contract"
 done
+xcrun clang -fobjc-arc -Wall -Wextra -Werror -fsanitize=address,undefined \
+  -framework Foundation -framework CoreGraphics experiments/mac-arm-steam/test-other-event.m -o "$artifacts/other-event"
+"$artifacts/other-event"
 xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined \
   experiments/mac-arm-steam/pool-layout.c experiments/mac-arm-steam/test-pool-layout.c \
   -o "$artifacts/pool-layout"
@@ -47,7 +55,7 @@ xcrun clang -Wall -Wextra -Werror -fsanitize=address,undefined \
 "$artifacts/helper-path"
 # Device-only sources must also pass the actual iOS compiler/ABI checks.
 for source in casefold-path.m casefold-probe.m volume-case-view.m appkit-font.m \
-              tier0-process-observer.c launch-summary.c font-advancement.m power-registration.c native-process-probe.c native-vm-probe.c native-vm-range-probe.c native-small-pool-probe.c exec-diagnostic.c cef-load-probe.m helper-load-probe.m helper-path.c synthetic-helper-probe.m; do
+              tier0-process-observer.c launch-summary.c font-advancement.m power-registration.c window-main.m native-process-probe.c native-vm-probe.c native-vm-range-probe.c native-small-pool-probe.c exec-diagnostic.c cef-load-probe.m helper-load-probe.m helper-path.c synthetic-helper-probe.m; do
   xcrun --sdk iphoneos clang -target arm64-apple-ios17.0 -fobjc-arc \
     -Wall -Wextra -Werror -c "experiments/mac-arm-steam/$source" -o "$artifacts/$source.o"
 done

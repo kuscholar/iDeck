@@ -77,26 +77,47 @@ static unsigned Run() {
     allocations.load(),frees.load(),failures.load(),!pi::PartitionAddressSpace::IsInitialized());
   return failures.load();
 }
-@interface IDeckPAApp : UIResponder <UIApplicationDelegate>
+@interface IDeckPAScene : UIResponder <UIWindowSceneDelegate>
 @property(strong,nonatomic) UIWindow* window;
 @end
-@implementation IDeckPAApp
-- (BOOL)application:(UIApplication*)app didFinishLaunchingWithOptions:(NSDictionary*)options {
-  (void)app;(void)options;
-  self.window=[[UIWindow alloc]initWithFrame:UIScreen.mainScreen.bounds];
+static UILabel* activeStatusLabel;
+static NSString* completedStatus;
+@implementation IDeckPAScene
+- (void)scene:(UIScene*)scene willConnectToSession:(UISceneSession*)session options:(UISceneConnectionOptions*)options {
+  (void)session;(void)options;
+  if (![scene isKindOfClass:UIWindowScene.class]) return;
+  fprintf(stderr,"[ideck-pa126] scene-connected=1\n");
+  self.window=[[UIWindow alloc]initWithWindowScene:(UIWindowScene*)scene];
   UIViewController* controller=[UIViewController new];
   controller.view.backgroundColor=UIColor.systemBackgroundColor;
   UILabel* label=[[UILabel alloc]initWithFrame:controller.view.bounds];
   label.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
   label.textAlignment=NSTextAlignmentCenter;label.numberOfLines=0;
-  label.text=@"Chromium 126 allocator\nTesting two 256 MiB pools…";
+  activeStatusLabel=label;
+  label.text=completedStatus ?: @"Chromium 126 allocator\nTesting two 256 MiB pools…";
   [controller.view addSubview:label];self.window.rootViewController=controller;
   [self.window makeKeyAndVisible];
-  dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
-    unsigned count=Run();
-    dispatch_async(dispatch_get_main_queue(),^{label.text=count ? @"Allocator test FAILED\nSee private device log" : @"Allocator test PASS\n256 MiB regular + BRP pools\n398 allocations / 398 frees\nCEF and Steam NOT tested";});
+  // A scene reconnect must not run the global allocator teardown test twice.
+  static dispatch_once_t once;
+  dispatch_once(&once,^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
+      unsigned count=Run();
+      dispatch_async(dispatch_get_main_queue(),^{
+        completedStatus=count ? @"Allocator test FAILED\nSee private device log" : @"Allocator test PASS\n256 MiB regular + BRP pools\n398 allocations / 398 frees\nCEF and Steam NOT tested";
+        activeStatusLabel.text=completedStatus;
+      });
+    });
   });
-  return YES;
+}
+@end
+@interface IDeckPAApp : UIResponder <UIApplicationDelegate>
+@end
+@implementation IDeckPAApp
+- (UISceneConfiguration*)application:(UIApplication*)app configurationForConnectingSceneSession:(UISceneSession*)session options:(UISceneConnectionOptions*)options {
+  (void)app;(void)options;
+  UISceneConfiguration* config=[[UISceneConfiguration alloc]initWithName:@"Allocator Probe" sessionRole:session.role];
+  config.delegateClass=IDeckPAScene.class;
+  return config;
 }
 @end
 int main(int argc,char** argv) {

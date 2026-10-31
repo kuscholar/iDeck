@@ -1194,3 +1194,329 @@
 - Preparing signed-off research snapshot only on experiment/mac-arm-steam-ios;
   time checked separately immediately before commit and push. No main/submodule
   change, Valve/runtime/signing payload, private device identity or raw log staged.
+
+
+### 2026-10-30 08:33 EDT — unchanged Air access gate, quiet heartbeat
+
+- HEAD/remote ad53b4083147539528c9e5c07cdc2d2641138884, correct fork/branch,
+  clean checkout at entry, no overlapping builder/device tools. One fresh read-only
+  Air inventory: iPad13,1 pairing unsupported, OS still unavailable. No user reply
+  to prior unlock/trust/version request. No repeat pairing/install, alternate-device
+  substitution, reboot or working-app change. No new runtime result.
+- Small-pool allocator14 remains device-verified on old iPad8,1 only. Reviewed
+  existing exact CEF ABI inventory/source-gate and do not weaken mismatched API
+  checks or repeat stock memory/process failures. Next actionable experiment
+  still requires normal Air development access and/or reproducibly compatible
+  CEF source/API; no new compatible source or browser result established.
+- Private current inventory .madeira-install/mac-arm-heartbeat-20261030-0832/
+  device-inventory.json SHA256 b4fa23c8755815a0a0a75d11af5376387cfb22c9146700d9181096db8a4322da.
+- Outside weekday Git window; this continuity note stays local, no commit/push.
+  No repeated notification for unchanged gate; original305-minute task retained.
+
+
+### 2026-10-30 17:16–17:19 EDT — Air trusted, Finder OS confirmed; developer pairing required
+
+- User reports unlocked, trusted and iPadOS27.2. Actual Finder General page
+  confirms iPad Air4/27.2, proving normal trust/device communication; no recovery
+  inference. Finder was backing up; left backup/settings untouched.
+- CoreDevice still only exposes unsupported/restorable representation and Xcode
+  developer target list omits Air. Opened actual Device Hub official File > Pair
+  Nearby Device: window explicitly requires Privacy & Security > Developer Mode.
+  Left waiting; user asked to enable/confirm on device or report pairing prompt
+  if already on. No agent security-setting change, restart, credential automation.
+- Distinct physical USB identity normalized against existing lab profile (remove
+  UDID formatting hyphens) is not covered; existing profile expires2026-11-03.
+  Need ordinary automatic provisioning for new target after development pairing;
+  no EVA/new capability. Existing signed14 standalone probe deep strict PASS.
+- No Air app installed/started, no simulator/old-device substitution. Existing
+  working apps/data preserved; no commit/push outside22:00–07:00.
+- Private report .madeira-install/ipad-air-trusted-preflight-20261030/report.json
+  SHA256 7354ceb382b9435bfbfe0993349505afa9b8e0f3e95fbb612835c6783e20755f.
+
+
+### 2026-10-30 17:22–17:27 EDT — Air paired, ordinary signing/install PASS; native trust pending
+
+- User completed official Device Hub pairing. Fresh CoreDevice now paired,
+  hardware iPad13,1/actual iPadOS27.2 build24B119, developerMode enabled, unlocked.
+  Earlier unsupported representation/unlock gate superseded. No target substitution.
+- Existing lab profile did not include new Air. One ordinary CLI provisioning
+  build returns No Accounts/device not included. Did NOT infer GUI logout or ask
+  credentials. Created disposable AirLab project with no Memory.entitlements/EVA;
+  opened actual Xcode session, selected exact Air via typed target-filter and
+  built. New ordinary lab profile covers Air, expires2026-11-06; certificate
+  fingerprint matches existing signing identity. No new capability/EVA requested.
+- Deep verified prepared standalone14 source/binary receipt and current probe SHA;
+  copied to private new ipad-air-partitionalloc14 and re-signed with new profile.
+  Deep strict and application/team/get-task/device matching checks PASS, no EVA.
+  Actual install succeeds in isolated bundle; working apps/data unchanged.
+- First launch is refused CoreDevice10002/FBS Security citing invalid signature,
+  inadequate entitlements OR profile not explicitly trusted. All local signing/
+  profile/identity checks pass; native developer-app trust is the next concrete
+  gate, not yet sole-root-cause proof. User asked Settings > General > VPN & Device
+  Management > Developer App trust, then open iDeck PA Lab. No automated security
+  confirmation or credentials, no repeated launch before response. No Air runtime
+  result, actual CEF, UI or Steam success claim.
+- Private artifacts hashes in ipadAirPairedInstall20261030 evidence section;
+  standard provisioning project/build log remains private. Do not publish raw
+  profiles/device IDs or pairing code. Source/log edits stay uncommitted outside
+  weekday22:00–07:00; next collect actual probe console only after native trust.
+
+
+### 2026-10-30 17:46–17:50 EDT — authorized trust, UIKit scene fix, actual Air15 PASS
+
+- User explicitly authorized Trust/confirm/test at action time. Device Hub
+  correct physical Air Developer App page showed only iDeck PA Lab; clicked Trust
+  then Allow and visually confirmed trusted state. No credential entry or other
+  device/profile security changes. Fresh lock/proc state and branch/remote checked.
+- Real trusted14 launch now starts, then SIGTRAP before allocator markers. Copied
+  actual dedicated .ips: EXC_BREAKPOINT, UIKitCore top symbol
+  ___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke.
+  This demonstrates original Security launch refusal was resolved; the next
+  fault is independent UIKit lifecycle compatibility, not an allocator failure.
+- Hypothesis/discriminator: provide required real UIScene window lifecycle in
+  own harness and rerun unchanged62 Chromium units/config on same Air. Implemented
+  UIWindowSceneDelegate, app configuration callback, matching manifest, own-window
+  creation and scene-connected marker. Process once gate avoids repeated global
+  allocator teardown; status retained on reconnect (reconnect itself NOT tested).
+  No Apple check suppression, upstream allocator/FEX/Valve edit or SDK downgrade.
+- Build15 passes actual iOS ARM64 compile/link and verified-source/tamper tests.
+  Final scene symbol/log marker+manifest checked, ordinary existing Air profile
+  sign/deep-strict PASS. Same isolated bundle upgraded, no working app/data change.
+- Actual Air15 install+console+Device Hub UI verified: scene1, two268435456byte
+  disjoint pools, allocations398/frees398/workers4/failures0/pools-uninitialized1,
+  cef-integrated0. Visible Allocator test PASS. Observer25s timeout is not death;
+  subsequent actual version15 and exact installed executable still alive checked.
+- Private ipad-air-partitionalloc14/launch-trusted.ips and
+  ipad-air-partitionalloc15/{launch.log,result.json,signed-receipt.json,...};
+  redacted facts/hashes/source fingerprints in ipadAirSourceAllocator15_20261030
+  evidence section. Source parent ad53b40 plus local patch; no commit/push outside
+  weekday22:00–07:00. Existing old-Pro results remain historical, not Air proof.
+- PhaseA allocator gate on requested Air now actually passes; native Steam UI
+  mission remains incomplete. Need compatible CEF source/custom API/small-pool
+  build and real native Helper IPC; own UIKit scene patch has NOT yet been applied
+  to the AppKit compatibility shim. Do not assume this probe passes Steam through
+  its stock16GiB constructor/process gates or proves performance/game support.
+
+
+### 2026-10-30 17:51 onward — genuine native Steam on requested Air, two distinct shim faults
+
+- Correct branch/origin/remote ad53b40 and local changes preserved; actual
+  Air developer access revalidated. Pinned AppKit source already implements
+  ShimSceneDelegate and app manifest; no redundant standalone-scene patch.
+- Native16 uses preserved converted13 copied privately, build number/signature
+  updated only, normal Air profile. Final shims/Helper/scene markers and internal
+  symlinks verified. Only completed15 probe identity-verified/ended; source15
+  backup remains on host. Working iDeck/apps/accounts never overwritten.
+- Actual Air16 VM probe completes/cleans:130 regions, largest observed gap6GiB,
+  vm_map1GiB succeeds,8/16GiB KERN_NO_SPACE and mmap8GiB ENOMEM. Inventory is not
+  atomic; large mapped/no-access/task-span values do not prove usable backing.
+- Actual native16 main loads steamui and reaches UIKit foreground/active callbacks,
+  remains black/fps0. Self-spawn result1/created0; tier0 fork-1/EPERM1. Optional
+  crashhandler preload misses CoreServices dependency and duplicate GURLHelper
+  warning observed; neither established as sole root cause. No UI/login success.
+- Important attribution correction: SIGTERM did NOT prove process exit. A later
+  launch with CEF env reused original2549 (same procLaunch). No CEF begin marker;
+  its .ips is stack-guard KERN_PROTECTION_FAILURE on main, repeated vgui2+3f554
+  and shim makeMainWindow. Do not label it CEF failure. Read-only actual VGUI
+  disassembly identifies VGUI_NSWindow super order-front call followed by main
+  request. Source base makeMainWindow incorrectly dispatches order-front again.
+- Hypothesis1/minimal patch: own window-main.m implements focus transition with
+  state committed before delegate/observer notifications, no order-front dispatch.
+  Only exact pinned generated source method is replaced; upstream checkout and
+  Valve instructions untouched. Host reproduction exercises VGUI call direction,
+  delegate/observer reentry and transitions under ASan/UBSan; all PASS. Final17
+  linked own function, source hashes and deep signing checked before install.
+- Fresh17 explicit CEF PID2574 really prints load=begin; two16GiB mmap ENOMEM,
+  SIGTRAP, actual .ips CEF+0x3b4dda0. Nearest Rust symbol is not causal attribution.
+  No cef_initialize/browser entry. This is the actual Air CEF discriminator.
+- Normal17 new2578 progresses to a different failure around121s: missing custom
+  NSEvent factory returns nil; NSApplication postEvent inserts it into array
+  and raises NSInvalidArgumentException. Exact exception backtrace copied. Not
+  a clean150s regression PASS and not proof all main-window behavior is fixed.
+- Device Hub Home/app-icon interaction was near/after17 crash; another17 process
+  appeared. Do NOT claim same-process scene reconnect success.18 install guard
+  caught active lab and refused; fresh exact app-path/PID matched, killed only
+  this empty experimental session and verified absence before installation.
+- Hypothesis2/minimal patch: other-event.h real custom event factory, types13..16,
+  position/modifiers/time/windowNumber, short subtype, NSInteger data1/2 stored.
+  Removed wrong pointer-return subtype stub. Invalid event types still raise;
+  nil array insertion checks remain, no payload logging. Public Apple API contract
+  linked in README. Shared actual factory host fixture tests signed16/64bit
+  boundaries, all supported types, real queue insertion and invalid exception.
+- Host test initially omitted CoreGraphics link; staged iOS compile exposed
+  ambiguous generic-id setters. Corrected link and typed NSEvent accesses; failed
+  builds never signed/installed. Final full host/sanitizer/iOS suite, first/second
+  compiler-failure preservation and successful3-shim staging checks all PASS.
+  Final18 method/marker+focus symbol/input hashes/deep strict signature and
+  unchanged original Helper checked.18 installed with same standard profile.
+- Build18 extended normal launch result recorded in the following continuation;
+  no current genuine login/library/depots/game/return claim. Root source/API/IPC
+  gates remain; no FEX/Wine/DXMT or baseline modifications.
+
+### 2026-10-30 19:24–19:27 EDT — Build18 bounded result and later identity limitation
+
+- Recovered completed private observer: actual18 starts18:08:19, reaches the new
+  custom-event marker at the old failure point and continues until150s observer
+  timeout. No prior nil-event exception in that trace. This supports the specific
+  event-contract correction; it does not prove full UI or long-term stability.
+- All sampled frame rates remain0. Steam checks/downloads its own update despite
+  the fixed startup switches, reaching178283/289112KB by observation end. Download
+  completion and post-update contents are NOT verified. Do not silently compare
+  later sessions against the originally staged payload. No browser/login proof.
+- Fresh19:24 process inventory identifies the same installed18 app with a
+  DIFFERENT PID from the bounded run. Original process survival and the reason
+  for that change are not established. Device Hub currently shows Home. A single
+  later crash-list collection times out initializing CoreDevice; this is not
+  crash evidence. No restart/install/termination of the later unknown session.
+- Exact remote research branch still ad53b4083147539528c9e5c07cdc2d2641138884,
+  verified read-only; scoped changes stay local under weekday Git restriction.
+  Private native16..18, signed receipts, host regression/staging logs and source
+  fingerprints indexed under ipadAirNative16to18_20261030. Raw data stays private.
+- Next device action must first reconcile lab identity and any updater state.
+  Further broad AppKit polishing cannot resolve the measured CEF16GiB or native
+  process/IPC gates: pursue a compatible source/API CEF with source-wide pool
+  layout and real Helper lifecycle. No generic CEF drop-in/hash spoof or binary
+  mask patches. Keep working Windows Steam route intact; native route remains
+  incomplete, with no login/library/Windows depot/game/return/performance success.
+
+### 2026-10-30 — required custom CEF loader APIs, static discriminator
+
+- Same isolated branch/origin/remote ad53b40 verified read-only; existing local
+  edits preserved. No new app install/launch or action on the later unknown18
+  session. This experiment is source/host evidence, not a device milestone.
+- Hypothesis: the seven custom symbols might be optional; if so a public source
+  baseline could potentially progress without reconstructing them. New own
+  audit-mac-cef-loader.py reads the genuine official universal Helper ARM64 slice,
+  resolves its actual dlsym import stub and recognizes a narrow lookup/store/
+  null-check/return-zero shape. All seven have unique required lookups, distinct
+  pointer slots and the same resolver/failure epilogue. Missing any returns0 in
+  this observed initialization path. This rules out treating them as optional
+  for that path, not every possible future architecture.
+- Actual original official Helper SHA2568047352bdbd37800dc3ff4d82920c0c9a285c4d578b2b57c796346c467b00f90;
+  ARM64 slice dcaea7d1540ad45bae6137ae09fdd572ee93a0a522d8c03878fae07ec2162c37.
+  Different from the retargeted/signed installed18 file; do not conflate them.
+  Actual audit report/hash and source fingerprints in cefRequiredLoaderAPIs20261030.
+- Fourteen synthetic non-executed tests pass: real shape, inverse conditional,
+  wrong/matching slots, changed argument/import/return, absent/ambiguous names,
+  section bounds, fat bounds/duplicate architecture and import-table separation.
+  Existing6 ABI tests pass. Python cache initially hit sandbox's protected cache;
+  compile succeeds with PYTHONPYCACHEPREFIX in temporary directory. No runtime
+  exception/auth/signing suppression or Valve instruction dump committed.
+- Fresh public searches again do not locate matching custom126 source. Official
+  upstream remains a different API baseline. Valve issue12226 is still an open
+  source request (not proof source is globally unavailable); wiki returns403,
+  not bypassed. Public CEF build instructions do not establish Steam ABI support.
+- Next: compatible source must implement these extensions with correct semantics
+  and all layouts/callback ownership, then build consistently with smaller pools.
+  Function-name stubs/hash spoofing would defeat the test. Workspace currently
+  has only~3.4GiB free; no huge Chromium download is justified before ABI baseline
+  exists. Native Helper IPC remains separate; no new native UI/login/game result.
+- Work stays uncommitted/unpushed outside authorized Git hours; source-only audit
+  does not justify rebuilding identical installed18 or rerunning unchanged fatal.
+
+### 2026-10-30 19:59 EDT — full public CEF source baseline, hash semantics and exact gate
+
+- User requests continuing until actual success. Goal remains incomplete; no
+  substitution with Windows UI or another device, no hash/check/sandbox bypass.
+  Branch/origin/remote ad53b40 and local work preserved. One current requested-Air
+  process query times out initializing CoreDeviceService; no new launch/install
+  or action on the later unknown18 session. Both macOS-on-iOS reference HEADs
+  remain pinned c2562a3/CyPort65e2e57; no new existing solution from these refs.
+- Acquired full public CEF repository at a5d51ba9db7ee74a523dc247bd09ec91ba4d7446:
+  ~2.98MB archive/~15.97MB regular files, NOT full Chromium. Safe regular-only
+  extraction, previous8 pinned files match exactly, archive/source hashes saved.
+  BSD notices retained privately, no vendored/Valve source or binaries in Git.
+- Real upstream cef_api_hash.py regenerates the exact previously observed
+  upstream mac e585e190387e31a71267207b66d175e213991470 and universal ed1dfa5f...
+  fingerprints. Control changes ONE cef_initialize parameter name only, leaves
+  its Clang C function type identical, yet changes mac/universal fingerprints.
+  Therefore hash mismatch alone is not exhaustive proof of different ABI layouts;
+  also cannot infer all required source edits from7 exported names. Exact private
+  argument names/other declarations remain unknown. No guessed implementation
+  or generated Valve-matching hash was used.
+- Final baseline/control C header AST compiles both succeed, after filling real
+  missing build inputs: explicit default mac client cef_config.h and actual
+  Chromium126.0.6478.183 net_error_list.h. Initial missing-input compiles were NOT
+  successes. These are host header checks, not Valve GN or complete CEF builds.
+- Read-only actual official ARM64 Helper has four cef_api_hash(0)/strcmp checks
+  against3bf3a90aebd22f3098ae1f2040d618be71553754, with mismatch check-failure
+  paths; two correspond to ExecuteProcess/Initialize wrapper sites. Did not patch
+  or execute these paths; current actual CEF constructor fails earlier on device.
+- Own audit-cef-source-surface.py runs only two reviewed SHA-pinned public hash
+  modules copied into a disposable directory, parses the SAME upstream declaration
+  objects, rejects symlinks/oversized headers/unreviewed Python and writes a NEW
+  report only. Actual full public126 fails mac+universal checks and lacks all7
+  required declarations (expected exit2). Passing surface checks would still not
+  prove layouts/callback ownership/functional semantics; no no-op stubs allowed.
+- Source gate9 tests, existing loader14/ABI6 and full test-local host/sanitizer/iOS
+  compile suite pass. Exact code, archive, AST and raw report fingerprints indexed
+  under cefFullPublicSourceBaseline20261030. No new device/UI/auth/depot/game result.
+- Existing authenticated GitHub code index also searched: exact actual platform
+  hash0 hits and custom API constrained toC++0 hits. Broad names find unrelated
+  reports, not usable source; no payloads fetched. This is bounded search evidence,
+  not proof no source exists globally. No upstream Issue/PR/message sent.
+- Specific remaining prerequisites: matching custom source/headers/semantics,
+  then consistent small-pool CEF build and actual native Helper IPC. Available
+  workspace~3.4GiB is inadequate for a full Chromium tree, but no large download
+  is justified before API source gate is resolved. Do not claim success or rerun
+  identical stock fatal tests to fill a run. Leave current local work uncommitted
+  and unpushed under weekday Git restriction.
+
+### 2026-10-30 23:38 EDT — actual Air19 update/config experiment and Mac CEF control
+
+- Recovered actual18/19 continuation, not a new baseline/main change. Origin/
+  experiment remote remain ad53b40. CLI/CoreDevice timeouts were execution-context
+  dependent: authorized official queries outside restricted sandbox succeed on
+  the unlocked physical Air while Device Hub reported Mac locked. The previous
+  Mac-unlock request became nonblocking; no unlock bypass/credentials performed.
+- Built19 in a private copy of18 with two new steam.cfg files containing only
+  BootStrapperInhibitUpdateOnLaunch=enable, based on actual Bridgeplay source
+ 8e18aa8. No reference code copied. This is ONLY an unauthenticated version-pin
+  hypothesis, not a product security-update policy or established fix.
+- Added own opt-in IDeckNativePinProbe=1 observer around existing open/fopen: logs
+  fixed basename-category/success/error only, preserves errno, caps32 records.
+  Host ASan/UBSan privacy/gating/limit tests and actual iOS Werror compile pass.
+  Full test-local and real staging compiler-failure/success regressions pass.
+  All3 new final shim markers/input hashes verified; signed with existing exact
+  Air profile identity and deep-strict signature. Root instructions, official
+  Helper full hash and CEF unchanged. Initially prepared config-only19 signing
+  receipt archived; only FINAL observed19 receipt eligible for installed test.
+- Fresh preflight confirmed18 app path/PID then ended ONLY that isolated empty
+  research session and verified absence. Actual19 installed; current installation
+  URL used for STEAM_APP_BUNDLE_PATH, only pin-observer diagnostic enabled.
+- Actual180s trace: two successful steam.cfg fopen markers, real native fork
+  EPERM and invalid CEF process handle, all fps0. At~122s still background manifest
+  check. Actual manifest version1792618285, installed version0 and pending0,
+  then Download complete marker. No prior nil-event exception during this trace;
+  no interactive browser/login/library result. Key does NOT establish suppressed
+  background updates. A basename-only successful open does not identify source
+  config path or establish the parser honored that value. Do not claim pin fixed.
+- Later fresh process inventory identifies same installed19 path but different
+  PID; no cause inferred. Current crash list exposes only3 older16/17 reports;
+  no new19 report found, which is not proof of no crash/relaunch. No stale PID
+  termination. Package inventory has24 cached update objects with signed manifest,
+  no installed marker in that directory. Private bootstrap log also proves18
+  completed289112KB cache download at18:11:21 after its observer ended. No cached
+  code installation proved; did NOT fabricate an .installed marker/checksum.
+- Independent host control: same official CEF SHA4bee8be5... initially fails
+  codesign verify because unsigned. Private framework copy receives ordinary
+  Mac ad-hoc signature; ARM64 text hashes across Mach-O files stay identical,
+  original source unchanged. Own Mac C load-only test now dlopens successfully,
+  reads real126.0.0/Chromium126.0.6478.183 and platform3bf3a90a.../universal908f7378...
+  identifiers. No cef_initialize, Steam main, browser, login or auth invoked.
+  This controls file/host loading; does not solve measured Air16GiB capacity.
+- Redacted evidence ipadAirNative19PinAndMacControl20261030 indexes private
+  installed/signed receipts, console/cache/bootstrap/host logs and exact source
+  hashes. Actual remaining gates unchanged: validated custom CEF source/ABI plus
+  source-wide small pools, then real Helper IPC/lifecycle. Generic hash spoof,
+  no-op exports, fake mmap/PIDs and private entitlements remain excluded.
+- Full task remains incomplete. No native Steam auth/library/depot/game/return
+  or performance improvement claim. Working Windows app/data preserved. Current
+ 23:xx NY Git window permits scoped reviewed source-only checkpoint; verify time
+  again immediately before commit and push, do not merge into main.
+
+- Final bounded cleanup: fresh installed19 app identifier/version/path and exact
+  current lab process revalidated, terminated ONLY this unauthenticated native
+  experiment, verified no matching process.19 remains installed with its data;
+  working apps untouched. Final full host/sanitizer/iOS/staging and Mac control
+  Werror compile pass again before checkpoint. No native completion claim.

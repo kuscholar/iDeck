@@ -124,8 +124,11 @@ def main():
                    '-framework','CoreFoundation','-o',str(binary)],check=True)
     plist = {'CFBundleIdentifier':'com.kuschqin.ideck.maclab.macprobe','CFBundleName':'iDeck PA Lab',
              'CFBundleDisplayName':'iDeck PA Lab','CFBundleExecutable':binary.name,'CFBundlePackageType':'APPL',
-             'CFBundleVersion':'14','CFBundleShortVersionString':'0.0.14','MinimumOSVersion':'17.0',
+             'CFBundleVersion':'15','CFBundleShortVersionString':'0.0.15','MinimumOSVersion':'17.0',
              'UIDeviceFamily':[1,2],'UILaunchScreen':{},'UIRequiresFullScreen':True,
+             'UIApplicationSceneManifest':{'UIApplicationSupportsMultipleScenes':False,'UISceneConfigurations':{
+                 'UIWindowSceneSessionRoleApplication':[{'UISceneConfigurationName':'Allocator Probe',
+                     'UISceneDelegateClassName':'IDeckPAScene'}]}},
              'UISupportedInterfaceOrientations':['UIInterfaceOrientationPortrait','UIInterfaceOrientationLandscapeLeft','UIInterfaceOrientationLandscapeRight']}
     (app/'Info.plist').write_bytes(plistlib.dumps(plist)); (app/'Chromium-LICENSE.txt').write_bytes((root/'LICENSE').read_bytes())
     (app/'Chromium-AUTHORS.txt').write_bytes((root/'AUTHORS').read_bytes())

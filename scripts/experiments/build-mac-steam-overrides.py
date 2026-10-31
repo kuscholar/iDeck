@@ -73,14 +73,29 @@ def main():
                 if name == 'libSystem.m':
                     text = replace_once(text, '    const char *f = FixCase(p, buf, size);',
                         '    extern const char *IDeckCasePath(const char *, char *, size_t);\n    const char *f = IDeckCasePath(p, buf, size);')
+                    text = replace_once(text, '    LogMissing("open", path, r); return r;',
+                        '    LogMissing("open", path, r); extern void IDeckObservePinConfig(const char *, int, int); IDeckObservePinConfig(path, 0, r); return r;')
+                    text = replace_once(text,
+                        'EXPORT FILE *fopen(const char *path, const char *m) { REAL(FILE *, "fopen", const char *, const char *); char buf[PATH_MAX]; return real(Redirect(path, buf, sizeof buf), m); }',
+                        'EXPORT FILE *fopen(const char *path, const char *m) { REAL(FILE *, "fopen", const char *, const char *); char buf[PATH_MAX]; FILE *r = real(Redirect(path, buf, sizeof buf), m); extern void IDeckObservePinConfig(const char *, int, int); IDeckObservePinConfig(path, 1, r ? 0 : -1); return r; }')
                 if name == 'CoreGraphics.m':
                     start = text.index('EXPORT CGDisplayModeRef CGDisplayCopyDisplayMode(')
                     end = text.index('EXPORT size_t CGDisplayModeGetWidth(', start)
                     text = text[:start] + '// iDeck CF ownership override\n' + text[end:]
+                if name == 'AppKit.m':
+                    text = replace_once(text,
+                        '- (void)makeMainWindow { [self makeKeyAndOrderFront:nil]; }',
+                        '- (void)makeMainWindow { extern void IDeckWindowMakeMain(id); IDeckWindowMakeMain(self); }')
+                    text = replace_once(text, '@property NSUInteger phase, momentumPhase;',
+                        '@property NSUInteger phase, momentumPhase;\nIDECK_OTHER_EVENT_FIELDS')
+                    text = replace_once(text, '@implementation NSEvent\nSHIM_RESOLVE',
+                        '@implementation NSEvent\nSHIM_RESOLVE\nIDECK_OTHER_EVENT_FACTORY')
+                    text = replace_once(text, '- (id)subtype { return nil; }\n', '')
+                    text = (OWN/'other-event.h').read_text() + '\n' + text
                 out = tmp / name; out.write_text(text); sources[name] = out
         for component, own, reexport in [
-            ('libSystem', ['sysv-semaphore.c','native-process-probe.c','native-vm-probe.c','native-vm-range-probe.c','native-small-pool-probe.c','pool-layout.c','cef-load-probe.m','helper-load-probe.m','helper-path.c','synthetic-helper-probe.m','exec-diagnostic.c','casefold-path.m','casefold-probe.m','volume-case-view.m'], ['-Wl,-reexport_library,'+sdk+'/usr/lib/libSystem.B.tbd']),
-            ('AppKit', ['appkit-font.m','font-advancement.m','font-matrix-constant.m','bitmap-image-rep.m'], ['-Wl,-reexport_framework,UIKit']),
+            ('libSystem', ['sysv-semaphore.c','native-process-probe.c','native-vm-probe.c','native-vm-range-probe.c','native-small-pool-probe.c','pool-layout.c','cef-load-probe.m','helper-load-probe.m','helper-path.c','synthetic-helper-probe.m','exec-diagnostic.c','casefold-path.m','casefold-probe.m','volume-case-view.m','pin-config-observer.c'], ['-Wl,-reexport_library,'+sdk+'/usr/lib/libSystem.B.tbd']),
+            ('AppKit', ['appkit-font.m','font-advancement.m','font-matrix-constant.m','bitmap-image-rep.m','window-main.m'], ['-Wl,-reexport_framework,UIKit']),
             ('CoreGraphics', ['display-pixel-encoding.m','display-mode-object.m'], ['-Wl,-reexport_framework,CoreGraphics'])]:
             text = (converted/'shims'/('Shim_'+component+'.m')).read_text()
             inputs['generated/Shim_'+component+'.m'] = hashlib.sha256(text.encode()).hexdigest()
