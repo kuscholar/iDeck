@@ -1,0 +1,443 @@
+{
+  "date": "2026-10-31",
+  "phase": "genuine AMD64 CEF game-return capacity experiment",
+  "source_head": "8c4794dfe93d79317c9ca54e8724c88b6ffd05cd",
+  "source_runtime_base": "be8151a7bf5773b1013f275161b7db6149284bcc",
+  "working_tree_changes": true,
+  "observed_build127_eight_table_case": {
+    "fresh_Steam_saved_login_local": "08:54:10 EDT",
+    "tracked_Hot_Roads_guest_PID": 756,
+    "game_start_local": "08:54:57 EDT",
+    "game_exit_local": "08:55:25 EDT",
+    "game_exit_code": 0,
+    "CEF_fatal_UTC": "2026-10-31T12:55:32.179Z",
+    "CEF_fatal_category": "V8 ExternalEntityTable::InitializeTable subspace allocation OOM",
+    "adopted_independent_tables": 8,
+    "next_512MiB_request_refused": true,
+    "all_observed_partial_free_remaining_views": true,
+    "agent_game_request_sent": false,
+    "user_report": "Game opened despite runtime notice; manual quit then Steam froze. Exact report-to-instance timing is not assumed.",
+    "chronology_correction": "Earlier private startup-only inference that refusal preceded any game was wrong. Complete fresh gameprocess log establishes the game/exit sequence above."
+  },
+  "hypothesis": "Finite native-backed table bank prevents a new V8 isolate table after game return; add one disjoint table without occupying the measured game-DLL gap. Not proof that all freezes or helper failures share one cause.",
+  "build128_minimal_native_patch": {
+    "exact_opt_in": "MADEIRA_CEF64_NINTH_TAIL_TABLE=1",
+    "requires": "explicit source/session/standalone/eight layout; reject compact conflict",
+    "ninth_table_interval": [
+      "0x7720000000",
+      "0x7740000000"
+    ],
+    "FEX_interval": [
+      "0x7500000000",
+      "0x7720000000"
+    ],
+    "FEX_GiB": 8.5,
+    "retained_game_DLL_gap": [
+      "0x7160000000",
+      "0x717fff0000"
+    ],
+    "maximum_native_slots": 17,
+    "no_claim_recycling": true,
+    "no_fallback_overlaps": true,
+    "unchanged_private_FEX_and_own_control_helper": true
+  },
+  "local_validation": {
+    "layout_all_slot_and_boundary_rollback_ASan_UBSan": "PASS",
+    "native_owner_all_slot_rollback_and_16_thread_claim_race_ASan_UBSan": "PASS",
+    "existing_view_adoption_contract_ASan_UBSan": "PASS",
+    "game_image_spill_all17_exclusions_ASan_UBSan": "PASS",
+    "launcher_and_return_focus": "PASS",
+    "full_Xcode128": "PASS",
+    "final_MachO_marker": "PASS",
+    "deep_strict_sign_and_isolated_upgrade": "PASS"
+  },
+  "runtime_notice_distinct_failure": {
+    "observed_child": "x86launcher.exe",
+    "category": "guest-window-reserve STATUS_NO_MEMORY 0xc0000017",
+    "meaning": "A 32-bit child failed its guarded 4GiB guest-window requirement; the native alert alone does not establish a Steam or 64-bit game failure. Do not bypass the reservation guard."
+  },
+  "limits": [
+    "An extra finite table is a discriminating capacity test, not a scalable lifetime solution or a final GO.",
+    "FEX strict analyzer no-matched-failure does not detect every CEF OOM and is not runtime PASS.",
+    "WM_NULL responsiveness/foreground focus alone is not interactive UI validation.",
+    "No Bluetooth, stable repeated game-return, normal no-argument full64 product-start or universal compatibility claim."
+  ],
+  "reference": "https://github.com/v8/v8/blob/12.6.228/src/sandbox/external-entity-table-inl.h",
+  "artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/eight127-confirm-gameprocess.txt",
+      "bytes": 13685,
+      "sha256": "3c3339bc740cf15090663b47ab76ef088a1094c8e42a64b079cf0f8b7ada8bd9"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/eight127-confirm-cef.txt",
+      "bytes": 123955,
+      "sha256": "bf748d46f6c95bef18f7c2a544144831b458c174fdaf30170b1d604959c415a3"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/eight127-startup-live-native.txt",
+      "bytes": 4937557,
+      "sha256": "282597b325c17a86bfe73317d14ec411a7167cf37705ea801d462e8669d0158e"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build128-unsigned.json",
+      "bytes": 597,
+      "sha256": "3d4a80a72007940ac51bf3163f0279444c657cb2a00d08dc3f6f6df828b06e94"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/native128-nine-standalone-capacity.txt",
+      "bytes": 5328,
+      "sha256": "52a0597f13fc30f6b127218c263af58291b4aa6665911d52b4e89c263741c4e2"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/nine128-live-linked-native.txt",
+      "bytes": 4969795,
+      "sha256": "dcea5338e568193211edf409890638a77efca6e4a611290be94cc1569cdee86f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/nine128-current-gameprocess.txt",
+      "bytes": 14196,
+      "sha256": "ff0f5ffe8bc8e9abad3544ad3b833e6d39adf554528a15b921f52c7da607f93c"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/nine128-current-cef.txt",
+      "bytes": 126058,
+      "sha256": "b3e70018a111d91032060f71bae038b82be725f1e0e33948350bda25fe841d44"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/owned128-nine-results.txt",
+      "bytes": 3367,
+      "sha256": "cfe1df2b326e5f6ff1182a9e7ccd00e63b9375ce5a4e0c7fa46954d8957cdb08"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build129-unsigned.json",
+      "bytes": 614,
+      "sha256": "0b9aa4134c7b4bdc4ba4f0c0f5aaf1621da35e3616c548b47df888987c85902f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/native129-twelve-standalone-capacity.txt",
+      "bytes": 6227,
+      "sha256": "debf8470d2bee9166cad6a12cf0c33fea5896eacef95b741cd52a7d29e38affd"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/owned129-twelve-results.txt",
+      "bytes": 3567,
+      "sha256": "1d747e321dd2ad4f2adac73b838c017d70bc4c1ceab706b997c4bc61766d394f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/owned129-twelve-ended-native.txt",
+      "bytes": 268527,
+      "sha256": "2377f9b60c213417417f35db8df6d3b21b1285f246a5b5d743c7dec6064da2fd"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/host129-twelve-transfer-fixed.log",
+      "bytes": 13983,
+      "sha256": "571cea1e787e7dd7fb4fecf7ee21941e3ae3d87f84cf651237b4dddb26982469"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/host129-image-spill.log",
+      "bytes": 209,
+      "sha256": "8970fd6e4270349a88d51f03b634caf0c3d235957fab2994d49af28d72b2f942"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/twelve129-second-crash-native.txt",
+      "bytes": 6055344,
+      "sha256": "fa3a658c96d3dce02b463e54a236bd3906f7ee17d1a7bd4d6bcfbe846d6084b6"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/twelve129-second-crash-gameprocess.txt",
+      "bytes": 14980,
+      "sha256": "a7dc318455e63725d84c5d9536b78add0242380e6b94fedfb45978081b34ee76"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/twelve129-second-crash-cef.txt",
+      "bytes": 127130,
+      "sha256": "cb957230c7acde128fb84c550ae7064ed35d49bf5693eabd27aba79ef0e24a0d"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/twelve129-after-user-crash-process.json",
+      "bytes": 381,
+      "sha256": "47e30558e66953ca7d952a74123d2bdad6edf36fcbc66238dacf265457c26f0e"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build130-unsigned.json",
+      "bytes": 758,
+      "sha256": "57dcdae64deeff55bc62929d0e3c65156dc5272699e88cfa4a4a45d43daae313"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/decoder130-stress-results.txt",
+      "bytes": 9852,
+      "sha256": "75a193fefbb29099914fde97341dd7075a07ac42ba91766d1e7304b581a1aec5"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/decoder130-ended-observe-native.txt",
+      "bytes": 6077122,
+      "sha256": "d44f93ad9acb30cce8260cccffef6216edf062d4747ec3950690b69ff02e566f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/decoder130-ended-observe-gameprocess.txt",
+      "bytes": 15852,
+      "sha256": "a144cd3c4d59d243ced2af57329a8282146b4d89fe3705b300c7702ae1657c1d"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/decoder130-ended-observe-cef.txt",
+      "bytes": 128202,
+      "sha256": "6ae684831bbc063a878ec410bd3c97c31673b9fda8654af5ea530054f36d789b"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build131-unsigned.json",
+      "bytes": 569,
+      "sha256": "04d7c83faeeb66fe0fcf70c36203aef7538d12c4987fd757a6db66bbefe3df52"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-stress-results.txt",
+      "bytes": 9852,
+      "sha256": "bd0f0384a0ef714db6d9c7f40556e449311b6c711405f72ffa863899702a001f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-stress-ended-native.txt",
+      "bytes": 255574,
+      "sha256": "df9673698bd609f04bc4b7c7f6b0153fd275c2b135a414be2e6769b9e9b0f54b"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-startup-native.txt",
+      "bytes": 3091742,
+      "sha256": "abb70b4694125c5045864d5d10726dedcb7412678df3d64b69a23a516192bc30"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-repeat-ended-native.txt",
+      "bytes": 6367893,
+      "sha256": "742d44978a12cb0271b34bcaf5bd2de2bad7112671ea90dfc9365d674f87677b"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-pre-end-gameprocess.txt",
+      "bytes": 16825,
+      "sha256": "20a5790e2269fb4873d6f8bd9ecf4f091159a5941ba780d848eb4be23b62f9ae"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-first-exit-cef.txt",
+      "bytes": 132442,
+      "sha256": "5afb53b8089ffecdb5a8919fa74c6e59a7c7e1b46ea50d9dbe7f0af5bda7a17d"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-repeat-startup-native.txt",
+      "bytes": 2490000,
+      "sha256": "0b2a13a0f0abf2e5d3bd0047a11d81c7e7c43dbacb00b9a59dcd0eb9fb04ba78"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-repeat-home-phone.png",
+      "bytes": 191003,
+      "sha256": "bd03db51074b8a698a330c5e77bf118eef539d519750acb1fe5ccd81eb2e3db6"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/span4131-after-exit-confirm-phone.png",
+      "bytes": 432532,
+      "sha256": "90d5bd415b8edddc7a1b80f2cd8248d73d11c0cd3061e3da42c55dc60e998213"
+    }
+  ],
+  "build128_real_game_return": {
+    "fresh_saved_login_EDT": "09:10:43",
+    "tracked_game_PID": 772,
+    "game_started_EDT": "09:11:43",
+    "game_exit_EDT": "09:12:09",
+    "game_exit_code": 0,
+    "CEF_OOM_UTC": "2026-10-31T13:12:15.133Z",
+    "all_nine_tables_adopted": true,
+    "next_tenth_request_refused": true,
+    "signed_A_MiB": 624,
+    "signed_B_MiB": 0,
+    "signed_C_MiB": 352,
+    "native_margin_MiB": 262,
+    "FEX_failure_assessment": "no-matched-failure",
+    "full_release_without_remaining_view_observed": false,
+    "user_report": "Same runtime notice; game starts, manual exit, Steam freezes again.",
+    "conclusion": "Nine tables insufficient. Additional native capacity is independently necessary; no sole-cause or long-term sufficiency claim."
+  },
+  "build129_twelve_table_discriminator": {
+    "feature_flag": "MADEIRA_CEF64_TWELVE_TABLES=1",
+    "requires": "explicit noncompact ninth-tail layout",
+    "table_bank_count": 12,
+    "native_hold_count": 20,
+    "FEX_interval": [
+      "0x7500000000",
+      "0x76c0000000"
+    ],
+    "FEX_GiB": 7,
+    "new_table_bases": [
+      "0x7700000000",
+      "0x76e0000000",
+      "0x76c0000000"
+    ],
+    "new_bank_growth_bounded": true,
+    "game_DLL_gap_preserved": true,
+    "all20_lease_image_exclusions": true,
+    "unmeasured_future_hold_guard": 20,
+    "mapping_alias_test_found": "A fixed new table at770 aliases old near-slot8. Search actual current held bases before a legacy guess.",
+    "local_tests": "ASan/UBSan layout/all-slot backing and rollback, native owner16-thread race, new actual12 geometry/adopter every exact fixed hint/exhaustion/retained claims/all-slot create rollback/bounds, old adopter regression, image spill20, read-only lease observer, launcher/return-focus PASS",
+    "native_compile": "37 succeeded,0 failed",
+    "full_Xcode_final_build": "PASS",
+    "final_MachO_and_native_archive_hash_receipt": "build129-unsigned.json",
+    "deep_strict_signature_and_isolated_upgrade": "PASS",
+    "actual_native_holds20_backing_edges40_cleanup20": "PASS",
+    "actual_AMD64_Windows_contract_12_distinct_tables_C0_batch0": "PASS",
+    "probe_and_temp_config_restored_byte_exact": "PASS",
+    "same_private_FEX_and_helper_as127": true,
+    "fresh_saved_Steam_login": true,
+    "game_return_UI_validation": "PENDING; user question active; do not restart while testing",
+    "limits": "Finite capacity experiment; smaller FEX may expose a different limit. No long-term GO or interactive UI claim.",
+    "fresh_saved_Steam_login_EDT": "09:23:44",
+    "first_game_guest_PID": 748,
+    "first_game_start_EDT": "09:24:51",
+    "first_game_exit_EDT": "09:25:13",
+    "first_game_exit_code": 0,
+    "first_return_UI": "User confirmed game exit then direction/navigation/Library browsing works",
+    "native_table_claims_after_first_return": 6,
+    "first_return_FEX_assessment": "no-matched-failure",
+    "first_return_CEF_current_fatal_observed": false,
+    "actual_signed_A_B_C_MiB": [
+      576,
+      128,
+      336
+    ],
+    "actual_JIT_span_MiB": 724,
+    "actual_margin_MiB": 258,
+    "JIT_span_limit": "20MiB excluded gap; signedA+B=704MiB, totalexecutable1040MiB",
+    "second_cycle_remote_request": "Single diagnostic URI staged exact readback, ACK nonce not confirmed, no new game in sampled Steam log; pending file cleared byte-exact. Do not retry/claim launch.",
+    "second_cycle_manual_UI_test": "USER reports entire app crashed at second game startup",
+    "second_cycle_native_task_absent_verified": true,
+    "second_game_guest_PID": 1016,
+    "second_game_start_EDT": "09:31:35",
+    "second_game_exit0_observed": false,
+    "second_cycle_native_failure": {
+      "FEX_arena_GiB": 7,
+      "views": 1311,
+      "free_bytes": 661188608,
+      "max_aligned_gap": 8323072,
+      "failed_request_bytes": 8388608,
+      "overlap_bytes": 0,
+      "thread_state_12288_allocation_failed": true,
+      "thread_init_status": "0xc0000017",
+      "private_FEX_module_base": "0x70ecb40000",
+      "native_mapped_FEX_base": "0x15ba28000",
+      "host_null_write_pc": "0x15ba49558",
+      "RVA": "0x21558",
+      "symbol": "FEXCore::Frontend::Decoder::DecodeInstructionImpl+0x38",
+      "instruction": "stp q0,q0,[x8], x8=0",
+      "original_decoder_entry_count": 65536,
+      "decoded_entry_bytes": 128,
+      "original_default_request_bytes": 8388608,
+      "limits": "8MiB views include multiple allocators; census size alone does not attribute every large view to decoder or rpmalloc. This exact decoder NULL access is separately resolved by PE disassembly."
+    },
+    "assessment": "First return improved, second launch failed. Not a long-term solution."
+  },
+  "build130_private_decoder_experiment": {
+    "native_base": "129 unchanged",
+    "own_helper_base": "126 unchanged",
+    "RPM_span_geometry": "private127 unchanged8MiB",
+    "new_exact_flag": "MADEIRA_FEX_DECODER_COMPACT=1 plus prior exact IR/session/source gates",
+    "hypothesis": "Default frontend decode buffer still reserves65536 entries despite effective256 instruction limit. Request proportional capacity, preserve explicit larger requests with existing pool resize API and original64K hard cap.",
+    "guards": "NULL, undersized metadata, entry-bound and overflow checks before instruction write, no assertion suppression",
+    "host_validation": "PASS actual decoder pre-write prefix, ABI128, all4 gates/cache, request min/max incl explicit large cases, last slot canaries and controlled negative cases ASan/UBSan; not full x86 decoder or Windows resize proof",
+    "cross_compile": "24steps incl ARM64EC module/FEXCore/frontend and link PASS",
+    "private_DLL_sha256": "634dd70d811270074ff9ebcf9ddb2dd67dd3a1b7b91dbe4ad3a5b144e15a7fcd",
+    "private_distribution": "No private modified FEX source/binary published; original submodules unchanged",
+    "installed_version130": "PASS deep strict, cached Nov6 profiles",
+    "own_real_AMD64_16threads_stress_C0_batch0_independent_oracle": "PASS",
+    "actual_decoder_256_entries_32768_bytes": "PASS own probe metadata; not kernel-granularity/residency measurement",
+    "real_Steam_game_return": "PENDING",
+    "actual_saved_login_EDT": "09:47:52",
+    "first_game": {
+      "guest_PID": 740,
+      "start_EDT": "09:48:47",
+      "exit_EDT": "09:49:09",
+      "exit_code": 0
+    },
+    "second_game": {
+      "guest_PID": 996,
+      "start_EDT": "09:49:25",
+      "exit_EDT": "09:49:38",
+      "exit_code_hex": "0xd0594a27",
+      "normal_exit": false
+    },
+    "actual_decoder_policy_confirmed_in_Steam_processes": true,
+    "second_cycle_failure": {
+      "failed_CallRet_reservation_bytes": 8396800,
+      "CallRet_original_capacity_MiB": 8,
+      "arena_views": 1394,
+      "free_bytes": 688971776,
+      "largest_aligned_gap": 8323072,
+      "span8_reserved_views": 590,
+      "CallRet_guarded_views": 152,
+      "ThreadInit_statuses": [
+        "0xc0000017",
+        "0xc0000017"
+      ],
+      "FEX_allocator_fatal_bytes": 1310720,
+      "current_CEF_OOM_observed": false,
+      "decoder_NULL_or_bounds_reject_observed": false,
+      "assessment": "Decoder null-write corrected/footprint reduced but insufficient total/contiguous capacity. Native continues logging after abnormal game exit; later native absence alone does not identify crash/termination cause."
+    }
+  },
+  "build131_private_span4_discriminator": {
+    "native_base": "129 unchanged",
+    "control_helper_base": "126 unchanged",
+    "decoder_IR_policies": "same130",
+    "only_new_private_allocator_geometry": {
+      "span_MiB": 4,
+      "large_page_MiB": 4,
+      "medium_page_MiB": 4,
+      "pooled_max_MiB": 2,
+      "large_class_count": 12,
+      "larger_requests": "existing huge path"
+    },
+    "original_CallRet_SEH_capacities_guards": true,
+    "native_arena_GiB": 7,
+    "CEF_bank": 12,
+    "host_actual_allocator_ASan_UBSan": "PASS allpooledclasses+realloc preservation/2MiB+1+8MiB+10MiB huge/alignment/12workers retirement+crossfree, argument-validation matchesproductionOFF/internalassertionsON; POSIX not Windows",
+    "private_ARM64EC_build": "PASS",
+    "private_FEX_sha256": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+    "deep_sign_install131": "PASS",
+    "actual_own_AMD64_stress16threads_C0_batch0_oracle": "PASS",
+    "actual_span4_getter_and_decoder32768": "PASS",
+    "first_full_Steam_saved_login_EDT": "10:27:31",
+    "physical_genuine_BPM_home_captured": true,
+    "first_JIT_partitions_MiB": [
+      560,
+      0,
+      304
+    ],
+    "first_margin_MiB": 263,
+    "game_requested_first_session": false,
+    "one_samebuild_repeat": "Done; actualA464+B240=704/C352/margin266, signed1056MiB; first signed864 run had no game",
+    "limits": "Capacity fragmentation remains an experiment; no runtime game/return or GO yet.",
+    "repeat_saved_login_EDT": "10:30:06",
+    "repeat_first_game": {
+      "guest_PID": 784,
+      "start_EDT": "10:31:21",
+      "exit_EDT": "10:31:45",
+      "exit_code": 0,
+      "phone_screen": "Actual Hot Roads game/menu visible under iDeck exit confirmation, later BPM game details visible; not proof of subsequent browsing."
+    },
+    "repeat_second_game": {
+      "guest_PID": 1068,
+      "start_EDT": "10:31:57",
+      "exit_EDT": "10:32:01",
+      "exit_hex": "0xc0000135",
+      "failed_import": "UnityPlayer.dll status0xc000007b",
+      "current_CEF_OOM_UTC": "2026-10-31T14:32:18.863Z",
+      "all12_table_claims": true,
+      "thirteenth_refused": true,
+      "FEX_malloc_or_thread_failure_observed": false
+    },
+    "causal_limits": "First fixed URI ACK says steam-open-failed; phone actions also occurred. Do not attribute all game starts/exits to agent; exact initiating interaction unknown. After confirming no active game, only exact failed lab task stopped for stable collection/config restoration. No allocator4 long-term GO."
+  },
+  "next132_section_diagnostics": {
+    "hypothesis": "Second same DLL rejected before existing image-map diagnostics; distinguish create-mapping failure, SectionImageInformation query failure/incorrect metadata, and later loader validation.",
+    "minimal_patch": "Exact session+MADEIRA_CEF64_SECTION_TRACE=1 gates, numeric status/handle/PEB/WinPID/TID/machine only, bounded2048 events each. Existing operation invoked once, no additional server requests or file/header reads.",
+    "no_runtime_fix_claim": true,
+    "FEX_policy": "sameprivate131 span4/decoder32K/IR4, no new FEX change",
+    "CEF_table_bank": "same12 (knowncapacitylimit, not falselyfixedbytrace)",
+    "final_native_link_sign_install": "PASS, sameprivate131 FEX/helper126 hashes; full native132; no runtime repair claim",
+    "own_probe_first_attempt": "Never entered Wine: executable-window reservation refused, existing bad-JIT-pool guard exited app. Not a DLL load test result. Original own probe backup retained; exactly one same-build fresh startup attempt pending."
+  }
+}

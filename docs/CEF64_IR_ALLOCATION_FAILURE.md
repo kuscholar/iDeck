@@ -1,5 +1,7 @@
 # CEF64 / FEX IR allocation failure: Build 122
 
+
+Latest follow-up: [game-return failures and capacity evidence](CEF64_GAME_RETURN_FAILURE.md). Earlier build/connection gates below are dated historical observations, not the current installed state.
 This is an observed failure and a read-only source diagnosis, not a runtime fix
 or a successful game-return result. Runtime code is based on
 `be8151a7bf5773b1013f275161b7db6149284bcc` plus local experimental changes.

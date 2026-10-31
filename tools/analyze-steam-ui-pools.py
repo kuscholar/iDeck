@@ -15,7 +15,7 @@ HEX = r'0x[0-9a-fA-F]+'
 
 def analyze_fex(lines):
     """Categorical failures only; absence of a match never proves runtime success."""
-    counters = dict(ir_buffer_rejections=0, allocator_fatals=0,
+    counters = dict(ir_buffer_rejections=0, decoder_buffer_rejections=0, allocator_fatals=0,
                     thread_initialization_failures=0, thread_state_unavailable=0,
                     census_allocation_failures=0, owned_arena_scan_failures=0)
     thread_statuses = {}
@@ -32,6 +32,8 @@ def analyze_fex(lines):
     for number, line in enumerate(lines, 1):
         if '[ideck-fex-ir] rejected NULL or out-of-bounds IR buffer' in line:
             failure('ir_buffer_rejections', number)
+        if '[ideck-fex-decoder] rejected NULL or undersized/out-of-bounds decode buffer' in line:
+            failure('decoder_buffer_rejections', number)
         if 'FEXAlloc could not allocate' in line:
             failure('allocator_fatals', number)
         if '[FEX-iOS] ThreadInit: thread state unavailable' in line:

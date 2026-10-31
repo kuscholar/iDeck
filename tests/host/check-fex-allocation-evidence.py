@@ -39,6 +39,7 @@ assert module.analyze_fex(unrelated.splitlines())['assessment'] == 'no-matched-f
 assert module.analyze_fex([])['assessment'] == 'no-matched-failure'
 assert 'not a PASS' in ' '.join(module.analyze_fex([])['limits'])
 for line, kind in [('[ideck-fex-ir] rejected NULL or out-of-bounds IR buffer before node access', 'ir_buffer_rejections'),
+                   ('[ideck-fex-decoder] rejected NULL or undersized/out-of-bounds decode buffer before instruction access', 'decoder_buffer_rejections'),
                    ('FEXAlloc could not allocate bytes=0x1000000', 'allocator_fatals'),
                    ('[FEX-iOS] ThreadInit: thread state unavailable -- unwinding thread 0x42', 'thread_state_unavailable')]:
     assert module.analyze_fex([line])['counters'][kind] == 1
