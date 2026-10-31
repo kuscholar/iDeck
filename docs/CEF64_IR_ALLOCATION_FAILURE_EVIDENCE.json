@@ -62,5 +62,217 @@
       "bytes": 221,
       "sha256": "55d777a8a56518be2755782cd0c71b3a064d0c2d52ee44f7d80dbc9691e65e2d"
     }
-  ]
+  ],
+  "private_authorized_build123": {
+    "phase": "Private FEX IR mode passes one complete engine-init/normal-exit lifecycle; Steam foreground handoff remains pending",
+    "device": "Kusch iPhone16,2 A17Pro",
+    "build": "123 private FEX PE overlay on native122",
+    "FEX_revision": "f59cab95659e8add0c88f0c76ec1cf483c536dbf plus private authorized changes",
+    "private_FEX_sha256": "5670e16af7ec5c01b093bd9383c18058405d2552ddac6489eff48889a40ca14f",
+    "fresh_Steam_saved_login": "2026-10-31T00:24:49-04:00",
+    "game_start": "2026-10-31T00:25:46-04:00",
+    "game_exit": "2026-10-31T00:27:19-04:00",
+    "game_exit_code": 0,
+    "D3D11": "11.1 Apple A17 Pro GPU",
+    "Mono_reload_seconds": 0.915,
+    "input_and_touch_initialized": true,
+    "IR_mode_device_confirmed": true,
+    "IR_null_or_bounds_reject": false,
+    "FEX_allocation_fatal": false,
+    "OpDispatcher_4MiB_log_count": 89,
+    "return_window_responsive": true,
+    "return_focused": false,
+    "focus_error": 5,
+    "foreground_pid": 32,
+    "foreground_owner_identified_by_native_startup": "explorer.exe",
+    "limits": "No live physical screenshot due Mac lock. Game input helper accepted Enter; not visual gameplay proof. A single successful lifecycle is not long-term capacity/leak/performance validation. Source-layout table capacity unchanged. Private FEX source/binary not published. ASLR changed code budgets vs122: A544+B160/C304 vs A624/noB/C352; one full run does not isolate IR size as sole cause of improved outcome.",
+    "artifacts": [
+      {
+        "private_path": "../.madeira-install/steam64-current/ir123-stress-results.txt",
+        "bytes": 9852,
+        "sha256": "b91687db67ae2fc9a9c30ab24232ef8516e6a1cdc246e29770e2c6700bd2a2c3"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir123-stress-ended-native.txt",
+        "bytes": 262983,
+        "sha256": "123b38b11132b5268701ef5ec0bd5e3a2e0a2d77c31924141f2ec05cc85289f2"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir123-game-unity.txt",
+        "bytes": 10437,
+        "sha256": "1647b55d22e7544f6929810ff394dde102297fe703eb53739c425953669810fe"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir123-return-gameprocess.txt",
+        "bytes": 10873,
+        "sha256": "ee4c7f39fc220595eaba6b214845a8faf99b7384f137bc969fda94fa9973c448"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir123-return-native.txt",
+        "bytes": 6728702,
+        "sha256": "a2278ac79407d4ffd03e203f421b7c4f307017fd9d647216887bc6f39b6c296d"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir123-return-ideck-return-status.txt",
+        "bytes": 92,
+        "sha256": "ef8898adca59df6ac6c82bea0161eeb4f64a6db0487f4e93475e34646cb35503"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/cleanup123-before-focus124-complete.json",
+        "bytes": 221,
+        "sha256": "55d777a8a56518be2755782cd0c71b3a064d0c2d52ee44f7d80dbc9691e65e2d"
+      }
+    ],
+    "JIT_regions": {
+      "A_MiB": 544,
+      "B_MiB": 160,
+      "signed_A_plus_B_MiB": 704,
+      "C_MiB": 304,
+      "span_MiB": 723,
+      "span_contains_excluded_gap_MiB": 19
+    }
+  },
+  "private_authorized_build124": {
+    "build": "124 PE overlay on native122/private IR DLL unchanged",
+    "own_helper_independent_device_hash_matches": true,
+    "actual_A_MiB": 560,
+    "actual_B_MiB": 144,
+    "actual_signed_AB_MiB": 704,
+    "actual_span_MiB": 716,
+    "actual_C_MiB": 304,
+    "normal_game_exit0": true,
+    "Steam_WM_NULL_responsive": true,
+    "focus_result": "error5 pending; registered Shell/Desktop checks did not match foreground",
+    "foreground_pid": 32,
+    "foreground_shell": false,
+    "foreground_desktop": false,
+    "registered_shell_policy_not_device_fix": true,
+    "original_IR_failure_present": false,
+    "next_discriminator": "Wine source non-Default virtual desktop class32769 + system explorer; log actual foreground atom; no arbitrary class/window allowance",
+    "artifacts": [
+      {
+        "private_path": "../.madeira-install/steam64-current/ir124-device-control.exe",
+        "sha256": "9731e66fdf98d6d50df59ad22da841898de623704333b2b9a90a15d54fbdcdb9",
+        "bytes": 117248
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir124-repeat-startup-native.txt",
+        "sha256": "6286682ce0caad1b1fcf0cffb3db9108dfa1b96bcb5d3e3051236f3d4b1a5bde",
+        "bytes": 2510446
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir124-repeat-game-ready-unity.txt",
+        "sha256": "bdae6a4b2072628a3bf44aba140d20d4ed7901648e14655b4918dd61ea5225ad",
+        "bytes": 10490
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir124-repeat-return-native.txt",
+        "sha256": "8bc899f25159d24dd71cb9a47d2cfa38857ed43deef4798b43eda08e2fd9000e",
+        "bytes": 5984438
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir124-repeat-return-ideck-return-status.txt",
+        "sha256": "e90388fb008c52e1c3e700b485600d8b6483a18e09f1af17201e98d753f812eb",
+        "bytes": 132
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir124-repeat-return-gameprocess.txt",
+        "sha256": "b8b720e0dc732a06fd795208aaf70bd8dbc15305305ecc310336224c9e035c82",
+        "bytes": 11421
+      }
+    ]
+  },
+  "private_authorized_build126": {
+    "build": "126 PE overlay on native122; private IR2 module unchanged",
+    "first_actual_game_exit0": "2026-10-31T00:46:41-04:00",
+    "first_return_WM_NULL_responsive": true,
+    "first_return_foreground_verified": true,
+    "first_return_queue_join_detach_verified": true,
+    "post_return_key_and_response_verified": true,
+    "physical_visual_validation": false,
+    "second_game": "PID1024 started00:48:17; fresh D3D11/A17/Mono1.133/input+touch, but second normal exit NOT proven",
+    "second_close_result": "game-close-pending",
+    "second_failure": {
+      "request_bytes": 16777216,
+      "alignment_bytes": 16777216,
+      "arena_views": 1235,
+      "free_bytes": 155082752,
+      "largest_aligned_gap_bytes": 14221312,
+      "overlap_bytes": 0,
+      "reserved_RW_16MiB_views": 475,
+      "thread_init_failure_status": "c0000017",
+      "failed_threads": [
+        "04a8 Steam",
+        "04ac game",
+        "04b0 Steam",
+        "04b4 game"
+      ],
+      "IR_null_or_bounds_reject": false,
+      "original_IR_invalid_write_seen": false
+    },
+    "hypothesis": "Remaining16MiB aligned demand matches rpmalloc span geometry; need actual allocator evidence and smaller-span discriminator, not a sole-caller or leak claim",
+    "long_term_GO": false,
+    "artifacts": [
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-return-ideck-return-status.txt",
+        "bytes": 212,
+        "sha256": "3afdae3a165faf05ae853867851dd020634fc44727758bee846603e2d33a85f8"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-return-gameprocess.txt",
+        "bytes": 12382,
+        "sha256": "fa88548cc0370967624f45cb2c705276e1cf5af9c23415a7512ce7d144f3656a"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-return-native.txt",
+        "bytes": 5871531,
+        "sha256": "2a9a6e5ee78c4b004acf859695dbf42d28f68694d9b23836fb099ac8122f8b0b"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-second-game-ready-unity.txt",
+        "bytes": 366,
+        "sha256": "a832c1d8ccc08e9caf2c49ea8c1cee77546bfb6a38cbbe4e515423ded3b51833"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-second-return-native.txt",
+        "bytes": 8289827,
+        "sha256": "0d01a69a4e0a6f3f59816d71772041b04e44e4465f96c7d06f73b0ad6472acf4"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-second-close-current-ack.txt",
+        "bytes": 57,
+        "sha256": "0dfe33f081a02f8ba163199ca4bf64a08c14875afd36b120ef5660721ace387f"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/ir126-second-return-gameprocess.txt",
+        "bytes": 12663,
+        "sha256": "860226bcd8663238f418c3f188f2d08b5146d5cdad9c97f94353183d27a79d7c"
+      }
+    ]
+  },
+  "private_build127_preparation": {
+    "build": "127",
+    "base_native_build": "122",
+    "own_helper_build": "126",
+    "build_kind": "Private RPM span8 PE overlay, not full Xcode127 native build",
+    "fex_sha256": "eb7db5cfd8c57b81c09c59fd025bc97581ce02146e3dcf4b9677ce8f3d61940d",
+    "actual_IR_and_span8_markers": true,
+    "old_span16_marker_absent": true,
+    "host_actual_allocator_ASan_UBSan_POSIX": "PASS",
+    "device_tested": false,
+    "limits": "Span geometry is private build-time option, not runtime gate; IR2 still exact triple gated; no ordinary original app/FEX changes or upstream publication.",
+    "signed": true,
+    "deep_strict_signature": true,
+    "installed": false,
+    "installation_not_attempted_due_idle_process_query_failure": true,
+    "independent_probe_not_started": true,
+    "original_own_probe_not_replaced": true,
+    "previous_test_recovery": {
+      "original_attributes_actual_fresh_restore_PASS_exit0": true,
+      "prior_and_restore_exact_native_identities_absent": true,
+      "original_global_config_readback_exact": true,
+      "original_CEF_config_readback_exact": true
+    },
+    "host_allocator_log_sha256": "57e4a94ab3b784e60a547dcd1f84cff4a68bacb2be30af109d7034fd7cb2f7b8"
+  }
 }
