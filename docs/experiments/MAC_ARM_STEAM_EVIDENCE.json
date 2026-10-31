@@ -2392,5 +2392,21 @@
         "sha256": "1a36a5f629d2a588287b9531c76314f48488302f17238f91680da261ecb73c88"
       }
     ]
+  },
+  "cefSourceRequestPublished20261031": {
+    "userAuthorized": "Explicit approval of exact prepared draft, destination ValveSoftware/steam-for-linux issue12226",
+    "url": "https://github.com/ValveSoftware/steam-for-linux/issues/12226#issuecomment-6538931459",
+    "author": "kuscholar",
+    "createdAt": "2026-10-31T04:20:50Z",
+    "bodySHA256": "49bbbfa2bea4e4e3ee214e71278084430ae239ba893666901fc4bae47c7043b3",
+    "sourceCheckpointBeforePosting": "bfb0b8bde61336d2d75b7a331ab44664701920b7",
+    "delivery": "GitHub connector write returned403 resource inaccessible by integration; existing user-authorized gh account was separately confirmed kuscholar and official API POST succeeded. No access-policy/signature bypass or new credentials.",
+    "verification": "Before send0 comments; after send independent connector read returns exact body/author/comment ID. One comment only, no new issue/PR/email.",
+    "contentScope": "Only approved public client/CEF metadata, required symbols and sanitized actual allocator result; no device identifier/credentials/signing payload/raw logs.",
+    "status": "Request delivered, no response/source access/success inferred",
+    "privateReceipt": {
+      "path": ".madeira-install/cef6478-header-experiment/source-request-published.json",
+      "sha256": "303c9116b1a63645ee807bb2437c313970118e4798ae35a964301d9a5dcbe197"
+    }
   }
 }

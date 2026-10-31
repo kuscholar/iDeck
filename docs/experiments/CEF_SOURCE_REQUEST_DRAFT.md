@@ -1,9 +1,10 @@
-# Matching Steam CEF source request — draft, not sent
+# Matching Steam CEF source request — published
 
-Proposed destination: [ValveSoftware/steam-for-linux issue 12226](https://github.com/ValveSoftware/steam-for-linux/issues/12226).
-User explicitly authorized this exact technical request on 2026-10-31. The
-comment has not yet been sent at this checkpoint; record its final URL below
-after posting. No unrelated upstream issue/PR/message is authorized.
+Published with explicit user authorization on 2026-10-31:
+[https://github.com/ValveSoftware/steam-for-linux/issues/12226#issuecomment-6538931459](https://github.com/ValveSoftware/steam-for-linux/issues/12226#issuecomment-6538931459).
+The exact published body is preserved below. This is a source request, not a
+claim that the native Steam browser works. No additional upstream messages
+were sent.
 
 ---
 

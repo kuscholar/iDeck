@@ -1580,3 +1580,21 @@
 - Prepared CEF_SOURCE_REQUEST_DRAFT.md for existing Valve issue12226. Requested
   explicit authorization before any upstream message; nothing sent. Continue
   local verified work while pending. Do not treat elapsed time as approval.
+
+### 2026-10-31 00:20 EDT — authorized matching-source request published
+
+- User explicitly approved the exact prepared technical request to existing
+  ValveSoftware/steam-for-linux issue12226. First published verified source
+  checkpoint bfb0b8bde61336d2d75b7a331ab44664701920b7; both commit00:19:37 and
+  push00:19:51 EDT individually checked within allowed weekend window.
+- Correct issue open, no comments before send. GitHub connector write403 is an
+  integration permission limit, not a user-account denial. Existing authorized
+  gh session separately confirmed kuscholar, official API sent exact approved
+  JSON body once; independent connector read confirms same author/body/ID.
+- Published2026-10-31T04:20:50Z:
+  https://github.com/ValveSoftware/steam-for-linux/issues/12226#issuecomment-6538931459
+  Body receipt/hash recorded in cefSourceRequestPublished20261031. No raw device
+  data, account/signing payload, new issue/PR/email or additional message.
+- Delivery is not maintainer acceptance, a source release, or working Steam.
+  No response/source access inferred. Keep full native mission incomplete,
+  current isolated21 component evidence separate from the actual CEF/UI gates.
