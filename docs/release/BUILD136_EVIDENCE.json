@@ -1,0 +1,138 @@
+{
+  "build": 136,
+  "source_commit": "9ffacca5357985f5e4e92e1714188a5589f0fd9a",
+  "merge_parent_main": "ce4eed5e9a72dd99f43cd25dc1c46eea5279e7c5",
+  "merge_parent_experiment": "9b9344501b5909ec90e74706d695808e71490e74",
+  "target": "physical Kusch iPhone15ProMax A17Pro",
+  "main_merge": "completed, conflict-free and pushed",
+  "release_decision": "NO-GO; no tag, draft or release created",
+  "build_validation": {
+    "full_Xcode136": "PASS after restoring documented pinned MinGW and normal installed Metal toolchain access",
+    "pinned_MinGW_archive_sha256": "bd85a3975723815cef28dbbd2ca2cb0c926f6b348a12a0453f39f7af273cb3f7",
+    "merged_host_regressions_passed": 12,
+    "additional_actual_geometry_test": "PASS; intentionally rejects observed136 layout",
+    "signed_app": "deep strict PASS; existing device-covering profiles expire2026-11-06",
+    "actual_installed_readback": 136,
+    "final_linked_marker": "nonmodal child diagnostic present",
+    "linked_NtCreateSection": "disassembly guards output load with null handle and nonzero status branches"
+  },
+  "actual_device": {
+    "fresh_saved_login": "Success after exact launch, no credentials entered",
+    "date": "2026-11-01",
+    "timezone": "America/New_York UTC-05:00",
+    "cycles": [
+      {
+        "start": "23:04:46",
+        "end": "23:06:38",
+        "exit": "0x00000000",
+        "normal_close_ACK": "steam-window-focused"
+      },
+      {
+        "start": "23:08:00",
+        "end": "23:08:03",
+        "exit": "0xc0000135",
+        "close_ACK": "No matching UUID acknowledgement; stale previous launch ACK is not success"
+      }
+    ],
+    "third_cycle": "not attempted after second game failure",
+    "independent_visible_UI": "not verified; user question pending, test already ended"
+  },
+  "original_second_game_failure": {
+    "image": "UnityPlayer.dll",
+    "section_create_query": "both success; AMD64",
+    "image_base": "0x17b7b0000",
+    "reason": "JIT-pool executable-copy allocation failed, original STATUS_NO_MEMORY",
+    "requested_contiguous_bytes": 23117824,
+    "total_free_bytes_bookkeeping": 85819392,
+    "largest_free_bytes_bookkeeping": 15761408,
+    "not_equivalent_to_135_image_spill_failure": true
+  },
+  "actual_geometry": {
+    "geometry_observed": true,
+    "actual_main_span_mib": 560,
+    "actual_c_mib": 304,
+    "actual_low_image_margin_mib": 262,
+    "required_main_span_mib": 704,
+    "required_c_mib": 352,
+    "required_low_image_margin_mib": 256,
+    "meets_requested_minima": false,
+    "limitation": "Span is not contiguous free capacity, usable code bytes, lifetime proof or Steam/game validation."
+  },
+  "initial_harness_error": {
+    "candidate_hole_mib": 566,
+    "misreported_as_C_mib": 566,
+    "actual_C_mib": 304,
+    "cause": "Greedy regex consumed candidate-hole suffix instead of actual C-region suffix",
+    "correction": "Anchored actual-region and final-pool fields; reject missing/duplicate/older-session fields; minimum geometry test fails closed",
+    "initial_gate_invalidated": true,
+    "consequence": "This run is a smaller-geometry capacity failure, not same-geometry comparison or evidence of merge-induced regression"
+  },
+  "CEF_limit": {
+    "records": 61,
+    "successful_adopts": 13,
+    "table_slots_adopted": 6,
+    "observed_refusals": 0,
+    "complete_runtime_coverage": false,
+    "later_fatal_or_whole_UI_root_cause": "not established; do not attribute this game failure to historical CEF OOM lines"
+  },
+  "safety": {
+    "native_guards": "unchanged",
+    "no_suspend_during_current_test": true,
+    "pending_control": "cleared",
+    "failed_owned_session": "identity verified and ended after game exited",
+    "original_config_and_CEF_attributes": "restored; both original files read back exactly",
+    "account_games_saves": "preserved"
+  },
+  "distribution_gate": "Exact tested FEX131 is private local-only experiment, not included in corresponding public source. Do not publish the tested binary without resolving exact source/relink obligations and permitted scope. Previous alpha4 remains unchanged.",
+  "next_discriminators": [
+    "Require observed actual main span and C minima before another game run; requested cfg is insufficient.",
+    "Analyze safe image-copy allocation/ownership and fragmentation separately from135 canonical image-spill placement and CEF table lifetime."
+  ],
+  "private_artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/xcode136-main-merge.log",
+      "bytes": 146112,
+      "sha256": "da9fcf517ae347da7d4e01a08bba3b7e9816486bfea9e6d2a06990892a5b51a1"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-installed-app.json",
+      "bytes": 1387,
+      "sha256": "6819e5dbe0c4f04d75bbaaf91b39facb70aa0ef9f0258bcf7ff2cafd23267c77"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-startup-steam-ready.json",
+      "bytes": 394,
+      "sha256": "773fa0777a75d8264dac00b7b624dd8612cb30285982d8c7136b16ea76afa9f0"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-after-cycle2-gameprocess.txt",
+      "bytes": 20903,
+      "sha256": "9151cf03afa7ddcbfea38d09fdbb72272fce7e5273c4056e6d2c9ffaf22b4695"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-ended-native.txt",
+      "bytes": 7689912,
+      "sha256": "07bf683804170963a2504464bc65347e22f4fc4b01c24dddd851473acbf33e71"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-after-cycle2-leases.txt",
+      "bytes": 14751,
+      "sha256": "b6286d5d632a419804f900d817ba64a184b4b59ada6c55be87590ec14ea482fa"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-corrected-layout.json",
+      "bytes": 374,
+      "sha256": "225339e2bca291213a799dfb260adfba18cf8cb43e9ecddfc5658654ffda0af6"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-NtCreateSection-linked.txt",
+      "bytes": 2830,
+      "sha256": "db2c0509d75a8e68eacb43f5aac1a4d08840fbb109873409874b1ca37e33dfa4"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/merge136-after-failed-cycle-restore-complete.json",
+      "bytes": 221,
+      "sha256": "55d777a8a56518be2755782cd0c71b3a064d0c2d52ee44f7d80dbc9691e65e2d"
+    }
+  ]
+}

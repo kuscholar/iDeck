@@ -4417,3 +4417,28 @@ navigation/table lifetime before changing layout or reuse. Do not weaken guards
 or claim either failure is the sole cause of the whole session freeze.
 See CEF64_BUILD135_MILESTONE.md and CEF64_BUILD135_EVIDENCE.json for evidence
 hashes, private-FEX reproduction limits and exact boundaries.
+
+### 2026-11-01 — user-authorized main merge and Build136 release regression
+
+User explicitly requested merging the experiment into main, retesting and only
+publishing a release if successful. Main merge9ffacca was conflict-free/pushed;
+prior source-only isolation instruction is superseded for this merge, not a
+claim of stability or permission to distribute private FEX. FullXcode136,12
+merged core host regressions/final linked marker/deep signing pass; actual
+Kusch install/readback136 and fresh genuine saved login pass.
+
+First game23:04:46..23:06:38 EST exits0 and helper reports Steam focus. Second
+23:08:00..23:08:03 exitsc0000135. Original section/query succeed AMD64 but JIT
+copy allocation wants22.047MiB, largest15.031MiB despite81.844MiB total free.
+Actual main span560MiB/C304MiB differs from requested704 and prior135 geometry.
+Initial private harness wrongly captured candidate-hole566 as C size; corrected
+actual-field/latest-session parser rejects geometry and its focused host checks
+pass. No equivalent-geometry or merge-caused regression claim is made.
+
+No third launch after failure. Bounded lease61records:13adopts including6tables,
+no refusal through snapshot; no complete-coverage or current CEF OOM claim.
+Failed session ended after game exit, pending control cleared, original attrs
+and both configs restored/read-back. Auth/games/saves preserved. Installed136
+retained; test ended. NO-GO for new release; existing alpha4 unchanged.
+Exact private FEX corresponding-source/relink permission scope is another gate.
+See release/BUILD136_RESULTS.md and release/BUILD136_EVIDENCE.json.
