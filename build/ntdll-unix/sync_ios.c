@@ -4,10 +4,34 @@
  * Original Wine source retains its own copyright/licensing through inclusion. */
 #define NtWaitForKeyedEvent ios_original_NtWaitForKeyedEvent
 #define NtReleaseKeyedEvent ios_original_NtReleaseKeyedEvent
+#define NtCreateSection ios_original_NtCreateSection
 #include "../../wine/dlls/ntdll/unix/sync.c"
 #undef NtWaitForKeyedEvent
 #undef NtReleaseKeyedEvent
+#undef NtCreateSection
 #include <pthread.h>
+
+/* Numeric-only discriminator for a same-file second load rejected before the
+ * image mapper. Never log object names, command lines or file contents, and
+ * never perform an extra server call or change the original operation/result. */
+NTSTATUS WINAPI NtCreateSection(HANDLE *handle, ACCESS_MASK access,
+    const OBJECT_ATTRIBUTES *attr, const LARGE_INTEGER *size, ULONG protect,
+    ULONG sec_flags, HANDLE file)
+{
+    NTSTATUS status=ios_original_NtCreateSection(handle,access,attr,size,protect,sec_flags,file);
+    const char *trace=getenv("MADEIRA_CEF64_SECTION_TRACE"),*session=getenv("MADEIRA_STEAM_UI_SESSION");
+    if((sec_flags & SEC_IMAGE) && trace && !strcmp(trace,"1") &&
+       session && !strcmp(session,"1"))
+    {
+        static unsigned records;
+        if(__sync_add_and_fetch(&records,1)<=2048)
+            dprintf(2,"[cef64-section-create] tid=%04x pid=%04x peb=%p file=%p mapping=%p flags=%x status=%x\n",
+                (unsigned)(ULONG_PTR)NtCurrentTeb()->ClientId.UniqueThread,
+                (unsigned)(ULONG_PTR)NtCurrentTeb()->ClientId.UniqueProcess,
+                NtCurrentTeb()->Peb,file,!status && handle?*handle:NULL,(unsigned)sec_flags,(unsigned)status);
+    }
+    return status;
+}
 
 /* Native globals are shared by iOS pseudo-processes, but server handles are
  * process-local. Never pass the main process default handle into a child.

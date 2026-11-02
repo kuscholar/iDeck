@@ -11,8 +11,6 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>IDeckEnabled</key>
-	<true/>
 	<key>CFBundleDisplayName</key>
 	<string>iDeck</string>
 	<key>CFBundleExecutable</key>
@@ -43,7 +41,7 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GCSupportsGameMode</key>
 	<true/>
-	<key>LSSupportsGameMode</key>
+	<key>IDeckEnabled</key>
 	<true/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.games</string>
@@ -54,6 +52,8 @@
 		<string>localdevvpn</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>LSSupportsGameMode</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>

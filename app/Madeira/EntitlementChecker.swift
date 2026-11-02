@@ -181,3 +181,44 @@ enum DeviceDiagnostics {
         LogStore.shared.log("[device] launch: \(signing()) \(addressMap()) available=\(jit_available_memory() >> 20)MB \(power())")
     }
 }
+
+/// Observe VA without allocating it or assuming an entitlement was granted.
+/// This is a necessary total-capacity test, not an aligned/contiguous-window test.
+enum IDeckAddressSpace {
+    static func current() -> IDeckAddressCapacity? {
+        var low: UInt64 = 0, maxAddress: UInt64 = 0
+        guard jit_task_map_range(&low, &maxAddress), maxAddress > 0x100000000, maxAddress <= UInt.max else { return nil }
+        let high = UInt(maxAddress)
+        var cursor: vm_address_t = 0x100000000
+        var free: UInt = 0
+        for _ in 0..<100000 {
+            if cursor >= high { break }
+            var address = cursor
+            var size: vm_size_t = 0
+            var info = vm_region_basic_info_data_64_t()
+            var count = mach_msg_type_number_t(MemoryLayout<vm_region_basic_info_data_64_t>.size / MemoryLayout<Int32>.size)
+            var object = mach_port_t(0)
+            let kr = withUnsafeMutablePointer(to: &info) {
+                $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
+                    vm_region_64(mach_task_self_, &address, &size, VM_REGION_BASIC_INFO_64, $0, &count, &object)
+                }
+            }
+            if object != 0 { mach_port_deallocate(mach_task_self_, object) }
+            if kr == KERN_INVALID_ADDRESS { free += high - cursor; cursor = high; break }
+            guard kr == KERN_SUCCESS, size > 0, address <= UInt.max - size else { return nil }
+            if address >= high { free += high - cursor; cursor = high; break }
+            if address > cursor { free += address - cursor }
+            let next = address + size
+            guard next > cursor else { return nil }
+            cursor = min(next, high)
+        }
+        guard cursor >= high else { return nil }
+        func setting(_ name: String, fallback: UInt64) -> UInt64 {
+            let raw = MadeiraConfig.get("env." + name) ?? ProcessInfo.processInfo.environment[name]
+            return raw.flatMap(UInt64.init) ?? fallback
+        }
+        return IDeckAddressCapacity(mapEnd: maxAddress, freeBytes: UInt64(free),
+            minMapGB: setting("MADEIRA_WOW_MIN_MAP_GB", fallback: 48),
+            minFreeGB: setting("MADEIRA_WOW_MIN_FREE_GB", fallback: 8))
+    }
+}

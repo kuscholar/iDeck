@@ -1323,7 +1323,11 @@ struct ContentView: View {
             // under the title, the buttons and the search field behind a
             // progressive blur (as in the App Store), with no hard edge.
             .toolbarBackground(library.enabled && !Self.systemScrollEdge ? .visible : .automatic, for: .navigationBar)
-            // A second session cannot start in this process; offer to close Madeira.
+            // Confirmed launch/preflight failures only. Observed child failures
+            // are nonmodal diagnostics in iDeck options, not a global alert.
+            .alert("Steam startup failed", isPresented: Binding(get: { ideck.startupFailure != nil }, set: { if !$0 { ideck.startupFailure = nil } })) {
+                Button("OK", role: .cancel) { ideck.startupFailure = nil }
+            } message: { Text(ideck.startupFailure ?? "") }
             .alert("Restart Madeira", isPresented: Binding(get: { library.restartNotice != nil },
                                                             set: { if !$0 { library.restartNotice = nil } })) {
                 Button("Close Madeira") {
@@ -1404,6 +1408,8 @@ struct ContentView: View {
                         }
                     }
                 }
+                let automaticATL = ProcessInfo.processInfo.arguments.contains("madeira-atlthunk-diagnostics")
+                let automaticCEF64Component = ProcessInfo.processInfo.arguments.contains("madeira-cef64-component-diagnostics")
                 let automaticPlatform = ProcessInfo.processInfo.arguments.contains("madeira-platform-diagnostics")
                 let automaticSwiftshader = ProcessInfo.processInfo.arguments.contains("madeira-swiftshader-diagnostics")
                 let automaticKeyedEvent = ProcessInfo.processInfo.arguments.contains("madeira-keyed-event-diagnostics")
@@ -1413,10 +1419,11 @@ struct ContentView: View {
                 let automaticFLS = ProcessInfo.processInfo.arguments.contains("madeira-fls-diagnostics")
                 let automaticLoginFirst = ProcessInfo.processInfo.arguments.contains("madeira-steam-login-desktop-experiment")
                 let automaticRatatan = ProcessInfo.processInfo.arguments.contains("madeira-ratatan-thread-experiment")
-                let automaticBigPicture = automaticRatatan || ProcessInfo.processInfo.arguments.contains("madeira-steam-big-picture-x86-experiment")
-                let automaticX86Client = automaticLoginFirst || automaticBigPicture || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-x86-experiment")
-                let automaticSteamUI = automaticX86Client || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-experiment")
-                if IDeckState.enabled && !automaticSteamUI && !automaticX86CEF && !automaticNativeVM && !automaticReservation && !automaticFLS {
+                let automatic64 = SteamUIExperiment.steam64
+                let automaticBigPicture = ProcessInfo.processInfo.arguments.contains("madeira-steam64-big-picture-experiment") || automaticRatatan || ProcessInfo.processInfo.arguments.contains("madeira-steam-big-picture-x86-experiment")
+                let automaticX86Client = !automatic64 && (automaticLoginFirst || automaticBigPicture || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-x86-experiment"))
+                let automaticSteamUI = automatic64 || automaticX86Client || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-experiment")
+                if IDeckState.enabled && !automaticATL && !automaticSteamUI && !automaticX86CEF && !automaticNativeVM && !automaticReservation && !automaticFLS {
                     ideck.refresh()
                     if IDeckRules.shouldAutoStart(setup: ideck.setupDone, ready: ideck.ready,
                         automatic: ideck.autoStart, arguments: ProcessInfo.processInfo.arguments) && !automaticProbeRequested {
@@ -1425,11 +1432,13 @@ struct ContentView: View {
                     }
                 }
                 if SteamUIExperiment.enabled, !automaticProbeRequested,
-                   automaticPlatform || automaticSwiftshader || automaticKeyedEvent || automaticX86CEF || automaticNativeVM || automaticReservation || automaticSteamUI || automaticFLS || ProcessInfo.processInfo.arguments.contains("madeira-runtime-diagnostics") {
+                   automaticATL || automaticPlatform || automaticSwiftshader || automaticKeyedEvent || automaticX86CEF || automaticNativeVM || automaticReservation || automaticSteamUI || automaticFLS || ProcessInfo.processInfo.arguments.contains("madeira-runtime-diagnostics") {
                     automaticProbeRequested = true
                     DispatchQueue.main.async {
                         launchAfterJIT = {
-                            if automaticNativeVM { startSteamUINativeVMProbe() }
+                            if automaticCEF64Component { startCEF64ComponentProbe() }
+                            else if automaticNativeVM { startSteamUINativeVMProbe() }
+                            else if automaticATL { startSteamUIProbe(atlThunk: true) }
                             else if automaticSteamUI { startSteamUIExperiment(x86Client: automaticX86Client, bigPicture: automaticBigPicture, loginFirst: automaticLoginFirst, ratatanThreadTest: automaticRatatan) }
                             else { startSteamUIProbe(fls: automaticFLS, reservation: automaticReservation, x86CEF: automaticX86CEF, keyedEvent: automaticKeyedEvent, swiftshader: automaticSwiftshader, platform: automaticPlatform) }
                         }
@@ -3595,29 +3604,60 @@ struct ContentView: View {
         logStore.log("[native-vm] completed code=\(result); see steam-ui-native-vm-results.txt; no CEF validation")
     }
 
-    private func startSteamUIProbe(fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false) {
+    private func startSteamUIProbe(fls: Bool = false, reservation: Bool = false, x86CEF: Bool = false, keyedEvent: Bool = false, swiftshader: Bool = false, platform: Bool = false, atlThunk: Bool = false) {
         guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
               wineserver_is_running() == 0, !StikJITHelper.poolTaken else {
             logStore.log("[steam-ui-probe] launch refused: fresh isolated JIT session required", level: .error)
             return
         }
-        let prefix = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("wine")
+        let prefix = SteamUIExperiment.runtimePrefix
         do {
-            let args = try SteamUIExperiment.prepareProbe(prefix: prefix, flag: MadeiraConfig.get(SteamUIExperiment.flag), bundleID: Bundle.main.bundleIdentifier, fls: fls, reservation: reservation, x86CEF: x86CEF, keyedEvent: keyedEvent, swiftshader: swiftshader, platform: platform)
+            let args = try SteamUIExperiment.prepareProbe(prefix: prefix, flag: MadeiraConfig.get(SteamUIExperiment.flag), bundleID: Bundle.main.bundleIdentifier, fls: fls, reservation: reservation, x86CEF: x86CEF, keyedEvent: keyedEvent, swiftshader: swiftshader, platform: platform, atlThunk: atlThunk)
             steamUIStarting = true
             setenv("MADEIRA_EXE", "cmd.exe", 1)
             setenv("MADEIRA_ARGS", args, 1)
             unsetenv("MADEIRA_DESKTOP")
-            logStore.log(platform ? "[steam-ui-probe] begin read-only Windows architecture and Valve platform query" : swiftshader ? "[steam-ui-probe] begin isolated official SwiftShader Vulkan initialization; no Steam client" : x86CEF ? "[steam-ui-probe] begin official x86 chrome_elf heap/thread probe; no Steam client" : reservation ? "[steam-ui-probe] begin reserve-only ownership test; no Steam client" : fls ? "[steam-ui-probe] begin synthetic FLS lifetime test; no Steam client" : "[steam-ui-probe] begin synthetic atomic and process tests; no Steam client")
+            logStore.log(atlThunk ? "[steam-ui-probe] begin isolated ATL thunk allocation/callback/free; no Steam client" : platform ? "[steam-ui-probe] begin read-only Windows architecture and Valve platform query" : swiftshader ? "[steam-ui-probe] begin isolated official SwiftShader Vulkan initialization; no Steam client" : x86CEF ? "[steam-ui-probe] begin official x86 chrome_elf heap/thread probe; no Steam client" : reservation ? "[steam-ui-probe] begin reserve-only ownership test; no Steam client" : fls ? "[steam-ui-probe] begin synthetic FLS lifetime test; no Steam client" : "[steam-ui-probe] begin synthetic atomic and process tests; no Steam client")
             runWineFullSequence(steamUI: true)
         } catch { logStore.log("[steam-ui-probe] " + error.localizedDescription, level: .error) }
+    }
+
+    private func startCEF64ComponentProbe() {
+        guard SteamUIExperiment.enabled, !steamUIStarting, jit_check_debugged(), wine_process_is_running() == 0,
+              wineserver_is_running() == 0, !StikJITHelper.poolTaken else { return }
+        guard madeira_cef64_hold_state() >= 0 else {
+            logStore.log("[cef64-owned] native reservation failed; isolated probe refused", level: .error)
+            return
+        }
+        do {
+            let args = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: SteamUIExperiment.runtimePrefix,
+                flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier,
+                ownedContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1",
+                renderer: ProcessInfo.processInfo.environment["MADEIRA_CEF64_PROBE_RENDERER"] == "1",
+                splitContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1" && ProcessInfo.processInfo.environment["MADEIRA_CEF64_SPLIT_LAYOUT"] == "1",
+                nearCodeContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1" && ProcessInfo.processInfo.environment["MADEIRA_CEF64_NEAR_CODE"] == "1",
+                crashPoolContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1" && ProcessInfo.processInfo.environment["MADEIRA_CEF64_CRASH_POOLS"] == "1",
+                crashpadContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_CRASHPAD_PROBE"] == "1",
+                restoreCrashConfig: ProcessInfo.processInfo.environment["MADEIRA_CEF64_CONFIG_RESTORE"] == "1",
+                networkContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_NETWORK_PROBE"] == "1")
+            steamUIStarting = true
+            setenv("MADEIRA_EXE", "cmd.exe", 1)
+            setenv("MADEIRA_ARGS", args, 1)
+            unsetenv("MADEIRA_DESKTOP")
+            logStore.log(ProcessInfo.processInfo.environment["MADEIRA_CEF64_NETWORK_PROBE"] == "1"
+                ? "[cef64-component] isolated x64 public HTTP/TLS and child-exit probe; no Steam client or credentials"
+                : ProcessInfo.processInfo.environment["MADEIRA_CEF64_CRASHPAD_PROBE"] == "1"
+                ? "[cef64-component] own genuine Crashpad IPC/minidump contract probe; Steam is not started"
+                : "[cef64-component] isolated source-built DLL load/VA contract probe; Steam is not started")
+            runWineFullSequence(steamUI: true)
+        } catch { logStore.log("[cef64-component] probe refused: \(error.localizedDescription)", level: .error) }
     }
 
     private func startIDeck(accountChooser: Bool = false) {
         guard !ideck.running, !jitCoordinator.busy, wine_process_is_running() == 0 else { return }
         ideck.error = nil
         UserDefaults.standard.set(true, forKey: "iDeckSetupComplete")
-        let launch = { startSteamUIExperiment(x86Client: true, bigPicture: true, accountChooser: accountChooser, loginFirst: accountChooser) }
+        let launch = { startSteamUIExperiment(x86Client: !SteamUIExperiment.steam64, bigPicture: true, accountChooser: accountChooser, loginFirst: accountChooser) }
         if jit_check_debugged() && StikJITHelper.ready { launch() }
         else { launchAfterJIT = launch; enableJIT() }
     }
@@ -3628,10 +3668,19 @@ struct ContentView: View {
             logStore.log("[steam-ui] launch refused: isolated experimental app, JIT and a fresh session are required", level: .error)
             return
         }
-        let prefix = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("wine")
+        guard madeira_cef64_hold_state() >= 0 else {
+            logStore.log("[cef64-owned] native reservation failed; Steam launch refused, reopen without experiment to use the working layout", level: .error)
+            return
+        }
+        let prefix = SteamUIExperiment.runtimePrefix
         let size = configuredDesktopSize(default: ResolutionChoices.defaultSize())
+        if x86Client, let capacity = IDeckAddressSpace.current(), !capacity.allowsWindow {
+            ideck.error = capacity.detail
+            ideck.startupFailure = capacity.detail
+            return
+        }
         do {
-            if x86Client, let source = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient"),
+            if x86Client, !IDeckRules.steamClientReady(prefix: prefix), let source = Bundle.main.resourceURL?.appendingPathComponent("Steam32OfficialClient"),
                FileManager.default.fileExists(atPath: source.path) {
                 logStore.log("[steam-ui] importing bundled official x86 client into separate directory")
                 try SteamUIExperiment.importBundledX86(source: source, prefix: prefix,
@@ -3640,7 +3689,9 @@ struct ContentView: View {
             if IDeckState.enabled { try ideck.installControl() }
             let plan = try SteamUIExperiment.prepare(prefix: prefix, width: size.0, height: size.1,
                 flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier, x86Client: x86Client, bigPicture: bigPicture,
-                bigPictureFlag: MadeiraConfig.get(SteamUIExperiment.bigPictureFlag) ?? (IDeckState.enabled ? "1" : nil), accountChooser: accountChooser, loginFirst: loginFirst, ratatanThreadTest: ratatanThreadTest)
+                bigPictureFlag: MadeiraConfig.get(SteamUIExperiment.bigPictureFlag) ?? (IDeckState.enabled ? "1" : nil), accountChooser: accountChooser, loginFirst: loginFirst, ratatanThreadTest: ratatanThreadTest,
+                sourceCEFLayout: madeira_cef64_hold_state() == 1,
+                externalCrashpad: ProcessInfo.processInfo.environment["MADEIRA_CEF64_EXTERNAL_CRASHPAD"] == "1")
             if IDeckState.enabled {
                 let relative = String(plan.windowsDirectory.dropFirst(3)).replacingOccurrences(of: "\\", with: "/")
                 ideck.beginLoginObservation(client: prefix.appendingPathComponent("drive_c/" + relative), enabled: accountChooser || loginFirst)
@@ -3653,6 +3704,10 @@ struct ContentView: View {
                     SteamOwnedLibrary.shared.dockEnded(); steamUIStarting = false
                     logStore.log("[steam-ui] launch held after connection handoff; restart with JIT enabled", level: .error)
                     return
+                }
+                if SteamUIExperiment.steam64 && ProcessInfo.processInfo.arguments.contains("madeira-steam64-compact-layout") {
+                    setenv("MADEIRA_STEAM64_COMPACT_LAYOUT", "1", 1)
+                    logStore.log("[steam64-layout] isolated compact arena experiment requested")
                 }
                 setenv("MADEIRA_EXE", "explorer.exe", 1)
                 setenv("MADEIRA_ARGS", plan.arguments, 1)
@@ -3766,7 +3821,7 @@ struct ContentView: View {
         logStore.log("Starting wineserver...")
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let winePrefixPath = documentsPath.appendingPathComponent("wine").path
+        let winePrefixPath = SteamUIExperiment.runtimePrefix.path
 
         logStore.log("Wine prefix: \(winePrefixPath)")
 
@@ -3787,7 +3842,7 @@ struct ContentView: View {
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let winePrefixPath = documentsPath.appendingPathComponent("wine").path
+        let winePrefixPath = SteamUIExperiment.runtimePrefix.path
 
         // Call synchronously — caller already waited for wineserver to be ready
         let result = wine_process_start(winePrefixPath)
@@ -4185,6 +4240,7 @@ final class TouchControlsModel: ObservableObject {
 /// lands on the hosting root view means empty space, and empty space belongs to
 /// the game underneath — mouse-look must keep working between the buttons.
 final class ControlsWindow: UIWindow {
+    private var steam64HitSamples = 0
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let m = TouchControlsModel.shared
         // Edit mode owns the whole screen: drags and the scale pinch must not
@@ -4201,6 +4257,15 @@ final class ControlsWindow: UIWindow {
         // button, its performance overlay and the touch controls do.
         let library = LibraryModel.shared
         if IDeckState.enabled && IDeckState.shared.running {
+            if ProcessInfo.processInfo.arguments.contains("madeira-steam64-input-diagnostics"),
+               event?.allTouches?.contains(where: { $0.phase == .began }) == true,
+               steam64HitSamples < 24 {
+                steam64HitSamples += 1
+                let root = rootViewController?.view
+                let rp = root?.convert(point, from: self) ?? point
+                let rb = root?.bounds ?? bounds
+                LogStore.shared.log("[ideck-hit] sample=\(steam64HitSamples) window=\(Int(bounds.width))x\(Int(bounds.height)) root=\(Int(rb.width))x\(Int(rb.height)) window-control=\(m.hitsInteractive(point, in: bounds, topBar: false) ? 1 : 0) root-control=\(m.hitsInteractive(rp, in: rb, topBar: false) ? 1 : 0) visible=\(m.visible ? 1 : 0)")
+            }
             if IDeckState.shared.menu || IDeckState.shared.menuRect.contains(point) {
                 return super.hitTest(point, with: event)
             }

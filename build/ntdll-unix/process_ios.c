@@ -74,6 +74,9 @@
 #include "ddk/ntddk.h"
 #include "unix_private.h"
 #include "ios_wow.h"
+#ifdef WINE_IOS
+#include "steam64_cef32_redirect.h"
+#endif
 #include "wine/condrv.h"
 #include "wine/server.h"
 #include "wine/debug.h"
@@ -1450,6 +1453,10 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
     const PS_ATTRIBUTE *handles_attr = NULL, *jobs_attr = NULL;
     data_size_t handles_size, jobs_size;
     obj_handle_t *handles, *jobs;
+#ifdef WINE_IOS
+    RTL_USER_PROCESS_PARAMETERS redirected_params;
+    WCHAR *cef32_path = NULL, *cef32_image = NULL, *cef32_command = NULL;
+#endif
 
     if (thread_flags & THREAD_CREATE_FLAGS_HIDE_FROM_DEBUGGER)
     {
@@ -1495,6 +1502,49 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
         }
     }
     if (!process_attr) process_attr = &empty_attr;
+
+#ifdef WINE_IOS
+    /* Isolated process-identity discriminator: the genuine Steam process gets
+     * the real browser PID directly, with no wrapper PID in between. Keep all
+     * caller-owned parameter buffers intact. All three paths must agree. */
+    if (steam64_cef32_enabled(getenv("MADEIRA_STEAM_UI_SESSION"),
+                             getenv("MADEIRA_STEAM64_DIRECT_CEF32"), getenv("WINEPREFIX")) &&
+        steam64_cef32_path(NULL, 0, path.Buffer, path.Length / sizeof(WCHAR), 0))
+    {
+        size_t plen = path.Length / sizeof(WCHAR), ilen = params->ImagePathName.Length / sizeof(WCHAR);
+        size_t clen = params->CommandLine.Length / sizeof(WCHAR), pn, in, cn;
+        cef32_path = malloc((plen + 1) * sizeof(WCHAR));
+        cef32_image = malloc((ilen + 1) * sizeof(WCHAR));
+        cef32_command = malloc((clen + 1) * sizeof(WCHAR));
+        if (!cef32_path || !cef32_image || !cef32_command)
+        {
+            free(cef32_path); free(cef32_image); free(cef32_command);
+            return STATUS_NO_MEMORY;
+        }
+        pn = steam64_cef32_path(cef32_path, plen + 1, path.Buffer, plen, 0);
+        in = steam64_cef32_path(cef32_image, ilen + 1, params->ImagePathName.Buffer, ilen, 0);
+        cn = steam64_cef32_path(cef32_command, clen + 1, params->CommandLine.Buffer, clen, 1);
+        if (!pn || !in || !cn || (machine && machine != IMAGE_FILE_MACHINE_AMD64))
+        {
+            dprintf(2, "[steam64-cef32] refused: parameter contract mismatch\n");
+            free(cef32_path); free(cef32_image); free(cef32_command);
+            return STATUS_INVALID_PARAMETER;
+        }
+        redirected_params = *params;
+        redirected_params.ImagePathName.Buffer = cef32_image;
+        redirected_params.ImagePathName.Length = in * sizeof(WCHAR);
+        redirected_params.ImagePathName.MaximumLength = (in + 1) * sizeof(WCHAR);
+        redirected_params.CommandLine.Buffer = cef32_command;
+        redirected_params.CommandLine.Length = cn * sizeof(WCHAR);
+        redirected_params.CommandLine.MaximumLength = (cn + 1) * sizeof(WCHAR);
+        params = &redirected_params;
+        path.Buffer = cef32_path;
+        path.Length = pn * sizeof(WCHAR);
+        path.MaximumLength = (pn + 1) * sizeof(WCHAR);
+        machine = IMAGE_FILE_MACHINE_I386;
+        dprintf(2, "[steam64-cef32] direct official i386 browser; original caller owns actual child PID\n");
+    }
+#endif
 
     TRACE( "%s image %s cmdline %s parent %p machine %x\n", debugstr_us( &path ),
            debugstr_us( &params->ImagePathName ), debugstr_us( &params->CommandLine ), parent, machine );
@@ -1592,6 +1642,7 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
                 {
                     dprintf(2, "[proc-gate] REFUSING spawn of %s (%s gate)\n",
                             debugstr_us( &params->ImagePathName ), blocked );
+                    free(cef32_path); free(cef32_image); free(cef32_command);
                     return STATUS_ACCESS_DENIED;
                 }
             }
@@ -1629,6 +1680,7 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
                     {
                         dprintf(2, "[proc-gate] madeira-bcd REFUSING spawn of %s (MADEIRA_SPAWN_BLOCK %.*s)\n",
                                 debugstr_us( &params->ImagePathName ), bl, list );
+                        free(cef32_path); free(cef32_image); free(cef32_command);
                         return STATUS_ACCESS_DENIED;
                     }
                 }
@@ -1645,6 +1697,7 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
         dprintf(2, "[proc-gate] REFUSING spawn of %s (conhost in an ARM64EC session: it is aarch64 and "
                 "its threads have no CPU area for the emulator loaded into it; env.MADEIRA_EC_CONHOST=1 "
                 "starts it)\n", debugstr_us( &params->ImagePathName ));
+        free(cef32_path); free(cef32_image); free(cef32_command);
         return STATUS_ACCESS_DENIED;
     }
 
@@ -1702,6 +1755,7 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
             if (has_type)
             {
                 dprintf(2, "[proc-gate] REFUSING steamwebhelper --type= child (single-process mode; task #34)\n");
+                free(cef32_path); free(cef32_image); free(cef32_command);
                 return STATUS_ACCESS_DENIED;
             }
             /* Append --single-process to the browser instance's command line.
@@ -2091,6 +2145,7 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
             dprintf( 2, "[sc-cef] REFUSING a SocialClubHelper.exe --type= child: its browser runs "
                         "--single-process, one CEF process is all the address space holds "
                         "(env.MADEIRA_SC_CEF=0 allows it)\n" );
+            free(cef32_path); free(cef32_image); free(cef32_command);
             return STATUS_ACCESS_DENIED;
         }
         if (kind == SC_BROWSER)
@@ -2180,6 +2235,9 @@ NTSTATUS WINAPI NtCreateUserProcess( HANDLE *process_handle_ptr, HANDLE *thread_
             memset( info, 0, sizeof(*info) );
             free( unix_name );
             free( nt_name.Buffer );
+#ifdef WINE_IOS
+            free(cef32_path); free(cef32_image); free(cef32_command);
+#endif
             return STATUS_SUCCESS;
         }
         goto done;
@@ -2379,6 +2437,9 @@ done:
     free( winedebug );
     free( unix_name );
     free( nt_name.Buffer );
+#ifdef WINE_IOS
+    free(cef32_path); free(cef32_image); free(cef32_command);
+#endif
     return status;
 }
 

@@ -8,6 +8,8 @@ final class LogStore: ObservableObject {
     @Published var entries: [LogEntry] = []
 
     private let logFileURL: URL
+    /// Read-only path for the bounded startup-failure observer.
+    var runtimeLogURL: URL { logFileURL }
     private let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "HH:mm:ss.SSS"
