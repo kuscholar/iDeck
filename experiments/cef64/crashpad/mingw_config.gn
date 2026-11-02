@@ -1,0 +1,80 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Madeira Converter Exception: see LICENSE-EXCEPTION.md
+# Cross compilation only. CEF/Crashpad C++ checks and reporting are unchanged.
+declare_args() {
+  ideck_mingw_bin = ""
+}
+config("default") {
+  defines = [ "NOMINMAX", "UNICODE", "_UNICODE", "WIN32_LEAN_AND_MEAN", "_CRT_SECURE_NO_WARNINGS", "__FUNCSIG__=__PRETTY_FUNCTION__" ]
+  cflags = [ "-Wall", "-Wextra", "-Werror", "-Wno-unused-parameter", "-Wno-missing-field-initializers", "-Wno-error=format", "-Wno-error=sign-compare", "-fno-strict-aliasing", "-fstack-protector-all", "-g" ]
+  ldflags = [ "-Wl,--undefined,_tls_used", "-Wl,--undefined,p_thread_callback_base" ]
+  cflags_c = [ "-std=c11" ]
+  cflags_cc = [ "-std=c++20", "-fno-exceptions", "-fno-rtti" ]
+  libs = [ "kernel32.lib" ]
+  if (is_debug) {
+    cflags += [ "-O0" ]
+  } else {
+    defines += [ "NDEBUG" ]
+    cflags += [ "-O2" ]
+  }
+}
+config("executable") {}
+config("Wexit_time_destructors") {}
+config("Wimplicit_fallthrough") { cflags = [ "-Wimplicit-fallthrough" ] }
+config("win_console") { ldflags = [ "-mconsole" ] }
+config("win_windowed") { ldflags = [ "-mwindows" ] }
+
+toolchain("ideck_mingw") {
+  tool_prefix = "python3 " + rebase_path("//ideck/mingw_tool.py") + " " + ideck_mingw_bin
+  foreach(language, [ "cc", "cxx" ]) {
+    tool(language) {
+      command = "$tool_prefix $language -MMD -MF {{output}}.d {{defines}} {{include_dirs}} {{cflags}} "
+      if (language == "cc") {
+        command += "{{cflags_c}}"
+      } else {
+        command += "{{cflags_cc}}"
+      }
+      command += " -c {{source}} -o {{output}}"
+      depfile = "{{output}}.d"
+      depsformat = "gcc"
+      outputs = [ "{{source_out_dir}}/{{label_name}}.{{source_name_part}}.obj" ]
+      description = "$language {{output}}"
+    }
+  }
+  tool("asm") {
+    command = "$tool_prefix asm {{output}} {{source}}"
+    outputs = [ "{{source_out_dir}}/{{label_name}}.{{source_name_part}}.obj" ]
+    description = "LLVM-ML {{output}}"
+  }
+  tool("alink") {
+    command = "$tool_prefix ar {{output}} {{inputs}}"
+    outputs = [ "{{target_out_dir}}/{{target_output_name}}.a" ]
+    description = "AR {{output}}"
+  }
+  tool("link") {
+    command = "$tool_prefix link -o {{output}} {{ldflags}} -Wl,--start-group {{inputs}} {{solibs}} {{libs}} -Wl,--end-group"
+    outputs = [ "{{output_dir}}/{{target_output_name}}{{output_extension}}" ]
+    default_output_dir = "{{root_out_dir}}"
+    default_output_extension = ".exe"
+    description = "LINK {{output}}"
+    lib_switch = ""
+    lib_dir_switch = "-L"
+  }
+  tool("solink_module") {
+    command = "$tool_prefix link -shared -o {{output}} {{ldflags}} -Wl,--start-group {{inputs}} {{solibs}} {{libs}} -Wl,--end-group"
+    outputs = [ "{{output_dir}}/{{target_output_name}}{{output_extension}}" ]
+    default_output_dir = "{{root_out_dir}}"
+    default_output_extension = ".dll"
+    description = "DLL {{output}}"
+    lib_switch = ""
+    lib_dir_switch = "-L"
+  }
+  tool("stamp") {
+    command = "$tool_prefix stamp {{output}}"
+    description = "STAMP {{output}}"
+  }
+  tool("copy") {
+    command = "cp {{source}} {{output}}"
+    description = "COPY {{output}}"
+  }
+}

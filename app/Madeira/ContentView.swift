@@ -1323,7 +1323,8 @@ struct ContentView: View {
             // under the title, the buttons and the search field behind a
             // progressive blur (as in the App Store), with no hard edge.
             .toolbarBackground(library.enabled && !Self.systemScrollEdge ? .visible : .automatic, for: .navigationBar)
-            // A second session cannot start in this process; offer to close Madeira.
+            // Confirmed launch/preflight failures only. Observed child failures
+            // are nonmodal diagnostics in iDeck options, not a global alert.
             .alert("Steam startup failed", isPresented: Binding(get: { ideck.startupFailure != nil }, set: { if !$0 { ideck.startupFailure = nil } })) {
                 Button("OK", role: .cancel) { ideck.startupFailure = nil }
             } message: { Text(ideck.startupFailure ?? "") }
@@ -3631,12 +3632,23 @@ struct ContentView: View {
         do {
             let args = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: SteamUIExperiment.runtimePrefix,
                 flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier,
-                ownedContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1")
+                ownedContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1",
+                renderer: ProcessInfo.processInfo.environment["MADEIRA_CEF64_PROBE_RENDERER"] == "1",
+                splitContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1" && ProcessInfo.processInfo.environment["MADEIRA_CEF64_SPLIT_LAYOUT"] == "1",
+                nearCodeContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1" && ProcessInfo.processInfo.environment["MADEIRA_CEF64_NEAR_CODE"] == "1",
+                crashPoolContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_OWNED_CONTRACT_PROBE"] == "1" && ProcessInfo.processInfo.environment["MADEIRA_CEF64_CRASH_POOLS"] == "1",
+                crashpadContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_CRASHPAD_PROBE"] == "1",
+                restoreCrashConfig: ProcessInfo.processInfo.environment["MADEIRA_CEF64_CONFIG_RESTORE"] == "1",
+                networkContract: ProcessInfo.processInfo.environment["MADEIRA_CEF64_NETWORK_PROBE"] == "1")
             steamUIStarting = true
             setenv("MADEIRA_EXE", "cmd.exe", 1)
             setenv("MADEIRA_ARGS", args, 1)
             unsetenv("MADEIRA_DESKTOP")
-            logStore.log("[cef64-component] isolated source-built DLL load/VA contract probe; Steam is not started")
+            logStore.log(ProcessInfo.processInfo.environment["MADEIRA_CEF64_NETWORK_PROBE"] == "1"
+                ? "[cef64-component] isolated x64 public HTTP/TLS and child-exit probe; no Steam client or credentials"
+                : ProcessInfo.processInfo.environment["MADEIRA_CEF64_CRASHPAD_PROBE"] == "1"
+                ? "[cef64-component] own genuine Crashpad IPC/minidump contract probe; Steam is not started"
+                : "[cef64-component] isolated source-built DLL load/VA contract probe; Steam is not started")
             runWineFullSequence(steamUI: true)
         } catch { logStore.log("[cef64-component] probe refused: \(error.localizedDescription)", level: .error) }
     }
@@ -3677,7 +3689,9 @@ struct ContentView: View {
             if IDeckState.enabled { try ideck.installControl() }
             let plan = try SteamUIExperiment.prepare(prefix: prefix, width: size.0, height: size.1,
                 flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier, x86Client: x86Client, bigPicture: bigPicture,
-                bigPictureFlag: MadeiraConfig.get(SteamUIExperiment.bigPictureFlag) ?? (IDeckState.enabled ? "1" : nil), accountChooser: accountChooser, loginFirst: loginFirst, ratatanThreadTest: ratatanThreadTest)
+                bigPictureFlag: MadeiraConfig.get(SteamUIExperiment.bigPictureFlag) ?? (IDeckState.enabled ? "1" : nil), accountChooser: accountChooser, loginFirst: loginFirst, ratatanThreadTest: ratatanThreadTest,
+                sourceCEFLayout: madeira_cef64_hold_state() == 1,
+                externalCrashpad: ProcessInfo.processInfo.environment["MADEIRA_CEF64_EXTERNAL_CRASHPAD"] == "1")
             if IDeckState.enabled {
                 let relative = String(plan.windowsDirectory.dropFirst(3)).replacingOccurrences(of: "\\", with: "/")
                 ideck.beginLoginObservation(client: prefix.appendingPathComponent("drive_c/" + relative), enabled: accountChooser || loginFirst)

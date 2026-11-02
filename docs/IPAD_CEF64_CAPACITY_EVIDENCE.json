@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-31",
+  "phase": "Full64 CEF capacity / user-selected physical iPad preflight",
+  "source_head": "cb3b8350ada20bd0af18c80ff48a30d5d3b7e612 plus preserved local experiment",
+  "source_head_change": "README-only human changes preserved; no runtime source change inferred from new HEAD",
+  "target": {
+    "marketing_name": "iPad Air4",
+    "product": "iPad13,1",
+    "SoC": "A14",
+    "OS": "iPadOS27.2",
+    "physical": true
+  },
+  "actual_installed_build": 134,
+  "signing": {
+    "normal_GUI_automatic_signing_generated_exact_main_helper_pair": true,
+    "get_task_allow": true,
+    "main_profile_Memory_plus": true,
+    "main_profile_EVA": false,
+    "main_profile_expiry_UTC": "2026-11-07T22:33:09",
+    "helper_profile_expiry_UTC": "2026-11-07T22:33:08",
+    "deep_strict": true
+  },
+  "layout133": {
+    "required_disjoint_native_regions": 20,
+    "total_requested_bytes": 63887769600,
+    "successful_regions": 1,
+    "failed_slot": 1,
+    "failed_base": "0x717fff0000",
+    "failed_size": "0x40010000",
+    "Mach_status": 1,
+    "Mach_name": "KERN_INVALID_ADDRESS",
+    "own_cleanup_status": 0,
+    "backing_edges_exercised": 0
+  },
+  "bounds134": {
+    "fixed_no_overwrite": true,
+    "protection_NONE": true,
+    "memory_touched": false,
+    "point_samples": 32,
+    "prefix_samples": 32,
+    "successful_operations": 48,
+    "all_successful_mapping_cleanup_status": 0,
+    "base": "0x7000000000",
+    "largest_tested_contiguous_prefix_bytes": 6442450944,
+    "first_failing_prefix_bytes": 6710886400,
+    "first_failing_point": "0x7180000000",
+    "failing_status": 1,
+    "scope": "Measured high band under current signed launch; not full backing, total RAM, every other address or Steam proof"
+  },
+  "debugger_discriminator": {
+    "fresh_start_stopped_probe": true,
+    "sentinel_unchanged_before_attachment": true,
+    "attached_target_obtained": false,
+    "error": "Process must be launched",
+    "debugged_capacity_result": null,
+    "exact_fresh_stopped_probe_ended_verified": true
+  },
+  "validation": {
+    "production_sampler_ASan_UBSan": "PASS ownership/64bounds/collision/errors",
+    "native_units": 37,
+    "full_Xcode": 134,
+    "final_MachO_markers": true,
+    "private_FEX131_helper126_unchanged": true,
+    "actual_install_version_readback": true,
+    "Wine_or_Steam_started": false,
+    "JIT_enabled_runtime_proved": false
+  },
+  "assessment": "NO-GO for unchanged full64 layout under this Memory-only launch; EVA and actual debugger-enabled capacity remain unverified",
+  "next": "Current Personal Team EVA request refused by official Xcode. No granted profile or full64 iPad pass. Preserve known capacity NO-GO; continue separate Kusch cycle investigation.",
+  "preservation": {
+    "MacAllocator22_app_and_data": true,
+    "iPhone_auth_games_saves_copied": false,
+    "mainline_merge_or_release": false,
+    "iPhone132_cleanup": "pending original file-service gate"
+  },
+  "artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/ipad133-native-layout-results.txt",
+      "bytes": 612,
+      "sha256": "ec6fd642eff37b8da4bb0f03a8d5f45b4112a2ca8f51bb7829e43c34389bacb5"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/ipad133-address-inventory-results.txt",
+      "bytes": 14564,
+      "sha256": "ee9db95659f8a8029c8fb8dacb7b3ecdcac251cced41b5b0e5ce7af3d69d8c8c"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/ipad134-memory-only-va-bounds-results.txt",
+      "bytes": 7076,
+      "sha256": "7b74770330058f6248d93f14d67e1daabcafc84aa489e5c84b483f3e262de9df"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/ipad134-build-evidence.json",
+      "bytes": 627,
+      "sha256": "be47e7f577bcd490e6ffc411534a4bcbed13cda2b09f23b17e24507ea0e5f88a"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/ipad134-debug-attach-private.log",
+      "bytes": 811,
+      "sha256": "706d0c991f168eb6e572764038f7ead08774cd01504b811aac6349933327b2b9"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/ipad134-debug-before-attach.txt",
+      "bytes": 59,
+      "sha256": "743da2244bdb889e466f2f0ba917ba16887ba2cd932815a7294e43c1bad0303f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/launch134-ipad-memory-only-va-bounds.json",
+      "bytes": 1617,
+      "sha256": "487ac7ff6bc8036825d7fc51d3c13f09247fd64c4c4f970710070887b8367327"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/launch134-ipad-debug-va-bounds.json",
+      "bytes": 1635,
+      "sha256": "990f4ad9c11ad989b7ed80335c08c1bf344cb5fc4131d6e66d1a3770521bca7c"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/host134-steam-ui.log",
+      "bytes": 184,
+      "sha256": "a3dc79edbe078bced184a6df6157bb6d129c5ec743c15a4b42fbe06d1bc04354"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/native134-build.log",
+      "bytes": 891,
+      "sha256": "7c1131d5f8038deb7940d47de4d6bfb1d2cba6b07fcf386b294854a063c5ef50"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/xcode134-vm-bounds.log",
+      "bytes": 176754,
+      "sha256": "5576cf68bba076da9ce0c089ff720381f4f949b939db774e0159df7ad84793ca"
+    }
+  ],
+  "continuation_20261031_2305Z": {
+    "user_report": "Mac unlocked",
+    "immediate_host_state": "KuschMacMini-M6-New native locked=true, frontmost loginwindow",
+    "normal_GUI_build_requested": false,
+    "one_shot_native_unlock_check": {
+      "bounded_seconds": 180,
+      "stage": "timeout_without_native_unlock",
+      "time_UTC": "2026-10-31T23:11:06Z"
+    },
+    "background_Xcode_interface": "Official installed scripting dictionary verified; helper syntax passes; not executed",
+    "existing_automation_permission": -1744,
+    "consent_prompt_requested": false,
+    "EVA_grant": "unchanged absent; not accepted/rejected by an actual EVA request",
+    "next": "Resolve which computer desktop the user has unlocked; do not repeat background No Accounts or generic unlock loops"
+  },
+  "subsequent_official_GUI_request": {
+    "executed": true,
+    "result": "Extended Virtual Addressing refused for Personal Team",
+    "activity_log": "BEBA4BE7-20C2-4BB4-8769-D116C57CC12E.xcactivitylog",
+    "sha256": "2452c00e29378c32bd3a8951b7a37165ebf85410788a931248bb01b549be106f",
+    "EVA_profile_granted": false
+  }
+}

@@ -706,3 +706,18 @@ only while the exact visible foreground `Steam Big Picture Mode` window belongs
 to steam.exe/steamwebhelper.exe. No keys are sent to games or other windows;
 XInput/HID snapshots remain unchanged. This is an experimental workaround, OFF
 by default, and requires device validation. Ordinary launch keeps prior behavior.
+
+
+## Fixed Hot Roads launch diagnostic (Build116, lab only)
+
+`python3 tests/host/check-steam64-game-launch.py` compiles the production gate
+and action under ASan/UBSan. It checks exact session/prefix/input gates, the
+additional `MADEIRA_STEAM64_GAME_LAUNCH_DIAGNOSTICS=1`, an installed regular file
+at `C:\Program Files\Steam\steamapps\common\Hot Roads\hr.exe`, and failure
+propagation. Only command `diagnostic-hot-roads` is accepted; it sends the fixed
+`steam://run/1819280` URI to genuine running Steam. No arbitrary URI/app/executable
+is accepted, no credential entry, and Steam retains license checks. A request ACK
+is not proof of launch/gameplay: inspect Steam gameprocess and game logs. Use
+only after the exact native lifetime's code/image regions are verified; do not
+repeat a launch into a failed or unknown runtime. Actual116reaches Unity's
+D3D11device initialization then fails a later FEX allocation; gameplay pending.

@@ -1,9 +1,10 @@
 name: Experimental CEF64 component
 on:
   push:
-    branches: [experiment/steam64-hybrid]
+    branches: [experiment/steam64-cef64]
     paths:
       - experiments/cef64/**
+      - '!experiments/cef64/crashpad/**'
       - tests/host/check-cef64-source.py
       - tests/host/check-cef64-cef-glue.py
       - .github/workflows/cef64-component.yml

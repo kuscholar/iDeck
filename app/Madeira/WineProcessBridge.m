@@ -930,8 +930,16 @@ static void *wine_process_thread(void *arg) {
             const char *verbose = getenv("MADEIRA_DEBUG_VERBOSE");
             const char *steam_ui = getenv("MADEIRA_STEAM_UI_SESSION");
             if (steam_ui && !strcmp(steam_ui, "1")) {
-                setenv("WINEDEBUG", "-all", 1); // no raw CEF command lines/credential-bearing payloads
-                LOG("[steam-ui] Wine payload-wide debug channels disabled; categorical evidence only");
+                const char *module_errors = getenv("MADEIRA_STEAM_UI_MODULE_ERRORS");
+                if (module_errors && !strcmp(module_errors, "1")) {
+                    // Opt-in module errors only; never trace process arguments,
+                    // file contents, relay parameters, authentication or URLs.
+                    setenv("WINEDEBUG", "-all,err+module", 1);
+                    LOG("[steam-ui] module-load errors enabled; all trace channels disabled");
+                } else {
+                    setenv("WINEDEBUG", "-all", 1); // no raw CEF command lines/credential-bearing payloads
+                    LOG("[steam-ui] Wine payload-wide debug channels disabled; categorical evidence only");
+                }
             } else if (verbose && *verbose && *verbose != '0') {
                 setenv("WINEDEBUG", "err+all,fixme+all,warn+module,warn+file,trace+process,trace+module,trace+loaddll,trace+loadorder,trace+win,trace+user32,trace+syscall,trace+file", 1);
                 LOG("WINEDEBUG = verbose (MADEIRA_DEBUG_VERBOSE set)");

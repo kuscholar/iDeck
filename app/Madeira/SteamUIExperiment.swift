@@ -42,12 +42,39 @@ enum SteamUIExperiment {
         let productDefault = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true ? "1" : nil
         return allowed(flag: MadeiraConfig.get(flag) ?? productDefault, bundleID: Bundle.main.bundleIdentifier)
     }
-    static func prepareCEF64ComponentProbe(prefix: URL, flag: String?, bundleID: String?, ownedContract: Bool = false) throws -> String {
+    static func prepareCEF64ComponentProbe(prefix: URL, flag: String?, bundleID: String?, ownedContract: Bool = false, renderer: Bool = false, splitContract: Bool = false, nearCodeContract: Bool = false, crashPoolContract: Bool = false, crashpadContract: Bool = false, restoreCrashConfig: Bool = false, networkContract: Bool = false) throws -> String {
         guard allowed(flag: flag, bundleID: bundleID), prefix.lastPathComponent == "wine-steam64" else { throw Failure.disabled }
+        guard !(ownedContract && renderer), !splitContract || ownedContract, !nearCodeContract || (ownedContract && splitContract), !crashPoolContract || nearCodeContract else { throw Failure.disabled }
         let drive = prefix.appendingPathComponent("drive_c")
+        if networkContract {
+            guard !ownedContract, !renderer, !splitContract, !nearCodeContract, !crashPoolContract,
+                  !crashpadContract, !restoreCrashConfig,
+                  isX64PE(drive.appendingPathComponent("steam64-network-probe.exe")) else { throw Failure.disabled }
+            let batch = "@echo off\r\nC:\\steam64-network-probe.exe > C:\\madeira-cef64-network-results.txt 2>&1\r\necho probe-exit=%errorlevel% >> C:\\madeira-cef64-network-results.txt\r\n"
+            try batch.write(to: drive.appendingPathComponent("madeira-cef64-network.cmd"), atomically: true, encoding: .utf8)
+            return "/c C:\\madeira-cef64-network.cmd"
+        }
+        if restoreCrashConfig {
+            guard !ownedContract, !renderer, !splitContract, !nearCodeContract, !crashPoolContract, !crashpadContract,
+                  isX64PE(drive.appendingPathComponent("iDeckCEF64Crashpad/config_guard.exe")) else { throw Failure.disabled }
+            let batch = "@echo off\r\nC:\\iDeckCEF64Crashpad\\config_guard.exe --restore > C:\\madeira-cef64-config-restore-results.txt 2>&1\r\necho restore-exit=%errorlevel% >> C:\\madeira-cef64-config-restore-results.txt\r\n"
+            try batch.write(to: drive.appendingPathComponent("madeira-cef64-config-restore.cmd"), atomically: true, encoding: .utf8)
+            return "/c C:\\madeira-cef64-config-restore.cmd"
+        }
+        if crashpadContract {
+            guard !ownedContract, !renderer, !splitContract, !nearCodeContract, !crashPoolContract else { throw Failure.disabled }
+            let directory = drive.appendingPathComponent("iDeckCEF64Crashpad")
+            guard isX64PE(directory.appendingPathComponent("crashpad_handler.exe")),
+                  isX64PE(directory.appendingPathComponent("crashpad_smoke.exe")) else { throw Failure.incompleteProbe }
+            let database = "own-" + UUID().uuidString
+            try FileManager.default.createDirectory(at: directory.appendingPathComponent(database), withIntermediateDirectories: false)
+            let batch = "@echo off\r\nC:\\iDeckCEF64Crashpad\\crashpad_smoke.exe C:\\iDeckCEF64Crashpad\\crashpad_handler.exe C:\\iDeckCEF64Crashpad\\\(database) > C:\\madeira-cef64-crashpad-results.txt 2>&1\r\necho probe-exit=%errorlevel% >> C:\\madeira-cef64-crashpad-results.txt\r\n"
+            try batch.write(to: drive.appendingPathComponent("madeira-cef64-crashpad.cmd"), atomically: true, encoding: .utf8)
+            return "/c C:\\madeira-cef64-crashpad.cmd"
+        }
         guard isX64PE(drive.appendingPathComponent("steam64-cef-load-probe.exe")),
               ownedContract || isX64PE(drive.appendingPathComponent("iDeckCEF64SourceProbe/chrome_elf.dll")) else { throw Failure.incompleteProbe }
-        let argument = ownedContract ? "--owned-contract" : "C:\\iDeckCEF64SourceProbe\\chrome_elf.dll"
+        let argument = ownedContract ? "--owned-contract\(crashPoolContract ? " --crash" : nearCodeContract ? " --near" : splitContract ? " --split" : "")" : "C:\\iDeckCEF64SourceProbe\\chrome_elf.dll\(renderer ? " --type=renderer" : "")"
         let batch = "@echo off\r\nC:\\steam64-cef-load-probe.exe \(argument) > C:\\madeira-cef64-load-results.txt 2>&1\r\necho probe-exit=%errorlevel% >> C:\\madeira-cef64-load-results.txt\r\n"
         try batch.write(to: drive.appendingPathComponent("madeira-cef64-load.cmd"), atomically: true, encoding: .utf8)
         return "/c C:\\madeira-cef64-load.cmd"
@@ -111,13 +138,25 @@ enum SteamUIExperiment {
         let bigPicture: Bool
         var accountChooser = false
         var frozenX86 = false
+        // A matched source-component experiment must not apply a queued client
+        // update before its own CEF is loaded. Ordinary AMD64 remains updated.
+        var frozenSourceCEF = false
         var ratatanThreadTest = false
+        var externalCrashpad = false
+        var restoreCrashpadConfig = false
         var batch: String {
-            ["@echo off", "start \"\" \"C:\\windows\\system32\\services.exe\"",
+            var lines = ["@echo off", "start \"\" \"C:\\windows\\system32\\services.exe\"",
              "if exist C:\\ideck-control.exe start \"\" C:\\ideck-control.exe",
-             "cd /d \"\(windowsDirectory)\"",
-             "\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\(frozenX86 ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")\(ratatanThreadTest ? " -applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2" : "")"]
-                .joined(separator: "\r\n") + "\r\n"
+             "cd /d \"\(windowsDirectory)\""]
+            if restoreCrashpadConfig {
+                lines += ["C:\\iDeckCEF64Crashpad\\config_guard.exe --restore > C:\\madeira-cef64-config-guard-results.txt 2>&1", "if errorlevel 1 exit /b 1"]
+            }
+            if externalCrashpad {
+                lines += ["C:\\iDeckCEF64Crashpad\\config_guard.exe --protect >> C:\\madeira-cef64-config-guard-results.txt 2>&1", "if errorlevel 1 exit /b 1"]
+            }
+            lines += ["\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\((frozenX86 || frozenSourceCEF) ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")\(ratatanThreadTest ? " -applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2" : "")"]
+            if externalCrashpad { lines += ["C:\\iDeckCEF64Crashpad\\config_guard.exe --restore >> C:\\madeira-cef64-config-guard-results.txt 2>&1"] }
+            return lines.joined(separator: "\r\n") + "\r\n"
         }
         var arguments: String { "/desktop=steamui,\(width)x\(height) cmd /c C:\\madeira-steam-ui.cmd" }
     }
@@ -249,14 +288,21 @@ enum SteamUIExperiment {
         }
         return nil
     }
-    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false) throws -> Plan {
+    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false, sourceCEFLayout: Bool = false, externalCrashpad: Bool = false) throws -> Plan {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
         guard !bigPicture || bigPictureFlag == "1" else { throw Failure.disabled }
         guard !ratatanThreadTest || (x86Client && !accountChooser && !loginFirst) else { throw Failure.disabled }
+        guard !sourceCEFLayout || (!x86Client && prefix.lastPathComponent == "wine-steam64") else { throw Failure.disabled }
+        guard !externalCrashpad || sourceCEFLayout else { throw Failure.disabled }
         guard (640...3840).contains(width), (360...2160).contains(height) else { throw Failure.invalidSize }
         let drive = prefix.appendingPathComponent("drive_c")
         if let relative = clientDirectory(prefix: prefix, x86Client: x86Client) {
-            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client, ratatanThreadTest: ratatanThreadTest)
+            let guardPresent = prefix.lastPathComponent == "wine-steam64" && relative == "Program Files/Steam"
+                && isX64PE(drive.appendingPathComponent("iDeckCEF64Crashpad/config_guard.exe"))
+            if externalCrashpad {
+                guard guardPresent, isX64PE(drive.appendingPathComponent("iDeckCEF64Crashpad/crashpad_handler.exe")) else { throw Failure.incompleteProbe }
+            }
+            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client, frozenSourceCEF: sourceCEFLayout, ratatanThreadTest: ratatanThreadTest, externalCrashpad: externalCrashpad, restoreCrashpadConfig: guardPresent)
             try plan.batch.write(to: drive.appendingPathComponent("madeira-steam-ui.cmd"), atomically: true, encoding: .utf8)
             return plan
         }
@@ -485,7 +531,11 @@ final class SteamUIEvidence {
     private func poll() {
         ticks += 1
         if startup?.failed() == true && reported.insert("guest-window-failed").inserted {
-            IDeckState.shared.startupFailure = "Steam could not start a 32-bit child (guest-window-reserve, STATUS_NO_MEMORY 0xc0000017). No 4 GiB guest window could be reserved with the required headroom. Close and reopen iDeck, then check 32-bit address space. Repairing Steam files or freeing disk space does not fix this limit. See advanced diagnostics; do not bypass the reservation guard."
+            // A child failure does not establish that Steam/the active game
+            // failed. Keep it available in options without taking input away.
+            // Required launch/preflight errors still use startupFailure.
+            IDeckState.shared.runtimeNotice = "A 32-bit process could not start because its 4 GiB address window and required headroom were unavailable (STATUS_NO_MEMORY 0xc0000017). Steam or a 64-bit game may continue. If something did not open, inspect Runtime Diagnostics for the affected process. This notice does not establish that Steam or your game failed."
+            LogStore.shared.log("[steam-ui] child-window-unavailable; recorded in iDeck options, not a session-failure verdict", level: .error)
         }
         let running = wine_process_is_running() != 0
         if running { sawRunning = true }
@@ -537,6 +587,7 @@ import UIKit
     @Published var preparing = false
     @Published var error: String?
     @Published var startupFailure: String?
+    @Published var runtimeNotice: String?
     @Published var menu = false
     var menuRect = CGRect.zero
     @Published var ready = false
@@ -721,6 +772,9 @@ import UIKit
                     case "menu-requested", "big-picture-requested": controlStatus=nil
                     case "account-ui-requested": controlStatus="Choose your account in Steam. iDeck never enters credentials."
                     case "returned-to-steam": controlStatus=nil
+                    case "steam-window-focused": controlStatus=nil
+                    case "steam-focus-pending": controlStatus="Steam is open but could not take focus. Tap its window or open Steam menu."
+                    case "steam-window-unresponsive": controlStatus="Steam’s window is not responding after the game closed. Check Runtime Diagnostics before restarting."
                     case "no-game": controlStatus="No running Steam game window was found."
                     case "multiple-games": controlStatus="Focus the game you want to close, then try again."
                     case "game-close-pending": controlStatus="The game is still open. Confirm its save/exit prompt."
@@ -1026,6 +1080,12 @@ struct IDeckHUD: View {
                                 }
                                 if !state.controlReady { Text("Connecting Steam controls…").font(.caption) }
                                 if let message=state.controlStatus { Text(message).font(.caption).foregroundStyle(.secondary) }
+                                if let notice=state.runtimeNotice {
+                                    VStack(alignment:.leading,spacing:5) {
+                                        Label("Runtime diagnostics",systemImage:"info.circle").font(.caption.bold())
+                                        Text(notice).font(.caption).foregroundStyle(.secondary)
+                                    }.accessibilityElement(children:.combine)
+                                }
                             }.padding(20)
                         }.frame(width:min(390,max(240,geo.size.width-32)),height:min(560,max(180,geo.size.height-insets.top-insets.bottom-24)))
                             .background(.regularMaterial,in:RoundedRectangle(cornerRadius:24))

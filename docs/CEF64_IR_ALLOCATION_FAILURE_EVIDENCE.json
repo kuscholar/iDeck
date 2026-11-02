@@ -329,5 +329,59 @@
     ],
     "device_status": "Kusch paired but tunnel disconnected; current check07:55EDT; Build127 still not installed/tested",
     "limits": "No matched failure is not success. No new on-device test performed. No private FEX source/binary publication."
+  },
+  "build127_actual_probe": {
+    "actual_device": "Kusch",
+    "build": "127 private PE overlay on native122",
+    "all_16_threads_exit0": true,
+    "probe_and_batch_exit0": true,
+    "independent_Python64_oracle": true,
+    "actual_span8_getter_marker": true,
+    "actual_IR4MiB_MAXINST256_marker": true,
+    "own_probe_restored_exact": true,
+    "Steam_game_proof": false,
+    "artifacts": [
+      {
+        "private_path": "..//Users/kuschqin/Downloads/GitHub/FunProjects/.madeira-install/steam64-current/ir127-stress-results.txt",
+        "bytes": 9852,
+        "sha256": "0974b064e1ef37a93b90cfecb0a061369b7f593bf0f1ac0d2c0c2951dff7ba30"
+      },
+      {
+        "private_path": "..//Users/kuschqin/Downloads/GitHub/FunProjects/.madeira-install/steam64-current/ir127-stress-ended-native.txt",
+        "bytes": 252391,
+        "sha256": "8c1cc60d462bfeb6495b14d5551c6a84d0ccdb213ecdc60517f0d43c7fb14081"
+      }
+    ]
+  },
+  "build127_eight_table_ownership_probe": {
+    "build": "127 same private span8/IR4 DLL",
+    "eight_distinct_table_claims": true,
+    "core14_edge_checks": true,
+    "placeholder_split_replace_preserve": true,
+    "generic_and_duplicate_refusals": true,
+    "inner_contract_result": 0,
+    "outer_batch_exit": null,
+    "outer_clean_exit_observed": false,
+    "actual_native16_holds": true,
+    "actual_published_FEX_range": [
+      "0x7500000000",
+      "0x7740000000"
+    ],
+    "actual_FEX_bytes": 9663676416,
+    "actual_span8_marker": true,
+    "original_own_probe_restored_exact": true,
+    "limits": "Contract C result0 only. Shell exit line absent in bounded observation; no clean process-exit claim. A label-only assertion was corrected using actual published numeric range, no runtime change or extra allocation retry. No CEF/login/game proof.",
+    "artifacts": [
+      {
+        "private_path": "../.madeira-install/steam64-current/owned127-eight-results-final.txt",
+        "bytes": 3286,
+        "sha256": "b36ccfad778d8a77c68eed4626521d12a899e0d26ef5f91b7fad7a8fab1ba98c"
+      },
+      {
+        "private_path": "../.madeira-install/steam64-current/owned127-eight-ended-native.txt",
+        "bytes": 19209270,
+        "sha256": "117e1dea1c2086bcdf66b4872a9de742985410fcde405cfdd1598c1285da4887"
+      }
+    ]
   }
 }

@@ -44,4 +44,11 @@ with tempfile.TemporaryDirectory() as d:
  subprocess.run([str(p/'test')],check=True)
 assert 'mach_port_deallocate' in (root/'app/Madeira/EntitlementChecker.swift').read_text()
 assert 'if x86Client, !IDeckRules.steamClientReady(prefix: prefix)' in (root/'app/Madeira/ContentView.swift').read_text()
+observer = s[s.index('final class SteamUIEvidence'):s.index('// iDeck is an isolated product shell')]
+assert 'IDeckState.shared.runtimeNotice =' in observer
+assert 'IDeckState.shared.startupFailure =' not in observer
+assert 'Text(notice)' in s and 'state.runtimeNotice' in s
+content = (root/'app/Madeira/ContentView.swift').read_text()
+assert 'ideck.startupFailure = capacity.detail' in content  # True preflight refusal remains visible.
+assert '.alert("Steam runtime notice"' not in content
 print('PASS: reported 639MiB refusal, margins/overflow, current-session chunked failure, busy log and rotation; no entitlement bypass')

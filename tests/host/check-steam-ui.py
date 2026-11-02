@@ -71,11 +71,44 @@ let componentArguments = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix
 assert(componentArguments == "/c C:\\madeira-cef64-load.cmd")
 let componentBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
 assert(!componentBatch.contains("steam.exe") && !componentBatch.contains("steamwebhelper") && componentBatch.contains("probe-exit=%errorlevel%"))
+_ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", renderer: true)
+let rendererBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
+assert(rendererBatch.contains("chrome_elf.dll --type=renderer") && !rendererBatch.contains("steam.exe"))
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true, renderer: true); fatalError("mixed component experiments") } catch {}
 try FileManager.default.removeItem(at: componentDLL)
 let ownedArguments = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true)
 assert(ownedArguments == componentArguments)
 let ownedBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
 assert(ownedBatch.contains(" --owned-contract") && !ownedBatch.contains("chrome_elf.dll") && !ownedBatch.contains("steam.exe"))
+_ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true, splitContract: true)
+let splitBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
+assert(splitBatch.contains("--owned-contract --split") && !splitBatch.contains("steam.exe"))
+_ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true, splitContract: true, nearCodeContract: true)
+let nearBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
+assert(nearBatch.contains("--owned-contract --near") && !nearBatch.contains("steam.exe"))
+_ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true, splitContract: true, nearCodeContract: true, crashPoolContract: true)
+let crashBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-load.cmd"), encoding: .utf8)
+assert(crashBatch.contains("--owned-contract --crash"))
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", crashPoolContract: true); fatalError("crash probe without near ownership") } catch {}
+let crashpadDirectory = componentDrive.appendingPathComponent("iDeckCEF64Crashpad")
+try FileManager.default.createDirectory(at: crashpadDirectory, withIntermediateDirectories: true)
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", crashpadContract: true); fatalError("missing real crashpad programs") } catch {}
+try componentPE.write(to: crashpadDirectory.appendingPathComponent("crashpad_handler.exe"))
+try componentPE.write(to: crashpadDirectory.appendingPathComponent("crashpad_smoke.exe"))
+let crashpadArguments = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", crashpadContract: true)
+assert(crashpadArguments == "/c C:\\madeira-cef64-crashpad.cmd")
+let crashpadBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-crashpad.cmd"), encoding: .utf8)
+assert(crashpadBatch.contains("crashpad_smoke.exe C:\\iDeckCEF64Crashpad\\crashpad_handler.exe C:\\iDeckCEF64Crashpad\\own-"))
+assert(!crashpadBatch.contains("steam.exe") && !crashpadBatch.contains("chrome_elf.dll"))
+_ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", crashpadContract: true)
+let secondCrashpadBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-crashpad.cmd"), encoding: .utf8)
+assert(crashpadBatch != secondCrashpadBatch) // A stale minidump cannot satisfy a new run.
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true, crashpadContract: true); fatalError("mixed crashpad/owned probe") } catch {}
+
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", nearCodeContract: true); fatalError("near without split ownership") } catch {}
+
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", splitContract: true); fatalError("split without ownership test") } catch {}
+
 do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: root, flag: "1", bundleID: "test.steamui", ownedContract: true); fatalError("owned probe ordinary prefix") } catch {}
 do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: nil, bundleID: "test.steamui", ownedContract: true); fatalError("owned probe flag") } catch {}
 try FileManager.default.createSymbolicLink(at: componentDLL, withDestinationURL: client.appendingPathComponent("steam.exe"))
@@ -86,6 +119,41 @@ let p = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, fl
 assert(p.arguments == "/desktop=steamui,1408x648 cmd /c C:\\madeira-steam-ui.cmd")
 assert(p.batch.contains("services.exe") && p.batch.contains("steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor"))
 assert(!p.batch.contains("dockhost") && !p.batch.contains("-bigpicture") && !p.batch.contains("-console"))
+assert(!p.batch.contains("-skipinitialbootstrap") && !p.batch.contains("-nobootstrapperupdate"))
+do { _ = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true); fatalError("source CEF ordinary prefix") } catch {}
+let sourceClient = componentDrive.appendingPathComponent("Program Files/Steam")
+try FileManager.default.createDirectory(at: sourceClient.deletingLastPathComponent(), withIntermediateDirectories: true)
+try FileManager.default.copyItem(at: client, to: sourceClient)
+let sourcePlan = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true)
+assert(sourcePlan.batch.contains("-nobootstrapperupdate -skipinitialbootstrap") && !sourcePlan.batch.contains("changeuser"))
+assert(!sourcePlan.batch.contains("-cef-disable-breakpad"))
+do { _ = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", externalCrashpad: true); fatalError("external crashpad without source layout") } catch {}
+do { _ = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true, externalCrashpad: true); fatalError("missing config guard") } catch {}
+try componentPE.write(to: crashpadDirectory.appendingPathComponent("config_guard.exe"))
+let protectedPlan = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true, externalCrashpad: true)
+assert(protectedPlan.batch.contains("config_guard.exe --protect") && protectedPlan.batch.contains("if errorlevel 1 exit /b 1"))
+assert(protectedPlan.batch.range(of: "--protect")!.lowerBound < protectedPlan.batch.range(of: "steam.exe")!.lowerBound)
+assert(!protectedPlan.batch.contains("-cef-disable-breakpad") && !protectedPlan.batch.contains("changeuser"))
+let unprotectedPlan = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui")
+assert(unprotectedPlan.batch.contains("config_guard.exe --restore") && !unprotectedPlan.batch.contains("--protect"))
+let restoreCommand = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", restoreCrashConfig: true)
+assert(restoreCommand == "/c C:\\madeira-cef64-config-restore.cmd")
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", crashpadContract: true, restoreCrashConfig: true); fatalError("restore plus crashpad contract") } catch {}
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", networkContract: true); fatalError("missing network probe") } catch {}
+let networkExe = componentDrive.appendingPathComponent("steam64-network-probe.exe")
+try componentPE.write(to: networkExe)
+let networkCommand = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", networkContract: true)
+assert(networkCommand == "/c C:\\madeira-cef64-network.cmd")
+let networkBatch = try String(contentsOf: componentDrive.appendingPathComponent("madeira-cef64-network.cmd"), encoding: .utf8)
+assert(networkBatch.contains("steam64-network-probe.exe") && networkBatch.contains("probe-exit=%errorlevel%") && !networkBatch.contains("steam.exe"))
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: root, flag: "1", bundleID: "test.steamui", networkContract: true); fatalError("network ordinary prefix") } catch {}
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "0", bundleID: "test.steamui", networkContract: true); fatalError("network feature flag") } catch {}
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", ownedContract: true, networkContract: true); fatalError("mixed network ownership") } catch {}
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", restoreCrashConfig: true, networkContract: true); fatalError("mixed network restore") } catch {}
+try FileManager.default.removeItem(at: networkExe)
+try FileManager.default.createSymbolicLink(at: networkExe, withDestinationURL: componentExe)
+do { _ = try SteamUIExperiment.prepareCEF64ComponentProbe(prefix: componentPrefix, flag: "1", bundleID: "test.steamui", networkContract: true); fatalError("network symlink") } catch {}
+do { _ = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true, sourceCEFLayout: true); fatalError("source CEF x86 client") } catch {}
 try pe("steam.exe", machine: 0x14c); refused("1", "test.steamui")
 try pe("steam.exe")
 let dll = client.appendingPathComponent("steamclient64.dll")

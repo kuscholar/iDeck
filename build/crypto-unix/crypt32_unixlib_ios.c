@@ -867,7 +867,7 @@ static void ios_load_roots_locked(void)
     ios_roots_loaded = TRUE;
 }
 
-static NTSTATUS enum_root_certs( void *args )
+static NTSTATUS ios_enum_root_certs_legacy( void *args )
 {
     struct enum_root_certs_params *params = args;
     struct list *ptr;
@@ -890,6 +890,59 @@ static NTSTATUS enum_root_certs( void *args )
         }
     }
     pthread_mutex_unlock( &ios_root_lock );
+    return status;
+}
+
+/* One statically linked Unix side serves all PE processes. The legacy x64
+ * reader removes certificates from that shared list; later processes then
+ * import an empty ROOT store. Keep the experimental x64 enumeration private
+ * to its calling thread/PEB, just as each real process has its own iterator.
+ * Buffer-size retries do not advance, and only end-of-list resets a walk.
+ * No timeout, eviction, fixed process limit, or trust-policy change is needed.
+ * The existing ordinary and WoW64 paths remain unchanged for this A/B. */
+extern int madeira_cef64_standalone_layout(void);
+static _Thread_local struct { const void *owner; unsigned int index; } ios_root64_cursor;
+
+static NTSTATUS enum_root_certs( void *args )
+{
+    struct enum_root_certs_params *params = args;
+    const char *option = getenv("MADEIRA_CEF64_ROOT_STORE");
+    const char *session = getenv("MADEIRA_STEAM_UI_SESSION");
+    const void *owner;
+    struct list *ptr;
+    unsigned int n = 0;
+    NTSTATUS status = STATUS_SUCCESS;
+
+    if (!option || strcmp(option,"1") || !session || strcmp(session,"1") ||
+        madeira_cef64_standalone_layout() != 1)
+        return ios_enum_root_certs_legacy(args);
+    if (!(owner = NtCurrentTeb()->Peb)) return STATUS_INVALID_PARAMETER;
+    if (ios_root64_cursor.owner != owner)
+    {
+        ios_root64_cursor.owner = owner;
+        ios_root64_cursor.index = 0;
+    }
+    pthread_mutex_lock(&ios_root_lock);
+    ios_load_roots_locked();
+    LIST_FOR_EACH(ptr,&root_cert_list)
+        if (n++ == ios_root64_cursor.index) break;
+    if (ptr == &root_cert_list)
+    {
+        ios_root64_cursor.owner = NULL;
+        ios_root64_cursor.index = 0;
+        status = STATUS_NO_MORE_ENTRIES;
+    }
+    else
+    {
+        struct root_cert *cert = LIST_ENTRY(ptr,struct root_cert,entry);
+        *params->needed = cert->size;
+        if (cert->size <= params->size)
+        {
+            memcpy(params->buffer,cert->data,cert->size);
+            ios_root64_cursor.index++;
+        }
+    }
+    pthread_mutex_unlock(&ios_root_lock);
     return status;
 }
 

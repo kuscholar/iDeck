@@ -529,13 +529,18 @@ enum StikJITHelper {
             let singleFit = largest < vm_address_t(poolSize)
                 ? poolRunSize(available: largest, wanted: vm_address_t(poolSize), pageFit: pageFit)
                 : vm_address_t(poolSize)
-            if ["1", "on", "true", "yes"].contains(splitValue) && windowHeld && !pairOff && singleFit < vm_address_t(poolSize) {
+            // Full64 needs the lower free run for region C as well as A/B.
+            // The ordinary comparison counts only A+B, so a larger single run
+            // below the window can win while eliminating C completely.
+            let keepLowForC = cef64KeepsLowPoolFree(ProcessInfo.processInfo.environment)
+            if ["1", "on", "true", "yes"].contains(splitValue) && windowHeld && !pairOff &&
+                (singleFit < vm_address_t(poolSize) || keepLowForC) {
                 // Where the single-region request lands: first-fit, past ml1040's plugs
                 // (holes below the placeholder, only when a hole above it fits).
                 let steered = earlyPoolBase != 0 && holes.contains { $0.base + $0.size > earlyPoolBase && $0.size >= singleFit }
                 let singleAt = holes.first(where: { $0.size >= singleFit && !(steered && $0.base + $0.size <= earlyPoolBase) })
                 if let s = singleAt, s.base + s.size <= exeWinBase {
-                    var best = singleFit
+                    var best = keepLowForC ? 0 : singleFit
                     var bestB: (base: vm_address_t, size: vm_address_t) = (base: 0, size: 0)
                     for run in holes where run.base >= exeWinBase + exeWinSize && run.base < ceiling {
                         let aFit = min(poolRunSize(available: min(run.size, ceiling - run.base),
@@ -556,6 +561,9 @@ enum StikJITHelper {
                         }
                     }
                     if let pa = pairA {
+                        if keepLowForC {
+                            LogStore.shared.log("[cef64-pool-plan] keep lower run for C; existing disjoint A/B requests and fallback checks retained")
+                        }
                         pairSingle = Int(singleFit)
                         poolSize = Int(pa.size)
                         LogStore.shared.log(String(format: "[pool-split] ml1036 pair above the window: A=0x%lx+%luMB B=0x%lx+%luMB "
@@ -1183,6 +1191,77 @@ enum StikJITHelper {
         return min(available & ~(granule - 1), request)
     }
 
+    private static func cef64KeepsLowPoolFree(_ env: [String: String]) -> Bool {
+        env["MADEIRA_CEF64_KEEP_LOW_POOL"] == "1" &&
+            env["MADEIRA_STEAM_UI_SESSION"] == "1" &&
+            env["MADEIRA_CEF64_SOURCE_LAYOUT"] == "1"
+    }
+
+    private static func cef64ExactSecondPool(_ env: [String: String]) -> Bool {
+        env["MADEIRA_CEF64_EXACT_POOL_B"] == "1" &&
+            env["MADEIRA_STEAM_UI_SESSION"] == "1" &&
+            env["MADEIRA_CEF64_SOURCE_LAYOUT"] == "1"
+    }
+
+    /// Observe the debugger's result, without changing protection or executing
+    /// an unverified range. A gap, partial mapping or writable page refuses it.
+    private static func poolRangeIsRX(_ base: vm_address_t, _ size: vm_address_t) -> Bool {
+        guard size > 0, base <= vm_address_t.max - size else { return false }
+        let end = base + size
+        var cursor = base
+        while cursor < end {
+            var address = cursor, length: vm_size_t = 0
+            var info = vm_region_basic_info_data_64_t()
+            var count = mach_msg_type_number_t(MemoryLayout<vm_region_basic_info_data_64_t>.size / MemoryLayout<Int32>.size)
+            var object: mach_port_t = 0
+            let result = withUnsafeMutablePointer(to: &info) {
+                $0.withMemoryRebound(to: Int32.self, capacity: Int(count)) {
+                    vm_region_64(mach_task_self_, &address, &length, VM_REGION_BASIC_INFO_64, $0, &count, &object)
+                }
+            }
+            if object != 0 { mach_port_deallocate(mach_task_self_, object) }
+            guard result == KERN_SUCCESS, address <= cursor, length > 0,
+                  address <= vm_address_t.max - length, address + length > cursor,
+                  info.protection & (VM_PROT_READ | VM_PROT_EXECUTE) == (VM_PROT_READ | VM_PROT_EXECUTE),
+                  info.protection & VM_PROT_WRITE == 0 else { return false }
+            cursor = min(end, address + length)
+        }
+        return true
+    }
+
+    /// Claim only the measured free B interval with no overwrite, then use the
+    /// existing BRK protocol's non-null prepare operation. No first-fit request,
+    /// protection workaround or retry. The caller still validates the pool span.
+    private static func prepareExactSecondPool(_ base: vm_address_t, _ size: vm_address_t) -> UnsafeMutableRawPointer? {
+        guard base >= 0x148000000, size >= 64 << 20, size <= 0x180000000 - 0x148000000,
+              base <= 0x180000000 - size, base & 0x3fff == 0, size & 0x3fff == 0 else { return nil }
+        var reserved = base
+        let kr = vm_allocate(mach_task_self_, &reserved, vm_size_t(size), 0 /* fixed, NO overwrite */)
+        guard kr == KERN_SUCCESS else {
+            LogStore.shared.log("[cef64-pool-B] exact no-overwrite claim refused kr=\(kr)", level: .error)
+            return nil
+        }
+        guard reserved == base else {
+            vm_deallocate(mach_task_self_, reserved, vm_size_t(size))
+            return nil
+        }
+        let pointer = UnsafeMutableRawPointer(bitPattern: base)!
+        let prepared = jit26_prepare_region(pointer, Int(size))
+        // Debugger preparation blesses the new pages; it does not change their
+        // current protection. Set RX once on this newly owned range, then read
+        // the complete result back. Never apply this to a faulting CEF mapping.
+        guard prepared == pointer,
+              vm_protect(mach_task_self_, base, vm_size_t(size), 0, VM_PROT_READ | VM_PROT_EXECUTE) == KERN_SUCCESS,
+              poolRangeIsRX(base, size) else {
+            vm_deallocate(mach_task_self_, base, vm_size_t(size))
+            LogStore.shared.log("[cef64-pool-B] owned range not returned as complete RX; released, no retry", level: .error)
+            return nil
+        }
+        LogStore.shared.log(String(format: "[cef64-pool-B] exact owned debugger prepare RX=0x%lx+%luMB; complete RX checked",
+                                  Int(base), Int(size >> 20)))
+        return pointer
+    }
+
     /// madeira-bcd split pool: the free runs of at least `minSize` in [lo, hi).
     private static func freeRuns(_ lo: vm_address_t, _ hi: vm_address_t,
                                  minSize: vm_address_t) -> [(base: vm_address_t, size: vm_address_t)] {
@@ -1276,15 +1355,20 @@ enum StikJITHelper {
                 + "; the pool stays one region", level: .error)
             return nil
         }
-        var plugs: [(vm_address_t, vm_size_t)] = []
-        for h in freeRuns(0x100000000, best.base, minSize: size) {
-            var a = h.base
-            if vm_allocate(mach_task_self_, &a, vm_size_t(h.size), 0 /* VM_FLAGS_FIXED */) == KERN_SUCCESS {
-                if a == h.base { plugs.append((a, vm_size_t(h.size))) } else { vm_deallocate(mach_task_self_, a, vm_size_t(h.size)) }
+        let got: UnsafeMutableRawPointer?
+        if cef64ExactSecondPool(ProcessInfo.processInfo.environment) {
+            got = prepareExactSecondPool(best.base, size)
+        } else {
+            var plugs: [(vm_address_t, vm_size_t)] = []
+            for h in freeRuns(0x100000000, best.base, minSize: size) {
+                var a = h.base
+                if vm_allocate(mach_task_self_, &a, vm_size_t(h.size), 0 /* VM_FLAGS_FIXED */) == KERN_SUCCESS {
+                    if a == h.base { plugs.append((a, vm_size_t(h.size))) } else { vm_deallocate(mach_task_self_, a, vm_size_t(h.size)) }
+                }
             }
+            got = jit26_prepare_region(nil, Int(size))
+            for (a, sz) in plugs { vm_deallocate(mach_task_self_, a, sz) }
         }
-        let got = jit26_prepare_region(nil, Int(size))
-        for (a, sz) in plugs { vm_deallocate(mach_task_self_, a, sz) }
         guard let p = got, p != UnsafeMutableRawPointer(bitPattern: 0) else {
             LogStore.shared.log("[pool-split] the debugger did not allocate the second region (\(size >> 20)MB) — the pool "
                 + "stays one region", level: .error)

@@ -1,0 +1,42 @@
+name: Experimental standalone CEF64 Crashpad
+on:
+  push:
+    branches: [experiment/steam64-cef64]
+    paths:
+      - experiments/cef64/crashpad/**
+      - tests/host/check-cef64-crashpad.py
+      - .github/workflows/cef64-crashpad.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cef64-crashpad-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  standalone-handler:
+    runs-on: windows-2022
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          submodules: false
+      - name: Install pinned Ninja
+        run: python -m pip install ninja==1.11.1.1
+      - name: Prepare exact public Crashpad and complete CEF crash policy
+        run: python experiments/cef64/crashpad/prepare.py "$env:RUNNER_TEMP/crashpad" --cef-checkout "$env:RUNNER_TEMP/cef"
+      - name: Check source integrity and parser behavior
+        run: python tests/host/check-cef64-crashpad.py --source "$env:RUNNER_TEMP/crashpad" --source-only
+      - name: Build real handler and exercise IPC plus local minidump
+        run: python experiments/cef64/crashpad/build.py "$env:RUNNER_TEMP/crashpad"
+      - name: Retain source provenance and tested open-source programs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cef64-standalone-crashpad-experiment
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/crashpad/ideck-crashpad-source.json
+            ${{ runner.temp }}/crashpad/ideck-crashpad-build.log
+            ${{ runner.temp }}/crashpad/ideck-crashpad-artifact/**

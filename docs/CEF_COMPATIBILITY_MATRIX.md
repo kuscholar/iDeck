@@ -84,3 +84,18 @@ visible real Steam login (account/password/QR) confirmed on Kusch. Login
 interaction/authentication, library, Big Picture and game/controller remain
 unverified. Private artifact hashes: STEAM_UI_X86_EVIDENCE.json. Preserve live
 session for user sign-in; never publish QR/auth data or claim full PoC success.
+
+
+### Full AMD64 game-start continuation, 2026-10-30 (Build118)
+
+| Gate | Evidence and limit |
+| --- | --- |
+| Native translator allocation order | Triple-gated full-arena small/large separation; production Wine gap-search ASan/UBSan and all37native units pass; final signed marker and actual direction logs verified. Total capacity remains finite. |
+| Signed pool selection | Full64 opt-in retains lower run for C using existing A/B/mid allocator. Actual Swift failed-geometry tests pass; final linked marker verified. Override branch not exercised in latest ASLR map. |
+| Game Mono/D3D11 | Latest same-bundle118test loads actual Mono/D3D11 and new Unity log initializes Direct3D11onA17Pro. Earlier Mono reservation failures are distinct from missing installed files. |
+| Peak native VA | One16MiB request fails with~41.6MiB fragmented free space; later headroom recovers, no captured FEXAlloc fatal in latest trace. Not stable-capacity success. |
+| Interactive Hot Roads / return | Steam still tracks game; UI/controller reply pending. Not validated. |
+
+Detailed redacted artifact hashes, exact starting revision and trial limits:
+[CEF64 source evidence](IDECK_CEF64_SOURCE_EVIDENCE.json),
+[POC results](BIG_PICTURE_POC_RESULTS.md). No long-term GO from build or tracking.

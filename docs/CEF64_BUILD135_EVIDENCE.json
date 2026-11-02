@@ -1,0 +1,119 @@
+{
+  "scope": "Experimental Build135 on physical Kusch iPhone15ProMax/A17Pro; not release or general stability proof",
+  "source_parent": "cb3b8350ada20bd0af18c80ff48a30d5d3b7e612",
+  "branch": "experiment/steam64-cef64",
+  "installed_build_readback": 135,
+  "user_report": {
+    "blocking_notice": "absent",
+    "normal_game_enter_exit_cycles": 2,
+    "third_attempt": "Steam stuck"
+  },
+  "game_process_log": {
+    "timezone": "America/New_York UTC-05:00",
+    "date": "2026-11-01",
+    "cycles": [
+      {
+        "start": "22:13:53",
+        "end": "22:14:10",
+        "exit": "0x00000000"
+      },
+      {
+        "start": "22:14:28",
+        "end": "22:14:47",
+        "exit": "0x00000000"
+      },
+      {
+        "start": "22:15:05",
+        "end": "22:15:08",
+        "exit": "0xc0000135"
+      }
+    ]
+  },
+  "original_third_game_failure": {
+    "image": "UnityPlayer.dll",
+    "section_create_and_query": "success; AMD64",
+    "map_status": "0xc0000017",
+    "required_bytes": 23093248,
+    "largest_gap_bytes": 20942848,
+    "image_band_start": "0x7160000000",
+    "image_band_end": "0x717fff0000",
+    "views": 195,
+    "missing_or_corrupt_file_established": false
+  },
+  "subsequent_CEF_failure": {
+    "time_local": "22:15:20",
+    "category": "ExternalEntityTable::InitializeTable (subspace allocation)",
+    "table_bank_slots": 12,
+    "slot_bytes": 536870912,
+    "same_browser_owner_all_slots_adopted": true,
+    "new_adoption_refused": "0xc0000017",
+    "records": 74,
+    "partial_tail": false,
+    "diagnostic_budget_exhausted": false,
+    "complete_runtime_coverage": false,
+    "leak_proven": false
+  },
+  "collection_limit": "One bounded suspend/copy/SIGCONT snapshot; game map failure precedes snapshot, CEF OOM follows it. Scheduling effects not excluded. Mac locked, no independent screen validation.",
+  "minimal_presentation_patch": "Child-window observation is nonmodal runtimeNotice in options; true preflight failure alert and native guards retained.",
+  "publication_review_followup": "Failed NtCreateSection does not dereference output handle. ASan/UBSan extracted production wrapper test passes; this line is not in installed135.",
+  "validation": {
+    "full_Xcode135": "PASS",
+    "final_debug_marker": "PASS",
+    "deep_strict_sign": "PASS",
+    "host_checks": "29 initial passing fixtures; source check rerun with pinned header PASS; new section wrapper test PASS (31 distinct valid checks)",
+    "CEF_glue_fixture": "not available as required pinned Chromium Git checkout; initial usage-only invocation is not a regression test pass",
+    "device_cycles": "two exit0 plus user interaction report; third failure remains",
+    "native_units_publication_followup": "37 succeeded, 0 failed; generated native archive only, not reinstalled"
+  },
+  "private_components_not_published": {
+    "FEX131_sha256": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+    "helper126_sha256": "a3fb33da4f236163debaa3e092d6d6826000d61dcaac8b3fa1677b2ecc1c07e8",
+    "public_checkout_reproduces_exact_private_FEX": false
+  },
+  "next_discriminator": [
+    "Attribute image-spill views to process owners across automatic child exit, without explicit FreeLibrary.",
+    "Compare Steam-only navigation and game cycles for CEF table demand and full-release semantics; do not recycle preserved placeholders."
+  ],
+  "private_artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/notice135-reconnected-app.json",
+      "bytes": 1401,
+      "sha256": "0314023ed5e84c13147c24b98e865dc9e3da598447db38e313b7d3b20ad4a9da"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/notice135-current-gameprocess.txt",
+      "bytes": 19967,
+      "sha256": "265f478a9d4d1de7f470544818acee19e1b612c4b634c1a147ca31ca4a5f9c51"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/notice135-startup-bounded-native.txt",
+      "bytes": 6561919,
+      "sha256": "c3b343c47eeb6a24050e5e5b5f95b88c1dc5f54c6614d6ef5fc6878d3f0a6b4d"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/notice135-third-stall-leases.txt",
+      "bytes": 17872,
+      "sha256": "db4e42ce000bc7ccb4c460878566e679d70c757bf5708db91e47724baaee1415"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/notice135-third-stall-lease-summary.json",
+      "bytes": 7249,
+      "sha256": "2e162cacaa0c404538cc5123790b2a20035d38f7cc9e4724b89499f1f44c6851"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/notice135-third-stall-cef.txt",
+      "bytes": 139625,
+      "sha256": "e5eb388bdb46166c75440fcf9ce86198c9e69df44a72b0bc28af1ee4c1d7465f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/xcode135-nonmodal-notice.log",
+      "bytes": 576995,
+      "sha256": "9231fdf20874e641a2904c6fa0199e962f2e91078dcd8e82305815ef382ce8c0"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/checkpoint135-native-build.log",
+      "bytes": 891,
+      "sha256": "7c1131d5f8038deb7940d47de4d6bfb1d2cba6b07fcf386b294854a063c5ef50"
+    }
+  ]
+}

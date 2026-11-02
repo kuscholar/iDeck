@@ -27,14 +27,14 @@
 			<key>NSExtensionActivationRule</key>
 			<string>FALSEPREDICATE</string>
 		</dict>
-		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.ar.viewer</string>
-		<key>NSExtensionPrincipalClass</key>
-		<string>MadeiraJITHelperHandler</string>
 		<key>NSExtensionContextClass</key>
 		<string>NSExtensionContext</string>
 		<key>NSExtensionContextHostClass</key>
 		<string>NSExtensionContext</string>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.ar.viewer</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>MadeiraJITHelperHandler</string>
 	</dict>
 	<key>XPCService</key>
 	<dict>

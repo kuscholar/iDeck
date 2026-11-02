@@ -82,6 +82,80 @@ static int focus_steam(void) {
     if(IsIconic(steam_window))ShowWindow(steam_window,SW_RESTORE);
     return GetForegroundWindow()==steam_window || SetForegroundWindow(steam_window)!=0;
 }
+static BOOL CALLBACK find_big_picture(HWND window,LPARAM unused) {
+    WCHAR title[80];
+    if(!GetWindowTextW(window,title,80)||wcscmp(title,L"Steam Big Picture Mode"))return TRUE;
+    return find_steam(window,unused); /* Also validates visibility and the process image. */
+}
+static void return_focus_status(int responsive,DWORD probe_error,DWORD focus_error,
+                                DWORD foreground_pid,int attached,int detached,int focused,
+                                int explorer,int attempted,DWORD attach_error) {
+    FILE *f=fopen("C:\\ideck-return-status.txt","w");
+    if(f){fprintf(f,"responsive=%d probe_error=%lu focus_error=%lu foreground_pid=%lu attached=%d detached=%d focused=%d foreground_shell=%d foreground_desktop=%d foreground_class_atom=%lu system_explorer=%d attach_attempted=%d attach_error=%lu\n",
+        responsive,(unsigned long)probe_error,(unsigned long)focus_error,
+        (unsigned long)foreground_pid,attached,detached,focused,
+        GetForegroundWindow()==GetShellWindow(),GetForegroundWindow()==GetDesktopWindow(),
+        (unsigned long)GetClassLongPtrW(GetForegroundWindow(),GCW_ATOM),explorer,attempted,(unsigned long)attach_error);fclose(f);}
+}
+/* -2: message queue unavailable; -1: no matching window; 0: focus refused;
+ * 1: actual foreground match. No client launch on an existing/hung window. */
+static int focus_existing_big_picture(void) {
+    steam_window=NULL;steam_area=0;EnumWindows(find_big_picture,0);
+    if(!steam_window)return -1;
+    HWND target=steam_window;
+    DWORD_PTR reply=0;SetLastError(ERROR_SUCCESS);
+    if(!SendMessageTimeoutW(target,WM_NULL,0,0,SMTO_ABORTIFHUNG|SMTO_BLOCK|SMTO_ERRORONEXIT,500,&reply)) {
+        return_focus_status(0,GetLastError(),0,0,0,0,0,0,0,0);return -2;
+    }
+    if(IsIconic(target))ShowWindowAsync(target,SW_RESTORE);
+    DWORD focus_error=0,pid=0,attach_error=0;int attached=0,detached=0,explorer=0,attempted=0;
+    if(GetForegroundWindow()!=target) {
+        SetLastError(ERROR_SUCCESS);
+        BOOL accepted=SetForegroundWindow(target);
+        if(!accepted)focus_error=GetLastError();
+        Sleep(50); /* Cross-thread activation is queued; verify the resulting window. */
+    }
+    if(GetForegroundWindow()!=target && focus_error==ERROR_ACCESS_DENIED) {
+        HWND foreground=GetForegroundWindow();WCHAR path[1024];
+        DWORD thread=GetWindowThreadProcessId(foreground,&pid),self=GetCurrentThreadId();
+        int eligible=thread&&thread!=self&&image(pid,path);
+        if(eligible) {
+            const WCHAR *name=wcsrchr(path,L'\\');name=name?name+1:path;
+            eligible=!wcscmp(name,L"steam.exe")||!wcscmp(name,L"steamwebhelper.exe")||game_window(foreground);
+            /* Explicit game exit can foreground another window owned by the
+             * Wine shell (observed PID32/class49188), not its registered desktop.
+             * Check the actual system image; class atoms/handles are not stable
+             * ownership identifiers. This path is only the requested return. */
+            explorer=!wcscmp(path,L"c:\\windows\\system32\\explorer.exe");
+            eligible=eligible||explorer;
+        }
+        /* Only after the explicit game-exit request, and only with a responsive
+         * verified Steam target and an owned Steam/game or registered shell queue. Never
+         * keep input queues joined or change foreground-lock system settings. */
+        if(eligible) {
+            attempted=1;SetLastError(ERROR_SUCCESS);
+            attached=AttachThreadInput(self,thread,TRUE)!=0;
+            if(attached) {
+                SetForegroundWindow(target);
+                detached=AttachThreadInput(self,thread,FALSE)!=0;
+                Sleep(50);
+            } else attach_error=GetLastError();
+        }
+    }
+    int focused=GetForegroundWindow()==target;
+    return_focus_status(1,0,focus_error,pid,attached,detached,focused,explorer,attempted,attach_error);
+    return focused;
+}
+static const char *return_to_steam(void) {
+    int focused=focus_existing_big_picture();
+    if(focused==-2)return "steam-window-unresponsive";
+    if(focused>=0)return focused?"steam-window-focused":"steam-focus-pending";
+    if(!open_steam(L"steam://open/bigpicture"))return "steam-open-failed";
+    Sleep(200);
+    /* Request acceptance is not proof that the browser became responsive. */
+    focused=focus_existing_big_picture();
+    return focused==-2?"steam-window-unresponsive":focused>0?"steam-window-focused":"big-picture-requested";
+}
 static UINT key(WORD vk,DWORD flags) {
     INPUT input={0};input.type=INPUT_KEYBOARD;input.ki.wVk=vk;
     /* CEF derives KeyboardEvent.code from the Windows scan code. Wine preserves
@@ -136,6 +210,15 @@ static void focus_status(int focused) {
     FILE *f=fopen("C:\\ideck-focus-status.txt","w");
     if(f){fprintf(f,"startup_focus=%d foreground_matches=%d\n",focused,
         steam_window && GetForegroundWindow()==steam_window);fclose(f);}
+}
+/* Explicit lab-only discriminator: ask the genuine running Steam client to
+ * launch one already-installed game. No arbitrary app ID, executable or URI. */
+static const char *diagnostic_hot_roads(void) {
+    const char *enabled=getenv("MADEIRA_STEAM64_GAME_LAUNCH_DIAGNOSTICS");
+    if(!input_diagnostic_allowed()||!enabled||strcmp(enabled,"1"))return "diagnostic-disabled";
+    DWORD attributes=GetFileAttributesW(L"C:\\Program Files\\Steam\\steamapps\\common\\Hot Roads\\hr.exe");
+    if(attributes==INVALID_FILE_ATTRIBUTES||(attributes&FILE_ATTRIBUTE_DIRECTORY))return "game-not-installed";
+    return open_steam(L"steam://run/1819280")?"diagnostic-game-launch-requested":"steam-open-failed";
 }
 static void input_status(void) {
     typedef DWORD (WINAPI *GetState)(DWORD,XINPUT_STATE *);
@@ -214,8 +297,7 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
             DWORD state=WaitForSingleObject(exiting,0);
             if(state==WAIT_OBJECT_0) {
                 CloseHandle(exiting);exiting=NULL;
-                int dispatched=open_steam(L"steam://open/bigpicture");Sleep(200);focus_steam();
-                ack(pending,dispatched?"returned-to-steam":"steam-open-failed");
+                ack(pending,return_to_steam());
             } else if(GetTickCount64()>deadline) {
                 CloseHandle(exiting);exiting=NULL;ack(pending,"game-close-pending");
             }
@@ -241,6 +323,15 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
                         !strcmp(command,"diagnostic-down")?VK_DOWN:VK_ESCAPE;
                 UINT sent=key(vk,0);Sleep(150);sent+=key(vk,KEYEVENTF_KEYUP);
                 ack(id,sent==2?"diagnostic-key-sent":"input-unavailable");
+            } else if(!strcmp(command,"diagnostic-hot-roads")) {
+                ack(id,diagnostic_hot_roads());
+            } else if(!strcmp(command,"diagnostic-return-focus")) {
+                if(!input_diagnostic_allowed()){ack(id,"diagnostic-disabled");continue;}
+                game=NULL;game_pid=0;ambiguous=0;EnumWindows(find_game,0);
+                if(game||ambiguous){ack(id,"active-game");continue;}
+                int result=focus_existing_big_picture(); /* Never starts a client. */
+                ack(id,result==-2?"steam-window-unresponsive":result==-1?"steam-window-unavailable":
+                       result?"steam-window-focused":"steam-focus-pending");
             } else if(!strcmp(command,"diagnostic-game-confirm")) {
                 if(!input_diagnostic_allowed()){ack(id,"diagnostic-disabled");continue;}
                 HWND window=GetForegroundWindow();game=NULL;game_pid=0;ambiguous=0;

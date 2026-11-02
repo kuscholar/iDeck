@@ -42,6 +42,9 @@
 #include <mach-o/dyld.h>
 #include <mach-o/getsect.h>
 #include "steam64_teb_ldrsw.h"
+#include "../diagnostics/cef64_delayload_probe.h"
+extern int madeira_cef64_standalone_layout(void);
+
 
 /* iOS-Madeira ml674: XZR/WZR AS A STORE SOURCE MUST READ ZERO.
  *
@@ -76,6 +79,11 @@
 #include <pthread/pthread.h>
 #include <pthread/qos.h>
 #include <fcntl.h>
+static int ios_cef64_delay_read(uint64_t address, void *buffer, size_t size)
+{
+    mach_vm_size_t got = 0;
+    return mach_vm_read_overwrite(mach_task_self(),address,size,(mach_vm_address_t)buffer,&got)==KERN_SUCCESS && got==size;
+}
 #endif
 #ifdef HAVE_SYS_PARAM_H
 # include <sys/param.h>
@@ -2017,6 +2025,18 @@ static void *ios_mach_exception_thread( void *arg )
                                     gn[gi + 1], (unsigned long long)gregs[gi + 1],
                                     gn[gi + 2], (unsigned long long)gregs[gi + 2],
                                     gn[gi + 3], (unsigned long long)gregs[gi + 3]);
+                        if (madeira_cef64_standalone_layout()==1 &&
+                            getenv("MADEIRA_CEF64_DELAYLOAD_TRACE") &&
+                            !strcmp(getenv("MADEIRA_CEF64_DELAYLOAD_TRACE"),"1") &&
+                            getenv("MADEIRA_STEAM_UI_SESSION") &&
+                            !strcmp(getenv("MADEIRA_STEAM_UI_SESSION"),"1"))
+                        {
+                            struct ideck_cef_delay_failure failure;
+                            if (ideck_cef_delay_probe(grip,gregs[4],ios_cef64_delay_read,&failure))
+                                dprintf(STDERR_FILENO,"[cef64-delay-load] reason=%u error=%u module=%s import=%s ordinal=%u; read-only exact CEF126 probe\n",
+                                        failure.reason,failure.error,failure.module,
+                                        failure.by_name?failure.symbol:"by-ordinal",failure.ordinal);
+                        }
                         /* Lab-only CEF126 i386 fatal caller probe. Read the faulting
                          * thread's own WoW window, not the Mach handler's current
                          * process. Emit code RVAs only, never stack payloads. No

@@ -233,6 +233,72 @@
       "private_path": ".madeira-install/steam64-current/span4131-after-exit-confirm-phone.png",
       "bytes": 432532,
       "sha256": "90d5bd415b8edddc7a1b80f2cd8248d73d11c0cd3061e3da42c55dc60e998213"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/image132-fixed-results.txt",
+      "bytes": 4154,
+      "sha256": "0d164f2896e466f46aa27ae8e5a5a2d15ee4c5b6790d4d1c59b7a1edbbfd696c"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/image132-fixed-ended-native.txt",
+      "bytes": 378970,
+      "sha256": "9aeec9d2ae8b41b48f0477e63c51ae1660a715677e8b3f27de71eabdc90ccf2e"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/image132-lifetime-evidence.json",
+      "bytes": 398,
+      "sha256": "76bceb95113f652f56fb9905c4950765c8e38d8bd2949e603db73e9fc7c52cfd"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-startup-native.txt",
+      "bytes": 3464945,
+      "sha256": "4a93da0ca008daa47db090e759eed573f278e9464a18e4eb7aa87647384c9e86"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-after-unity-play-phone.png",
+      "bytes": 139621,
+      "sha256": "cbedc01eddc8d3a28679a79f8122e67e9341ff8ca39efcd91c316575a2528484"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-current-gameprocess.txt",
+      "bytes": 17336,
+      "sha256": "4677eca42a37fcfc792c00e0fb7efe0c95c617dc83a236c11306127efc168d75"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-second-play-gameprocess.txt",
+      "bytes": 17617,
+      "sha256": "ae427f76d4a647514eb774746b953b73efe9cb05747b2dc7e8a0843b33127350"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-second-game-phone.png",
+      "bytes": 558840,
+      "sha256": "b204375d9840c2ec1b04b316cd03a7a02ee5c8348ca9ec5a7798d7ea9202a82f"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-after-return-search-phone.png",
+      "bytes": 243410,
+      "sha256": "2b1bf44faddf206a015ab02bfeb817cc72db413245cd8452fb442faef7e0fd2d"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-second-live-native.txt",
+      "bytes": 10000000,
+      "sha256": "8c071987362efb4c4c3fd46f0b23e31c22efcd98eb7c9ac758a9851db7c6e659",
+      "completeness": "PARTIAL FAILED TRANSFER; ends before second game; not a no-fault record"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-after-stop-processes.json",
+      "bytes": 43312,
+      "sha256": "e49a789e051cf034c4f51388a0d624f47ce1c2c785eacbe5771b5acf32a965e1"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/section132-reconnected-lock.json",
+      "bytes": 610,
+      "sha256": "0ec09c65b7c2641816db95602e6e650aa67443101e5f5781648733dfe3ef358c"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build133-unsigned.json",
+      "bytes": 520,
+      "sha256": "3e9afdc53bc51912fa65cdb2a6771a4930e6de88e1797503254892e3e5ea0b14"
     }
   ],
   "build128_real_game_return": {
@@ -438,6 +504,75 @@
     "FEX_policy": "sameprivate131 span4/decoder32K/IR4, no new FEX change",
     "CEF_table_bank": "same12 (knowncapacitylimit, not falselyfixedbytrace)",
     "final_native_link_sign_install": "PASS, sameprivate131 FEX/helper126 hashes; full native132; no runtime repair claim",
-    "own_probe_first_attempt": "Never entered Wine: executable-window reservation refused, existing bad-JIT-pool guard exited app. Not a DLL load test result. Original own probe backup retained; exactly one same-build fresh startup attempt pending."
+    "own_probe_first_attempt": "Never entered Wine due occupied executable window/bad JIT pool guard; no DLL result.",
+    "own_probe_second_attempt": "Parent rejected existing fixed diagnostic argument, probe-exit2; no image-lifetime body executed. Own program now accepts that exact public launcher argument without an arbitrary path.",
+    "own_probe_fixed_actual_result": {
+      "sequential_child_processes": 3,
+      "successful_image_maps_queries_AMD64_checks_and_frees": 12,
+      "all_children_exit0": true,
+      "parent_batch_exit0": true,
+      "no_DllMain_import_or_game_entry_execution": true,
+      "limits": "No generic repeated-map failure reproduced in this scoped test, not full DLL/game execution proof."
+    },
+    "original_own_PE_and_configs_restored_exact": true,
+    "actual_full_Steam_saved_login_EDT": "10:47:46",
+    "actual_full_Steam_native_pid": 34396,
+    "actual_signed_A_B_C_MiB": [
+      544,
+      160,
+      288
+    ],
+    "actual_signed_total_MiB": 992,
+    "actual_margin_MiB": 262,
+    "JIT_span_MiB": 724,
+    "accounting_correction": "Initial private parser missed late-split format, wrongly treated724span asA; corrected actual544+160+C288=992 stillpasses976gate. No runtime guard change.",
+    "physical_UI": "Genuine Big Picture home and Hot Roads details observed; actual Steam Play clicked, runtime notice dismissed, Unity configuration Play clicked, Unity splash observed.",
+    "first_tracked_game_guest_PID": 788,
+    "first_tracked_game_start_EDT": "10:49:53",
+    "second_load_stage_trace_outcome": "PENDING actual first/second game execution, do not restart live session."
+  },
+  "build132_same_lifetime_second_game": {
+    "native_launch_receipt": ".madeira-install/steam64-current/launch132-section-decoder-span4-twelve-image-spill-cpu1-big-picture.json",
+    "first_game_guest_pid": 788,
+    "first_start_EDT": "2026-10-31 10:49:53",
+    "first_exit_EDT": "2026-10-31 10:54:08",
+    "first_exit_code": 0,
+    "second_game_guest_pid": 1084,
+    "second_start_EDT": "2026-10-31 10:58:28",
+    "second_configuration_and_animated_menu_artifact": true,
+    "second_exit_code": null,
+    "second_return": "Visual Steam details/Play; Search click displays actual Steam content-error page",
+    "second_return_interactive_navigation": "NOT established",
+    "actual_native_app_crash": "NOT established; agent ended exact task after recording content error; absence verified",
+    "partial_native_copy_bytes": 10000000,
+    "partial_native_copy_ends": "2026-10-31 10:56:27 mid-line, before second start",
+    "all_nine_observed_tables_same_owner": true,
+    "complete_current_native_log": false,
+    "current_CEF_OOM_cause": "NOT collected",
+    "configuration_restore": "First upload timed out, no fresh restoration diagnostic launched; state unverified; restore/read back before next launch"
+  },
+  "build133_lease_file_discriminator": {
+    "hypothesis": "A separate bounded numeric event file enables lease lifetime inspection without relying on growing native logs; not a compatibility fix",
+    "flags": [
+      "MADEIRA_STEAM_UI_SESSION=1",
+      "MADEIRA_CEF64_LEASE_TRACE=1",
+      "MADEIRA_CEF64_LEASE_FILE=1"
+    ],
+    "scope": "Existing standalone owned layout, exact isolated wine-steam64 prefix; VM results/claims unchanged",
+    "bounded_bytes": 524288,
+    "bounded_records": 4096,
+    "host_writer_ASan_UBSan": "PASS actual filesystem/gates/schema/errno/overwrite/symlink/replacement/truncation/8 concurrent writers/budget",
+    "native_units": "37 succeeded, 0 failed",
+    "full_Xcode_build": 133,
+    "linked_markers_verified": true,
+    "unsigned_debug_sha256": "733d9d87ecbd34d1711cd987ed026e4c91d113d0dd766174cad1910b0ebfec88",
+    "private_FEX131_sha256": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+    "helper126_sha256": "a3fb33da4f236163debaa3e092d6d6826000d61dcaac8b3fa1677b2ecc1c07e8",
+    "deep_strict_signature": true,
+    "installed": false,
+    "device_runtime_tested": false,
+    "phone_lockState_passcodeRequired": false,
+    "blocker": "CoreDevice file upload/download/listing continues timing out after user reconnect; process/lock queries and Device Hub screen work; no repeated reinstall/Steam launch",
+    "next": "Restore/read back temporary132 configuration and original attributes first; only then install133 and capture actual lease lifetime during repeated real games"
   }
 }

@@ -73,6 +73,25 @@ file read. An own AMD64 lifetime PE maps the installed UnityPlayer and CEF DLLs
 with `DONT_RESOLVE_DLL_REFERENCES` in three sequential children; it does not run
 DllMain/imports/game/Steam authentication. Compilation is not its device result.
 
+Actual132 own lifetime test now passes three sequential children and12image
+maps/header checks/frees, all child exits0 and batch0. The original probe and
+temporary configurations were restored before genuine Steam. This did not
+reproduce the intermittent full game-loader rejection.
+
+The same132 native lifetime then renders two actual Hot Roads menus. First
+guest788 starts10:49:53 and exits0 at10:54:08. Second guest1084 starts10:58:28;
+its Unity configuration and actual animated menu are captured. After its visible
+return to Steam, clicking Search shows Steam's own content-error page. The second
+exit code and current CEF failure cause are uncollected because file transfers
+subsequently fail. A10,000,000byte partial native copy ends before the second
+game and cannot prove absence of later OOM. The task is subsequently ended by
+the agent; this is not evidence that the app crashed in this run.
+
+[Build133 bounded lease evidence](CEF64_LEASE_DIAGNOSTICS.md) is prepared and
+signed with no allocator/layout/helper policy change. It is not installed or
+device-validated. Temporary configuration restoration after132 is still pending
+file-service recovery, even though the phone's unlocked state is confirmed.
+
 ## Next discriminators and assessment
 
 1. Capture actual create/query status and reported architecture for the failed
