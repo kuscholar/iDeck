@@ -26,9 +26,17 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 
 ## 安装 Alpha，一起测试
 
-从 [Releases](https://github.com/kuscholar/iDeck/releases) 下载 IPA 和 `SHA256SUMS`。
-**v0.1.3-alpha.2（Build 56）** 包含下文的六步检查启动器和中英文说明。
-旧版 v0.1.3-alpha.1（Build 54）使用之前的启动器。
+当前最新实验预发布为 **[v0.1.3-alpha.5 · Build 143](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.5)**。
+从该版本下载 IPA 和 `SHA256SUMS`，同页提供对应源码、许可证和重链接材料。
+IPA 需要使用自己的开发签名后侧载。
+
+> **已知问题：第三次退出游戏后，Steam 仍可能卡住。** 测试 iPhone 上的 Steam
+> 菜单可用、浏览更流畅，Hot Roads 能三次进入并退出，但第三次返回后 Steam 卡住。
+> 这是供测试的预发布版，不代表可以长期稳定游玩。
+
+本次64位 Steam 实测使用预先准备的独立 Steam64／CEF 环境。IPA 不附带 Steam
+文件或已登录配置，**尚未验证全新设备上的64位 Steam 可以一键配置成功**。
+具体证据与限制见 [Build 143 测试记录](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md)。
 
 1. **下载并校验。** 对照 `SHA256SUMS` 检查 IPA 的 SHA-256。Mac 可运行
    `shasum -a 256 下载的文件.ipa`。
@@ -56,41 +64,47 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 
 旧版在更换 Bundle ID 重签后可能生成错误的回跳地址。可先关闭可选的
 **Madeira JIT shortcut**，手动连接 **LocalDevVPN**，返回后点击 **Enable JIT**。
-修复后的源码会读取实际注册的回跳信息；更新 App 后，还需从 App 内导入新版
-签名快捷指令并替换旧副本。此修复尚未包含在已发布的 Build 56 IPA 中。
+当前版本会读取实际注册的回跳信息；更新 App 后，还需从 App 内重新导入
+签名快捷指令并替换旧副本。App 升级不会自动替换已导入的快捷指令。
 详见 [JIT 排错说明](docs/JIT.md#shortcut-destination-errors-after-re-signing)。
 
-## 打开 Steam 前：点亮六个勾
+## 打开 Steam 前：逐项点亮检查清单
 
-使用包含新启动器的 Build 55 或更新构建，打开 iDeck，点击
+打开当前版本的 iDeck，点击
 **Check all prerequisites（检查全部前置条件）**，按从上到下的流程处理提示：
 
 | 步骤 | 要做什么 |
 | --- | --- |
 | 1 · Local runtime（本地运行时） | 点击 **Prepare runtime** 初始化本地 Windows 环境，保留已有文件。 |
-| 2 · Steam & browser files（Steam 与浏览器文件） | 在 iDeck 自己的环境内放入完整、兼容的 Windows Steam 与 CEF 文件。**Add Steam files** 提供说明；若某构建自带资源，**Prepare Steam** 会复制资源。公开 IPA 不包含 Steam。 |
+| 2 · Steam & browser files（Steam 与浏览器文件） | 在选中的 iDeck 环境中放入完整、架构匹配的 Windows Steam 与 CEF 文件。旧版客户端提供 **Repair Steam files** 入口，准备方法见下文。公开 IPA 不包含 Steam。 |
 | 3 · Development signing（开发签名） | 使用允许调试的开发签名；若提示缺少权限，需要重新签名。 |
 | 4 · JIT setup（JIT 配置） | 打开设置，使用内置 StikJIT 并配置本设备的配对文件，或使用支持的外部 StikDebug 流程。配对授权由你自行完成。 |
 | 5 · Device connection（设备连接） | 按提示连接 LocalDevVPN，使本地调试连接可达；返回 iDeck 后重新检查。 |
 | 6 · JIT for this session（本次会话 JIT） | 点击 **Enable JIT**，完成后返回。App 新进程需要重新启用 JIT；已有或已消耗的运行时会话可能需要重新打开 App。 |
+| 7 · 32-bit address space（32位地址空间） | 如被阻止，打开 **View diagnostics** 查看。JIT 启用不代表32位子进程有足够虚拟地址空间，运行时启动时还会检查。 |
 
 检查按钮只检查当前状态，不会自动签名、启用 JIT 或启动 Steam。
 返回 App 或完成 JIT 操作后会重新检查；每一步都有状态和相应处理入口。
-**6/6 ready** 后可手动点击 **Launch Steam Big Picture**。
-六项通过只说明前置条件满足，不保证登录、画面或某个游戏一定正常。
-Build 54 使用旧的设置入口，没有这套六步检查。
+当前显示的检查项全部就绪后，可手动点击 **Launch Steam Big Picture**。
+检查通过只说明前置条件满足，不保证登录、画面或某个游戏一定正常。
 
 进入 Valve 自己的 Steam 窗口输入账号并自行批准 Steam Guard。登录保存、账号认证和
 游戏许可由 Steam 处理。需要换账号时，使用启动器的
 **Sign in / Change Steam account**，它会打开 Steam 自己的账号流程。
 可在 iDeck 设置中调整自动启动；即使开启自动启动，新 App 进程仍需要 JIT。
 
-**Steam 客户端准备仍面向技术测试者。** 当前实验使用较旧的 32 位 Windows Steam，
-完善的全新客户端获取/安装流程尚未完成。请阅读
-[源码与资源准备](docs/GETTING_STARTED.md) 和
-[客户端准备记录](tests/steam-ui/README.md)，通过合法渠道获取软件，
-不要使用他人的登录缓存。完整客户端应位于同一个受支持目录：
-`wine/drive_c/Steam32BundleLab` 或 `wine/drive_c/Steam32Lab`，不能拼凑不同安装的零散文件。
+**Steam 客户端准备仍面向技术测试者。** 旧版路径使用较旧的32位 Windows Steam。
+Build 143 也包含独立的实验性 Steam64 路径，真机结果依赖
+[发行记录](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md) 所述的预先配置环境，不能视为全新设备配置已经通过，
+也不要混用两套客户端环境。
+
+旧版客户端请阅读 [源码与资源准备](docs/GETTING_STARTED.md) 和
+[客户端准备记录](tests/steam-ui/README.md)，通过合法渠道获取完整软件。
+客户端应位于 `wine/drive_c/Steam32BundleLab` 或 `wine/drive_c/Steam32Lab`
+其中一个目录，不能拼凑不同安装的零散文件。可在 `iDeck/Steam32OfficialRepair`
+放入完整兼容客户端后使用 **Repair Steam files**，详见
+[Steam 修复说明](docs/IDECK_STEAM_RECOVERY.md)。不要复制他人的登录缓存，
+也不要通过卸载 App 来切换环境。
 
 ## 口袋里的掌机，有些什么？
 
@@ -111,7 +125,8 @@ Build 54 使用旧的设置入口，没有这套六步检查。
 
 测试 iPhone 上已观察到真实 Steam 登录、保存登录、大屏幕模式和游戏库浏览；
 有 PC 游戏在本地启动，并收到测试者实际游玩的反馈。文字输入与悬浮菜单的 Steam 操作
-也收到正面反馈。但启动和登录后跳转仍可能卡住。蓝牙手柄、稳定返回 Steam、
+也收到正面反馈。Build 143 的菜单和浏览有所改善，但第三次返回 Steam 后仍可能
+卡住，启动和登录后跳转也仍可能卡住。蓝牙手柄、稳定返回 Steam、
 长时间游玩与 iPad 仍需验证；系统枚举出手柄不等于游戏一定响应，日志出现
 `BrowserReady` 也不等于界面可以操作。不承诺广泛游戏或反作弊兼容性。
 
@@ -124,6 +139,9 @@ Build 54 使用旧的设置入口，没有这套六步检查。
 git clone --recurse-submodules https://github.com/kuscholar/iDeck.git
 cd iDeck
 ```
+
+重建某个发行版时，请检出对应 tag 并使用同版源码／重链接附件。
+Build 143 的源码附件还包含其运行时使用的 FEX 组件补充源码和构建说明。
 
 阅读 [Getting started](docs/GETTING_STARTED.md)、[构建说明](docs/BUILDING.md) 和
 [JIT 设置](docs/JIT.md)。公开 Git 仓库不包含预编译运行时资源，尚非一条命令即可完成的
@@ -182,15 +200,9 @@ Steam、SteamOS、Steam Deck 为 Valve 商标；iPhone、iPad、iOS、Metal 为 
 iDeck 为独立项目，不隶属于 Valve、Apple、Madeira 或 DroidDeck，也未获得其背书。
 
 
-### Build 67 · v0.1.3-alpha.3
+## 早期更新
 
-Steam recovery is now available in the launcher: **Repair Steam files** restores
-compatible program files while retaining account data, installed games and saves.
-If this build has no bundled client, supply your own complete compatible client
-in `iDeck/Steam32OfficialRepair` using Files. Reopen iDeck after repair.
-See [recovery details](docs/IDECK_STEAM_RECOVERY.md).
-
-新版包含 Steam 文件修复入口、64 位游戏安装识别和 JIT 重签名回调修复。
-更新后如使用旧版 Madeira JIT 快捷指令，请从 iDeck 重新导入并替换同名指令；
-应用升级不会自动替换已导入的快捷指令。TLS 恢复仅经本地故障模拟验证，
-不保证解决所有加速器问题。IPA 仍不包含 Steam、账号或游戏，需自行开发签名。
+[Build 67 · v0.1.3-alpha.3](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.3)
+加入 Steam 文件修复、64位游戏安装识别和 JIT 重签名回调修复。
+更新后需重新导入旧的 JIT 快捷指令。TLS 恢复仅经本地故障模拟验证，
+不保证解决所有 VPN 或加速器问题。详见 [Steam 修复说明](docs/IDECK_STEAM_RECOVERY.md)。

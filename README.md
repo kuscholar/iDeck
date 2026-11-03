@@ -35,9 +35,18 @@ No gaming PC stream is required.
 
 ## Install the alpha and help test
 
-Grab the IPA and `SHA256SUMS` from [Releases](https://github.com/kuscholar/iDeck/releases).
-**v0.1.3-alpha.2 (Build 56)** includes the six-step launcher and bilingual setup
-guide. The older v0.1.3-alpha.1 (Build 54) uses the previous launcher.
+The newest experimental checkpoint is **[v0.1.3-alpha.5 · Build 143](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.5)**.
+Download its IPA and `SHA256SUMS`; matching source, license and relink materials
+are attached to the same release. You must sign the IPA for your own device.
+
+> **Known issue:** Steam can freeze after the third game exit. On the test
+> iPhone, the Steam menu works and browsing is more fluid; Hot Roads launched
+> and exited three times, but Steam froze after the third return. This is a
+> prerelease for testing; stable gameplay is not guaranteed.
+
+The Steam64 test used a previously prepared Steam64/CEF environment. The IPA
+contains no Steam files or preconfigured login, and fresh Steam64 setup is
+**not validated as one-click working**. See the [Build 143 test record](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md).
 
 1. **Download and verify.** Compare the IPA's SHA-256 with `SHA256SUMS`.
 2. **Sign and sideload.** Use your own Apple ID with a tool such as
@@ -67,31 +76,32 @@ for signing details and limitations, or [source setup](docs/GETTING_STARTED.md).
 On an older build, re-signing with a different Bundle ID can break the
 Shortcuts return URL. As a temporary workaround, turn off the optional
 **Madeira JIT shortcut**, connect **LocalDevVPN** manually, then return and tap
-**Enable JIT**. The corrected source uses registered callback metadata; replace
-the imported shortcut with the corrected signed local copy after updating.
-This fix is not yet included in the published Build 56 IPA.
+**Enable JIT**. Current releases use registered callback metadata. After updating,
+re-import the signed shortcut from iDeck and replace the old copy; an app update
+does not automatically replace an already imported shortcut.
 See [JIT troubleshooting](docs/JIT.md#shortcut-destination-errors-after-re-signing).
 
-## Before Steam: six green checks
+## Before Steam: the readiness checklist
 
-On Build 55 or newer containing the checklist, open the launcher and tap
+Open the current launcher and tap
 **Check all prerequisites**. Work down the vertical steps; each has a checkmark
 or a missing-condition action:
 
 | Step | What you need to do |
 | --- | --- |
 | 1 · Local runtime | Tap **Prepare runtime** to initialize the local Windows environment. Existing files are preserved. |
-| 2 · Steam & browser files | Supply a complete compatible Windows Steam client with its CEF/browser files in iDeck's own prefix. Use **Add Steam files** for guidance; if a build supplies resources, **Prepare Steam** copies them. |
+| 2 · Steam & browser files | Supply a complete compatible Windows Steam client with matching CEF/browser files in the selected iDeck environment. The legacy client has a **Repair Steam files** entry; see the preparation notes below. |
 | 3 · Development signing | Use a development signature that permits debugging. Re-sign if the check reports missing permission. |
 | 4 · JIT setup | Open JIT setup. Configure Built-in StikJIT with this device's pairing file, or the supported external StikDebug workflow. Pairing approval is yours to complete. |
 | 5 · Device connection | Connect LocalDevVPN when requested so the local debug connection is reachable. Recheck after returning to iDeck. |
 | 6 · JIT for this session | Tap **Enable JIT** and return to iDeck. A new app process needs JIT again; an existing/consumed runtime session may require a fresh app session. |
+| 7 · 32-bit address space | Review **View diagnostics** if blocked. JIT does not prove that a 32-bit child has enough virtual address space; the runtime checks again when starting it. |
 
 The checker observes prerequisites; it does not sign the app, enable JIT or
 start Steam for you. Checks rerun when you return or finish a JIT request.
-**6/6 ready** unlocks manual **Launch Steam Big Picture**. It is not a guarantee
-that Steam login, rendering or a particular game will work. Build 54 has the
-earlier setup controls rather than this checklist.
+When all displayed checks are ready, manual **Launch Steam Big Picture** becomes
+available. This does not guarantee that Steam login, rendering or a particular
+game will work.
 
 Sign in inside Valve's real Steam UI and approve Steam Guard yourself. Steam
 owns saved login and license checks. Use the launcher's **Sign in / Change Steam
@@ -99,13 +109,20 @@ account** entry for another account; iDeck opens Steam's own account flow.
 Automatic startup can be changed in iDeck settings; it still requires JIT for
 each new app process.
 
-**Steam setup is still a technical-tester task.** The experiment uses an older
-32-bit Windows Steam client; a supported clean acquisition/setup flow remains
-unfinished. Follow [setup](docs/GETTING_STARTED.md) and
+**Steam setup is still a technical-tester task.** The legacy path uses an older
+32-bit Windows Steam client. Build 143 also contains an experimental separate
+Steam64 path; its on-device results require the prepared environment described
+in the [release test record](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md). Do not treat those results as fresh-device
+setup validation or mix the two client environments.
+
+For legacy setup, follow [setup](docs/GETTING_STARTED.md) and the
 [client preparation notes](tests/steam-ui/README.md), using legitimate owner
-channels. Do not copy another installation's authentication cache. A complete
-client must be in one supported directory (`wine/drive_c/Steam32BundleLab` or
-`wine/drive_c/Steam32Lab`); scattered files from different clients do not count.
+channels. A complete client belongs in one supported directory
+(`wine/drive_c/Steam32BundleLab` or `wine/drive_c/Steam32Lab`); scattered files
+from different clients do not count. **Repair Steam files** can use a complete
+compatible client supplied in `iDeck/Steam32OfficialRepair`; see
+[recovery instructions](docs/IDECK_STEAM_RECOVERY.md). Do not copy another
+installation's login cache or delete the app to switch environments.
 
 ## Your phone, with a handheld habit
 
@@ -140,7 +157,9 @@ observed on the test iPhone. A PC game has started locally, with gameplay also
 reported by the tester. Text entry and the floating menu's Steam action have
 received positive device feedback.
 
-There are still rough edges: startup and post-login transitions can hang.
+Build 143 improves menu handling and browsing in the tester’s report, but Steam
+can still freeze after the third game return. Startup and post-login transitions
+can also hang.
 Windows enumerating a controller is not proof that every Steam/game input path
 works. Bluetooth, reliable game return, longer sessions and iPad testing remain
 open. Recent logs reached successful login and `BrowserReady`; those events alone
@@ -159,6 +178,10 @@ and [login/transition evidence](docs/IDECK_LOGIN_TRANSITION_EVIDENCE.json).
 git clone --recurse-submodules https://github.com/kuscholar/iDeck.git
 cd iDeck
 ```
+
+To rebuild a release, check out its tag and use its matching source/relink
+companions. Build 143's source companion includes the additional FEX component
+overlay and rebuild instructions used for its shipped runtime.
 
 Follow [Getting started](docs/GETTING_STARTED.md), [Building](docs/BUILDING.md)
 and [JIT setup](docs/JIT.md). The public snapshot excludes compiled runtime
@@ -234,15 +257,10 @@ are Apple trademarks. iDeck is independent and is not affiliated with or endorse
 by Valve, Apple, Madeira or DroidDeck.
 
 
-### Build 67 · v0.1.3-alpha.3
+## Earlier updates
 
-Steam recovery is now available in the launcher: **Repair Steam files** restores
-compatible program files while retaining account data, installed games and saves.
-If this build has no bundled client, supply your own complete compatible client
-in `iDeck/Steam32OfficialRepair` using Files. Reopen iDeck after repair.
-See [recovery details](docs/IDECK_STEAM_RECOVERY.md).
-
-新版包含 Steam 文件修复入口、64 位游戏安装识别和 JIT 重签名回调修复。
-更新后如使用旧版 Madeira JIT 快捷指令，请从 iDeck 重新导入并替换同名指令；
-应用升级不会自动替换已导入的快捷指令。TLS 恢复仅经本地故障模拟验证，
-不保证解决所有加速器问题。IPA 仍不包含 Steam、账号或游戏，需自行开发签名。
+[Build 67 · v0.1.3-alpha.3](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.3)
+introduced Steam file recovery, 64-bit game installation detection and the JIT
+re-signing callback fix. Re-import old JIT shortcuts after updating. TLS recovery
+was checked with local fault simulation; it is not a guarantee for every VPN or
+accelerator. See [Steam recovery](docs/IDECK_STEAM_RECOVERY.md).
