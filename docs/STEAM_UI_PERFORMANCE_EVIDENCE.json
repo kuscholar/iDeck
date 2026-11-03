@@ -1,0 +1,250 @@
+{
+  "phase": "Steam UI performance investigation; not a validated performance fix",
+  "source_head": "c969c9a4a3bbae5bd1b7baf7e1c2559c23d6acc3 plus preserved local changes on fix/steam-runtime-entry",
+  "device_build": 139,
+  "baseline": {
+    "Steam_batch": "-cef-disable-gpu",
+    "V8_native_marker": "JITLESS (interpreted), MADEIRA_JITLESS=1",
+    "reported_guest_cpu_count": 1,
+    "guest_cpu_count_is_host_single_core_affinity": false,
+    "thread_suspend_sampling": true,
+    "thermal_serious_observed": true
+  },
+  "minimal_patch": {
+    "V8": "Honor explicit MADEIRA_JITLESS instead of unconditionally setting 1; keep compatibility default 1",
+    "GPU": "Separate default-off steam64.gpu-acceleration opt-in for owned full64 source layout; flag removal alone is not hardware-backend proof"
+  },
+  "regressions": {
+    "host_launcher": "PASS",
+    "early_environment_ASan_UBSan": "PASS including persisted V8 and explicit env precedence",
+    "debug_privacy_policy": "PASS",
+    "full_Xcode139": "PASS",
+    "final_dylib_markers": "PASS",
+    "unchanged_private_FEX_and_helper": "PASS",
+    "deep_strict_sign": "PASS",
+    "installed_version_readback": "139"
+  },
+  "device_test": {
+    "V8_mode_requested": 0,
+    "GPU": "software forced, unchanged",
+    "CPU_count": 1,
+    "Unity_no_copy_experiment": false,
+    "first_agent_start": "No Wine: LocalDevVPN disconnected; native JIT failed; later locked",
+    "user_retry": "User reports black screen/startup failure",
+    "current_V8_effective_marker": "Recovered stable old-session log confirms JIT ENABLED at15:02; this is failed V8 trial, not GPU test",
+    "fresh_Steam_login": "not proven",
+    "speedup": "not proven",
+    "GPU_backend": "not verified",
+    "game_test_performed_by_agent": false,
+    "V8_effective_switch_evidence": "Fresh15:02 webhelper command lacks --js-flags=--jitless; CreateBrowser/AfterCreated, no observed BrowserReady",
+    "original_configuration_restored_byte_exact": true,
+    "restore_confirmation": "config-after-restore-timeout.cfg matches before-config-fresh.cfg",
+    "normal_exit_request": "SIGTERM accepted; subsequent process query still shows original PID68543, not proof of death",
+    "GPU_experiment": "not started; idle gate correctly refused while original process remains",
+    "forced_end": "Not executed: automatic approval rejected SIGKILL due possible active user state. User requested normal app-switcher close once; pending.",
+    "after_user_close": {
+      "old_PID68543": "absent in fresh query",
+      "new_PID69333": "present; preserved, no forced end",
+      "current_config_before_GPU_stage": "original byte-exact",
+      "GPU_next_start_config": "staged and byte-exact read back",
+      "effective_GPU_backend": "not yet verified",
+      "current_user_screen": "User reports Steam opens but remains slow; Hot Roads visible, Exit game request not completed; native Runtime diagnostics notice remains.",
+      "installed_frontmost_bundle_caveat": "Lab139 installed version was verified; current all-app and native identity enumeration time out. Do not infer a current exact process owner from historical file contents."
+    },
+    "GPU_effective_test": "Not completed. Latest captured batch retains -cef-disable-gpu; staged next-start config is not effective-renderer evidence.",
+    "Device_Hub": {
+      "authorized": true,
+      "app": "Apple Xcode DeviceHub.app",
+      "visual_capture": "Hot Roads Game Mode with virtual pad and native menu; native menu later absent",
+      "input": "Mouse clicks and one balanced Alt-F4 did not establish game closure; Escape coincided with native menu dismissal",
+      "screen_service": "One transient Error displaying screen contents, then image recovered",
+      "current_gate": "Mac later locked=true/frontmost loginwindow; guard refused further input. Stop Screen Sharing was NOT executed.",
+      "CoreDevice": "File/process requests repeatedly time out; debugger process listing cannot establish connection. No debugger attach performed."
+    },
+    "exit_command_evidence": {
+      "request": "UUID exit-game observed in selected prefix",
+      "reply": "ready ready, not matching request",
+      "return_status": "responsive/focused fields exist, but lack freshness nonce; do not attribute them to current request/session",
+      "root_cause": "Not established; no current helper thread/call evidence",
+      "game_exit": "Not verified; no force kill or Steam/account action"
+    },
+    "GPU_staged_config_rollback": "original byte-exact verified"
+  },
+  "private_artifacts": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/steam64-current/steam-ui-performance-20261102T144517",
+  "sha256": {
+    "before-config-fresh.cfg": "aec4babda0b28ffe69ff1780bb3f1b20f510a044014c7e20399be1712c8c542e",
+    "v8-jit-readback.cfg": "d3e24c1888350e75c26d0fd2af802b5cbdc2961fb04438f042863be9e0e079d1",
+    "native.txt": "db586e0f978b37bf9df8e97fe8684619a5a59757546cf6a5ef9506394b0f4481",
+    "native139.txt": "ecc7a05a2e88733442d777dde9b73ccb26d2c9b6d3ad1d828f4b6f9e0458099d",
+    "launch139-v8-jit-only.json": "0eddc608cd07b96ee58ab6ee046d86f76893f693a793c37516192a6f8bdd8d1e",
+    "build139-ui-performance-evidence.json": "7d28db281be3db894e7b110ac8e6577a0280afc64357d4fff8e9c884dd4b1cd1",
+    "webhelper-after-black.txt": "7a8793a7c6ed2ecfbfc14004c1a696f6f6337d7c64ed5b70680ed14033577c83",
+    "gameprocess-after-black.txt": "4341ce205ce08375619b5dcec947654e4fce5ab82f02d454886a63fd6063a266",
+    "config-after-restore-timeout.cfg": "aec4babda0b28ffe69ff1780bb3f1b20f510a044014c7e20399be1712c8c542e",
+    "end-v8-only-test.json": "e23a51b9b2569828ee3ea0600a381a652c8052eef51adf4e7fbfcc56aa2ae0fd",
+    "before-gpu-only-processes.json": "83918a39cec0aa594543922f9a21a6e0979113ffaadb6ff0ae725d36d78c26cf",
+    "after-user-close-processes.json": "452e209bbfc521c7ddc90090fb3ed374167bc322529b44e4790eac0613dbe8c7",
+    "native-after-user-close.txt": "28879f1d6240c2ff6a3f2c49cb48dd0302d9ad75b28bad7b53b53a7a0b8393c3",
+    "config-after-user-close.cfg": "aec4babda0b28ffe69ff1780bb3f1b20f510a044014c7e20399be1712c8c542e",
+    "gpu-only-next-start.cfg": "bdc1749592e4a71d8fd9604460473bb5b69ab3fbbb73fa1d13c3fb8fde294c80",
+    "gpu-only-next-start-readback.cfg": "bdc1749592e4a71d8fd9604460473bb5b69ab3fbbb73fa1d13c3fb8fde294c80",
+    "gpu-only-stage-state.json": "0cd14c7a086c5592cd1216c18a627729419d5e101f893b40c444a765cea6f6f9",
+    "command.txt": "10d6800c33776af2cef3a3734a22bf59a89de97669edda4b8f5f63911c801908",
+    "command-result.txt": "e800348d9d264664b7da0a65bd9caec2694924f95f8c341aaefb4c1d3f832199",
+    "return-status.txt": "3afdae3a165faf05ae853867851dd020634fc44727758bee846603e2d33a85f8",
+    "lldb-device-process-list.txt": "66a19d71019648eae3d985d37e1ce4f67c6aecbfa883e3325ec60069ef59b234",
+    "perf139-return-current.png": "c65532e6fd58b383a949d006be4a78cf9165515a10a6f8991c99ee7d0b69a68d",
+    "perf139-after-game-close-shortcut.png": "a5cdcec695734cc544e4bb22090b21473989410db94e261e4a860892205a0c9b",
+    "build140-ui-performance-evidence.json": "1d52aa0838b3e83c84541a0fa3891f3c7cca60416f17b56870dd8d57a873cfc3",
+    "perf140-sampling-policy.log": "91bb6c8dce53259e947ef262173bcae6845faea3ffa1a2610d389c65323caf80",
+    "perf140-debug-policy.log": "493474e8f34a40cbb8db98994ef208ff720d7d0d7d27802433b7688b8e852103",
+    "perf140-launch-policy.log": "a3dc79edbe078bced184a6df6157bb6d129c5ec743c15a4b42fbe06d1bc04354"
+  },
+  "Build140": {
+    "patch": "Default lean diagnostics only for exact genuine Steam session after explicit config; independently gate compositor20s all-thread stack walker. Bounded actual-main-stall dump remains.",
+    "host_policy_ASan_UBSan": "PASS",
+    "existing_lean_policy": "PASS",
+    "launcher_privacy_regressions": "PASS",
+    "full_Xcode": "PASS",
+    "final_linked_markers": "PASS",
+    "unchanged_private_FEX_helper": "PASS",
+    "deep_strict_sign": "PASS",
+    "prepared_private_app": "prepared140-ui-sampling/Madeira.app",
+    "installed": false,
+    "UI_performance": "unverified",
+    "exit_root_fix": "not claimed",
+    "GPU_backend": "unverified"
+  },
+  "build142_followup": {
+    "native_log_bytes": 4471134,
+    "native_log_sha256": "db09d27d5f4ddb5ad1c31cb709bf18f380515ba34ad426f9f4600f8771fd4ae1",
+    "observed_failure": "User report and native guest-window records: Steamwebhelper is not responding",
+    "new_BrowserReady": "not observed in captured startup logs",
+    "new_login_success": "not observed",
+    "source_head": "c969c9a4a3bbae5bd1b7baf7e1c2559c23d6acc3 plus uncommitted changes",
+    "experiment": "Same installed142; only scoped LEAN_DIAG=0, exact config readback verified",
+    "confounders": "LEAN includes VM monitoring/replay cadence, not pure sampling; cold-start placement differs",
+    "on_device_game_exit": "unverified",
+    "lean0_explicit_test": {
+      "fresh_login_success": "2026-11-02T18:03:01",
+      "helper_marker": "menu=existing-window-v2",
+      "fresh_BPM_window": "2026-11-02 18:02:51 local, 1280x800",
+      "browser_gpu": "still disabled; not hardware acceleration evidence",
+      "visible_navigation": "user confirmation pending",
+      "ordinary_shell_attempt": "did not start Wine; excluded from A/B outcomes",
+      "webhelper_sha256": "8a13a4c82c46c4899d9c55a9361be52f429f5d588d4ab92efe043e4fc5ce8540",
+      "original_config_sha256": "aec4babda0b28ffe69ff1780bb3f1b20f510a044014c7e20399be1712c8c542e",
+      "one_key_candidate_sha256": "6d98aae6a2dfc3546d26b5e595a8b67644542009be14fe41f4979c26d4616147",
+      "readback_matches": true,
+      "limits": "One failed lean1 and one successful-login lean0 cold start do not prove causality; ASLR/placement may differ"
+    }
+  },
+  "build143_refinement": {
+    "policy": "Steam-only pure sampling switch; default MADEIRA_STEAM_UI_SAMPLING=0; never sets LEAN_DIAG",
+    "effects": "periodic thread-sample/rip-profile/cpu-split/wprof and compositor stack walker only",
+    "preserved": "VM warmer/replay cadence, raw errors, actual-stall capture, sync-census, guest CPU/JS/GPU, ordinary paths",
+    "tests": "100 production-header matrix cases ASan/UBSan; legacy lean, early selection, launcher, menu, focus, return PASS",
+    "device_validation": "not installed; preserve current live142",
+    "native37": "PASS",
+    "full_Xcode143": "PASS",
+    "final_native_and_bridge_markers": "PASS",
+    "deep_strict_sign": "PASS",
+    "signed_debug_sha256": "e2ddefed134236539d9156c7544b0f7a33d094c905622726764dc73bd22b2a10",
+    "helper_sha256": "e27ded223c5a559c0f9fcac9a1d41cfe8ed9fabf4c2fb22c4e9913e3373dc4ac",
+    "installed": true,
+    "installed_bundle_version": "143",
+    "same_config_after_install": true,
+    "runtime_validation": {
+      "fresh_login_success": "2026-11-02T20:01:06",
+      "fresh_big_picture_window": "2026-11-02 20:00:46 local; window created, not navigation proof",
+      "menu_fresh_nonce_reply": "menu-requested",
+      "menu_visible_navigation": "user confirmation pending",
+      "live_native_policy_marker": "not retrieved; current raw log transfer fails CoreDevice7000/POSIX60, not no-fault proof",
+      "browser_gpu": "still explicitly disabled by captured official startup log"
+    },
+    "preceding142_lean0_native_sha256": "db4ab3ac989de032119d2900ca04605a76fab92c8624d945080beb81d1709402",
+    "preceding142_end_reason": "unknown; absent on resume, no new game launch in copied official gameprocess log",
+    "webhelper_sha256": "c0eb20860c1bfc040ee5f25189de0e6d4a03c6903ce0fb7da15595ac62115d40",
+    "user_validation": {
+      "source": "explicit user reply in this thread",
+      "menu_visible": true,
+      "library_browsing": "more fluid",
+      "quantitative_speedup": "not measured",
+      "game_exit_and_repeated_loops": "not tested in this report",
+      "hardware_acceleration": "not established; baseline remains software GPU"
+    },
+    "gameprocess_followup": {
+      "source": "Fresh copied official gameprocess_log.txt; not agent-launched",
+      "appID": 1819280,
+      "launches": [
+        "2026-11-02 20:02:15",
+        "2026-11-02 20:02:48",
+        "2026-11-02 20:03:58"
+      ],
+      "exits": [
+        "2026-11-02 20:02:32",
+        "2026-11-02 20:03:47",
+        "2026-11-02 20:04:25"
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "raw_private_sha256": "64ec578af601be018af4ac350f87491dd2804551a92f3e88dd91de38e69c03c8",
+      "limits": "Game process tracking/exit codes plus subsequent user navigation report, not measured gameplay duration or proof native Exit game action was used"
+    },
+    "runtime_policy_verified": {
+      "native_sha256": "9e1ce67319668c41cf01fb23b1865bc4e92fb723c31975bdee7c2f7259d3d119",
+      "bridge_marker": "diagnostic-samplers=off periodic-stack-dumps=off; pure-sampling-policy-v2; VM policy untouched",
+      "server_marker": "pure-sampling-policy-v2; VM maintenance unchanged; sync-census retained",
+      "compositor_marker": "compositor-periodic-stacks=off; bounded main-stall diagnostics retained"
+    },
+    "late_session_limits": {
+      "new_idle_check_ACK": "not observed, old reply remained",
+      "identity_revalidation": "original process absent before debugger attach; no attach/suspend/terminate performed",
+      "disk_resource_report": "Action taken: none; not app termination evidence",
+      "jetsam_snapshot": "20:02:24 report includes target frontmost; no kill reason on target entry; killed other processes, not proof target killed",
+      "last_native_timestamp": "20:04:40 local",
+      "footprint_at_end_MB": 3884,
+      "later_owned_reservation_refusal": "slot19, 512MiB; bounds/ownership guard held",
+      "sole_end_cause": "undetermined",
+      "GPU_changes_so_far": "none"
+    }
+  },
+  "build143_GPU_only": {
+    "same_installed_build": 143,
+    "single_setting": "steam64.gpu-acceleration=1",
+    "candidate_readback_exact": true,
+    "JS": "jitless",
+    "guest_CPU": 1,
+    "pure_sampling_and_VM": "unchanged from143 baseline",
+    "fresh_login_success": "2026-11-02T20:15:39",
+    "actual_batch_cef_disable_gpu": false,
+    "fresh_webhelper_disable_gpu_flags": false,
+    "fresh_BPM_window": "2026-11-02 20:15:19 local",
+    "gameprocess": "Hot Roads1819280 started20:16:19; not agent-launched",
+    "snapshot_safety": "refused because a game was observed; no suspend or resume signals sent",
+    "normal_exit_test_safety": "refused before request because original PID absent; no terminate or exit request sent",
+    "rotated_native_sha256": "3fc09bdc6311a90c386e6374c8cebbb9b7f9a7f0adcaf07a7d26d8a15f28d029",
+    "native_policy_marker": "gpu-request=hardware-auto v8=jitless",
+    "actual_CEF_hardware_backend": "unverified; a native D3D11 warning is not attributed to CEF rather than the game",
+    "breakpoint_observation": {
+      "guest_breakpoint": "0x70e1ac48e2",
+      "loader_libcef_base": "0x70de590000",
+      "RVA": "0x35348e2",
+      "limits": "Breakpoint is present; no failed-check/fatal caller identified, no claim this alone terminated app. Logging continues afterwards."
+    },
+    "late_footprint_MB": [
+      4059,
+      4004
+    ],
+    "session_end_reason": "undetermined; user manual-closure question pending",
+    "later_native_log": "20:38:14 developer-shell startup with no JIT; not original GPU session",
+    "rollback": "Known-good143 software config restored with exact readback; all Steam data preserved",
+    "rollback_sha256": "6d98aae6a2dfc3546d26b5e595a8b67644542009be14fe41f4979c26d4616147",
+    "promote_GPU_default": false,
+    "restored_baseline_fresh_login": "2026-11-02T23:21:30",
+    "final_state": "Same installed143; user-confirmed software baseline configuration restored/read back, fresh login verified; no agent game launch"
+  }
+}

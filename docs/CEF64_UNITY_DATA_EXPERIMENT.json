@@ -1,0 +1,77 @@
+{
+  "build": 138,
+  "source_parent": "c969c9a plus preserved Build137 runtime-entry changes",
+  "branch": "fix/steam-runtime-entry",
+  "phase": "local demand-reduction experiment prepared; device execution pending",
+  "hypothesis": "Avoid the22MiB Unity executable-pool copy for a proven pure AMD64 image, using existing PE-address/FEX data-image mechanism while retaining Steam/support aliases. Do not claim allocator leakage was proven.",
+  "minimal_patch": "Under owned Steam64 session/libcef-only policy, explicit UNITY_DATA_ONLY adds exact UnityPlayer basename; separate IMAGE_DATA_PROBE adds only owned test DLL. Existing architecture/hybrid/builtin/resource/WoW64 guards remain.",
+  "discriminating_test": "Owned24MiB DLL code/writable BSS/callback/static TLS;32calls per round;2rounds per child/3children; actual native no-pool-copy marker required. Not yet device-run.",
+  "host_checks": [
+    "ASan/UBSan production image selector baseline/Unity/probe opt-in and negative names PASS",
+    "Outer architecture/hybrid/builtin/WoW64 call-site checks retained",
+    "Runtime early-profile isolation PASS",
+    "Game DLL spill regression PASS",
+    "Actual geometry parser regression PASS",
+    "37native units PASS",
+    "fullXcode138 PASS",
+    "Owned DLL TLS export disassembly reads Windows GS TLS; no emulated-TLS call"
+  ],
+  "device_gate": {
+    "initial_process_query": "15s timeout; no session action issued",
+    "availability": "Kusch paired/localNetwork but tunnelState=disconnected and ddiServicesAvailable=false",
+    "user_connection_request": "pending; preserve current Steam; do not repeatedly install or restart"
+  },
+  "native_Git_or_Valve_modifications": "No FEX/submodule/Valve/game binary changes. Owned probe executables remain private.",
+  "code_hashes": {
+    "build/ntdll-unix/virtual_ios.c": "26330221b5fd2837440d95ba158b24de8399f2b8e7247d0a97372758b06c0320",
+    "build/diagnostics/ideck_runtime_selection.h": "0b98e5ffe1c3599bcf467ec05bd708b44c66ddb7620be18b9cba855fd3f713f8",
+    "tests/host/check-cef64-image-data-policy.py": "bf630680d8b9bde96dafe00c98526120fcc2b39540d0e814f5bf707a6d7d3879",
+    "experiments/cef64/image-execution-dll.c": "743a66614da1e44eb53fb10125a5f0b88cd7e5a1a8227e67c567d29cb92c7a9a",
+    "experiments/cef64/image-execution-probe.c": "be0d82d97de457255981e762015ca8f0e5f43614fc2fd087982a8ea7319cdabf",
+    "experiments/cef64/IMAGE_EXECUTION.md": "45a2e4d28a7ea664d592230032535e52b21e1d8be3c8eaaffdcd1e564c20f3fb"
+  },
+  "private_probe_artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/ideck-x64-image138.dll",
+      "bytes": 64512,
+      "SizeOfImage": 25268224,
+      "sha256": "a7f7ac7d8b8bff17f96cdc337e149b9617f7febc2636ec7d53818c15f16f7c57"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/image-execution138-probe.exe",
+      "bytes": 95744,
+      "SizeOfImage": 131072,
+      "sha256": "97a3de8f29d067c55979da4092d34e1dcf20456e304a1ab27059edcf3f2553b1"
+    }
+  ],
+  "device_test_results": null,
+  "actual_game_results": null,
+  "release_decision": "NO-GO, hypothesis not validated on device",
+  "candidate_signing": {
+    "final_debug_marker": true,
+    "signed_debug_sha256": "dbc33c9c525c829f67671641221932eb4cbc5d03cb8bc67c8f8a67e6f69fd336",
+    "private_overlays_unchanged": {
+      "arm64ec-windows/xtajit64.dll": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+      "ideck-control.exe": "a3fb33da4f236163debaa3e092d6d6826000d61dcaac8b3fa1677b2ecc1c07e8"
+    },
+    "deep_strict_sign": "PASS",
+    "installed": false
+  },
+  "private_build_artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/xcode138-unity-data.log",
+      "bytes": 150659,
+      "sha256": "1f82841903874c18bb8d2f640a3f327bf5b298fcef8e9688aacd8f6124c3ca9d"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/native138-unity-data-build.log",
+      "bytes": 891,
+      "sha256": "cdc7668fe180c8313339851bd85b0d2748040045d9ce1340747e6319d89e9a1a"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/image138-tls-disassembly.txt",
+      "bytes": 642,
+      "sha256": "7c43b94af79d4dbe78aefa0fa618f42a5ca9056f1ab31ce003b664ddbded6173"
+    }
+  ]
+}

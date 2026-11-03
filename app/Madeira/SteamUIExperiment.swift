@@ -8,15 +8,25 @@ enum SteamUIExperiment {
     static let bigPictureFlag = "env.MADEIRA_EXPERIMENTAL_BIG_PICTURE"
     static let sessionKey = "MADEIRA_STEAM_UI_SESSION"
     // Explicit migration experiment: separate registry, Steam/auth and save tree.
-    static func usesSteam64(arguments: [String]) -> Bool {
-        arguments.contains("madeira-steam64-experiment") || arguments.contains("madeira-steam64-big-picture-experiment") || arguments.contains("madeira-cef64-component-diagnostics")
+    static func usesSteam64(arguments: [String], selectedRuntime: String? = nil) -> Bool {
+        if arguments.contains("madeira-steam64-experiment") || arguments.contains("madeira-steam64-big-picture-experiment") || arguments.contains("madeira-cef64-component-diagnostics") { return true }
+        if arguments.dropFirst().contains(where: { $0.hasPrefix("madeira-") }) { return false }
+        return selectedRuntime == "steam64"
     }
-    static var steam64: Bool { usesSteam64(arguments: ProcessInfo.processInfo.arguments) }
-    static func runtimePrefix(documents: URL, arguments: [String]) -> URL {
-        documents.appendingPathComponent(usesSteam64(arguments: arguments) ? "wine-steam64" : "wine")
+    static var steam64: Bool { usesSteam64(arguments: ProcessInfo.processInfo.arguments, selectedRuntime: MadeiraConfig.get("steam-runtime")) }
+    static func runtimePrefix(documents: URL, arguments: [String], selectedRuntime: String? = nil) -> URL {
+        documents.appendingPathComponent(usesSteam64(arguments: arguments, selectedRuntime: selectedRuntime) ? "wine-steam64" : "wine")
     }
     static var runtimePrefix: URL {
-        runtimePrefix(documents: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0], arguments: ProcessInfo.processInfo.arguments)
+        runtimePrefix(documents: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0], arguments: ProcessInfo.processInfo.arguments, selectedRuntime: MadeiraConfig.get("steam-runtime"))
+    }
+    // Default compatibility remains interpreted. An explicit opt-out must not
+    // be overwritten by the genuine Steam launcher immediately before spawn.
+    static func v8JitlessMode(environment: [String: String], configuration: [String: String], steam64: Bool) -> String {
+        let value = environment["MADEIRA_JITLESS"]
+            ?? (steam64 ? configuration["steam64.env.MADEIRA_JITLESS"] : nil)
+            ?? configuration["env.MADEIRA_JITLESS"]
+        return value == "0" ? "0" : "1"
     }
 
     // Re-signing can change the bundle ID without changing the registered
@@ -144,6 +154,7 @@ enum SteamUIExperiment {
         var ratatanThreadTest = false
         var externalCrashpad = false
         var restoreCrashpadConfig = false
+        var gpuAccelerated = false
         var batch: String {
             var lines = ["@echo off", "start \"\" \"C:\\windows\\system32\\services.exe\"",
              "if exist C:\\ideck-control.exe start \"\" C:\\ideck-control.exe",
@@ -154,7 +165,7 @@ enum SteamUIExperiment {
             if externalCrashpad {
                 lines += ["C:\\iDeckCEF64Crashpad\\config_guard.exe --protect >> C:\\madeira-cef64-config-guard-results.txt 2>&1", "if errorlevel 1 exit /b 1"]
             }
-            lines += ["\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox -cef-disable-gpu -nocrashmonitor\((frozenX86 || frozenSourceCEF) ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")\(ratatanThreadTest ? " -applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2" : "")"]
+            lines += ["\"\(windowsDirectory)\\steam.exe\" -no-cef-sandbox\(gpuAccelerated ? "" : " -cef-disable-gpu") -nocrashmonitor\((frozenX86 || frozenSourceCEF) ? " -nobootstrapperupdate -skipinitialbootstrap" : "")\(bigPicture ? " -bigpicture" : "")\(accountChooser ? " steam://changeuser" : "")\(ratatanThreadTest ? " -applaunch 2949320 -job-worker-count 2 -background-job-worker-count 2" : "")"]
             if externalCrashpad { lines += ["C:\\iDeckCEF64Crashpad\\config_guard.exe --restore >> C:\\madeira-cef64-config-guard-results.txt 2>&1"] }
             return lines.joined(separator: "\r\n") + "\r\n"
         }
@@ -288,12 +299,13 @@ enum SteamUIExperiment {
         }
         return nil
     }
-    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false, sourceCEFLayout: Bool = false, externalCrashpad: Bool = false) throws -> Plan {
+    static func prepare(prefix: URL, width: Int, height: Int, flag: String?, bundleID: String?, x86Client: Bool = false, bigPicture: Bool = false, bigPictureFlag: String? = nil, accountChooser: Bool = false, loginFirst: Bool = false, ratatanThreadTest: Bool = false, sourceCEFLayout: Bool = false, externalCrashpad: Bool = false, gpuAcceleration: Bool = false) throws -> Plan {
         guard allowed(flag: flag, bundleID: bundleID) else { throw Failure.disabled }
         guard !bigPicture || bigPictureFlag == "1" else { throw Failure.disabled }
         guard !ratatanThreadTest || (x86Client && !accountChooser && !loginFirst) else { throw Failure.disabled }
         guard !sourceCEFLayout || (!x86Client && prefix.lastPathComponent == "wine-steam64") else { throw Failure.disabled }
         guard !externalCrashpad || sourceCEFLayout else { throw Failure.disabled }
+        guard !gpuAcceleration || (sourceCEFLayout && !x86Client && prefix.lastPathComponent == "wine-steam64") else { throw Failure.disabled }
         guard (640...3840).contains(width), (360...2160).contains(height) else { throw Failure.invalidSize }
         let drive = prefix.appendingPathComponent("drive_c")
         if let relative = clientDirectory(prefix: prefix, x86Client: x86Client) {
@@ -302,7 +314,7 @@ enum SteamUIExperiment {
             if externalCrashpad {
                 guard guardPresent, isX64PE(drive.appendingPathComponent("iDeckCEF64Crashpad/crashpad_handler.exe")) else { throw Failure.incompleteProbe }
             }
-            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client, frozenSourceCEF: sourceCEFLayout, ratatanThreadTest: ratatanThreadTest, externalCrashpad: externalCrashpad, restoreCrashpadConfig: guardPresent)
+            let plan = Plan(windowsDirectory: "C:\\" + relative.replacingOccurrences(of: "/", with: "\\"), width: width, height: height, bigPicture: bigPicture && !(accountChooser || loginFirst), accountChooser: accountChooser, frozenX86: x86Client, frozenSourceCEF: sourceCEFLayout, ratatanThreadTest: ratatanThreadTest, externalCrashpad: externalCrashpad, restoreCrashpadConfig: guardPresent, gpuAccelerated: gpuAcceleration)
             try plan.batch.write(to: drive.appendingPathComponent("madeira-steam-ui.cmd"), atomically: true, encoding: .utf8)
             return plan
         }
@@ -669,7 +681,7 @@ import UIKit
     }
     @Published private(set) var repairRequiresRestart = false
     var canRepairSteam: Bool {
-        !preparing && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
+        !SteamUIExperiment.steam64 && !preparing && !running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
     }
     func repairSteam() {
         guard Self.enabled, canRepairSteam else { return }
@@ -738,7 +750,7 @@ import UIKit
         }
         let drive=prefix.appendingPathComponent("drive_c")
         try Data(contentsOf:source).write(to:drive.appendingPathComponent("ideck-control.exe"),options:.atomic)
-        for name in ["ideck-command.txt","ideck-command-result.txt","ideck-focus-status.txt","ideck-input-status.txt"] { try? FileManager.default.removeItem(at:drive.appendingPathComponent(name)) }
+        for name in ["ideck-command.txt","ideck-command-result.txt","ideck-focus-status.txt","ideck-input-status.txt","ideck-control-build.txt"] { try? FileManager.default.removeItem(at:drive.appendingPathComponent(name)) }
         controlReady=false;controlBusy=false;requestID=nil;controlStatus=nil
     }
     func observeControl() {
@@ -927,6 +939,8 @@ struct IDeckLauncher: View {
                         VStack(alignment: .leading) {
                             Text("iDeck").font(.largeTitle.bold())
                             Text("Your Steam library. On your iPhone.").foregroundStyle(.secondary)
+                            Text(SteamUIExperiment.steam64 ? "Steam 64-bit · experimental" : "Steam 32-bit · legacy")
+                                .font(.caption).foregroundStyle(.secondary)
                         }
                     }
                     VStack(alignment: .leading, spacing: 12) {

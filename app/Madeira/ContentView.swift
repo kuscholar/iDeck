@@ -1364,6 +1364,15 @@ struct ContentView: View {
                     Button("Cancel", role: .cancel) { library.cloudNotice = nil; library.cloudRetry = nil }
                 }
             } message: { Text(library.cloudNotice?.message ?? "") }
+            // The full-screen Steam session has no visible log list. Keep raw
+            // capture, but avoid parsing every guest debug line and publishing
+            // SwiftUI list updates behind the Steam/game display.
+            .onChange(of: ideck.running, initial: true) { _, running in
+                if IDeckState.enabled {
+                    logStore.setDisplayActive(!running)
+                    logStore.log("[steam-ui-render] log-list-hidden=\(running ? 1 : 0); raw capture retained")
+                }
+            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 if IDeckState.enabled {
                     LibraryController.shared.configure(enabled: true, ownsInput: !ideck.running || ideck.menu)
@@ -1419,7 +1428,9 @@ struct ContentView: View {
                 let automaticFLS = ProcessInfo.processInfo.arguments.contains("madeira-fls-diagnostics")
                 let automaticLoginFirst = ProcessInfo.processInfo.arguments.contains("madeira-steam-login-desktop-experiment")
                 let automaticRatatan = ProcessInfo.processInfo.arguments.contains("madeira-ratatan-thread-experiment")
-                let automatic64 = SteamUIExperiment.steam64
+                // Persisted runtime chooses the prefix, not whether to bypass
+                // the launcher's setup/auto-start preference as a diagnostic.
+                let automatic64 = SteamUIExperiment.usesSteam64(arguments: ProcessInfo.processInfo.arguments)
                 let automaticBigPicture = ProcessInfo.processInfo.arguments.contains("madeira-steam64-big-picture-experiment") || automaticRatatan || ProcessInfo.processInfo.arguments.contains("madeira-steam-big-picture-x86-experiment")
                 let automaticX86Client = !automatic64 && (automaticLoginFirst || automaticBigPicture || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-x86-experiment"))
                 let automaticSteamUI = automatic64 || automaticX86Client || ProcessInfo.processInfo.arguments.contains("madeira-steam-ui-experiment")
@@ -3657,6 +3668,9 @@ struct ContentView: View {
         guard !ideck.running, !jitCoordinator.busy, wine_process_is_running() == 0 else { return }
         ideck.error = nil
         UserDefaults.standard.set(true, forKey: "iDeckSetupComplete")
+        logStore.log(SteamUIExperiment.steam64
+            ? "[ideck-runtime] launcher-selected Steam64 prefix=wine-steam64; saved login stays in selected prefix"
+            : "[ideck-runtime] launcher-selected legacy Steam32 prefix=wine; saved login stays in selected prefix")
         let launch = { startSteamUIExperiment(x86Client: !SteamUIExperiment.steam64, bigPicture: true, accountChooser: accountChooser, loginFirst: accountChooser) }
         if jit_check_debugged() && StikJITHelper.ready { launch() }
         else { launchAfterJIT = launch; enableJIT() }
@@ -3669,7 +3683,8 @@ struct ContentView: View {
             return
         }
         guard madeira_cef64_hold_state() >= 0 else {
-            logStore.log("[cef64-owned] native reservation failed; Steam launch refused, reopen without experiment to use the working layout", level: .error)
+            ideck.error = "The selected Steam64 profile or startup address reservations are unavailable. Your saved accounts and games were kept. See Advanced diagnostics; iDeck will not switch to the legacy account environment."
+            logStore.log("[cef64-owned] native reservation/profile failed; selected runtime retained, no legacy-account fallback", level: .error)
             return
         }
         let prefix = SteamUIExperiment.runtimePrefix
@@ -3691,7 +3706,8 @@ struct ContentView: View {
                 flag: MadeiraConfig.get(SteamUIExperiment.flag) ?? (IDeckState.enabled ? "1" : nil), bundleID: Bundle.main.bundleIdentifier, x86Client: x86Client, bigPicture: bigPicture,
                 bigPictureFlag: MadeiraConfig.get(SteamUIExperiment.bigPictureFlag) ?? (IDeckState.enabled ? "1" : nil), accountChooser: accountChooser, loginFirst: loginFirst, ratatanThreadTest: ratatanThreadTest,
                 sourceCEFLayout: madeira_cef64_hold_state() == 1,
-                externalCrashpad: ProcessInfo.processInfo.environment["MADEIRA_CEF64_EXTERNAL_CRASHPAD"] == "1")
+                externalCrashpad: ProcessInfo.processInfo.environment["MADEIRA_CEF64_EXTERNAL_CRASHPAD"] == "1",
+                gpuAcceleration: SteamUIExperiment.steam64 && MadeiraConfig.get("steam64.gpu-acceleration") == "1")
             if IDeckState.enabled {
                 let relative = String(plan.windowsDirectory.dropFirst(3)).replacingOccurrences(of: "\\", with: "/")
                 ideck.beginLoginObservation(client: prefix.appendingPathComponent("drive_c/" + relative), enabled: accountChooser || loginFirst)
@@ -3714,7 +3730,10 @@ struct ContentView: View {
                 setenv("MADEIRA_DESKTOP", "1", 1)
                 setenv("MADEIRA_SCREEN_W", String(plan.width), 1)
                 setenv("MADEIRA_SCREEN_H", String(plan.height), 1)
-                setenv("MADEIRA_JITLESS", "1", 1)
+                let jitless = SteamUIExperiment.v8JitlessMode(environment: ProcessInfo.processInfo.environment,
+                    configuration: MadeiraConfig.all(), steam64: SteamUIExperiment.steam64)
+                setenv("MADEIRA_JITLESS", jitless, 1)
+                logStore.log("[steam-ui-render] gpu-request=\(plan.gpuAccelerated ? "hardware-auto" : "software-forced") v8=\(jitless == "0" ? "jit" : "jitless"); actual backend requires driver evidence")
                 // Genuine Steam bypasses LibraryEntry.applyEnvironment. Publish the
                 // same physical/touch XInput snapshot to WGI-only games as well.
                 setenv("MADEIRA_WGI_HOST_PADS", MadeiraConfig.get("env.MADEIRA_WGI_HOST_PADS") ?? "1", 1)

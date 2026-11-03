@@ -1,0 +1,60 @@
+{
+  "source_head": "c969c9a4a3bbae5bd1b7baf7e1c2559c23d6acc3 plus local fix/steam-runtime-entry changes",
+  "observed_session": {
+    "build": 139,
+    "native_PID": 69333,
+    "helper_PEB": "0x10290c000",
+    "helper_TEB": "0x70fff20000",
+    "helper_module_base": "0x1186d0000",
+    "helper_thread_port": "0x9f27",
+    "repeated_native_stack": [
+      "read",
+      "server_select",
+      "server_wait",
+      "NtWaitForSingleObject",
+      "NtCreateUserProcess+0x2d50",
+      "__wine_syscall_dispatcher",
+      "guest return0x1186d3a25"
+    ]
+  },
+  "binary_discriminator": {
+    "helper_sha256": "a3fb33da4f236163debaa3e092d6d6826000d61dcaac8b3fa1677b2ecc1c07e8",
+    "guest_return_RVA": "0x3a25",
+    "preferred_return": "0x140003a25",
+    "verified_disassembly": "open_steam: call CreateProcessW at0x140003a1f; next instruction0x140003a25",
+    "native_source_wait": "NtWaitForSingleObject(process_info,FALSE,NULL), process_ios.c"
+  },
+  "observed_failure": "Control helper blocked synchronously starting another Steam process, unable to service later exit-game request",
+  "limits": [
+    "Exact preceding URI/request was not recorded; source has multiple open_steam callers",
+    "Do not claim the native child-bootstrap wait cause is solved",
+    "Raw native transfer timed out; stable first10,000,000 bytes used, not whole-session absence evidence"
+  ],
+  "hypothesis": "Menu focus-denial fallback unnecessarily creates another Steam client and can strand the single control loop",
+  "minimal_patch": "Steam menu uses bounded existing Big Picture focus only, returning explicit missing/hung/denied states; existing-window big-picture requests reuse the return policy. No new thread, kill, assertions or guard changes.",
+  "regressions": {
+    "production_menu_ASan_UBSan": "PASS",
+    "bounded_focus_ASan_UBSan": "PASS",
+    "game_return_policy_ASan_UBSan": "PASS",
+    "launcher": "PASS",
+    "full_Xcode142": "PASS",
+    "helper_standalone_matches_Xcode_resource": "PASS",
+    "new_helper_sealed_into_signed_bundle": "PASS",
+    "deep_strict_sign": "PASS",
+    "installed_version_readback": "142"
+  },
+  "on_device_menu_game_exit": "pending",
+  "next_experiment": "Check fresh142 startup/layout/helper marker, test menu before/in game and normal exit with matching UUID ACK, actual game exit and real resumed navigation",
+  "evidence_sha256": {
+    "native_fixed_prefix10m": "b3c882458052aac6113a84a733e05906c79429821ed42a8abf1f736897a21217"
+  },
+  "build143_device_followup": {
+    "fresh_login_success": "2026-11-02T20:01:06",
+    "same_new_helper_in_signed_bundle": true,
+    "menu_fresh_nonce_ACK": "menu-requested",
+    "ACK_sha256": "e0c03da2a7408fec74e4a05cf071258b3ef694267133fd11e6477f6ca6ebae64",
+    "limits": "Matching menu ACK and user-visible menu confirmed; in-game exit and repeated loops remain unverified",
+    "user_visible_menu": true,
+    "user_browsing_report": "more fluid"
+  }
+}

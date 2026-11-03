@@ -165,6 +165,20 @@ static UINT key(WORD vk,DWORD flags) {
     input.ki.dwFlags=flags|((scan&0xff00)==0xe000?KEYEVENTF_EXTENDEDKEY:0);
     return SendInput(1,&input,sizeof(input));
 }
+static const char *steam_menu(void) {
+    /* A denied foreground request does not mean Steam is absent. Starting a
+     * second client here parked the only control thread in CreateProcessW's
+     * startup wait, so subsequent game-exit requests could never be read.
+     * Use the existing bounded queue/foreground handoff; never launch a client
+     * merely to open the menu of the already-running Big Picture window. */
+    int focused=focus_existing_big_picture();
+    if(focused==-2)return "steam-window-unresponsive";
+    if(focused==-1)return "steam-window-unavailable";
+    if(!focused)return "steam-focus-pending";
+    UINT sent=key(VK_CONTROL,0);sent+=key('1',0);Sleep(100);
+    sent+=key('1',KEYEVENTF_KEYUP);sent+=key(VK_CONTROL,KEYEVENTF_KEYUP);
+    return sent==4?"menu-requested":"input-unavailable";
+}
 static int input_diagnostic_allowed(void) {
     const char *session=getenv("MADEIRA_STEAM_UI_SESSION");
     const char *enabled=getenv("MADEIRA_STEAM64_INPUT_DIAGNOSTICS");
@@ -283,6 +297,8 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
     char last[37]="",id[37],command[32],pending[37]="";HANDLE exiting=NULL;ULONGLONG deadline=0;
     if(read_request(id,command))strcpy(last,id); /* Never replay a stale action on startup. */
     ack("ready","ready");
+    FILE *build=fopen("C:\\ideck-control-build.txt","w");
+    if(build){fputs("menu=existing-window-v2\n",build);fclose(build);}
     unsigned input_ticks=0;int initial_focus=0;
     int menu_keys=steam64_menu_keys();
     for(;;) {
@@ -305,13 +321,9 @@ int WINAPI wWinMain(HINSTANCE instance,HINSTANCE previous,PWSTR line,int show) {
         if(read_request(id,command)&&strcmp(last,id)) {
             strcpy(last,id);
             if(!strcmp(command,"menu")) {
-                if(!focus_steam()) { open_steam(L"steam://open/bigpicture");Sleep(300); }
-                if(focus_steam()) {
-                    UINT sent=key(VK_CONTROL,0);sent+=key('1',0);Sleep(100);sent+=key('1',KEYEVENTF_KEYUP);sent+=key(VK_CONTROL,KEYEVENTF_KEYUP);
-                    ack(id,sent==4?"menu-requested":"input-unavailable");
-                } else ack(id,"steam-window-unavailable");
+                ack(id,steam_menu());
             } else if(!strcmp(command,"big-picture")) {
-                ack(id,open_steam(L"steam://open/bigpicture")?"big-picture-requested":"steam-open-failed");
+                ack(id,return_to_steam());
             } else if(!strcmp(command,"diagnostic-confirm")||!strcmp(command,"diagnostic-right")||!strcmp(command,"diagnostic-left")||
                       !strcmp(command,"diagnostic-up")||!strcmp(command,"diagnostic-down")||!strcmp(command,"diagnostic-back")) {
                 if(!input_diagnostic_allowed()){ack(id,"diagnostic-disabled");continue;}

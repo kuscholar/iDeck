@@ -1,0 +1,159 @@
+{
+  "build": 137,
+  "source_parent": "c969c9a4a3bbae5bd1b7baf7e1c2559c23d6acc3",
+  "branch": "fix/steam-runtime-entry",
+  "source_status": "local scoped uncommitted fix; main and alpha4 release unchanged",
+  "source_hashes": {
+    "app/Madeira/ContentView.swift": "bdd3a3617b7cea61759295de8e20343e9a5880b83c48453bd1b57b3340430e81",
+    "app/Madeira/JITAllocator.c": "c546708c946f0cb60e1a0f227c3ead9c5825c9fcc3e167f9aa363a6f1917369a",
+    "app/Madeira/SteamUIExperiment.swift": "b093943c51f62964109448047ebec4c2cd3fae78167d9611bdf1d4f14db6d535",
+    "build/diagnostics/ideck_runtime_selection.h": "be1803235990914ece7b78e5a28bd567c781e6417247ccadc1a0777eb2604b30",
+    "build/ntdll-unix/signal_arm64_ios.c": "eda949b14df7a297c8ecc1bbd5b09edbed8e0c20af5cb9cce97693e8187f5929",
+    "build/ntdll-unix/steam64_teb_ldrsw.h": "fbddf4de6837221b10c7176b24e175ec45684c448287572715bcbfb3811bb8ab",
+    "tests/host/check-cef64-native-owner.py": "27dd9b7e28c1db6f424d4afc197404945e0d7f3c2ca72f0ae7748d066089e864",
+    "tests/host/check-ideck-runtime-selection.py": "f78d837ea72cca929ea02f3274f4d39f58f6e83626222dddacd9128d7e6f5a13",
+    "tests/host/check-steam-ui.py": "3f13ba5664123e362ccb23356cf46364ba577a63fa7fb01aea3947702756c9a4",
+    "tests/host/check-steam64-teb-ldrsw.py": "1f28e977059cb8d770c5db398eacb88c8234aabc874147b159a143f855edc26f"
+  },
+  "fixes": [
+    "Persist steam-runtime=steam64 for both ordinary icon/JIT-return launch and explicit Steam64 test. Legacy prefix/account/save tree retained; no auth transfer.",
+    "Read selected steam64.env.* config before native reservations/JIT. No Foundation startup allocations, no ordinary env.* leakage to legacy diagnostics, no silent prefix fallback.",
+    "Admit exact own-registered-TEB LDRSW x8,[x18,#0x180c] for both preserved Steam prefixes under session gate; retain offset/opcode/x18/owner checks and signed read."
+  ],
+  "host_validation": [
+    "production Swift launcher including persisted selection and explicit diagnostic override PASS",
+    "ASan/UBSan early native selection/config/restore and environment priority PASS",
+    "actual native hold rollback and16-thread single-claim race PASS",
+    "TEB opcode/offset/prefix negatives and signed-value tests PASS",
+    "launcher readiness and startup failure regressions PASS",
+    "37 native compilation units PASS",
+    "full Xcode137 PASS",
+    "final linked entry/namespace/TEB markers PASS",
+    "deep-strict signature PASS"
+  ],
+  "device_validation": {
+    "target": "physical Kusch iPhone15ProMax A17Pro",
+    "actual_installed_readback": 137,
+    "normal_app_open": "success; no diagnostic arguments or injected environment",
+    "persisted_config_readbacks": "global and minimal ExternalHandler files byte-exact",
+    "Steam64_system_reg_metadata": "present",
+    "fresh_saved_login_after_normal_open": "not observed in110s bounded wait; native log contains only app initialization, no Wine start. Do not count previous batch or historical login as fresh proof.",
+    "game_launch": "not attempted; user requested manual testing",
+    "legacy32_browser_fix": "host-tested and linked; not separately run on device in this build"
+  },
+  "preservation": "Both account/game/save trees retained. No account action/credential automation or login-cache transfer. Prior configs privately backed up. Native allocation guards unchanged.",
+  "known_remaining": "Repeated-game capacity/lifetime failures from135/136 remain unresolved; no release or stability claim. Tested private FEX131 component remains outside Git.",
+  "private_artifacts": [
+    {
+      "private_path": ".madeira-install/steam64-current/xcode137-runtime-entry.log",
+      "bytes": 187652,
+      "sha256": "680fd5296a6d1d1001ebc72dbc242b73a582655bca966ee5044c55d82c20919c"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/native137-runtime-entry-build.log",
+      "bytes": 891,
+      "sha256": "a2930366749ce290e0affd1139d157bf6c3fe29406603ea2cbd408ec1e131132"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build137-native-owner-check.log",
+      "bytes": 166,
+      "sha256": "9b0fc797d9f69f891cf6e7bf027e14272d667f099ee220b0a2e47a11c1288bb0"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build137-installed-app.json",
+      "bytes": 1387,
+      "sha256": "480f4a92ab258186a95e0a7e26f5cf0eb6969f6574d4dea5a22380e98926be06"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build137-normal-open-native.txt",
+      "bytes": 1173,
+      "sha256": "1e72404201dda469c4ffe85dd44c8630d3fa56ef61491344501a32dae99cf899"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build137-installed-global.cfg",
+      "bytes": 2339,
+      "sha256": "aec4babda0b28ffe69ff1780bb3f1b20f510a044014c7e20399be1712c8c542e"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/build137-installed-CEF.cfg",
+      "bytes": 438,
+      "sha256": "53737a32ac6f577f6130cdfec7026e065e642cf5fcfe75d904a86aa72d9f416a"
+    },
+    {
+      "private_path": ".madeira-install/steam64-current/launch137-normal-app-open.json",
+      "bytes": 1323,
+      "sha256": "931b12b6c22f2b0b9a706011bbed246ff512da3fca690c232967aa73ad90eeb7"
+    }
+  ],
+  "user_test_followup_20261102": {
+    "date": "2026-11-02",
+    "timezone": "America/New_York UTC-05:00",
+    "installed_build": 137,
+    "user_report": "First game entered and returned; second launch fails but Steam remains responsive",
+    "ordinary_launcher_prefix_verified": "wine-steam64; native marker11:14:11 confirms persisted Steam64 selection",
+    "actual_main_span_mib": 592,
+    "actual_C_mib": 336,
+    "actual_low_image_margin_mib": 268,
+    "requested_main_mib": 704,
+    "cycles": [
+      {
+        "start": "11:15:18",
+        "end": "11:15:42",
+        "exit": "0x00000000"
+      },
+      {
+        "start": "11:15:54",
+        "end": "11:15:57",
+        "exit": "0xc0000135"
+      },
+      {
+        "start": "11:16:15",
+        "end": "11:16:18",
+        "exit": "0xc0000135"
+      }
+    ],
+    "original_failure": {
+      "image": "UnityPlayer.dll",
+      "section_create_query": "success; AMD64",
+      "pool_copy_status": "0xc0000017",
+      "requested_bytes": 23117824,
+      "largest_free_block_bytes": 22921216,
+      "total_free_bookkeeping_bytes": 90062848,
+      "largest_shortfall_bytes": 196608,
+      "free_entries": 112
+    },
+    "bounded_interpretation": "Play created a real game process. Canonical DLL can open/query, but executable pool copy fails. This is a contiguous JIT pool allocation/fragmentation failure, not evidence of missing file, button input loss or a reproduced browser crash.",
+    "post_first_exit": "Native log records60ranges/0x5af4000 freed and55mapping tombstones for the first game owner. Aggregate reclamation is not proof of the exact Unity block fate.",
+    "allocator_source_review": "Adjacent clean-block coalescing and grace-delayed best-fit already exist. Do not claim merely adding them is a new fix. Need allocation/owner/cleanliness history to distinguish live reuse, fragmentation or failed reclamation.",
+    "CEF_limit": "Only historical OOM entries in captured cef log; no attribution of those entries to the current cycle. User responsiveness is user-reported.",
+    "device_actions": "read-only copies only; current Steam kept alive; no input, restart, account/config change or game launch by agent",
+    "next_discriminator": "Trace exact large-image allocation and reclaim intervals/owner and max-protection after exit; preserve only proven-reusable contiguous image blocks. Keep native ownership, executable-page and grace guards intact. Then user repeats3cycles; do not silently grow/shrink guards or suppress failure.",
+    "private_artifacts": [
+      {
+        "private_path": ".madeira-install/steam64-current/build137-second-launch-20261102T111818/apps.json",
+        "bytes": 1408,
+        "sha256": "887bfcfbe568a3a8b7f6b53edbcfd62a64c68d1f56aa84bd9d741b3eed217274"
+      },
+      {
+        "private_path": ".madeira-install/steam64-current/build137-second-launch-20261102T111818/identity.json",
+        "bytes": 171,
+        "sha256": "506384ce59b6ded2f884b435ad7a0bb101daf470c36d6403c7a5e8f910175fe6"
+      },
+      {
+        "private_path": ".madeira-install/steam64-current/build137-second-launch-20261102T111818/gameprocess.txt",
+        "bytes": 22142,
+        "sha256": "4341ce205ce08375619b5dcec947654e4fce5ab82f02d454886a63fd6063a266"
+      },
+      {
+        "private_path": ".madeira-install/steam64-current/build137-second-launch-20261102T111818/native.txt",
+        "bytes": 5793115,
+        "sha256": "db586e0f978b37bf9df8e97fe8684619a5a59757546cf6a5ef9506394b0f4481"
+      },
+      {
+        "private_path": ".madeira-install/steam64-current/build137-second-launch-20261102T111818/cef.txt",
+        "bytes": 143302,
+        "sha256": "8cb87b7e6f6b1e3cfba92bfbbc083b59e327a818fe956af41b3cdff30311d49b"
+      }
+    ]
+  }
+}

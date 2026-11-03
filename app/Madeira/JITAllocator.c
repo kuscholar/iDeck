@@ -911,10 +911,12 @@ unsigned madeira_early_intruder_tag, madeira_early_intruder_prot;
 #include <crt_externs.h>
 #include "../../build/diagnostics/steam_ui_vm_probe.h"
 #include "../../build/diagnostics/cef64_layout_probe.h"
+#include "../../build/diagnostics/ideck_runtime_selection.h"
 
 /* Explicit full64 source-component experiment. All regions are reserved before
  * Wine and remain natively owned until its checked single-transfer API adopts
- * them. No ordinary launch can enable this from an environment variable alone. */
+ * them. Opt-in requires explicit arguments or the persisted full64 profile;
+ * an environment variable alone does not select the product runtime. */
 static unsigned ideck_cef64_held_mask, ideck_cef64_claimed_mask;
 static int ideck_cef64_hold_status;
 static const struct ideck_cef64_slot *ideck_cef64_active_slots = ideck_cef64_slots;
@@ -952,14 +954,20 @@ void madeira_cef64_hold_unclaim(unsigned slot)
 
 __attribute__((constructor(99), used)) static void ideck_cef64_boot_holds(void)
 {
-    const char *option = getenv("MADEIRA_CEF64_SOURCE_LAYOUT");
     char **argv = *_NSGetArgv();
-    int argc = *_NSGetArgc(), requested = 0;
+    int argc = *_NSGetArgc();
+    char runtime[32]={0};
+    madeira_cfg_get("steam-runtime",runtime,sizeof(runtime));
+    int persisted=ideck_steam64_early_environment(runtime,argc,argv,madeira_cfg_get);
+    if (persisted<0)
+    {
+        __atomic_store_n(&ideck_cef64_hold_status,-1,__ATOMIC_RELEASE);
+        return; /* Selected prefix stays selected; never fall back to old auth. */
+    }
+    if (persisted>0) dprintf(2,"[ideck-runtime] persisted Steam64 profile selected before native holds; no auth transfer\n");
+    const char *option = getenv("MADEIRA_CEF64_SOURCE_LAYOUT");
+    int requested=ideck_steam64_selected(runtime,argc,argv);
     if (!option || strcmp(option, "1")) return;
-    for (int i = 1; i < argc; ++i)
-        if (argv[i] && (!strcmp(argv[i], "madeira-steam64-experiment") ||
-                        !strcmp(argv[i], "madeira-steam64-big-picture-experiment") ||
-                        !strcmp(argv[i], "madeira-cef64-component-diagnostics"))) requested = 1;
     if (!requested) return;
     const char *split = getenv("MADEIRA_CEF64_SPLIT_LAYOUT");
     if (split && !strcmp(split, "1")) {
