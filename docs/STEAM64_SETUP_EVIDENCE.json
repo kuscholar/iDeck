@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "phase": "Steam64 launcher setup; host verified; fresh device gate pending",
+  "branch": "feature/steam64-setup",
+  "source_baseline": "b7d03d57174bbfc39c0f21698a9ee1a9653e5e6e",
+  "remote_main_checked": "47b2a32257cebdae35a740540f9f93ff3de78233",
+  "build": 144,
+  "published": false,
+  "device_installed": false,
+  "device_validation": false,
+  "observed_failure": "The release IPA lacks an installer for the private prepared full64 prefix/profile. Upgrading can retain legacy32 selection. This does not establish full64 capacity on a low-VA device.",
+  "hypothesis": "Transactional official acquisition plus matched source components and atomic explicit profile selection reproduce preparation, without auth transfer or weakened reservations.",
+  "discriminator": "Extract/hash all18 packages and6229 stock files; compose open components, activate, repeat repair preserving the original receipt and restore a disposable config; reject bad archives/architectures/components, unsupported maps, interruption and conflicting settings.",
+  "packages": 18,
+  "unique_official_files": 6229,
+  "download_bytes": 346737778,
+  "unique_official_expanded_bytes": 782490134,
+  "steam_manifest_version": "1769025840",
+  "steam_manifest_sha256": "2ed4528edafa147aceb219a924f68e9d91227d81edba15d861c2c8e63942ff36",
+  "catalog_sha256": "918ecb6e339088a923920dec0d3998d122e93dd4adf7940fefec01159cdbcc8b",
+  "linked_macho_ui_markers": true,
+  "debug_dylib_sha256": "1685d22fb9dc0b2d4734102666ae0a77cf6a6024081313375dd082e1bc55917f",
+  "translator_sha256": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+  "new_fex_source_edits": false,
+  "private_evidence": {
+    "build144-complete.log": {
+      "relative_path": ".madeira-install/ideck-steam64-setup/build144-complete.log",
+      "sha256": "7a63539a9edd36e25278a953d892bfc5c3b7f9d1c3c5b119ae848f2d79704b9c"
+    },
+    "full-setup-test-final.log": {
+      "relative_path": ".madeira-install/ideck-steam64-setup/full-setup-test-final.log",
+      "sha256": "fb30b4efc9d8db5bd339d890a7c3a5928b47794ae0e5b6c8b2c011bbebe9b5f6"
+    },
+    "component-profile-test.log": {
+      "relative_path": ".madeira-install/ideck-steam64-setup/component-profile-test.log",
+      "sha256": "264c60920b8f2b74d15b8569ec9c535dab1cfed6788095fa866948589eb964fe"
+    },
+    "installer-test-final.log": {
+      "relative_path": ".madeira-install/ideck-steam64-setup/installer-test-final.log",
+      "sha256": "69de39ed8d0dcba6c982ab9b4904a1d8b43cfb746f5e059d47ae3b74fce936fd"
+    },
+    "official-package-availability.json": {
+      "relative_path": ".madeira-install/ideck-steam64-setup/official-package-availability.json",
+      "sha256": "48f26d201cae6407d9d341ee5fbcc6753f97093d33d69be069d586748ce39d8d"
+    }
+  },
+  "checks": {
+    "extractor_transaction": "PASS production Swift CRC/SHA256/path/symlink/case collision/bomb/architecture/cancellation/disk/rollback/interruption; exact private Steam and separate legacy sentinel preservation; public-only import",
+    "full_composed_setup": "PASS all18 package hashes/extraction,6229 stock files, open component composition, activation, repeated activation retaining first rollback receipt, restore, corrupt component refusal",
+    "profile_and_runtime": "PASS unknown/low maps, config/receipt recovery, conflicting edits, unrelated preferences, symlinks; actual pinned compatibility and released FEX131 resources",
+    "regressions": "PASS check-ideck.py, check-ideck-runtime-selection.py, check-steam-ui-keyboard.py (explicit writable CLANG_MODULE_CACHE_PATH)",
+    "xcode": "PASS full unsigned Build144; linked debug dylib markers/catalog/component/translator hashes; no Valve/auth payload"
+  },
+  "limitations": [
+    "No physical installation, fresh-device download/TLS/login, setup/repair/rollback UI or repeated-game test in this run. The stale question reply that iDeck was not visible is not manual-close or gameplay proof.",
+    "A map reaching0x8000000000 is necessary only; all native disjoint holds must succeed on restart. Steam64 does not expand VA or guarantee32-bit helper capacity.",
+    "Legacy prefix is retained, not migrated; user-owned Valve sign-in may be needed.",
+    "Pinned January22/CEF126 client is not the newest Steam/Chromium. Future changes require compatibility/security assessment.",
+    "Build143 third-return freeze is still unresolved.",
+    "New binary release requires the complete exact source/rebuild/notices for the open components. This feature branch contains source/metadata, no public binaries."
+  ],
+  "next_test": "Fresh-user physical setup on an eligible device: native holds/JIT, user-owned Steam login, repair/rollback UI and repeated game cycles; do not overwrite working auth/game state."
+}

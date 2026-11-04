@@ -4684,3 +4684,39 @@ Latest user correction for Build143: three game enter/exit cycles work, but
 Steam freezes after the THIRD return. This supersedes any complete-loop/stability
 impression from exit-code0 and early menu observations. User explicitly requests
 an experimental checkpoint release with that known issue; not a stable GO.
+
+
+## 2026-11-03 — Build144 isolated Steam64 launcher setup (unreleased)
+
+- Phase: reproducible full64 preparation, not new runtime stability proof. Base
+  `b7d03d57174bbfc39c0f21698a9ee1a9653e5e6e`, branch `feature/steam64-setup`;
+  checked origin/main `47b2a32257cebdae35a740540f9f93ff3de78233`. Existing
+  working-tree changes, main and installed authenticated state are preserved.
+- Gap/hypothesis: an IPA upgrade does not reproduce the prepared full64 prefix.
+  Add explicit transactional official-client acquisition and atomic profile
+  selection rather than switching config alone, copying login caches or weakening
+  VA guards. The screenshot's low capacity does not prove full64 eligibility.
+- Discriminator/evidence:18 pinned Valve packages and6229 stock files passed
+  full extraction/hashing; composed open components, activation, repeated repair
+  preserving the first rollback receipt and restoration passed in disposable
+  storage. Exact hashes/private artifact paths: STEAM64_SETUP_EVIDENCE.json.
+- Scoped patch: launcher Install/Upgrade, Verify/Repair and Return to previous
+  environment; verified resumable cache/streaming ZIP, durable rollback and
+  cancellation, matched component/runtime pins, actual native holds prerequisite
+  after restart. No FEX/Valve/submodule source edits; released FEX131 bytes reused.
+  Original wine, accounts, games and saves remain separate and untouched.
+- Host extractor/transaction/profile/runtime checks and existing readiness,
+  runtime-selection and keyboard regressions pass. Full unsigned Xcode144 passes;
+  linked final debug dylib and all component/catalog/translator pins inspected.
+- Limits: not installed or tested physically in this run; no new login/UI/game
+  proof. The later stale-question reply that iDeck was not visible is not a
+  manual-close observation. Third-return freeze remains.512GiB map boundary alone
+  is not ownership; native holds are still required. The pinned older client
+  needs compatibility/security review for updates and full source/notices before
+  distributing new binaries. No new release has been published.
+- Next: fresh-user physical setup, native holds/JIT, user Steam login, repair/
+  rollback UI and repeated game loops. Never delete or overwrite the authenticated
+  working prefix or copy credentials to simulate a fresh-user result.
+
+See [Steam64 setup](STEAM64_SETUP.md) and
+[redacted evidence](STEAM64_SETUP_EVIDENCE.json).

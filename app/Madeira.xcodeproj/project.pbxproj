@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1640004 /* Steam64Compatibility in Resources */ = {isa = PBXBuildFile; fileRef = B2640004 /* Steam64Compatibility */; };
+		B1640003 /* Steam64Packages.json in Resources */ = {isa = PBXBuildFile; fileRef = B2640003 /* Steam64Packages.json */; };
+		B1640002 /* Steam64Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2640002 /* Steam64Setup.swift */; };
+		B1640001 /* Steam64ClientInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2640001 /* Steam64ClientInstaller.swift */; };
 		B1000901 /* SteamUIExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000901 /* SteamUIExperiment.swift */; };
 		A1000520 /* MadeiraDock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000520 /* MadeiraDock.swift */; };
 		A1000521 /* MadeiraDockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000521 /* MadeiraDockView.swift */; };
@@ -180,6 +184,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2640004 /* Steam64Compatibility */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Steam64Compatibility"; sourceTree = "<group>"; };
+		B2640003 /* Steam64Packages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Steam64Packages.json"; sourceTree = "<group>"; };
+		B2640002 /* Steam64Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Steam64Setup.swift"; sourceTree = "<group>"; };
+		B2640001 /* Steam64ClientInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Steam64ClientInstaller.swift"; sourceTree = "<group>"; };
 		B2000901 /* SteamUIExperiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamUIExperiment.swift; sourceTree = "<group>"; };
 		A2000520 /* MadeiraDock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MadeiraDock.swift"; sourceTree = "<group>"; };
 		A2000521 /* MadeiraDockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MadeiraDockView.swift"; sourceTree = "<group>"; };
@@ -440,6 +448,10 @@
 				A2000522 /* SteamKeyValues.swift */,
 				A2000523 /* SteamRuntime.swift */,
 				B2000901 /* SteamUIExperiment.swift */,
+				B2640004 /* Steam64Compatibility */,
+				B2640003 /* Steam64Packages.json */,
+				B2640002 /* Steam64Setup.swift */,
+				B2640001 /* Steam64ClientInstaller.swift */,
 				A2000524 /* DockInstallers.swift */,
 				A2000913 /* DockReset.swift */,
 				A2000510 /* SteamSignIn.swift */,
@@ -672,6 +684,8 @@
 				A10000D2 /* licenses in Resources */,
 				A1000081 /* x86_64-vcruntime in Resources */,
 				A1000040 /* prefix-template.tar.gz in Resources */,
+				B1640004 /* Steam64Compatibility in Resources */,
+				B1640003 /* Steam64Packages.json in Resources */,
 				A1000094 /* cacert.pem in Resources */,
 				A1000910 /* Assets.xcassets in Resources */,
 				B1000004 /* madeira-jit.js in Resources */,
@@ -770,6 +784,8 @@
 				A1000522 /* SteamKeyValues.swift in Sources */,
 				A1000523 /* SteamRuntime.swift in Sources */,
 				B1000901 /* SteamUIExperiment.swift in Sources */,
+				B1640002 /* Steam64Setup.swift in Sources */,
+				B1640001 /* Steam64ClientInstaller.swift in Sources */,
 				A1000524 /* DockInstallers.swift in Sources */,
 				A1000913 /* DockReset.swift in Sources */,
 				A1000510 /* SwiftSteam/SteamSignIn.swift in Sources */,

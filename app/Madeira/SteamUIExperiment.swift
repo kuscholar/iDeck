@@ -669,6 +669,11 @@ import UIKit
             if let relative = SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: !SteamUIExperiment.steam64) {
                 prerequisites[1].detail += " Selected client: drive_c/" + relative + "."
             }
+            if SteamUIExperiment.steam64 {
+                let owned = madeira_cef64_hold_state() == 1
+                prerequisites[IDeckPrerequisite.allCases.firstIndex(of: .addressSpace)!] = .init(id: .addressSpace, status: owned ? .passed : .needsAction,
+                    detail: owned ? "Steam64's native address reservations are held. Launch checks remain active." : "Steam64's required native address reservations are unavailable. Fully reopen after setup; use Return to previous environment if this device/signing layout is unsupported.")
+            }
             refresh()
             lastChecked = Date()
             checkingPrerequisites = false
@@ -678,6 +683,69 @@ import UIKit
     var prefix: URL { SteamUIExperiment.runtimePrefix }
     func refresh() {
         ready = IDeckRules.runtimeReady(prefix: prefix) && SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: !SteamUIExperiment.steam64) != nil
+    }
+    @Published var steam64Progress: Steam64Progress?
+    @Published private(set) var steam64Committing = false
+    private var steam64Task: Task<Void, Never>?
+    var canManageEnvironment: Bool {
+        !preparing && !running && !checkingPrerequisites && !repairRequiresRestart && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
+    }
+    var canRestoreEnvironment: Bool {
+        MadeiraConfig.documents.map { FileManager.default.fileExists(atPath: $0.appendingPathComponent(Steam64Profile.receiptName).path) } == true
+    }
+    func cancelSteam64Setup() { if !steam64Committing { steam64Task?.cancel() } }
+    func installSteam64() {
+        guard Self.enabled, canManageEnvironment, let documents = MadeiraConfig.documents, let config = MadeiraConfig.url else { return }
+        preparing = true; self.error = nil
+        let target = documents.appendingPathComponent("wine-steam64")
+        let mapEnd = IDeckAddressSpace.current()?.mapEnd
+        steam64Task = Task { @MainActor in
+            defer { preparing = false; steam64Task = nil; steam64Committing = false }
+            do {
+                guard Steam64Profile.eligible(mapEnd: mapEnd) else { throw Steam64SetupError.unsupported }
+                // Check all open components before seeding or downloading anything.
+                try await Task.detached { try Steam64Components.validateRuntime(); try Steam64Components.validateBundle() }.value
+                let previous = try Steam64Profile.read(config)
+                steam64Progress = .init(phase: .checking)
+                try await Task.detached(priority: .userInitiated) {
+                    let fm = FileManager.default
+                    guard target.standardizedFileURL == target.resolvingSymlinksInPath() else { throw Steam64InstallError.unsafePath }
+                    if !fm.fileExists(atPath: target.appendingPathComponent("system.reg").path) {
+                        guard let archive = Bundle.main.path(forResource: "prefix-template", ofType: "tar.gz") else { throw Steam64InstallError.runtime }
+                        if fm.fileExists(atPath: target.path), !(try fm.contentsOfDirectory(atPath: target.path)).isEmpty { throw Steam64InstallError.runtime }
+                        try fm.createDirectory(at: target, withIntermediateDirectories: true)
+                        guard madeira_extract_prefix_tgz(archive, target.path) == 0 else { throw Steam64InstallError.runtime }
+                    }
+                }.value
+                try Task.checkCancellation()
+                _ = try await Steam64Installer.shared.run(prefix: target, cache: documents.appendingPathComponent("Steam64DownloadCache"), sessionInactive: {
+                    await MainActor.run { !self.running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken }
+                }, progress: { value in await MainActor.run { if self.preparing && !self.steam64Committing { self.steam64Progress = value } } })
+                try Task.checkCancellation()
+                steam64Committing = true
+                // Repair also restores an incomplete selected Steam64 profile. A retry
+                // keeps the first pre-upgrade receipt, so rollback still selects legacy.
+                try await Task.detached(priority: .userInitiated) {
+                    try Steam64Profile.activate(config: config, expected: previous, mapEnd: mapEnd, prefix: target, catalog: Steam64Catalog.load())
+                }.value
+                autoStart = false
+                UserDefaults.standard.set(true, forKey: "iDeckSetupComplete")
+                repairRequiresRestart = true
+                ready = false
+                self.error = Steam64SetupError.restart.localizedDescription
+            } catch is CancellationError {
+                self.error = "Steam64 setup cancelled. Downloads can be resumed; the selected environment was not changed."
+                steam64Progress = nil
+            } catch { self.error = error.localizedDescription; steam64Progress = nil }
+        }
+    }
+    func restorePreviousEnvironment() {
+        guard canManageEnvironment, let config = MadeiraConfig.url else { return }
+        do {
+            try Steam64Profile.restore(config: config)
+            autoStart = false; repairRequiresRestart = true; ready = false
+            self.error = "Previous environment selected. Fully close and reopen iDeck before launching. Both environments and their data were kept."
+        } catch { self.error = error.localizedDescription }
     }
     @Published private(set) var repairRequiresRestart = false
     var canRepairSteam: Bool {
@@ -972,6 +1040,23 @@ struct IDeckLauncher: View {
                     VStack(spacing: 0) {
                         ForEach(Array(state.prerequisites.enumerated()), id: \.element.id) { index, row in
                             stepRow(row, number: index + 1)
+                        }
+                    }
+                    GroupBox("Steam64 setup") {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Install the matched 64-bit Steam and browser from Valve. Your previous environment, account, games and saves stay intact. The first Steam64 sign-in uses Steam’s own login; credentials are not transferred.").font(.caption).foregroundStyle(.secondary)
+                            Button(SteamUIExperiment.steam64 ? "Verify / Repair Steam64" : "Install / Upgrade to Steam64") { state.installSteam64() }
+                                .buttonStyle(.borderedProminent).disabled(!state.canManageEnvironment || jit.busy)
+                            if let progress = state.steam64Progress {
+                                if let fraction = progress.fraction { ProgressView(value: fraction) }
+                                Text(state.steam64Committing ? "Verifying Steam64 and saving selection…" : progress.phase.rawValue).font(.caption)
+                                if state.preparing && !state.steam64Committing { Button("Cancel download / setup") { state.cancelSteam64Setup() }.font(.caption) }
+                            }
+                            if state.canRestoreEnvironment {
+                                Button("Return to previous environment") { state.restorePreviousEnvironment() }
+                                    .disabled(!state.canManageEnvironment || jit.busy)
+                            }
+                            Text("An eligible device/address layout and an app restart are required. This does not increase virtual address space or guarantee game compatibility.").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                     GroupBox("Steam recovery") {
