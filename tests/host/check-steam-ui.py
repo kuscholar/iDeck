@@ -8,8 +8,19 @@ src = (root / 'app/Madeira/SteamUIExperiment.swift').read_text()
 policy = src[src.index('enum SteamUIExperiment {'):src.index('\n@MainActor\nfinal class SteamUIEvidence')]
 main = r'''
 let docs64 = URL(fileURLWithPath: "/test-documents")
+assert(SteamUIExperiment.v8JitlessMode(environment: [:], configuration: [:], steam64: true) == "1")
+assert(SteamUIExperiment.v8JitlessMode(environment: [:], configuration: ["steam64.env.MADEIRA_JITLESS":"0"], steam64: true) == "0")
+assert(SteamUIExperiment.v8JitlessMode(environment: [:], configuration: ["steam64.env.MADEIRA_JITLESS":"0"], steam64: false) == "1")
+assert(SteamUIExperiment.v8JitlessMode(environment: ["MADEIRA_JITLESS":"1"], configuration: ["steam64.env.MADEIRA_JITLESS":"0"], steam64: true) == "1")
+assert(SteamUIExperiment.v8JitlessMode(environment: ["MADEIRA_JITLESS":"0"], configuration: [:], steam64: true) == "0")
+for bad in ["00","false","true","0 "] { assert(SteamUIExperiment.v8JitlessMode(environment: ["MADEIRA_JITLESS":bad], configuration: [:], steam64: true) == "1") }
 assert(!SteamUIExperiment.usesSteam64(arguments: []))
 assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: []).lastPathComponent == "wine")
+assert(SteamUIExperiment.usesSteam64(arguments: ["app"], selectedRuntime: "steam64"))
+assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: ["app"], selectedRuntime: "steam64").lastPathComponent == "wine-steam64")
+assert(!SteamUIExperiment.usesSteam64(arguments: ["app", "madeira-runtime-diagnostics"], selectedRuntime: "steam64"))
+assert(!SteamUIExperiment.usesSteam64(arguments: ["app"], selectedRuntime: "steam64-old"))
+assert(!SteamUIExperiment.usesSteam64(arguments: ["app"], selectedRuntime: "steam32"))
 for arg in ["madeira-steam64-experiment", "madeira-steam64-big-picture-experiment", "madeira-cef64-component-diagnostics"] {
  assert(SteamUIExperiment.usesSteam64(arguments: [arg]))
  assert(SteamUIExperiment.runtimePrefix(documents: docs64, arguments: [arg]).lastPathComponent == "wine-steam64")
@@ -127,6 +138,12 @@ try FileManager.default.copyItem(at: client, to: sourceClient)
 let sourcePlan = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true)
 assert(sourcePlan.batch.contains("-nobootstrapperupdate -skipinitialbootstrap") && !sourcePlan.batch.contains("changeuser"))
 assert(!sourcePlan.batch.contains("-cef-disable-breakpad"))
+let gpuPlan = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true, gpuAcceleration: true)
+assert(!gpuPlan.batch.contains("-cef-disable-gpu") && gpuPlan.batch.contains("-no-cef-sandbox") && !gpuPlan.batch.contains("changeuser"))
+assert(sourcePlan.batch.contains("-cef-disable-gpu") && !sourcePlan.gpuAccelerated)
+assert(gpuPlan.batch == sourcePlan.batch.replacingOccurrences(of: " -cef-disable-gpu", with: ""))
+do { _ = try SteamUIExperiment.prepare(prefix: root, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", gpuAcceleration: true); fatalError("GPU without isolated layout") } catch {}
+do { _ = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", x86Client: true, sourceCEFLayout: true, gpuAcceleration: true); fatalError("GPU must not select legacy client") } catch {}
 do { _ = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", externalCrashpad: true); fatalError("external crashpad without source layout") } catch {}
 do { _ = try SteamUIExperiment.prepare(prefix: componentPrefix, width: 1408, height: 648, flag: "1", bundleID: "test.steamui", sourceCEFLayout: true, externalCrashpad: true); fatalError("missing config guard") } catch {}
 try componentPE.write(to: crashpadDirectory.appendingPathComponent("config_guard.exe"))

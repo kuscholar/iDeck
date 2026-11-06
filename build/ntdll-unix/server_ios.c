@@ -25,6 +25,7 @@
 #include "config.h"
 
 #ifdef WINE_IOS
+#include "../../app/Madeira/SteamUIDiagnostics.h"
 #include <os/log.h>
 #include <pthread.h>
 #include <dlfcn.h>
@@ -2790,14 +2791,15 @@ static void ios_wprof_main( void )
  * keeps its 20 s line and [xp]/[xp-t]/[xp-api]/[xp-api-top] keep their rates, so
  * abline, bucket, xptphase, energyfit, clampstats and apitop read the same
  * fields; tstime has no [thread-sample] lines to tag. The memory walks of
- * virtual_ios.c's warmer thread run every ~10 min instead of every minute. */
+ * virtual_ios.c's warmer thread run every ~10 min instead of every minute
+ * only for broad LEAN_DIAG. Steam's pure-sampling switch leaves them unchanged. */
 static int ios_lean_diag;
 
 static void ios_thread_sampler_main(void)
 {
     int gen = 0;
     ios_ts_calibrate();
-    wine_log_write(ios_lean_diag ? "[thread-sample] ml876 armed for [sync-census] only (MADEIRA_LEAN_DIAG: no bursts, no guest RIP profile)"
+    wine_log_write(ios_lean_diag ? "[thread-sample] ml876 armed for [sync-census] only (periodic sampling disabled: no bursts, no guest RIP profile)"
                                  : "[thread-sample] ml876 armed (task-wide: burst of 4 passes / 250 ms every 20 s)");
     for (;;) {
         int b;
@@ -5723,12 +5725,15 @@ void server_init_process_done(void)
             const char *lean_env = getenv("MADEIRA_LEAN_DIAG");
             /* 1: a [power] line every 5 s (coalition GPU energy, IOReport, battery) and [power-t] (energy per thread) */
             const char *probe_env = getenv("MADEIRA_POWER_PROBE");
-            ios_lean_diag = lean_env && *lean_env && strcmp(lean_env, "0") != 0;
+            int broad_lean = lean_env && *lean_env && strcmp(lean_env, "0") != 0;
+            ios_lean_diag = broad_lean || madeira_steam_ui_sampling_disabled();
             ios_power_probe_on = probe_env && *probe_env && strcmp(probe_env, "0") != 0;
-            if (ios_lean_diag)
+            if (broad_lean)
                 wine_log_write("[lean-diag] madeira-bcd MADEIRA_LEAN_DIAG=%s: [thread-sample] bursts, guest RIP profile ([rip-profile], "
                                "[cpu-split]) and [wprof] off; [sync-census] every 20 s and [xp]/[xp-t]/[xp-api] every 250 ms / 1 s as "
                                "before; the warmer's memory walks every ~10 min", lean_env);
+            else if (ios_lean_diag)
+                wine_log_write("[steam-ui-sampling] pure-sampling-policy-v2: thread-sample, rip-profile, cpu-split and wprof off; VM maintenance unchanged; sync-census retained");
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{ ios_thread_sampler_main(); });
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{ ios_xprobe_main(); });   /* ml1128 */
             if (!ios_lean_diag) dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{ ios_wprof_main(); });   /* ml1129 */

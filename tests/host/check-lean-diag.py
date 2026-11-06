@@ -100,7 +100,8 @@ arm_at = server.find("if (__sync_bool_compare_and_swap(&ios_ts_armed, 0, 1))")
 arm = server[arm_at:server.find("ios_wprof_main(); });", arm_at) + 40]
 check(arm_at > 0 and 'const char *lean_env = getenv("MADEIRA_LEAN_DIAG");' in arm,
       "MADEIRA_LEAN_DIAG is read where the samplers are armed (once a process)")
-check('ios_lean_diag = lean_env && *lean_env && strcmp(lean_env, "0") != 0;' in arm,
+check('int broad_lean = lean_env && *lean_env && strcmp(lean_env, "0") != 0;' in arm and
+      'ios_lean_diag = broad_lean || madeira_steam_ui_sampling_disabled();' in arm,
       "unset, empty or 0 leaves it off")
 # (a build may also gate each sampler on a probes level of its own: "if (probes >= N ...")
 check(re.search(r"if \((?:probes >= 2 && )?!ios_lean_diag\) dispatch_async\(dispatch_get_global_queue\(QOS_CLASS_UTILITY, 0\), "

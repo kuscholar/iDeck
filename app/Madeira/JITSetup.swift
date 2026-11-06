@@ -190,8 +190,9 @@ final class JITCoordinator: ObservableObject {
     @Published private(set) var pairingSource = JITPairingFileStore.source
 
     private init() {
+        let product = Bundle.main.object(forInfoDictionaryKey: "IDeckEnabled") as? Bool == true
         method = UserDefaults.standard.string(forKey: "madeiraJITMethod")
-            .flatMap(JITMethod.init(rawValue:)) ?? .automatic
+            .flatMap(JITMethod.init(rawValue:)) ?? (product ? .builtIn : .automatic)
     }
 
     var resolvedMethod: JITMethod {

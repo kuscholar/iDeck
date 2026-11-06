@@ -8,10 +8,11 @@
 static int steam64_teb_ldrsw_matches(const char *session, const char *prefix,
                                     uint32_t insn, uint64_t x18, uint64_t fault)
 {
-    static const char suffix[]="/wine-steam64";
+    static const char suffix[]="/wine-steam64", legacy[]="/wine";
     size_t n=prefix?strlen(prefix):0;
-    return session&&!strcmp(session,"1")&&n>=sizeof(suffix)-1&&
-           !strcmp(prefix+n-(sizeof(suffix)-1),suffix)&&x18==0&&fault==0x180c&&
+    int own_prefix=(n>=sizeof(suffix)-1 && !strcmp(prefix+n-(sizeof(suffix)-1),suffix)) ||
+                   (n>=sizeof(legacy)-1 && !strcmp(prefix+n-(sizeof(legacy)-1),legacy));
+    return session&&!strcmp(session,"1")&&own_prefix&&x18==0&&fault==0x180c&&
            (insn&0xffc00000)==0xb9800000&&((insn>>5)&31)==18&&
            (((insn>>10)&4095)*4)==fault;
 }

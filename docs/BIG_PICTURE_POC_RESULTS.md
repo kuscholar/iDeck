@@ -4442,3 +4442,315 @@ and both configs restored/read-back. Auth/games/saves preserved. Installed136
 retained; test ended. NO-GO for new release; existing alpha4 unchanged.
 Exact private FEX corresponding-source/relink permission scope is another gate.
 See release/BUILD136_RESULTS.md and release/BUILD136_EVIDENCE.json.
+
+### 2026-11-01 — Build137 persisted ordinary entry and own-TEB adapter
+
+Current user normal136 log confirmed prefixwine/Steam32BundleLab, unlike prior
+explicit Steam64/wine-steam64 test. No changeuser in either batch; no agent
+account action. Legacy browser196 suffers exact native LDRSW/x18zero read0x180c
+AV, then threads end and browser784 starts. Existing adapter gate excluded wine;
+host ASan/UBSan reproduces differing predicates. No current game start recorded.
+
+User authorizes fix/build for own manual testing. Local fix/steam-runtime-entry
+fromc969 adds persisted steam-runtime selection, early scoped steam64.env.*
+config before reservations, normal launcher label and no silent account-prefix
+fallback; legacy diagnostics remain isolated. Tight own-TEB signed-load adapter
+now covers both supported Steam prefixes; no FEX/Valve code or guard changes.
+Host launcher/selection/ownership/failure/TEB tests,37nativeunits/full137/final
+linked markers/deep signing pass. Kusch install/actual137/config readbacks pass.
+
+Normal no-argument app-open accepted;110s wait has no fresh SteamSuccess and
+native file contains app initialization only, no Wine start. Do not mistake
+previous batch/historical auth for a fresh pass. Preserve current auto-start
+preference and hand installed137 to user for launcher/check/JIT/Steam/account/
+game testing. No game launch or separate legacy-browser device test performed.
+Both auth/game/save trees and original config backups preserved. No release;
+135/136 repeated-cycle capacity/lifetime problems remain. See
+IDECK_RUNTIME_ENTRY.md and IDECK_RUNTIME_ENTRY_EVIDENCE.json.
+
+### 2026-11-02 — Build137 user ordinary launch and repeated-game failure
+
+User first game succeeds and returns; later Play does not enter game but Steam
+remains responsive (user report). Actual137/current native identity verified,
+read-only no-pause copies succeed.11:14:11 normal launcher selects wine-steam64.
+Hot Roads11:15:18..11:15:42 exits0; next11:15:54..57 and11:16:15..18 exitc0000135.
+Original UnityPlayer executable pool-copy request0x160c000 failsc0000017; section
+create/query succeed AMD64. Largest free0x15dc000, total0x55e4000/112entries.
+Main requested704 becomes592MiB, C336/margin268. No input-loss/missing-file
+claim; old CEF OOM lines are not attributed to this run.
+
+First game owner reclaims60ranges/0x5af4000,55tombstones; exact Unity block fate
+unproven. Source already has adjacent clean-block coalescing and best-fit.
+Next trace large-image interval/owner/reuse/max-protection history and fix only
+the demonstrated contract, preserving grace/ownership/exec guards. No code or
+device configuration changes in this collection; keep user's current Steam
+alive. New evidence appended to IDECK_RUNTIME_ENTRY_EVIDENCE.json. No release.
+
+### 2026-11-02 — Build138 isolated Unity pool-copy demand discriminator
+
+User requests continued repair/testing. Current137 evidence establishes large
+Unity copy refusal; existing best-fit/coalescing cannot infer lost block fate.
+Investigated existing pure-x64 data-image route already enabled only for libcef
+in this profile. Minimal explicit Unity-only extension retains all client and
+support aliases and outer AMD64/nonhybrid/nonbuiltin/nonresource/nonWoW guards.
+No FEX implementation, Valve/game binary, reservation guard or assertion changes.
+
+Separate owned24MiB DLL/driver compiles Werror AMD64 with real static TLS. It
+tests32calls/callbacks plus worker TLS in2rounds across3children, including
+explicit unload and loaded-at-child-exit. Device execution is required before
+claiming image execution or gameplay success. Production policy ASan/UBSan
+and runtime/spill/layout regressions pass,37nativeunits/fullXcode138 pass.
+Signing preparation is independent; no installation or game action performed.
+
+Fresh Kusch process query times out15s. One availability check confirms paired
+but disconnected tunnel/noDDI. User asked once to restore existing connection
+and preserve current Steam; no repeated install/launch or account prompt.
+Private existing runtime unchanged. Next: revalidate current identity/no game,
+restore config attributes safely, install signed138, back up/stage owned probe,
+run fresh own execution discriminator, verify results/actual no-copy route and
+restore probe byte-exact before enabling Unity flag for user game cycles. No
+release or proven-fix claim. See experiments/cef64/IMAGE_EXECUTION.md and
+CEF64_UNITY_DATA_EXPERIMENT.json.
+
+### 2026-11-02 — Build139 Steam UI performance, unsuccessful V8-only trial
+
+User reports slow Steam UI while games are smooth; UI performance becomes the
+current priority. Physical baseline confirms -cef-disable-gpu / webhelper
+--disable-gpu-compositing, interpreted V8 and one reported guest CPU. Guest CPU
+count is not host single-core affinity. Thread-suspending diagnostic bursts and
+serious thermal state are also observed, with no quantified causal cost.
+
+Actual launcher bug unconditionally resets MADEIRA_JITLESS=1. Minimal patch honors
+explicit V8 configuration with compatibility default1 and early scoped export;
+separate default-off GPU-auto opt-in removes the disabling flag only in owned
+full64 source layout. No game/FEX/Valve/submodule edits or guard relaxation.
+Host launcher/early-environment ASan/UBSan/debug privacy checks and full139,
+final linked markers/unchanged private overlays/deep signing pass. Installed139
+version read back on Kusch. Unity no-copy/probe flags remain off throughout.
+
+V8-only candidate readback matches; GPU remains disabled, guestCPU1 retained.
+First start cannot enable native JIT because VPN is disconnected; no Wine launch
+or fresh login. User retry reports black/start failure. Fresh15:02 webhelper
+initializes without jitless switch, but BrowserReady/usable home not observed.
+Live/stable native-copy attempts time out: no exact fatal or sole-cause claim.
+Original compatible config restored; byte-exact readback confirmed after upload
+timeout. Same agent-launched PID68543 remains despite accepted SIGTERM, so no
+death claim. GPU-only staging safely refuses idle gate; no GPU upload/launch.
+Automatic approval rejects forced SIGKILL due possible active user state;
+no workaround attempted. User asked once to close iDeck through app switcher.
+
+Next: verify absence, then test GPU-auto alone with restored V8 compatibility and
+unchanged CPU/diagnostics; require actual backend evidence and real navigation.
+Separately test existing lean diagnostics to avoid suspend bursts. Keep both
+prefixes/auth/games/saves, no automatic game launch, no speedup/release claim.
+No commit/push outside user window. See STEAM_UI_PERFORMANCE.md and its evidence
+JSON for exact private artifact hashes, rollback and observed limitations.
+
+Follow-up: user closes old test; exact68543 absent, new69333 retained. Original
+config readback matches. GPU-auto request staged/read back for next Steam start;
+activation reuses69333, captured batch still disables GPU. User reports usable
+but slow Steam and Hot Roads, pending native Exit game, diagnostic notice. No
+effective GPU backend/performance pass. Device Hub actual visual capture succeeds;
+native menu later absent after keyboard interaction, but mouse/standard AltF4
+do not establish game closure. Selected-prefix exit UUID has only ready/ready
+reply; old return-status fields lack nonce, not current success evidence. No
+game kill, account action, debugger attach or precise helper root-cause claim.
+
+Current CoreDevice file/process calls time out; debugger device query cannot
+connect. One preview error recovers. Mac later truly locks; guard refuses UI
+input and does NOT stop screen sharing. Unlock requested once. Current all-app
+identity/fault capture unavailable; preserve current session. Safe GPU rollback
+requires compare/readback; if unavailable, last verified GPU1 remains prospective
+next-start staging, not a verified setting for the active browser.
+
+Independent Build140 removes confirmed diagnostic overhead by default only for
+exact genuine Steam sessions after config export. Existing lean switch disables
+server suspend bursts/RIP profiling; additional unconditional compositor20s stack
+walker now honors that policy. Explicit diagnostic override, ordinary games,
+error capture and bounded actual-main-stall dump remain. No GPU/JS/CPU/allocator/
+guard/FEX/Valve/submodule or exit-policy changes in this follow-up. Production
+header ASan/UBSan/isolation/override, existing lean/launcher/privacy tests pass;
+fullXcode140/final markers/unchanged private overlay/deep signing pass. Prepared
+but NOT installed; no device speedup/game-return/root-fix claim. Next recover
+current logs and safe idle state, reconcile staged GPU config, test lean-only,
+then GPU with fixed JS/CPU/diagnostic policy. No commit/push/release.
+
+
+### 2026-11-02 — Build142 startup regression discriminator
+
+Revision c969c9a plus preserved local runtime-entry/performance/control changes.
+GPU staging was rolled back/read back exactly. Build141 fails guarded native
+executable-window placement before Wine. Build142 installs/readbacks correctly,
+allocates JIT pools, starts Wine and recreates the new helper marker, but user
+and stable native guest-window logs confirm webhelper not responding. Fresh
+browser initialization is recorded; no fresh login/BrowserReady observed. Native
+4471134-byte ended-session log SHA256
+`db09d27d5f4ddb5ad1c31cb709bf18f380515ba34ad426f9f4600f8771fd4ae1`.
+Private artifacts: steam64-current/steam-ui-performance-20261102T144517.
+No secret/raw device logs are published.
+
+Hypothesis/test: existing LEAN mode changes VM maintenance/replay as well as
+sampling; relaunch the same142 with only scoped LEAN_DIAG=0, original settings
+preserved and exact config readback required. Failed-session identity verified
+absent first. This A/B is running; not a root-cause/fix claim. Hidden-log pause
+and existing-window-only menu tests/full142/signing pass. Device navigation,
+GPU acceleration, in-game exit and repeated loops remain unverified. No FEX,
+Valve, authentication or guard changes. No commit/push outside the user's window.
+
+
+Build142 A/B update: initial ordinary launch only opened the configured developer
+shell (no JIT/Wine); excluded. Identity-verified shell normally closed; explicit
+Steam64/BPM entry then records fresh Success18:03:01 and new BPM window18:02:51,
+plus exact new helper marker. Visible navigation pending. Single cold-start A/B
+cannot establish LEAN causality because placement may differ. Current142 session
+preserved, no game launched. Scoped LEAN0 config backup/readback retained.
+
+Smallest follow-up: pure Steam-only sampling switch defaults0; server sampler
+and compositor stack gate share production policy, leaving broad LEAN and VM
+maintenance untouched.100 ASan/UBSan policy cases, old lean compatibility, early
+selection, launcher/menu/focus/return pass. Build143 native37/fullXcode/final
+sealing are checked separately; no device claim or release from these checks.
+Next: obtain visible142 navigation, test pure sampling without VM changes, then
+one GPU-only comparison and genuine menu/exit regression. Keep account data and
+live test. No commit/push outside allowed hours.
+
+Build143 final verification: native37, fullXcode, exact native/server and bridge
+markers in final signed debug dylib, unchanged FEX131 and new helper marker,
+deep-strict signing PASS. Candidate prepared privately; NOT installed. Current
+142/LEAN0 successful-login session remains for user navigation confirmation.
+
+
+### 2026-11-02 — Build143 installed and fixed menu serviced
+
+Preserved ended142/LEAN0 native log SHA256
+`db4ab3ac989de032119d2900ca04605a76fab92c8624d945080beb81d1709402`;
+exact absence on resume, end reason unknown. Main/helper valid profiles and deep
+signature rechecked. Installed143, version readback143, exact config unchanged.
+Corrected explicit launch (initial CLI parse error did not launch app) yields
+fresh Steam Success20:01:06 and new BPM window20:00:46. Same helper accepts one
+fixed menu command and returns matching UUID menu-requested. No fresh gameplay,
+visual menu/navigation, in-game exit or speedup claim. Raw native transfer fails
+CoreDevice7000/POSIX60, not proof of absent runtime faults/policy. Mac locked;
+Device Hub guard refuses capture. Current live143 session preserved for pending
+user UI question. No pause/kill, account action, GPU change or automatic game.
+Private artifacts steam64-current; redacted hashes in performance/control JSON.
+Next require actual menu/library observation, then GPU-only comparison with fixed
+V8/CPU/pure-sampling/VM settings; retain rollback. No commit/push outside window.
+
+
+Build143 user validation: user explicitly confirms the Steam menu is visible and
+homepage/library browsing is more fluid. This is user-observed improvement,
+separate from the artifact-backed matching menu ACK/fresh login/window creation;
+no quantitative speedup, hardware browser GPU, game-exit or loop-stability pass.
+Next GPU-only experiment retains143, interpreted JS, CPU1 and pure sampling/VM
+policy; back up fresh config and confirm no new game before normal cold restart.
+
+Fresh official143 gameprocess follow-up supersedes earlier not-yet-tested
+status: three Hot Roads1819280 launches20:02:15/20:02:48/20:03:58, exits20:02:32/
+20:03:47/20:04:25, all exit code0 and removed from running list. Agent did not
+launch these. User subsequently confirms menu visible and browsing improved.
+This is bounded repeated-process-cycle evidence, not long-term stability or
+proof of native Exit game action. Preserve this baseline before GPU-only test.
+
+
+### 2026-11-02 — effective GPU-only experiment, baseline restored
+
+Same143 with one appended GPU-auto key; exact candidate/readback. Actual batch
+and fresh webhelper omit GPU-disable flags; native hardware-auto/JITless marker,
+fresh login and new BPM window recorded. User/gameprocess activity starts Hot
+Roads20:16:19; agent does not launch it. Snapshot refuses before pause when game
+observed. Later normal-exit request refuses on absent original PID; no stale
+signal/attach/exit/terminate. End reason unknown, user closure question pending.
+Rotated native snapshot preserved; loader-confirmed libcef breakpoint RVA
+0x35348e2, failed check unknown, later native lines continue. Footprint~4GiB.
+D3D11 warning alone is not CEF renderer evidence; no hardware/performance pass.
+Subsequent20:38 developer-shell log is another startup, not GPU test evidence.
+Exact candidate safely rolled back/read back to user-confirmed143 baseline.
+No assertions, guards, FEX/Valve/auth modifications. No GPU default/release GO.
+Evidence hashes and limits in STEAM_UI_PERFORMANCE_EVIDENCE.json. Next investigate
+CEF-owned hardware backend/failed-check with controlled idle UI, preserve genuine
+menu responsiveness and confirmed three game-process cycles; require further
+stability validation. No automated game launch or forced closure.
+
+Final state of this continuation: exact software-baseline config rollback
+verified; same installed143 explicitly relaunched after fresh idle/unlock check,
+new Steam Success 2026-11-02T23:21:30 and exact process identity verified.
+No forced kill, debugger attach, pause or agent game launch in these failed
+gates. Keep baseline active; manual-closure answer and long-term stability
+remain pending. GPU not promoted, no release claim.
+
+
+Latest user correction for Build143: three game enter/exit cycles work, but
+Steam freezes after the THIRD return. This supersedes any complete-loop/stability
+impression from exit-code0 and early menu observations. User explicitly requests
+an experimental checkpoint release with that known issue; not a stable GO.
+
+
+## 2026-11-03 — Build144 isolated Steam64 launcher setup (unreleased)
+
+- Phase: reproducible full64 preparation, not new runtime stability proof. Base
+  `b7d03d57174bbfc39c0f21698a9ee1a9653e5e6e`, branch `feature/steam64-setup`;
+  checked origin/main `47b2a32257cebdae35a740540f9f93ff3de78233`. Existing
+  working-tree changes, main and installed authenticated state are preserved.
+- Gap/hypothesis: an IPA upgrade does not reproduce the prepared full64 prefix.
+  Add explicit transactional official-client acquisition and atomic profile
+  selection rather than switching config alone, copying login caches or weakening
+  VA guards. The screenshot's low capacity does not prove full64 eligibility.
+- Discriminator/evidence:18 pinned Valve packages and6229 stock files passed
+  full extraction/hashing; composed open components, activation, repeated repair
+  preserving the first rollback receipt and restoration passed in disposable
+  storage. Exact hashes/private artifact paths: STEAM64_SETUP_EVIDENCE.json.
+- Scoped patch: launcher Install/Upgrade, Verify/Repair and Return to previous
+  environment; verified resumable cache/streaming ZIP, durable rollback and
+  cancellation, matched component/runtime pins, actual native holds prerequisite
+  after restart. No FEX/Valve/submodule source edits; released FEX131 bytes reused.
+  Original wine, accounts, games and saves remain separate and untouched.
+- Host extractor/transaction/profile/runtime checks and existing readiness,
+  runtime-selection and keyboard regressions pass. Full unsigned Xcode144 passes;
+  linked final debug dylib and all component/catalog/translator pins inspected.
+- Limits: not installed or tested physically in this run; no new login/UI/game
+  proof. The later stale-question reply that iDeck was not visible is not a
+  manual-close observation. Third-return freeze remains.512GiB map boundary alone
+  is not ownership; native holds are still required. The pinned older client
+  needs compatibility/security review for updates and full source/notices before
+  distributing new binaries. No new release has been published.
+- Next: fresh-user physical setup, native holds/JIT, user Steam login, repair/
+  rollback UI and repeated game loops. Never delete or overwrite the authenticated
+  working prefix or copy credentials to simulate a fresh-user result.
+
+See [Steam64 setup](STEAM64_SETUP.md) and
+[redacted evidence](STEAM64_SETUP_EVIDENCE.json).
+
+
+## 2026-11-06 — Build145 four-action setup waterfall (fresh phone install)
+
+- User reports Build144 setup can complete, but the visible Steam step calls legacy
+  repair and the new installer is below the list; pairing is buried in the full
+  JIT settings sheet. This establishes the reported setup friction, not new game
+  stability or authentication success.
+- Base6422597 on feature/steam64-setup. Minimal UI patch: Install Steam (runtime
+  bundled automatically), Connect LocalDevVPN, Pair this device (direct Pair in
+  iDeck with live existing panel/PIN) and Enable JIT. Signing/address checks stay
+  mandatory, automatic and unnumbered. Highlight/scroll follows the complete scan,
+  not partial results. Repair/import/account/rollback/methods are Advanced options.
+  New product installs default built-in; saved choices and ordinary Madeira stay.
+- Host sequential/skip/checking/restart/signing/VA gate tests, existing readiness,
+  runtime selection and JIT method/pairing integration checks pass. Legacy static
+  checks were refreshed for configurable bundle IDs, current URLComponents callback
+  encoding and the existing pinned MIT notice format. Rust crate tests skipped
+  because cargo not on PATH; no Rust changes. Full unsigned Xcode145 passes;
+  final linked markers and unchanged released translator pin verified.
+- New exact main/helper profiles were obtained through normal background Xcode
+  initialization and used by the established CLI signer; no Mac unlock, token
+  extraction or security setting change. Deep-strict signing passed.
+- Actual device inventory before installation contained original iDeck143 only.
+  Fresh Test145 installed under com.kuschqin.ideck.freshtest; before its launch
+  Documents contained0files. Original143 installation URL remained unchanged.
+  CoreDevice launch passed; raw receipts stay in .madeira-install/ideck-waterfall145.
+  Redacted hashes and live-process observation: IDECK_SETUP_WATERFALL_EVIDENCE.json.
+- No user UI acceptance, new Steam login or game-cycle result is claimed. Pairing
+  may survive reinstall in its own Keychain, so0Documents does not prove zero
+  pairing state. Agent did not clear/copy keys. Third-return Steam freeze remains
+  outside this launcher-only change. No FEX/Valve/submodule source changes.
+- Next: user validates the four-step fresh setup, direct pairing instructions,
+  automatic advancement and normal Steam launch. Preserve original app/data.

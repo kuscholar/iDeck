@@ -34,6 +34,7 @@
 #include "WineServerBridge.h"
 #include "PrefixExtractor.h"
 #include "FEXBridge.h"  // fex_get_jit_write_offset()
+#include "SteamUIDiagnostics.h"
 
 // Thread-local globals for wine_ios_exit longjmp (used by wine_ios_exit.h shim in ntdll)
 // Each Wine "process" thread has its own jmpbuf so child processes can exit independently.
@@ -1357,6 +1358,18 @@ static void *wine_process_thread(void *arg) {
                 dup2(logfd, STDOUT_FILENO);
                 close(logfd);
             }
+        }
+
+        /* Steam UI sessions should not periodically interrupt guest threads
+         * merely to profile them. Apply after all explicit configuration, and
+         * retain ordinary games' policy plus an explicit diagnostic opt-out. */
+        int ui_diagnostics = madeira_steam_ui_diagnostic_defaults();
+        if (ui_diagnostics > 0) {
+            fprintf(stderr, "[steam-ui-render] diagnostic-samplers=%s periodic-stack-dumps=%s; pure-sampling-policy-v2; VM policy untouched; error capture retained\n",
+                    madeira_steam_ui_sampling_disabled() ? "off" : "on",
+                    madeira_steam_ui_periodic_stacks_enabled() ? "on" : "off");
+        } else if (ui_diagnostics < 0) {
+            fprintf(stderr, "[steam-ui-render] sampling default could not be applied\n");
         }
 
         // Pick which exe to run (env var override, default = cube.exe).

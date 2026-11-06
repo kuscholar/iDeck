@@ -83,6 +83,7 @@ int main(int argc,char **argv){
  return 0;
 }
 '''
+code=code.replace('#include <pthread.h>', '#include <pthread.h>\n#include "'+str(root/'build/diagnostics/ideck_runtime_selection.h')+'"\nstatic int madeira_cfg_get(const char *key,char *out,size_t size){(void)key;(void)size;out[0]=0;return 0;}')
 with tempfile.TemporaryDirectory() as d:
     p=Path(d);(p/'t.c').write_text(code)
     subprocess.run(['clang','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-pthread',str(p/'t.c'),'-o',str(p/'t')],check=True)

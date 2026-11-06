@@ -196,3 +196,6 @@ Steam32OfficialClient/
 app/Frameworks/StikJIT.xcframework/ios-arm64/StikJIT.framework/Info.plist
 app/Frameworks/StikJIT.xcframework/ios-arm64/StikJIT.framework/Modules/StikJIT.swiftmodule/*.swiftmodule
 app/Frameworks/StikJIT.xcframework/ios-arm64/StikJIT.framework/Modules/StikJIT.swiftmodule/*.swiftsourceinfo
+
+# Source-built Steam64 support payload; stage from pinned artifacts, never Valve files.
+app/Madeira/Steam64Compatibility/

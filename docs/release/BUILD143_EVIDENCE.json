@@ -1,0 +1,52 @@
+{
+  "release": "v0.1.3-alpha.5",
+  "build": 143,
+  "status": "Experimental prerelease at user request; not stable/GO",
+  "tested_target": "Kusch iPhone15ProMax A17Pro, iOS27.0",
+  "improvements": [
+    "Steam-only periodic sampler/stack-walker suppression without changing VM maintenance",
+    "Hidden native-log UI parsing paused during Steam",
+    "Steam-menu helper uses existing window instead of synchronous secondary-client startup",
+    "Persisted Steam64 runtime/prefix selection and guarded own-TEB handling"
+  ],
+  "user_verified": {
+    "menu_visible": true,
+    "library_browsing": "more fluid",
+    "game_cycles": 3,
+    "latest_result": "User reports Steam freezes after returning from the third game exit; supersedes any impression of complete loop stability"
+  },
+  "artifact_verified": {
+    "full_Xcode143": "PASS",
+    "native37": "PASS",
+    "host_policy_ASan_UBSan": "PASS",
+    "installed_version_readback": "143",
+    "fresh_Steam_saved_login": "PASS",
+    "three_Hot_Roads_process_exits": "0,0,0; not uninterrupted long-term UI proof",
+    "matching_menu_request_ACK": "PASS",
+    "IPA_files": 1245,
+    "IPA_findings": [],
+    "public_IPA_ad_hoc": "PASS; recipients must sign with own profiles",
+    "portable_relink": "executed PASS; no clean-machine full-runtime rebuild claim",
+    "portable_relink_text_sections": "All __TEXT sections match the tested143 debug dylib byte hashes"
+  },
+  "source_and_distribution": {
+    "unchanged_PE_resources": "All alpha4 existing PE files except xtajit64.dll/ideck-control.exe retain matching hashes; no new PE resources",
+    "changed_native_archive": "libntdll_unix.a; corresponding top-level native source supplied",
+    "FEX131_exact_DLL_sha256": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+    "FEX_corresponding_source": "Pinned base and nested archives plus exact ten-file FEX-local131 overlay/options/build recipe in source companion; supplied for this user-requested iDeck release; no upstream FEX submission",
+    "FEX_source_hashes": "match recorded131 build inputs",
+    "base_sources": "Retain all unchanged alpha4 source archives and component licenses",
+    "private_runtime_state": "No phone Documents, auth, games, saves, profiles or pairing data packaged"
+  },
+  "known_limits": [
+    "Steam can freeze after third game exit; long-term stability not fixed",
+    "GPU-auto tested separately but not verified as hardware CEF; left default-off",
+    "V8 JIT experiment not promoted; interpreted compatibility default retained",
+    "Steam64 tests used a preconfigured separate prefix and source-CEF resources; fresh Steam64 setup is not proven by this IPA",
+    "Existing normal setup/manual import remains; no bundled Valve files or copied login caches",
+    "Bluetooth, arbitrary games, older iPads and fresh-account Steam64 path not validated in this release",
+    "Ad-hoc repackaged artifact audited and relinked; this public IPA was not separately installed again after repackaging"
+  ],
+  "IPA_sha256": "e202fb95e97bd74191da321b34f85600a884d29613dde87bb2dc7a45439f17fe",
+  "relink_inputs_sha256": "44b253b18517ea74a249eac31c41d0fdbd9cd71c8886ba5099f31635957913fe"
+}

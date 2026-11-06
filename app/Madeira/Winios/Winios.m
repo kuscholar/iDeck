@@ -35,6 +35,7 @@
 /* The window census struct is shared with Swift through this header;
  * including it here keeps both sides' definitions the same. */
 #include "Winios.h"
+#include "../SteamUIDiagnostics.h"
 
 /* csops syscall — CS_DEBUGGED is the flag StikDebug JIT rides on. Declared by
  * hand for the same reason JITAllocator.c does: <sys/codesign.h> is not in the
@@ -1313,7 +1314,7 @@ static void winios_ensure_compositor(void) {
      * an app-side timer — keeps firing even when all wine threads are
      * stuck (unlike the tree dump, which rides wine's event drain). */
     static dispatch_source_t stack_timer;
-    if (!stack_timer) {
+    if (!stack_timer && madeira_steam_ui_periodic_stacks_enabled()) {
         stack_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,
                           dispatch_get_global_queue(QOS_CLASS_UTILITY, 0));
         dispatch_source_set_timer(stack_timer, dispatch_time(DISPATCH_TIME_NOW, 20 * NSEC_PER_SEC),
@@ -1321,6 +1322,8 @@ static void winios_ensure_compositor(void) {
         dispatch_source_set_event_handler(stack_timer, ^{ ios_dump_all_thread_stacks(); });
         dispatch_resume(stack_timer);
     }
+    if (!madeira_steam_ui_periodic_stacks_enabled())
+        fprintf(stderr, "[steam-ui-render] compositor-periodic-stacks=off; bounded main-stall diagnostics retained\n");
 }
 
 /* main thread only */

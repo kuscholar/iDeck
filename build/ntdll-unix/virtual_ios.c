@@ -16349,9 +16349,8 @@ static int ios_x64_image_nocopy_enabled(void)
  * retaining the large libcef saving. Never inferred from an executable name
  * or enabled on the ordinary path. All existing pure-x64 eligibility remains
  * mandatory at the call site. No Valve bytes or FEX translation are changed. */
-static int ios_cef64_libcef_basename(const WCHAR *name, size_t units)
+static int ios_cef64_data_basename(const WCHAR *name, size_t units, const char *expected)
 {
-    static const char expected[] = "libcef.dll";
     size_t start = 0;
     if (!name || !units) return 0;
     for (size_t i = 0; i < units; ++i)
@@ -16359,8 +16358,8 @@ static int ios_cef64_libcef_basename(const WCHAR *name, size_t units)
         if (!name[i]) return 0;
         if (name[i] == '\\' || name[i] == '/') start = i + 1;
     }
-    if (units - start != sizeof(expected) - 1) return 0;
-    for (size_t i = 0; i < sizeof(expected) - 1; ++i)
+    if (units - start != strlen(expected)) return 0;
+    for (size_t i = 0; expected[i]; ++i)
     {
         unsigned c = name[start + i];
         if (c >= 'A' && c <= 'Z') c += 'a' - 'A';
@@ -16378,8 +16377,24 @@ static int ios_cef64_image_data_accepts(const UNICODE_STRING *name)
     static unsigned reports;
     if (__sync_add_and_fetch(&reports, 1) == 1)
         dprintf(2, "[cef64-image-policy] experimental libcef-only data; existing client aliases retained\n");
-    return name && !(name->Length % sizeof(WCHAR)) &&
-        ios_cef64_libcef_basename(name->Buffer, name->Length / sizeof(WCHAR));
+    if (!name || name->Length % sizeof(WCHAR)) return 0;
+    size_t units=name->Length/sizeof(WCHAR);
+    if (ios_cef64_data_basename(name->Buffer,units,"libcef.dll")) return 1;
+    /* Isolated demand-reduction experiment. Keep Steam/client/support copies;
+     * admit only UnityPlayer or the owned execution probe. The call site still
+     * excludes EC/ARM64, hybrid, Wine builtin, resource and WoW64 images. */
+    const char *unity=getenv("MADEIRA_CEF64_UNITY_DATA_ONLY");
+    const char *probe=getenv("MADEIRA_CEF64_IMAGE_DATA_PROBE");
+    if (unity && !strcmp(unity,"1") &&
+        ios_cef64_data_basename(name->Buffer,units,"unityplayer.dll"))
+    {
+        static unsigned unity_reports;
+        if (__sync_add_and_fetch(&unity_reports,1)<=32)
+            dprintf(2,"[cef64-unity-data] pure AMD64 Unity image uses existing data-image path; no native pool copy\n");
+        return 1;
+    }
+    return probe && !strcmp(probe,"1") &&
+        ios_cef64_data_basename(name->Buffer,units,"ideck-x64-image.dll");
 }
 
 /* The request is host-page rounded (16 KB) while SizeOfImage is only 4 KB

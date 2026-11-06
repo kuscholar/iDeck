@@ -12,7 +12,10 @@ int main(void){
  assert(!steam64_teb_ldrsw_matches(NULL,p,observed,0,0x180c));
  assert(!steam64_teb_ldrsw_matches("0",p,observed,0,0x180c));
  assert(!steam64_teb_ldrsw_matches("1",NULL,observed,0,0x180c));
- assert(!steam64_teb_ldrsw_matches("1","/private/wine",observed,0,0x180c));
+ assert(steam64_teb_ldrsw_matches("1","/private/wine",observed,0,0x180c));
+ assert(!steam64_teb_ldrsw_matches("0","/private/wine",observed,0,0x180c));
+ assert(!steam64_teb_ldrsw_matches("1","/private/other-wine",observed,0,0x180c));
+ assert(!steam64_teb_ldrsw_matches("1","/private/wine-old",observed,0,0x180c));
  assert(!steam64_teb_ldrsw_matches("1","/private/wine-steam64-old",observed,0,0x180c));
  assert(!steam64_teb_ldrsw_matches("1",p,observed,0x7900300000,0x180c));
  assert(!steam64_teb_ldrsw_matches("1",p,observed,0,0x1808));
