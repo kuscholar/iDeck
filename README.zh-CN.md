@@ -26,17 +26,22 @@ Valve 真正的 Windows Steam Big Picture，以及部分兼容的 PC 游戏，�
 
 ## 安装 Alpha，一起测试
 
-当前最新实验预发布为 **[v0.1.3-alpha.5 · Build 143](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.5)**。
-从该版本下载 IPA 和 `SHA256SUMS`，同页提供对应源码、许可证和重链接材料。
-IPA 需要使用自己的开发签名后侧载。
+当前最新实验预发布为 **[v0.1.3-alpha.6 · Build 145](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.6)**。
+下载 IPA 和 `SHA256SUMS`；同一发行页附带源码、Steam64 兼容组件源码、许可证与重链接材料。
+IPA 需要使用你自己的开发签名才能安装。
 
-> **已知问题：第三次退出游戏后，Steam 仍可能卡住。** 测试 iPhone 上的 Steam
-> 菜单可用、浏览更流畅，Hot Roads 能三次进入并退出，但第三次返回后 Steam 卡住。
-> 这是供测试的预发布版，不代表可以长期稳定游玩。
+**少一点找按钮，多一点 Steam。** 新启动器把安装整理成四步瀑布流程，Steam64 下载和
+配对按钮就在对应步骤里，完成后自动打勾。安装器从 Valve 下载并校验匹配文件，保留旧环境，
+并提供修复／回退入口。
 
-本次64位 Steam 实测使用预先准备的独立 Steam64／CEF 环境。IPA 不附带 Steam
-文件或已登录配置，**尚未验证全新设备上的64位 Steam 可以一键配置成功**。
-具体证据与限制见 [Build 143 测试记录](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md)。
+> **仍是实验版：** 第三次退出游戏回 Steam 后仍可能冻结。本版改善安装体验，
+> 不代表这个稳定性问题已解决。用户反馈 Build144 的安装流程可以完成；Build145 新界面已完成
+> 编译、签名、真机安装和启动，但新版完整首次配置／游戏循环尚未独立验证。
+> 详见 [Build145 测试记录](docs/release/BUILD145_RESULTS.md)。
+
+IPA 包含本地运行时和带许可证的**源码构建开源兼容组件**，不包含 Valve 的 Steam 客户端／
+libcef、游戏或账号数据。Steam 由启动器下载，登录和 Steam Guard 由你在 Valve 界面中完成。
+目前固定使用经过匹配的旧客户端／CEF，存在兼容性与安全限制，并不是最新 Steam／Chromium。
 
 1. **下载并校验。** 对照 `SHA256SUMS` 检查 IPA 的 SHA-256。Mac 可运行
    `shasum -a 256 下载的文件.ipa`。
@@ -50,7 +55,8 @@ IPA 需要使用自己的开发签名后侧载。
 3. **信任并打开。** 连接设备并完成“信任此电脑”、开发者模式或开发者信任等系统提示
    （如有）。升级前备份存档；卸载 App 可能同时删除本地 Steam 数据、游戏和存档。
 4. **准备 Steam 与 JIT。** 按下方流程逐项完成。IPA 包含本地运行时，
-   **不包含 Steam/CEF 客户端、游戏或已登录的 Steam 账号**。安装成功不等于 JIT 已启用。
+   **不包含 Valve 的 Steam 客户端／libcef、游戏或已登录账号**；请从启动器下载 Steam。
+   安装成功不等于 JIT 已启用。
 5. **分阶段测试。** 启动器检查 → 进入真正的 Steam 并自行完成 Steam Guard →
    浏览 Library → 启动一个兼容游戏 → 返回 Steam → 重开 iDeck 检查登录是否保留。
    分别测试触控、键盘和手柄，记录卡在哪一步。
@@ -68,43 +74,30 @@ IPA 需要使用自己的开发签名后侧载。
 签名快捷指令并替换旧副本。App 升级不会自动替换已导入的快捷指令。
 详见 [JIT 排错说明](docs/JIT.md#shortcut-destination-errors-after-re-signing)。
 
-## 打开 Steam 前：逐项点亮检查清单
+## 打开 Steam 前：四步出发
 
-打开当前版本的 iDeck，点击
-**Check all prerequisites（检查全部前置条件）**，按从上到下的流程处理提示：
+跟着高亮步骤操作即可。启动器自动检查设备，已完成的项目打勾，并滚动到下一步，
+不用再去页面底部找安装按钮。
 
 | 步骤 | 要做什么 |
 | --- | --- |
-| 1 · Local runtime（本地运行时） | 点击 **Prepare runtime** 初始化本地 Windows 环境，保留已有文件。 |
-| 2 · Steam & browser files（Steam 与浏览器文件） | 在选中的 iDeck 环境中放入完整、架构匹配的 Windows Steam 与 CEF 文件。旧版客户端提供 **Repair Steam files** 入口，准备方法见下文。公开 IPA 不包含 Steam。 |
-| 3 · Development signing（开发签名） | 使用允许调试的开发签名；若提示缺少权限，需要重新签名。 |
-| 4 · JIT setup（JIT 配置） | 打开设置，使用内置 StikJIT 并配置本设备的配对文件，或使用支持的外部 StikDebug 流程。配对授权由你自行完成。 |
-| 5 · Device connection（设备连接） | 按提示连接 LocalDevVPN，使本地调试连接可达；返回 iDeck 后重新检查。 |
-| 6 · JIT for this session（本次会话 JIT） | 点击 **Enable JIT**，完成后返回。App 新进程需要重新启用 JIT；已有或已消耗的运行时会话可能需要重新打开 App。 |
-| 7 · 32-bit address space（32位地址空间） | 如被阻止，打开 **View diagnostics** 查看。JIT 启用不代表32位子进程有足够虚拟地址空间，运行时启动时还会检查。 |
+| 1 · Install Steam | 点 **Install Steam64**。自动下载安装并校验 Steam／浏览器，同时准备运行时。保持 App 前台，完成后按提示完全关闭并重开。 |
+| 2 · Connect LocalDevVPN | 打开 LocalDevVPN，点 Connect，再返回。已连通会自动打勾。 |
+| 3 · Pair this device | 点 **Pair in iDeck**，本步骤会直接显示配对指引和验证码。iOS 设置里的配对主机仍叫 **Madeira**；通常只需配置一次。 |
+| 4 · Enable JIT | 点 **Enable JIT**，完成后返回。完全关闭 App 后的新进程需要重新启用 JIT。 |
 
-检查按钮只检查当前状态，不会自动签名、启用 JIT 或启动 Steam。
-返回 App 或完成 JIT 操作后会重新检查；每一步都有状态和相应处理入口。
-当前显示的检查项全部就绪后，可手动点击 **Launch Steam Big Picture**。
-检查通过只说明前置条件满足，不保证登录、画面或某个游戏一定正常。
+所有必要检查通过后，点 **Launch Steam Big Picture**。签名、虚拟地址／原生预留和运行时文件
+仍会检查，只是不再要求用户把这些自动检查当成单独操作。**Check again** 可重新检查。
+iOS26 使用配对文件导入入口；直接在设备上配对需要 iOS27。
 
-进入 Valve 自己的 Steam 窗口输入账号并自行批准 Steam Guard。登录保存、账号认证和
-游戏许可由 Steam 处理。需要换账号时，使用启动器的
-**Sign in / Change Steam account**，它会打开 Steam 自己的账号流程。
-可在 iDeck 设置中调整自动启动；即使开启自动启动，新 App 进程仍需要 JIT。
+**Advanced options（高级选项）**里保留 Steam64 校验／修复、回到原环境、其他 JIT 方法／
+配对文件导入、账号切换和自动启动设置。原 `wine` 环境保留，Steam64 使用独立的 `wine-steam64`；
+账号缓存、游戏和存档不会自动迁移。请通过 Steam 自己的登录／Steam Guard／换账号流程操作，
+不要复制他人的登录缓存，也不要为了切换环境卸载 App。
 
-**Steam 客户端准备仍面向技术测试者。** 旧版路径使用较旧的32位 Windows Steam。
-Build 143 也包含独立的实验性 Steam64 路径，真机结果依赖
-[发行记录](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md) 所述的预先配置环境，不能视为全新设备配置已经通过，
-也不要混用两套客户端环境。
-
-旧版客户端请阅读 [源码与资源准备](docs/GETTING_STARTED.md) 和
-[客户端准备记录](tests/steam-ui/README.md)，通过合法渠道获取完整软件。
-客户端应位于 `wine/drive_c/Steam32BundleLab` 或 `wine/drive_c/Steam32Lab`
-其中一个目录，不能拼凑不同安装的零散文件。可在 `iDeck/Steam32OfficialRepair`
-放入完整兼容客户端后使用 **Repair Steam files**，详见
-[Steam 修复说明](docs/IDECK_STEAM_RECOVERY.md)。不要复制他人的登录缓存，
-也不要通过卸载 App 来切换环境。
+Steam64 **不会扩大设备虚拟地址空间**。不支持的设备／签名布局仍可能失败，32位游戏或辅助进程
+也仍可能受限。容量、固定版本、下载与回退说明见 [Steam64 配置与修复](docs/STEAM64_SETUP.md)。
+配置检查通过，不等于所有游戏能正常运行。
 
 ## 口袋里的掌机，有些什么？
 
@@ -141,7 +134,9 @@ cd iDeck
 ```
 
 重建某个发行版时，请检出对应 tag 并使用同版源码／重链接附件。
-Build 143 的源码附件还包含其运行时使用的 FEX 组件补充源码和构建说明。
+Alpha.6 保留准确的 FEX131 补充源码／构建材料，并新增独立的 Chromium／CEF、Crashpad
+兼容组件源码附件。请用 `tools/stage-steam64-compatibility.py` 准备固定哈希的开源组件，
+详见 [Build145 重建记录](docs/release/BUILD145_RESULTS.md#source-and-relink-materials)。
 
 阅读 [Getting started](docs/GETTING_STARTED.md)、[构建说明](docs/BUILDING.md) 和
 [JIT 设置](docs/JIT.md)。公开 Git 仓库不包含预编译运行时资源，尚非一条命令即可完成的

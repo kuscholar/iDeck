@@ -82,3 +82,16 @@ The packaging tool validates nested ad-hoc signatures and excludes provisioning
 profiles/local Mono. It inventories the resulting archive and prefix members.
 Signing requests do not grant privileges: recipient profiles must actually allow
 the permissions required by the debugging/JIT workflow.
+
+
+## Alpha.6 / Build145
+
+Use the matching alpha.6 source, **Steam64 support-source**, relink and license
+companions rather than the historical alpha.3 filenames above. The main source
+manifest pins the release tag and retains the existing FEX-local131 overlay.
+The support-source archive documents readable focused Chromium, complete CEF
+and the actual standalone Crashpad/MinGW source plus exact recipes and notices.
+The relink archive has 105 inputs; its command was executed and all 30 TEXT section
+hashes matched Build145. No full clean-machine/offline rebuild is claimed.
+Follow [Build145 materials](BUILD145_RESULTS.md#source-and-relink-materials)
+and [Steam64 staging](../STEAM64_SETUP.md) for the additional resource directory.

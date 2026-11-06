@@ -1,0 +1,61 @@
+{
+  "release": "v0.1.3-alpha.6",
+  "build": 145,
+  "status": "Experimental prerelease, not stable/GO; not Latest",
+  "improvements": [
+    "Verified in-app Steam64 acquisition/repair/rollback from18 pinned Valve packages",
+    "Four direct user actions: install Steam, connect VPN, pair in iDeck, enable JIT; runtime/signing/native VA checks automatic and mandatory",
+    "Direct on-device pairing panel; advanced methods/recovery/account settings collapsed",
+    "Preserves prior environment; no auth/game/save transfer; matched open helper components bundled with notices and source companion"
+  ],
+  "user_report": "User says Build144 installation can complete; reports setup friction addressed in145. No new user acceptance of the145 UI or Steam/gameplay flow is claimed.",
+  "device_evidence": "Kusch iPhone15ProMax: independent Fresh Test145 deep-strict signed, installed/read back, Documents0files before launch, CoreDevice launch and live process. Original iDeck143 URL/version preserved.",
+  "public_IPA_device_validation": "Not installed again after ad-hoc packaging. Installed development test used a separate Fresh Test identifier; public package retains alpha.5 app identifier for upgrades.",
+  "host_checks": [
+    "Production waterfall ordering/skip/intermediate scan/restart/signing/VA gates PASS",
+    "Existing readiness/runtime selection/JIT method/pairing checks PASS; Rust crate rerun skipped (no Rust changes)",
+    "Full unsigned Xcode145 PASS; final linked setup strings and exact runtime/helper/resource pins inspected"
+  ],
+  "package": {
+    "files": 1480,
+    "findings": [],
+    "sha256": "caf3be231ec7968ca337287d603d90b2674179a362715292d2ddb302d5cacb65",
+    "bundle": "com.kuschqin.madeira.steamui",
+    "profile_or_private_key": false,
+    "Valve_client_or_libcef": false,
+    "only_new_PE_resources": [
+      "Payload/Madeira.app/Steam64Compatibility/crashpad_handler.exe",
+      "Payload/Madeira.app/Steam64Compatibility/config_guard.exe",
+      "Payload/Madeira.app/Steam64Compatibility/chrome_elf.dll"
+    ],
+    "existing_PE_resources_changed": [],
+    "existing_PE_resources_removed": [],
+    "source_built_components": {
+      "chrome_elf.dll": "673584661cd0044b186e40286b3d57a099b45002d3fc50f334ae1d3d14bc7621",
+      "crashpad_handler.exe": "76303a50b472a8a97c7d336564f00498ab5d34104d1f5c994056125528d8fd11",
+      "config_guard.exe": "0d7e0e45215c94da469d1c167aaa3533e2a9c563d4acc5f13b567860011a5640"
+    }
+  },
+  "relink": {
+    "inputs": 105,
+    "executed": true,
+    "all_TEXT_sections_match": true,
+    "text_sections": 30,
+    "INPUTS_sha256": "163c1c6f28b419619e819ed9f97bdef16ee7ce83c3c811fe5485b62feca03234"
+  },
+  "sources": {
+    "main_source": "Retains exact alpha.5 unchanged component archives, FEX-local131 source overlay/options and corresponding top-level native source; replaces application snapshot with this release tag.",
+    "new_support_source": "Separate source archive includes focused pinned Chromium, complete matching CEF, actual adapted Crashpad-mingw94 tree with dependencies, exact ELF build recipes, config_guard source and complete notices. Focused Chromium snapshot is not falsely called the entire browser repository; recipes fetch additional public pinned build inputs.",
+    "FEX_new_changes": false,
+    "FEX_DLL_sha256": "a3365a0d47f02efab8b31f4ae178e742769bcb827fd87c41c5db49de25ee590c",
+    "support_source_sha256": "355fe784a93185a6cb94a10400173523aa9a602969dbafde7c0e93ae0a48ea06"
+  },
+  "known_limits": [
+    "Steam can freeze after the third game exit; not solved by this installer/UI release.",
+    "Revised145 full first-run flow and another-device signing/Steam64 login/game cycles remain unverified; no Bluetooth or broad/iPad gameplay support claim.",
+    "Steam64 does not enlarge task VA; actual native holds remain required and32-bit helpers/games can still fail.",
+    "Matched January22 client/CEF126 is older, not current Steam/Chromium; compatibility/security review required for a future snapshot.",
+    "No full clean-machine or offline whole-runtime rebuild claim; the105-input application relink was executed and matched all30TEXT sections.",
+    "No auth automation, copied accounts or maintainer signing profiles. Testers must re-sign main/helper coherently and enable JIT themselves."
+  ]
+}

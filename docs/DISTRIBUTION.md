@@ -77,3 +77,16 @@ binary-distribution issues. Those issues are not silently marked solved here.
 - LGPL2.1 section6: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 - MPL2.0: https://www.mozilla.org/en-US/MPL/2.0/
 - Component-specific copies are included in LICENSES and pinned submodules.
+
+
+## Build145 open Steam64 support components
+
+Alpha.6 adds source-built chrome_elf.dll, standalone crashpad_handler.exe and
+our config_guard.exe, with exact hashes, complete shipped notices and a separate
+support-source companion. These open-source components are distinct from Valve's
+proprietary Steam/client/libcef tree, which is never bundled and is acquired by
+the user from the pinned official HTTPS packages. The exact distribution scope,
+source layout and test limitations are in release/BUILD145_RESULTS.md. The
+component's original BSD/Apache/MIT terms are retained; our GPL/exception notices
+apply only where granted. A focused Chromium source snapshot is not represented
+as the full browser checkout or an offline whole-runtime rebuild.

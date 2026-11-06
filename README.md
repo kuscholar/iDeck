@@ -35,18 +35,28 @@ No gaming PC stream is required.
 
 ## Install the alpha and help test
 
-The newest experimental checkpoint is **[v0.1.3-alpha.5 · Build 143](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.5)**.
-Download its IPA and `SHA256SUMS`; matching source, license and relink materials
-are attached to the same release. You must sign the IPA for your own device.
+The newest experimental checkpoint is **[v0.1.3-alpha.6 · Build 145](https://github.com/kuscholar/iDeck/releases/tag/v0.1.3-alpha.6)**.
+Download its IPA and `SHA256SUMS`; matching source, Steam64 support-source,
+license and relink materials are attached to the same release. You must sign
+the IPA for your own device.
 
-> **Known issue:** Steam can freeze after the third game exit. On the test
-> iPhone, the Steam menu works and browsing is more fluid; Hot Roads launched
-> and exited three times, but Steam froze after the third return. This is a
-> prerelease for testing; stable gameplay is not guaranteed.
+**Less setup treasure hunt, more Steam.** The launcher now walks through four
+actions, with a direct Steam64 installer, visible pairing button and automatic
+checkmarks. The installer downloads and verifies the matched client from Valve;
+it keeps the old environment and offers repair/rollback.
 
-The Steam64 test used a previously prepared Steam64/CEF environment. The IPA
-contains no Steam files or preconfigured login, and fresh Steam64 setup is
-**not validated as one-click working**. See the [Build 143 test record](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md).
+> **Still experimental:** Steam can freeze after the third game exit. This
+> release improves setup; it does not fix that game-return failure or guarantee
+> broad game support. The Build144 installer was reported complete by the user;
+> Build145's new UI was built, signed, installed and opened on the test iPhone,
+> but its complete revised first-run/gameplay flow has not been independently
+> validated. See the [Build145 test record](docs/release/BUILD145_RESULTS.md).
+
+The IPA includes the local runtime and pinned **source-built open compatibility
+components** with notices. It includes no Valve Steam client/libcef, games or
+account data. Steam is downloaded in the launcher, and you authenticate through
+Valve yourself. The matched older client/CEF snapshot has compatibility and
+security limitations; it is not the latest Steam/Chromium.
 
 1. **Download and verify.** Compare the IPA's SHA-256 with `SHA256SUMS`.
 2. **Sign and sideload.** Use your own Apple ID with a tool such as
@@ -60,7 +70,8 @@ contains no Steam files or preconfigured login, and fresh Steam64 setup is
    and trust prompts when requested. Back up saves before upgrading an existing
    install; deleting the app can delete its local Steam data and games.
 4. **Prepare Steam and JIT.** Follow the checklist below. The IPA includes the
-   local runtime but **does not include Steam/CEF, games or a Steam account**.
+   local runtime and open compatibility helpers, but **no Valve Steam client/libcef,
+   games or a Steam account**. Download Steam through the launcher.
 5. **Test in stages.** Check launcher readiness → enter genuine Steam and complete
    Steam Guard yourself → browse Library → try a compatible game → return to
    Steam → reopen iDeck to check saved login. Try touch, keyboard and your
@@ -81,48 +92,34 @@ re-import the signed shortcut from iDeck and replace the old copy; an app update
 does not automatically replace an already imported shortcut.
 See [JIT troubleshooting](docs/JIT.md#shortcut-destination-errors-after-re-signing).
 
-## Before Steam: the readiness checklist
+## Before Steam: four steps, then play
 
-Open the current launcher and tap
-**Check all prerequisites**. Work down the vertical steps; each has a checkmark
-or a missing-condition action:
+Follow the highlighted step. The launcher checks the device automatically,
+marks completed steps and moves to the next action—no hunting below the list.
 
-| Step | What you need to do |
+| Step | Your action |
 | --- | --- |
-| 1 · Local runtime | Tap **Prepare runtime** to initialize the local Windows environment. Existing files are preserved. |
-| 2 · Steam & browser files | Supply a complete compatible Windows Steam client with matching CEF/browser files in the selected iDeck environment. The legacy client has a **Repair Steam files** entry; see the preparation notes below. |
-| 3 · Development signing | Use a development signature that permits debugging. Re-sign if the check reports missing permission. |
-| 4 · JIT setup | Open JIT setup. Configure Built-in StikJIT with this device's pairing file, or the supported external StikDebug workflow. Pairing approval is yours to complete. |
-| 5 · Device connection | Connect LocalDevVPN when requested so the local debug connection is reachable. Recheck after returning to iDeck. |
-| 6 · JIT for this session | Tap **Enable JIT** and return to iDeck. A new app process needs JIT again; an existing/consumed runtime session may require a fresh app session. |
-| 7 · 32-bit address space | Review **View diagnostics** if blocked. JIT does not prove that a 32-bit child has enough virtual address space; the runtime checks again when starting it. |
+| 1 · Install Steam | Tap **Install Steam64**. iDeck downloads/verifies Steam and its browser and prepares the runtime automatically. Keep it open; fully close/reopen when prompted. |
+| 2 · Connect LocalDevVPN | Open LocalDevVPN, tap Connect and return. An already reachable connection is checked off automatically. |
+| 3 · Pair this device | Tap **Pair in iDeck**. Follow the live instructions/PIN in this card; iOS Settings calls the pairing host **Madeira**. Normally needed once. |
+| 4 · Enable JIT | Tap **Enable JIT** and return to iDeck. A fresh app process needs JIT again. |
 
-The checker observes prerequisites; it does not sign the app, enable JIT or
-start Steam for you. Checks rerun when you return or finish a JIT request.
-When all displayed checks are ready, manual **Launch Steam Big Picture** becomes
-available. This does not guarantee that Steam login, rendering or a particular
-game will work.
+When every required check passes, tap **Launch Steam Big Picture**. Signing,
+address-space/native reservations and installed runtime files still gate launch;
+shortening the UI does not bypass them. **Check again** refreshes the automatic
+checks. On iOS26, use the pairing-file import fallback; direct on-device pairing
+requires iOS27.
 
-Sign in inside Valve's real Steam UI and approve Steam Guard yourself. Steam
-owns saved login and license checks. Use the launcher's **Sign in / Change Steam
-account** entry for another account; iDeck opens Steam's own account flow.
-Automatic startup can be changed in iDeck settings; it still requires JIT for
-each new app process.
+**Advanced options** holds Verify/Repair Steam64, Return to previous environment,
+other JIT methods/import, account switching and auto-start. The old `wine` prefix
+is retained; Steam64 uses `wine-steam64`. Login caches, games and saves are not
+automatically migrated. Use Steam's own sign-in/Steam Guard and account flow.
+Never copy someone else's login cache or delete the app to switch environments.
 
-**Steam setup is still a technical-tester task.** The legacy path uses an older
-32-bit Windows Steam client. Build 143 also contains an experimental separate
-Steam64 path; its on-device results require the prepared environment described
-in the [release test record](https://github.com/kuscholar/iDeck/blob/v0.1.3-alpha.5/docs/release/BUILD143_RESULTS.md). Do not treat those results as fresh-device
-setup validation or mix the two client environments.
-
-For legacy setup, follow [setup](docs/GETTING_STARTED.md) and the
-[client preparation notes](tests/steam-ui/README.md), using legitimate owner
-channels. A complete client belongs in one supported directory
-(`wine/drive_c/Steam32BundleLab` or `wine/drive_c/Steam32Lab`); scattered files
-from different clients do not count. **Repair Steam files** can use a complete
-compatible client supplied in `iDeck/Steam32OfficialRepair`; see
-[recovery instructions](docs/IDECK_STEAM_RECOVERY.md). Do not copy another
-installation's login cache or delete the app to switch environments.
+Steam64 does **not** create virtual address space. Unsupported device/signing
+layouts can still fail, and 32-bit games/helpers may retain separate limits.
+See [Steam64 setup and recovery](docs/STEAM64_SETUP.md) for capacity, download,
+version-pinning and rollback details. Passing setup is not gameplay validation.
 
 ## Your phone, with a handheld habit
 
@@ -180,8 +177,10 @@ cd iDeck
 ```
 
 To rebuild a release, check out its tag and use its matching source/relink
-companions. Build 143's source companion includes the additional FEX component
-overlay and rebuild instructions used for its shipped runtime.
+companions. Alpha.6 retains the exact FEX131 overlay/rebuild materials and adds a
+separate Steam64 support-source companion for Chromium/CEF and standalone Crashpad.
+Stage its hash-pinned open components with `tools/stage-steam64-compatibility.py`;
+see [Build145 rebuild notes](docs/release/BUILD145_RESULTS.md#source-and-relink-materials).
 
 Follow [Getting started](docs/GETTING_STARTED.md), [Building](docs/BUILDING.md)
 and [JIT setup](docs/JIT.md). The public snapshot excludes compiled runtime
@@ -194,7 +193,7 @@ development team and a unique identifier; the source defaults to
 `com.kuscholar.ideck.steamui`. Keep existing Madeira installs and their data
 separate.
 
-The Git checkout excludes compiled runtime payloads, Steam/CEF, games, account
+The Git checkout excludes compiled runtime payloads, Valve client/libcef, games, account
 caches, signing profiles and the proprietary Apple converter. The alpha IPA
 and its source/license/relink companion assets are distributed separately. Read the
 [distribution requirements](docs/DISTRIBUTION.md) before sharing a built package.
