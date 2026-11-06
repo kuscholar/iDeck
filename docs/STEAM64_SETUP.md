@@ -5,22 +5,44 @@ IPA alone does not install Valve's proprietary client or change the selected
 prefix. Existing users opt in; iDeck does not silently move an account into a new
 prefix. The Build143/alpha.5 release did not contain this installer.
 
-## User flow
+## User flow (Build145)
 
-1. Save/exit games, fully close iDeck, then reopen to its launcher. Do not start
-   Steam yet. If automatic startup is enabled, turn it off first.
-2. Select **Install / Upgrade to Steam64**. The app checks the address range and
-   bundled compatibility components before downloading anything.
-3. Keep iDeck in the foreground. The progress display covers availability,
-   download, hash verification and installation. Cancel/retry retains verified
-   package cache. A failed download does not change the selected environment.
-4. After success, fully close/reopen iDeck. Address reservations must be acquired
-   at app startup; changing the config in a running app is insufficient.
-5. Check prerequisites, enable JIT using the existing pairing/VPN flow, then
-   launch Steam. Use Valve's genuine login and Steam Guard yourself when asked.
-6. For a damaged 64-bit client, use **Verify / Repair Steam64** from a fresh app
-   session. **Return to previous environment** restores the prior selection and
-   controlled settings without deleting either prefix. Reopen after switching.
+The launcher is a four-action waterfall. Only the current unfinished action has
+a primary button; completed actions show checkmarks and are skipped automatically.
+The check above it combines signing/address checks without counting them as user
+tasks. Checks rerun when returning from Settings/VPN/JIT, and the launcher scrolls
+to the next step after the complete scan.
+
+1. **Install Steam → Install Steam64.** This same action downloads the complete
+   matched Steam/browser files and prepares the local Windows runtime. There is
+   no separate manual runtime step or legacy32 repair detour. Keep iDeck open;
+   progress and cancellation are inside this card. If prompted, fully close and
+   reopen iDeck before continuing: native reservations are acquired at app startup.
+2. **Connect LocalDevVPN.** Open it, tap Connect and return to iDeck. An already
+   reachable connection is checked off automatically.
+3. **Pair this device → Pair in iDeck.** This starts the existing on-device pairing
+   immediately, with its live instructions/PIN in this card. The iOS Settings
+   pairing host is still named **Madeira**. Pairing normally only needs doing once.
+   On iOS26, the one fallback action opens pairing-file import in JIT setup.
+4. **Enable JIT.** Return to iDeck after activation, then choose **Launch Steam
+   Big Picture** once all checks pass. JIT is needed again after fully closing
+   the app. Steam sign-in and Steam Guard happen inside Valve's genuine UI.
+
+New product installs default to built-in JIT so the direct in-app pairing flow is
+consistent. Existing saved method choices and ordinary Madeira's automatic default
+are preserved. Advanced JIT methods/file import are under **Advanced options**,
+not duplicate primary buttons in the pairing step.
+
+For damaged files, open **Advanced options → Verify / Repair Steam64** in a fresh
+app session. **Return to previous environment** restores the prior selection and
+controlled settings without deleting either prefix. Legacy32 manual repair remains
+an explicit advanced action only for an existing legacy installation. Automatic
+checks and native address guards remain mandatory despite the shorter interface.
+
+Build144 fresh installation was reported complete by the user; this feedback
+establishes the installer path, not Steam login/gameplay stability. Build145's
+new UI is separately compiled/tested; see its device/validation evidence before
+claiming a new end-to-end result.
 
 The original `wine` prefix is untouched. `wine-steam64` is separate; login caches
 are never copied. Existing games/saves are preserved in their original location,
@@ -97,6 +119,7 @@ python3 tools/stage-steam64-compatibility.py \
 Reproducible host checks:
 
 ```sh
+python3 tests/host/check-ideck-waterfall.py
 python3 tests/host/check-steam64-install.py
 python3 tests/host/check-steam64-setup.py
 # Optional private official packages and staged open components:
@@ -111,6 +134,6 @@ fixtures exercise rollback, malicious archives, private data and interruption.
 The optional real test verifies/extracts the18 packages, checks the complete
 stock client, composes the open components, and activates/restores a disposable
 configuration. It starts no Steam/Wine process and does not establish device
-installation, login, UI or repeated-game stability. Build144 is not published;
+installation, login, UI or repeated-game stability. Build145 is not published;
 fresh-device download/login, repair/rollback UI and repeated game cycles remain
 physical-device release gates.

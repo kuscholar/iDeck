@@ -4720,3 +4720,37 @@ an experimental checkpoint release with that known issue; not a stable GO.
 
 See [Steam64 setup](STEAM64_SETUP.md) and
 [redacted evidence](STEAM64_SETUP_EVIDENCE.json).
+
+
+## 2026-11-06 — Build145 four-action setup waterfall (fresh phone install)
+
+- User reports Build144 setup can complete, but the visible Steam step calls legacy
+  repair and the new installer is below the list; pairing is buried in the full
+  JIT settings sheet. This establishes the reported setup friction, not new game
+  stability or authentication success.
+- Base6422597 on feature/steam64-setup. Minimal UI patch: Install Steam (runtime
+  bundled automatically), Connect LocalDevVPN, Pair this device (direct Pair in
+  iDeck with live existing panel/PIN) and Enable JIT. Signing/address checks stay
+  mandatory, automatic and unnumbered. Highlight/scroll follows the complete scan,
+  not partial results. Repair/import/account/rollback/methods are Advanced options.
+  New product installs default built-in; saved choices and ordinary Madeira stay.
+- Host sequential/skip/checking/restart/signing/VA gate tests, existing readiness,
+  runtime selection and JIT method/pairing integration checks pass. Legacy static
+  checks were refreshed for configurable bundle IDs, current URLComponents callback
+  encoding and the existing pinned MIT notice format. Rust crate tests skipped
+  because cargo not on PATH; no Rust changes. Full unsigned Xcode145 passes;
+  final linked markers and unchanged released translator pin verified.
+- New exact main/helper profiles were obtained through normal background Xcode
+  initialization and used by the established CLI signer; no Mac unlock, token
+  extraction or security setting change. Deep-strict signing passed.
+- Actual device inventory before installation contained original iDeck143 only.
+  Fresh Test145 installed under com.kuschqin.ideck.freshtest; before its launch
+  Documents contained0files. Original143 installation URL remained unchanged.
+  CoreDevice launch passed; raw receipts stay in .madeira-install/ideck-waterfall145.
+  Redacted hashes and live-process observation: IDECK_SETUP_WATERFALL_EVIDENCE.json.
+- No user UI acceptance, new Steam login or game-cycle result is claimed. Pairing
+  may survive reinstall in its own Keychain, so0Documents does not prove zero
+  pairing state. Agent did not clear/copy keys. Third-return Steam freeze remains
+  outside this launcher-only change. No FEX/Valve/submodule source changes.
+- Next: user validates the four-step fresh setup, direct pairing instructions,
+  automatic advancement and normal Steam launch. Preserve original app/data.

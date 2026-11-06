@@ -133,7 +133,13 @@ for marker in ['JITPairing.swift in Sources', 'libmadeira_rppairing.a in Framewo
 require('app/Madeira/libmadeira_rppairing.a' in gitignore and 'build/rppairing-ios/target/' in gitignore,
         'the built library and cargo output are ignored')
 notices = app / 'legal/LICENSES-rppairing-crates.txt'
-require(notices.exists() and 'idevice 0.1.68 (MIT)' in notices.read_text(), 'crate notices are bundled')
+notice_text = notices.read_text() if notices.exists() else ''
+idevice_notice = notice_text.split('idevice 0.1.68\n', 1)[-1].split('\n==============================================================================', 1)[0]
+require(notices.exists() and 'idevice 0.1.68' in notice_text
+        and ('idevice 0.1.68 (MIT)' in notice_text
+             or ('MIT license retrieved verbatim from idevice v0.1.68 workspace root.' in idevice_notice
+                 and 'Permission is hereby granted, free of charge' in idevice_notice)),
+        'crate notices contain the pinned idevice MIT license')
 for path in ['THIRD-PARTY-NOTICES.md', 'app/Madeira/legal/THIRD-PARTY-NOTICES.md']:
     require('libmadeira_rppairing.a' in (root / path).read_text(), f'{path} lists on-device pairing')
 

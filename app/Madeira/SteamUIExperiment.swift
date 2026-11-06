@@ -176,7 +176,7 @@ enum SteamUIExperiment {
         var errorDescription: String? {
             switch self {
             case .disabled: return "Steam UI requires the experimental .steamui app and its feature flag."
-            case .incompleteClient: return "Steam client or browser files are missing or incompatible. Return to the iDeck launcher and choose Repair Steam files."
+            case .incompleteClient: return "Steam client or browser files are missing or incompatible. In the iDeck launcher, use Install Steam64, or Advanced options → Verify / Repair Steam64."
             case .incompleteProbe: return "All x64 runtime probes must be present in the experimental app's own drive_c and matching CEF directory."
             case .invalidSize: return "Unsupported experimental desktop size."
             }
@@ -514,6 +514,45 @@ struct IDeckPreflight {
     var canLaunch: Bool { results.allSatisfy { $0.status == .passed } }
 }
 
+
+// Product steps represent user actions. Runtime preparation is part of Steam
+// installation; signing and address ownership remain mandatory automatic checks.
+enum IDeckSetupStep: String, CaseIterable, Identifiable {
+    case steam, connection, pairing, jit
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .steam: return "Install Steam"
+        case .connection: return "Connect LocalDevVPN"
+        case .pairing: return "Pair this device"
+        case .jit: return "Enable JIT"
+        }
+    }
+}
+struct IDeckSetupFlow {
+    let checks: [IDeckPrerequisiteResult]
+    var restartRequired = false
+    func passed(_ id: IDeckPrerequisite) -> Bool { checks.first { $0.id == id }?.status == .passed }
+    func complete(_ step: IDeckSetupStep) -> Bool {
+        switch step {
+        case .steam: return !restartRequired && passed(.runtime) && passed(.steam)
+        case .connection: return passed(.connection)
+        case .pairing: return passed(.pairing)
+        case .jit: return passed(.jit)
+        }
+    }
+    var next: IDeckSetupStep? { IDeckSetupStep.allCases.first { !complete($0) } }
+    var automaticallyReady: Bool { passed(.signing) && passed(.addressSpace) }
+    var launchReady: Bool {
+        !restartRequired && IDeckPrerequisite.allCases.allSatisfy(passed)
+    }
+    func actionable(_ step: IDeckSetupStep) -> Bool {
+        guard next == step, !restartRequired else { return false }
+        // Never suggest enabling JIT past a known signing/address-layout failure.
+        return step != .jit || automaticallyReady
+    }
+}
+
 @MainActor
 final class SteamUIEvidence {
     static let shared = SteamUIEvidence()
@@ -664,7 +703,7 @@ import UIKit
                 prerequisites[0].detail = "Runtime files are missing from this installation. Reinstall iDeck."
             }
             if !SteamUIExperiment.steam64 && !IDeckRules.steamClientReady(prefix: prefix) {
-                prerequisites[1].detail = IDeckRules.clientIssues(prefix: prefix).joined(separator: "\n") + "\nRepair Steam files below. Account data and games are preserved."
+                prerequisites[1].detail = IDeckRules.clientIssues(prefix: prefix).joined(separator: "\n") + "\nInstall Steam below to prepare the complete Steam64 environment. Existing data is preserved."
             }
             if let relative = SteamUIExperiment.clientDirectory(prefix: prefix, x86Client: !SteamUIExperiment.steam64) {
                 prerequisites[1].detail += " Selected client: drive_c/" + relative + "."
@@ -700,7 +739,7 @@ import UIKit
         let target = documents.appendingPathComponent("wine-steam64")
         let mapEnd = IDeckAddressSpace.current()?.mapEnd
         steam64Task = Task { @MainActor in
-            defer { preparing = false; steam64Task = nil; steam64Committing = false }
+            defer { preparing = false; steam64Task = nil; steam64Committing = false; checkPrerequisites() }
             do {
                 guard Steam64Profile.eligible(mapEnd: mapEnd) else { throw Steam64SetupError.unsupported }
                 // Check all open components before seeding or downloading anything.
@@ -732,7 +771,7 @@ import UIKit
                 UserDefaults.standard.set(true, forKey: "iDeckSetupComplete")
                 repairRequiresRestart = true
                 ready = false
-                self.error = Steam64SetupError.restart.localizedDescription
+                self.error = nil // The current install card now explains the required reopen.
             } catch is CancellationError {
                 self.error = "Steam64 setup cancelled. Downloads can be resumed; the selected environment was not changed."
                 steam64Progress = nil
@@ -922,210 +961,191 @@ struct IDeckLauncher: View {
     let diagnostics: () -> Void
     @ObservedObject private var state = IDeckState.shared
     @ObservedObject private var jit = JITCoordinator.shared
+    @ObservedObject private var pairing = OnDevicePairing.shared
     @Environment(\.scenePhase) private var scenePhase
     @State private var selection = 0
-    @State private var showSetupHelp = false
-    private var launchEnabled: Bool { state.prerequisitesPassed && !state.preparing && !jit.busy }
-    private var passedCount: Int { state.prerequisites.filter { $0.status == .passed }.count }
-    private var sessionAvailable: Bool {
-        !state.running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken
+    @State private var showAdvanced = false
+
+    private var flow: IDeckSetupFlow { .init(checks: state.prerequisites, restartRequired: state.repairRequiresRestart) }
+    private var busy: Bool { state.checkingPrerequisites || state.preparing || jit.busy || pairing.active }
+    private var launchEnabled: Bool { state.prerequisitesPassed && flow.launchReady && !busy }
+    private func detail(_ id: IDeckPrerequisite) -> String { state.prerequisites.first { $0.id == id }?.detail ?? "Checking…" }
+    private func canAct(_ step: IDeckSetupStep) -> Bool {
+        guard !busy, flow.actionable(step) else { return false }
+        if step == .steam { return state.canManageEnvironment }
+        if step == .jit { return !state.running && wine_process_is_running() == 0 && wineserver_is_running() == 0 && !StikJITHelper.poolTaken }
+        return true
     }
-    private func act(on step: IDeckPrerequisite) {
-        guard !state.checkingPrerequisites, !state.preparing, !jit.busy else { return }
+    private func act(_ step: IDeckSetupStep) {
+        guard canAct(step) else { return }
         switch step {
-        case .runtime: if state.bundledRuntimeAvailable { state.prepare() } else { showSetupHelp = true }
-        case .steam: state.repairSteam()
-        case .signing, .pairing: setupJIT()
+        case .steam: state.installSteam64()
         case .connection: LocalDevVPN.open()
-        case .jit: if sessionAvailable { enableJIT() } else { diagnostics() }
-        case .addressSpace: diagnostics()
+        case .pairing:
+            if OnDevicePairing.isSupported { pairing.start() }
+            else { setupJIT() }
+        case .jit: enableJIT()
         }
     }
-    private func actionTitle(_ step: IDeckPrerequisite) -> String {
+    private func actionTitle(_ step: IDeckSetupStep) -> String {
         switch step {
-        case .runtime: return state.bundledRuntimeAvailable ? "Prepare runtime" : "Setup instructions"
-        case .steam: return "Repair Steam files"
-        case .signing, .pairing: return "Open JIT setup"
+        case .steam: return SteamUIExperiment.steam64 ? "Install / Repair Steam64" : "Install Steam64"
         case .connection: return LocalDevVPN.actionTitle
-        case .jit: return sessionAvailable ? "Enable JIT" : "View diagnostics"
-        case .addressSpace: return "View diagnostics"
+        case .pairing: return OnDevicePairing.isSupported ? "Pair in iDeck" : "Import pairing file"
+        case .jit: return "Enable JIT"
+        }
+    }
+    private func description(_ step: IDeckSetupStep) -> String {
+        switch step {
+        case .steam:
+            if state.repairRequiresRestart { return "Steam is installed. Fully close iDeck in the app switcher, then reopen it to continue." }
+            if flow.complete(step) { return "Steam and its browser are ready." }
+            return "Downloads Steam and its browser from Valve and prepares the local runtime automatically. Keep iDeck open. Existing accounts, games and saves are preserved."
+        case .connection:
+            return flow.complete(step) ? "The device connection is ready." : "Open LocalDevVPN, tap Connect, then return here. This connection is needed to enable JIT."
+        case .pairing:
+            if flow.complete(step) { return "Pairing is ready. You normally only do this once." }
+            if OnDevicePairing.isSupported { return "Tap Pair in iDeck, then follow the instructions below. In iOS Settings, the pairing host is named Madeira." }
+            return "On-device pairing needs iOS 27. Import this device’s pairing file through JIT setup."
+        case .jit:
+            return flow.complete(step) ? "JIT is active for this app session." : "Enable JIT, then return to iDeck. Repeat this after fully closing the app."
         }
     }
     private func accept() {
         switch selection {
         case 0: state.checkPrerequisites()
-        case 1...7:
-            let row = state.prerequisites[selection - 1]
-            if row.status == .needsAction { act(on: row.id) }
-        case 8: if launchEnabled { start() }
-        case 9: if launchEnabled { account() }
-        default: state.autoStart.toggle()
+        case 1...4: act(IDeckSetupStep.allCases[selection - 1])
+        case 5: if launchEnabled { start() }
+        case 6: showAdvanced.toggle()
+        default: break
         }
     }
-    private func stepRow(_ row: IDeckPrerequisiteResult, number: Int) -> some View {
-        HStack(alignment: .top, spacing: 14) {
+    private func stepRow(_ step: IDeckSetupStep, number: Int) -> some View {
+        let done = flow.complete(step)
+        let current = flow.next == step
+        return HStack(alignment: .top, spacing: 14) {
             VStack(spacing: 6) {
                 Group {
-                    switch row.status {
-                    case .passed: Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                    case .needsAction: Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.orange)
-                    case .checking: ProgressView().frame(width: 28, height: 28)
-                    case .unchecked:
-                        Text("\(number)").font(.caption.bold()).frame(width: 28, height: 28)
-                            .background(Color.secondary.opacity(0.12), in: Circle())
-                    }
-                }.font(.title2).frame(width: 30, height: 30).accessibilityHidden(true)
-                if number < state.prerequisites.count {
-                    Rectangle().fill(row.status == .passed ? Color.green.opacity(0.4) : Color.secondary.opacity(0.2))
-                        .frame(width: 2).frame(minHeight: 42)
+                    if done { Image(systemName: "checkmark.circle.fill").foregroundStyle(.green) }
+                    else if (step == .steam && state.preparing) || (step == .jit && jit.busy) { ProgressView() }
+                    else { Text("\(number)").font(.headline).frame(width: 30, height: 30)
+                            .background(current ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.1), in: Circle()) }
+                }.font(.title2).frame(width: 32, height: 32).accessibilityHidden(true)
+                if number < IDeckSetupStep.allCases.count {
+                    Rectangle().fill(done ? Color.green.opacity(0.4) : Color.secondary.opacity(0.2))
+                        .frame(width: 2).frame(minHeight: done ? 22 : 52)
                 }
             }
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text(row.id.title).font(.headline)
+                    Text(step.title).font(.headline)
                     Spacer()
-                    if row.status == .passed { Text("Ready").font(.caption).foregroundStyle(.green) }
+                    if done { Text("Done").font(.caption).foregroundStyle(.green) }
+                    else if current { Text("Next").font(.caption).foregroundStyle(.tint) }
                 }
-                Text(row.detail).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-                if row.status == .needsAction {
-                    Button(actionTitle(row.id)) { act(on: row.id) }
-                        .buttonStyle(.bordered).disabled(state.checkingPrerequisites || state.preparing || jit.busy)
+                Text(description(step)).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                if step == .steam && state.preparing, let progress = state.steam64Progress {
+                    if let fraction = progress.fraction { ProgressView(value: fraction) }
+                    Text(state.steam64Committing ? "Verifying Steam64 and saving selection…" : progress.phase.rawValue).font(.caption)
+                    if !state.steam64Committing { Button("Cancel installation") { state.cancelSteam64Setup() }.font(.caption) }
                 }
-            }.padding(.bottom, 20)
+                if step == .pairing && (pairing.active || !done) { OnDevicePairingPanel() }
+                if current && !done && !state.repairRequiresRestart && !(step == .pairing && pairing.active) {
+                    Button(actionTitle(step)) { act(step) }
+                        .buttonStyle(.borderedProminent).disabled(!canAct(step))
+                }
+                if current && step == .jit {
+                    if let message = jit.status { Text(message).font(.caption).foregroundStyle(.secondary) }
+                    if let error = jit.error { Text(error).font(.caption).foregroundStyle(.orange) }
+                }
+            }.padding(.bottom, done ? 12 : 24)
         }
-        .padding(10)
+        .padding(12)
         .background(selection == number ? Color.accentColor.opacity(0.08) : Color.clear, in: RoundedRectangle(cornerRadius: 14))
         .id(number)
         .accessibilityElement(children: .contain)
     }
+    private var automaticChecks: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                if state.checkingPrerequisites { ProgressView() }
+                Image(systemName: flow.automaticallyReady ? "checkmark.shield.fill" : "shield.lefthalf.filled")
+                    .foregroundStyle(flow.automaticallyReady ? Color.green : Color.secondary)
+                Text(state.checkingPrerequisites ? "Checking this device…" : "Automatic device checks").font(.subheadline.weight(.semibold))
+                Spacer()
+                Button("Check again") { state.checkPrerequisites() }.font(.caption).disabled(busy)
+            }
+            ForEach(state.prerequisites.filter { [.signing, .addressSpace].contains($0.id) && $0.status == .needsAction }) { row in
+                Text(row.detail).font(.caption).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
+            }
+        }.padding(14).background(.background, in: RoundedRectangle(cornerRadius: 14)).id(0)
+    }
+    private var advancedOptions: some View {
+        DisclosureGroup("Advanced options", isExpanded: $showAdvanced) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(SteamUIExperiment.steam64 ? "Steam 64-bit · experimental" : "Steam 32-bit · legacy").font(.caption).foregroundStyle(.secondary)
+                Button("JIT settings / Import pairing file", action: setupJIT).disabled(busy)
+                Button("Verify / Repair Steam64") { state.installSteam64() }.disabled(!state.canManageEnvironment || busy)
+                if state.canRestoreEnvironment {
+                    Button("Return to previous environment") { state.restorePreviousEnvironment() }.disabled(!state.canManageEnvironment || busy)
+                }
+                if !SteamUIExperiment.steam64 && state.ready {
+                    Button("Repair legacy Steam32 files") { state.repairSteam() }.disabled(!state.canRepairSteam || busy)
+                }
+                Button("Sign in / Change Steam account", action: account).disabled(!launchEnabled)
+                Toggle("Open Big Picture automatically next time", isOn: $state.autoStart)
+                Button("Runtime diagnostics", action: diagnostics).disabled(busy)
+            }.buttonStyle(.bordered).padding(.top, 12)
+        }.id(6)
+    }
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: 20) {
                     HStack(spacing: 14) {
                         Image(systemName: "gamecontroller.fill").font(.largeTitle).foregroundStyle(.cyan)
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 4) {
                             Text("iDeck").font(.largeTitle.bold())
                             Text("Your Steam library. On your iPhone.").foregroundStyle(.secondary)
-                            Text(SteamUIExperiment.steam64 ? "Steam 64-bit · experimental" : "Steam 32-bit · legacy")
-                                .font(.caption).foregroundStyle(.secondary)
                         }
                     }
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Before you launch").font(.title2.bold())
-                        Text("Follow the steps below. A green checkmark means the condition was verified on this device.")
-                            .font(.subheadline).foregroundStyle(.secondary)
-                        Button { state.checkPrerequisites() } label: {
-                            HStack {
-                                if state.checkingPrerequisites { ProgressView().tint(.white) }
-                                Label(state.checkingPrerequisites ? "Checking prerequisites…" : "Check all prerequisites", systemImage: "checklist")
-                            }.frame(maxWidth: .infinity).padding(8)
-                        }.buttonStyle(.borderedProminent)
-                            .disabled(state.checkingPrerequisites || state.preparing || jit.busy).id(0)
-                        if let checked = state.lastChecked, !state.checkingPrerequisites {
-                            HStack {
-                                Text("\(passedCount) of \(state.prerequisites.count) ready")
-                                Spacer()
-                                Text(checked, style: .time)
-                            }.font(.caption).foregroundStyle(.secondary)
-                        }
-                        if state.prerequisitesPassed {
-                            Label("All prerequisites are ready. You can launch Steam.", systemImage: "checkmark.seal.fill")
-                                .foregroundStyle(.green).font(.subheadline)
-                        } else if !state.checkingPrerequisites,
-                                  let next = state.prerequisites.first(where: { $0.status == .needsAction }) {
-                            Text("Next: \(next.id.title)").font(.subheadline.weight(.semibold))
-                        }
-                    }
+                    Text("Set up and play").font(.title2.bold())
+                    Text("Follow the highlighted step. iDeck checks the rest automatically.").font(.subheadline).foregroundStyle(.secondary)
+                    automaticChecks
                     VStack(spacing: 0) {
-                        ForEach(Array(state.prerequisites.enumerated()), id: \.element.id) { index, row in
-                            stepRow(row, number: index + 1)
-                        }
+                        ForEach(Array(IDeckSetupStep.allCases.enumerated()), id: \.element.id) { index, step in stepRow(step, number: index + 1) }
                     }
-                    GroupBox("Steam64 setup") {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Install the matched 64-bit Steam and browser from Valve. Your previous environment, account, games and saves stay intact. The first Steam64 sign-in uses Steam’s own login; credentials are not transferred.").font(.caption).foregroundStyle(.secondary)
-                            Button(SteamUIExperiment.steam64 ? "Verify / Repair Steam64" : "Install / Upgrade to Steam64") { state.installSteam64() }
-                                .buttonStyle(.borderedProminent).disabled(!state.canManageEnvironment || jit.busy)
-                            if let progress = state.steam64Progress {
-                                if let fraction = progress.fraction { ProgressView(value: fraction) }
-                                Text(state.steam64Committing ? "Verifying Steam64 and saving selection…" : progress.phase.rawValue).font(.caption)
-                                if state.preparing && !state.steam64Committing { Button("Cancel download / setup") { state.cancelSteam64Setup() }.font(.caption) }
-                            }
-                            if state.canRestoreEnvironment {
-                                Button("Return to previous environment") { state.restorePreviousEnvironment() }
-                                    .disabled(!state.canManageEnvironment || jit.busy)
-                            }
-                            Text("An eligible device/address layout and an app restart are required. This does not increase virtual address space or guarantee game compatibility.").font(.caption).foregroundStyle(.secondary)
-                        }
-                    }
-                    GroupBox("Steam recovery") {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Repair missing or incompatible Steam/browser program files without deleting accounts, games or saves. Replaced public files are backed up. Close Steam and reopen iDeck first if a session has already started.").font(.caption).foregroundStyle(.secondary)
-                            Button("Repair Steam files") { state.repairSteam() }
-                                .buttonStyle(.bordered).disabled(!state.canRepairSteam || jit.busy || state.checkingPrerequisites || state.repairRequiresRestart)
-                        }
-                    }
-                    if state.preparing { ProgressView("Preparing runtime…") }
-                    if let message = jit.status { Text(message).font(.caption).foregroundStyle(.secondary) }
-                    if let message = jit.error { Text(message).foregroundStyle(.orange) }
-                    if let error = state.error { Text(error).foregroundStyle(.orange) }
+                    if let error = state.error { Text(error).foregroundStyle(.orange).font(.subheadline).fixedSize(horizontal: false, vertical: true) }
                     Button(action: start) {
-                        Label(jit.busy ? "Enabling JIT…" : "Launch Steam Big Picture", systemImage: "play.fill")
-                            .font(.headline).frame(maxWidth: .infinity).padding(12)
-                    }.buttonStyle(.borderedProminent).disabled(!launchEnabled).id(8)
-                    GroupBox("Steam account") {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Sign in or change accounts in Steam after launch. Account login is verified by Steam, after these device checks.")
-                                .font(.subheadline).foregroundStyle(.secondary)
-                            Button("Sign in / Change Steam account", action: account)
-                                .buttonStyle(.bordered).disabled(!launchEnabled)
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                    }.id(9)
-                    Toggle("Open Big Picture automatically next time", isOn: $state.autoStart).id(10)
-                    Text("Connect a controller, or tap directly on Steam. The floating iDeck button opens the keyboard, virtual controller and options.")
-                        .font(.subheadline).foregroundStyle(.secondary)
-                    Text("Powered by Madeira · Genuine Windows Steam. Compatibility is experimental.")
+                        Label("Launch Steam Big Picture", systemImage: "play.fill").font(.headline).frame(maxWidth: .infinity).padding(12)
+                    }.buttonStyle(.borderedProminent).disabled(!launchEnabled).id(5)
+                    Text("Sign in inside Steam when it opens. A controller, direct touch and the floating menu are available after launch.")
                         .font(.caption).foregroundStyle(.secondary)
-                    Button("Advanced diagnostics", action: diagnostics).font(.caption)
+                    advancedOptions
+                    Text("Powered by Madeira · Genuine Windows Steam · Experimental compatibility")
+                        .font(.caption).foregroundStyle(.secondary)
                 }.padding(24).padding(.bottom, 48).frame(maxWidth: 660).frame(maxWidth: .infinity)
             }.background(Color(.systemGroupedBackground))
-                .onChange(of: selection) { _, value in
-                    withAnimation { proxy.scrollTo(value, anchor: .center) }
-                }
+            .onChange(of: selection) { _, value in withAnimation { proxy.scrollTo(value, anchor: .center) } }
         }
-        .onAppear {
-            state.checkPrerequisites()
-            LibraryController.shared.configure(enabled: true, ownsInput: true)
-        }
+        .onAppear { state.checkPrerequisites(); LibraryController.shared.configure(enabled: true, ownsInput: true) }
         .onChange(of: scenePhase) { _, phase in if phase == .active { state.checkPrerequisites() } }
         .onChange(of: jit.busy) { _, busy in if !busy { state.checkPrerequisites() } }
+        .onChange(of: state.lastChecked) { _, _ in
+            // Scroll only after the complete scan; intermediate unchecked rows
+            // must not pull the user back to the first card while pairing.
+            selection = flow.next.flatMap { IDeckSetupStep.allCases.firstIndex(of: $0) }.map { $0 + 1 } ?? 5
+        }
+        .onChange(of: pairing.phase) { _, phase in
+            if case .paired = phase { state.checkPrerequisites() }
+            else if pairing.active { selection = 3 }
+        }
         .onDisappear { LibraryController.shared.configure(enabled: true, ownsInput: false) }
         .onReceive(LibraryController.shared.commands) { command in
-            guard !showSetupHelp else { return }
+            guard !pairing.active, !jit.showSetup else { return }
             if command == "up" { selection = max(0, selection - 1) }
-            if command == "down" { selection = min(10, selection + 1) }
+            if command == "down" { selection = min(6, selection + 1) }
             if command == "accept" { accept() }
-        }
-        .overlay(alignment: .bottom) {
-            Text((["Check prerequisites"] + IDeckPrerequisite.allCases.map(\.title) + ["Launch Steam", "Steam account", "Auto-start"])[selection])
-                .font(.caption).padding(8).background(.regularMaterial, in: Capsule()).padding(8).allowsHitTesting(false)
-        }
-        .sheet(isPresented: $showSetupHelp, onDismiss: { state.checkPrerequisites() }) {
-            NavigationStack {
-                Form {
-                    Section("Runtime") {
-                        Text("Prepare runtime creates the local environment without replacing existing files. Missing app runtime files require a complete iDeck build.")
-                    }
-                    Section("Steam client") {
-                        Text("Use a legitimate compatible Windows Steam client. In Files → iDeck → wine → drive_c, place the complete client folder at Steam32BundleLab or Steam32Lab, then check again.")
-                        Text("Steam, steamclient.dll, steamwebhelper and libcef must belong to the same compatible 32-bit client. A single steam.exe is insufficient.")
-                        Link("Read setup instructions", destination: URL(string: "https://github.com/kuscholar/iDeck/blob/main/docs/GETTING_STARTED.md")!)
-                    }
-                    Section("Account") { Text("Complete sign-in and Steam Guard inside Steam. These checks never read your password or verify account login.") }
-                }.navigationTitle("Setup help")
-                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showSetupHelp = false } } }
-            }
         }
     }
 }

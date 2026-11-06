@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "build": 145,
+  "branch": "feature/steam64-setup",
+  "source_base": "6422597c7536f333fbf6c96b9d2d9daf457d5cdc",
+  "observed_failure": "The visible Steam prerequisite still called legacy32 repair while Steam64 acquisition was below the list. Pairing opened a full settings sheet rather than the required pairing action.",
+  "hypothesis": "One ordered user-action flow with direct installer/pairing actions and automatic prerequisite aggregation removes the dead-end repair detour and redundant settings choices.",
+  "changes": [
+    "Four user actions: Install Steam (including runtime preparation), connect VPN, pair device, enable JIT; launch follows after all automatic/native checks pass.",
+    "Only current unfinished action is primary; completed actions checked/skipped; after a complete scan scroll to next action.",
+    "Direct Pair in iDeck uses existing OnDevicePairing with live PIN/instructions; iOS Settings host still Madeira. Import/expert JIT/repair/rollback/account/auto-start remain Advanced options.",
+    "New product defaults to built-in JIT; stored choices and ordinary Madeira automatic default retained.",
+    "No runtime/address/signing guards removed. Explicit reopen required after installation remains. No FEX or Valve changes."
+  ],
+  "user_report": "User reports Build144 installation can complete but setup UI is confusing. This does not establish new login/game-cycle stability.",
+  "host_checks": {
+    "waterfall-host.log": {
+      "sha256": "deca0dad539b98fbdcd023a56337e3c30e8a9b89b9d1c84b67bf1850cc55e4d1",
+      "private_path": ".madeira-install/ideck-waterfall145/waterfall-host.log",
+      "result": "PASS"
+    },
+    "readiness-host.log": {
+      "sha256": "50b6fe8df18e0a3e07eb449ef339b867510b6e7b0138b260049d04a1cdcaf48a",
+      "private_path": ".madeira-install/ideck-waterfall145/readiness-host.log",
+      "result": "PASS"
+    },
+    "jit-method-host.log": {
+      "sha256": "f76236011088e926386a1d8c1c2eae050612ab325cf775fa12fb8b7c2052c0fa",
+      "private_path": ".madeira-install/ideck-waterfall145/jit-method-host.log",
+      "result": "PASS"
+    },
+    "jit-pairing-host.log": {
+      "sha256": "425c1dbcdde79741c102f8a40b57fbb680a93625aeaf943639beae99d1d57ecd",
+      "private_path": ".madeira-install/ideck-waterfall145/jit-pairing-host.log",
+      "result": "PASS"
+    },
+    "runtime-host.log": {
+      "sha256": "48fb869a8a80efb8ea1f4cef9aad42f489f4828998e8d16506caa5b337a07ea5",
+      "private_path": ".madeira-install/ideck-waterfall145/runtime-host.log",
+      "result": "PASS"
+    }
+  },
+  "host_limit": "Existing Rust pairing library tests skipped because cargo is not on PATH; no Rust changes. Host tests are not UI/device validation.",
+  "full_xcode": "PASS unsigned full iOS build; private isolated app ID; final linked UI markers inspected",
+  "build_log_sha256": "bd30e7e9e17e7e7ee3824c5ba4237a1a2ac8d3a1c802dd108d9827d589a5d0d5",
+  "linked_validation": {
+    "build": 145,
+    "bundle": "com.kuschqin.ideck.freshtest",
+    "display_name": "iDeck Fresh Test",
+    "linked_waterfall_markers": true,
+    "translator_pin_unchanged": true,
+    "installed": false,
+    "ui_user_validation": false
+  },
+  "test_maintenance": "Existing JIT structural checks updated for one configurable bundle ID instead of an obsolete developer-specific default, URLComponents callback encoding and current pinned MIT notice formatting; required guarantees retained.",
+  "device": {
+    "target": "Kusch iPhone15ProMax",
+    "bundle": "com.kuschqin.ideck.freshtest",
+    "original_preserved": "com.kuschqin.madeira.steamui Build143 was present at original URL before installation",
+    "before_install": "Independent Fresh Test was absent from actual app inventory, so no old test sandbox was reset by the agent. Prior game-log lookup failed because the app was absent, not proof of a game failure.",
+    "installation": "PASS CoreDevice install + app version/identity readback",
+    "user_ui_validation": false,
+    "first_launch": "PASS CoreDevice launch",
+    "live_after_launch": true,
+    "documents_before_first_launch": "0 files",
+    "pairing_keychain": "Existing pairing may survive an iOS reinstall; the agent did not clear/copy keys or claim an empty keychain. Valid pairing is automatically skipped.",
+    "artifact_hashes": {
+      "install145.json": "f7424b906ae52877066a89c1e7af809c703dd688f951ce183e23b0fc8fb76f2d",
+      "apps-after-install.json": "c096ce84a0d15d5d97735ea020d7778c9929a1305361db8034ef4619f9d2a715",
+      "documents-before-first-launch.json": "bb0df7cfa4a44d4c26b851194f9f86c2df15f8d92cace93010994bac690c9d54",
+      "first-launch145.json": "cb8937ab1a3fb855bb15f8fe1681dbde2ebe843ff52a3a888ed2caebf272f46c",
+      "processes-after-launch.json": "db7b5d6ce61e0070d8b2d9a6b7e11b65b2a5105bc43677e7405346612c61857e"
+    }
+  },
+  "known_limit": "Build143 third-return Steam freeze remains unresolved and is outside this launcher-only change.",
+  "next": "User tests Install Steam64/reopen, VPN, direct Pair in iDeck, Enable JIT and normal Steam launch; inspect stage-specific failures, preserve credentials and original app."
+}

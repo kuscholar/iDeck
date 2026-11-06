@@ -137,7 +137,8 @@ project = (root / "app/Madeira.xcodeproj/project.pbxproj").read_text()
 helper_source = (root / "app/MadeiraJITHelper/MadeiraJITHelper.swift").read_text()
 require(project.count('PRODUCT_BUNDLE_IDENTIFIER = "$(MADEIRA_BUNDLE_IDENTIFIER)";') == 2
         and project.count('PRODUCT_BUNDLE_IDENTIFIER = "$(MADEIRA_BUNDLE_IDENTIFIER).JITHelper";') == 2
-        and project.count("MADEIRA_BUNDLE_IDENTIFIER = com.kuschqin.madeira.steamui;") == 2
+        and len(re.findall(r"MADEIRA_BUNDLE_IDENTIFIER = ([A-Za-z0-9.]+);", project)) == 2
+        and len(set(re.findall(r"MADEIRA_BUNDLE_IDENTIFIER = ([A-Za-z0-9.]+);", project))) == 1
         and "AppExtensionPoint" not in helper_source,
         "one setting, MADEIRA_BUNDLE_IDENTIFIER, names the app and the helper")
 
@@ -156,10 +157,12 @@ body = library_source[library_source.index('struct LibraryView: View {'):]
 body = body[body.index('    var body: some View {'):body.index('    @ToolbarContentBuilder private var libraryToolbar')]
 require('.alert(jitProblem == nil ? "Library" : "Couldn\'t Enable JIT"' in body,
         "the library's error alert is on the tab view, shown on the Settings tab as well")
-require('URL(string: "localdevvpn://enable?scheme=\\(SteamUIExperiment.callbackScheme)")' in setup
+require('parts.scheme = "localdevvpn"; parts.host = "enable"' in setup
+        and 'if let scheme = SteamUIExperiment.callbackScheme' in setup
+        and 'URLQueryItem(name: "scheme", value: scheme)' in setup
         and "localdevvpn" in app_plist["LSApplicationQueriesSchemes"]
-        and any("madeira-steamui" in t.get("CFBundleURLSchemes", []) for t in app_plist.get("CFBundleURLTypes", [])),
-        "LocalDevVPN opens to connect and returns to Madeira's own URL scheme")
+        and any("$(PRODUCT_BUNDLE_IDENTIFIER)" in t.get("CFBundleURLSchemes", []) for t in app_plist.get("CFBundleURLTypes", [])),
+        "LocalDevVPN encodes the registered current-app callback rather than an Optional or legacy shared scheme")
 
 # Play without JIT runs Enable JIT, then starts the game, once: only with the debugger
 # attached (so the start cannot ask again), and never after a failure.
