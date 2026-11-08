@@ -1,12 +1,11 @@
 # Linux Steam + Madeira iPad continuation
 
 User requested every305 minutes until repeatedly stable on **iPad Air4/iPad13,1**.
-As of run2, a user LaunchAgent `com.kusch.ideck-linux-steam-ipad-305m` is loaded,
-interval18300seconds, official CLI dispatch actually tested, last exit0. It calls
-`codex app-server daemon start`, then `codex queue --resume` for this existing
-thread. The active writer correctly deferred resume. A full unattended research
-turn after writer release is not yet observed. This is a macOS task, not a task
-created in the app's native Scheduled UI. Sleep/offline storage can delay work.
+As of run4, user LaunchAgent com.kusch.ideck-linux-steam-ipad-305m is loaded,
+interval18300seconds. Fresh readback runs2/last0 and this continuation prompt
+actually entered research work. The official CLI daemon/queue serializes the
+existing thread. This is a macOS task, not a native app Scheduled-UI task; future
+sleep/storage outages can delay it. Do not create another overlapping job.
 
 ## Required context and constraints
 
@@ -26,6 +25,55 @@ Guard or user trust approval. Continue independent verifiable work at real human
 authorization gates; do not repeat unchanged prompts or assume unsupported paths.
 
 Implementation checkpoint: `93ea5138d58bd6e84a2267b210f6dd7d541bb623` (signed-off isolated branch).
+
+## Latest resume: run4 (supersedes earlier run3 details)
+
+Air4/iPad13,1 is freshly connected, iPadOS27.2(24B119). Read-only last-probe check
+still missing; trust confirmation has not arrived. No repeated launch/install or
+Mac-unlock request. Preserve installed Lab1/production/Mac Allocator and all state.
+Lab4 is prepared UNSIGNED, not installed: explicit linux-packet-pipe-diagnostics
+uses separate PacketRootFS, current report and feature-flagged private archive.
+No rootfs importer, iOS Steam display or Madeira linkage yet. Verify exact profile,
+certificate/device/current availability before any later deployment.
+
+Packet-at-creation is now IMPLEMENTED in app/PacketPipe.c, enabled only via
+--packet-pipes / LINUX_LAB_PACKET_PIPES=1; default/base stream code unchanged.
+Immutable copied-source/archive receipts and final iOS marker V3 are required.
+The corrected probe expects O_DIRECT on WRITER ONLY (Linux source), unlike the
+initial test's wrong read flag expectation. Baseline still EINVAL; basic now0.
+15 contract cases+complete=16PASS with changed-unit ASan/UBSan: boundaries,4096
+splits, short discard/zero, flags, byte counts, EOF/HUP/dup/fork, blocked wakeup,
+signal cancel, capacity and EFAULT/partial-EMFILE cleanup. Ordinary16 and diagnostic
+compat125 pass. tools/test-packet-pipes.sh reproduces this in a NEW private root.
+Packet-to-stream writer conversion and proc writer reopen without DIRECT remain
+explicit EOPNOTSUPP, now bounded numeric diagnostics; ordinary stream conversion,
+splice/SCM_RIGHTS of these descriptions and full API coverage are not qualified.
+Don't claim complete kernel semantics or silently drop flags.
+
+Real Steam advances past controller pipe fatal. Missing genuine helper IBus/NSS/
+accessibility/XKB and SDL dependencies were actually identified and installed in
+the private guest. Genuine CEF logs and BrowserReady now exist. A300s actual X11
+observation gives a screenshot of **Unexpected Transport Error0x3009**, NOT a
+working login/Library/BPM. Wrapper0 only means display session ended. The UI test
+used packet-v5; final packet-release/iOS also correct full-closed poll masking and
+add refusal diagnostics. Exact binaries differ: read hashes/evidence first.
+CPUinfo/inotify/D-Bus log errors are NOT a proven root cause; referenced Chromium
+code logs cpuinfo failure nonfatally. Do not spoof CPU features or patch checks.
+
+NEXT single discriminator: use final artifact to see whether documented packet
+conversion/reopen limits occur, then trace bounded numeric WebUI/client local
+transport and socket/FD-pass establishment/close failure causing0x3009. Preserve
+fresh unauthenticated root run2/steam-fakefs-v3; no logged-in cache transfer.
+Observer --seconds1..600 enables longer observation; no blind retries/timeouts or
+Continue Anyway. All bounded runs end before checkout/build mutation; revalidate.
+Continue real rootfs/X11/RFB integration as useful in parallel with diagnosis; actual Air testing remains mandatory. Credentials/Guard/
+trust are user-only. Game bridge remains diagnostic125 and launches no game.
+
+LaunchAgent readback runs2/last0/18300s; this continuation arrived and performed
+real work. Keep schedule active; no STABLE_SUCCESS.json exists. No GO/stability,
+physical ELF/UI, Bluetooth, licensed game launch/return or JIT coexistence proof.
+
+## Earlier recorded state (run3; historical, superseded above)
 
 ## Current actual status and next gates (run3)
 

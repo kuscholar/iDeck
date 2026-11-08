@@ -58,6 +58,13 @@ class Boundaries(unittest.TestCase):
             self.assertEqual(result["display_session_returncode"], 0)
             self.assertTrue(result["steam_ui"].startswith("UNVERIFIED"))
 
+    def test_excessive_observation_refused(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root,cli,output=self.fixture(folder)
+            result=subprocess.run([sys.executable,str(TOOL),str(cli),str(root),str(output),"--seconds","601"],capture_output=True)
+            self.assertEqual(result.returncode,2)
+            self.assertFalse(output.exists())
+
 
 if __name__ == "__main__":
     unittest.main()

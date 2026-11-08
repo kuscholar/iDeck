@@ -7,6 +7,9 @@ case "${1:---display-only}" in
     --steam) steam=1 ;;
     *) exit 2 ;;
 esac
+duration=${2:-90}
+case "$duration" in ''|*[!0-9]*) exit 2 ;; esac
+test "$duration" -ge 1 && test "$duration" -le 600 || exit 2
 umask 077
 head -c 12 /dev/urandom | base64 | head -c 8 > /tmp/ideck-vnc-password
 Xvfb :99 -screen 0 1280x800x24 -nolisten tcp -extension MIT-SHM > /tmp/ideck-xvfb.log 2>&1 &
@@ -36,6 +39,6 @@ if test "$steam" = 1; then
     ./steamrtarm64/steam -clientbeta steamdeck_stable -nobigpicture > /tmp/ideck-steam-x11.log 2>&1 &
     spid=$!
 fi
-sleep 90
+sleep "$duration"
 kill -0 "$vpid"
 # This status describes the display session only. Inspect Steam's own log/status.

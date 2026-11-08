@@ -96,10 +96,12 @@
 			<key>inputPaths</key>
 			<array>
 				<string>$(LINUX_LAB_BUILD_DIR)/probe.elf</string>
+				<string>$(LINUX_LAB_BUILD_DIR)/packet-probe.elf</string>
 			</array>
 			<key>outputPaths</key>
 			<array>
 				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/probe.elf</string>
+				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/packet-probe.elf</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -108,6 +110,8 @@
 			<key>shellScript</key>
 			<string>set -euo pipefail
 cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/probe.elf"
+
+cp "$LINUX_LAB_BUILD_DIR/packet-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/packet-probe.elf"
 </string>
 		</dict>
 		<key>000000000000000000000009</key>
@@ -183,7 +187,7 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 				</array>
 				<key>LIBRARY_SEARCH_PATHS</key>
 				<array>
-					<string>$(LINUX_LAB_BUILD_DIR)</string>
+					<string>$(LINUX_LAB_RUNTIME_DIR)</string>
 				</array>
 				<key>OTHER_LDFLAGS</key>
 				<array>
@@ -203,7 +207,9 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>3</string>
+				<string>4</string>
+				<key>LINUX_LAB_RUNTIME_DIR</key>
+				<string>$(LINUX_LAB_BUILD_DIR)</string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000C</key>
@@ -250,7 +256,7 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 				</array>
 				<key>LIBRARY_SEARCH_PATHS</key>
 				<array>
-					<string>$(LINUX_LAB_BUILD_DIR)</string>
+					<string>$(LINUX_LAB_RUNTIME_DIR)</string>
 				</array>
 				<key>OTHER_LDFLAGS</key>
 				<array>
@@ -270,7 +276,9 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>3</string>
+				<string>4</string>
+				<key>LINUX_LAB_RUNTIME_DIR</key>
+				<string>$(LINUX_LAB_BUILD_DIR)</string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000D</key>

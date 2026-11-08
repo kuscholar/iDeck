@@ -11,6 +11,7 @@ expected=d1419782da2e299fe22f1ddb85c70ae3d1e276b1
 : "${MESON:=meson}"
 : "${NINJA:=ninja}"
 : "${LD_LLD:=ld.lld}"
+NINJA=$(command -v "$NINJA")
 LD_LLD=$(command -v "$LD_LLD")
 export PATH="$(dirname "$LD_LLD"):$PATH"
 mkdir -p "$LINUX_LAB_ARTIFACTS"
@@ -36,7 +37,17 @@ xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
     -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
     "$repo/experiments/linux-steam/guest/compatibility.c" "$repo/experiments/linux-steam/guest/compat-start.S" \
     -Wl,-e,_start -o "$out/ideck-madeira"
+xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
+    -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
+    "$repo/experiments/linux-steam/guest/packet-pipe-probe.c" -Wl,-e,_start -o "$out/packet-probe.elf"
+runtime="$out"
+if [[ ${LINUX_LAB_PACKET_PIPES:-0} == 1 ]]; then
+    packet_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-packet.XXXXXX")
+    runtime="$packet_stage/runtime"
+    python3 "$repo/experiments/linux-steam/tools/build-pipe-observer.py" "$src" "$out" "$NINJA" "$runtime" --packet-pipes --archive-only
+    cp "$out/libish_emu.a" "$out/libfakefs.a" "$runtime/"
+fi
 xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
     -derivedDataPath "$LINUX_LAB_ARTIFACTS/xcode" CODE_SIGNING_ALLOWED=NO \
-    LINUX_LAB_BUILD_DIR="$out" build
+    LINUX_LAB_BUILD_DIR="$out" LINUX_LAB_RUNTIME_DIR="$runtime" build

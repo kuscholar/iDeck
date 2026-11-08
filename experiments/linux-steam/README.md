@@ -220,3 +220,39 @@ EINVAL in this pin. Current exit1 is expected failing evidence, NOT test success
 It has future packet-boundary/short-read/CLOEXEC/nonblock assertions; never make
 these pass by dropping O_DIRECT or suppressing the Steam fatal. See investigation
 for primary UAPI references and exact trace. No device pipe test has run yet.
+
+## Packet-at-creation experiment (run4)
+
+Packet support is now implemented in a separately generated lab archive; the
+pinned baseline still reproduces EINVAL. Enable it explicitly:
+
+```sh
+export LINUX_LAB_PACKET_TEST_DIR="$LINUX_LAB_ARTIFACTS/new-packet-test"
+bash experiments/linux-steam/tools/test-packet-pipes.sh
+LINUX_LAB_PACKET_PIPES=1 bash experiments/linux-steam/tools/build-lab.sh
+```
+
+The first command needs a prepared host Meson build and NEW test output. It
+reproduces baseline failure, then basic success and16 contract-result lines under
+an ASan/UBSan-instrumented changed host unit. The second builds unsigned Lab4;
+confirm IDECK_PACKET_PIPE_V3 in the final Mach-O and exact ELF resource hash.
+No signed IPA/device success is implied. `linux-packet-pipe-diagnostics` runs its
+fixed embedded ELF in app-private PacketRootFS, reports to last-packet-probe.txt,
+and consumes one runtime lifetime. Default builds keep the feature off.
+
+Packet boundaries, truncation, EOF, bounded capacity, byte counts and tested
+poll/dup/fork/cancellation behavior are implemented. Dynamic packet/stream
+conversion is explicitly unsupported; read the investigation before claiming
+complete pipe compatibility. Ordinary stream paths/base archives/vendor remain
+untouched. Build receipts include immutable changed-source snapshots and hashes.
+
+The genuine host Steam client advances to CEF/BrowserReady but actually displays
+Unexpected Transport Error0x3009. No login/Library/BPM/game/return success exists.
+The next discriminator is WebUI/client transport, including unsupported packet
+mode operations and FD passing, not assertion suppression. iPad developer trust
+is still pending. This source target still lacks an iOS Steam display frontend.
+
+The X11 observer now accepts `--seconds 1..600` (default90) with a bounded cleanup
+allowance. It preserves exact per-run private logs. A300-second run is not a
+stability claim. Keep captures private, and never run raw-log controls on an
+authenticated root or copy another app's login state.

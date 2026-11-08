@@ -591,3 +591,142 @@ This identifies a concrete startup blocker, not a sole cause for all future CEF.
 Run3 implementation checkpoint: **93ea5138d58bd6e84a2267b210f6dd7d541bb623** (signed off). Remaining Air
 trust and genuine packet-pipe semantics are unresolved; no stable Steam claim.
 All bounded host sessions ended before the checkpoint; do not target stale PIDs.
+
+## Run 4: packet-at-creation implementation and genuine CEF startup (2026-11-08)
+
+Resumed clean branch72fb27f; fetched origin and checked all worktrees. Baseline,
+submodule pins and production apps stay unchanged. Fresh Air details confirm
+**iPad13,1, iPadOS27.2(24B119)**, connected. One read-only result check still finds
+no Lab probe. No trust confirmation arrived; no launch, install, signing, Mac
+unlock request, credential action or security-setting change was made. Installed
+Lab1 remains the old control; later unsigned builds are not on-device evidence.
+
+### Observed failure, hypothesis and implementation boundary
+
+Run3 proved actual Steam pipe2flags0x90000 -> EINVAL and ordinary pipesPASS.
+Hypothesis: a genuine packet-at-creation implementation permits that startup
+contract without weakening Valve assertions. The optional generated lab archive
+now includes **app/PacketPipe.c** only with build-pipe-observer.py --packet-pipes.
+Non-packet calls retain the original pinned implementation. No vendor/FEX/Wine
+source or base archive is overwritten; hash receipts verify the base archive is
+unchanged. The immutable private output contains its included source snapshot.
+
+The implementation uses local native datagrams for packet boundaries, splits
+large writes at4096bytes and discards a short-read packet tail. Shared endpoint
+state implements reader/writer lifetime, queued EOF/HUP, EPIPE/SIGPIPE, dup/fork,
+custom poll/epoll notifications and bounded cancellation. No native guest PID is
+treated as a Darwin process. All native endpoints remain nonblocking; guest
+blocking semantics use the existing wait/signal integration.
+
+Two discriminating tests rejected naive native passthrough:
+
+- A64KiB native buffer fills at15packets and reports ENOBUFS(-105), not EAGAIN.
+  The final adapter enforces16 guest packet slots and has larger native buffers
+  for protocol overhead. Full queue returns EAGAIN and sleeps/wakes correctly;
+  it does not spin on misleading native POLLOUT or remap all resource errors.
+- Native FIONREAD reports37 for payload packets3+2. Metadata records actual
+  payload lengths under serialized native I/O; the guest sees5, then2 after
+  a short read discards the first packet tail. Native protocol overhead is not
+  exposed as Linux data.
+
+The first prototype/test incorrectly expected O_DIRECT on the read endpoint.
+[Linux create_pipe_files](https://github.com/torvalds/linux/blob/master/fs/pipe.c)
+sets it on the writer only. The adapter and reproducer were corrected against
+that independent source before the final conformance claims. The original
+creation EINVAL finding remains valid. No CPU capability or packet flag is
+fabricated to bypass a check.
+
+**Explicit incomplete contract:** packet-to-stream conversion via F_SETFL, and
+opening a packet writer without O_DIRECT, return EOPNOTSUPP with bounded numeric
+diagnostics. Ordinary stream-to-packet conversion is not implemented either.
+This is packet-at-creation support, not a full Linux pipe replacement. Splice,
+SCM_RIGHTS transfer of these descriptions, and all possible ioctl/async behavior
+are not qualified. Do not assume this partial surface cannot affect later UI.
+
+### Discriminating tests and regressions
+
+The unchanged baseline still fails exact Steam creation flags with EINVAL.
+The corrected ARM64 standalone basic control passes under the adapter and writes
+its current report. **15 contract cases plus complete =16PASS lines** cover
+large-write splitting, short-read discard, zero/nonblocking I/O, byte counts,
+dup/queued EOF, writer-only flags, epoll read/drain/HUP, bounded capacity/refill,
+closed-reader EPIPE/full poll masks, fork lifetime, blocked epoll/writer wakeup,
+signal cancellation, bad-output-pointer cleanup and partial-install EMFILE.
+The explicit unsupported conversion is tested as a limitation, not emulated
+Linux success. The changed host translation unit is ASan/UBSan-instrumented;
+prebuilt base libraries are not wholly instrumented, and leak freedom is not
+inferred from this. No sanitizer error was observed in these bounded controls.
+
+The published tools/test-packet-pipes.sh reproduces baseline failure and adapter
+success in a NEW private root/output. Ordinary16 ARM64 controls and diagnostic
+compatibility-wrapper exit125 remain passing with the packet-enabled archive.
+The game bridge still launches no game. Five observer-boundary tests pass,
+including rejection of durations over600seconds. No unrelated broad suite was
+repeated after already passing.
+
+### Final iOS build inclusion (not device execution)
+
+LINUX_LAB_PACKET_PIPES=1 is an explicit Lab-only build flag, off by default.
+It copies/patches a private iOS archive, preserving original generated archives.
+Only this target's link search path selects it. Lab4 adds explicit
+**linux-packet-pipe-diagnostics**, a separate PacketRootFS and current
+last-packet-probe.txt. Missing/conflicting controls report errors. It has no
+Steam login fields, in-app Steam root importer, Steam display frontend or Madeira
+linkage. The default regular control and existing app/prefix remain unchanged.
+
+The complete unsigned arm64 build passes. Final executable contains both
+IDECK_PACKET_PIPE_V3 and IDECK_LINUXRUNNER_DIRFD_GUARD_V3, the diagnostic argument,
+and the exact source-built packet ELF. Source/archive/app hashes are retained.
+One intermediate provenance check incorrectly treated Meson's relative file
+entry as cwd-relative; resolving it against entry.directory fixes that build.
+No source workaround or security change was made. **Lab4 is not signed,
+installed or run on Air**; no on-device packet, rootfs or Steam claim.
+
+### Actual Steam/CEF observations
+
+With packet support, the prior controllerxinput pipe assertion is absent in the
+bounded host runs. A helper-specific loader log then proves missing libibus;
+actual ldd additionally identifies NSS/NSPR/accessibility/XKB. Normal verified
+guest apt installation supplies those and the previously missing SDL graphics
+probe library (13.596s host only). No host packages, GPG/TLS checks or Valve binary
+were altered. Keep the installed-package inventory and raw logs private.
+
+Genuine steamwebhelper/CEF now executes, creates real logs and records
+**BrowserReady**. A first90-second wrapper exceeds its cleanup bound and is
+terminated at140.116s; this is observer termination, not a spontaneous client
+crash. A second helper run finishes its92.572s display-session observation. The
+same immutable packet-v5 binary was observed for a longer300seconds; wrapper
+finishes at305.386s. Its actual1280x800 framebuffer shows Valve's
+**Unexpected Transport Error:0x3009**, with restart/continue/exit choices. No
+choice was clicked. This is a real Steam error window, not interactive login,
+Library or Big Picture success. These UI observations use packet-v5; later final
+contract/iOS artifacts also correct a full-and-closed poll mask and add bounded
+unsupported-mode diagnostics. Do not silently equate their exact binaries.
+
+CEF logs contain cpuinfo initialization and inotify/D-Bus warnings, but inspected
+[Chromium PreSandboxInit](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/content/app/content_main_runner_impl.cc)
+logs cpuinfo failure without making it fatal. This source is a reference, not a
+verified match to the precise bundled CEF revision. Do not claim the cpuinfo
+message alone killed the renderer or is the0x3009 cause. BrowserReady and
+WebUITransport.GetTransportInfo entries coexist with the real error dialog.
+No credentials, Guard approval or account-cache transfer occurred.
+
+### Next experiment and remaining gates
+
+1. Preserve pending Air user-trust action; after confirmation collect Lab1 before
+   upgrading only its isolated container. No repeated unchanged unlock/trust asks.
+2. Use the final packet artifact's bounded conversion/reopen diagnostics to rule
+   out that documented limit in0x3009. Trace categorical WebUI/client transport
+   establishment/close status and specific socket/FD-passing failures. Do not
+   restart blindly, change timeouts or select Continue Anyway as a substitute.
+3. Continue actual rootfs/X11/RFB integration in the iOS Lab as useful alongside
+   compatibility diagnosis, then qualify real Air input/login/Library/BPM. Physical testing
+   remains required; host screenshots and compilation do not satisfy it.
+4. Compatibility discovery, licensed Madeira handoff, game/return, coexistence,
+   memory/performance and repeated stability all remain unverified.
+
+The user LaunchAgent readback now shows runs2, last exit0 and interval18300s;
+this continuation prompt actually arrived and progressed source/build/test work.
+Future scheduling through sleep/storage outages is not guaranteed. No success
+sentinel was written and no scheduled task was stopped. Raw screenshots, logs,
+package/rootfs payloads and signing assets remain outside Git.

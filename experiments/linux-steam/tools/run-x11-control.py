@@ -19,7 +19,9 @@ p.add_argument("ish", type=Path)
 p.add_argument("root", type=Path)
 p.add_argument("output", type=Path)
 p.add_argument("--steam", action="store_true")
+p.add_argument("--seconds",type=int,default=90,help="bounded guest observation, 1..600 seconds")
 a = p.parse_args()
+if not 1<=a.seconds<=600: p.error("observation must be between1 and600 seconds")
 ish, root, output = a.ish.resolve(), a.root.resolve(), a.output.resolve()
 if not (root / "data").is_dir() or not (root / "meta.db").is_file():
     p.error("prepared stopped fakefs required")
@@ -32,12 +34,12 @@ with (root / ".ideck-x11-observer.lock").open("a") as lock:
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     output.mkdir(parents=True)
     script = (Path(__file__).parents[1] / "guest/x11-control.sh").read_text()
-    command = [str(ish), "-f", str(root), "/bin/sh", "-c", script, "ideck-x11-control", "--steam" if a.steam else "--display-only"]
+    command = [str(ish), "-f", str(root), "/bin/sh", "-c", script, "ideck-x11-control", "--steam" if a.steam else "--display-only",str(a.seconds)]
     start = time.monotonic()
     with (output / "host.log").open("wb") as log:
         child = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
         try:
-            rc = child.wait(timeout=140)
+            rc = child.wait(timeout=a.seconds+50)
             outcome = "exited"
         except subprocess.TimeoutExpired:
             outcome = "bounded-observer-terminated"
@@ -57,6 +59,6 @@ with (root / ".ideck-x11-observer.lock").open("a") as lock:
                 (output / name).write_bytes(log.read(1024 * 1024))
     report = dict(scope="host ARM64 Linux interpreter; actual X11/VNC, not iPad", display_session_returncode=rc,
                   outcome=outcome, elapsed_seconds=round(time.monotonic()-start, 3),
-                  steam_requested=a.steam, steam_ui="UNVERIFIED; inspect real frame and guest log")
+                  steam_requested=a.steam,requested_seconds=a.seconds, steam_ui="UNVERIFIED; inspect real frame and guest log")
     (output / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report))

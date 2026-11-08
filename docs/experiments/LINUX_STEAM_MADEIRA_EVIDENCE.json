@@ -1,7 +1,7 @@
 {
-  "schema_version": 3,
-  "latest_run": "run3",
-  "recorded_at_utc": "2026-11-08T06:32:49.211864+00:00",
+  "schema_version": 4,
+  "latest_run": "run4",
+  "recorded_at_utc": "2026-11-08T11:09:41.958436+00:00",
   "origin": "https://github.com/kuscholar/iDeck.git",
   "branch": "experiment/linux-steam-madeira-ipad",
   "baseline": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
@@ -13,71 +13,94 @@
   },
   "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
-  "previous_source_checkpoint": "b0989ee820fa37a1f9e311940d72eec9523f396e",
-  "source_checkpoint": "93ea5138d58bd6e84a2267b210f6dd7d541bb623",
+  "previous_source_checkpoint": "72fb27f6b71bd343efb8f0ce13eda13a73b889f1",
+  "source_checkpoint": "containing source checkpoint; exact hash recorded in following doc commit",
   "target": {
-    "model": "iPad Air 4",
     "product": "iPad13,1",
+    "model": "iPad Air4",
     "os": "27.2 (24B119)",
-    "paired": true,
-    "developer_mode": true,
-    "last_metadata_connectivity": "localNetwork; not a future availability claim"
+    "fresh_details": true,
+    "connectivity": "connected paired"
   },
-  "phase": "Phase1 host embedding and real X11; Phase2 host genuine Steam startup blocked; physical Air execution trust-blocked",
   "device": {
-    "selected": "Air4 iPad13,1 iPadOS27.2",
-    "discovery": "paired available via CLI",
-    "lock_state": "passcodeRequired=false; unlockedSinceBoot=true",
-    "devicehub_executor": "unavailable symlinked writable root initialization; no configuration or security change",
-    "actual_capture": "devicectl screenshot shows Untrusted Developer",
-    "single_launch": "CoreDevice10002",
-    "local_signature": "deep strict passes",
-    "last_probe_copy": "missing file CoreDevice7000",
-    "user_trust_reply": "pending",
-    "new_install": false,
+    "prior_observed_gate": "Untrusted Developer",
+    "trust_confirmation": "still pending",
+    "current_probe": "missing file CoreDevice7000",
+    "launch_or_install_this_run": false,
+    "signed_lab4": false,
     "device_ELF_or_UI_success": false,
-    "Mac_unlock_requested": false
+    "preserved": "production, Mac Allocator, phone installs/account/games/saves",
+    "Mac_unlock_request_or_security_change": false
   },
-  "lab3": {
-    "mode": "explicit linux-distro-diagnostics",
-    "root": "own Application Support/iDeckLinuxLab/DebianRootFS fakefs",
-    "behavior": "fixed non-authenticating control only; no arbitrary UI commands",
-    "source_implementation": true,
-    "host_adapter": "6PASS, guestwait0, repeatEBUSY-16",
-    "host_regression": "16PASS, ASan+UBSan protocol, packages6PASS",
-    "unsigned_ios_arm64_build": "passed",
-    "final_macho_markers": "v3 dirfd and explicit distro mode verified",
-    "signed_or_installed": false,
+  "packet_adapter": {
+    "source_sha256": "e25934ea229b4c1b00681fd836d4e7a151061780c9f852b159dd9cc5372d27a4",
+    "enabled_only": "--packet-pipes copied private archive; LINUX_LAB_PACKET_PIPES=1 explicit target flag, default off",
+    "base_archive_unchanged": "hash-verified receipts",
+    "native": "local nonblocking datagrams with per-pipe public socket buffer sizing; no global sysctl change",
+    "semantics": [
+      "packet4096 split and short-tail discard",
+      "16-slot bounded capacity/EAGAIN",
+      "payload-only FIONREAD",
+      "writer-only O_DIRECT",
+      "EOF/HUP/EPIPE/SIGPIPE",
+      "dup/fork and blocking wake/cancel",
+      "poll/epoll and partial failure cleanup"
+    ],
+    "explicit_limits": [
+      "writer packet-to-stream F_SETFL EOPNOTSUPP",
+      "writer reopen without DIRECT EOPNOTSUPP",
+      "ordinary stream conversion not implemented",
+      "SCM_RIGHTS/splice of these descriptions and entire Linux API not qualified"
+    ],
+    "diagnostics": "bounded numeric unsupported-conversion/reopen flags/PID; no payloads",
+    "prototype_failures": [
+      "naive64KiB native queue fails ENOBUFS at15 packets",
+      "native FIONREAD37 for3+2 payload",
+      "initial wrong read-end DIRECT expectation corrected against Linux source"
+    ],
+    "no_assertion_or_Valve_or_FEX_patch": true
+  },
+  "tests": {
+    "base_exact_packet_reproducer": "still EINVAL, expected exit1",
+    "corrected_packet_basic": "passed, exit0, current file output",
+    "packet_contract": "15 cases plus complete16 PASS lines, exit0",
+    "sanitizers": "changed host translation unit ASan/UBSan; no observed error, prebuilt core not wholly instrumented, no leak-freedom claim",
+    "published_reproduction_script": "actually executed in fresh private output; base failure and adapter success",
+    "ordinary": "16PASS",
+    "compatibility_bridge": "diagnostic125 only, no game",
+    "observer_policy": "5PASS including duration>600 refusal"
+  },
+  "ios_lab4": {
+    "source_implemented": true,
+    "unsigned_arm64_build": "passed",
+    "feature": "packet-at-creation only explicit lab archive",
+    "final_macho_markers": [
+      "IDECK_PACKET_PIPE_V3",
+      "IDECK_LINUXRUNNER_DIRFD_GUARD_V3",
+      "linux-packet-pipe-diagnostics",
+      "IDECK_PACKET_CONVERSION_UNSUPPORTED"
+    ],
+    "resource": "exact embedded ARM64 ELF separately host-executed PASS",
+    "source_and_archive_receipt": "ios-packet.I70itW/runtime/build-evidence.json",
+    "installed_or_device_run": false,
     "JIT_or_Madeira_or_iOS_Steam_display": false
   },
-  "host_client": {
-    "official_ELF_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
-    "version": "1792618285",
-    "updater": "naturally completes update, exit42 in268.075s; official steam.sh restart contract",
-    "post_update": "steamui.so failed missing libGL; ldd identifies direct GTK/GLib/etc dependencies",
-    "dependency_install": "normal signed Debian guest apt, no bypass/host changes",
-    "VGUI": "ldd missing libopenal; installation lets startup advance",
-    "GLX": "disabled-GLX session fatal glXChooseVisual; enabled GLX advances beyond it",
-    "display_transport": "real Xvfb/VNC1280x800, authenticated loopback; captured genuine updater verification window",
-    "login_Library_or_BPM": false,
-    "performance_claim": "host observer durations only, not iPad measurements"
+  "genuine_steam": {
+    "scope": "unauthenticated host interpreter only",
+    "official_client": "1792618285",
+    "packet_result": "previous controller pipe fatal absent; no full-root cause claim",
+    "helper_dependencies": "observed IBus/NSS/accessibility/XKB/SDL loader requirements normally guest-apt installed13.596s",
+    "CEF": "executes, own logs and BrowserReady present",
+    "cpuinfo": "logged error, not proven fatal or0x3009 cause; reference Chromium code logs only; exact bundled revision not verified",
+    "long_observation": "requested300s, wrapper ended305.386s0; not client success",
+    "actual_frame": "Valve Unexpected Transport Error0x3009, no choice clicked",
+    "UI_artifact_runtime": "packet-v5; final contract/iOS adds full-closed poll correction and refusal telemetry, exact binaries differ",
+    "login_Library_BPM": false,
+    "game_and_return": false,
+    "credentials_or_Guard_automated": false,
+    "performance": "host control durations only, no iPad comparison"
   },
-  "latest_discriminating_experiment": {
-    "observed": "Steam controllerxinput fatal on negative pipe descriptors",
-    "hypothesis": "missing Linux pipe flag/contract; no resource or CPU root-cause assumption",
-    "method": "separate trace-only host archive/binary, first64 flags/status/guestpid; syscall behavior unchanged",
-    "actual": "Steam guestpid11 pipe2 flags0x90000 returns-22; ordinary and CLOEXEC calls succeed",
-    "interpretation": "ARM64 O_DIRECT=1<<16; packet+CLOEXEC flag rejected in pinned pipe.c",
-    "primary_references": [
-      "https://github.com/torvalds/linux/blob/master/arch/arm64/include/uapi/asm/fcntl.h",
-      "https://man7.org/linux/man-pages/man2/pipe.2.html"
-    ],
-    "isolated_reproducer": "ARM64/Werror packet-pipe-probe: streamPASS, Steam packet flags-22, packetsemanticsBLOCKED, guestexit1",
-    "reproducer_is_passing_compatibility": false,
-    "minimal_behavior_fix": "none; no flag dropping/assertion suppression",
-    "regression": "ordinary16 controls/protocol/packages remain passing; source observer boundary tests4PASS; actual RFB capture passes",
-    "next": "implement/test actual packet behavior incl boundary truncation, fork/dup, poll/EOF/cancellation and fcntl before retesting Steam"
-  },
+  "next_discriminator": "first check final artifact unsupported mode telemetry; then bounded WebUI/client local transport/socket/FD-passing establishment and close status for0x3009; no blind timeout/assertion workaround",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -89,240 +112,285 @@
     "goal": "repeated stable real Linux Steam UI/Library/BPM/input + licensed Madeira game launch/return on selected Air4",
     "sleep_may_delay": true,
     "stop": "agent verifies real evidence then unloads only this job, or user cancels",
-    "plist_sha256": "c5318c2cea63c43530df7022e185349c28c947590dbd13c8183ffa5482dd3d8d"
+    "plist_sha256": "c5318c2cea63c43530df7022e185349c28c947590dbd13c8183ffa5482dd3d8d",
+    "fresh_launchctl_runs": 2,
+    "last_exit": 0,
+    "current_continuation_executed_research": true,
+    "stable_success_sentinel_written": false,
+    "unloaded": false
   },
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "private_artifacts": [
     {
-      "path": "run3/launch-lab1.json",
-      "sha256": "23ad7777264d37771b66019c9e713d1a01ae1ecb18ebfee2f5f579371b65dfae",
-      "size": 2285
+      "path": "host-root/probe-results.txt",
+      "sha256": "bbdd3c5de9778734ca9e002cdc1bf97481fd582e753de8d5d524be44a6151906",
+      "size": 361
     },
     {
-      "path": "run3/air-current.png",
-      "sha256": "ad83bcbc844b82ede3e0ed634faae1f2f272ba7d2cc5be10c1ec2e47ff013636",
-      "size": 11119635
+      "path": "ios-packet.I70itW/runtime/build-evidence.json",
+      "sha256": "17362f7d46e31c94fbf9361aa20170cafece03c85dbec9dcc56f12e23665e92f",
+      "size": 516
     },
     {
-      "path": "run3/air-probe-check.log",
+      "path": "run4/air-check.log",
       "sha256": "e91479e45cdb2cca008bbf47e2f1eec16f7ea74f155d3ff481341ffdbc3482d6",
       "size": 152
     },
     {
-      "path": "run3/distro-embedding-final.log",
+      "path": "run4/air-details.json",
+      "sha256": "8802627f6dded60fbc9623aae0a8b19b33112c88e2fb238896c63d89d5ea4491",
+      "size": 15436
+    },
+    {
+      "path": "run4/apt-helper-install.json",
+      "sha256": "db884d5d89595ba649abd4cb75c77eedc739aeeea5fa9fc7e50d68b269991c23",
+      "size": 143
+    },
+    {
+      "path": "run4/apt-helper-install.log",
+      "sha256": "29c1f80961af21711553807853717ef2509242b4c9e81b35f0095eac40878cca",
+      "size": 39091
+    },
+    {
+      "path": "run4/cef-evidence/steamwebhelper.log",
+      "sha256": "8b974a0a287b5f74847c2d281eb4cdbb97164876110a2f033721efd3e60b1ade",
+      "size": 5693
+    },
+    {
+      "path": "run4/compat-final.log",
+      "sha256": "18aa29fa90cdeae2acf551acd0da1493704e9a3ec3417d9085b1b4f227d6bf6f",
+      "size": 72
+    },
+    {
+      "path": "run4/device-elf-control/packet-probe-results.txt",
+      "sha256": "7383b8254fb1710702e2c502d2a44241ba13ce06bbdff4160ba5a03d022d5b69",
+      "size": 125
+    },
+    {
+      "path": "run4/device-elf-host.log",
+      "sha256": "b9fcee69aa7a6b5cc6d30923e3ff34cdc89eb8da1e85d8021057fff13ece250b",
+      "size": 935
+    },
+    {
+      "path": "run4/helper-ldd.log",
+      "sha256": "8e8d86133027fb9b365b86b308782014a3aaa148f6b2cd482899233e1d1cab5d",
+      "size": 8906
+    },
+    {
+      "path": "run4/ios-packet-verified-build.log",
+      "sha256": "b36f99546708637c55614c46d9a666b6446130370a4f26500aa6e047e798921c",
+      "size": 3486
+    },
+    {
+      "path": "run4/ios-release-final.log",
+      "sha256": "7dd4f9d2227e6861c8d6e03d473db35729f9173b33eb9fa54ec52c3ea1a99589",
+      "size": 55435
+    },
+    {
+      "path": "run4/observer-tests.log",
+      "sha256": "fe23f9d30259704b683c039a611a3635c9a8464f8fa565162b628b5d0e7504cc",
+      "size": 103
+    },
+    {
+      "path": "run4/ordinary-final.log",
       "sha256": "07a37e33689e3412d24e0e9dddcfcf4eb88561d76469f8038cf281d3b71e3858",
       "size": 68
     },
     {
-      "path": "run3/distro-embedding-result.json",
-      "sha256": "e66609f57a0e9a4091701817187732a6f411cb845af1f4a6167110e3dd8c27bd",
-      "size": 454
+      "path": "run4/packet-capacity-diag.log",
+      "sha256": "8afb22bb08ba5964a2186d0ca2a2eaf74c4be2549885ccb4ef2c21c574cbe4ce",
+      "size": 3618
     },
     {
-      "path": "run3/host-regressions.log",
-      "sha256": "190919125a1a9153fcd5696c14ce643f73487f6e8bb308b91140800b1705109b",
-      "size": 978
+      "path": "run4/packet-contract-final.log",
+      "sha256": "f1ac5ed2c58426a4e383809dde99ecf4b706a3af39b4a2172030fce492915d1a",
+      "size": 10450
     },
     {
-      "path": "run3/ios-build3-final.log",
-      "sha256": "cd306cd7c3a81247359d048e9f54456843af392157c7d3f2dfb8182e5bb30fba",
-      "size": 20100
+      "path": "run4/packet-integration-final.log",
+      "sha256": "f236aa28f025e4be93e1c9a9809081cd60eae1ea527ebb9a9c36da57fa946e2e",
+      "size": 10246
     },
     {
-      "path": "run3/steam-updater.log",
-      "sha256": "b69dd1ce7c52b00d8143a4789381db448b865cdcc7d30c6064ddb772f6802df9",
-      "size": 29603
+      "path": "run4/packet-integration-v3.log",
+      "sha256": "11a3cc90ed425186fe0fe87e9267065d8b7f7a6469c10f6fe2c1cb7911cb01a6",
+      "size": 3613
     },
     {
-      "path": "run3/steam-updater.json",
-      "sha256": "9d6f1d8be6069f380c10075c1eb4e8d9f5c716c802512cc20b90ea4a44c3f5e6",
-      "size": 145
+      "path": "run4/packet-integration-v5.log",
+      "sha256": "898dede59bfe24ac77fb56ffeb7cb50cdc27233e6cc50440f868d936e50bac7e",
+      "size": 10352
     },
     {
-      "path": "run3/steam-post-update.log",
-      "sha256": "03878a7dbf2a4c9b965fda21d012befa815b314199f14754aaaa42744f1ef014",
-      "size": 4339
+      "path": "run4/packet-integration.log",
+      "sha256": "288d634d0ead175ba2654bf00889895be767a44557b8ca972356c9514a14dcb5",
+      "size": 3520
     },
     {
-      "path": "run3/steam-post-update.json",
-      "sha256": "b966e001709de4ec9bfb22739434ad624ee8ee77ace2a106495015d8c04affca",
-      "size": 143
+      "path": "run4/packet-release-contract.log",
+      "sha256": "85a85ad4815823ddd1f3147ffdd456564b9d59869e722d6075b8104923415b8e",
+      "size": 10510
     },
     {
-      "path": "run3/apt-update.json",
-      "sha256": "87ed07882871e37bc83294fd7573d4919fda5a0a85d5115181813500aee6e0b8",
-      "size": 143
+      "path": "run4/packet-release/PacketPipe.c",
+      "sha256": "e25934ea229b4c1b00681fd836d4e7a151061780c9f852b159dd9cc5372d27a4",
+      "size": 13326
     },
     {
-      "path": "run3/apt-display-install.json",
-      "sha256": "b1a82d615fe8af0a56db10f76c38fccf7accfaa5b7a6259a32101a179fc3e0dc",
-      "size": 143
+      "path": "run4/packet-release/build-evidence.json",
+      "sha256": "0ed0a82af0434f583e8e9c4357dcf589545619ea6ba70363c8a190fdbb8fe2fd",
+      "size": 515
     },
     {
-      "path": "run3/apt-steamui-install.json",
-      "sha256": "71196755f8174315e0effc31c7e7e5c26e9920616031db89969d08235300acba",
-      "size": 143
+      "path": "run4/packet-release/ish-pipe-observer",
+      "sha256": "3b91815ba3e109c3700d7c49e59bc7a89cc2b3e6fb4237c6c604e33b3e20dfb0",
+      "size": 1896464
     },
     {
-      "path": "run3/apt-openal-install.json",
-      "sha256": "b431587106d1651bf349a574f74b5b98704a76ac13e5f9ef86a263fd2845df94",
-      "size": 142
+      "path": "run4/reproduce/base-blocker.log",
+      "sha256": "59797fe1d95cb2c6fcc74cc50788ab637c3d4bba2bbc7f8498670fac81539664",
+      "size": 806
     },
     {
-      "path": "run3/apt-mesa-install.json",
-      "sha256": "6fc3cb4e13ba8808f8b4276b9d088082ce44f1cfdad2c032fd2596418e27a35e",
-      "size": 142
+      "path": "run4/reproduce/packet-basic.log",
+      "sha256": "1fa4cac49d106196df7988566a3410c6f46d21c2fa253484cd5d404933540604",
+      "size": 935
     },
     {
-      "path": "run3/steamui-ldd.log",
-      "sha256": "6e94e479ee30ab1eca9051fb0960701a5a3b79118093847e029f4ab09dff7bc4",
-      "size": 5057
+      "path": "run4/reproduce/packet-contract.log",
+      "sha256": "3fc69dd8d07119465217a61363db5103a047e302341e2e2a70e2c36ae2434d57",
+      "size": 10510
     },
     {
-      "path": "run3/vgui2-ldd-packages.log",
-      "sha256": "4e3fddcbc62a505d81f3a7633707e69efcce760b581de75ddfc6aa0b8697c456",
-      "size": 15007
+      "path": "run4/reproduce/results.json",
+      "sha256": "c502bc6af48149e560c47ed26d29649f4738652560cb8583b2069cba24713c3a",
+      "size": 377
     },
     {
-      "path": "run3/rfb-capture.log",
-      "sha256": "094a03992f8adbbf17152f6aa33f441fe5e0855d367a3a4c933435964cfdd967",
-      "size": 79
+      "path": "run4/reproduce/runtime/PacketPipe.c",
+      "sha256": "e25934ea229b4c1b00681fd836d4e7a151061780c9f852b159dd9cc5372d27a4",
+      "size": 13326
     },
     {
-      "path": "run3/x11-frame.png",
-      "sha256": "a2db7a54e03a5c5e3581bcad84e9e104028642640da0969b98a97403638aafba",
-      "size": 7090
+      "path": "run4/reproduce/runtime/build-evidence.json",
+      "sha256": "92e02199c403ed79c1019f878b341cfa3f2a4651de566f47ca4e98ffa6be216c",
+      "size": 515
     },
     {
-      "path": "run3/steam-x11-frame.png",
-      "sha256": "8dc73a24289c1a03a145159669407ce44752d7a339b9900bbfce0bc9cbd2d820",
-      "size": 15418
+      "path": "run4/reproduce/runtime/ish-pipe-observer",
+      "sha256": "34f4ca39c2ca80b70e4adead5607f3dbd48faf87d1f40b84ffe0a44b66dcbe2b",
+      "size": 1896704
     },
     {
-      "path": "run3/x11-control.json",
-      "sha256": "bfea978f135d6044fd6e17388989785e05894926674c0bcce3e2327f8ad520df",
-      "size": 170
+      "path": "run4/steam-helper/host.log",
+      "sha256": "81317ed4392aeb1839fd72c524a4e39f81fd38e21262ea694744976ec54c589c",
+      "size": 28542
     },
     {
-      "path": "run3/steam-x11-control.json",
-      "sha256": "41f4160e2b4f16e4604bbca25a87c2ee42db0c5b6474d10d8032b22885caaac2",
-      "size": 170
+      "path": "run4/steam-helper/ideck-steam-x11.log",
+      "sha256": "6af202c483507d13c55536d4e9757434deeafe1bdd50f2d2f9b0d096c3e85188",
+      "size": 6269
     },
     {
-      "path": "run3/observer-tests.log",
-      "sha256": "2883683acc18ad75a5bc59a202565af534679f56218db3d1a66368e72cb40c45",
-      "size": 102
-    },
-    {
-      "path": "run3/pipe-observer-build.log",
-      "sha256": "d2f478954b665daceede422d1539cf49a66283e73b4fe36d31998f10ac7e7bee",
-      "size": 133
-    },
-    {
-      "path": "run3/pipe-observer/ish-pipe-observer",
-      "sha256": "fc16312cd14470f2e9f8c7a43f37597b81ac7dd9c41230ef6810169036b41a22",
-      "size": 1806400
-    },
-    {
-      "path": "run3/pipe-root/packet-pipe-probe",
-      "sha256": "3e8c3940f14ea8952b1e30fdc80046f098a35c4fb1a14e1e9cfd7dc8de4f2a1a",
-      "size": 2512
-    },
-    {
-      "path": "run3/packet-pipe-probe.log",
-      "sha256": "4dd1c0641db9abb6502bc9fc1f425b5565a11b09b1f3e87c70ae5f4a92babe46",
-      "size": 927
-    },
-    {
-      "path": "run3/xcode/Build/Products/Debug-iphoneos/LinuxLab.app/LinuxLab",
-      "sha256": "8e718b242622fb6894133b56cd49627d6a381cd709bfae57a69a77fd7329a6c4",
-      "size": 1742040
-    },
-    {
-      "path": "run3/source-x11-steam/host.log",
-      "sha256": "0454d830fe953cc8d5dd00979dc7638e4b2670ff78c348aca9a31b9b7aa5cc87",
-      "size": 7766
-    },
-    {
-      "path": "run3/source-x11-steam/ideck-steam-x11.log",
-      "sha256": "ebc8480b375782e7dd725001b2377cb5944f6be752ac7237c87ed4cb68ea64b6",
-      "size": 4644
-    },
-    {
-      "path": "run3/source-x11-steam/ideck-x11vnc.log",
-      "sha256": "a381f27d06d30bee7d23d5f3429904320b0a5d71f45e37ea50013035907b069c",
-      "size": 3660
-    },
-    {
-      "path": "run3/source-x11-steam/ideck-xvfb.log",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "size": 0
-    },
-    {
-      "path": "run3/source-x11-steam/result.json",
-      "sha256": "238890d0f0c7353cb82db3e22071840e3f453a9ed6043787d5498c289f762280",
-      "size": 248
-    },
-    {
-      "path": "run3/source-x11-glx/host.log",
-      "sha256": "d1053b9fd668dd9e1e72732ffad101415085bbab162672717f42aeb48129e816",
-      "size": 9784
-    },
-    {
-      "path": "run3/source-x11-glx/ideck-steam-x11.log",
-      "sha256": "6536142ade74743198a836d04ea54b3081be88e3cabec85821614d126f4a8efd",
-      "size": 4842
-    },
-    {
-      "path": "run3/source-x11-glx/ideck-x11vnc.log",
-      "sha256": "4e89e46b7fcc5bd16ad9c429a9665418479a98c0977440dd7bf20e589a8e2e49",
+      "path": "run4/steam-helper/ideck-x11vnc.log",
+      "sha256": "8840815b0add651629d506f084232134e762a665ceff4b56581eb1d18e25caac",
       "size": 3661
     },
     {
-      "path": "run3/source-x11-glx/ideck-xvfb.log",
+      "path": "run4/steam-helper/ideck-xvfb.log",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "size": 0
     },
     {
-      "path": "run3/source-x11-glx/result.json",
-      "sha256": "2c2fc9766caacdf747e71dc81184d9ff880f271d95f556676f1aa941a61e8f5d",
+      "path": "run4/steam-helper/result.json",
+      "sha256": "e9451f7b05cc3a7cb077ac8e6de62bacac00655fa24f7682e04b7d4af2929a1a",
       "size": 248
     },
     {
-      "path": "run3/source-x11-pipe/host.log",
-      "sha256": "7cb402751fe6038652a0fb689814be76fc99298e0b05968c13d8231ba22d481a",
-      "size": 9145
+      "path": "run4/steam-long-capture.log",
+      "sha256": "30c6a4b99673234ca876478cb22aac4a298c534508cbeff7d04cc4cd5da7554b",
+      "size": 81
     },
     {
-      "path": "run3/source-x11-pipe/ideck-steam-x11.log",
-      "sha256": "9db8f834cbca903398288a08ce1b1b362b0a50b10ac97de2c6df02d8c7a28d88",
-      "size": 4912
+      "path": "run4/steam-long-frame.png",
+      "sha256": "4f5c80cc9cb55d7298d6c347c7a678d157a470869cc5f699d8e0052f4fba8eb6",
+      "size": 40031
     },
     {
-      "path": "run3/source-x11-pipe/ideck-x11vnc.log",
-      "sha256": "280b1fdc0157b259ba3a8c72fbc01754528f101371b148618888b867fe5f1a47",
-      "size": 3661
+      "path": "run4/steam-long/host.log",
+      "sha256": "e972dab2db76c0e30595430747bc9928b12321282f8eeb04090cd23cfa958d46",
+      "size": 59295
     },
     {
-      "path": "run3/source-x11-pipe/ideck-xvfb.log",
+      "path": "run4/steam-long/ideck-steam-x11.log",
+      "sha256": "27c76c21d652c10ba02ec0684e764045237e2495afbb4434efd3b83077c48ce7",
+      "size": 13173
+    },
+    {
+      "path": "run4/steam-long/ideck-x11vnc.log",
+      "sha256": "115b16ff7dd389e7086eda6fcdc902c6a95435f959d30eb1bf3d06439fbc9e87",
+      "size": 5636
+    },
+    {
+      "path": "run4/steam-long/ideck-xvfb.log",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "size": 0
     },
     {
-      "path": "run3/source-x11-pipe/result.json",
-      "sha256": "568cd3078353652c779ccb3eeac7076d5126b42ddb64bc3efaf93b4126d515c7",
-      "size": 248
+      "path": "run4/steam-long/result.json",
+      "sha256": "96b0fc5f06d378eab01018c54ae16acc03d3a88b458a8c763aaed95d595babfa",
+      "size": 277
+    },
+    {
+      "path": "run4/steam-packet-frame.png",
+      "sha256": "356fa00494fa0a1415086c0af78fa9cfc1b7cdebc31fa79ce813a08aa3b76073",
+      "size": 13711
+    },
+    {
+      "path": "run4/steam-packet/host.log",
+      "sha256": "64eafa43479ca331a58ddfe27d74154ea631445cad4ad066a168a9b1c5072921",
+      "size": 30903
+    },
+    {
+      "path": "run4/steam-packet/ideck-steam-x11.log",
+      "sha256": "95ccbf63b71bdbad5032fffafb380f9a49e731659fcb863e282da1b2d95cd13e",
+      "size": 6298
+    },
+    {
+      "path": "run4/steam-packet/ideck-x11vnc.log",
+      "sha256": "eb07dadc654e5e7fa5886e4348bba81473811fe4790f7c3e9fdefb42e5170e0b",
+      "size": 5571
+    },
+    {
+      "path": "run4/steam-packet/ideck-xvfb.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "run4/steam-packet/result.json",
+      "sha256": "b29d4bd5d10dfcdf47e49e074792e77c41e18678debe8624138534c694816dd3",
+      "size": 272
+    },
+    {
+      "path": "xcode/Build/Products/Debug-iphoneos/LinuxLab.app/LinuxLab",
+      "sha256": "6c6ce8e3570b99d7bc6ba40b21db8241fed86dfc5da8bbecdff8150fda2a7450",
+      "size": 1762536
+    },
+    {
+      "path": "xcode/Build/Products/Debug-iphoneos/LinuxLab.app/packet-probe.elf",
+      "sha256": "1cd2038165745ed9a04113ccd7d9a30e9373b415bdff0efc81ad55345ca0e276",
+      "size": 2912
     }
   ],
   "experiment_source_files": [
     {
       "path": "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj",
-      "sha256": "a09c373bc7c9597bec956cf04b8dadd10be4f5fe259cd1ee9ceb005f148dfc62",
-      "size": 12120
+      "sha256": "5c7ae398091b5f53cf30ad37b0befd2fc6915eda1a02d1b3aeb6556f0fdc0971",
+      "size": 12558
     },
     {
       "path": "experiments/linux-steam/LinuxLab.xcodeproj/project.xcworkspace/xcuserdata/kuschqin.xcuserdatad/UserInterfaceState.xcuserstate",
-      "sha256": "68c9c5331dd55af64d92d1e73a67538499a6224c46afdd8f5294b78ec3eee869",
+      "sha256": "5dea533f74d4e1c978a854f29fd48c59d78a0dd1254568d53060db2d8f5a78d6",
       "size": 8725
     },
     {
@@ -332,8 +400,8 @@
     },
     {
       "path": "experiments/linux-steam/README.md",
-      "sha256": "f6ca48f76f0134b7779a5b5b97671bfeb7b2784b96d400ad4764df16fbdd87bb",
-      "size": 13265
+      "sha256": "8594b27030b682ebf12aaf7b6dda768cbb15de4e71c1c6aad7f20a421adf3525",
+      "size": 15297
     },
     {
       "path": "experiments/linux-steam/app/Info.plist",
@@ -376,9 +444,14 @@
       "size": 791
     },
     {
+      "path": "experiments/linux-steam/app/PacketPipe.c",
+      "sha256": "e25934ea229b4c1b00681fd836d4e7a151061780c9f852b159dd9cc5372d27a4",
+      "size": 13326
+    },
+    {
       "path": "experiments/linux-steam/app/main.m",
-      "sha256": "e4eacf2785edbd94228b76840322c4d1ea380394c009c94e9484236c7b9a8e06",
-      "size": 4862
+      "sha256": "ab72bf2eec81c2d95a98057ec82da1b6ca5e1a14680cb0ea8247cf78048a2a19",
+      "size": 5344
     },
     {
       "path": "experiments/linux-steam/compatibilitytool.vdf",
@@ -411,9 +484,14 @@
       "size": 2142
     },
     {
+      "path": "experiments/linux-steam/guest/packet-pipe-integration.c",
+      "sha256": "fc97ce2821eba91646a20d4b4d509d1ad9791bd0019dd3f525c8274204063cc5",
+      "size": 8264
+    },
+    {
       "path": "experiments/linux-steam/guest/packet-pipe-probe.c",
-      "sha256": "1f8dc5c347d5fe4578296ba02df6617fd72f653eab9e5c64d682580bfe156b05",
-      "size": 2625
+      "sha256": "b02eb7173d7336d731d13fbd02c5744086323cc2648baf20f011ce23e04690f1",
+      "size": 3177
     },
     {
       "path": "experiments/linux-steam/guest/probe.c",
@@ -422,8 +500,8 @@
     },
     {
       "path": "experiments/linux-steam/guest/x11-control.sh",
-      "sha256": "421a335f824e39ff7f736aac6f52bbff58388c48a7bec1b71fa265244681e52f",
-      "size": 1425
+      "sha256": "db875bbaeca504c0f760739373b394564c49d17caff72bd8c60b5a4179f64c69",
+      "size": 1561
     },
     {
       "path": "experiments/linux-steam/patches/linuxrunner-dirfd.patch",
@@ -457,8 +535,8 @@
     },
     {
       "path": "experiments/linux-steam/tests/test_x11_control.py",
-      "sha256": "b769017955983ff0fd378c5b9f77c1a7f87993a19c739da285d29a4801839606",
-      "size": 2548
+      "sha256": "deefc76bda9402e724bed0484584a8b18a43957bf91fdb70b0cbddb60e199fa3",
+      "size": 2929
     },
     {
       "path": "experiments/linux-steam/toolmanifest.vdf",
@@ -467,13 +545,13 @@
     },
     {
       "path": "experiments/linux-steam/tools/build-lab.sh",
-      "sha256": "2ea055c474ec8bdd595473c03aae6f5bdee53ddcf7587fa76045f2c9bc6c6174",
-      "size": 2613
+      "sha256": "38bb2eb972bb1cf914036e2a6aaa8e0b3349d1de96a8f65147b0ff655a3d776b",
+      "size": 3307
     },
     {
       "path": "experiments/linux-steam/tools/build-pipe-observer.py",
-      "sha256": "eb3e31edbdb041e3ed16c17b47d891e7669ad235575cfaba69e557bb86ec49ef",
-      "size": 2706
+      "sha256": "7a2ac655ffea45fe4d100a13adb8260d5bf86f4743fdd940ab4b1be58426e3b0",
+      "size": 4960
     },
     {
       "path": "experiments/linux-steam/tools/build-rootfs-tools.py",
@@ -512,8 +590,8 @@
     },
     {
       "path": "experiments/linux-steam/tools/run-x11-control.py",
-      "sha256": "624d2d47ee1484b236c1f9a6686a3c4a941d904cd2140ded3936ef3afeb84a51",
-      "size": 2987
+      "sha256": "412c8fb6314a7d8eadfaf872b633636bf40942669ed75a98a3b63835962bf08a",
+      "size": 3217
     },
     {
       "path": "experiments/linux-steam/tools/steam_packages.py",
@@ -524,22 +602,566 @@
       "path": "experiments/linux-steam/tools/test-host.sh",
       "sha256": "a9d2f3e18d84ef32e16e1ecbf09ebb9fd013ed088b81b12d7772a6d938824dcf",
       "size": 2682
+    },
+    {
+      "path": "experiments/linux-steam/tools/test-packet-pipes.sh",
+      "sha256": "a8d4695ffcaa8a37000922a8bd2d9dc0890e63a669d5772d445dcc6fdaee9d84",
+      "size": 2488
     }
   ],
-  "unverified": [
-    "Air ELF",
-    "Air prepared root and network",
-    "Air actual Steam UI/login/Library/BPM",
-    "host CEF/login/Library",
-    "Steam compatibility discovery",
-    "licensed Madeira game launch",
-    "game return",
-    "controller/touch",
-    "stability/performance",
-    "JIT coexistence",
-    "complete runtime shutdown"
+  "not_verified": [
+    "physical Air ELF/packet/rootfs/display",
+    "interactive Steam login/Library/BPM",
+    "Bluetooth/controller/touch",
+    "Steam-discovered compatibility tool",
+    "licensed Madeira launch",
+    "game return/repeated stability",
+    "runtime/JIT coexistence and complete shutdown",
+    "iPad performance"
   ],
   "previous_runs": [
+    {
+      "schema_version": 3,
+      "latest_run": "run3",
+      "recorded_at_utc": "2026-11-08T06:32:49.211864+00:00",
+      "origin": "https://github.com/kuscholar/iDeck.git",
+      "branch": "experiment/linux-steam-madeira-ipad",
+      "baseline": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+      "baseline_submodules": {
+        "FEX": "f59cab95659e8add0c88f0c76ec1cf483c536dbf",
+        "dxmt": "128b297c6e9a00014408dc68b4c2c2373b5813de",
+        "madeira-dock": "72558e416a390f3669457930f09a389e54f49556",
+        "wine": "9129e9684daaeae70da9435e7c6060e59392634e"
+      },
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
+      "previous_source_checkpoint": "b0989ee820fa37a1f9e311940d72eec9523f396e",
+      "source_checkpoint": "93ea5138d58bd6e84a2267b210f6dd7d541bb623",
+      "target": {
+        "model": "iPad Air 4",
+        "product": "iPad13,1",
+        "os": "27.2 (24B119)",
+        "paired": true,
+        "developer_mode": true,
+        "last_metadata_connectivity": "localNetwork; not a future availability claim"
+      },
+      "phase": "Phase1 host embedding and real X11; Phase2 host genuine Steam startup blocked; physical Air execution trust-blocked",
+      "device": {
+        "selected": "Air4 iPad13,1 iPadOS27.2",
+        "discovery": "paired available via CLI",
+        "lock_state": "passcodeRequired=false; unlockedSinceBoot=true",
+        "devicehub_executor": "unavailable symlinked writable root initialization; no configuration or security change",
+        "actual_capture": "devicectl screenshot shows Untrusted Developer",
+        "single_launch": "CoreDevice10002",
+        "local_signature": "deep strict passes",
+        "last_probe_copy": "missing file CoreDevice7000",
+        "user_trust_reply": "pending",
+        "new_install": false,
+        "device_ELF_or_UI_success": false,
+        "Mac_unlock_requested": false
+      },
+      "lab3": {
+        "mode": "explicit linux-distro-diagnostics",
+        "root": "own Application Support/iDeckLinuxLab/DebianRootFS fakefs",
+        "behavior": "fixed non-authenticating control only; no arbitrary UI commands",
+        "source_implementation": true,
+        "host_adapter": "6PASS, guestwait0, repeatEBUSY-16",
+        "host_regression": "16PASS, ASan+UBSan protocol, packages6PASS",
+        "unsigned_ios_arm64_build": "passed",
+        "final_macho_markers": "v3 dirfd and explicit distro mode verified",
+        "signed_or_installed": false,
+        "JIT_or_Madeira_or_iOS_Steam_display": false
+      },
+      "host_client": {
+        "official_ELF_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+        "version": "1792618285",
+        "updater": "naturally completes update, exit42 in268.075s; official steam.sh restart contract",
+        "post_update": "steamui.so failed missing libGL; ldd identifies direct GTK/GLib/etc dependencies",
+        "dependency_install": "normal signed Debian guest apt, no bypass/host changes",
+        "VGUI": "ldd missing libopenal; installation lets startup advance",
+        "GLX": "disabled-GLX session fatal glXChooseVisual; enabled GLX advances beyond it",
+        "display_transport": "real Xvfb/VNC1280x800, authenticated loopback; captured genuine updater verification window",
+        "login_Library_or_BPM": false,
+        "performance_claim": "host observer durations only, not iPad measurements"
+      },
+      "latest_discriminating_experiment": {
+        "observed": "Steam controllerxinput fatal on negative pipe descriptors",
+        "hypothesis": "missing Linux pipe flag/contract; no resource or CPU root-cause assumption",
+        "method": "separate trace-only host archive/binary, first64 flags/status/guestpid; syscall behavior unchanged",
+        "actual": "Steam guestpid11 pipe2 flags0x90000 returns-22; ordinary and CLOEXEC calls succeed",
+        "interpretation": "ARM64 O_DIRECT=1<<16; packet+CLOEXEC flag rejected in pinned pipe.c",
+        "primary_references": [
+          "https://github.com/torvalds/linux/blob/master/arch/arm64/include/uapi/asm/fcntl.h",
+          "https://man7.org/linux/man-pages/man2/pipe.2.html"
+        ],
+        "isolated_reproducer": "ARM64/Werror packet-pipe-probe: streamPASS, Steam packet flags-22, packetsemanticsBLOCKED, guestexit1",
+        "reproducer_is_passing_compatibility": false,
+        "minimal_behavior_fix": "none; no flag dropping/assertion suppression",
+        "regression": "ordinary16 controls/protocol/packages remain passing; source observer boundary tests4PASS; actual RFB capture passes",
+        "next": "implement/test actual packet behavior incl boundary truncation, fork/dup, poll/EOF/cancellation and fcntl before retesting Steam"
+      },
+      "recurrence": {
+        "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
+        "label": "com.kusch.ideck-linux-steam-ipad-305m",
+        "configured": true,
+        "interval_seconds": 18300,
+        "interval_minutes": 305,
+        "manual_dispatch_test": "exit0, queued; resume deferred active writer",
+        "unattended_research_turn_observed": false,
+        "goal": "repeated stable real Linux Steam UI/Library/BPM/input + licensed Madeira game launch/return on selected Air4",
+        "sleep_may_delay": true,
+        "stop": "agent verifies real evidence then unloads only this job, or user cancels",
+        "plist_sha256": "c5318c2cea63c43530df7022e185349c28c947590dbd13c8183ffa5482dd3d8d"
+      },
+      "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
+      "private_artifacts": [
+        {
+          "path": "run3/launch-lab1.json",
+          "sha256": "23ad7777264d37771b66019c9e713d1a01ae1ecb18ebfee2f5f579371b65dfae",
+          "size": 2285
+        },
+        {
+          "path": "run3/air-current.png",
+          "sha256": "ad83bcbc844b82ede3e0ed634faae1f2f272ba7d2cc5be10c1ec2e47ff013636",
+          "size": 11119635
+        },
+        {
+          "path": "run3/air-probe-check.log",
+          "sha256": "e91479e45cdb2cca008bbf47e2f1eec16f7ea74f155d3ff481341ffdbc3482d6",
+          "size": 152
+        },
+        {
+          "path": "run3/distro-embedding-final.log",
+          "sha256": "07a37e33689e3412d24e0e9dddcfcf4eb88561d76469f8038cf281d3b71e3858",
+          "size": 68
+        },
+        {
+          "path": "run3/distro-embedding-result.json",
+          "sha256": "e66609f57a0e9a4091701817187732a6f411cb845af1f4a6167110e3dd8c27bd",
+          "size": 454
+        },
+        {
+          "path": "run3/host-regressions.log",
+          "sha256": "190919125a1a9153fcd5696c14ce643f73487f6e8bb308b91140800b1705109b",
+          "size": 978
+        },
+        {
+          "path": "run3/ios-build3-final.log",
+          "sha256": "cd306cd7c3a81247359d048e9f54456843af392157c7d3f2dfb8182e5bb30fba",
+          "size": 20100
+        },
+        {
+          "path": "run3/steam-updater.log",
+          "sha256": "b69dd1ce7c52b00d8143a4789381db448b865cdcc7d30c6064ddb772f6802df9",
+          "size": 29603
+        },
+        {
+          "path": "run3/steam-updater.json",
+          "sha256": "9d6f1d8be6069f380c10075c1eb4e8d9f5c716c802512cc20b90ea4a44c3f5e6",
+          "size": 145
+        },
+        {
+          "path": "run3/steam-post-update.log",
+          "sha256": "03878a7dbf2a4c9b965fda21d012befa815b314199f14754aaaa42744f1ef014",
+          "size": 4339
+        },
+        {
+          "path": "run3/steam-post-update.json",
+          "sha256": "b966e001709de4ec9bfb22739434ad624ee8ee77ace2a106495015d8c04affca",
+          "size": 143
+        },
+        {
+          "path": "run3/apt-update.json",
+          "sha256": "87ed07882871e37bc83294fd7573d4919fda5a0a85d5115181813500aee6e0b8",
+          "size": 143
+        },
+        {
+          "path": "run3/apt-display-install.json",
+          "sha256": "b1a82d615fe8af0a56db10f76c38fccf7accfaa5b7a6259a32101a179fc3e0dc",
+          "size": 143
+        },
+        {
+          "path": "run3/apt-steamui-install.json",
+          "sha256": "71196755f8174315e0effc31c7e7e5c26e9920616031db89969d08235300acba",
+          "size": 143
+        },
+        {
+          "path": "run3/apt-openal-install.json",
+          "sha256": "b431587106d1651bf349a574f74b5b98704a76ac13e5f9ef86a263fd2845df94",
+          "size": 142
+        },
+        {
+          "path": "run3/apt-mesa-install.json",
+          "sha256": "6fc3cb4e13ba8808f8b4276b9d088082ce44f1cfdad2c032fd2596418e27a35e",
+          "size": 142
+        },
+        {
+          "path": "run3/steamui-ldd.log",
+          "sha256": "6e94e479ee30ab1eca9051fb0960701a5a3b79118093847e029f4ab09dff7bc4",
+          "size": 5057
+        },
+        {
+          "path": "run3/vgui2-ldd-packages.log",
+          "sha256": "4e3fddcbc62a505d81f3a7633707e69efcce760b581de75ddfc6aa0b8697c456",
+          "size": 15007
+        },
+        {
+          "path": "run3/rfb-capture.log",
+          "sha256": "094a03992f8adbbf17152f6aa33f441fe5e0855d367a3a4c933435964cfdd967",
+          "size": 79
+        },
+        {
+          "path": "run3/x11-frame.png",
+          "sha256": "a2db7a54e03a5c5e3581bcad84e9e104028642640da0969b98a97403638aafba",
+          "size": 7090
+        },
+        {
+          "path": "run3/steam-x11-frame.png",
+          "sha256": "8dc73a24289c1a03a145159669407ce44752d7a339b9900bbfce0bc9cbd2d820",
+          "size": 15418
+        },
+        {
+          "path": "run3/x11-control.json",
+          "sha256": "bfea978f135d6044fd6e17388989785e05894926674c0bcce3e2327f8ad520df",
+          "size": 170
+        },
+        {
+          "path": "run3/steam-x11-control.json",
+          "sha256": "41f4160e2b4f16e4604bbca25a87c2ee42db0c5b6474d10d8032b22885caaac2",
+          "size": 170
+        },
+        {
+          "path": "run3/observer-tests.log",
+          "sha256": "2883683acc18ad75a5bc59a202565af534679f56218db3d1a66368e72cb40c45",
+          "size": 102
+        },
+        {
+          "path": "run3/pipe-observer-build.log",
+          "sha256": "d2f478954b665daceede422d1539cf49a66283e73b4fe36d31998f10ac7e7bee",
+          "size": 133
+        },
+        {
+          "path": "run3/pipe-observer/ish-pipe-observer",
+          "sha256": "fc16312cd14470f2e9f8c7a43f37597b81ac7dd9c41230ef6810169036b41a22",
+          "size": 1806400
+        },
+        {
+          "path": "run3/pipe-root/packet-pipe-probe",
+          "sha256": "3e8c3940f14ea8952b1e30fdc80046f098a35c4fb1a14e1e9cfd7dc8de4f2a1a",
+          "size": 2512
+        },
+        {
+          "path": "run3/packet-pipe-probe.log",
+          "sha256": "4dd1c0641db9abb6502bc9fc1f425b5565a11b09b1f3e87c70ae5f4a92babe46",
+          "size": 927
+        },
+        {
+          "path": "run3/xcode/Build/Products/Debug-iphoneos/LinuxLab.app/LinuxLab",
+          "sha256": "8e718b242622fb6894133b56cd49627d6a381cd709bfae57a69a77fd7329a6c4",
+          "size": 1742040
+        },
+        {
+          "path": "run3/source-x11-steam/host.log",
+          "sha256": "0454d830fe953cc8d5dd00979dc7638e4b2670ff78c348aca9a31b9b7aa5cc87",
+          "size": 7766
+        },
+        {
+          "path": "run3/source-x11-steam/ideck-steam-x11.log",
+          "sha256": "ebc8480b375782e7dd725001b2377cb5944f6be752ac7237c87ed4cb68ea64b6",
+          "size": 4644
+        },
+        {
+          "path": "run3/source-x11-steam/ideck-x11vnc.log",
+          "sha256": "a381f27d06d30bee7d23d5f3429904320b0a5d71f45e37ea50013035907b069c",
+          "size": 3660
+        },
+        {
+          "path": "run3/source-x11-steam/ideck-xvfb.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        {
+          "path": "run3/source-x11-steam/result.json",
+          "sha256": "238890d0f0c7353cb82db3e22071840e3f453a9ed6043787d5498c289f762280",
+          "size": 248
+        },
+        {
+          "path": "run3/source-x11-glx/host.log",
+          "sha256": "d1053b9fd668dd9e1e72732ffad101415085bbab162672717f42aeb48129e816",
+          "size": 9784
+        },
+        {
+          "path": "run3/source-x11-glx/ideck-steam-x11.log",
+          "sha256": "6536142ade74743198a836d04ea54b3081be88e3cabec85821614d126f4a8efd",
+          "size": 4842
+        },
+        {
+          "path": "run3/source-x11-glx/ideck-x11vnc.log",
+          "sha256": "4e89e46b7fcc5bd16ad9c429a9665418479a98c0977440dd7bf20e589a8e2e49",
+          "size": 3661
+        },
+        {
+          "path": "run3/source-x11-glx/ideck-xvfb.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        {
+          "path": "run3/source-x11-glx/result.json",
+          "sha256": "2c2fc9766caacdf747e71dc81184d9ff880f271d95f556676f1aa941a61e8f5d",
+          "size": 248
+        },
+        {
+          "path": "run3/source-x11-pipe/host.log",
+          "sha256": "7cb402751fe6038652a0fb689814be76fc99298e0b05968c13d8231ba22d481a",
+          "size": 9145
+        },
+        {
+          "path": "run3/source-x11-pipe/ideck-steam-x11.log",
+          "sha256": "9db8f834cbca903398288a08ce1b1b362b0a50b10ac97de2c6df02d8c7a28d88",
+          "size": 4912
+        },
+        {
+          "path": "run3/source-x11-pipe/ideck-x11vnc.log",
+          "sha256": "280b1fdc0157b259ba3a8c72fbc01754528f101371b148618888b867fe5f1a47",
+          "size": 3661
+        },
+        {
+          "path": "run3/source-x11-pipe/ideck-xvfb.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        {
+          "path": "run3/source-x11-pipe/result.json",
+          "sha256": "568cd3078353652c779ccb3eeac7076d5126b42ddb64bc3efaf93b4126d515c7",
+          "size": 248
+        }
+      ],
+      "experiment_source_files": [
+        {
+          "path": "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj",
+          "sha256": "a09c373bc7c9597bec956cf04b8dadd10be4f5fe259cd1ee9ceb005f148dfc62",
+          "size": 12120
+        },
+        {
+          "path": "experiments/linux-steam/LinuxLab.xcodeproj/project.xcworkspace/xcuserdata/kuschqin.xcuserdatad/UserInterfaceState.xcuserstate",
+          "sha256": "68c9c5331dd55af64d92d1e73a67538499a6224c46afdd8f5294b78ec3eee869",
+          "size": 8725
+        },
+        {
+          "path": "experiments/linux-steam/LinuxLab.xcodeproj/xcshareddata/xcschemes/LinuxLab.xcscheme",
+          "sha256": "8f07ee2e70bed01af0c32d9b76775ed329757e35f090b9c648c5088f3fbd6736",
+          "size": 1224
+        },
+        {
+          "path": "experiments/linux-steam/README.md",
+          "sha256": "f6ca48f76f0134b7779a5b5b97671bfeb7b2784b96d400ad4764df16fbdd87bb",
+          "size": 13265
+        },
+        {
+          "path": "experiments/linux-steam/app/Info.plist",
+          "sha256": "8a4c358b78564baf816ae8c8729d1e584e600b8f67bdd444205d4ad4abc3cfb9",
+          "size": 901
+        },
+        {
+          "path": "experiments/linux-steam/app/LabBridge.c",
+          "sha256": "7969ee7c341432920642dfdfb7913afe617a2e3efb1e8d8ff9fa2e901643462d",
+          "size": 2431
+        },
+        {
+          "path": "experiments/linux-steam/app/LabDeviceFS.c",
+          "sha256": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "size": 2379
+        },
+        {
+          "path": "experiments/linux-steam/app/LabDeviceFS.h",
+          "sha256": "f1591b2b0a66f7195645fab84c0fe6cf7e17ff02bcdc964e1e0fc8b053bc2c9b",
+          "size": 196
+        },
+        {
+          "path": "experiments/linux-steam/app/LaunchProtocol.c",
+          "sha256": "5d5130906c16b10b0eb4326bb04108108c657d32b2a751292fa0e4fd8983c29e",
+          "size": 2614
+        },
+        {
+          "path": "experiments/linux-steam/app/LaunchProtocol.h",
+          "sha256": "4e559d8dfafe192f4bf5c37906ac57db99cf63d3da5e07af3150d65fb680503d",
+          "size": 1085
+        },
+        {
+          "path": "experiments/linux-steam/app/LinuxLabRuntime.c",
+          "sha256": "1e090c968b9037ae32307b5c067d4bc471856c0164d70687af6a2bbbc2d739a3",
+          "size": 7663
+        },
+        {
+          "path": "experiments/linux-steam/app/LinuxLabRuntime.h",
+          "sha256": "170a08d448b6981c9dbfd906569339d5d8fa869e0fea8861ff2065af246884d5",
+          "size": 791
+        },
+        {
+          "path": "experiments/linux-steam/app/main.m",
+          "sha256": "e4eacf2785edbd94228b76840322c4d1ea380394c009c94e9484236c7b9a8e06",
+          "size": 4862
+        },
+        {
+          "path": "experiments/linux-steam/compatibilitytool.vdf",
+          "sha256": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+          "size": 269
+        },
+        {
+          "path": "experiments/linux-steam/guest/clone.S",
+          "sha256": "b239f32af1e221faec5bb6ad0709a6a2edbaad3a2e4c07b57225c216240508b8",
+          "size": 371
+        },
+        {
+          "path": "experiments/linux-steam/guest/compat-start.S",
+          "sha256": "a9ae83caf55a7cf7da485912430622f784fcfa4dfdf9ec1b59e41e63abc295bf",
+          "size": 212
+        },
+        {
+          "path": "experiments/linux-steam/guest/compatibility.c",
+          "sha256": "f2128b59dd1d8d2382d2297ccd0f7dd178e22a0161be5a554090555e3ce56ea2",
+          "size": 3036
+        },
+        {
+          "path": "experiments/linux-steam/guest/glibc-start.S",
+          "sha256": "8aa4011f978a02769f5f647b99783bfabe6df0dd80415060eb88bf27bd9f5b10",
+          "size": 347
+        },
+        {
+          "path": "experiments/linux-steam/guest/network-probe.c",
+          "sha256": "9e1883469bf42452c5ece3f13d12e60ef4958321e22d44335e5a54eb432b60c1",
+          "size": 2142
+        },
+        {
+          "path": "experiments/linux-steam/guest/packet-pipe-probe.c",
+          "sha256": "1f8dc5c347d5fe4578296ba02df6617fd72f653eab9e5c64d682580bfe156b05",
+          "size": 2625
+        },
+        {
+          "path": "experiments/linux-steam/guest/probe.c",
+          "sha256": "89608748cbcc84b87120f0af3be11051c4762f1f01eccdae262d6ec0eacbd170",
+          "size": 5565
+        },
+        {
+          "path": "experiments/linux-steam/guest/x11-control.sh",
+          "sha256": "421a335f824e39ff7f736aac6f52bbff58388c48a7bec1b71fa265244681e52f",
+          "size": 1425
+        },
+        {
+          "path": "experiments/linux-steam/patches/linuxrunner-dirfd.patch",
+          "sha256": "03092b40a23c66858543dfe15749ae0d01d26645c8900f471ebda55777891f1a",
+          "size": 735
+        },
+        {
+          "path": "experiments/linux-steam/patches/linuxrunner-fakefs-case-alias.patch",
+          "sha256": "aca5b539d0793e8a8c40cccdc783a3ce111d79766d35186ff767c79ed5548f81",
+          "size": 1380
+        },
+        {
+          "path": "experiments/linux-steam/tests/protocol-test.c",
+          "sha256": "666186bd8c8e0db84ceb37527e7b68d01f9a83177c31a8f3791eee97cd32807c",
+          "size": 2316
+        },
+        {
+          "path": "experiments/linux-steam/tests/test_overlay.py",
+          "sha256": "32fa2070b9c004c7da0075f3e23132ca82a533e6128dbae090c8604bdac5c67e",
+          "size": 1579
+        },
+        {
+          "path": "experiments/linux-steam/tests/test_packages.py",
+          "sha256": "b9db352b5689a20e13d9afa001236088c2085aa867430f83c81491fb2fd4764d",
+          "size": 4982
+        },
+        {
+          "path": "experiments/linux-steam/tests/test_schedule.py",
+          "sha256": "346ea374b25bb450f81f242dc5b50a0fc1b0e062c66cf5f9ab27171ef158241f",
+          "size": 1599
+        },
+        {
+          "path": "experiments/linux-steam/tests/test_x11_control.py",
+          "sha256": "b769017955983ff0fd378c5b9f77c1a7f87993a19c739da285d29a4801839606",
+          "size": 2548
+        },
+        {
+          "path": "experiments/linux-steam/toolmanifest.vdf",
+          "sha256": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8",
+          "size": 138
+        },
+        {
+          "path": "experiments/linux-steam/tools/build-lab.sh",
+          "sha256": "2ea055c474ec8bdd595473c03aae6f5bdee53ddcf7587fa76045f2c9bc6c6174",
+          "size": 2613
+        },
+        {
+          "path": "experiments/linux-steam/tools/build-pipe-observer.py",
+          "sha256": "eb3e31edbdb041e3ed16c17b47d891e7669ad235575cfaba69e557bb86ec49ef",
+          "size": 2706
+        },
+        {
+          "path": "experiments/linux-steam/tools/build-rootfs-tools.py",
+          "sha256": "3674930a1a3a4849cc91575a9d123ced13bb6c04c748b53b53a00316e1129a5a",
+          "size": 1691
+        },
+        {
+          "path": "experiments/linux-steam/tools/configure-schedule.py",
+          "sha256": "e497f7be1243ac2c1c58a36ab77fb4c96e6fb6d1cbc66f6c2758d0550a615d5c",
+          "size": 1889
+        },
+        {
+          "path": "experiments/linux-steam/tools/host-embed.c",
+          "sha256": "97b4c7d5cd16f093a1b9ab0fde3154908c76b982fc20d5592e379cc2122a3abd",
+          "size": 957
+        },
+        {
+          "path": "experiments/linux-steam/tools/make-steam-overlay.py",
+          "sha256": "12bc3c6210d7c0cd0d7c7086d50f2300aa81aecceea516a8f03330e59900e4d9",
+          "size": 4088
+        },
+        {
+          "path": "experiments/linux-steam/tools/overlay-dirfd.py",
+          "sha256": "d776f7abd778d4f2c316713956521d38c993a7d413120fd78e52185dfea8135c",
+          "size": 1969
+        },
+        {
+          "path": "experiments/linux-steam/tools/prepare-loader-control.py",
+          "sha256": "e0946eb7698becccf9aecb66cc10107ad612f80886e5a0b29ac9ec55dc15acd1",
+          "size": 4276
+        },
+        {
+          "path": "experiments/linux-steam/tools/rfb-capture.m",
+          "sha256": "9dfb42002ebb7a9087eb2b04f231a4bf5c560612aa1c6ca23a829e3dd7f406ca",
+          "size": 2808
+        },
+        {
+          "path": "experiments/linux-steam/tools/run-x11-control.py",
+          "sha256": "624d2d47ee1484b236c1f9a6686a3c4a941d904cd2140ded3936ef3afeb84a51",
+          "size": 2987
+        },
+        {
+          "path": "experiments/linux-steam/tools/steam_packages.py",
+          "sha256": "3884a330b219e424e126c77a786918180249f2759257ef2ead49d2791ffdc03c",
+          "size": 8482
+        },
+        {
+          "path": "experiments/linux-steam/tools/test-host.sh",
+          "sha256": "a9d2f3e18d84ef32e16e1ecbf09ebb9fd013ed088b81b12d7772a6d938824dcf",
+          "size": 2682
+        }
+      ],
+      "unverified": [
+        "Air ELF",
+        "Air prepared root and network",
+        "Air actual Steam UI/login/Library/BPM",
+        "host CEF/login/Library",
+        "Steam compatibility discovery",
+        "licensed Madeira game launch",
+        "game return",
+        "controller/touch",
+        "stability/performance",
+        "JIT coexistence",
+        "complete runtime shutdown"
+      ]
+    },
     {
       "schema_version": 2,
       "latest_run": "run2",
