@@ -1,4 +1,4 @@
-# Run7 source/build progress; preserve active Air Lab13 login
+# Run7 source/build progress (09d2347); preserve active Air Lab13 login
 
 FIRST respect the human auth boundary below. Fresh CoreDevice confirms SAME
 Lab13 process alive; no device restart/install/input or account inspection this

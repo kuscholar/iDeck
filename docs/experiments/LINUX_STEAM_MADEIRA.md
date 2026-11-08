@@ -1053,3 +1053,6 @@ verify Library/BPM and Steam compatibility-tool discovery; separately measure fu
 native cleanup/VM/signal ownership before actual Madeira startup and return.
 No combined Wine/MSC binary was distributed. No game/return/repeat-stability
 success or scheduler-unload sentinel is justified.
+
+Run7 implementation checkpoint: `09d23478c611b6193f4e12d691d63c2d89e00bbd` (signed off).
+Installed Air Lab13 remains run6 code `d865032`; the new Lab14 is unsigned/build-only.

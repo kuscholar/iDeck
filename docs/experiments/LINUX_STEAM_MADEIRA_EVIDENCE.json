@@ -13,10 +13,10 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": "run7",
-  "recorded_at_utc": "2026-11-08T19:23:25.452453+00:00",
-  "previous_source_checkpoint": "fef1bb73214e223f4e5d641422236f29198ede4c",
-  "source_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38",
-  "source_parent": "d9142c3768dd0efd564f68763e9cd04024ac7ec7",
+  "recorded_at_utc": "2026-11-08T19:23:55.706804+00:00",
+  "previous_source_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38",
+  "source_checkpoint": "09d23478c611b6193f4e12d691d63c2d89e00bbd",
+  "source_parent": "a894282f73865786a1d0e2bec9f7feb1a2ab5750",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -2511,6 +2511,8 @@
       "experiments/linux-steam/tools/build-lab.sh": "63225fea85526946dd3c8aefb96347faf9f9fe37de66bbeee11982393360c9d5",
       "experiments/linux-steam/tools/session-lifecycle-control.c": "7f93fddfe3c94a640df870e373cd4e70a7e47c671478a5ccab8cea86ae36e582",
       "experiments/linux-steam/tools/test-session-lifecycle.sh": "376cf9cb1deae60915d7334628e1ad1187896b730565c6c14ef515f26a194bc0"
-    }
+    },
+    "implementation_checkpoint": "09d23478c611b6193f4e12d691d63c2d89e00bbd",
+    "installed_device_source": "d8650325a90534452317e0b13d0c40a41e626e38 (Lab13), preserved"
   }
 }
