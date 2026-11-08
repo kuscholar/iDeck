@@ -10,5 +10,9 @@ int ideck_linux_lab_compat_probe(const char *root_path);
 /* Fixed, non-authenticating Debian/glibc control in a prepared private fakefs.
  * root_path contains data/ and meta.db; never a production prefix. */
 int ideck_linux_lab_distro_probe(const char *root_path);
+/* Explicit frontend build only; one lifetime, no reusable shutdown guarantee. */
+int ideck_linux_lab_steam_frontend(const char *root_path);
+/* Explicit fixed, signed-Debian dependency repair in this Lab root only. */
+int ideck_linux_lab_dependencies(const char *root_path);
 const char *ideck_linux_lab_stage(void);
 #endif

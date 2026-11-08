@@ -4,8 +4,9 @@ Private-development experiment, not an alternative product release. See
 [investigation/status](../../docs/experiments/LINUX_STEAM_MADEIRA.md).
 The ordinary Madeira target is untouched. This separate UIKit target links the
 pinned LinuxRunner interpreter, a minimal native embedding adapter and a bounded
-diagnostic compatibility bridge. It currently has **no Steam display frontend**
-and **does not link or start Madeira**.
+diagnostic compatibility bridge. An explicit experimental desktop frontend links the pinned RFB/Metal display,
+root importer and input adapter. Physical Air TCP execution is verified; interactive
+Steam login/Library is not yet verified. It **does not link or start Madeira**.
 
 ## Build and controls
 
@@ -311,3 +312,41 @@ After authorized isolated signing/device trust, `linux-tcp-diagnostics` runs the
 embedded ELF in its separate TCPRootFS and writes `last-tcp-probe.txt`. Lab5's final
 Mach-O and embedded ELF were checked; it has NOT been installed or executed on
 Air. No iOS Steam display/rootfs importer or Madeira game handoff exists yet.
+
+## Complete frontend experiment (explicit opt-in)
+
+Use a STOPPED, known unauthenticated private fakefs; never a working app's root
+or cached login. Export through `tools/export-clean-root.py`, retaining the JSON
+image receipt and SHA256. This exporter omits account/browser state and host
+bindings; it is not an account migration. Rootfs/Valve/package files stay private.
+
+```sh
+export LINUX_LAB_PACKET_PIPES=1 LINUX_LAB_TCP_VIEW=1 LINUX_LAB_STEAM_FRONTEND=1
+export LINUX_LAB_ROOTFS_SHA256=<sha256-of-your-verified-clean-image>
+# CMAKE, NINJA, MESON and LD_LLD must resolve to the prepared private tools.
+bash experiments/linux-steam/tools/build-lab.sh
+```
+
+After matching-profile signing of a disposable Lab copy, stage that exact image
+in its own app container as `Documents/LinuxLabInput/steam-rootfs.tar.gz` and
+launch with `linux-steam-desktop`. No production identifier or account cache
+fallback. The importer verifies the build pin, writes only an owned stage and
+preserves existing roots. Read `last-root-import.json` under the Lab's Application
+Support directory; import success alone is not Steam UI success. One runtime per
+native app lifetime; no reusable shutdown/game handoff guarantee. No JIT is needed
+for this interpreter target. Failed import requires an explicit fresh native Lab
+lifetime; never retry over active runtime state automatically.
+
+`tests/archive-header-test.c` compares a fixed UTF-8 PAX fixture, global-only
+BINARY header and per-entry BINARY header. Link against the pinned no-iconv
+libarchive (not system libarchive) and run with ASan/UBSan in C locale. It checks
+the original warning plus exact filename bytes, payload and EOF preservation.
+The exporter uses the successful per-entry header; it never strips Unicode names. The iOS SDK requires the Scene manifest/delegate included
+in this Lab; building against SDK27 without it fails before Linux can run.
+
+`linux-steam-install-dependencies` is an explicit alternative mode in the frontend
+build. It uses normal signed apt metadata to install only pinned libnm0, writes
+`last-dependency-setup.json` plus private guest logs, and verifies steamclient.so
+ldd has no missing entries. It never accepts arbitrary shell commands and does
+not start Steam or access accounts. Restart only after completion to use
+`linux-steam-desktop` in a fresh native runtime lifetime. Conflicting modes refuse.

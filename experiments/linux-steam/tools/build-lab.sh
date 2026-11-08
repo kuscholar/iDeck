@@ -57,7 +57,18 @@ if [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]]; then
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$tcp_stage/runtime/"
     runtime="$tcp_stage/runtime"
 fi
+frontend_libs=""
+if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
+    [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]] || { echo 'Steam frontend requires explicit TCP view opt-in' >&2; exit 2; }
+    [[ ${LINUX_LAB_ROOTFS_SHA256:-} =~ ^[0-9a-f]{64}$ ]] || { echo 'A verified clean root installation hash is required' >&2; exit 2; }
+    bash "$repo/experiments/linux-steam/tools/build-ios-archive.sh"
+    archive="$LINUX_LAB_ARTIFACTS/ios-libarchive-v2"
+    frontend_libs="$archive/liblabrootfs.a $archive/libarchive/libarchive.a -lz"
+fi
 xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
     -derivedDataPath "$LINUX_LAB_ARTIFACTS/xcode" CODE_SIGNING_ALLOWED=NO \
-    LINUX_LAB_BUILD_DIR="$out" LINUX_LAB_RUNTIME_DIR="$runtime" build
+    LINUX_LAB_BUILD_DIR="$out" LINUX_LAB_RUNTIME_DIR="$runtime" \
+    LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
+    LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
+    LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

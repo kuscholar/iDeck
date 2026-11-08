@@ -1,14 +1,32 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception */
 #import <UIKit/UIKit.h>
 #import "LinuxLabRuntime.h"
+#import "LinuxSteamViewController.h"
 
 @interface LinuxLabDelegate : UIResponder <UIApplicationDelegate>
 @property(nonatomic, strong) UIWindow *window;
 @property(nonatomic, strong) UITextView *output;
+- (void)connectWindowScene:(UIWindowScene *)scene;
 @end
 @implementation LinuxLabDelegate
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)options {
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)options { return YES; }
+- (void)connectWindowScene:(UIWindowScene *)scene {
+    /* Keep the one Linux runtime/controller across scene reconnects. */
+    UIViewController *existing = self.window.rootViewController;
+    self.window = [[UIWindow alloc] initWithWindowScene:scene];
+    if (existing) { self.window.rootViewController=existing; [self.window makeKeyAndVisible]; return; }
+    if ([NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-desktop"] ||
+        [NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-install-dependencies"]) {
+        BOOL conflict=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-desktop"] &&
+            [NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-install-dependencies"];
+        for(NSString *argument in @[@"linux-distro-diagnostics",@"linux-packet-pipe-diagnostics",@"linux-tcp-diagnostics"])
+            if([NSProcessInfo.processInfo.arguments containsObject:argument])conflict=YES;
+        if(conflict) {
+            UIViewController *error=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
+            label.text=@"Select exactly one Linux Lab mode; no guest started.";label.numberOfLines=0;error.view=label;self.window.rootViewController=error;
+        } else self.window.rootViewController=[LinuxSteamViewController new];
+        [self.window makeKeyAndVisible];return;
+    }
     UIViewController *controller = [UIViewController new];
     controller.view.backgroundColor = UIColor.systemBackgroundColor;
     self.output = [UITextView new];
@@ -56,7 +74,15 @@
         [summary writeToURL:[lab URLByAppendingPathComponent:distro ? @"last-distro-probe.txt" : tcp ? @"last-tcp-probe.txt" : packet ? @"last-packet-probe.txt" : @"last-probe.txt"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
         dispatch_async(dispatch_get_main_queue(), ^{ self.output.text = summary; });
     });
-    return YES;
+ }
+@end
+
+@interface LinuxLabSceneDelegate : UIResponder <UIWindowSceneDelegate>
+@end
+@implementation LinuxLabSceneDelegate
+- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)options {
+    if ([scene isKindOfClass:UIWindowScene.class])
+        [(LinuxLabDelegate *)UIApplication.sharedApplication.delegate connectWindowScene:(UIWindowScene *)scene];
 }
 @end
 int main(int argc, char **argv) {

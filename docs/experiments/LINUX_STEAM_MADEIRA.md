@@ -1,9 +1,9 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status: Phase 1 controls implemented; isolated Lab installed on the selected Air,
-first launch blocked by device signature/entitlement/trust refusal. Host-only
-Debian+HTTPS controls pass. No device Linux ELF, Steam UI/login/Big Picture,
-licensed game handoff or stability success is claimed. See latest run below.
+Status: Phase 1 now has actual Air ARM64 ELF evidence: Lab8 TCP control
+completed status0 with17 PASS. Native Scene startup fixed. Full verified Linux
+image import and native X11/RFB/Metal desktop are now verified on Air; no interactive device Steam UI/login,
+Library/Big Picture or Madeira game/return/stability success yet. See run6.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -838,3 +838,138 @@ stability remain unimplemented/unverified. No GO assessment or success sentinel
 is justified yet; continue the experiment.
 
 Run5 implementation checkpoint: **fef1bb73214e223f4e5d641422236f29198ede4c** (signed off). Genuine host login/input and unsigned Lab5 are evidenced separately; no on-Air success or final GO.
+
+## Run 6 — physical Air execution and complete frontend integration
+
+Parent `9e1bc1a0bf317aaa7cc660ac2d53f25aa6dfba34`; remote main remains
+`2ac39beff91251d36f3ad6331d3f8402b3c10e18`. LinuxRunner and nested
+libarchive remain pristine at the pinned revisions in EVIDENCE.json. The
+verified external volume and all unrelated worktrees are preserved. Existing
+Air-authorized `.freshtest` development identity is reused only for this isolated
+Lab, with the same app container; production iDeck and Mac Allocator are untouched.
+Fresh Air details report iPad13,1 / iPadOS27.2(24B119). User explicitly completed
+developer trust. No Mac GUI/unlock, credential entry or security bypass was used.
+
+**Implementation.** Added a stopped-fakefs portable-image exporter, preserving
+Linux metadata/symlinks/hardlinks, refusing native-parent traversal and inconsistent
+hardlinks. It excludes runtime state, host bindings and Steam browser/account/cache
+locations. The source must still be known unauthenticated; guards do not prove
+absence of all secrets. Two missing non-executable PAM/pam manual symlink payloads
+are explicitly recorded/omitted; missing required files refuse export. The clean
+image is2008460373 bytes,27834 entries/4028749898 payload bytes, SHA256
+`07676e4c820a7cca7c9db46df80e681de6a294260e37273a9f1a8e0c479921ea`.
+It retains578 copyright files and is private, not committed/distributed.
+
+The native importer verifies the build-pinned SHA256 through an owned immutable
+stage, imports fakefs with the pinned BSD libarchive, restores native cwd, and
+publishes only a complete root. Existing roots require the same pin and remain
+writable for this app's own updates/login. Failed installs clean only their own
+stage, preserving the original image and existing roots. Actual host import,
+cwd restore, root reuse and wrong-pin preservation controls passed. This host
+import used system libarchive; it was not evidence for the iOS static dependency.
+
+Explicit `linux-steam-desktop` plus build feature flags adds genuine Xvfb/X11,
+authenticated app-local RFB into pinned LinuxRunner Metal display, absolute touch
+and native keyboard forwarding without native account fields/key logs. It starts
+Valve's original ARM64 Steam in desktop mode with remote CEF debugging disabled.
+RFB readiness checks the guest VNC PID's real TCP listener using genuine lsof,
+rather than kill0 or a stale file. No hardware controller or physical input success
+is claimed. Linux shutdown/reuse and Madeira integration remain incomplete.
+
+**Failure1: X11 native IPC.** The first host embedded clean-root test could not
+connect to X11. A direct test using pinned realfs_mknod proves FIFO creation
+changes native cwd. A relative socket prefix then returns ENOENT; an absolute
+prefix survives and transfers real data.8 checks pass. The native adapter now
+uses an absolute prefix and verifies same-inode /private/var→/var alias only if
+needed for Darwin's104-byte sockaddr_un limit; oversized paths fail closed.
+No kernel/FEX patch. A one-variable host retry advances beyond X11, then exits
+through Valve InternalAPI_Init failure. No login frame was captured from that
+clean embedded run. Exact-environment ldd separately reports unresolved
+ARM64 `libnm.so.0`; this is a dependency finding, not yet a proven sole cause.
+The generic Valve32-bit-dependency message does not identify the actual ARM64 ABI.
+
+**Failure2: native startup.** After trust, actual Lab6 PID2604 stops in UIKit
+`EvaluateRuntimeIssueForNoSceneLifecycleAdoption`, SIGTRAP on the main thread,
+before any Linux result. Lab8 adds UIApplicationSceneManifest plus UIWindowScene
+connection and retains the single controller/runtime across reconnects. Full
+build, final Scene symbol/pin, existing-profile signing and deep-strict checks
+pass. Actual Air Lab8 TCP control exits0 with17 PASS and visible real result UI.
+This is device execution; it does not prove Steam UI. Apple documents this SDK
+requirement at https://developer.apple.com/documentation/technotes/tn3187-migrating-to-the-uikit-scene-based-life-cycle .
+
+**Failure3: full image import.** Air Lab8 verifies the image but fails import.
+Lab9 adds categorical import type/code/source-line/cwd metadata. Actual result:
+archive error type0, code79/EFTYPE, copied tools/fakefs.c line251 (header iterator
+stops before EOF), cwd restored. A fixed tiny UTF-8 PAX fixture against the SAME
+pinned no-iconv libarchive reproduces ARCHIVE_WARN(-20)/79 in C/US-ASCII locale:
+`Pathname can't be converted from UTF-8 to current locale.` The system library
+control accepts it in both locales, explaining why the earlier host import was
+insufficient. With en_US.UTF-8 the pinned library succeeds. A proposed thread-scoped UTF-8 locale passes six host sanitizer wrapper checks,
+but actual Air Lab10 cannot create that locale (`utf8_locale_ready=false`), so no
+import is attempted. That implementation is rejected/removed rather than assuming
+macOS locale availability on iOS. The static dependency was not sanitizer-built.
+
+A second fixed archive discriminator preserves the already validated UTF-8 filename
+bytes using per-entry PAX `hdrcharset=BINARY`. Pinned no-iconv libarchive in the C
+locale accepts this entry and returns the exact byte path/payload/EOF; seven native
+ASan/UBSan wrapper checks pass. The same global PAX flag alone still fails and is
+explicitly tested. No charset warning is ignored and no names/content are dropped.
+The exporter now declares raw filename bytes per entry. A new private image is
+being generated from the hash-verified original image, changing only these PAX
+headers. The Air import remains pending until the new image's actual receipt.
+
+**Checks/limits.**24 Python regressions pass, including9 portable-image tests;
+8 real socket/cwd checks;7 archive-header wrapper checks; full iOS builds8/9/10 and strict
+signing pass. Raw image/packages/profiles/device logs/screenshots remain private,
+with selected hashes in EVIDENCE.json. No FEX/Valve/vendor/main edits, no game,
+authentication or full stable-success claim. Next build/deploy the byte-path image and read its import receipt and
+actual guest logs/display after the byte-preserving image, then isolate the real Steam dependency/startup failure.
+
+**Actual Air11 result.** The byte-path image SHA256
+`8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a`
+is2013920423 bytes,27834 entries with the same4028749898 payload bytes. It changes
+only per-entry PAX headers from the verified original. Lab11's actual current-pin
+receipt records `imported=true`, `cwd_restored=true`, error0. The genuine Linux
+Xvfb/x11vnc framebuffer appears through native RFB/Metal (black desktop/cursor).
+Actual Valve ARM64 Steam runs update/verification and accesses the official manifest,
+but XOpenDisplay fails even while VNC's earlier X connection works; no login success.
+
+**Failure4: C path ownership.** Native `fileSystemRepresentation` bytes were
+stored across the frontend autorelease pool, despite retaining the NSString.
+A native host ASan fixture reproduces heap-use-after-free on the same lifetime,
+exitSIGABRT. Apple explicitly requires copying these bytes outside their memory
+context. The adapter now malloc-copies the validated absolute prefix for the
+single native runtime lifetime. No unsafe all-descendant free/teardown is claimed.
+Nine real Darwin socket/cwd/owned-prefix wrapper checks pass with ASan/UBSan.
+Actual Lab12 advances beyond XOpenDisplay to the same InternalAPI_Init failure
+as the clean host root. This supports the X11 ownership repair, not UI success.
+Final signed Mach-O contains the actual owned-prefix helper symbol.
+
+**Next dependency discriminator.** Exact ARM64 steamclient.so ldd under the
+production environment reports missing `libnm.so.0`. Added explicit Lab-only
+`linux-steam-install-dependencies`: normal signed apt install of pinned
+`libnm0=1.52.1-1`, followed by exact-environment ldd and fail-on-missing check.
+It never accepts a guest command, bypasses apt authentication or accesses account
+state. The first host control installs the package but exits100 because the clean
+image omits var/log/apt. Creating the normal log directory fixes this separate
+packaging precondition; the same production control then exits0 and real ldd
+resolves libnm0 with no missing entries. Actual Lab13 final build, final helper
+link/sign/deep-strict and device install pass; explicit dependency control is
+launched on Air. Read its result before a fresh native lifetime's Steam launch.
+No interactive Library/BPM, controller, Madeira game or return success yet.
+
+**Actual Air13 dependency result and active Steam run.** Normal Debian HTTPS
+package acquisition/install completes, then the ldd/marker control exits0 with
+`dependencies-complete=PASS`. A missing PTY log warning remains; no error was
+ignored by the script. Only this completed diagnostic native lifetime is ended.
+The same signed Lab13 is relaunched with `linux-steam-desktop`, retaining the
+same image/root. Actual new steamwebhelper reaches CEF/browser initialization;
+the previous InternalAPI_Init fatal is absent in the current sample. The frame
+is still a black X11 cursor desktop, not an interactive Steam login. Keep this
+active session for bounded observation before any restart or speculative patch.
+
+Final regression: ordinary host16 ARM64 controls plus diagnostic125 wrapper,
+protocol ASan/UBSan and6 package tests pass. The final signed Lab13 Mach-O
+contains Scene/TCP/packet/dirfd/frontend markers plus the owned-prefix helper
+and fixed dependency mode; source and artifact hashes are in EVIDENCE.json.
+No final GO/Library/BPM/game/return/stability claim is justified.

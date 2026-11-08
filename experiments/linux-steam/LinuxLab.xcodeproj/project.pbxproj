@@ -70,6 +70,12 @@
 				<string>100000000000000000000002</string>
 				<string>200000000000000000000003</string>
 				<string>200000000000000000000004</string>
+				<string>610000000000000000000000</string>
+				<string>610000000000000000000001</string>
+				<string>610000000000000000000002</string>
+				<string>610000000000000000000003</string>
+				<string>610000000000000000000004</string>
+				<string>610000000000000000000005</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -143,6 +149,12 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<string>100000000000000000000003</string>
 				<string>100000000000000000000001</string>
 				<string>000000000000000000000009</string>
+				<string>600000000000000000000000</string>
+				<string>600000000000000000000001</string>
+				<string>600000000000000000000002</string>
+				<string>600000000000000000000003</string>
+				<string>600000000000000000000004</string>
+				<string>600000000000000000000005</string>
 			</array>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
@@ -183,11 +195,13 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>ENGINE_ASBESTOS=1</string>
 					<string>LOG_HANDLER_DPRINTF=1</string>
 					<string>ISH_INTERNAL=1</string>
+					<string>IDECK_LAB_STEAM_FRONTEND=$(LINUX_LAB_STEAM_FRONTEND)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
 					<string>$(SRCROOT)/../../vendor/LinuxRunner</string>
 					<string>$(LINUX_LAB_BUILD_DIR)</string>
+					<string>$(SRCROOT)/../../vendor/LinuxRunner/app/LinuxRunner</string>
 				</array>
 				<key>LIBRARY_SEARCH_PATHS</key>
 				<array>
@@ -203,6 +217,11 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>UIKit</string>
 					<string>-framework</string>
 					<string>Foundation</string>
+					<string>-framework</string>
+					<string>MetalKit</string>
+					<string>-framework</string>
+					<string>Metal</string>
+					<string>$(LINUX_LAB_FRONTEND_LIBS)</string>
 				</array>
 				<key>CODE_SIGN_STYLE</key>
 				<string>Automatic</string>
@@ -211,9 +230,15 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>5</string>
+				<string>13</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
+				<key>LINUX_LAB_STEAM_FRONTEND</key>
+				<string>0</string>
+				<key>LINUX_LAB_ROOTFS_SHA256</key>
+				<string></string>
+				<key>LINUX_LAB_FRONTEND_LIBS</key>
+				<string></string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000C</key>
@@ -252,11 +277,13 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>ENGINE_ASBESTOS=1</string>
 					<string>LOG_HANDLER_DPRINTF=1</string>
 					<string>ISH_INTERNAL=1</string>
+					<string>IDECK_LAB_STEAM_FRONTEND=$(LINUX_LAB_STEAM_FRONTEND)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
 					<string>$(SRCROOT)/../../vendor/LinuxRunner</string>
 					<string>$(LINUX_LAB_BUILD_DIR)</string>
+					<string>$(SRCROOT)/../../vendor/LinuxRunner/app/LinuxRunner</string>
 				</array>
 				<key>LIBRARY_SEARCH_PATHS</key>
 				<array>
@@ -272,6 +299,11 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>UIKit</string>
 					<string>-framework</string>
 					<string>Foundation</string>
+					<string>-framework</string>
+					<string>MetalKit</string>
+					<string>-framework</string>
+					<string>Metal</string>
+					<string>$(LINUX_LAB_FRONTEND_LIBS)</string>
 				</array>
 				<key>CODE_SIGN_STYLE</key>
 				<string>Automatic</string>
@@ -280,9 +312,15 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>5</string>
+				<string>13</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
+				<key>LINUX_LAB_STEAM_FRONTEND</key>
+				<string>0</string>
+				<key>LINUX_LAB_ROOTFS_SHA256</key>
+				<string></string>
+				<key>LINUX_LAB_FRONTEND_LIBS</key>
+				<string></string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000D</key>
@@ -442,6 +480,114 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>100000000000000000000004</string>
+		</dict>
+		<key>600000000000000000000000</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>app/LabRootFS.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>610000000000000000000000</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>600000000000000000000000</string>
+		</dict>
+		<key>600000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>app/LinuxSteamViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>610000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>600000000000000000000001</string>
+		</dict>
+		<key>600000000000000000000002</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>../../vendor/LinuxRunner/app/LinuxRunner/RFBClient.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>610000000000000000000002</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>600000000000000000000002</string>
+		</dict>
+		<key>600000000000000000000003</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>../../vendor/LinuxRunner/app/LinuxRunner/RFBProtocol.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>610000000000000000000003</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>600000000000000000000003</string>
+		</dict>
+		<key>600000000000000000000004</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>../../vendor/LinuxRunner/app/LinuxRunner/MetalFramebufferView.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>610000000000000000000004</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>600000000000000000000004</string>
+		</dict>
+		<key>600000000000000000000005</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>app/LabSocketPrefix.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>610000000000000000000005</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>600000000000000000000005</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

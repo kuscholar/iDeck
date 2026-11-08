@@ -14,6 +14,7 @@
 #include "fs/dev.h"
 #include "fs/fd.h"
 #include "fs/path.h"
+#include "LinuxSteamSession.h"
 
 static atomic_bool consumed;
 static atomic_int phase;
@@ -39,6 +40,8 @@ static void *run_guest(void *unused) {
 }
 static int run(const char *root_path, int mode) {
     int steam_probe = mode == 1, compat_probe = mode == 2, distro_probe = mode == 3;
+    int frontend = mode == 4, dependencies = mode == 5;
+    int fake_root = distro_probe || frontend || dependencies;
     if (!root_path || root_path[0] != '/') return -22;
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
@@ -46,7 +49,7 @@ static int run(const char *root_path, int mode) {
     char distro_data[4096];
     int size = snprintf(distro_data, sizeof distro_data, "%s/data", root_path);
     if (size < 0 || size >= (int)sizeof distro_data) return -36;
-    int err = mount_root(distro_probe ? &fakefs : &realfs, distro_probe ? distro_data : root_path);
+    int err = mount_root(fake_root ? &fakefs : &realfs, fake_root ? distro_data : root_path);
     if (err < 0) return err;
     atomic_store(&phase, 2);
     if ((err = become_first_process()) < 0) return err;
@@ -56,10 +59,20 @@ static int run(const char *root_path, int mode) {
         err = generic_mkdirat(AT_PWD, dirs[i], i == 1 ? 01777 : 0700);
         if (err < 0 && err != -17) return err;
     }
+    if (frontend) {
+        /* This is a fresh native app's first runtime and a private non-shared
+         * root. No previous guest can survive here; never do this for arbitrary
+         * host controls or any ordinary gaming path. Update fakefs via its API. */
+        const char *stale[] = {"/tmp/.X99-lock", "/tmp/.X11-unix/X99", "/tmp/ideck-display-ready", "/tmp/ideck-vnc-password"};
+        for (unsigned i=0;i<sizeof stale/sizeof stale[0];i++) {
+            err=generic_unlinkat(AT_PWD,stale[i]);
+            if(err<0&&err!=-2)return err;
+        }
+    }
     if ((err = do_mount(&procfs, "proc", "/proc", "", 0)) < 0) return err;
     atomic_store(&phase, 4);
     char devices_path[4096];
-    if (!distro_probe) {
+    if (!fake_root) {
         if (lab_device_fs_prepare(root_path, devices_path, sizeof devices_path)) return -5;
         if ((err = do_mount(&fakefs, devices_path, "/dev", "", 0)) < 0) return err;
     }
@@ -70,7 +83,7 @@ static int run(const char *root_path, int mode) {
     for (unsigned i = 0; i < sizeof devices / sizeof devices[0]; i++) {
         dev_t_ device = dev_make(MEM_MAJOR, devices[i].minor);
         err = generic_mknodat(AT_PWD, devices[i].path, S_IFCHR | 0666, device);
-        if (err == -17 && distro_probe) {
+        if (err == -17 && fake_root) {
             struct statbuf st;
             err = generic_statat(AT_PWD, devices[i].path, &st, false);
             if (!err && (!S_ISCHR(st.mode) || st.rdev != device)) err = -5;
@@ -80,13 +93,13 @@ static int run(const char *root_path, int mode) {
     if ((err = ideck_lab_bridge_install()) < 0) return err;
     dev_t_ bridge_device = dev_make(ideck_lab_bridge_major(), 0);
     err = generic_mknodat(AT_PWD, "/dev/ideck-madeira", S_IFCHR | 0600, bridge_device);
-    if (err == -17 && distro_probe) {
+    if (err == -17 && fake_root) {
         struct statbuf st;
         err = generic_statat(AT_PWD, "/dev/ideck-madeira", &st, false);
         if (!err && (!S_ISCHR(st.mode) || st.rdev != bridge_device)) err = -5;
     }
     if (err < 0) return err;
-    if (steam_probe) {
+    if (steam_probe || frontend) {
         const char *links[] = {"/root/.steam/steam", "/root/.steam/root"};
         for (unsigned i = 0; i < sizeof links / sizeof links[0]; i++) {
             err = generic_symlinkat("/Steam", AT_PWD, links[i]);
@@ -109,7 +122,18 @@ static int run(const char *root_path, int mode) {
         if (IS_ERR(dir)) return (int)PTR_ERR(dir);
         fs_chdir(current->fs, dir);
     }
-    const char *program = distro_probe ? "/bin/sh" : steam_probe ? "/Steam/steamrtarm64/steam" : compat_probe ? "/ideck-madeira" : "/probe";
+    const char *program = distro_probe || frontend || dependencies ? "/bin/sh" : steam_probe ? "/Steam/steamrtarm64/steam" : compat_probe ? "/ideck-madeira" : "/probe";
+    const char frontend_args[] = IDECK_LINUX_STEAM_ARGS;
+    const char dependency_args[] = "/bin/sh\0-c\0"
+        "set -eu; umask 077; exec > /tmp/ideck-dependencies.log 2>&1; "
+        "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin; "
+        "export DEBIAN_FRONTEND=noninteractive; mkdir -p /var/log/apt; "
+        "apt-get -y --no-install-recommends -o Acquire::Retries=0 -o Acquire::http::Timeout=30 "
+        "-o Acquire::https::Timeout=30 install libnm0=1.52.1-1; "
+        "export LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/Steam/steamrtarm64/panorama; "
+        "ldd /Steam/steamrtarm64/steamclient.so > /tmp/ideck-client-ldd.txt; "
+        "if grep -F '=> not found' /tmp/ideck-client-ldd.txt; then exit 1; fi; "
+        "echo dependencies-complete=PASS\0";
     const char distro_args[] = "/bin/sh\0-c\0"
         "set -eu; umask 077; exec > /distro-probe-results.txt; "
         "test \"$(uname -m)\" = aarch64; echo distro-arm64=PASS; "
@@ -133,8 +157,8 @@ static int run(const char *root_path, int mode) {
         current->files->files[2] = fd_retain(output);
     }
     atomic_store(&phase, 6);
-    if ((err = do_execve(program, distro_probe ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
-                         distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
+    if ((err = do_execve(program, distro_probe || frontend || dependencies ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
+                         frontend ? frontend_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
     exit_hook = observe_exit;
     current = NULL;
     pthread_t worker;
@@ -148,3 +172,18 @@ int ideck_linux_lab_run(const char *root_path) { return run(root_path, 0); }
 int ideck_linux_lab_steam_probe(const char *root_path) { return run(root_path, 1); }
 int ideck_linux_lab_compat_probe(const char *root_path) { return run(root_path, 2); }
 int ideck_linux_lab_distro_probe(const char *root_path) { return run(root_path, 3); }
+int ideck_linux_lab_steam_frontend(const char *root_path) {
+#if IDECK_LAB_STEAM_FRONTEND
+    return run(root_path, 4);
+#else
+    (void)root_path; return -95;
+#endif
+}
+
+int ideck_linux_lab_dependencies(const char *root_path) {
+#if IDECK_LAB_STEAM_FRONTEND
+    return run(root_path, 5);
+#else
+    (void)root_path; return -95;
+#endif
+}

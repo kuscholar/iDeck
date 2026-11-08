@@ -1,3 +1,88 @@
+# Current active session — Lab13 genuine Steam/CEF (run6)
+
+Read latest run6 evidence before older notes. User trust DONE, no Mac-unlock
+requests ever. Actual Air8 TCP17 PASS; actual Air11 complete clean fakefs import
+PASS/current image8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a.
+Image/root already installed; do not re-copy2GB or replace data. Native X11/RFB/
+Metal desktop/cursor is real physical evidence, not Steam UI/login.
+
+Air11 XOpenDisplay failure: borrowed NSString filesystemRepresentation outlived
+its autorelease pool. Host ASan reproduces UAF, fixed malloc-owned absolute prefix
+passes9 actual socket/cwd/lifetime controls. Air12 advances into InternalAPI_Init.
+Exact ARM64 ldd finds libnm.so.0 absent. Air13 explicit fixed normal signed-apt
+libnm0=1.52.1-1 install and ldd complete status0/guest-exited. No credentials used.
+Completed diagnostic PID was identity-checked/ended; SAME Lab13 fresh normal
+linux-steam-desktop session is ACTIVE, recorded private
+run6/trust-cleared/launch13-steam.json PID (revalidate; never use stale IDs).
+
+FIRST inspect this active session, don't restart/reinstall while genuine Steam
+may still initialize or user interacts. New actual CEF/webhelper65 initialization
+progresses, original InternalAPI_Init fatal absent; screenshot at13:55 still black
+X11 cursor, no interactive login/Library/BPM. D-Bus/GLib/Vulkan warnings are not
+proven root causes; don't add blind flags/patches. Read fresh bounded
+LinuxSteamRootFS/data/tmp/ideck-steam.log and Steam/logs/{steamwebhelper.log,cef_log.txt,
+steamui_html.txt} through private app container, plus screenshot. Preserve session.
+If actual login appears, user-only credentials/Guard, no native credential automation.
+
+Branch source parent9e1bc1a; current run6 code is staged/checkpointed separately.
+Private run6 EVIDENCE hashes include final signed Lab13/debugging receipts. Scope:
+ordinary host16 ELF + diagnostic125 bridge and protocol/package regressions pass;
+Python24, socket9, header7 and actual Air TCP17 pass. Rootfs UTF8 locale workaround
+was REJECTED on actual iOS; final image uses per-entry PAX BINARY preserving known
+UTF8 bytes. Don't reintroduce unavailable locale or copy old browser state.
+
+No controller/Library/BPM/game/return/repeated stability evidence. Bridge125 is
+still diagnostic, not Madeira execution. Continue actual full goal, no success
+sentinel or scheduler unload. Preserve original apps/account/games/main and all
+unrelated worktrees; never FEX/Valve/security/auth edits.
+
+--- Previous step-by-step context follows ---
+
+# Latest: run6 — user trust completed, actual Air controls passed
+
+Read the run6 section and EVIDENCE.json before older notes below. User repeatedly
+confirmed developer trust; do not ask again or ask for Mac unlock. CLI only.
+Air iPad13,1/iPadOS27.2(24B119); exact private device selection unchanged.
+Lab8 actual17 TCP controls exit0 with real visible results. Lab6 failure was
+native UIKit Scene adoption (SIGTRAP), now corrected, not a Linux crash.
+
+Lab10 is installed in the existing isolated com.kuschqin.ideck.freshtest container
+and launched with linux-steam-desktop. Revalidate its recorded PID from private
+run6/trust-cleared/launch10-frontend.json; never use stale PID. Preserve live user
+sessions; don't restart/reinstall while import/frontend/user login is active.
+Original working iDeck, Mac Allocator, accounts/games/saves unchanged.
+
+The clean2GB image is already staged at Documents/LinuxLabInput/steam-rootfs.tar.gz;
+SHA07676e4c820a7cca7c9db46df80e681de6a294260e37273a9f1a8e0c479921ea.
+No auth/cache transfer. Lab8 verified hash but failed import; Lab9 exact failure
+archive79 at copied fakefs.c251 (header iterator), native cwd restored. Same pinned
+no-iconv host libarchive reproduces UTF-8 PAX warning in C locale. Lab10 attempted a thread-scoped UTF-8 locale, but actual iOS creation fails;
+no guest started. That approach is removed. Seven pinned-library native header
+checks now prove per-entry PAX hdrcharset=BINARY preserves validated filename
+bytes in C locale; global-only header is insufficient. A new image is being
+repacked from the original verified clean image with only this header change.
+FIRST finish/inspect new image receipt before building/deploying the next Lab; collect Library/Application Support/iDeckLinuxLab/last-root-import.json
+and screenshot. Complete root import is not yet recorded. No JIT needed for interpreter.
+If import succeeds, root is LinuxSteamRootFS; inspect data/tmp/ideck-{steam,xvfb,x11vnc}.log
+without publishing raw state/QR/account text. A black frame/process is not UI.
+
+Prior relative native socket prefix was wrong: pinned FIFO changes native cwd.
+Absolute prefix with same-inode /var alias budget check now passes real8-test
+contract. Exact clean embedded host run advances beyond X11 but Steam then reports
+InternalAPI_Init failure; exact-env ldd finds missing ARM64 libnm.so.0. No sole
+cause claim or assertion suppression. Isolate this dependency through signed normal
+guest packages if the physical run corroborates it. Do not restore old host browser
+state to make it work. Original host warm root's real login proof remains host-only.
+
+New frontend build gates: LINUX_LAB_PACKET_PIPES=1 LINUX_LAB_TCP_VIEW=1
+LINUX_LAB_STEAM_FRONTEND=1 LINUX_LAB_ROOTFS_SHA256=<actual verified pin>, plus pinned
+static libarchive via tools/build-ios-archive.sh. Default frontend off. Current
+root importer/source/Metal/RFB/input are experimental; no on-Air interactive Steam
+or controller/Library/BPM/auth/game/return stability evidence yet. Bridge remains125.
+Continue actual goal; no STABLE_SUCCESS.json or scheduler unload justified.
+
+---
+
 # Linux Steam + Madeira iPad continuation
 
 User requested every305 minutes until repeatedly stable on **iPad Air4/iPad13,1**.
