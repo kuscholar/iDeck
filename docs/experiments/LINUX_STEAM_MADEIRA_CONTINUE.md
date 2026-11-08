@@ -27,27 +27,26 @@ authorization gates; do not repeat unchanged prompts or assume unsupported paths
 
 Implementation checkpoint: `d662352ce36a390528959967a5e32c2f48057081` (signed-off isolated branch).
 
-## Current actual status and next gates
+## Current actual status and next gates (run3)
 
-The selected Air is paired, developer-enabled, iPadOS27.2(24B119). Its exact ID and
-fresh metadata are in private run2/air-details.json. Do not substitute Pro/iPhone
-or simulator. Default Lab ID linuxlab has no profile. CLI-only deployment uses
-existing **com.kuschqin.ideck.freshtest**, absent on Air before this run, because
-its current authorized profile covers Air/certificate. It is distinct from the
-unchanged installed Mac Allocator and production iDeck. No phone install changed.
+Selected Air4/iPad13,1/iPadOS27.2 is paired and available over CoreDevice. The
+fresh lock-state query reports passcodeRequired=false. Device Hub control's
+executor failed on the inherited writable-root symlink; do NOT change sandbox/
+trust/config or ask Mac unlock. Public devicectl screenshot works and shows the
+actual **Untrusted Developer** dialog. One Lab1 launch still returns10002; this
+is a user trust boundary, not Linux failure. The async Air trust question is
+pending. No further install/launch for this unchanged gate. After user confirmation,
+first collect the installed Lab1 control; no device ELF result exists yet.
 
-Lab1 actually signed/deep-verified/installed/read back as iDeck Linux Lab, but
-SpringBoard refused launch with generic signature/entitlement/trust message.
-**No device ELF result yet.** The user was asked to inspect the exact Air prompt
-and trust the developer only if iPad reports it untrusted. That reply is pending.
-Don't infer Linux crash, repeatedly launch, install over a live test or ask to
-unlock Mac. Verify local profile/signature/device coverage before later upgrades.
-
-Lab2 source/unsigned iOS arm64 build has the corrected v3 patch and16 host probe
-lines; final Mach-O marker verified. It has not been deployed on Air yet. For the
-existing Air lab, build with PRODUCT_BUNDLE_IDENTIFIER=com.kuschqin.ideck.freshtest
-and matching authorized profile; preserve its container. Do not accidentally
-replace the phone Fresh Test installation. Source default remains linuxlab.
+Default source ID linuxlab has no profile. Air-installed Lab1 uses the previously
+absent, already-authorized com.kuschqin.ideck.freshtest; production/Mac Allocator
+and phone apps untouched. Validate exact app/profile/device before upgrades.
+New unsigned **Lab3** adds explicit linux-distro-diagnostics, fixed prepared
+DebianRootFS fakefs control. Final iOS arm64 build/linked v3 and mode markers pass;
+not installed/signed yet. Host prepared distro adapter passes6results, wait0 and
+repeatEBUSY; ordinary16 controls/ASan/UBSan/packages6 pass. Preserve single lifetime.
+Source docs describe app-private root placement and last-distro-probe.txt. No
+in-app rootfs importer or Linux Steam iOS display target yet.
 
 LinuxRunner vendor pin d1419782 and optional libarchive fc6563f5 source remain
 pristine. Interpreter-only Lab excludes JIT, GUI and Madeira linkage currently.
@@ -78,16 +77,34 @@ host-only fakefs importer patch accepts only existing SAME regular inode aliases
 on case-insensitive storage (PAM/pam doc hardlink), rejects different-inode conflicts.
 It is not a guest filesystem/runtime or permission workaround.
 
-Full-root assembly now includes explicit /Steam directory metadata. Root
-run2/steam-fakefs-v3 really executes Steam with current v3 guard, downloads the
-client update to100% and begins extracting packages. The75.057-second bounded
-observer deliberately sends SIGTERM (returncode-15); this is NOT a crash, update
-completion, UI or natural client exit. Receipt run2/steam-dirfd-v3.json and log
-are private. No X11 server exists. Next inspect/resume the same unauthenticated
-root under a longer bounded observer, identify the next actual error, then bring
-up minimal X11/display. Do not overwrite host/ish while it executes or infer a
-network/CEF failure from an observer timeout. No account was ever logged into
-these host roots. Keep raw data/private packages out of Git.
+Full-root run2/steam-fakefs-v3 now completes the official Steam update naturally
+(exit42/268.075s; Valve steam.sh defines42 as restart). Following launch actually
+fails steamui.so loading because libGL.so.1 was missing. Signed guest apt refresh
+and normal installation supply libGL/minimal X11/VNC. ldd then identified direct
+GTK/GLib/PipeWire/PulseAudio/GdkPixbuf/EGL/VA dependencies; their guest apt install
+also completes. Keep exact package versions/hashes in private evidence; no GPG or
+TLS bypass, Valve patch or host package install. No account data in this root.
+
+Actual Xvfb960x540 plus authenticated loopback VNC works: unchanged pinned RFBClient
+captures a true empty desktop/cursor. New tools/rfb-capture.m builds a host-only
+private PNG observer (never claim a captured frame proves Steam UI). A second
+1280x800 real Steam X11 experiment shows Valve's actual Verifying installation
+window. Read run3/steam-x11-control.json and private tmp/ideck-steam-x11.log before
+repeating; bound/cleanup are not Steam crash proof. No Library/login/CEF success.
+With OpenAL fixed, VGUI loaded but the GLX-disabled control failed glXChooseVisual.
+Mesa25.0.7 packages were already present. Enabling XvfbGLX advances beyond this,
+then real Steam fatals controllerxinput_linux.cpp31 on negative pipe descriptors.
+Numeric discriminator now DONE: separate host pipe observer (base/vendor/iOS
+unchanged) logs SteamPID11 pipe2flags0x90000 -> -22/EINVAL; other calls0. ARM64
+O_DIRECT=1<<16, so this is packet+CLOEXEC. Pinned pipe.c rejects O_DIRECT.
+Freestanding guest/packet-pipe-probe.c reproduces ordinaryPASS, packet-22 and
+exit1 (expected FAILURE evidence, not passing semantics). Next design real packet
+pipe behavior with isolated boundary/short-read, fork/dup, poll/EOF/cancellation
+and fcntl tests; never strip the flag or suppress assertions. No EMFILE/CPU/clone
+sole-cause inference. No runtime behavior fix or device pipe execution yet. Exact source
+observer and guest script are now committed with four boundary tests. Wrapper
+exit0 does not prove Steam success; its bounded private per-run guest logs do.
+Do not overwrite host/ish during an active guest. No CEF/login/Library success.
 
 After actual Air ELF controls, bring up complete rootfs and minimal X11/display,
 then genuine Valve ARM64 Steam login/Library/BPM. Reuse LinuxRunner RFB client/

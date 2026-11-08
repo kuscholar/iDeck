@@ -203,7 +203,7 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>2</string>
+				<string>3</string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000C</key>
@@ -270,7 +270,7 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>2</string>
+				<string>3</string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000D</key>

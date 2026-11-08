@@ -15,7 +15,8 @@
     self.output.editable = NO;
     self.output.font = [UIFont monospacedSystemFontOfSize:16 weight:UIFontWeightRegular];
     self.output.translatesAutoresizingMaskIntoConstraints = NO;
-    self.output.text = @"iDeck Linux Lab\nARM64 Linux interpreter control\nRunning…\n";
+    BOOL distro = [NSProcessInfo.processInfo.arguments containsObject:@"linux-distro-diagnostics"];
+    self.output.text = distro ? @"iDeck Linux Lab\nPrepared Debian/glibc control\nRunning…\n" : @"iDeck Linux Lab\nARM64 Linux interpreter control\nRunning…\n";
     [controller.view addSubview:self.output];
     [NSLayoutConstraint activateConstraints:@[
         [self.output.leadingAnchor constraintEqualToAnchor:controller.view.safeAreaLayoutGuide.leadingAnchor constant:16],
@@ -28,19 +29,28 @@
         NSFileManager *fm = NSFileManager.defaultManager;
         NSURL *support = [fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
         NSURL *lab = [support URLByAppendingPathComponent:@"iDeckLinuxLab" isDirectory:YES];
-        NSURL *root = [lab URLByAppendingPathComponent:@"LinuxRootFS" isDirectory:YES];
+        NSURL *root = [lab URLByAppendingPathComponent:distro ? @"DebianRootFS" : @"LinuxRootFS" isDirectory:YES];
         NSError *error = nil;
-        [fm createDirectoryAtURL:root withIntermediateDirectories:YES attributes:nil error:&error];
+        [fm createDirectoryAtURL:lab withIntermediateDirectories:YES attributes:nil error:&error];
+        if (distro && !error) {
+            BOOL directory = NO;
+            BOOL ready = [fm fileExistsAtPath:[root URLByAppendingPathComponent:@"data"].path isDirectory:&directory] && directory &&
+                [fm fileExistsAtPath:[root URLByAppendingPathComponent:@"meta.db"].path];
+            if (!ready) error = [NSError errorWithDomain:@"LinuxLab" code:2 userInfo:@{NSLocalizedDescriptionKey:@"Prepared Debian fakefs is missing; no guest started."}];
+        }
+        if (!distro && !error) [fm createDirectoryAtURL:root withIntermediateDirectories:YES attributes:nil error:&error];
         NSURL *probe = [root URLByAppendingPathComponent:@"probe"];
-        [fm removeItemAtURL:[root URLByAppendingPathComponent:@"probe-results.txt"] error:nil];
+        NSString *reportName = distro ? @"distro-probe-results.txt" : @"probe-results.txt";
+        NSURL *reportRoot = distro ? [root URLByAppendingPathComponent:@"data" isDirectory:YES] : root;
+        [fm removeItemAtURL:[reportRoot URLByAppendingPathComponent:reportName] error:nil];
         NSData *data = [NSData dataWithContentsOfURL:[NSBundle.mainBundle URLForResource:@"probe" withExtension:@"elf"]];
-        if (!error && !data) error = [NSError errorWithDomain:@"LinuxLab" code:2 userInfo:nil];
-        if (!error) [data writeToURL:probe options:NSDataWritingAtomic error:&error];
-        if (!error) [fm setAttributes:@{NSFilePosixPermissions:@0700} ofItemAtPath:probe.path error:&error];
-        int result = error ? -1 : ideck_linux_lab_run(root.fileSystemRepresentation);
-        NSString *report = [NSString stringWithContentsOfURL:[root URLByAppendingPathComponent:@"probe-results.txt"] encoding:NSUTF8StringEncoding error:nil] ?: @"No current probe result";
-        NSString *summary = [NSString stringWithFormat:@"iDeck Linux Lab\nBackend: interpreter (JIT not compiled)\nStage: %s\nResult (errno or guest wait status): %d\n%@\nSteam UI and Madeira handoff are not tested.\n", ideck_linux_lab_stage(), result, error ? @"Host preparation failed" : report];
-        [summary writeToURL:[lab URLByAppendingPathComponent:@"last-probe.txt"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        if (!distro && !error && !data) error = [NSError errorWithDomain:@"LinuxLab" code:2 userInfo:nil];
+        if (!distro && !error) [data writeToURL:probe options:NSDataWritingAtomic error:&error];
+        if (!distro && !error) [fm setAttributes:@{NSFilePosixPermissions:@0700} ofItemAtPath:probe.path error:&error];
+        int result = error ? -1 : distro ? ideck_linux_lab_distro_probe(root.fileSystemRepresentation) : ideck_linux_lab_run(root.fileSystemRepresentation);
+        NSString *report = [NSString stringWithContentsOfURL:[reportRoot URLByAppendingPathComponent:reportName] encoding:NSUTF8StringEncoding error:nil] ?: @"No current probe result";
+        NSString *summary = [NSString stringWithFormat:@"iDeck Linux Lab\nBackend: interpreter (JIT not compiled)\nStage: %s\nResult (errno or guest wait status): %d\n%@\nSteam UI and Madeira handoff are not tested.\n", ideck_linux_lab_stage(), result, error ? error.localizedDescription : report];
+        [summary writeToURL:[lab URLByAppendingPathComponent:distro ? @"last-distro-probe.txt" : @"last-probe.txt"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
         dispatch_async(dispatch_get_main_queue(), ^{ self.output.text = summary; });
     });
     return YES;

@@ -168,3 +168,55 @@ untouched. Installed Lab1 currently gets SpringBoard's generic
 signature/entitlement/trust refusal. User inspection of the actual iPad prompt
 is pending. Do not infer a Linux crash or claim device execution from signing
 and installation alone. New unsigned Lab2 has not been installed on Air.
+
+## Lab3 full Debian control
+
+`linux-distro-diagnostics` is an explicit app launch argument, using only the
+prepared app-private `Library/Application Support/iDeckLinuxLab/DebianRootFS/`
+with `data/` and `meta.db`. It runs a fixed ARM64/glibc/filesystem/entropy/curl-link
+control and writes `last-distro-probe.txt`; it never logs into Steam or takes
+arbitrary guest commands. Missing rootfs is an error. The source does not yet
+provide an on-device rootfs importer. Do not copy an actively written fakefs
+SQLite database or another app's account/prefix. This mode is host-validated and
+compiled for iOS, but not device-validated yet.
+
+```sh
+# Build host-embed using test-host.sh first, then use an ABSOLUTE private,
+# stopped, initialized Debian fakefs copy:
+"$LINUX_LAB_ARTIFACTS/host-embed" /absolute/private/debian-copy --distro-probe
+```
+
+`tools/rfb-capture.m` is a host-only actual-frame probe using the pinned vendor
+RFBClient/RFBProtocol. Compile with Foundation/CoreGraphics/ImageIO and the vendor
+header include directory. It takes port, private8-byte password-file and NEW PNG
+output path. The observed host Xvfb frame (960x540) has only a cursor. No UI/input
+success is inferred from this capture; no RFB or Metal source was copied/modified.
+
+Reproduce the host display/client test (ONLY a stopped, unauthenticated Lab root):
+
+```sh
+python3 experiments/linux-steam/tools/run-x11-control.py \
+  "$LINUX_LAB_ARTIFACTS/host/ish" /absolute/private/steam-fakefs \
+  "$LINUX_LAB_ARTIFACTS/new-x11-observation" --steam
+```
+
+The fixed guest script starts Xvfb :99 and authenticated loopback VNC5993, launches
+only the official stable Steam desktop executable when requested, observes90s and
+cleans up its own guest processes. The outer observer is bounded140s and serializes
+its own callers. Verify no independent guest is already using that root first.
+Known login-state files refuse this raw-log control without reading their contents;
+the guard cannot prove a caller-selected root contains no secrets. Use a fresh
+unauthenticated root, never the working app/account. Session exit0 does NOT assert
+Steam exit0 or UI success. Four observer policy tests cover missing-root/login-state
+refusal, preserving old output and not promoting a zero mock exit to Steam success.
+Guest logs are copied privately (bounded1MiB tails); never add them to Git.
+
+The next observed Steam blocker is packet-mode pipe2. A separate bounded
+trace-only host binary can be built with `tools/build-pipe-observer.py` (source,
+existing Meson build, Ninja path, NEW private output). It copies the archive and
+never changes the base runtime/vendor. `guest/packet-pipe-probe.c` is a static
+ARM64 reproducer: ordinary pipe succeeds, actual Steam packet flags0x90000 fail
+EINVAL in this pin. Current exit1 is expected failing evidence, NOT test success.
+It has future packet-boundary/short-read/CLOEXEC/nonblock assertions; never make
+these pass by dropping O_DIRECT or suppressing the Steam fatal. See investigation
+for primary UAPI references and exact trace. No device pipe test has run yet.

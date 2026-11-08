@@ -441,3 +441,149 @@ Source checkpoint: **d662352ce36a390528959967a5e32c2f48057081**, signed off on t
 Only source, tests, pinned gitlink and redacted evidence were committed; no
 compiled binaries, rootfs, Valve packages, profiles or raw logs. The following
 documentation-only commit records this exact implementation revision.
+
+## Run 3: direct Air observation, full-root adapter and display (2026-11-08)
+
+Resumed from source b0989ee/d662352 with pristine experiment worktree and fetched
+origin. Selected Air remains iPad13,1/iPadOS27.2. No production app/account/game
+state changed. Device Hub's control tool failed to initialize its executor due
+to the inherited symlinked writable root; no trust/sandbox setting was changed.
+Authorized Xcode CLI outside the tool sandbox discovers the real paired Air,
+reads passcodeRequired=false/unlockedSinceBoot=true and captures its actual screen.
+No Mac-unlock request or lock bypass was made.
+
+The installed Lab has no live process. One launch is refused CoreDevice10002.
+**Actual Air screenshot explicitly shows Untrusted Developer.** This narrows the
+previous generic signature/entitlement/trust alternatives to an observed user
+trust gate. Local deep/strict signature verification still passes. User trust in
+Settings is required; it is not automated. Pending async question explains the
+Air action. No further launch/install retry was used for this unchanged gate.
+Screenshot/profile identities remain private; no device ELF result is claimed.
+
+### Genuine updater and its next failure
+
+The same unauthenticated full-root ARM64 Steam updater completes download,
+extraction and installation, then writes **Update complete, launching Steam**.
+It naturally exits42 after268.075seconds (host interpreter only). The exact
+Valve steam.sh sets MAGIC_RESTART_EXITCODE=42 and restarts on that value, so this
+is consistent with its documented-in-source restart contract, not a crash.
+
+A subsequent bounded launch verifies installation then naturally exits255 in
+2.160seconds: **dlmopen steamui.so failed: libGL.so.1 not found**. This is the next
+observed dynamic dependency failure, not a CEF/renderer diagnosis. Signed Debian
+apt metadata refresh passes in13.373seconds. Installing libgl1, xvfb, x11vnc,
+xauth, fonts-dejavu-core and dbus-daemon inside this private root passes in65.907s.
+No host packages, TLS/GPG bypass, Valve binary or production root was modified.
+Those times are host-control durations, not iPad performance measurements.
+
+### Whole-distribution embedding control
+
+Lab3 adds only an explicit **linux-distro-diagnostics** argument. It mounts
+prepared Application Support/iDeckLinuxLab/DebianRootFS/data using fakefs and its
+sibling meta.db, retains existing Linux metadata/devices, validates known device
+node types/numbers, and executes a fixed non-authenticating Debian shell control.
+The default ELF probe and original production target remain unchanged. Missing
+prepared storage reports an error rather than creating a fake successful root.
+No arbitrary shell/launch arguments are accepted from the app UI.
+
+A private copy of the stopped initialized Debian base passes all six host adapter
+results: ARM64 identity, glibc executable/dynamic link, filesystem/touch, entropy,
+curl linking and completion; guest wait0 and repeat-start EBUSY(-16). The first
+host invocation accidentally supplied a relative root and correctly got EINVAL;
+the corrected absolute-root run is the valid result. This proves host embedding,
+not Air execution or complete shutdown/restart. PID1 remains parked and the
+one-native-lifetime limit is unchanged. Lab3 unsigned iOS arm64 build passes with
+the v3 guard and explicit mode markers in the final Mach-O; not installed yet.
+Host16 ordinary controls, diagnostic compatibility wrapper125, protocol ASan/UBSan
+and all6 package regressions also pass after this adapter change.
+
+### Real display transport control
+
+An actual guest Xvfb :99 (960x540x24, no TCP listener) plus x11vnc on authenticated
+host loopback5993 starts in this private root. The unchanged pinned LinuxRunner
+RFBClient receives and decodes an actual frame. New source tools/rfb-capture.m
+saves it through public CoreGraphics/ImageIO and explicitly labels Steam UI
+UNVERIFIED. The observed image is an empty black X11 desktop with cursor. This
+is display-transport evidence, not Steam paint or interactive login. The random
+8-byte VNC password and all raw frames/logs stay outside Git.
+
+Host capture compilation retains vendor source unchanged, suppressing its known
+misleading-indentation/unused-static-header warnings and deprecated public DES
+warning; no error suppression in runtime assertions is introduced. New control
+code builds with Wall/Wextra/Werror. Full renderer/input/iOS integration remains
+future work after the actual missing-library/display discriminators.
+
+
+The direct-dependency ldd check after libGL lists GLib/GObject/GIO, GTK2,
+PipeWire, PulseAudio, GdkPixbuf, EGL and VA. Their ordinary signed guest package
+installation succeeds in29.354seconds. A fresh1280x800 X11 session really paints
+Valve's **Updating Steam / Verifying installation** window; it then reports
+**Could not load module vgui2_s.so**. That specific module's loader/dependencies
+are the next discriminator. Neither an updater window nor frame capture proves
+CEF, login or Library. No credentials were entered. Raw guest logs/screenshots
+remain private. Air user trust remains pending and no Lab3 install is claimed.
+
+The vgui2_s.so discriminator identifies **libopenal.so.1** via actual guest ldd.
+Installing libopenal1 succeeds (9.467s). The subsequent real source-based X11
+experiment advances past that loader error but fatals in
+surface_linux.cpp1967: **glXChooseVisual failed**. The transport-only test had
+explicitly disabled GLX; this configuration is inappropriate for Steam's VGUI.
+The source control now enables Xvfb's GLX, with Mesa software libraries as its
+next dependency. This is a targeted display-configuration hypothesis, not an
+assertion workaround, FEX fix, or a claim the CEF renderer works.
+
+Source guest/x11-control.sh and tools/run-x11-control.py now reproduce the
+bounded actual display/client observation. They preserve old artifacts, reject
+recognizable login state and serialize their own calls; callers must still check
+for independent guest processes. Four policy tests pass with a mock executable
+(no device/runtime evidence). Session wrapper exit0 means only session completion,
+not Steam success: the real client fatal is retained separately in its own log.
+
+
+### GLX discriminator result and next contract
+
+Mesa libglx-mesa0/libgl1-mesa-dri25.0.7-2+deb13u1 were already installed transitively;
+apt confirms them current (2.293s, no new packages). Therefore the discriminating
+change was enabling Xvfb GLX, not adding an unverified renderer fix. The next
+actual source-wrapper experiment no longer reports glXChooseVisual; Steam advances
+then fatals in **controllerxinput_linux.cpp31**, asserting its pipe descriptors
+are nonnegative. This does not prove pipe2's flags/status, EMFILE or a CPU bug.
+No assertion was suppressed. Next capture the numeric pipe syscall result and
+make an isolated ARM64 pipe/fcntl control before changing LinuxRunner semantics.
+A separate unimplemented-clone-flag message is observed but is not established
+as the cause of the pipe failure. No CEF/login/Library success is claimed.
+
+At the end of run3, a read-only Air last-probe check still fails missing file
+(CoreDevice7000). No user trust confirmation has arrived; no further launch or
+installation was attempted. The scheduled305-minute continuation remains active.
+The required next device action is the observed Air developer-trust prompt, not
+Mac unlock. Linux Steam UI and game/return stability remain unverified on iPad.
+
+### Exact pipe failure: traced and isolated, not suppressed
+
+A separate host observer is generated by build-pipe-observer.py from the exact
+pinned fs/pipe.c, linked against a PRIVATE COPY of libish.a. Vendor sources,
+base archive/binary, iOS build and ordinary pipe behavior are unchanged. It logs
+only the first64 pipe2 flags/status/guestPID values; never user buffers/paths.
+Final diagnostic Mach-O contains its marker. In the same real Steam startup,
+guestPID11 pipe2(flags=0x90000) returns **-22/EINVAL**, followed by the controller
+fatal. Other ordinary/CLOEXEC calls succeed. This is not evidence of EMFILE.
+
+ARM64's O_DIRECT bit is1<<16, O_CLOEXEC1<<19, so0x90000 requests a packet-mode
+pipe plus CLOEXEC. Checked both pinned kernel/fs.h and the authoritative
+[Linux ARM64 UAPI](https://github.com/torvalds/linux/blob/master/arch/arm64/include/uapi/asm/fcntl.h).
+[Linux pipe2 semantics](https://man7.org/linux/man-pages/man2/pipe.2.html) require
+packet boundaries and discarding an unread packet tail on a short read. The
+pinned fs/pipe.c rejects everything except CLOEXEC/NONBLOCK, explaining this
+exact missing feature. Do NOT silently remove O_DIRECT, replace the assert or
+pretend stream pipes implement packets.
+
+New freestanding **guest/packet-pipe-probe.c** compiles ARM64/Werror and executes
+under the same runtime. Actual result: stream creation0 and roundtripPASS;
+exact Steam packet flags return-22; packet semanticsBLOCKED; guest exit1. This
+is an intentionally reproduced failure, NOT a passing compatibility test. It
+also contains future boundary/short-read/CLOEXEC/nonblock checks that must pass
+after a real implementation. Actual packet operations have not run yet.
+No runtime behavior fix is claimed; packet support, duplication/fork, polling,
+EOF/cancellation and fcntl behavior need isolated tests before another Steam run.
+This identifies a concrete startup blocker, not a sole cause for all future CEF.
