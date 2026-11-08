@@ -25,6 +25,8 @@ credentials. Normal authorized CLI tools are allowed. Never automate Steam login
 Guard or user trust approval. Continue independent verifiable work at real human
 authorization gates; do not repeat unchanged prompts or assume unsupported paths.
 
+Implementation checkpoint: `d662352ce36a390528959967a5e32c2f48057081` (signed-off isolated branch).
+
 ## Current actual status and next gates
 
 The selected Air is paired, developer-enabled, iPadOS27.2(24B119). Its exact ID and

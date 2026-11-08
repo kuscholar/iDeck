@@ -436,3 +436,8 @@ handoff, input, complete runtime shutdown or reliable return. The schedule's
 fixed goal remains repeated stability on the selected Air, including the real
 Steam UI and licensed Madeira game/return cycle. The native queue active-writer
 warning deferred the manual dispatch; future unattended research is not yet proven.
+
+Source checkpoint: **d662352ce36a390528959967a5e32c2f48057081**, signed off on the isolated experiment branch.
+Only source, tests, pinned gitlink and redacted evidence were committed; no
+compiled binaries, rootfs, Valve packages, profiles or raw logs. The following
+documentation-only commit records this exact implementation revision.

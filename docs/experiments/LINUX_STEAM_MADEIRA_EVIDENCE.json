@@ -5,7 +5,7 @@
   "branch": "experiment/linux-steam-madeira-ipad",
   "origin": "https://github.com/kuscholar/iDeck.git",
   "baseline": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
-  "source_checkpoint": "first signed-off experiment checkpoint includes these files; use git log for containing revision",
+  "source_checkpoint": "d662352ce36a390528959967a5e32c2f48057081",
   "baseline_submodules": {
     "FEX": "f59cab95659e8add0c88f0c76ec1cf483c536dbf",
     "dxmt": "128b297c6e9a00014408dc68b4c2c2373b5813de",
