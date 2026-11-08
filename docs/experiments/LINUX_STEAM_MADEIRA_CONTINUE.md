@@ -1,4 +1,4 @@
-# Run11: Lab16 installed, Air diagnostic PASS; Steam native process ended
+# Run11 8eaf7b6: Lab16 installed, Air diagnostic PASS; Steam process ended
 
 FIRST current state supersedes old Lab13 auth-wait notes: PID2676 is gone. The
 new Lab13 PID3054 was activated without termination; actual screen showed a

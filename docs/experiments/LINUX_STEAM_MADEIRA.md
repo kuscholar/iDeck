@@ -1331,3 +1331,6 @@ request unless actual genuine UI requires it. Controller/touch qualification,
 Library/BPM, licensed Madeira game and return/repeat stability remain incomplete.
 Source/artifact/receipt hashes are in EVIDENCE; raw logs/frames/QR/profiles stay
 private outside Git. No success sentinel or goal completion is justified.
+
+Run11 implementation checkpoint: `8eaf7b61703d77f8d206faafebb180a17da525d5` (signed off). Lab16 is actually
+installed/device-diagnostic-validated; its first Steam process ended, cause unknown.
