@@ -14,7 +14,7 @@
   "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "previous_source_checkpoint": "b0989ee820fa37a1f9e311940d72eec9523f396e",
-  "source_checkpoint": "containing source commit, followed by exact revision record",
+  "source_checkpoint": "93ea5138d58bd6e84a2267b210f6dd7d541bb623",
   "target": {
     "model": "iPad Air 4",
     "product": "iPad13,1",

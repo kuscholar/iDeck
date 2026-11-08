@@ -587,3 +587,7 @@ after a real implementation. Actual packet operations have not run yet.
 No runtime behavior fix is claimed; packet support, duplication/fork, polling,
 EOF/cancellation and fcntl behavior need isolated tests before another Steam run.
 This identifies a concrete startup blocker, not a sole cause for all future CEF.
+
+Run3 implementation checkpoint: **93ea5138d58bd6e84a2267b210f6dd7d541bb623** (signed off). Remaining Air
+trust and genuine packet-pipe semantics are unresolved; no stable Steam claim.
+All bounded host sessions ended before the checkpoint; do not target stale PIDs.
