@@ -135,7 +135,8 @@
         if([NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-install-dependencies"]) {
             [self showStatus:@"Installing the pinned Debian Steam dependency in this Lab only."];
             int result=ideck_linux_lab_dependencies(root.fileSystemRepresentation);
-            NSDictionary *report=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),@"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
+            NSDictionary *report=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),@"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),
+                @"linux_worker_entries":@(ideck_linux_lab_native_worker_entries())};
             NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil];
             [data writeToURL:[lab URLByAppendingPathComponent:@"last-dependency-setup.json"] options:NSDataWritingAtomic error:nil];
             [self showStatus:[NSString stringWithFormat:@"Dependency control ended (status %d). Restart the Lab for Steam.",result]];
@@ -156,7 +157,7 @@
             int result=ideck_linux_lab_compatibility_tool_probe(root.fileSystemRepresentation,&payload);
             extern unsigned ideck_lab_bridge_requests(void);
             NSDictionary *report=@{@"status":@(result),@"native_bridge_requests":@(ideck_lab_bridge_requests()),@"diagnostic_only":@YES,
-                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
+                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),@"linux_worker_entries":@(ideck_linux_lab_native_worker_entries())};
             NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil];
             [data writeToURL:[lab URLByAppendingPathComponent:@"last-compatibility-control.json"] options:NSDataWritingAtomic error:nil];
             [self showStatus:[NSString stringWithFormat:@"Compatibility diagnostic ended (status %d). No game was launched. Restart the Lab for Steam.",result]];return;
@@ -176,7 +177,7 @@
             int result=ideck_linux_lab_steam_frontend(root.fileSystemRepresentation);
 #endif
             NSDictionary *snapshot=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),
-                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
+                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),@"linux_worker_entries":@(ideck_linux_lab_native_worker_entries())};
             NSData *report=[NSJSONSerialization dataWithJSONObject:snapshot options:NSJSONWritingPrettyPrinted error:nil];
             [report writeToURL:[lab URLByAppendingPathComponent:@"last-runtime-session.json"] options:NSDataWritingAtomic error:nil];
             weakSelf.guestEnded=YES;

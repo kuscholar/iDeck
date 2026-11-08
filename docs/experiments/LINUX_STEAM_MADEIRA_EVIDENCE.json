@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": "run10",
-  "recorded_at_utc": "2026-11-08T20:32:25.812149+00:00",
+  "latest_run": "run11",
+  "recorded_at_utc": "2026-11-08T23:46:41.921743+00:00",
   "previous_source_checkpoint": "6fb631d9acdb9ba3c0dae3dab1e015ad21487d42",
   "source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_parent": "72b6763a70ae7bed5751e23f3a9cee5a8e7315db",
@@ -320,7 +320,7 @@
       "sha256": "b41d62f142a721a9d46736c6f3e57d1f3763b0bebc4217fe8d9d5d982dad4a5e"
     }
   ],
-  "next_discriminator": "Keep Air13 for user genuine login/input/Library/BPM. Before integrating lease/handoff, inventory and measure/disable each optional native worker provider under explicit experimental policy; never assert other_native_workers=0 from guest count alone. Then legitimate Steam Play/game/return validation remains mandatory.",
+  "next_discriminator": "Await force-close clarification while inspecting delayed exit reports. Native kernel log build uses DPRINTF/writev666 but App never connects fd666; instrument a private native diagnostic sink for a bounded reproduction, not an assumed runtime fix. Preserve same Lab auth; no new login request unless genuine UI requires it.",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -343,13 +343,12 @@
     "not_a_fresh_scheduler_readback": true
   },
   "not_verified": [
-    "genuine Steam account authentication in this Linux Lab",
-    "on-Air interactive Library/Big Picture/controller/touch",
-    "on-Air optional compatibility installation/shared-viewer mode",
-    "Steam-discovered Play reaching the bridge",
+    "genuine current-session Steam authentication and interactive Library/Big Picture",
+    "physical touch/controller navigation",
+    "Steam-discovered Play reaching bridge",
     "licensed Madeira game launch and return",
-    "repeated Air stability",
-    "measured iPad performance/JIT coexistence/full shutdown"
+    "repeated Air stability and measured performance",
+    "full native quiescence/signal lease integration/runtime restore"
   ],
   "previous_runs": [
     {
@@ -2659,9 +2658,10 @@
         "util/timer.c detached timer_thread",
         "kernel/guest_profile.c optional detached sampler, no stop loop",
         "fs/tty-real.c real TTY read thread",
-        "kernel/native_offload.c macOS-only forwarding worker; iOS stubs checked"
+        "kernel/native_offload.c Apple native-handler pipe forwarding includes iOS; only posix_spawn is macOS-only (run11 correction)"
       ],
-      "finding": "Existing lifetime count tracks guest entries only; it cannot certify all native workers stopped. No timer/profile/TTY/offload cleanup patch yet."
+      "finding": "Existing lifetime count tracks guest entries only; it cannot certify all native workers stopped. No timer/profile/TTY/offload cleanup patch yet.",
+      "correction": "Prior iOS-stubs inference was wrong: !__APPLE__ guard excludes non-Apple, not iOS. Actual iOS object contains native handler and tracked worker calls."
     },
     "unchanged": "Active Air13, saved unsigned Lab15, app target/project/main/vendor/FEX/Valve and account/game/save storage unchanged. Bridge remains diagnostic125. No success sentinel.",
     "next": "Keep Air13 for user genuine login/input/Library/BPM. Before integrating lease/handoff, inventory and measure/disable each optional native worker provider under explicit experimental policy; never assert other_native_workers=0 from guest count alone. Then legitimate Steam Play/game/return validation remains mandatory.",
@@ -2682,5 +2682,97 @@
       "experiments/linux-steam/tools/native-state-control.c": "869f3b8d64b29ebd7208b687f23cfe5070d12aa01dc611b4ac51576dfc0f9d99"
     },
     "implementation_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7"
+  },
+  "run11": {
+    "source_parent": "bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067",
+    "previous_goal_turn": "progress: native signal lease component and real Linux refusal evidence, source published; no full cleanup claim",
+    "hypothesis": "Four additional LinuxRunner native worker providers require pending-through-cleanup accounting before handoff; no assumption that guest counter0 means native quiescence.",
+    "minimal_patch": "Opt-in LINUX_LAB_NATIVE_WORKERS=1 copied-archive wrappers for timers/profiler/real TTY/native-handler pipe forwarding; reserve before pthread_create, retire on failure or outer cleanup; categorical app report/query; original provider error semantics preserved. No stop/reset/lease release/game permission.",
+    "worker_tests": "7 host modes PASS: concurrent role entry/return/pthread_exit, actual periodic timer/free, own pipe-backed real TTY/cancellation, real ARM64 guest->registered harmless native handler with2 real forwarders joined (exit37), real optional profiler remains1 after16 guest controls exit, underflow invalidation, HOST ONLY EAGAIN rollback. Wrapper/task/five worker units sanitized; rest archive not fully instrumented.",
+    "ios_guard": "HOST ONLY start-failure flag intentionally fails actual iOS compilation and emits no object; not a build success.",
+    "correction": "Apple iOS has native in-process handler forwarding. Absence of macOS posix_spawn does NOT imply iOS stubs. Actual iOS object proves handler + tracked worker calls, no posix_spawn.",
+    "builds": {
+      "Lab16": {
+        "version": 16,
+        "unsigned": true,
+        "installed": false,
+        "macho_sha256": "04443ce0c80f0c5b62b72866aea03fe7bd8cb86eaa5a7b1a13bca91e9485ddd0",
+        "linked_symbols": [
+          "_ideck_native_workers_total",
+          "_ideck_native_worker_start",
+          "_ideck_linux_lab_native_worker_entries"
+        ],
+        "runtime_query_is_local_symbol": true,
+        "worker_marker_linked": true,
+        "report_key_linked": true,
+        "signal_lease_not_linked": true,
+        "ios_native_handler_worker_code_present": true,
+        "ios_posix_spawn_absent": true,
+        "ios_worker_receipt_sha256": "48814f1792eef7d7d09dada974b816cf72b80ed57549bdccab2c5094452b328d",
+        "native_handler_object_sha256": "c7b411f5d69745d201ffc5acb80a5b5fd9172b43869b9d0a01242ad80c74b484",
+        "initial_inspection_correction": "nm -gU excludes local runtime symbols; full nm confirms query linked, no runtime patch required",
+        "scope": "full iOS build/final link and copied-object inspection only; not actual Air worker runtime or game handoff validation"
+      },
+      "default": "full unsigned all-flags-off iOS build PASS, marker/start symbol absent; ordinary host16, diagnostic125/protocol sanitizer/package6 checks PASS and disabled query-95 verified",
+      "artifact_inspection_correction": "Initial nm -gU assertion missed the LOCAL runtime query. Full nm confirms it retained; no runtime patch or export added to satisfy verifier."
+    },
+    "actual_device_sequence": [
+      "Old recorded PID2676 missing; current same installed Lab13 process3054 was at home. Activated WITHOUT terminate-existing and PID stayed3054. Actual screen confirms completed ordinary16 diagnostics/status0. Old Steam login session not assumed live.",
+      "Existing exact Air/app/certificate/profile revalidated; signed/deep-strict Lab16 installed over isolated Lab only, retaining container/root/auth/games/saves. No phone/MacAllocator/production install changed.",
+      "Explicit compatibility diagnostic PID3186 completes actual Air status0, native_bridge_requests1, native_guest_threads0, linux_worker_entries0 and guest diagnostic-tool-roundtrip=PASS. Synthetic AppID480/125, NOT licensed game/Steam-discovered Play.",
+      "After identity-verified completed diagnostic, fresh explicit linux-steam-desktop PID3190 started. Shared USB RFB observer succeeds alongside native viewer and captures real1280x800 account startup splash. No credential/key/pointer/Guard automation; account display alone not authentication or Library proof.",
+      "Next shared observer refused connection; fresh CoreDevice lists NO Lab process, so PID3190 actually ended. No new matching crash or jetsam report found in current listing; runtime-result absent, private guest stdout no fatal/assertion. Cause UNKNOWN, not attributed to OOM/JIT/worker patch. User-only question pending whether app was force-closed. No blind restart."
+    ],
+    "next_discriminator": "Await force-close clarification while inspecting delayed exit reports. Native kernel log build uses DPRINTF/writev666 but App never connects fd666; instrument a private native diagnostic sink for a bounded reproduction, not an assumed runtime fix. Preserve same Lab auth; no new login request unless genuine UI requires it.",
+    "limits": [
+      "No authenticated interactive Library/BPM/input/game/return/repeat-stability proof",
+      "Worker counter snapshots are NOT a stop barrier; UI/RFB/TLS/VM/Mach/resources/future starts remain outside this census",
+      "Signal lease still not linked; native runtime restart guard unchanged",
+      "No FEX/vendor/Valve/security/credential edits or success sentinel",
+      "Lab16 first Steam process ended; observer timeout alone was NOT used as death proof"
+    ],
+    "private_artifacts": {
+      "run11-workers-host-final/build-evidence.json": "819df689005df2477fac0f6556e7b2a65145cbb40e735f5b9636e6c4066acd52",
+      "run11-workers-negative-final/build-evidence.json": "2e660a5d88062b2fadb085a64e3c147d8f0e727ea33649e6d7d072abcb0519d2",
+      "run11-worker-controls-final/evidence.json": "e49930714530d9bf7fb6615b5021dfb84f9c9ee8846853bdad743be6568a3f75",
+      "run11-final-linked16.json": "7c40f6e9a30210ab4d1a9bdd8b68aeba920eaab9dc17e0d63850864b4dd87db2",
+      "run11-lab16-build.log": "a5b2e2fe1121f6e75c9fb8575d745565e1e71f35e84505e6aaa5d1e894d47efa",
+      "run11-default-linked.json": "4232d2e41a70125c8f0e28d302b23d58967df41ca62353abb72dedd4d5f814d3",
+      "run11-default-xcode.log": "beaec4353d28befcc7400bc8942957a2aeec0730d9a23e3dacc931a148604d37",
+      "run11-default-host-regression.log": "3a69f977dda14676eae6a6fd67437cfd1922be323d45b020955659f88c4da900",
+      "run11-ios-host-failure-guard.json": "f16c8453c7541f01cbfdb8b175a1b64f9a539391fa0edd54ee1327c4e974f5f7",
+      "run11-air-current-processes.json": "c6bc4f937026e8b86cd22edac5cea5724d7acee951d3a380232631453289a976",
+      "run11-activate-existing.json": "d19e971a3f0696486fbd1187f39cdb7a4bb4b0aaaa0b9fdf1c31773d9e961d1b",
+      "run11-activated-ui.png": "8077e729eb654f5b493bda77c4405b05ede4a937b5006314cd0c0078a9f47ac8",
+      "run11-sign-preflight.json": "8a92350ad098f006e3eeccd38d18f469ccbd5902f2e8995c16420f7d9bb5bc59",
+      "run6/signed-lab16/evidence.json": "5b0d1d0a275f698e27fd14d18103371856832e418e570b4d07020f66f786e9f8",
+      "run11-install16.json": "089c642e82d3740bee70776bd5a9b715489313ce6781294369c4e6b651dab8c6",
+      "run11-launch16-tool.json": "a7955209b8eb5356334a35ce9dda5628947a2780aeb97849361eddf0a9c3c7e2",
+      "run11-air-tool-result.json": "b17708663621d700bec685ea974dc8c6033e7aae1de4e75bc8c8b962c484163c",
+      "run11-air-installed-helper.txt": "3b0d74c67347215ba87194296657195b40cd06a5aa9f58c053d0c256ec6ab4a5",
+      "run11-launch16-steam.json": "c8b5a2ddc17331f4d9fea32b622cf54386e469d075295e390ae56fc0b2a79d43",
+      "run11-rfb-live/observer.json": "7bac8a3ac012b297f08a3967ccaf4020acde42491efca0f3880c437005c15c73",
+      "run11-rfb-live/transport/result.json": "9f2b65260e53ed73e551d7b460dd5b2b2b81b313f8a60f8eb950fffe3d626763",
+      "run11-rfb-live/guest-frame.png": "dc3c8983905fc14ec344c8403290dff33d577c9e7b4b61ab82af28dc58dec300",
+      "run11-rfb-live/later/result.json": "7f1b288733ba5885bd63b7854aaca6cf2ccf9d7dffdfb6cf4a2cf81208f8d8b4",
+      "run11-steam16-current-processes.json": "930c4402ae8a26494298da15536b7a9e921cc9bc2b84ef428333f7c17e9f7b5e",
+      "run11-exit/exit-categorical.json": "b2c931ed8f7ada0b96bb1db0c5242cfee5b13d05d42d70290b683fa2520a19a5",
+      "run11-exit/LinuxLab.json": "ea8466629783d6886843e760415a2f0cf2e3591bebb03e563f867d0bfa163ce9",
+      "run11-exit/JetsamEvent.json": "508c833f24641cf04c4983f38390c83c1cff8974711a308943cd0ac13ae896e1"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "3b0452ece2a161850b5cba2a7d13df15edf3156c47e168b52982bfe5dc1a0f15",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "4fbab4125aa523452d125b2811716c36219cf26d0600af8613f0980ad0a411fd",
+      "experiments/linux-steam/app/LinuxLabRuntime.h": "6471eb3636e1d2300c85c9cfae1da9d9d23f3c4e47193e5a2aa7ac4b2b304552",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "4e234b0d40d82585944c8e4db4e6312309654af18b09da067f1dccb336a6ecbf",
+      "experiments/linux-steam/app/NativeWorkers.c": "f19da0638bf8d16fdaf468f54bd17bfe06ad3d19cf8346925748c36525c64363",
+      "experiments/linux-steam/app/NativeWorkers.h": "38a08180297d38c3812d4cf0cb5fb26938f2d01e26c030ba920180dc2ae8c7b4",
+      "experiments/linux-steam/guest/worker-forward-probe.c": "5e27e4cad248284b7110d52ea530eecca963ebd12567e180f6d25856b0d88341",
+      "experiments/linux-steam/tools/build-lab.sh": "d0c976f401c937ed6feb2fa4752618f1b8acade98d13468cb572539b8e1ecf9e",
+      "experiments/linux-steam/tools/build-native-workers.py": "ce27be3e952b31f5a1ae9d9eef47e87f391014e5f62daa22e5d71f2419be6492",
+      "experiments/linux-steam/tools/host-embed.c": "99ee55ea0915d998cb2e5d83241bfc52518ffcc249d763eafed17f72b7f55b61",
+      "experiments/linux-steam/tools/native-workers-control.c": "785a655435d9f609d2f1b9917f228a65dacd490615e969356cbcd13d8e99e3e0",
+      "experiments/linux-steam/tools/test-native-workers.sh": "9fc9a4542f7ca52ec4abafddb9a7f299d9eb5919406beeeef8c53f383e5ccf9a"
+    }
   }
 }

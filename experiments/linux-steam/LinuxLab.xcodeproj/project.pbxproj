@@ -210,6 +210,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
+					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -244,7 +245,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>15</string>
+				<string>16</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -258,6 +259,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_WORKERS</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -301,6 +304,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
+					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -335,7 +339,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>15</string>
+				<string>16</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -349,6 +353,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_WORKERS</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -400,7 +406,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>15</string>
+				<string>16</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -408,10 +414,13 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
+					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_WORKERS</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -424,7 +433,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>15</string>
+				<string>16</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -432,10 +441,13 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
+					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_WORKERS</key>
 				<string>0</string>
 			</dict>
 		</dict>

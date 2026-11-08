@@ -1244,8 +1244,9 @@ prepared host/lifetime archive/LD_LLD to run the actual Linux refusal case.
 
 **Remaining worker ownership.** Pinned source d1419782 also creates native
 pthread providers in util/timer.c, optional kernel/guest_profile.c, fs/tty-real.c
-and kernel/native_offload.c. The latter has iOS stubs rather than macOS spawn;
-it is not evidence that the other providers are stopped. The profiler sampler
+and kernel/native_offload.c. The native-handler forwarding path also exists on Apple iOS; only macOS
+posix_spawn is excluded there (run11 correction of the earlier stub inference).
+This is not evidence that any other providers are stopped. The profiler sampler
 has an unbounded loop when enabled. None of these are covered by the current
 guest-entry count. Next measure/explicitly exclude each provider before enabling
 lease integration. Do not use an arbitrary delay or assert count0 to hide them.
@@ -1258,3 +1259,75 @@ required; no STABLE_SUCCESS or goal completion is justified.
 
 Run10 component checkpoint: `9348bb8eebe9d4de2076f6f057c923e41e1cccd7` (signed off); unlinked and
 not deployed. Installed Air13 and saved unsigned Lab15 remain unchanged.
+
+## Run11 — tracked native workers and actual Air compatibility diagnostic
+
+Parent `bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067`. Storage, branch/origin/current
+remote and prior user/session state revalidated. User explicitly resumed work.
+No subagents or simultaneous runtime experiments. Four native providers now
+have optional copied-archive pending-through-cleanup counters: real timers,
+optional profiler, real TTY reader and native-handler output forwarders. The
+worker counter snapshot is separate from guest entries, fails closed on invalid
+accounting, and cannot authorize signal restore, Wine or restart. Provider error
+handling semantics are preserved; ignored upstream timer/TTY start errors are
+not claimed fixed. Original archives/vendor/FEX/Valve remain unchanged.
+
+**Correction with compiled evidence:** !__APPLE__ stubs do not apply to iOS.
+Apple iOS retains in-process native handlers and their forwarding workers;
+only HAS_POSIX_SPAWN is macOS-specific. Actual iOS native_offload object contains
+handler + worker-start references without posix_spawn. Earlier run10 inference
+was incorrect and is corrected in resumption/evidence docs.
+
+Seven host controls pass with sanitized wrapper/task/worker units (remaining
+static archive not fully instrumented): concurrent roles including pthread_exit,
+actual periodic timer/free, real TTY reader on this test process's OWN stdin pipe
+with upstream cleanup/cancellation, real ARM64 guest exec of a fixed harmless
+native handler with2 output forwarders and controlled exit37, actual optional
+profiler still live after standard16 guest controls finish, underflow invalidation,
+and explicitly HOST ONLY pthread EAGAIN reservation rollback. No terminal/security
+settings or other process input is touched. Profiler is intentionally alive until
+that one host test process exits, not cleanly stopped. Lab embedding does not
+call the CLI profiler initializer. Actual iOS compilation rejects the HOST-only
+failure-injection macro; that expected failure emits no object.
+
+Full unsigned Lab16 feature build passes, worker marker/helper/query/report key
+actually linked. First exported-only nm check missed the LOCAL runtime query;
+full nm confirms it, without changing runtime/export policy for the verifier.
+Saved unsigned Mach-O SHA04443ce0c80f0c5b62b72866aea03fe7bd8cb86eaa5a7b1a13bca91e9485ddd0.
+Full default-flags-off iOS build plus ordinary host16/diagnostic125/protocol/
+package6 checks pass; disabled count reports-95 rather than invented0.
+LINUX_LAB_NATIVE_WORKERS=1 requires explicit guest lifetime tracking. It reports
+linux_worker_entries categorically after sessions; no signal lease is linked.
+
+**Actual Air sequence:** Fresh process3054 superseded old2676. It was initially
+on home; activation WITHOUT terminate-existing kept3054 and showed a completed
+ordinary16 diagnostic/status0. Therefore the old login wait was no longer an
+active session. Existing exact Air/profile/certificate/expiry were revalidated;
+disposable Lab16 signed/deep-strict verified and installed ONLY into the existing
+isolated freshtest container. Same root/auth/game/save storage preserved; no
+production/MacAllocator/phone app changed. Actual explicit compatibility diagnostic
+PID3186 returns status0, native_bridge_requests1, native_guest_threads0 and
+linux_worker_entries0. Guest installed-helper output diagnostic-tool-roundtrip=PASS.
+This is synthetic AppID480/125, NOT genuine Steam-discovered Play or licensed game.
+
+After identity-verified successful completion, a fresh explicit Linux Steam
+frontend PID3190 starts. Shared authenticated local USB display observation now
+succeeds alongside native viewer: actual1280x800 genuine account startup splash,
+no mouse/keyboard/password/Guard automation. A selected account splash is not
+successful authentication, Library/BPM or stable UI proof. Later observer reports
+connection refusal; fresh authoritative CoreDevice lists NO Lab process, proving
+3190 ended rather than treating timeout as termination. Current crash/jetsam file
+listing contains no new matching report. Runtime-result file absent and private
+guest stdout has no fatal/assertion; cause remains UNKNOWN. User was asked whether
+they force-closed the app; question is pending. No blind restart or sole-cause
+OOM/JIT/worker-counter conclusion.
+
+Next discriminator is private native runtime logging: actual iOS compile uses
+LOG_HANDLER_DPRINTF, whose pinned kernel/log.c writes fd666, while the Lab has
+no connection for that descriptor. This explains missing native diagnostic
+coverage, not the process exit itself. Preserve app/auth state, inspect delayed
+exit reports, then bound a reproduction with native evidence. No new login
+request unless actual genuine UI requires it. Controller/touch qualification,
+Library/BPM, licensed Madeira game and return/repeat stability remain incomplete.
+Source/artifact/receipt hashes are in EVIDENCE; raw logs/frames/QR/profiles stay
+private outside Git. No success sentinel or goal completion is justified.

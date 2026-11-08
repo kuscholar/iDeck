@@ -1,3 +1,44 @@
+# Run11: Lab16 installed, Air diagnostic PASS; Steam native process ended
+
+FIRST current state supersedes old Lab13 auth-wait notes: PID2676 is gone. The
+new Lab13 PID3054 was activated without termination; actual screen showed a
+COMPLETED ordinary16 diagnostic/status0. Only then signed Lab16 was installed
+into SAME isolated freshtest container with exact existing Air profile/certificate.
+No working app/root/auth/games/saves erased. Actual Lab16 compatibility PID3186
+completed status0/request1/guest_entries0/worker_entries0, guest helper PASS.
+This is synthetic AppID480 + diagnostic125, not licensed game or Steam Play.
+
+Completed diagnostic was identity-verified before explicit fresh Steam PID3190.
+New shared USB display observer actually works and captures genuine account
+startup splash1280x800; no key/pointer/auth action. It is NOT interactive Library
+or successful authentication evidence. A later observer failed and authoritative
+CoreDevice then listed NO Lab process:3190 really ended. Cause UNKNOWN. Current
+crash/jetsam listing has no new matching report; runtime result absent, guest log
+no fatal/assertion. User question PENDING: manually force-closed or spontaneous?
+Do not assume OOM, successful login, stability or an active old PID. No blind
+restart. Preserve same root/account state; no new login request without UI evidence.
+
+Worker flag LINUX_LAB_NATIVE_WORKERS=1 requires guest lifetime opt-in. Copied
+archive reserves before native pthread_create and retires after original body/
+nested cleanup or failed start across4 providers. Host7 modes PASS incl actual
+timer/free, private-pipe real TTY, guest->harmless native handler2 forwarders,
+optional profiler1 surviving guest count0, roles/underflow/EAGAIN. Actual iOS
+failure-injection guard refuses compile. Full Lab16 feature/default builds and
+final Mach-O markers/query + native-handler object inspected. Runtime query is
+LOCAL symbol; nm -gU falsely missed it, full nm confirms link. Signal lease NOT
+linked; no restart/stop/Wine permission. Original vendor/base/primary unchanged.
+
+IMPORTANT CORRECTION: iOS Apple native-handler forwarding is real, not a stub.
+Only posix_spawn is macOS-only. Older run10 inference was wrong and corrected.
+Current counters exclude UIKit/RFB/TLS/VM/Mach/future starts; zero not full cleanup.
+NEXT collect delayed termination evidence and wire a private native log sink:
+pinned kernel LOG_HANDLER_DPRINTF writes fd666, but Lab never connects it. Keep
+native log private, input tracing disabled, no credential/Guard automation.
+Full genuine Library/BPM/input -> licensed Madeira game -> reliable return and
+repeat stability remain required. No success sentinel/goal completion.
+
+--- Historical run10/prior context ---
+
 # Run10 9348bb8: unlinked native signal lease; Air13 auth pending
 
 Fresh actual15:27 physical Air screenshot remains genuine empty Steam login/
@@ -20,8 +61,8 @@ handlers preserved. The lease stays owned until this one host test process exits
 Current Lab CANNOT supply a measured complete worker certificate. Full native
 cleanup, lease integration, Wine/game/return and repeated stability remain open.
 
-Pin review identifies native timer, optional profiler, real TTY and macOS-only
-native forwarding pthread providers beyond guest entries. NEXT independent
+Pin review identifies native timer, optional profiler, real TTY and Apple native-handler
+forwarding pthread providers beyond guest entries. NEXT independent
 work: authoritative worker lifetime accounting or explicit exclusion per provider
 before enabling signal restore. Do not invent zero from the task counter. No
 atomic sigaction CAS exists: native owners must serialize; syscall-failure paths

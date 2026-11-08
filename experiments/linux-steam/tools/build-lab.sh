@@ -17,6 +17,9 @@ export PATH="$(dirname "$LD_LLD"):$PATH"
 if [[ ${LINUX_LAB_COMPAT_TOOL:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]]; then
     echo 'Compatibility registration requires explicit Steam frontend opt-in' >&2;exit 2
 fi
+if [[ ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 && ${LINUX_LAB_GUEST_LIFETIME:-0} != 1 ]];then
+    echo 'Native worker accounting requires explicit guest lifetime tracking' >&2;exit 2
+fi
 mkdir -p "$LINUX_LAB_ARTIFACTS"
 sdk=$(xcrun --sdk iphoneos --show-sdk-path)
 out="$LINUX_LAB_ARTIFACTS/ios"
@@ -66,6 +69,12 @@ if [[ ${LINUX_LAB_GUEST_LIFETIME:-0} == 1 ]]; then
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$lifetime_stage/runtime/"
     runtime="$lifetime_stage/runtime"
 fi
+if [[ ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 ]];then
+    worker_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-workers.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-native-workers.py" "$src" "$out" "$runtime/libish.a" "$worker_stage/runtime"
+    cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$worker_stage/runtime/"
+    runtime="$worker_stage/runtime"
+fi
 frontend_libs=""
 if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
     [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]] || { echo 'Steam frontend requires explicit TCP view opt-in' >&2; exit 2; }
@@ -81,6 +90,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_SHARED_DISPLAY="${LINUX_LAB_SHARED_DISPLAY:-0}" \
     LINUX_LAB_COMPAT_TOOL="${LINUX_LAB_COMPAT_TOOL:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
+    LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
     LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

@@ -19,6 +19,9 @@
 #if IDECK_LAB_GUEST_LIFETIME
 #include "GuestLifetime.h"
 #endif
+#if IDECK_LAB_NATIVE_WORKERS
+#include "NativeWorkers.h"
+#endif
 
 static atomic_bool consumed;
 static atomic_int phase;
@@ -51,6 +54,9 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
 #if IDECK_LAB_GUEST_LIFETIME
     if(strcmp(ideck_guest_lifetime_marker(),"IDECK_GUEST_LIFETIME_V1"))return -5;
+#endif
+#if IDECK_LAB_NATIVE_WORKERS
+    if(strcmp(ideck_native_workers_marker(),"IDECK_NATIVE_WORKERS_V1"))return -5;
 #endif
     atomic_store(&phase, 1);
     char distro_data[4096];
@@ -218,6 +224,14 @@ int ideck_linux_lab_live_guest_threads(void) {
 #if IDECK_LAB_GUEST_LIFETIME
     unsigned live=ideck_guest_lifetime_live();
     return live>32768?-5:(int)live;
+#else
+    return -95;
+#endif
+}
+
+int ideck_linux_lab_native_worker_entries(void) {
+#if IDECK_LAB_NATIVE_WORKERS
+    return ideck_native_workers_total();
 #else
     return -95;
 #endif
