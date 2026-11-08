@@ -10,6 +10,17 @@ esac
 duration=${2:-90}
 case "$duration" in ''|*[!0-9]*) exit 2 ;; esac
 test "$duration" -ge 1 && test "$duration" -le 600 || exit 2
+case "${3:---no-cef-debug}" in
+    --cef-debug) cef_debug=1 ;;
+    --no-cef-debug) cef_debug=0 ;;
+    *) exit 2 ;;
+esac
+# Refuse stale/occupied display state; do not delete a possibly live server's
+# lock. A caller must inspect the stopped private root before any recovery.
+if test -e /tmp/.X99-lock || test -S /tmp/.X11-unix/X99; then
+    echo X11_EXISTING_DISPLAY_REFUSED
+    exit 5
+fi
 umask 077
 head -c 12 /dev/urandom | base64 | head -c 8 > /tmp/ideck-vnc-password
 Xvfb :99 -screen 0 1280x800x24 -nolisten tcp -extension MIT-SHM > /tmp/ideck-xvfb.log 2>&1 &
@@ -36,7 +47,9 @@ if test "$steam" = 1; then
     cd /Steam
     export DISPLAY=:99 STEAM_RUNTIME=1
     export LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/Steam/steamrtarm64/panorama
-    ./steamrtarm64/steam -clientbeta steamdeck_stable -nobigpicture > /tmp/ideck-steam-x11.log 2>&1 &
+    set -- -clientbeta steamdeck_stable -nobigpicture
+    test "$cef_debug" = 0 || set -- "$@" -cef-enable-debugging
+    ./steamrtarm64/steam "$@" > /tmp/ideck-steam-x11.log 2>&1 &
     spid=$!
 fi
 sleep "$duration"

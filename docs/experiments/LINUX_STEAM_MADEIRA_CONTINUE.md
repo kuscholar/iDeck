@@ -26,7 +26,60 @@ authorization gates; do not repeat unchanged prompts or assume unsupported paths
 
 Implementation checkpoint: `7ae2fe5222f1d35f4b473fc563815129039518a0` (signed-off isolated branch).
 
-## Latest resume: run4 (supersedes earlier run3 details)
+## Latest resume: run5 (supersedes run4 host UI result)
+
+Genuine ARM64 Linux Steam login is now VISIBLY INTERACTIVE ON THE MAC HOST only.
+Two CEF WebUI/client WebSockets previously403 now101. Native pinned RFB click,
+fixed public test text insertion and Ctrl-A/backspace deletion actually appear
+in private frames. NO login submitted, no auth/cache transfer, no Library/BPM.
+Raw frames contain transient QR login material; never publish them.
+
+Actual discriminator: Valve GetIPCConnectionDetails invokes real lsof. Initially
+missing ->127; install normal Debian lsof4.99.4+dfsg-2 ->1 because LinuxRunner
+lacked TCP tables/socket inode identity. Optional app/LinuxProcTCP.c plus
+build-tcp-view.py overlay only copied archives: real guest FD ownership/inodes,
+native TCP state, proc/net/tcp{,6} and per-PID net. NO Steam/FEX/vendor patch or
+security-check bypass. Partial ABI: guest-visible FD-backed sockets only, no
+orphan sockets, queue counters/network namespaces/UDP completeness. IPv6 header
+must say remote_address; real lsof tests caught and corrected that distinction.
+
+Reproducible test-tcp-view.sh now passes base-negative1 (13 expected failures),
+positive17, real Debian lsof19 IPv4/IPv6 including actual owner PID. Changed units
+ASan/UBSan, not whole runtime. Ordinary16 with correct embedded adapter and bridge
+fixture125/repeatEBUSY plus protocol sanitizers pass;15 Python tests pass.
+An earlier CLI ordinary run lacks embedded urandom/bridge and fails those fixture
+requirements, not proof of a TCP regression. Sanitized Steam run also stalls in
+CEF and shows inherited proc task-list alignment diagnostic; no causal claim.
+Unsanitized same-source Steam run captures login/input and ends0 after366.673s.
+
+Unsigned Lab5 rebuilt with both LINUX_LAB_PACKET_PIPES=1 LINUX_LAB_TCP_VIEW=1.
+Final Mach-O TCP_V1/packetV3/dirfdV3 and linux-tcp-diagnostics markers verified;
+embedded tcp ELF checked. NOT signed/installed/on-Air. linux-tcp-diagnostics
+uses TCPRootFS and last-tcp-probe.txt. Air still has old Lab1; pending user trust
+confirmation unchanged (run5 single probe-file read missing). No repeated trust/
+unlock requests or device launches. Native Mac stack sample timed out, no stack
+artifact; no success or fault inferred. One attempted resource sample found the
+observer had already ended; no memory/CPU measurement exists.
+
+NEXT: carry genuine rootfs/X11/RFB/Metal/input into isolated iOS frontend and
+qualify Air controls after human trust. Keep guest Steam state app-private and
+never copy account secrets from any existing app or host. Current root run2/
+steam-fakefs-v3 is UNAUTHENTICATED but has private transient QR/browser/log state;
+prepare clean installation state rather than transporting that session. Inspect
+fakefs metadata/symlinks/hardlinks before exporting a portable root. Bridge still
+only diagnostic125; licensed Madeira game/return remains wholly unverified.
+
+CEF debug is explicit --cef-debug, unauthenticated only. Steam endpoint [::1]:8080
+was identity-verified; unrelated Docker owns IPv4:8080, leave it alone. Safe CDP
+returns numeric ports/boolean key presence and101/403 metadata only; never save
+raw headers/frames/auth. Observer refuses stale X99 state. Normal cleanup passes;
+if forced termination left old display artifacts, verify no runtime before any
+explicit private-root-only recovery. Never copy/delete live metadata or overwrite
+an active artifact. All host runs ended; no assumed live PID. See run5 private
+receipts and EVIDENCE hashes before a new experiment.
+
+## Historical resume: run4
+
 
 Air4/iPad13,1 is freshly connected, iPadOS27.2(24B119). Read-only last-probe check
 still missing; trust confirmation has not arrived. No repeated launch/install or

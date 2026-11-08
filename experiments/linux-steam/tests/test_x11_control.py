@@ -57,6 +57,17 @@ class Boundaries(unittest.TestCase):
             result = json.loads((output / "result.json").read_text())
             self.assertEqual(result["display_session_returncode"], 0)
             self.assertTrue(result["steam_ui"].startswith("UNVERIFIED"))
+            self.assertFalse(result["cef_debug_requested"])
+
+    def test_debug_opt_in_keeps_auth_guard(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root, cli, output = self.fixture(folder)
+            config = root / "data/Steam/config"
+            config.mkdir(parents=True)
+            (config / "loginusers.vdf").touch()
+            result = subprocess.run([sys.executable, str(TOOL), str(cli), str(root), str(output), "--steam", "--cef-debug"], capture_output=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertFalse(output.exists())
 
     def test_excessive_observation_refused(self):
         with tempfile.TemporaryDirectory() as folder:

@@ -97,11 +97,13 @@
 			<array>
 				<string>$(LINUX_LAB_BUILD_DIR)/probe.elf</string>
 				<string>$(LINUX_LAB_BUILD_DIR)/packet-probe.elf</string>
+				<string>$(LINUX_LAB_BUILD_DIR)/tcp-probe.elf</string>
 			</array>
 			<key>outputPaths</key>
 			<array>
 				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/probe.elf</string>
 				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/packet-probe.elf</string>
+				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/tcp-probe.elf</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -112,6 +114,8 @@
 cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/probe.elf"
 
 cp "$LINUX_LAB_BUILD_DIR/packet-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/packet-probe.elf"
+
+cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/tcp-probe.elf"
 </string>
 		</dict>
 		<key>000000000000000000000009</key>
@@ -207,7 +211,7 @@ cp "$LINUX_LAB_BUILD_DIR/packet-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOU
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>4</string>
+				<string>5</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 			</dict>
@@ -276,7 +280,7 @@ cp "$LINUX_LAB_BUILD_DIR/packet-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOU
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>4</string>
+				<string>5</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 			</dict>

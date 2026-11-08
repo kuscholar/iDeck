@@ -734,3 +734,105 @@ package/rootfs payloads and signing assets remain outside Git.
 Run4 source checkpoint: **7ae2fe5222f1d35f4b473fc563815129039518a0** (signed off). Final contract/iOS artifacts
 are linked and hashed; actual Steam UI still reports0x3009, and Air trust/device
 execution remains pending. All bounded host sessions ended; no stale PID action.
+
+## Run5 — real Linux Steam login/input on the host; Air remains unverified
+
+Baseline/source parent for this run: `d9142c3` on the isolated experiment branch;
+LinuxRunner remains `d1419782da2e299fe22f1ddb85c70ae3d1e276b1`. Storage UUID and
+migration completion, branch/origin/worktrees and remote state were checked before
+writes. The production/main worktrees, FEX, Valve binaries and installed apps were
+not changed. Exact generated-source, archive, executable and private evidence
+hashes are in the adjacent EVIDENCE.json. The recurring task remains active.
+
+**Observed failure and discriminating evidence.** The final packet adapter ran
+for240seconds without its unsupported conversion/reopen diagnostics, but genuine
+CEF's two local WebSockets repeatedly failed with HTTP403. Fixed read-only CEF
+queries showed valid numeric transport ports and boolean key presence; request
+metadata showed the expected Steam origin/localhost/Upgrade values. No key,
+cookie, auth header or WebSocket payload was returned or logged by the diagnostic.
+Steam's own `GetIPCConnectionDetails` logs identify `lsof` exit127. Read-only
+inspection of the exact official steamui.so confirms that it invokes lsof to find
+local socket ownership. Neither that check nor any Valve code was patched.
+
+**Hypothesis and minimal change.** Installing genuine Debian
+`lsof4.99.4+dfsg-2` and its dependencies through normal verified apt changes127
+to1: the command now exists but finds no socket owner. LinuxRunner had neither
+TCP proc tables nor nonzero socket inode identities. The isolated copied-archive
+adapter now assigns stable identities to actual guest open descriptions and
+supplies their real native TCP endpoints/state through proc TCP tables and the
+per-PID net view. Dup/fork shares description identity; retained fd tables and
+references protect collection against closes. Native host PIDs are never reported
+as guest ownership, no fake Steam peer is inserted, and Steam still makes its own
+connection and authentication decisions.
+
+The interface follows the relevant
+[Linux TCP proc format](https://kernel.org/doc/html/v5.12/networking/proc_net_tcp.html).
+Debian's unmodified lsof initially caught an IPv6 header error; the
+[lsof4.99.4 parser](https://raw.githubusercontent.com/lsof-org/lsof/4.99.4/lib/dialects/linux/dsock.c)
+expects `remote_address` for IPv6, rather than IPv4's `rem_address`. Correcting
+that contract removes the warning and makes the actual IPv6 owner test pass.
+This is intentionally partial ABI support: guest-visible descriptor-backed TCP
+only, no orphan/TIME_WAIT inventory, UDP or complete network namespaces. Queue,
+retransmission and timer accounting are not implemented; their columns are zero
+placeholders and cannot support performance conclusions.
+
+**Tests and corrected test setup.** The checked-in `test-tcp-view.sh` reproduces
+base exit1 (4PASS/13 expected FAIL), then17 positive TCP checks. Its optional
+Debian test executes the actual lsof in the ARM64 guest and checks the actual
+owner PID over IPv4 and IPv6, giving19PASS. Changed units use ASan/UBSan; this is
+not whole-runtime instrumentation. The inherited socket unit still emits20
+compiler warnings; the new net unit compiles with Werror. Correctly linking the
+embedded Lab adapter against the new archive also gives all16 ordinary ELF
+controls, diagnostic bridge exit125, repeat-start EBUSY and protocol-sanitizer
+success. A prior CLI fixture lacked the embedded urandom/bridge nodes and failed
+those two requirements; it was the wrong adapter for that regression test.
+All15 Python tests (including6 X11 observer boundaries) pass. The first new shell
+runner exposed Bash3.2's empty-array/set-u behavior; an explicit numeric CPP gate
+fixes the runner, and the complete fresh-output reproduction then passes.
+
+**Actual Steam UI evidence.** One sanitized Steam observation stalled before
+UI/debug-page creation and exceeded its cleanup bound (410.776seconds), showing
+an inherited proc task-list alignment diagnostic. Its cause was not established.
+A separate unsanitized artifact with the same final TCP semantics then records
+HTTP101 on both genuine transport WebSockets and displays Valve's real Steam
+login window. A native pinned RFB client clicks the actual account field, types
+`ideck-input-control`, then Ctrl-A/backspace removes it. Separate real frames
+visually confirm both states. No login was submitted and no credentials/Guard or
+account-cache transfer occurred. The bounded360second display session ends0 at
+366.673seconds. This is a **host interactive login-form milestone**, not account
+login, Library, Big Picture, iPad execution or repeated stability.
+
+Raw frames contain a transient official login QR challenge; they and all raw
+logs/payloads remain private. Public evidence records their hashes only. CEF debug
+is explicit `--cef-debug` and defaults off. Steam's verified endpoint on this Mac
+is IPv6 `[::1]:8080`; unrelated Docker owns IPv4 port8080 and was left untouched.
+A diagnostic that connected to IPv4 first was observing that other service,
+not a Steam failure. One earlier manually ended observer left X99 artifacts,
+which were removed only through the guest filesystem after verifying the private
+root was stopped. The observer now refuses existing X99 state instead of silently
+reusing/deleting it. A bounded native stack sampler timed out without producing
+an artifact; a resource sample found the observer already ended. No stack or
+CPU/memory measurements are claimed from those attempts.
+
+**iOS implementation/build boundary.** Unsigned isolated Lab5 adds
+`linux-tcp-diagnostics`, TCPRootFS and last-tcp-probe.txt. Build gates
+`LINUX_LAB_PACKET_PIPES=1 LINUX_LAB_TCP_VIEW=1` overlay only copied generated
+archives; the default ordinary target path remains unchanged. The iOS SDK lacks
+macOS's tcp_fsm header, so the adapter translates the documented BSD numeric
+state ABI explicitly using the public TCP_CONNECTION_INFO API. Actual iPad
+behavior is still a required control. Full Xcode build passes; the final Mach-O
+contains TCP_V1, packetV3, dirfdV3 and diagnostic-argument markers, and the exact
+embedded TCP ELF matches the host-executed control by SHA256. Lab5 is NOT signed,
+installed or run on Air. The installed old Lab1's single current probe read still
+returns missing-file CoreDevice7000, with no user trust confirmation. No repeated
+launch/install/trust prompt or Mac unlock request was made.
+
+**Next experiment.** Bring a clean portable fakefs plus genuine X11/RFB/Metal and
+input into the isolated iOS frontend, then run the controls and genuine UI on Air
+once the user-only trust boundary is satisfied. Inspect fakefs metadata, symlink
+confinement and hardlink preservation; do not copy a live root, the host's browser
+session/QR state or another app's login data. Only user interaction with the
+actual iPad Steam interface may establish account login. Steam-discovered Play,
+licensed Madeira execution, shutdown/relaunch, game return and repeated physical
+stability remain unimplemented/unverified. No GO assessment or success sentinel
+is justified yet; continue the experiment.

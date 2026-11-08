@@ -246,8 +246,8 @@ conversion is explicitly unsupported; read the investigation before claiming
 complete pipe compatibility. Ordinary stream paths/base archives/vendor remain
 untouched. Build receipts include immutable changed-source snapshots and hashes.
 
-The genuine host Steam client advances to CEF/BrowserReady but actually displays
-Unexpected Transport Error0x3009. No login/Library/BPM/game/return success exists.
+At run4 the genuine host Steam client advanced to CEF/BrowserReady but displayed
+Unexpected Transport Error0x3009. Run5 below supersedes that host login result.
 The next discriminator is WebUI/client transport, including unsupported packet
 mode operations and FD passing, not assertion suppression. iPad developer trust
 is still pending. This source target still lacks an iOS Steam display frontend.
@@ -256,3 +256,58 @@ The X11 observer now accepts `--seconds 1..600` (default90) with a bounded clean
 allowance. It preserves exact per-run private logs. A300-second run is not a
 stability claim. Keep captures private, and never run raw-log controls on an
 authenticated root or copy another app's login state.
+
+## Guest TCP ownership and genuine login (run5)
+
+The actual CEF page's two local WebSockets returned HTTP403. Steam's own log
+identified its missing `lsof` command; normal Debian apt installation supplied
+4.99.4+dfsg-2. It then returned1 because the runtime lacked TCP tables and stable
+socket inode identities. No Valve binary, authentication check or FEX was patched.
+
+`tools/build-tcp-view.py` overlays a NEW copied archive only: stable actual guest
+socket descriptions, `/proc/net/tcp{,6}` and the per-PID net view. The inventory
+uses retained guest descriptor tables and native TCP connection state, not host
+PIDs or invented peers. It is partial: only guest-visible descriptor-backed TCP,
+no orphan/TIME_WAIT inventory, network namespace implementation, UDP or queue/
+retransmission accounting (those counter columns remain zero). Treat it as an
+explicit experimental feature, not a complete Linux network ABI.
+
+Reproduce the negative baseline,17 positive controls and optional19-control
+Debian `lsof` test, with all other Lab runtimes stopped:
+
+```sh
+export LINUX_LAB_TCP_TEST_DIR="$LINUX_LAB_ARTIFACTS/new-tcp-test"
+# Optional: a stopped, unauthenticated fakefs with Debian's real lsof installed.
+export LINUX_LAB_DISTRO_ROOT="$LINUX_LAB_ARTIFACTS/private-prepared-root"
+bash experiments/linux-steam/tools/test-tcp-view.sh
+```
+
+The final unsanitized host artifact then gave two genuine HTTP101 handshakes and
+displayed Steam's actual login UI. Native RFB click/type/delete of the fixed public
+text `ideck-input-control` was visually verified; no login was submitted. Raw
+frames include transient login QR material and MUST remain private. This is a
+host milestone, **not iPad login, Library, Big Picture or stable game/return**.
+The sanitized Steam observation instead stalled before UI and reported an
+inherited proc-list alignment diagnostic; no sole cause or clean full-runtime
+sanitizer claim. Changed-unit contract tests pass separately.
+
+`run-x11-control.py --cef-debug` explicitly requests the genuine client's local
+developer endpoint; default off and the unauthenticated-root guard still applies.
+Inspect ownership before connecting. On this host Steam used `[::1]:8080` while
+an unrelated service already owned IPv4 port8080; never stop that service or
+confuse its HTML response with CEF. Do not log cookies, headers, WebSocket frames,
+authentication keys, account values or arbitrary Runtime.evaluate results.
+Only fixed read-only metadata/boolean queries were used. The observer now refuses
+an existing X99 lock/socket rather than deleting a possibly active display.
+
+Prepare unsigned isolated **Lab5** with both explicit runtime gates:
+
+```sh
+LINUX_LAB_PACKET_PIPES=1 LINUX_LAB_TCP_VIEW=1 \
+  bash experiments/linux-steam/tools/build-lab.sh
+```
+
+After authorized isolated signing/device trust, `linux-tcp-diagnostics` runs the
+embedded ELF in its separate TCPRootFS and writes `last-tcp-probe.txt`. Lab5's final
+Mach-O and embedded ELF were checked; it has NOT been installed or executed on
+Air. No iOS Steam display/rootfs importer or Madeira game handoff exists yet.

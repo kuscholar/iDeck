@@ -16,8 +16,9 @@
     self.output.font = [UIFont monospacedSystemFontOfSize:16 weight:UIFontWeightRegular];
     self.output.translatesAutoresizingMaskIntoConstraints = NO;
     BOOL distro = [NSProcessInfo.processInfo.arguments containsObject:@"linux-distro-diagnostics"];
+    BOOL tcp = [NSProcessInfo.processInfo.arguments containsObject:@"linux-tcp-diagnostics"];
     BOOL packet = [NSProcessInfo.processInfo.arguments containsObject:@"linux-packet-pipe-diagnostics"];
-    self.output.text = packet ? @"iDeck Linux Lab\nLinux packet pipe control\nRunning…\n" : distro ? @"iDeck Linux Lab\nPrepared Debian/glibc control\nRunning…\n" : @"iDeck Linux Lab\nARM64 Linux interpreter control\nRunning…\n";
+    self.output.text = tcp ? @"iDeck Linux Lab\nLinux TCP ownership control\nRunning…\n" : packet ? @"iDeck Linux Lab\nLinux packet pipe control\nRunning…\n" : distro ? @"iDeck Linux Lab\nPrepared Debian/glibc control\nRunning…\n" : @"iDeck Linux Lab\nARM64 Linux interpreter control\nRunning…\n";
     [controller.view addSubview:self.output];
     [NSLayoutConstraint activateConstraints:@[
         [self.output.leadingAnchor constraintEqualToAnchor:controller.view.safeAreaLayoutGuide.leadingAnchor constant:16],
@@ -30,10 +31,10 @@
         NSFileManager *fm = NSFileManager.defaultManager;
         NSURL *support = [fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
         NSURL *lab = [support URLByAppendingPathComponent:@"iDeckLinuxLab" isDirectory:YES];
-        NSURL *root = [lab URLByAppendingPathComponent:distro ? @"DebianRootFS" : packet ? @"PacketRootFS" : @"LinuxRootFS" isDirectory:YES];
+        NSURL *root = [lab URLByAppendingPathComponent:distro ? @"DebianRootFS" : tcp ? @"TCPRootFS" : packet ? @"PacketRootFS" : @"LinuxRootFS" isDirectory:YES];
         NSError *error = nil;
         [fm createDirectoryAtURL:lab withIntermediateDirectories:YES attributes:nil error:&error];
-        if(distro && packet) error=[NSError errorWithDomain:@"LinuxLab" code:22 userInfo:@{NSLocalizedDescriptionKey:@"Select exactly one diagnostic mode; no guest started."}];
+        if((int)distro + (int)packet + (int)tcp > 1) error=[NSError errorWithDomain:@"LinuxLab" code:22 userInfo:@{NSLocalizedDescriptionKey:@"Select exactly one diagnostic mode; no guest started."}];
         if (distro && !error) {
             BOOL directory = NO;
             BOOL ready = [fm fileExistsAtPath:[root URLByAppendingPathComponent:@"data"].path isDirectory:&directory] && directory &&
@@ -42,17 +43,17 @@
         }
         if (!distro && !error) [fm createDirectoryAtURL:root withIntermediateDirectories:YES attributes:nil error:&error];
         NSURL *probe = [root URLByAppendingPathComponent:@"probe"];
-        NSString *reportName = distro ? @"distro-probe-results.txt" : packet ? @"packet-probe-results.txt" : @"probe-results.txt";
+        NSString *reportName = distro ? @"distro-probe-results.txt" : tcp ? @"tcp-probe-results.txt" : packet ? @"packet-probe-results.txt" : @"probe-results.txt";
         NSURL *reportRoot = distro ? [root URLByAppendingPathComponent:@"data" isDirectory:YES] : root;
         [fm removeItemAtURL:[reportRoot URLByAppendingPathComponent:reportName] error:nil];
-        NSData *data = [NSData dataWithContentsOfURL:[NSBundle.mainBundle URLForResource:packet ? @"packet-probe" : @"probe" withExtension:@"elf"]];
+        NSData *data = [NSData dataWithContentsOfURL:[NSBundle.mainBundle URLForResource:tcp ? @"tcp-probe" : packet ? @"packet-probe" : @"probe" withExtension:@"elf"]];
         if (!distro && !error && !data) error = [NSError errorWithDomain:@"LinuxLab" code:2 userInfo:nil];
         if (!distro && !error) [data writeToURL:probe options:NSDataWritingAtomic error:&error];
         if (!distro && !error) [fm setAttributes:@{NSFilePosixPermissions:@0700} ofItemAtPath:probe.path error:&error];
         int result = error ? -1 : distro ? ideck_linux_lab_distro_probe(root.fileSystemRepresentation) : ideck_linux_lab_run(root.fileSystemRepresentation);
         NSString *report = [NSString stringWithContentsOfURL:[reportRoot URLByAppendingPathComponent:reportName] encoding:NSUTF8StringEncoding error:nil] ?: @"No current probe result";
         NSString *summary = [NSString stringWithFormat:@"iDeck Linux Lab\nBackend: interpreter (JIT not compiled)\nStage: %s\nResult (errno or guest wait status): %d\n%@\nSteam UI and Madeira handoff are not tested.\n", ideck_linux_lab_stage(), result, error ? error.localizedDescription : report];
-        [summary writeToURL:[lab URLByAppendingPathComponent:distro ? @"last-distro-probe.txt" : packet ? @"last-packet-probe.txt" : @"last-probe.txt"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        [summary writeToURL:[lab URLByAppendingPathComponent:distro ? @"last-distro-probe.txt" : tcp ? @"last-tcp-probe.txt" : packet ? @"last-packet-probe.txt" : @"last-probe.txt"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
         dispatch_async(dispatch_get_main_queue(), ^{ self.output.text = summary; });
     });
     return YES;

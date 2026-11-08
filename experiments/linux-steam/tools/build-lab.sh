@@ -40,12 +40,22 @@ xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
 xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
     -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
     "$repo/experiments/linux-steam/guest/packet-pipe-probe.c" -Wl,-e,_start -o "$out/packet-probe.elf"
+xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
+    -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
+    "$repo/experiments/linux-steam/guest/tcp-view-probe.c" -Wl,-e,_start -o "$out/tcp-probe.elf"
 runtime="$out"
 if [[ ${LINUX_LAB_PACKET_PIPES:-0} == 1 ]]; then
     packet_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-packet.XXXXXX")
     runtime="$packet_stage/runtime"
     python3 "$repo/experiments/linux-steam/tools/build-pipe-observer.py" "$src" "$out" "$NINJA" "$runtime" --packet-pipes --archive-only
     cp "$out/libish_emu.a" "$out/libfakefs.a" "$runtime/"
+fi
+if [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]]; then
+    [[ ${LINUX_LAB_PACKET_PIPES:-0} == 1 ]] || { echo 'TCP Steam experiment requires explicit packet-pipe opt-in' >&2; exit 2; }
+    tcp_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-tcp.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-tcp-view.py" "$src" "$out" "$runtime/libish.a" "$NINJA" "$tcp_stage/runtime" --archive-only
+    cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$tcp_stage/runtime/"
+    runtime="$tcp_stage/runtime"
 fi
 xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
