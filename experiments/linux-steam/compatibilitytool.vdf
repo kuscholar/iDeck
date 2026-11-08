@@ -1,0 +1,13 @@
+"compatibilitytools"
+{
+    "compat_tools"
+    {
+        "ideck-madeira-lab"
+        {
+            "install_path" "."
+            "display_name" "iDeck Madeira (Lab, diagnostic only)"
+            "from_oslist" "windows"
+            "to_oslist" "linux"
+        }
+    }
+}

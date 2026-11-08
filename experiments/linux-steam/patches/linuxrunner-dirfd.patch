@@ -1,0 +1,22 @@
+--- a/fs/generic.c
++++ b/fs/generic.c
+@@ -11,0 +12,5 @@
++
++
++const char *ideck_linuxrunner_dirfd_guard(void) {
++    return "IDECK_LINUXRUNNER_DIRFD_GUARD_V3";
++}
+@@ -43,0 +49,6 @@
++    if (path_raw[0] && path_raw[0] != '/' && at && at != AT_PWD && !IS_ERR(at)) {
++        struct statbuf st;
++        int err = at->mount->fs->fstat(at, &st);
++        if (err < 0) return ERR_PTR(err);
++        if (!S_ISDIR(st.mode)) return ERR_PTR(_ENOTDIR);
++    }
+@@ -227,0 +239,6 @@
++    if (path_raw[0] && path_raw[0] != '/' && dirfd && dirfd != AT_PWD && !IS_ERR(dirfd)) {
++        struct statbuf st;
++        int err = dirfd->mount->fs->fstat(dirfd, &st);
++        if (err < 0) return err;
++        if (!S_ISDIR(st.mode)) return _ENOTDIR;
++    }

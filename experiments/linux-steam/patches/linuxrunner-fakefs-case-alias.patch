@@ -1,0 +1,22 @@
+--- a/tools/fakefs.c
++++ b/tools/fakefs.c
+@@ -140,8 +140,17 @@
+                 fprintf(stderr, "warning: almost pwned by hardlink %s\n", hardlink);
+                 continue;
+             }
+-            if (linkat(root_fd, fix_path(hardlink_path), root_fd, fix_path(entry_path), 0) < 0)
+-                POSIX_ERR();
++            if (linkat(root_fd, fix_path(hardlink_path), root_fd, fix_path(entry_path), 0) < 0) {
++                int saved_errno = errno;
++                struct stat source_stat, destination_stat;
++                bool same_regular_inode = saved_errno == EEXIST &&
++                    fstatat(root_fd, fix_path(hardlink_path), &source_stat, AT_SYMLINK_NOFOLLOW) == 0 &&
++                    fstatat(root_fd, fix_path(entry_path), &destination_stat, AT_SYMLINK_NOFOLLOW) == 0 &&
++                    S_ISREG(source_stat.st_mode) && S_ISREG(destination_stat.st_mode) &&
++                    source_stat.st_dev == destination_stat.st_dev &&
++                    source_stat.st_ino == destination_stat.st_ino;
++                if (!same_regular_inode) { errno = saved_errno; POSIX_ERR(); }
++            }
+             sqlite3_bind_blob64(insert_hardlink, 1, entry_path, strlen(entry_path), SQLITE_TRANSIENT);
+             sqlite3_bind_blob64(insert_hardlink, 2, hardlink_path, strlen(hardlink_path), SQLITE_TRANSIENT);
+             STEP_RESET(insert_hardlink);

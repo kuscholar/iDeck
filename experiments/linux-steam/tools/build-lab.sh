@@ -1,0 +1,42 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
+set -euo pipefail
+repo=$(cd "$(dirname "$0")/../../.." && pwd)
+: "${LINUX_LAB_ARTIFACTS:?Set to a private directory on the verified external volume}"
+case "$LINUX_LAB_ARTIFACTS" in /Volumes/easystore/*) ;; *) echo 'Artifacts must use the external volume' >&2; exit 2;; esac
+src="$repo/vendor/LinuxRunner"
+expected=d1419782da2e299fe22f1ddb85c70ae3d1e276b1
+[[ $(git -C "$src" rev-parse HEAD) == "$expected" ]] || exit 2
+[[ -z $(git -C "$src" status --porcelain --untracked-files=no) ]] || { echo 'LinuxRunner source is modified' >&2; exit 2; }
+: "${MESON:=meson}"
+: "${NINJA:=ninja}"
+: "${LD_LLD:=ld.lld}"
+LD_LLD=$(command -v "$LD_LLD")
+export PATH="$(dirname "$LD_LLD"):$PATH"
+mkdir -p "$LINUX_LAB_ARTIFACTS"
+sdk=$(xcrun --sdk iphoneos --show-sdk-path)
+out="$LINUX_LAB_ARTIFACTS/ios"
+mkdir -p "$out"
+python3 - "$sdk" "$out/cross.ini" <<'PY'
+import json, sys
+sdk, dest = sys.argv[1:]
+open(dest, 'w').write("[binaries]\nc = ['xcrun', '--sdk', 'iphoneos', 'clang']\nar = ['xcrun', 'ar']\n[host_machine]\nsystem = 'darwin'\ncpu_family = 'aarch64'\ncpu = 'aarch64'\nendian = 'little'\n[properties]\nneeds_exe_wrapper = true\n[built-in options]\nc_args = ['-target', 'arm64-apple-ios26.0', '-isysroot', " + repr(sdk) + "]\nc_link_args = ['-target', 'arm64-apple-ios26.0', '-isysroot', " + repr(sdk) + "]\n")
+PY
+if [[ ! -f "$out/build.ninja" ]]; then
+    "$MESON" setup "$out" "$src" --cross-file "$out/cross.ini" \
+        -Dengine=asbestos -Dguest_arch=arm64 -Djit=false -Djit_emit=false -Dcli_aot= -Dvdso_required=true
+fi
+"$NINJA" -C "$out" libish.a libish_emu.a libfakefs.a
+python3 "$repo/experiments/linux-steam/tools/overlay-dirfd.py" "$src" "$out"
+xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
+    -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
+    "$repo/experiments/linux-steam/guest/probe.c" "$repo/experiments/linux-steam/guest/clone.S" \
+    -Wl,-e,_start -o "$out/probe.elf"
+xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
+    -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
+    "$repo/experiments/linux-steam/guest/compatibility.c" "$repo/experiments/linux-steam/guest/compat-start.S" \
+    -Wl,-e,_start -o "$out/ideck-madeira"
+xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
+    -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
+    -derivedDataPath "$LINUX_LAB_ARTIFACTS/xcode" CODE_SIGNING_ALLOWED=NO \
+    LINUX_LAB_BUILD_DIR="$out" build

@@ -1,0 +1,170 @@
+# iDeck Linux Lab
+
+Private-development experiment, not an alternative product release. See
+[investigation/status](../../docs/experiments/LINUX_STEAM_MADEIRA.md).
+The ordinary Madeira target is untouched. This separate UIKit target links the
+pinned LinuxRunner interpreter, a minimal native embedding adapter and a bounded
+diagnostic compatibility bridge. It currently has **no Steam display frontend**
+and **does not link or start Madeira**.
+
+## Build and controls
+
+Initialize `vendor/LinuxRunner` at the recorded gitlink. Host and iOS builds need
+Xcode, Python3, Meson1.9.2, Ninja and `ld.lld`. Keep tools/build outputs on the
+verified external volume; a private venv is suitable. No graphics, Linux kernel,
+shader converter, FEX modifications or JIT permission is needed for these controls.
+
+```sh
+export LINUX_LAB_ARTIFACTS=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad
+# Put Meson, Ninja and ld.lld on PATH, or set MESON/NINJA/LD_LLD to their full paths.
+bash experiments/linux-steam/tools/test-host.sh
+bash experiments/linux-steam/tools/build-lab.sh
+```
+
+The host script compiles and actually executes ARM64 Linux ELF programs through
+LinuxRunner; this is macOS evidence. The iOS script builds scheme LinuxLab for
+physical arm64 and embeds the same probe. Open `LinuxLab.xcodeproj`, choose your
+own development team, and generate a profile for `com.kuschqin.ideck.linuxlab`.
+Override only this Lab ID if another unique development ID is necessary. Never
+replace the working iDeck ID to obtain signing. Install the signed Lab with
+CoreDevice only after verifying the intended iPad is online and app slots allow
+installation. Do not uninstall apps to make room.
+
+On launch, the Lab runs its control once and shows categorical results. It writes
+`Library/Application Support/iDeckLinuxLab/last-probe.txt`. Copy/read this file
+through the development app container to establish *device* execution; a build,
+process presence or a host result does not suffice. The interpreter requires no
+JIT. Reopen the Lab for another control; no restart-in-place capability is claimed.
+
+`test-host.sh` also runs the real freestanding compatibility wrapper with
+synthetic Steam metadata. It returns **125** intentionally: native diagnostics
+received it, but **no game launched**. Raw wait status is `125 << 8 = 32000`.
+
+## Narrow compatibility fix
+
+`patches/linuxrunner-dirfd.patch` is a GPL patch to LinuxRunner, applied by
+`overlay-dirfd.py` only to generated private `libish.a` inputs. It rejects a
+non-directory dirfd with `ENOTDIR` for relative openat/accessat before normalization.
+Absolute paths and legal file-null utimensat retain their upstream behavior.
+Version3 passes16 host probe lines; the required linked marker is
+`IDECK_LINUXRUNNER_DIRFD_GUARD_V3`. The initial common-path v1 was incorrect for
+utimensat and is superseded, and openat-only v2 missed the observed accessat caller. The original path
+assertion stays. The vendor checkout remains pristine. A linked version function
+is called by the adapter so a build omitting the patch cannot silently pass.
+The control reproduces the original abort without this patch, and tests the errno
+with it. The patch does not establish a complete CEF or filesystem fix.
+
+## Official Steam acquisition control
+
+The host-only `tools/steam_packages.py` selects official `*_all` and
+`*_linuxarm64_linuxarm64` packages, validates size/SHA-256, resumes partial files
+and extracts to **new** private per-package staging directories. It rejects path
+traversal, encrypted entries, case collisions and unsafe links. Official ZIPs use
+some backslash separators and three contained library symlinks; these are checked
+and normalized. Hashes come from HTTPS metadata, not a Valve signature system.
+This is not yet an in-app repair/update/activation manager. Extraction failures
+can leave a partial new staging directory; it never repairs over an existing app.
+
+```sh
+curl --fail --location --output "$LINUX_LAB_ARTIFACTS/steam_client_steamdeck_stable_linuxarm64" \
+  https://client-update.steamstatic.com/steam_client_steamdeck_stable_linuxarm64
+python3 experiments/linux-steam/tools/steam_packages.py \
+  "$LINUX_LAB_ARTIFACTS/steam_client_steamdeck_stable_linuxarm64" \
+  --block bins_linuxarm64_linuxarm64 --cache "$LINUX_LAB_ARTIFACTS/packages" \
+  --extract "$LINUX_LAB_ARTIFACTS/steam-parts"
+```
+
+The isolated loader control uses that actual client plus the pinned Debian ARM64
+glibc package. `ideck_linux_lab_steam_probe` is a fixed desktop/channel launch,
+not the UI integration. Do not run this stdout-collecting loader diagnostic against
+an authenticated root. Its current sparse root lacks complete distro/display/CEF
+dependencies; see the evidence and next test in the investigation document.
+
+## Compatibility discovery and IPC
+
+When the real frontend is ready, install `compatibilitytool.vdf`,
+`toolmanifest.vdf` and the source-built ARM64 `ideck-madeira` executable together
+in `$STEAM_ROOT/compatibilitytools.d/ideck-madeira-lab/`. Do not change existing
+Steam tool choices or claim discovery until tested in Steam itself.
+
+The wrapper supports only `run` and `waitforexitandrun`. It captures positive
+AppID, install directory, executable, cwd, optional compatdata and at most32
+arguments in a fixed8216-byte v1 frame. It uses LinuxRunner's virtual
+`/dev/ideck-madeira` device (lab major242); no guest PID is treated as a Darwin
+process and no socket/command injection is used. Each open accepts one validated
+request and returns a bounded16-byte response. The current handler always reports
+not-launched125. A separate native host filesystem/catalog/ownership validator and
+Madeira adapter are mandatory before any real execution is enabled.
+
+Initial syntax validation permits ASCII paths under the Lab's explicit shared
+library prefix, forbids traversal/sibling-prefix escapes and checks packed argv.
+It does **not** validate symlink races, executable file type, app manifests,
+licenses or host path authority. There is deliberately no host execution API to
+reach by bypassing those unfinished checks. Non-ASCII game paths, Steam query
+verbs, cancellation, complete shutdown and Steam-discovered tool operation remain
+future gates. Synthetic fixture480 is never submitted to Valve as a game launch.
+
+## Attribution and binary boundary
+
+Built on [Madeira/iDeck](https://github.com/kuscholar/iDeck),
+[LinuxRunner](https://github.com/mxhm11cr/LinuxRunner), iSH and ios-linuxkit.
+[DroidDeck](https://github.com/Droid-Deck/DroidDeck) supplies architectural and
+compatibility-tool interface references; no Android wrapper code is transplanted.
+Upstream source/licenses remain in the pinned submodule. The fakefs metadata
+adapter retains GPLv3; new-code converter permissions do not expand upstream
+grants. This Linux-only binary excludes Apple's shader converter; distribution
+of a future combined binary needs a fresh licensing/linkage review. Do not publish
+private logs, rootfs/Valve/game payloads, profiles, pairing files or account data.
+
+Reproduce the sparse root separately (a **new** destination is mandatory):
+
+```sh
+python3 experiments/linux-steam/tools/prepare-loader-control.py \
+  "$LINUX_LAB_ARTIFACTS/steam_client_steamdeck_stable_linuxarm64" \
+  "$LINUX_LAB_ARTIFACTS" "$LINUX_LAB_ARTIFACTS/loader-new-root" --use-host-dns
+# Use a bounded observer when running this fixed, unauthenticated host diagnostic:
+# host-embed <new-root> --steam-loader-probe
+```
+
+This preparation script was actually run on a fresh fixture. It verifies the
+reviewed stable snapshot and Debian libc6 hash, extracts only regular glibc
+libraries, and does not execute a package script. It is intentionally insufficient
+for Steam UI: no complete distro, trust store, display server or client platform
+set. `--use-host-dns` is for host tests; use the iPad's own resolver when adapting
+bootstrap to iOS. Network restrictions of an execution sandbox must be distinguished
+from guest failures. Keep raw diagnostic stdout private and never use an
+authenticated root for this loader probe.
+
+
+## Complete-root and recurring continuation status
+
+The full pinned Debian base was assembled/imported and initialized in the guest;
+its genuine ARM64 curl verifies Valve HTTPS successfully. `build-rootfs-tools.py`
+builds host-only bootstrap/import helpers. Its separate fakefs hardlink patch
+accepts only an existing same regular inode, preserving rejection of conflicting
+files. `make-steam-overlay.py` emits a guest-only archive from validated component
+staging, including directory metadata; never unpack it over the working app.
+The latest host Steam experiment reached update download100% and extraction
+before a deliberate bounded observer termination. No Steam UI is implemented.
+See the investigation for exact commands/evidence and unresolved display gates.
+
+A macOS user LaunchAgent `com.kusch.ideck-linux-steam-ipad-305m` is loaded every
+18300seconds/305minutes. `tools/configure-schedule.py` generates its plist from
+explicit CLI/thread/project/prompt/log arguments. It uses official CLI
+`app-server daemon start` and `queue --resume`; no Codex databases, credentials,
+lock state or OS privacy settings are altered. The existing thread's active
+writer deferred the actual test dispatch; unattended research is not yet proven.
+Read back with `launchctl print gui/$(id -u)/com.kusch.ideck-linux-steam-ipad-305m`.
+Stop only this job upon user cancellation or repeated evidence-backed actual Air
+Steam+Madeira stability with
+`launchctl bootout gui/$(id -u)/com.kusch.ideck-linux-steam-ipad-305m`.
+Mac sleep/storage availability can delay work. User explicitly requests CLI-only
+operation and no further Mac-unlock questions.
+
+The Air deployment uses a previously uninstalled separate development ID
+com.kuschqin.ideck.freshtest with an already authorized matching Air profile.
+Source default linuxlab is unchanged; production and Mac Allocator apps remain
+untouched. Installed Lab1 currently gets SpringBoard's generic
+signature/entitlement/trust refusal. User inspection of the actual iPad prompt
+is pending. Do not infer a Linux crash or claim device execution from signing
+and installation alone. New unsigned Lab2 has not been installed on Air.
