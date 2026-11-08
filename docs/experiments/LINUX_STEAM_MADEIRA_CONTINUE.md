@@ -1,4 +1,4 @@
-# Run9: native signal ownership persists; active Air13 unchanged
+# Run9 6fb631d: native signal ownership persists; active Air13 unchanged
 
 Read run9 actual host evidence before designing handoff. Standard ARM6416-control
 guest finishes0, all guest table entries and native lifetime reservations drain,

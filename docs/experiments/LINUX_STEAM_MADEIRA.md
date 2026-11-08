@@ -1191,3 +1191,6 @@ not yet implement that lease, full cleanup, native restart or Wine coexistence;
 those remain independent requirements. Actual human Steam login, Library/BPM,
 Steam Play, legitimate game launch/return and repeat device stability are still
 unproven. Preserve the existing one-lifetime guards and all working app data.
+
+Run9 host-discriminator checkpoint: `6fb631d9acdb9ba3c0dae3dab1e015ad21487d42` (signed off).
+Installed Air13 and saved unsigned Lab15 remain unchanged.
