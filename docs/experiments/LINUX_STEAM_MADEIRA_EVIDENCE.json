@@ -15,7 +15,7 @@
   "latest_run": "run5",
   "recorded_at_utc": "2026-11-08T15:34:36.423588+00:00",
   "previous_source_checkpoint": "7ae2fe5222f1d35f4b473fc563815129039518a0",
-  "source_checkpoint": "pending signed-off run5 checkpoint; exact source hashes below",
+  "source_checkpoint": "fef1bb73214e223f4e5d641422236f29198ede4c",
   "source_parent": "d9142c3768dd0efd564f68763e9cd04024ac7ec7",
   "target": {
     "product": "iPad13,1",

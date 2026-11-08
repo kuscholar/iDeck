@@ -24,7 +24,7 @@ credentials. Normal authorized CLI tools are allowed. Never automate Steam login
 Guard or user trust approval. Continue independent verifiable work at real human
 authorization gates; do not repeat unchanged prompts or assume unsupported paths.
 
-Implementation checkpoint: `7ae2fe5222f1d35f4b473fc563815129039518a0` (signed-off isolated branch).
+Implementation checkpoint: `fef1bb73214e223f4e5d641422236f29198ede4c` (signed-off run5 isolated branch; host login/input, not Air success).
 
 ## Latest resume: run5 (supersedes run4 host UI result)
 

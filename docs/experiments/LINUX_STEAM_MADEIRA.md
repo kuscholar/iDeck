@@ -836,3 +836,5 @@ actual iPad Steam interface may establish account login. Steam-discovered Play,
 licensed Madeira execution, shutdown/relaunch, game return and repeated physical
 stability remain unimplemented/unverified. No GO assessment or success sentinel
 is justified yet; continue the experiment.
+
+Run5 implementation checkpoint: **fef1bb73214e223f4e5d641422236f29198ede4c** (signed off). Genuine host login/input and unsigned Lab5 are evidenced separately; no on-Air success or final GO.
