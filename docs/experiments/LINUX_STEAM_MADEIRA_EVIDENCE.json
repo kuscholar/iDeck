@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": "run8",
-  "recorded_at_utc": "2026-11-08T20:18:35.020765+00:00",
+  "latest_run": "run9",
+  "recorded_at_utc": "2026-11-08T20:24:30.121331+00:00",
   "previous_source_checkpoint": "09d23478c611b6193f4e12d691d63c2d89e00bbd",
   "source_checkpoint": "e61ed82a3c8075e62b3c8eb88fb58b3061868693",
   "source_parent": "310c6a85a03762f297d6395e97fda31ed4b6a26d",
@@ -320,7 +320,7 @@
       "sha256": "b41d62f142a721a9d46736c6f3e57d1f3763b0bebc4217fe8d9d5d982dad4a5e"
     }
   ],
-  "next_discriminator": "Preserve live Lab13 login; user authenticates through genuine Steam and reports input/Library. Lab15 is built only. After that active session is explicitly finished, qualify optional tool diagnostic and Steam discovery on Air, then full Linux cleanup and legitimate Madeira launch/return.",
+  "next_discriminator": "Preserve Air13 pending human auth. Next independent handoff discriminator: native signal ownership lease with full quiescence and foreign-owner refusal; current zero lifetime count does not authorize Wine. No runtime reset/restore implemented.",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -2610,5 +2610,33 @@
       "libarchive": "fc6563f5130d8a7ee1fc27c0e55baef35119f26c"
     },
     "implementation_checkpoint": "e61ed82a3c8075e62b3c8eb88fb58b3061868693"
+  },
+  "run9": {
+    "source_parent": "c59f16aaab1e3b3353197ec30790f9b1cced7a3d",
+    "previous_goal_turn": "progress: real compatibility installation/ARM64 diagnostic bridge, Lab15 linked and default regression verification, source published",
+    "device": "Fresh CoreDevice confirms same installed Lab13 native process/executable; no device installation, restart, input, account inspection or LLDB attach; human Steam authentication remains pending.",
+    "failure": "Even after guest table empty and native lifetime reservations zero, LinuxRunner still owns native SIGUSR1 and ignores SIGPIPE; prior handlers are not restored.",
+    "hypothesis": "Zero guest tasks/entry count is insufficient for native Wine/FEX handoff because process-wide signal ownership survives.",
+    "discriminator": "Host sentinel handlers/masks installed before actual ARM64 runtime; after real normal16-control guest exit and after injected child pthread creation EAGAIN, query native sigaction and compare owners without printing pointers.",
+    "minimal_patch": "HOST ONLY native-state-control.c/test-native-state.sh; no runtime handler restoration, native restart, vendor/FEX/Valve or active Air mutation.",
+    "results": {
+      "normal": "host control0, all8 signal/lifetime/reentry checks PASS; actual standard16 guest checks PASS",
+      "injected_failure": "host control0 recognizes standard probe guest wait256 (exit1) and same8 ownership/lifetime checks PASS; this is not successful guest execution",
+      "scope": "host wrapper/task-hook sanitizers; other static dependency units not instrumented. No on-Air native signal, Wine execution or full cleanup claim.",
+      "corrected_harness_expectation": "Initial negative harness reused old orphan-probe wait512 and correctly failed. Actual standard probe returns256; fixed expectation and reran to NEW output. Initial evidence retained privately."
+    },
+    "next": "Design a serialized feature-gated ownership lease: capture original actions before Linux init, prove guest/native quiescence, refuse foreign-owner changes, restore only owned actions before any native game. Do not restore while Linux is active or remove restart guard. Still qualify actual Steam auth/Library/BPM/Play before device game handoff.",
+    "private_artifacts": {
+      "run9-native-state-final/evidence.json": "0d7f7bbc76ce31fed2799ca5fff4ba5d9d28d1929a1948e42906bdb7e931b653",
+      "run9-native-state-final/normal.log": "76849a8c537a7a83fb2c29fee97815442e82b8c3ecb3dd817a4860d974434757",
+      "run9-native-state-final/failure.log": "d343e7e748cdf1c4b97c4d2bf412fdfe37d4a9314c02a17e8d579e7de18405f3",
+      "run9-native-state-final-build.log": "a8a44a6d76af4892b5183b4403e7da55d6fc97385c0baa1bd733021c673b2444",
+      "run9-native-state/evidence.json": "aa2f46d043ef7a896d81603a87306b4caf6519997f7da01a58c00bb6fc0d6241",
+      "run9-air-processes.json": "ce2233d613c60d84afbc6e2f11e54abfdb786c5ed8e4ab6ec1a8dc12a11b333d"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/tools/native-state-control.c": "04db61c0cda85f15b47c1f9f47967286457865a9c35cd0ca9d4e356885e17851",
+      "experiments/linux-steam/tools/test-native-state.sh": "931404833a8f00e08ac4e81c0a276971c2f8b98116d9012894a87ec3946e5eb3"
+    }
   }
 }

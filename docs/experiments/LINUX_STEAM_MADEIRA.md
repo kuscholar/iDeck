@@ -1143,3 +1143,51 @@ combined converter-linked binary distribution is justified.
 
 Run8 implementation checkpoint: `e61ed82a3c8075e62b3c8eb88fb58b3061868693` (signed off). Actual installed
 Air13 remains run6 code; Lab15 is an unsigned saved build only.
+
+## Run9 — native signal state outlives all guest entries
+
+Parent `c59f16aaab1e3b3353197ec30790f9b1cced7a3d`; exact external volume, branch,
+origin and current main/experiment remote revisions verified. Fresh CoreDevice
+shows the same Lab13 executable/process alive. User login/Guard reply is still
+pending; no device input, restart/upgrade, auth inspection or debugger attach.
+The preceding goal turn made actual source/build/bridge progress; this turn adds
+a concrete handoff failure discriminator, not a completion claim.
+
+**Observed failure and hypothesis.** Pinned kernel/init.c installs native SIGUSR1
+and ignores SIGPIPE in become_first_process. No inverse API is evident. Joining
+initial execution, empty guest task table and even the run7 native lifetime count
+may therefore leave process state unsuitable for a new Wine/FEX owner.
+
+**Discriminating execution.** New HOST ONLY `tools/native-state-control.c` installs
+its own sentinel native handlers/masks before calling the real ARM64 interpreter.
+It runs the standard16-control guest, waits for no guest table entries AND zero
+native reservations, then reads native sigaction (without logging addresses).
+SIGUSR1 still matches the actual LinuxRunner handler; SIGPIPE is still SIG_IGN;
+both previous actions differ. All8 ownership/lifetime/reentry observations pass,
+standard16 ELF checks pass, native reentry remains-16. A separate injected child
+pthread-start EAGAIN archive yields real standard-probe exit1/wait256; its zero
+reservations/table entries still leave the same signal owners, all8 checks pass.
+This negative control is expected guest FAILURE, not successful guest execution.
+
+The first harness incorrectly reused wait512 from the older orphan probe and
+failed its expected-status assertion. The standard probe's real failure wait is
+256. This expectation was corrected and both cases rerun into a new output
+folder; initial logs retained privately. No runtime fix was claimed from that
+failed harness or from the corrected host control.
+
+**Minimal patch/regression.** Only two standalone host tools are added. Wrapper
+and copied task-hook units use ASan/UBSan; static remaining dependency units do
+not. Original vendor/base archive, FEX, Valve, app target and active Air runtime
+are unchanged. Reproduce with `tools/test-native-state.sh`, prepared host/lifetime
+and explicitly negative HOST ONLY archives, LD_LLD and a NEW private external
+LINUX_LAB_NATIVE_STATE_OUT. Hashes, exact archive pins and results are in EVIDENCE.
+No extra Xcode rebuild or app installation is evidence for this host-only work.
+
+**Next targeted change and limits.** A native signal ownership lease must capture
+prior actions before Linux init, establish serialized full quiescence, reject
+foreign-handler changes, and restore only owned state before any native game.
+Never restore signals while a Linux guest can still run. This experiment does
+not yet implement that lease, full cleanup, native restart or Wine coexistence;
+those remain independent requirements. Actual human Steam login, Library/BPM,
+Steam Play, legitimate game launch/return and repeat device stability are still
+unproven. Preserve the existing one-lifetime guards and all working app data.

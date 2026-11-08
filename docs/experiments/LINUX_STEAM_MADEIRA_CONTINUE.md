@@ -1,3 +1,28 @@
+# Run9: native signal ownership persists; active Air13 unchanged
+
+Read run9 actual host evidence before designing handoff. Standard ARM6416-control
+guest finishes0, all guest table entries and native lifetime reservations drain,
+but native SIGUSR1 STILL points to LinuxRunner and SIGPIPE remains SIG_IGN.
+Prior sentinel actions/masks are NOT restored. A separate HOST ONLY child-start
+EAGAIN case has the same ownership leak after actual guest wait256/exit1. The
+first negative harness mistakenly expected old orphan-probe512; corrected and
+rerun into NEW output. Both final controls pass8 checks, no runtime fix claimed.
+Native restart remains refused-16. No FEX/vendor/Valve edits or signal reset.
+
+Next independent experiment is a serialized opt-in native ownership lease with
+capture-before-init, full quiescence, foreign-owner refusal and exact restore;
+not an assumption that counter0 means Wine may run. Do not restore handlers in
+the active Air app or remove the one-lifetime guard. Current Lab15 is still only
+a saved unsigned build; no new app/runtime build or install required for run9.
+
+Fresh CoreDevice verifies same Lab13 process/executable alive. User Steam login/
+Guard/input reply STILL PENDING. No restart, upgrade, key/pointer/credential action
+or LLDB attach. Preserve current app, account/game/save isolation. Prior run8
+remains authoritative for tool125 and failed second-viewer policy. No authenticated
+Library/BPM/game/return/repeated stability; no success sentinel or goal completion.
+
+--- Prior run8 and historical context ---
+
 # Run8 checkpoint e61ed82; preserve Air13 genuine login
 
 FIRST preserve the SAME active installed Lab13 session (run6 d865032); fresh
