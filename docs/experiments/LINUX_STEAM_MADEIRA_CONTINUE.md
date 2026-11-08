@@ -1,4 +1,4 @@
-# Run8 source/build checkpoint; preserve Air13 genuine login
+# Run8 checkpoint e61ed82; preserve Air13 genuine login
 
 FIRST preserve the SAME active installed Lab13 session (run6 d865032); fresh
 CoreDevice and actual15:15 physical screenshot show genuine empty Steam login,

@@ -1140,3 +1140,6 @@ Full Linux/native cleanup, legitimate Madeira authentication/game launch and
 same-app return remain required; diagnostic125 and zero live-counter are not
 permissions to remove existing single-lifetime guards. No STABLE_SUCCESS or
 combined converter-linked binary distribution is justified.
+
+Run8 implementation checkpoint: `e61ed82a3c8075e62b3c8eb88fb58b3061868693` (signed off). Actual installed
+Air13 remains run6 code; Lab15 is an unsigned saved build only.
