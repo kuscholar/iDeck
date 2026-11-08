@@ -76,6 +76,7 @@
 				<string>610000000000000000000003</string>
 				<string>610000000000000000000004</string>
 				<string>610000000000000000000005</string>
+				<string>630000000000000000000001</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -104,12 +105,18 @@
 				<string>$(LINUX_LAB_BUILD_DIR)/probe.elf</string>
 				<string>$(LINUX_LAB_BUILD_DIR)/packet-probe.elf</string>
 				<string>$(LINUX_LAB_BUILD_DIR)/tcp-probe.elf</string>
+				<string>$(LINUX_LAB_BUILD_DIR)/ideck-madeira</string>
+				<string>$(SRCROOT)/compatibilitytool.vdf</string>
+				<string>$(SRCROOT)/toolmanifest.vdf</string>
 			</array>
 			<key>outputPaths</key>
 			<array>
 				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/probe.elf</string>
 				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/packet-probe.elf</string>
 				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/tcp-probe.elf</string>
+				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/LabCompatibility/ideck-madeira</string>
+				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/LabCompatibility/compatibilitytool.vdf</string>
+				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/LabCompatibility/toolmanifest.vdf</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -122,6 +129,10 @@ cp "$LINUX_LAB_BUILD_DIR/probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FO
 cp "$LINUX_LAB_BUILD_DIR/packet-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/packet-probe.elf"
 
 cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/tcp-probe.elf"
+
+mkdir -p "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility"
+cp "$LINUX_LAB_BUILD_DIR/ideck-madeira" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility/ideck-madeira"
+cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility/"
 </string>
 		</dict>
 		<key>000000000000000000000009</key>
@@ -197,6 +208,8 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>ISH_INTERNAL=1</string>
 					<string>IDECK_LAB_STEAM_FRONTEND=$(LINUX_LAB_STEAM_FRONTEND)</string>
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
+					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
+					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -231,7 +244,7 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>14</string>
+				<string>15</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -241,6 +254,10 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>LINUX_LAB_FRONTEND_LIBS</key>
 				<string></string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
+				<string>0</string>
+				<key>LINUX_LAB_COMPAT_TOOL</key>
+				<string>0</string>
+				<key>LINUX_LAB_SHARED_DISPLAY</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -282,6 +299,8 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>ISH_INTERNAL=1</string>
 					<string>IDECK_LAB_STEAM_FRONTEND=$(LINUX_LAB_STEAM_FRONTEND)</string>
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
+					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
+					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -316,7 +335,7 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>14</string>
+				<string>15</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -326,6 +345,10 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>LINUX_LAB_FRONTEND_LIBS</key>
 				<string></string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
+				<string>0</string>
+				<key>LINUX_LAB_COMPAT_TOOL</key>
+				<string>0</string>
+				<key>LINUX_LAB_SHARED_DISPLAY</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -377,13 +400,19 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>14</string>
+				<string>15</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
+					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
+					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 				</array>
+				<key>LINUX_LAB_COMPAT_TOOL</key>
+				<string>0</string>
+				<key>LINUX_LAB_SHARED_DISPLAY</key>
+				<string>0</string>
 			</dict>
 		</dict>
 		<key>000000000000000000000010</key>
@@ -395,13 +424,19 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>14</string>
+				<string>15</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
+					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
+					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 				</array>
+				<key>LINUX_LAB_COMPAT_TOOL</key>
+				<string>0</string>
+				<key>LINUX_LAB_SHARED_DISPLAY</key>
+				<string>0</string>
 			</dict>
 		</dict>
 		<key>000000000000000000000011</key>
@@ -612,6 +647,24 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>600000000000000000000005</string>
+		</dict>
+		<key>620000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/ToolInstall.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>630000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>620000000000000000000001</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

@@ -14,6 +14,9 @@ expected=d1419782da2e299fe22f1ddb85c70ae3d1e276b1
 NINJA=$(command -v "$NINJA")
 LD_LLD=$(command -v "$LD_LLD")
 export PATH="$(dirname "$LD_LLD"):$PATH"
+if [[ ${LINUX_LAB_COMPAT_TOOL:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]]; then
+    echo 'Compatibility registration requires explicit Steam frontend opt-in' >&2;exit 2
+fi
 mkdir -p "$LINUX_LAB_ARTIFACTS"
 sdk=$(xcrun --sdk iphoneos --show-sdk-path)
 out="$LINUX_LAB_ARTIFACTS/ios"
@@ -75,6 +78,8 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
     -derivedDataPath "$LINUX_LAB_ARTIFACTS/xcode" CODE_SIGNING_ALLOWED=NO \
     LINUX_LAB_BUILD_DIR="$out" LINUX_LAB_RUNTIME_DIR="$runtime" \
+    LINUX_LAB_SHARED_DISPLAY="${LINUX_LAB_SHARED_DISPLAY:-0}" \
+    LINUX_LAB_COMPAT_TOOL="${LINUX_LAB_COMPAT_TOOL:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \

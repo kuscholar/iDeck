@@ -4,6 +4,7 @@
 #import "LabRootFS.h"
 #import "LabSocketPrefix.h"
 #import "LinuxLabRuntime.h"
+#import "ToolInstall.h"
 #import "RFBClient.h"
 #import "MetalFramebufferView.h"
 #include <unistd.h>
@@ -140,10 +141,40 @@
             [self showStatus:[NSString stringWithFormat:@"Dependency control ended (status %d). Restart the Lab for Steam.",result]];
             return;
         }
+        BOOL compatibilityProbe=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-compatibility-diagnostics"];
+#if IDECK_LAB_COMPAT_TOOL
+        NSURL *resource=[NSBundle.mainBundle.resourceURL URLByAppendingPathComponent:@"LabCompatibility" isDirectory:YES];
+        if(!resource){[self showStatus:@"Compatibility resource directory is unavailable; no guest started."];return;}
+        NSData *toolBinary=[NSData dataWithContentsOfURL:[resource URLByAppendingPathComponent:@"ideck-madeira"]];
+        NSData *toolDiscovery=[NSData dataWithContentsOfURL:[resource URLByAppendingPathComponent:@"compatibilitytool.vdf"]];
+        NSData *toolManifest=[NSData dataWithContentsOfURL:[resource URLByAppendingPathComponent:@"toolmanifest.vdf"]];
+        if(!toolBinary.length||toolBinary.length>262144||!toolDiscovery.length||toolDiscovery.length>4096||!toolManifest.length||toolManifest.length>4096){
+            [self showStatus:@"Bundled compatibility tool is missing or exceeds its bounds; no guest started."];return;
+        }
+        if(compatibilityProbe){
+            struct ideck_tool_payload payload={toolBinary.bytes,toolBinary.length,toolDiscovery.bytes,toolDiscovery.length,toolManifest.bytes,toolManifest.length};
+            int result=ideck_linux_lab_compatibility_tool_probe(root.fileSystemRepresentation,&payload);
+            extern unsigned ideck_lab_bridge_requests(void);
+            NSDictionary *report=@{@"status":@(result),@"native_bridge_requests":@(ideck_lab_bridge_requests()),@"diagnostic_only":@YES,
+                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
+            NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil];
+            [data writeToURL:[lab URLByAppendingPathComponent:@"last-compatibility-control.json"] options:NSDataWritingAtomic error:nil];
+            [self showStatus:[NSString stringWithFormat:@"Compatibility diagnostic ended (status %d). No game was launched. Restart the Lab for Steam.",result]];return;
+        }
+#else
+        if(compatibilityProbe){[self showStatus:@"Compatibility tool is not enabled; no guest started."];return;}
+#endif
         [self showStatus:@"Starting genuine ARM64 Linux Steam; waiting for its display."];
         __weak typeof(self) weakSelf=self;
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
+#if IDECK_LAB_COMPAT_TOOL
+            // Capturing the NSData objects here keeps their bytes alive until
+            // the synchronous preboot installer and initial session return.
+            struct ideck_tool_payload payload={toolBinary.bytes,toolBinary.length,toolDiscovery.bytes,toolDiscovery.length,toolManifest.bytes,toolManifest.length};
+            int result=ideck_linux_lab_steam_frontend_with_tool(root.fileSystemRepresentation,&payload);
+#else
             int result=ideck_linux_lab_steam_frontend(root.fileSystemRepresentation);
+#endif
             NSDictionary *snapshot=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),
                 @"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
             NSData *report=[NSJSONSerialization dataWithJSONObject:snapshot options:NSJSONWritingPrettyPrinted error:nil];

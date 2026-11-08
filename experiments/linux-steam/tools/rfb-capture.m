@@ -42,6 +42,11 @@ int main(int argc, char **argv) {
                 width, height, (unsigned long long)count, (unsigned long long)bytes, saved);
             dispatch_semaphore_signal(done);
         };
+        client.statusHandler = ^(NSString *status) {
+            if([status hasPrefix:@"Display error:"] && !atomic_exchange(&captured,true)) {
+                puts("RFB_ERROR frame_unavailable");dispatch_semaphore_signal(done);
+            }
+        };
         [client start];
         long timedOut = dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 45 * NSEC_PER_SEC));
         [client stop];

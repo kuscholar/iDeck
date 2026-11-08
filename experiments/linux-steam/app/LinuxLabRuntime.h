@@ -17,5 +17,10 @@ int ideck_linux_lab_dependencies(const char *root_path);
 /* Optional copied-archive count includes queued guest starts until outer cleanup.
  * Negative means unsupported/invalid. Zero is not a Wine/restart permission. */
 int ideck_linux_lab_live_guest_threads(void);
+struct ideck_tool_payload;
+/* Opt-in preboot installer; the payload belongs to the signed native app. */
+int ideck_linux_lab_steam_frontend_with_tool(const char *root_path,const struct ideck_tool_payload *tool);
+/* Diagnostic125 only, with synthetic metadata; no Steam ownership/game claim. */
+int ideck_linux_lab_compatibility_tool_probe(const char *root_path,const struct ideck_tool_payload *tool);
 const char *ideck_linux_lab_stage(void);
 #endif

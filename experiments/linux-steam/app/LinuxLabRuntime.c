@@ -15,6 +15,7 @@
 #include "fs/fd.h"
 #include "fs/path.h"
 #include "LinuxSteamSession.h"
+#include "ToolInstall.h"
 #if IDECK_LAB_GUEST_LIFETIME
 #include "GuestLifetime.h"
 #endif
@@ -41,10 +42,10 @@ static void *run_guest(void *unused) {
     task_run_current();
     return NULL;
 }
-static int run(const char *root_path, int mode) {
+static int run(const char *root_path, int mode, const struct ideck_tool_payload *tool) {
     int steam_probe = mode == 1, compat_probe = mode == 2, distro_probe = mode == 3;
-    int frontend = mode == 4, dependencies = mode == 5;
-    int fake_root = distro_probe || frontend || dependencies;
+    int frontend = mode == 4, dependencies = mode == 5, tool_probe = mode == 6;
+    int fake_root = distro_probe || frontend || dependencies || tool_probe;
     if (!root_path || root_path[0] != '/') return -22;
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
@@ -112,13 +113,18 @@ static int run(const char *root_path, int mode) {
             if (err < 0 && err != -17) return err;
         }
     }
+#if IDECK_LAB_COMPAT_TOOL
+    if(tool) { int created=0; if((err=ideck_tool_install(tool,&created))<0)return err; }
+#else
+    if(tool)return -95;
+#endif
     /* Keep PID 1 out of guest execution: its halt path calls host _exit(). */
     if ((err = prepare_guest_runtime_dirs()) < 0) return err;
     atomic_store(&phase, 5);
     if ((err = become_new_init_child()) < 0) return err;
     initial_child = current;
     if ((err = create_stdio("/dev/null", MEM_MAJOR, DEV_NULL_MINOR)) < 0) return err;
-    if (compat_probe) {
+    if (compat_probe || tool_probe) {
         const char *fixture[] = {"/mnt", "/mnt/ideck", "/mnt/ideck/SteamLibrary", "/mnt/ideck/SteamLibrary/steamapps", "/mnt/ideck/SteamLibrary/steamapps/common", "/mnt/ideck/SteamLibrary/steamapps/common/Control"};
         for (unsigned i = 0; i < sizeof fixture / sizeof fixture[0]; i++) {
             err = generic_mkdirat(AT_PWD, fixture[i], 0700);
@@ -128,8 +134,14 @@ static int run(const char *root_path, int mode) {
         if (IS_ERR(dir)) return (int)PTR_ERR(dir);
         fs_chdir(current->fs, dir);
     }
-    const char *program = distro_probe || frontend || dependencies ? "/bin/sh" : steam_probe ? "/Steam/steamrtarm64/steam" : compat_probe ? "/ideck-madeira" : "/probe";
+    const char *program = distro_probe || frontend || dependencies || tool_probe ? "/bin/sh" : steam_probe ? "/Steam/steamrtarm64/steam" : compat_probe ? "/ideck-madeira" : "/probe";
     const char frontend_args[] = IDECK_LINUX_STEAM_ARGS;
+    const char tool_args[] = "/bin/sh\0-c\0"
+        "set -eu; umask 077; exec > /tmp/ideck-compatibility-results.txt 2>&1; "
+        "cd " IDECK_LAUNCH_ROOT "Control; "
+        "export STEAM_COMPAT_APP_ID=480 STEAM_COMPAT_INSTALL_PATH=" IDECK_LAUNCH_ROOT "Control; "
+        "set +e; " IDECK_COMPAT_TOOL_EXE " waitforexitandrun " IDECK_LAUNCH_ROOT "Control/control.exe; result=$?; set -e; "
+        "test \"$result\" -eq 125; echo diagnostic-tool-roundtrip=PASS\0";
     const char dependency_args[] = "/bin/sh\0-c\0"
         "set -eu; umask 077; exec > /tmp/ideck-dependencies.log 2>&1; "
         "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin; "
@@ -163,8 +175,8 @@ static int run(const char *root_path, int mode) {
         current->files->files[2] = fd_retain(output);
     }
     atomic_store(&phase, 6);
-    if ((err = do_execve(program, distro_probe || frontend || dependencies ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
-                         frontend ? frontend_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
+    if ((err = do_execve(program, distro_probe || frontend || dependencies || tool_probe ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
+                         frontend ? frontend_args : tool_probe ? tool_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
     exit_hook = observe_exit;
     current = NULL;
     pthread_t worker;
@@ -182,13 +194,13 @@ static int run(const char *root_path, int mode) {
     atomic_store(&phase, 8);
     return wait_status;
 }
-int ideck_linux_lab_run(const char *root_path) { return run(root_path, 0); }
-int ideck_linux_lab_steam_probe(const char *root_path) { return run(root_path, 1); }
-int ideck_linux_lab_compat_probe(const char *root_path) { return run(root_path, 2); }
-int ideck_linux_lab_distro_probe(const char *root_path) { return run(root_path, 3); }
+int ideck_linux_lab_run(const char *root_path) { return run(root_path, 0, NULL); }
+int ideck_linux_lab_steam_probe(const char *root_path) { return run(root_path, 1, NULL); }
+int ideck_linux_lab_compat_probe(const char *root_path) { return run(root_path, 2, NULL); }
+int ideck_linux_lab_distro_probe(const char *root_path) { return run(root_path, 3, NULL); }
 int ideck_linux_lab_steam_frontend(const char *root_path) {
 #if IDECK_LAB_STEAM_FRONTEND
-    return run(root_path, 4);
+    return run(root_path, 4, NULL);
 #else
     (void)root_path; return -95;
 #endif
@@ -196,7 +208,7 @@ int ideck_linux_lab_steam_frontend(const char *root_path) {
 
 int ideck_linux_lab_dependencies(const char *root_path) {
 #if IDECK_LAB_STEAM_FRONTEND
-    return run(root_path, 5);
+    return run(root_path, 5, NULL);
 #else
     (void)root_path; return -95;
 #endif
@@ -208,5 +220,22 @@ int ideck_linux_lab_live_guest_threads(void) {
     return live>32768?-5:(int)live;
 #else
     return -95;
+#endif
+}
+
+int ideck_linux_lab_steam_frontend_with_tool(const char *root_path,const struct ideck_tool_payload *tool) {
+#if IDECK_LAB_STEAM_FRONTEND && IDECK_LAB_COMPAT_TOOL
+    if(!tool)return -22;
+    return run(root_path,4,tool);
+#else
+    (void)root_path;(void)tool;return -95;
+#endif
+}
+int ideck_linux_lab_compatibility_tool_probe(const char *root_path,const struct ideck_tool_payload *tool) {
+#if IDECK_LAB_STEAM_FRONTEND && IDECK_LAB_COMPAT_TOOL
+    if(!tool)return -22;
+    return run(root_path,6,tool);
+#else
+    (void)root_path;(void)tool;return -95;
 #endif
 }

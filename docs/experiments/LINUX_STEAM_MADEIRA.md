@@ -3,7 +3,8 @@
 Status: Phase 1 now has actual Air ARM64 ELF evidence: Lab8 TCP control
 completed status0 with17 PASS. Native Scene startup fixed. Full verified Linux
 image import, native X11/RFB/Metal and genuine Valve Linux Steam login window
-are now visually verified on Air; no authenticated/interactive device Steam login,
+are now visually verified on Air. Run8 adds a host-verified installed diagnostic
+compatibility tool and unsigned Lab15; active Air13 is preserved. No authenticated/interactive device Steam login,
 Library/Big Picture or Madeira game/return/stability success yet. See run6.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
@@ -1056,3 +1057,86 @@ success or scheduler-unload sentinel is justified.
 
 Run7 implementation checkpoint: `09d23478c611b6193f4e12d691d63c2d89e00bbd` (signed off).
 Installed Air Lab13 remains run6 code `d865032`; the new Lab14 is unsigned/build-only.
+
+## Run8 — real tool installation and preserved Air login
+
+Parent `310c6a85a03762f297d6395e97fda31ed4b6a26d`; external mount, branch, exact
+origin/remote main and experiment state revalidated. Same physical Air13 native
+process identity and actual15:15 screenshot show genuine Steam login with empty
+credentials/expired QR, not authenticated Library. Human login/input question
+remains pending. No app upgrade/restart, credential action or account-state copy.
+
+**Failure/hypothesis/test.** The frontend lacked actual custom-tool installation.
+An opt-in preboot fakefs/VFS installer now takes only the signed native bundle's
+bounded ARM64 ELF and two VDF assets. It installs a complete versioned directory
+before any guest tasks run, reuses only exact matching files, rejects symlink
+parents/non-init callers, and preserves conflicts or an existing staging area.
+It cleans only files created by this attempt. Publication relies on that sole
+preboot writer; generic rename is not an adversarial cross-host no-replace API.
+The six real VFS control modes cover24 checks under wrapper/installer ASan+UBSan;
+the static dependency is not fully instrumented. Actual installed ARM64 helper
+execution on the separate unauthenticated host root returns diagnostic125,
+outer shell0 and exactly one native bridge request. Synthetic AppID480 is merely
+a contract fixture. No Steam-discovered Play, owned game or Wine session exists.
+
+`LINUX_LAB_COMPAT_TOOL=1` requires frontend opt-in; default0 leaves runtime
+behavior disabled. `linux-steam-compatibility-diagnostics` is explicit and
+conflicts with other launch modes. It reports only numeric categorical results
+in `last-compatibility-control.json`, with the fixed guest diagnostic result in
+`LinuxSteamRootFS/data/tmp/ideck-compatibility-results.txt`. Bundled NSData assets
+are held through the asynchronous native lifetime. The VDF leading slash in
+`/ideck-madeira %verb%` follows Valve's install-relative Proton toolmanifest
+convention; it is not an arbitrary host shell path. See the primary
+[Valve ARM64 tool manifest](https://github.com/ValveSoftware/Proton/blob/experimental_11.0/toolmanifest_arm64.vdf).
+
+**Actual frontend boundary.** One real host Steam/X11 discovery attempt used only
+a stopped, separate unauthenticated root. Its180-second observer plus50-second
+grace terminated its owned native child, status-15; that is not a Steam crash.
+No tool-discovery or interactive UI success was obtained. Current Air13 remains
+the stronger real login-window evidence. No diagnostic patch was inferred from
+D-Bus/Vulkan warnings.
+
+**CLI display discriminator.** A new host-only bounded public usbmuxd observer
+supports only ListDevices and Connect to the exact selected device/app port5993,
+with ephemeral Mac127.0.0.1 listener, backpressure and byte/time bounds. It never
+reads pairing records or changes trust/security/locks. The generated app-local
+RFB display password is private and distinct from Steam login. Both ordinary and
+shared ClientInit attempts were rejected by current13's exclusive server;
+zero frame/input was delivered and its original native viewer remained active.
+A separate host-only2x2 RFB wire fixture proves shared ClientInit1 is actually
+sent; it is not device or Steam UI evidence. The optional future-build
+`LINUX_LAB_SHARED_DISPLAY=1` adds genuine x11vnc -shared, default0. This flag is
+not deployed or device-validated. No LLDB attach or guest pointer/key action was
+performed; supported CLI debugger help alone was inspected.
+
+**Build/regression evidence.** Full unsigned physical-arm64 Lab15 feature build
+passes. Final Mach-O actually contains installer/runtime entrypoints and shared
+command; its helper SHA256 exactly matches the host-executed installed helper.
+Artifact is saved privately in `run8-lab15-unsigned/LinuxLab.app`, NOT signed,
+installed or on-Air run. Full flags-off build passes; installer symbol/shared
+command absent. Diagnostic assets remain bundled but inactive (an initial test
+incorrectly expected them absent; the observation was corrected, not hidden).
+Ordinary16 real ARM64 controls, diagnostic125 wrapper, protocol sanitizers,
+6 package checks and34 Python tests pass. No FEX/Valve/vendor/game/main edits.
+Hashes for source dependencies, receipts and private evidence are in EVIDENCE.
+
+**Reproduction.** With the pinned prepared external artifacts and toolchain,
+run `tools/test-tool-install.sh` using a NEW `LINUX_LAB_TOOL_OUT`. For the actual
+installed-helper experiment, compile `tools/tool-runtime-control.c` with
+`app/{LinuxLabRuntime,LabDeviceFS,LabBridge,LaunchProtocol,ToolInstall}.c`,
+`IDECK_LAB_STEAM_FRONTEND=1`, `IDECK_LAB_COMPAT_TOOL=1`, `GUEST_ARM64=1`,
+`ENGINE_ASBESTOS=1`, `ISH_INTERNAL=1`, the pinned host include/build directories,
+the copied TCP/packet libish.a and original libish_emu/fakefs/sqlite3. Run it only
+on a stopped unauthenticated host fakefs: arguments are root, own resource folder,
+absolute guest socket prefix and `diagnostic`. Do not use/copy the active Air root.
+For Lab15 build, use the existing build-lab.sh/toolchain/root SHA8afdfb2b... with
+frontend, packet, TCP, lifetime, compatibility and shared-display opt-ins. No JIT
+is required for these interpreter controls. Actual logs/commands belong privately.
+
+**Next boundary.** User completes genuine Steam login/Guard and qualifies actual
+input, Library/BPM. Preserve current session until then. Once it ends, qualify
+optional installed-tool diagnostic on Air, then actual Steam discovery/Play.
+Full Linux/native cleanup, legitimate Madeira authentication/game launch and
+same-app return remain required; diagnostic125 and zero live-counter are not
+permissions to remove existing single-lifetime guards. No STABLE_SUCCESS or
+combined converter-linked binary distribution is justified.

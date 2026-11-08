@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": "run7",
-  "recorded_at_utc": "2026-11-08T19:23:55.706804+00:00",
+  "latest_run": "run8",
+  "recorded_at_utc": "2026-11-08T20:17:47.765295+00:00",
   "previous_source_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38",
   "source_checkpoint": "09d23478c611b6193f4e12d691d63c2d89e00bbd",
   "source_parent": "a894282f73865786a1d0e2bec9f7feb1a2ab5750",
@@ -320,7 +320,7 @@
       "sha256": "b41d62f142a721a9d46736c6f3e57d1f3763b0bebc4217fe8d9d5d982dad4a5e"
     }
   ],
-  "next_discriminator": "Integrate clean portable fakefs/X11/RFB/Metal/input into isolated iOS frontend; after pending user trust, qualify actual Air ELF then genuine Steam UI. Keep all host auth/QR state out of app staging.",
+  "next_discriminator": "Preserve live Lab13 login; user authenticates through genuine Steam and reports input/Library. Lab15 is built only. After that active session is explicitly finished, qualify optional tool diagnostic and Steam discovery on Air, then full Linux cleanup and legitimate Madeira launch/return.",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -343,13 +343,13 @@
     "not_a_fresh_scheduler_readback": true
   },
   "not_verified": [
-    "on-Air ELF/packet/TCP/full-root/display",
-    "genuine account authentication in this Linux runtime",
-    "on-Air interactive Library/BPM/controller/touch",
-    "Steam Play discovery reaching bridge",
+    "genuine Steam account authentication in this Linux Lab",
+    "on-Air interactive Library/Big Picture/controller/touch",
+    "on-Air optional compatibility installation/shared-viewer mode",
+    "Steam-discovered Play reaching the bridge",
     "licensed Madeira game launch and return",
     "repeated Air stability",
-    "iPad performance and JIT coexistence/full shutdown"
+    "measured iPad performance/JIT coexistence/full shutdown"
   ],
   "previous_runs": [
     {
@@ -2514,5 +2514,100 @@
     },
     "implementation_checkpoint": "09d23478c611b6193f4e12d691d63c2d89e00bbd",
     "installed_device_source": "d8650325a90534452317e0b13d0c40a41e626e38 (Lab13), preserved"
+  },
+  "run8_parent": "310c6a85a03762f297d6395e97fda31ed4b6a26d",
+  "run8": {
+    "source_parent": "310c6a85a03762f297d6395e97fda31ed4b6a26d",
+    "active_device": "Same installed Lab13 executable/process confirmed via CoreDevice; actual15:15 Air screenshot remains empty genuine Steam login/expired QR. User auth reply pending; no install/restart/input/credentials this run.",
+    "observed_failure": "No compatibility tool installed in genuine frontend; second developer RFB viewer is refused by current exclusive server, original viewer stays connected.",
+    "hypothesis": "Preboot signed-bundle payload installation can exercise the real ARM64 compatibility executable and bounded native bridge independently of Steam login.",
+    "minimal_patch": "Opt-in IDECK_LAB_COMPAT_TOOL: fakefs/VFS preboot installer, fixed versioned target, exact matching reuse, conflict/stale-stage preservation, installed diagnostic125 mode; separate explicit shared-display flag; CLI-only exact-device bounded loopback observer.",
+    "installer_tests": "24 checks across6 real pinned fakefs/VFS host modes; sanitizer-instrumented installer/control wrapper; static dependency not instrumented.",
+    "actual_installed_helper": "Host real ARM64 executable from installed tool path; helper125, outer shell0, native_bridge_requests1. Synthetic AppID480 is a diagnostic contract fixture, not ownership/game/Steam-discovery evidence.",
+    "host_steam_discovery": "One stopped unauthenticated host root: real Steam/X11 observed180s+50s grace then owned observer terminates native child; return-15 is observer termination, not Steam crash. Tool discovery/UI UNVERIFIED.",
+    "rfb_device_observer": "Exact Air USB through public usbmuxd ListDevices/Connect only, port5993, bounded ephemeral Mac loopback. Both ordinary and shared ClientInit observers refused; zero frame/input obtained, original native viewer preserved. No pairing-record/security/lock operations.",
+    "wire_control": "Host-only2x2 RFB protocol fixture confirms shared ClientInit1 and observer capture; not Steam or device evidence.",
+    "builds": {
+      "Lab15": "unsigned physical arm64 full feature build PASS; actual tool symbols, shared command, helper and VDF hashes inspected. NOT signed/installed/device-run.",
+      "default": "all new runtime flags off full iOS build PASS; installer symbol and shared command absent. Own diagnostic resources still bundled but inactive.",
+      "feature_artifact": {
+        "version": 15,
+        "unsigned": true,
+        "installed": false,
+        "macho_sha256": "b217209f51ba39ab95cc20614e6f2900f25a5a0119a9687eb23e1727c30abb2f",
+        "linked_symbols": [
+          "_ideck_tool_install",
+          "_ideck_linux_lab_compatibility_tool_probe",
+          "_ideck_linux_lab_steam_frontend_with_tool"
+        ],
+        "shared_display_command_linked": true,
+        "resources_sha256": {
+          "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+          "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+          "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+        },
+        "scope": "built/linked only, no on-Air tool or shared-viewer success"
+      },
+      "default_artifact": {
+        "version": "15",
+        "macho_sha256": "1217ef6eeb92fbd0c72567e08bf5c33f9796bd11ce02b5f8a27af86a21c313fe",
+        "compat_installer_symbol_absent": true,
+        "shared_display_command_absent": true,
+        "compatibility_resources_bundled_but_inactive": true,
+        "full_build_pass": true,
+        "scope": "flags-off unsigned iOS build only; original diagnostic assets remain bundled, installer is not linked or invoked; no install/runtime claim"
+      }
+    },
+    "regressions": {
+      "python": "34 PASS",
+      "ordinary_host": "16 ARM64 ELF controls + diagnostic125 wrapper + protocol ASan/UBSan +6 package tests PASS"
+    },
+    "limits": [
+      "Current bridge still diagnostic125; no actual Wine/FEX/DXMT session or licensed game launched",
+      "No full cleanup/restart/Wine co-existence claim",
+      "No authentication/Library/BPM/input/game-return/stability claim",
+      "Current Air13 session unchanged; no credentials or state exported to another root",
+      "Default resource-absence assertion rejected: fixtures are bundled; only disabled runtime/linkage is verified",
+      "No FEX/Valve/vendor/main edits or combined converter-linked binary distribution"
+    ],
+    "private_artifacts": {
+      "run8-tool-controls-final/evidence.json": "f4168f03c736bfd93e52cdec7835d62c7a130317c33d83ab8dbdf5d41c08463a",
+      "run8-installed-tool-diagnostic.log": "480fb50d0f5a91e9f50b06c21f3de9cc5df132329dfd6fcd75523b46f1621b32",
+      "run8-final-linked15.json": "c47e7638225a099b74dd960929500b01b0a8918d687e181ea4752defffe5a949",
+      "run8-lab15-final-build.log": "4adf3ebafab25d5d21d2a4b899e4bb861241fc6168fe4c8ba86c78534d8d23a0",
+      "run8-default-linked.json": "7375b614ee767e0c2cec08d0ae1e98ca4e5239ac442c9160566a5ffed1b9d1c3",
+      "run8-default-xcode.log": "3b0c3c2912e14b21e2e42991ac22df4f39d8bb57ce1c6ce9f29eea5ab33d1503",
+      "run8-default-host-regression.log": "62a7f5d2c6719dc9b964471aa674086ca1bed949c6b6b749a844864e42945ad6",
+      "run8-python-tests.log": "2d856780abcd99bc63fd8e7d4f8a2bcb360beedb04cf9793a065983d288b9da9",
+      "run8-steam-discovery/result.json": "2a5166149db90c642ed900dd0fa6846ca25cf188f9f064966be037b729c6d5bd",
+      "run8-air-rfb-passive/result.json": "c58fc8c2bf054d2d7b7a474bcbc2b64c38607c2bc4c54f1548f5fecfc4ba73ad",
+      "run8-air-rfb-shared/result.json": "d1d0e355d26d9973bc86ea300b8c67aa99561d46d4504d5341f8d35368751fea",
+      "run8-rfb-shared-observer/source-evidence.json": "3695fd877d955e700736de6432bdcfb74454c04640ab697337d2ae3340894513",
+      "run8-rfb-share-bit-test/evidence.json": "acfd3d1053b6d6f7a3cc4c29219ecfa8fbb2ba55849424b0878c0aa18213dd2b",
+      "run8-air-fresh-processes.json": "3edd9011f19e23766895fab46656ff6a5b3d4d9d2b77bf4169a84c37245da157",
+      "run8-air-final-ui.png": "54ba2bd683c6425d983677ea0e0f6e2fe1bd51f0253da14f6cd776913762954c"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "fcdd9d57acab22176d6efe9c93d9e6661cc92b0cae5e2289d35794617a6f4f31",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "34625c27244ed772e463405bff8d1be2f4b89c7734161b40d95e27da2282fd87",
+      "experiments/linux-steam/app/LinuxLabRuntime.h": "da299de07eca5ebf3fe57c391e67ff6a8a0355c35679cec8a2150bc3c5b1ac75",
+      "experiments/linux-steam/app/LinuxSteamSession.h": "afbf0b7d866194663868ef2b59b87252a4d52ec88548d55d7baf5e717a43da37",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "756072624e3d71bd4286fdbe0c7bd47ffb29b57924c223eb93670fb31adacf22",
+      "experiments/linux-steam/app/ToolInstall.c": "e965949c37ba5817bac810114640241852be62ec267a63e1b96d6b7194efee45",
+      "experiments/linux-steam/app/ToolInstall.h": "4043d2b3ec7125129c75e108489bc7b5cc920ca33b2dc0b602c37d580096377e",
+      "experiments/linux-steam/app/main.m": "e659980cd421ecc9295bafea4faf90c32125013dd21845a632929a66289e1cce",
+      "experiments/linux-steam/tests/test_rfb_usbmux.py": "9ff867681c31110bece4c22ea8ab58b1587a41dd82b561c218ab0b28b1d34bc9",
+      "experiments/linux-steam/tools/build-lab.sh": "33844fa3e619fe39f0da905213d558eeedb00d5a4e6929677cea57c9b7e4a276",
+      "experiments/linux-steam/tools/build-rfb-observer.sh": "709c201bdae1ea9a55edb8d136bf7ea71ece6e4d08ec496e1d5720a91168369a",
+      "experiments/linux-steam/tools/forward-lab-rfb.py": "62521dc09bb8089598a14f54b93dbf150ee8a01b38ae562d65c75cd2405420c1",
+      "experiments/linux-steam/tools/rfb-capture.m": "e02d5257ecea1c09fba00d660ab17d8f7ce719d2e27abb83e9fd75a4fe2f13db",
+      "experiments/linux-steam/tools/test-tool-install.sh": "fdcb01ff74748e245bd80a3dacb9c2ba88fc6df1818f3b7327792af8d05cdf94",
+      "experiments/linux-steam/tools/tool-install-control.c": "42ad582bd64e427ced1db598c3d8242a178add98d5d7f75721893584fdfe79dc",
+      "experiments/linux-steam/tools/tool-runtime-control.c": "71ff45c83dbc7bdc97d013deec74f247029e8262f230af47ac675c721fa1972c"
+    },
+    "unchanged_pins": {
+      "LinuxRunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "libarchive": "fc6563f5130d8a7ee1fc27c0e55baef35119f26c"
+    }
   }
 }

@@ -1,3 +1,43 @@
+# Run8 source/build checkpoint; preserve Air13 genuine login
+
+FIRST preserve the SAME active installed Lab13 session (run6 d865032); fresh
+CoreDevice and actual15:15 physical screenshot show genuine empty Steam login,
+expired QR, no authenticated Library. User auth/input question STILL PENDING.
+No new installation, restart, input, passwords or Guard action this run. Do not
+repeat trust/Mac unlock/login requests. Never copy this root/auth to another app.
+
+New optional LINUX_LAB_COMPAT_TOOL=1 installs OUR signed-bundle ARM64 helper and
+VDFs through real fakefs before guest execution into fixed versioned
+/Steam/compatibilitytools.d/ideck-madeira-lab-v1. Matching files reused; unknown
+conflicts/stale stages preserved; init-only and bounded validation. Host24 checks
+pass. ACTUAL installed helper executes with synthetic AppID480, returns125;
+native_bridge_requests1 and outer diagnostic shell0. This is NOT real Steam Play,
+license ownership, game execution, discovery or game-return success.
+
+Unsigned Lab15 full feature build and final Mach-O/resource inspection pass;
+all-flags-off iOS build and ordinary16/protocol/package/Python34 regressions pass.
+Saved run8-lab15-unsigned; NOT signed/installed/on-Air qualified. Optional
+LINUX_LAB_SHARED_DISPLAY=1 adds x11vnc -shared only to this experimental frontend.
+Current13 rejects second ordinary AND shared developer viewers, leaving original
+viewer alive. Do NOT keep retrying or alter that active server live. New public
+usbmuxd observer uses only exact-device ListDevices/Connect to app5993, ephemeral
+Mac loopback, bounded time/bytes, no pairing records/trust/security/credentials.
+Actual observer delivered no frame or input. Private display password is NOT a
+Steam account credential; never publish either. Host-only wire fixture confirms
+shared bit1, not device success. No LLDB attach/expression was performed.
+
+A separate unauthenticated host Steam discovery observer was bounded/terminated;
+no tool-discovery/UI proof. No competing host experiment remains from that run.
+After user login/input/Library qualification, preserve that auth; only after live
+user session ends, sign/upgrade Lab15 if needed, run explicit
+linux-steam-compatibility-diagnostics then fresh frontend lifetime. Collect
+last-compatibility-control.json and guest tmp/ideck-compatibility-results.txt.
+Actual Steam discovery/Play must be measured separately. Preserve one-lifetime
+Wine/runtime guard and finish full Linux cleanup before real Madeira handoff.
+Bridge125 is still diagnostic; all full product/stability gates remain open.
+
+--- Previous run7 and historical context follow ---
+
 # Run7 source/build progress (09d2347); preserve active Air Lab13 login
 
 FIRST respect the human auth boundary below. Fresh CoreDevice confirms SAME

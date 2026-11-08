@@ -15,10 +15,11 @@
     UIViewController *existing = self.window.rootViewController;
     self.window = [[UIWindow alloc] initWithWindowScene:scene];
     if (existing) { self.window.rootViewController=existing; [self.window makeKeyAndVisible]; return; }
-    if ([NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-desktop"] ||
-        [NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-install-dependencies"]) {
-        BOOL conflict=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-desktop"] &&
-            [NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-install-dependencies"];
+    unsigned steamModes=0;
+    for(NSString *mode in @[@"linux-steam-desktop",@"linux-steam-install-dependencies",@"linux-steam-compatibility-diagnostics"])
+        if([NSProcessInfo.processInfo.arguments containsObject:mode])steamModes++;
+    if (steamModes) {
+        BOOL conflict=steamModes!=1;
         for(NSString *argument in @[@"linux-distro-diagnostics",@"linux-packet-pipe-diagnostics",@"linux-tcp-diagnostics"])
             if([NSProcessInfo.processInfo.arguments containsObject:argument])conflict=YES;
         if(conflict) {
