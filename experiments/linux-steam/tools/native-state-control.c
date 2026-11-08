@@ -8,6 +8,10 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#if IDECK_TEST_NATIVE_SIGNAL_LEASE
+#include "NativeSignalLease.h"
+#include <errno.h>
+#endif
 
 static int failures;
 static void check(const char *name, int ok) {
@@ -37,6 +41,11 @@ int main(int argc, char **argv) {
     sigaddset(&owner.sa_mask,SIGUSR2);
     if (sigaction(SIGUSR1,&owner,NULL) || sigaction(SIGPIPE,&owner,NULL) ||
         sigaction(SIGUSR1,NULL,&before_usr1) || sigaction(SIGPIPE,NULL,&before_pipe)) return 3;
+#if IDECK_TEST_NATIVE_SIGNAL_LEASE
+    extern void sigusr1_handler(int);
+    struct ideck_signal_lease *lease=ideck_signal_lease_capture(sigusr1_handler);
+    if (!lease) return 5;
+#endif
     dup2(2,666);
     int result=ideck_linux_lab_run(argv[1]);
     /* The standard probe exits1 when its clone cannot start. The older orphan
@@ -55,6 +64,19 @@ int main(int argc, char **argv) {
     check("pipe-still-ignored-by-linuxrunner",after_pipe.sa_handler==SIG_IGN);
     check("usr1-prior-owner-not-restored",!same_action(&before_usr1,&after_usr1));
     check("pipe-prior-owner-not-restored",!same_action(&before_pipe,&after_pipe));
+#if IDECK_TEST_NATIVE_SIGNAL_LEASE
+    check("real-linux-signal-ownership-recorded",ideck_signal_lease_claim(lease)==0);
+    /* Deliberately UNKNOWN: the entry counter excludes timer/profile/TTY/
+     * forwarding workers. Do not invent a full-quiescence assertion here. */
+    struct ideck_signal_quiescence proof={1,1,live_guests(),ideck_linux_lab_live_guest_threads(),-1};
+    check("unknown-other-workers-refuse-release",ideck_signal_lease_release(lease,&proof)==-EAGAIN);
+    struct sigaction refused_usr1,refused_pipe;
+    if (sigaction(SIGUSR1,NULL,&refused_usr1) || sigaction(SIGPIPE,NULL,&refused_pipe)) return 6;
+    check("refusal-preserves-real-linux-handlers",same_action(&after_usr1,&refused_usr1)&&same_action(&after_pipe,&refused_pipe));
+    check("owned-lease-cannot-be-discarded",ideck_signal_lease_destroy(lease)==-EBUSY);
+    /* This one host test process now exits normally, reclaiming its deliberately
+     * still-owned lease. No runtime restart or signal restoration was allowed. */
+#endif
     check("native-runtime-reentry-remains-refused",ideck_linux_lab_run(argv[1])==-16);
     puts("scope=host signal ownership only; no Wine/iPad shutdown or handoff success");
     return failures?1:0;

@@ -1194,3 +1194,64 @@ unproven. Preserve the existing one-lifetime guards and all working app data.
 
 Run9 host-discriminator checkpoint: `6fb631d9acdb9ba3c0dae3dab1e015ad21487d42` (signed off).
 Installed Air13 and saved unsigned Lab15 remain unchanged.
+
+## Run10 — isolated native signal lease, fail-closed real-runtime control
+
+Parent `72b6763a70ae7bed5751e23f3a9cee5a8e7315db`; storage UUID/migration, branch,
+origin and clean prior checkpoint verified. The preceding goal turn made actual
+progress by reproducing surviving signal ownership. Fresh exact Air identity and
+15:27 physical screenshot confirm SAME Lab13 genuine login, empty credentials,
+expired QR. The human authentication/input boundary is still pending. No device
+input, upgrade/restart, password/Guard/auth inspection or debugger attach.
+
+**Targeted implementation.** Separate NativeSignalLease.c/.h captures pre-Linux
+native signal actions and records exact expected Linux USR1 and ignored PIPE
+ownership. Operations belong to one native owner thread; other signal setters
+must be serialized too, because POSIX sigaction has no atomic compare-and-swap.
+Release requires the native caller's actually measured runtime-returned,
+future-starts-disabled, guest-task/native-entry/other-worker0 assertions. Unknown
+counts MUST stay negative. The current Lab has no complete other-worker census
+and MUST NOT claim zero. This component cannot accept guest IPC readiness or
+launch Wine, reset a runtime or authorize any game itself.
+
+Before restoring either action it compares BOTH handlers, flags and masks.
+Foreign-owner changes poison the lease without overwriting that policy. On
+syscall/readback failure, including possible partial restoration, no retry or
+clean-handoff result is allowed. Such OS failure paths are not fault-injected in
+this run. A successful signal-resource release alone would still not prove full
+VM/TLS/filesystem/Mach-state cleanup or restart safety.
+
+**Tests and real-runtime discriminator.** Five real native OS policy-fixture
+modes pass ASan/UBSan: exact original restoration/incomplete gates, claim conflict,
+foreign handler, same-handler foreign mask and same-handler foreign flags.
+Wrong-thread operations and unknown/incomplete counts are refused. These use
+explicit component-contract fixtures, not measured Linux full-quiescence claims.
+A separate control executes the real ARM64 standard16 probes and real lifecycle
+archive. Guest table/count drain0; the lease records actual Linux handlers. With
+other workers correctly UNKNOWN (-1), release returns EAGAIN and preserves BOTH
+actual Linux handlers. Owned bookkeeping cannot be destroyed; it lives until
+this one host test process exits. No Linux-runtime signal restoration, game
+start or full native shutdown was performed. No claim of leak-free teardown.
+
+A standalone iOS-arm64 object compiles with Wall/Wextra/Werror. The component is
+NOT referenced by the Lab Xcode target and no app Mach-O includes this candidate.
+Do not infer a deployed fix from that object. Installed Air13 and saved unsigned
+Lab15 are unchanged. The optional native-state-control test branch leaves the
+original run9 discriminator default unchanged; its regressions are recorded
+privately. Reproduce with tools/test-native-signal-lease.sh, NEW private
+LINUX_LAB_SIGNAL_LEASE_OUT; add LINUX_LAB_SIGNAL_LEASE_REAL_RUNTIME=1 plus the
+prepared host/lifetime archive/LD_LLD to run the actual Linux refusal case.
+
+**Remaining worker ownership.** Pinned source d1419782 also creates native
+pthread providers in util/timer.c, optional kernel/guest_profile.c, fs/tty-real.c
+and kernel/native_offload.c. The latter has iOS stubs rather than macOS spawn;
+it is not evidence that the other providers are stopped. The profiler sampler
+has an unbounded loop when enabled. None of these are covered by the current
+guest-entry count. Next measure/explicitly exclude each provider before enabling
+lease integration. Do not use an arbitrary delay or assert count0 to hide them.
+
+All source/receipt hashes are in EVIDENCE. No vendor/FEX/Valve, primary app/main,
+account/game/save or security change; no compiled binary/rootfs/QR/raw logs in
+Git. Bridge125 remains diagnostic. Actual human login, input/Library/BPM,
+Steam-discovered Play, licensed Madeira game/return and repeat stability remain
+required; no STABLE_SUCCESS or goal completion is justified.

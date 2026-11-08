@@ -1,3 +1,35 @@
+# Run10: unlinked native signal lease; Air13 authentication still pending
+
+Fresh actual15:27 physical Air screenshot remains genuine empty Steam login/
+expired QR; same native Lab13 process/executable alive. Preserve it. No install,
+restart, input, credentials, Guard, auth copy or LLDB attach. Human login/input
+question remains pending; do not repeat trust/Mac unlock/login questions.
+
+New NativeSignalLease.c/.h is NOT linked into the Lab target. It is an isolated
+native signal-resource component, not permission for Wine or runtime restart.
+It captures original actions before Linux initialization, records exact expected
+USR1/PIPE ownership, requires one native owner thread plus serialized other
+signal owners, and refuses unknown/incomplete native cleanup. Foreign pointer,
+mask or flag changes poison it without restoring either signal. Real OS component
+fixture tests5 modes pass ASan/UBSan; standalone iOS object compiles. This is not
+an iOS app build/link/device success. No actual new signed app exists from run10.
+
+Actual real ARM64 standard16 host control + recorded Linux ownership PASS;
+other_native_workers=-1 correctly refuses release/EAGAIN with both actual Linux
+handlers preserved. The lease stays owned until this one host test process exits.
+Current Lab CANNOT supply a measured complete worker certificate. Full native
+cleanup, lease integration, Wine/game/return and repeated stability remain open.
+
+Pin review identifies native timer, optional profiler, real TTY and macOS-only
+native forwarding pthread providers beyond guest entries. NEXT independent
+work: authoritative worker lifetime accounting or explicit exclusion per provider
+before enabling signal restore. Do not invent zero from the task counter. No
+atomic sigaction CAS exists: native owners must serialize; syscall-failure paths
+are poisoned but not fault-injected. Existing runtime reentry guard stays intact.
+Active Air13 and saved unsigned Lab15 unchanged; bridge remains diagnostic125.
+
+--- Prior run9 and historical evidence ---
+
 # Run9 6fb631d: native signal ownership persists; active Air13 unchanged
 
 Read run9 actual host evidence before designing handoff. Standard ARM6416-control

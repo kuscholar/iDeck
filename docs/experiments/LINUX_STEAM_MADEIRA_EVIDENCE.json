@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": "run9",
-  "recorded_at_utc": "2026-11-08T20:24:30.121331+00:00",
+  "latest_run": "run10",
+  "recorded_at_utc": "2026-11-08T20:32:25.812149+00:00",
   "previous_source_checkpoint": "e61ed82a3c8075e62b3c8eb88fb58b3061868693",
   "source_checkpoint": "6fb631d9acdb9ba3c0dae3dab1e015ad21487d42",
   "source_parent": "c59f16aaab1e3b3353197ec30790f9b1cced7a3d",
@@ -320,7 +320,7 @@
       "sha256": "b41d62f142a721a9d46736c6f3e57d1f3763b0bebc4217fe8d9d5d982dad4a5e"
     }
   ],
-  "next_discriminator": "Preserve Air13 pending human auth. Next independent handoff discriminator: native signal ownership lease with full quiescence and foreign-owner refusal; current zero lifetime count does not authorize Wine. No runtime reset/restore implemented.",
+  "next_discriminator": "Keep Air13 for user genuine login/input/Library/BPM. Before integrating lease/handoff, inventory and measure/disable each optional native worker provider under explicit experimental policy; never assert other_native_workers=0 from guest count alone. Then legitimate Steam Play/game/return validation remains mandatory.",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -2639,5 +2639,47 @@
       "experiments/linux-steam/tools/test-native-state.sh": "931404833a8f00e08ac4e81c0a276971c2f8b98116d9012894a87ec3946e5eb3"
     },
     "implementation_checkpoint": "6fb631d9acdb9ba3c0dae3dab1e015ad21487d42"
+  },
+  "run10": {
+    "source_parent": "72b6763a70ae7bed5751e23f3a9cee5a8e7315db",
+    "previous_turn": "progress: real native signal-ownership discriminator and published source checkpoint; not complete shutdown",
+    "device": "Fresh exact Air process/executable still Lab13; actual15:27 screenshot genuine Steam login, empty account/password and expired QR. Auth/input user reply pending; no install/restart/input/credential/Guard or debugger action.",
+    "hypothesis": "A native serialized signal ownership lease can preserve original actions and refuse release for incomplete cleanup or foreign ownership, without starting Wine or trusting guest-provided readiness.",
+    "implementation": "Separate unlinked NativeSignalLease native component: capture-before-init, exact Linux-owner claim, owner-thread restriction, complete native assertions, full handler+mask+flags comparison before restoring either signal, poison on partial/error/foreign change, no retries/reset/game permission. Current Lab cannot attest other workers and must pass-1.",
+    "tests": {
+      "component": "5 real native OS signal-policy fixture modes PASS with ASan/UBSan: exact restore/gates, claim conflict, foreign handler, foreign mask, foreign flags; wrong owner thread and incomplete/unknown count gates covered. Fixture complete proof is not measured Linux cleanup.",
+      "actual_linux": "Real ARM64 standard16 controls PASS; native count0 + empty guest table; lease records actual Linux handlers, unknown other workers returns EAGAIN preserving both handlers; owned lease remains owned until this host test process ends. No actual Linux-handler restoration or Wine handoff claimed.",
+      "ios": "Standalone iOS arm64 object compiles Wall/Wextra/Werror. NOT linked into Lab target/Mach-O, no full app build/install/device validation for component.",
+      "error_limits": "OS sigaction partial syscall failure paths are poisoned but not fault-injected; no atomic CAS guarantee for uncooperative external signal setters.",
+      "previous_discriminator": "Default native-state normal and injected-failure controls both0; previous16 guest controls pass in normal mode, expected failure256 recognized in negative."
+    },
+    "other_worker_inventory": {
+      "source_pin": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "paths": [
+        "util/timer.c detached timer_thread",
+        "kernel/guest_profile.c optional detached sampler, no stop loop",
+        "fs/tty-real.c real TTY read thread",
+        "kernel/native_offload.c macOS-only forwarding worker; iOS stubs checked"
+      ],
+      "finding": "Existing lifetime count tracks guest entries only; it cannot certify all native workers stopped. No timer/profile/TTY/offload cleanup patch yet."
+    },
+    "unchanged": "Active Air13, saved unsigned Lab15, app target/project/main/vendor/FEX/Valve and account/game/save storage unchanged. Bridge remains diagnostic125. No success sentinel.",
+    "next": "Keep Air13 for user genuine login/input/Library/BPM. Before integrating lease/handoff, inventory and measure/disable each optional native worker provider under explicit experimental policy; never assert other_native_workers=0 from guest count alone. Then legitimate Steam Play/game/return validation remains mandatory.",
+    "private_artifacts": {
+      "run10-air-processes.json": "42b7613f91e8b5388c1b6e279640ca3b55143aa5fcb9832eab55a8ca7f68fcfc",
+      "run10-air-ui.png": "d5d093fd36b62e908bdb11b8ba455f4ee8c4ed086643fee11247c72ee67df9f4",
+      "run10-signal-lease-final/evidence.json": "74c1dcbeab131693df842d74c38bc71ee404e0598551a89aebc02254e1157269",
+      "run10-signal-lease-final/real-runtime.log": "0e3e25e5643eae641def13109420f4bb598b71a8cd98557a4240359ff6ac1b3f",
+      "run10-signal-lease-final/NativeSignalLease-ios.o": "c06ff6f692a55009743f6f479fe2f47c8630d706b4c351c69f7d4b07043a460e",
+      "run10-signal-lease-final-build.log": "d2c2936330a1294a02d353f79fcee668ee90e647096fe36843b963605f090e33",
+      "run10-native-state-regression/evidence.json": "994011f807e5f750ba65ce5fc59d917a8858077274d8abf0acd2a7870d24489a"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/app/NativeSignalLease.c": "79b8716b31ed242db3aa12bda45a5bd313c27936ce90740ba394b13e5f231427",
+      "experiments/linux-steam/app/NativeSignalLease.h": "37f0433bbcc965de69338cdeee33c59c3c43d6e687153225227382952d600f08",
+      "experiments/linux-steam/tests/native-signal-lease-test.c": "ae9e2781b6a5541f423500320a36d75bf0de2d98bfccff97ead33ecda179ee09",
+      "experiments/linux-steam/tools/test-native-signal-lease.sh": "99ef72397d71762e0ca6cb93e7dedba54d60a17ad6b2f58179ff51a391804aa7",
+      "experiments/linux-steam/tools/native-state-control.c": "869f3b8d64b29ebd7208b687f23cfe5070d12aa01dc611b4ac51576dfc0f9d99"
+    }
   }
 }
