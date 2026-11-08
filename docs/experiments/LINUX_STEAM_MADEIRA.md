@@ -730,3 +730,7 @@ this continuation prompt actually arrived and progressed source/build/test work.
 Future scheduling through sleep/storage outages is not guaranteed. No success
 sentinel was written and no scheduled task was stopped. Raw screenshots, logs,
 package/rootfs payloads and signing assets remain outside Git.
+
+Run4 source checkpoint: **7ae2fe5222f1d35f4b473fc563815129039518a0** (signed off). Final contract/iOS artifacts
+are linked and hashed; actual Steam UI still reports0x3009, and Air trust/device
+execution remains pending. All bounded host sessions ended; no stale PID action.
