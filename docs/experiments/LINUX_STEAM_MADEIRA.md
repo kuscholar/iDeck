@@ -2,7 +2,8 @@
 
 Status: Phase 1 now has actual Air ARM64 ELF evidence: Lab8 TCP control
 completed status0 with17 PASS. Native Scene startup fixed. Full verified Linux
-image import and native X11/RFB/Metal desktop are now verified on Air; no interactive device Steam UI/login,
+image import, native X11/RFB/Metal and genuine Valve Linux Steam login window
+are now visually verified on Air; no authenticated/interactive device Steam login,
 Library/Big Picture or Madeira game/return/stability success yet. See run6.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
@@ -978,3 +979,14 @@ Run6 implementation checkpoint: `d8650325a90534452317e0b13d0c40a41e626e38` (sign
 record BrowserReady65536 and popup/BrowserReady131073, but the actual collected
 frame still does not show an interactive login. Preserve this session; neither
 BrowserReady nor this checkpoint establishes UI/Library/BPM success.
+
+**Visual milestone / current human boundary.** Inspection of the13:57 private
+`frontend13-later.png` confirms the actual official Steam login window on Air:
+account/password controls and genuine Steam QR challenge. The previous text entry
+was written before that frame was viewed and understated this result. This is a
+real login-window display, not yet verified input or successful authentication.
+User has been asked to authenticate directly via the genuine interface/Guard.
+Keep this exact native session alive; no restart or credential automation. Once
+the user acts, do not export/copy this root or login state to another installation.
+Raw QR frames remain private; public evidence is hash-only. Library, BPM,
+licensed Madeira launch/return and repeat stability still remain open.

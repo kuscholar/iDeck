@@ -13,7 +13,7 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 6,
   "latest_run": "run6",
-  "recorded_at_utc": "2026-11-08T18:57:01.467048+00:00",
+  "recorded_at_utc": "2026-11-08T18:58:58.766171+00:00",
   "previous_source_checkpoint": "fef1bb73214e223f4e5d641422236f29198ede4c",
   "source_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38",
   "source_parent": "d9142c3768dd0efd564f68763e9cd04024ac7ec7",
@@ -31,7 +31,7 @@
     "current_probe": "Lab8 physical Air TCP diagnostic: guest-exited0,17 PASS; screenshot and report collected",
     "launch_or_install_this_run": true,
     "signed_lab4": false,
-    "device_ELF_or_UI_success": "ARM64 TCP ELF succeeds; Steam UI NOT verified",
+    "device_ELF_or_UI_success": "Actual ARM64 TCP ELF17 PASS; complete fakefs import PASS; native X11/RFB/Metal PASS; genuine Steam login window visually present. Interactive login/Library/BPM/game-return UNVERIFIED.",
     "preserved": "production, Mac Allocator, phone installs/account/games/saves",
     "Mac_unlock_request_or_security_change": false,
     "signed_lab5": false,
@@ -2393,8 +2393,8 @@
       "host": "first install reached dpkg but apt exit100 due intentionally omitted var/log/apt; normal directory preparation added; repeated exact production control exits0, real ldd resolves libnm0 and reports no not-found entries",
       "device": "ACTUAL Air13 apt installs pinned ARM64 libnm0 from deb.debian.org HTTPS; final ldd check and marker PASS, native status0/guest-exited. PTY log warning remains; not install failure."
     },
-    "current_session": "Same signed Lab13 fresh ordinary linux-steam-desktop launch after completed dependency diagnostic; real CEF initialization progresses, no interactive UI/login proof yet",
-    "Steam13_observation": "Actual current session: BrowserReady65536 18:55:29; PopupHTMLWindow131073 and BrowserReady131073 18:56:06; still no visible interactive login in collected frame. BrowserReady is not UI success.",
+    "current_session": "Lab13 live genuine Linux Steam login window; keep app and auth session alive; user asked to log in directly. Never copy this root/account data to another app.",
+    "Steam13_observation": "Actual Air screenshot frontend13-later.png at13:57 visibly shows genuine Valve Linux Steam login window, account/password controls and official QR challenge. Interactive touch/keyboard and successful user auth/Library remain unverified; human login request pending. No agent credential or Guard entry.",
     "source_parent": "9e1bc1a0bf317aaa7cc660ac2d53f25aa6dfba34",
     "source_files_sha256": {
       "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "264a02ceecc46268c8df08ace50fb074464d478775a870167d7665087d6d5199",

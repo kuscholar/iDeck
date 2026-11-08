@@ -1,3 +1,15 @@
+# FIRST: live genuine Linux Steam login on Air, human auth pending
+
+Actual13:57 frontend13-later.png visibly confirms Valve's real ARM64 Linux Steam
+login window (account/password + official QR). This SUPERSEDES older black-frame
+notes below. User was asked via async question to scan using Steam Mobile or
+enter credentials/Guard directly and report Library/touch. Preserve active Lab13
+session; no rebuild/restart/install/credential automation or repeated login question.
+Do not export/copy this root/browser/account state. CLI-only, no Mac unlock ask.
+Actual auth/input/Library/BPM/game/return/stability still unverified; no success
+sentinel. While awaiting user response, continue independent bridge/lifecycle
+source work without touching this active app or auth. Implementation d865032.
+
 # Current active session — Lab13 genuine Steam/CEF (run6)
 
 Read latest run6 evidence before older notes. User trust DONE, no Mac-unlock
