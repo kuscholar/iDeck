@@ -11,9 +11,9 @@
   "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
-  "schema_version": 6,
-  "latest_run": "run6",
-  "recorded_at_utc": "2026-11-08T18:58:58.766171+00:00",
+  "schema_version": 7,
+  "latest_run": "run7",
+  "recorded_at_utc": "2026-11-08T19:23:25.452453+00:00",
   "previous_source_checkpoint": "fef1bb73214e223f4e5d641422236f29198ede4c",
   "source_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38",
   "source_parent": "d9142c3768dd0efd564f68763e9cd04024ac7ec7",
@@ -21,15 +21,15 @@
     "product": "iPad13,1",
     "model": "iPad Air4",
     "os": "27.2 (24B119)",
-    "fresh_details": true,
+    "fresh_details": false,
     "connectivity": "connected paired",
-    "details_source": "run6 Air CoreDevice device details"
+    "details_source": "run6 actual device details; run7 process identity only, no new model/OS observation"
   },
   "device": {
     "prior_observed_gate": "Untrusted Developer",
     "trust_confirmation": "User explicitly confirmed developer trust; Lab8 actual launch/execution succeeds",
-    "current_probe": "Lab8 physical Air TCP diagnostic: guest-exited0,17 PASS; screenshot and report collected",
-    "launch_or_install_this_run": true,
+    "current_probe": "Run6 Air TCP17 pass retained; run7 only revalidates same live Lab13 process, no device control rerun",
+    "launch_or_install_this_run": false,
     "signed_lab4": false,
     "device_ELF_or_UI_success": "Actual ARM64 TCP ELF17 PASS; complete fakefs import PASS; native X11/RFB/Metal PASS; genuine Steam login window visually present. Interactive login/Library/BPM/game-return UNVERIFIED.",
     "preserved": "production, Mac Allocator, phone installs/account/games/saves",
@@ -2451,5 +2451,66 @@
       "experiments/linux-steam/tools/test-tcp-view.sh": "66fde75ae1b1c0f26f22c39a9376415218d0a8cc25100f1c33ea961a46512862"
     },
     "implementation_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38"
+  },
+  "run7": {
+    "source_parent": "a894282f73865786a1d0e2bec9f7feb1a2ab5750",
+    "prior_goal_turn": "progress: actual Air Linux Steam login display and scoped published implementation; not authentication success",
+    "active_device": "same installed Lab13 executable/PID confirmed alive now via CoreDevice; no install/restart/input/credential operations this run",
+    "failure": "initial ELF returns status0 and stage guest-exited while real orphan continues and writes after parent return",
+    "hypothesis": "joining only the initial guest thread is not a handoff cleanup barrier",
+    "discriminator": "real freestanding ARM64 orphan marker two seconds after parent exit; virtual SIGTERM control removes late write; default restart guard remains -16",
+    "patch": "opt-in copied kernel/task.c hooks reserve before pthread creation, retire on failure or outer guest-entry cleanup after nested TLB cleanup; initial embedding thread uses same reservation contract",
+    "negative_control": "explicit HOST ONLY injected child pthread creation EAGAIN; parent ELF exits512 as expected, no live guest entries or native reservations; not a successful guest program",
+    "scope": "counter does not prove all native TLS/global resources, Mach handlers, memory maps, Wine coexistence or reusable restart; never grants game-launch permission",
+    "builds": {
+      "Lab14_tracked": "full unsigned physical arm64 build PASS; final Mach-O marker/query/hooks verified",
+      "default_flags_off": "full unsigned physical arm64 build PASS in separate DerivedData",
+      "installed": false,
+      "signed": false,
+      "default_macho_sha256": "b7b47ddf93daf44d12d44526455b4726d91cf89f112db408d59c515890c2db56",
+      "default_tracking_marker_absent": true
+    },
+    "regressions": {
+      "python": "24 PASS",
+      "tracked": "real ARM64 observe/signal/standard all status0; standard16 ELF controls pass",
+      "negative": "one explicit start-failure control status0 (validates expected guest512)",
+      "default": "observe/signal/standard all status0; standard16 ELF controls pass and query reports -95 unsupported"
+    },
+    "limits": [
+      "Air13 genuine login remains human-only pending",
+      "No on-device execution of new lifecycle hooks",
+      "No verified Library/BPM/controller or Windows game/return",
+      "Compatibility bridge still diagnostic125",
+      "No FEX/Valve/vendor/main changes",
+      "No combined Wine/MSC binary distribution or success sentinel"
+    ],
+    "private_artifacts": {
+      "run7-lifecycle/evidence.json": "168e2b12daa91b92de5bd74b9b72df5cf6706f70c0dee22c7933eb6a4fdbf4a3",
+      "run7-lifetime-archive/build-evidence.json": "f68948a8a9d7173c1d33bccf6b7209680b6031031f31bd6934b55d2fa1b696a0",
+      "run7-lifetime-all-controls/evidence.json": "9edc3b6f0e19abc02bd61aeca06bdb586ce1037db048d88ef9137ae76d614dae",
+      "run7-negative-final/build-evidence.json": "72e2f8d2ded8553c0fa7fa13f562f6406536295f4c3155efa682815712841b67",
+      "run7-negative-controls-final/evidence.json": "000fc897e9c027a7974f7cea1753d36a9fe492c1ce169bef458eaeaff826f0b7",
+      "run7-final-linked14.json": "5c40e93791df5779087ac0fa972290d58ca3d564c30a6e2ca03aacfd46544fd6",
+      "run7-lab14-final-build.log": "52a66268f0021ebf8dc766c13c3fc97bd820a3e1405c976573990b7aab5a038f",
+      "run7-default-build.log": "3862bae56e2d28dd9ea8ca386c71e5bcfc336fc5e60ed8181fefb67234b65b67",
+      "run7-python-tests.log": "30677a9737ca9151e9890ccefaffb3830558a051ed10fb5819926afb22182bd7",
+      "run7-air-processes.json": "5dc55cebab4e55c0f1143c1ba4e5fa19a04a4d467571104cf30fe7ff2d389cc4",
+      "run7-default-controls-final-v2/evidence.json": "bdb8bd7dfece524f33f35c148267de3fe37e8d5a7538e4965589de4b4045b448",
+      "run7-python-tests-final.log": "c4609e901ca6416948c7d19a787dbab57516d8a1f1ba230ca27a252a13ad7633"
+    },
+    "source_files_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "cf1dd4ed7bad7859a517e0a07e84ff66fc1448c24327e35e9bde4d0b47171861",
+      "experiments/linux-steam/README.md": "3ec6fd86a9995beaff83553aca6a2fdd14af200aa1e222588cb9c7c2283b6628",
+      "experiments/linux-steam/app/GuestLifetime.c": "6bff593ce8d3e95798241e14a6adbf83f557084a692d378be754365fcfc8bbb3",
+      "experiments/linux-steam/app/GuestLifetime.h": "aaf8299f45a941e35f947dc5b8d80f09e8b52d7b870a8489b01b95d4ad7d25d7",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "7113f02c148e9d644cb7e52e99b81cf86bcee8d97e45d7b81cc4c01f58a4fecb",
+      "experiments/linux-steam/app/LinuxLabRuntime.h": "a8373191ab644ae30a6231bdc541ade2e0f5bdf5c873985d2fc8b6fec604f3c7",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "20bf76729ec4cad5a75bdd98ff75c6e4706bd9c8f62f8b1ff874c5f44061c8f3",
+      "experiments/linux-steam/guest/session-lifecycle-probe.c": "fba8a7ff128880b167930dc27893d543e717c5d60cc12fc95ef6980ae3685674",
+      "experiments/linux-steam/tools/build-guest-lifetime.py": "0b88117b1e12e51d76d53682ebdb9c8f1249c2abca424f24a6090b3b1ce3b9ec",
+      "experiments/linux-steam/tools/build-lab.sh": "63225fea85526946dd3c8aefb96347faf9f9fe37de66bbeee11982393360c9d5",
+      "experiments/linux-steam/tools/session-lifecycle-control.c": "7f93fddfe3c94a640df870e373cd4e70a7e47c671478a5ccab8cea86ae36e582",
+      "experiments/linux-steam/tools/test-session-lifecycle.sh": "376cf9cb1deae60915d7334628e1ad1187896b730565c6c14ef515f26a194bc0"
+    }
   }
 }

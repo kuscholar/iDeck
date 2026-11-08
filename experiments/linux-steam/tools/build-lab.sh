@@ -57,6 +57,12 @@ if [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]]; then
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$tcp_stage/runtime/"
     runtime="$tcp_stage/runtime"
 fi
+if [[ ${LINUX_LAB_GUEST_LIFETIME:-0} == 1 ]]; then
+    lifetime_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-lifetime.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-guest-lifetime.py" "$src" "$out" "$runtime/libish.a" "$lifetime_stage/runtime"
+    cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$lifetime_stage/runtime/"
+    runtime="$lifetime_stage/runtime"
+fi
 frontend_libs=""
 if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
     [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]] || { echo 'Steam frontend requires explicit TCP view opt-in' >&2; exit 2; }
@@ -69,6 +75,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
     -derivedDataPath "$LINUX_LAB_ARTIFACTS/xcode" CODE_SIGNING_ALLOWED=NO \
     LINUX_LAB_BUILD_DIR="$out" LINUX_LAB_RUNTIME_DIR="$runtime" \
+    LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
     LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

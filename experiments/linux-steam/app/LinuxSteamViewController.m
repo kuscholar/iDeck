@@ -134,7 +134,7 @@
         if([NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-install-dependencies"]) {
             [self showStatus:@"Installing the pinned Debian Steam dependency in this Lab only."];
             int result=ideck_linux_lab_dependencies(root.fileSystemRepresentation);
-            NSDictionary *report=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage())};
+            NSDictionary *report=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),@"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
             NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil];
             [data writeToURL:[lab URLByAppendingPathComponent:@"last-dependency-setup.json"] options:NSDataWritingAtomic error:nil];
             [self showStatus:[NSString stringWithFormat:@"Dependency control ended (status %d). Restart the Lab for Steam.",result]];
@@ -144,6 +144,10 @@
         __weak typeof(self) weakSelf=self;
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
             int result=ideck_linux_lab_steam_frontend(root.fileSystemRepresentation);
+            NSDictionary *snapshot=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),
+                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads())};
+            NSData *report=[NSJSONSerialization dataWithJSONObject:snapshot options:NSJSONWritingPrettyPrinted error:nil];
+            [report writeToURL:[lab URLByAppendingPathComponent:@"last-runtime-session.json"] options:NSDataWritingAtomic error:nil];
             weakSelf.guestEnded=YES;
             [weakSelf showStatus:[NSString stringWithFormat:@"Linux session ended (status %d). Restart the Lab before another runtime session.",result]];
         });

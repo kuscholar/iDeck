@@ -350,3 +350,31 @@ build. It uses normal signed apt metadata to install only pinned libnm0, writes
 ldd has no missing entries. It never accepts arbitrary shell commands and does
 not start Steam or access accounts. Restart only after completion to use
 `linux-steam-desktop` in a fresh native runtime lifetime. Conflicting modes refuse.
+
+## Session lifetime controls (host first)
+
+`guest/session-lifecycle-probe.c` deliberately exits its initial process while a
+real orphan writes later. `tools/test-session-lifecycle.sh` uses fresh private
+roots and rejects existing outputs. Its observe/control signal addresses virtual
+Linux PIDs only; it is not a production shutdown API.
+
+An optional copied archive from `tools/build-guest-lifetime.py` tracks reserved
+native starts until failed creation or outer guest-entry cleanup. Enable it for
+iOS builds with `LINUX_LAB_GUEST_LIFETIME=1`; it defaults off. Runtime reports
+contain only numeric status/stage/count, no input or account payloads. A zero
+counter never authorizes Wine or resets the one-runtime guard.
+
+```sh
+python3 experiments/linux-steam/tools/build-guest-lifetime.py \
+  vendor/LinuxRunner "$LINUX_LAB_ARTIFACTS/host" \
+  "$LINUX_LAB_ARTIFACTS/host/libish.a" "$LINUX_LAB_ARTIFACTS/new-lifetime" --sanitize
+LINUX_LAB_GUEST_LIFETIME=1 \
+LINUX_LAB_LIFETIME_ARCHIVE="$LINUX_LAB_ARTIFACTS/new-lifetime/libish.a" \
+LINUX_LAB_LIFECYCLE_OUT="$LINUX_LAB_ARTIFACTS/new-lifecycle-controls" \
+  bash experiments/linux-steam/tools/test-session-lifecycle.sh
+```
+
+The generator's explicit `--fail-child-starts` and harness
+`LINUX_LAB_LIFETIME_NEGATIVE=1` are HOST negative controls for EAGAIN rollback,
+never production flags. No such failure archive is used by build-lab.sh. These
+results do not substitute for physical-iPad Wine/game/return qualification.

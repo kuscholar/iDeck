@@ -1,3 +1,27 @@
+# Run7 source/build progress; preserve active Air Lab13 login
+
+FIRST respect the human auth boundary below. Fresh CoreDevice confirms SAME
+Lab13 process alive; no device restart/install/input or account inspection this
+run. User login/Guard reply still pending. Never repeat Mac unlock/trust requests.
+
+Independent lifecycle experiment now reproduces guest-exited with a real orphan
+still running. Host virtual-namespace SIGTERM stops that controlled orphan; this
+is not a production stop API or Wine handoff proof. New optional
+LINUX_LAB_GUEST_LIFETIME=1 copied-archive hooks count pending starts before
+pthread_create and retire only on create error/outer guest-entry cleanup after
+nested TLB cleanup. Native initial embedding reservation included. Default query
+is -95 unsupported; invalid tracking fails closed. Original archive/vendor unchanged.
+Host actual observe/signal/standard16 and injected-EAGAIN rollback controls pass.
+Full tracked/default iOS Lab14 builds pass; final tracked query/hooks/marker
+verified after initial unused query was dead-stripped. Raw artifacts/hashes under
+run7* in private base; saved tracked app run7-tracked-unsigned/LinuxLab.app.
+Lab14 NOT signed/installed/device-tested. DO NOT upgrade the live Lab13 to test
+it while the user may be authenticating. No runtime restart guard removal or
+actual Madeira launch: bridge125 remains diagnostic, all native/global cleanup
+and Wine/FEX coexistence still need measurement. Preserve full user goal.
+
+--- Air user-login boundary and prior evidence ---
+
 # FIRST: live genuine Linux Steam login on Air, human auth pending
 
 Actual13:57 frontend13-later.png visibly confirms Valve's real ARM64 Linux Steam

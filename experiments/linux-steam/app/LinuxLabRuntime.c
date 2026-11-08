@@ -15,6 +15,9 @@
 #include "fs/fd.h"
 #include "fs/path.h"
 #include "LinuxSteamSession.h"
+#if IDECK_LAB_GUEST_LIFETIME
+#include "GuestLifetime.h"
+#endif
 
 static atomic_bool consumed;
 static atomic_int phase;
@@ -45,6 +48,9 @@ static int run(const char *root_path, int mode) {
     if (!root_path || root_path[0] != '/') return -22;
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
+#if IDECK_LAB_GUEST_LIFETIME
+    if(strcmp(ideck_guest_lifetime_marker(),"IDECK_GUEST_LIFETIME_V1"))return -5;
+#endif
     atomic_store(&phase, 1);
     char distro_data[4096];
     int size = snprintf(distro_data, sizeof distro_data, "%s/data", root_path);
@@ -163,7 +169,15 @@ static int run(const char *root_path, int mode) {
     current = NULL;
     pthread_t worker;
     atomic_store(&phase, 7);
-    if ((err = pthread_create(&worker, NULL, run_guest, NULL))) return -err;
+#if IDECK_LAB_GUEST_LIFETIME
+    ideck_guest_lifetime_reserve();
+#endif
+    if ((err = pthread_create(&worker, NULL, run_guest, NULL))) {
+#if IDECK_LAB_GUEST_LIFETIME
+        ideck_guest_lifetime_retire(NULL);
+#endif
+        return -err;
+    }
     if ((err = pthread_join(worker, NULL))) return -err;
     atomic_store(&phase, 8);
     return wait_status;
@@ -185,5 +199,14 @@ int ideck_linux_lab_dependencies(const char *root_path) {
     return run(root_path, 5);
 #else
     (void)root_path; return -95;
+#endif
+}
+
+int ideck_linux_lab_live_guest_threads(void) {
+#if IDECK_LAB_GUEST_LIFETIME
+    unsigned live=ideck_guest_lifetime_live();
+    return live>32768?-5:(int)live;
+#else
+    return -95;
 #endif
 }

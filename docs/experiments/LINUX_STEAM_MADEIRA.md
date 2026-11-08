@@ -990,3 +990,66 @@ Keep this exact native session alive; no restart or credential automation. Once
 the user acts, do not export/copy this root or login state to another installation.
 Raw QR frames remain private; public evidence is hash-only. Library, BPM,
 licensed Madeira launch/return and repeat stability still remain open.
+
+## Run 7 — prepare safe Linux-to-Madeira lifecycle boundary
+
+Parent `a894282f73865786a1d0e2bec9f7feb1a2ab5750`; branch/origin/main and actual
+external mount UUID revalidated. The previous goal turn made actual progress
+(Air genuine Steam login-window display). Fresh CoreDevice process inspection
+confirms the same installed Lab13 session still exists. User login/Guard question
+remains pending. No new device installation, restart, key entry or auth inspection
+was performed; preserve that session. New work is independent host/build evidence.
+
+**Observed failure/hypothesis.** `ideck_linux_lab_run()` joins only the initial
+thread. Its `guest-exited` stage therefore cannot authorize native game handoff.
+A new freestanding ARM64 ELF forks a child, handshakes, then exits its parent.
+The native adapter returns0/guest-exited while the real child is still in the
+virtual task table and writes a second marker two seconds later. This directly
+reproduces the lifecycle gap, without Steam/account/game resources. A separate
+fresh-root control signals only the virtual Linux namespace from its parked
+PID1 context; the child exits with signal15 and cannot write its late marker.
+No Darwin PID/process or active device session is signalled by these controls.
+Neither case removes the one-native-runtime guard: repeat start still returns-16.
+
+**Minimal instrumentation.** Optional `LINUX_LAB_GUEST_LIFETIME=1` compiles a
+pinned pristine kernel/task.c copy into a new archive. Pending starts are counted
+BEFORE pthread_create (covering queued threads); failed creation retires the
+reservation. The outer task_run_current cleanup retires successful starts AFTER
+nested TLB/fiber cleanup. The manually created initial embedding thread reserves
+on the same contract. Underflow invalidates the count rather than advertising0.
+The original vendor/base archive is hash-checked and unchanged. No FEX, CPU/JIT,
+Valve, stop/restart or gaming-path semantics are changed. Default builds disable
+this feature and the query reports-95/unsupported, not a false clean state.
+
+**Discriminating checks.** Real ARM64 observe/signal controls now see the native
+count remain1 after initial exit and drain0 after child cleanup. Standard16 ELF
+controls (including real clone/thread/futex and diagnostic bridge roundtrip) pass
+against the copied archive. A separate explicitly HOST-ONLY negative archive
+returns EAGAIN from child pthread creation: the ELF exits512, as expected; kernel
+rollback leaves no live guest tasks or native reservations and restart stays-16.
+The test passes by recognizing that failure, not by calling its guest a success.
+The changed task unit and control wrapper are ASan/UBSan instrumented; all other
+static dependency units are not. Python24 regressions pass. Default-feature
+runtime and full iOS builds are verified separately; final results/hashes are in
+EVIDENCE.json. An initial harness-only macOS Bash3.2 empty-array/set-u error was
+corrected by passing an explicit0/1 compiler definition; no runtime claim was
+based on that failed invocation.
+
+**Final artifact boundary.** Unsigned physical-arm64 Lab14 builds with tracking
+and with default flags off. The first tracked artifact dead-stripped the unused
+query; adding a categorical `last-runtime-session.json`/dependency-session count
+consumer retains the real query and hooks. Final Mach-O symbols and lifetime
+marker are inspected, not inferred from compile output. Tracked Mach-O SHA256
+`9e3d7020a5599181f46aea8d8c237e4733fac72d006e33878f2e703341247f75` is preserved
+in private `run7-tracked-unsigned`. Lab14 is NOT signed, installed or on-Air tested;
+the existing Lab13 login is preserved.
+
+**Limits/next experiment.** Zero tracked guest entries is stronger than initial
+process exit but still does not prove every native TLS destructor, VM mapping,
+background service or Mach handler is safe for Wine/FEX. No callback grants Wine
+launch permission, no reusable restart is enabled, and the compatibility bridge
+still returns diagnostic125. After human genuine Steam login/input qualification,
+verify Library/BPM and Steam compatibility-tool discovery; separately measure full
+native cleanup/VM/signal ownership before actual Madeira startup and return.
+No combined Wine/MSC binary was distributed. No game/return/repeat-stability
+success or scheduler-unload sentinel is justified.

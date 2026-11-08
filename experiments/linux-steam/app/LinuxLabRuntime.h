@@ -14,5 +14,8 @@ int ideck_linux_lab_distro_probe(const char *root_path);
 int ideck_linux_lab_steam_frontend(const char *root_path);
 /* Explicit fixed, signed-Debian dependency repair in this Lab root only. */
 int ideck_linux_lab_dependencies(const char *root_path);
+/* Optional copied-archive count includes queued guest starts until outer cleanup.
+ * Negative means unsupported/invalid. Zero is not a Wine/restart permission. */
+int ideck_linux_lab_live_guest_threads(void);
 const char *ideck_linux_lab_stage(void);
 #endif

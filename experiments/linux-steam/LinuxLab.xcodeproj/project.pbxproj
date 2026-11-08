@@ -196,6 +196,7 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>LOG_HANDLER_DPRINTF=1</string>
 					<string>ISH_INTERNAL=1</string>
 					<string>IDECK_LAB_STEAM_FRONTEND=$(LINUX_LAB_STEAM_FRONTEND)</string>
+					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -230,7 +231,7 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>13</string>
+				<string>14</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -239,6 +240,8 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<string></string>
 				<key>LINUX_LAB_FRONTEND_LIBS</key>
 				<string></string>
+				<key>LINUX_LAB_GUEST_LIFETIME</key>
+				<string>0</string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000C</key>
@@ -278,6 +281,7 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 					<string>LOG_HANDLER_DPRINTF=1</string>
 					<string>ISH_INTERNAL=1</string>
 					<string>IDECK_LAB_STEAM_FRONTEND=$(LINUX_LAB_STEAM_FRONTEND)</string>
+					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -312,7 +316,7 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>13</string>
+				<string>14</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -321,6 +325,8 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 				<string></string>
 				<key>LINUX_LAB_FRONTEND_LIBS</key>
 				<string></string>
+				<key>LINUX_LAB_GUEST_LIFETIME</key>
+				<string>0</string>
 			</dict>
 		</dict>
 		<key>00000000000000000000000D</key>
@@ -369,7 +375,16 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 			<key>name</key>
 			<string>Debug</string>
 			<key>buildSettings</key>
-			<dict/>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>14</string>
+				<key>LINUX_LAB_GUEST_LIFETIME</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
+				</array>
+			</dict>
 		</dict>
 		<key>000000000000000000000010</key>
 		<dict>
@@ -378,7 +393,16 @@ cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCE
 			<key>name</key>
 			<string>Release</string>
 			<key>buildSettings</key>
-			<dict/>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>14</string>
+				<key>LINUX_LAB_GUEST_LIFETIME</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>IDECK_LAB_GUEST_LIFETIME=$(LINUX_LAB_GUEST_LIFETIME)</string>
+				</array>
+			</dict>
 		</dict>
 		<key>000000000000000000000011</key>
 		<dict>
