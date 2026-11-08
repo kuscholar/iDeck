@@ -1,4 +1,4 @@
-# Run10: unlinked native signal lease; Air13 authentication still pending
+# Run10 9348bb8: unlinked native signal lease; Air13 auth pending
 
 Fresh actual15:27 physical Air screenshot remains genuine empty Steam login/
 expired QR; same native Lab13 process/executable alive. Preserve it. No install,

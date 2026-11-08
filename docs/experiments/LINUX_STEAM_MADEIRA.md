@@ -1255,3 +1255,6 @@ account/game/save or security change; no compiled binary/rootfs/QR/raw logs in
 Git. Bridge125 remains diagnostic. Actual human login, input/Library/BPM,
 Steam-discovered Play, licensed Madeira game/return and repeat stability remain
 required; no STABLE_SUCCESS or goal completion is justified.
+
+Run10 component checkpoint: `9348bb8eebe9d4de2076f6f057c923e41e1cccd7` (signed off); unlinked and
+not deployed. Installed Air13 and saved unsigned Lab15 remain unchanged.
