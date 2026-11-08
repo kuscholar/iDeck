@@ -14,8 +14,8 @@
   "schema_version": 6,
   "latest_run": "run6",
   "recorded_at_utc": "2026-11-08T18:57:01.467048+00:00",
-  "previous_source_checkpoint": "7ae2fe5222f1d35f4b473fc563815129039518a0",
-  "source_checkpoint": "fef1bb73214e223f4e5d641422236f29198ede4c",
+  "previous_source_checkpoint": "fef1bb73214e223f4e5d641422236f29198ede4c",
+  "source_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38",
   "source_parent": "d9142c3768dd0efd564f68763e9cd04024ac7ec7",
   "target": {
     "product": "iPad13,1",
@@ -2319,7 +2319,10 @@
       "run6/trust-cleared/cef13-first.log": "9db572ab2482609af7defba673baf7ed5c870d6d7d0fc4c3a775a18bf862c3cf",
       "run6/trust-cleared/webhelper13-first.log": "67a7ec92f21a5ce4388f0b4493bfe1140d3dbabcc305aaf9725ff7902f160c77",
       "run6/final-linked13.json": "63d4029adf2d3f98901a838b77e2cc3d334c008c06034cb379ee4dc494a6343c",
-      "run6/ordinary-regressions.log": "1aac797b8084cc1ae5527ca76fbc6074cea753443e1926e8ea2ccb54ed27be84"
+      "run6/ordinary-regressions.log": "1aac797b8084cc1ae5527ca76fbc6074cea753443e1926e8ea2ccb54ed27be84",
+      "run6/trust-cleared/webhelper13-later.log": "67a7ec92f21a5ce4388f0b4493bfe1140d3dbabcc305aaf9725ff7902f160c77",
+      "run6/trust-cleared/steamui13-later.txt": "82e148baf4c83ea7833ed1fafb38e8ef5cef416d0bfdbad5e3c925162158fb75",
+      "run6/trust-cleared/frontend13-later.png": "7a838886c38c3a2a4e3e3bc3b63d9cb035112512a3d3c302e1edadc6e57bad57"
     },
     "socket_hypothesis": {
       "observed": "pinned realfs_mknod FIFO changes native cwd; relative socket prefix breaks X11 connect ENOENT",
@@ -2391,7 +2394,7 @@
       "device": "ACTUAL Air13 apt installs pinned ARM64 libnm0 from deb.debian.org HTTPS; final ldd check and marker PASS, native status0/guest-exited. PTY log warning remains; not install failure."
     },
     "current_session": "Same signed Lab13 fresh ordinary linux-steam-desktop launch after completed dependency diagnostic; real CEF initialization progresses, no interactive UI/login proof yet",
-    "Steam13_observation": "Original InternalAPI_Init fatal absent in current sample; actual steamwebhelper65 progresses to CEF/browser initialization. Native screenshot black X11 cursor; no login, Library or stability success inferred.",
+    "Steam13_observation": "Actual current session: BrowserReady65536 18:55:29; PopupHTMLWindow131073 and BrowserReady131073 18:56:06; still no visible interactive login in collected frame. BrowserReady is not UI success.",
     "source_parent": "9e1bc1a0bf317aaa7cc660ac2d53f25aa6dfba34",
     "source_files_sha256": {
       "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "264a02ceecc46268c8df08ace50fb074464d478775a870167d7665087d6d5199",
@@ -2446,6 +2449,7 @@
       "experiments/linux-steam/tools/test-host.sh": "a9d2f3e18d84ef32e16e1ecbf09ebb9fd013ed088b81b12d7772a6d938824dcf",
       "experiments/linux-steam/tools/test-packet-pipes.sh": "a8d4695ffcaa8a37000922a8bd2d9dc0890e63a669d5772d445dcc6fdaee9d84",
       "experiments/linux-steam/tools/test-tcp-view.sh": "66fde75ae1b1c0f26f22c39a9376415218d0a8cc25100f1c33ea961a46512862"
-    }
+    },
+    "implementation_checkpoint": "d8650325a90534452317e0b13d0c40a41e626e38"
   }
 }

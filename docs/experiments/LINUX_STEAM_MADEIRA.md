@@ -973,3 +973,8 @@ protocol ASan/UBSan and6 package tests pass. The final signed Lab13 Mach-O
 contains Scene/TCP/packet/dirfd/frontend markers plus the owned-prefix helper
 and fixed dependency mode; source and artifact hashes are in EVIDENCE.json.
 No final GO/Library/BPM/game/return/stability claim is justified.
+
+Run6 implementation checkpoint: `d8650325a90534452317e0b13d0c40a41e626e38` (signed off). Current real CEF logs
+record BrowserReady65536 and popup/BrowserReady131073, but the actual collected
+frame still does not show an interactive login. Preserve this session; neither
+BrowserReady nor this checkpoint establishes UI/Library/BPM success.

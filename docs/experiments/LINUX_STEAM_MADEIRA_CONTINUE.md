@@ -24,7 +24,9 @@ LinuxSteamRootFS/data/tmp/ideck-steam.log and Steam/logs/{steamwebhelper.log,cef
 steamui_html.txt} through private app container, plus screenshot. Preserve session.
 If actual login appears, user-only credentials/Guard, no native credential automation.
 
-Branch source parent9e1bc1a; current run6 code is staged/checkpointed separately.
+Run6 implementation checkpoint `d8650325a90534452317e0b13d0c40a41e626e38`; signed off. Actual CEF logs have
+BrowserReady65536 and PopupHTMLWindow/BrowserReady131073 by18:56:06, but collected
+frame does not yet prove a visible interactive login.
 Private run6 EVIDENCE hashes include final signed Lab13/debugging receipts. Scope:
 ordinary host16 ELF + diagnostic125 bridge and protocol/package regressions pass;
 Python24, socket9, header7 and actual Air TCP17 pass. Rootfs UTF8 locale workaround
