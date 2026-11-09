@@ -215,6 +215,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
+					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -249,7 +250,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>19</string>
+				<string>21</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -269,6 +270,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 				<key>LINUX_LAB_LAZY_PAGES</key>
+				<string>0</string>
+				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -315,6 +318,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
+					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -349,7 +353,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>19</string>
+				<string>21</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -369,6 +373,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 				<key>LINUX_LAB_LAZY_PAGES</key>
+				<string>0</string>
+				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -420,7 +426,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>19</string>
+				<string>21</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -431,6 +437,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
+					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -441,6 +448,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 				<key>LINUX_LAB_LAZY_PAGES</key>
+				<string>0</string>
+				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -453,7 +462,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>19</string>
+				<string>21</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -464,6 +473,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
+					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -474,6 +484,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 				<key>LINUX_LAB_LAZY_PAGES</key>
+				<string>0</string>
+				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
 				<string>0</string>
 			</dict>
 		</dict>

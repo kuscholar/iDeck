@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 13,
-  "recorded_at_utc": "2026-11-09T00:59:55.016605+00:00",
+  "latest_run": 14,
+  "recorded_at_utc": "2026-11-09T01:22:35.853091+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "8eaf7b61703d77f8d206faafebb180a17da525d5",
   "source_parent": "bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067",
@@ -2974,7 +2974,7 @@
       "process_events": 47
     },
     "interpretation": "Targeted host amplification reduced to1.02025x (68517936 vs67158064). Actual device completed official update without previous ~3GB pressure. Earlier18 and19 do not have identical client update state; no full causality/whole-Steam peak reduction percentage, stability or performance claim.",
-    "next_discriminator": "Preserve active post-update19 PID3640 after revalidating executable; console session37953. Read actual UI and resource trajectory: at78 samples peak2102974120/available903293272, no warnings. Does not prove stable memory or UI. If memory rises again isolate next layer; no blind retries or memory-cap changes. Old result10752 belongs3625.",
+    "next_discriminator": "Build20 read-only self CPU and existing anonymous-page/Asbestos code-cache atomic counters at1Hz, no allocation policy change. First attribute remaining pressure; current3640 terminalSIGKILL9. No repeated unchanged launch, credentials or system-cap changes.",
     "private_artifact_sha256": {
       "run13/host-lazy/build-evidence.json": "04bbd8bc15d56ae38cc0c95b9c0db6c9e40a075bda43e55b40ea09222d588212",
       "run13/host-lazy-san/build-evidence.json": "8bddc11b1ce6b162867c9df053365d77b4d13a9b1b577dce89d3d22ef1288241",
@@ -2996,7 +2996,15 @@
       "run13/postupdate-kernel-second.log": "5d816281a201c97c3951a6213eebaf534f7bb3d4156ff14d15adbdcb087b5dbd",
       "run13/postupdate-first.png": "87c9019f7218bcf5f65169acbf328145ee3b641f45e119bf42565f961255847d",
       "run13/launch19-postupdate.json": "2f64d2832807d178d741706f98b8aa85ed046ab8fdeff2293e0b81bb6ea37454",
-      "run13/after-postupdate-error-processes.json": "4eb93a396a51109d6a0f7634f4cb44cc29e7f1cc4ab397517af9af2faf86e2f0"
+      "run13/after-postupdate-error-processes.json": "4eb93a396a51109d6a0f7634f4cb44cc29e7f1cc4ab397517af9af2faf86e2f0",
+      "run13/final-3640-summary.json": "bf48ce68c1d5d2fd6276d906f56648f0ca01494023054d8997948c0624d5befa",
+      "run13/current-before-profile.log": "f926392c143a24179a684671ea70ca6b93457d855f22ddd62a14c62484bcfbb8",
+      "run13/launch19-after-absence.json": "ebe1f0e32c36aa489cc3111cba5fc9dca9bb96f5607e56b1e3b2f696c8bd9f51",
+      "run13/library-click/result.json": "487c8325f802f0a8b2502a7012a6ed2a5b8ad7fb7bd4cfadf6248bec8d1e57c2",
+      "run13/view-click/result.json": "49bdbbd2c6696464af2456af00674d57923249178b0c48f3036a8426af3e3630",
+      "run13/after-library-click.png": "8cdc396d0d3b32dcbb36a2ad54a13a424c42259878c003478b7aafa8fd3e1006",
+      "run13/after-view-click.png": "36e0b3c4f33bcb590949023ca033ff526c4f4d6cc89b4b4ae3bcc46269b73d4f",
+      "run13/activity-live3640-toc.xml": "65a12b20d0325ee8550615226cea06b8d93f8ef620b17a78df4983338e22f645"
     },
     "source_sha256": {
       "experiments/linux-steam/tools/build-lazy-pages.py": "e4510e8104b8849f27727c615c82f5e9150630238334792d9c9936f3a4c66f47",
@@ -3023,7 +3031,161 @@
       "available_last": 903293272,
       "memory_warnings": 0,
       "ui": "black guest/cursor; no Library/login proof",
-      "active": true
-    }
+      "active": false
+    },
+    "postupdate_final": {
+      "pid": 3640,
+      "samples": 461,
+      "elapsed_seconds": 443.001,
+      "peak_footprint": 2984712880,
+      "last": {
+        "mono_ms": 340910771,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 2984712880,
+        "resident_bytes": 1366065152,
+        "virtual_bytes": 482577580032,
+        "available_known": 1,
+        "available_bytes": 21554512
+      },
+      "warnings": 15,
+      "termination": {
+        "terminatingSignal": 9,
+        "wasCoreDumpCreated": false
+      },
+      "ui": "genuine authenticated Steam shell visible, content black before/after Library/View click; cursor moves but no useful content interaction proven",
+      "scope": "No Library/BPM/stability proof; no user credentials or Guard operation"
+    },
+    "profiling_limit": "10s requested real ActivityMonitor run ends after0.988152s Device disconnected; TOC onlykernel0, no per-Lab performance results. CoreDevice thereafter lists noLab. Native launch artifact independently confirmsSIGKILL9, no attribution of disconnect to Linux itself."
+  },
+  "run14": {
+    "source_parent": "9c69a1b7e09d87edef4c11c87d80e0ea64ad3efc",
+    "prior_termination": "Actual19 fresh3640 reaches footprint2984712880/available21554512 and15 memory warnings over443.001s thenSIGKILL9. Genuine account shell/header visible, content black; fixed Library/View pointer press/release transported but useful interaction not proven. Fresh exact Success-OK at2026-11-09T00:59:02 confirms saved legitimate login, agent did not log in. No Library/BPM/game stability.",
+    "profiling": "Actual10s requested ActivityMonitor ends0.988152s Device disconnected; onlykernel0 in TOC, no per-App CPU result. No signal/cancellation sent to a console or profiler to force stop.",
+    "hypothesis": "Read-only self CPU and existing logical-anonymous/translation global counters can distinguish a mostly waiting client from busy interpretation/rendering and bound cache hypothesis; no allocation-policy change in20.",
+    "minimal20_patch": "NativeKernelLog adds public RUSAGE_SELF cumulative user/system microseconds, plus existing pinned independent atomic anonymous_guest_pages/translation_tables/blocks/code_words_bytes/flush counters. No new sampling thread, guest payload, arbitrary memory, cache policy, memory cap, JIT or vendor edit. Logical pages != physical footprint, code words exclude metadata/disconnected blocks; not coherent aggregate.",
+    "host_checks": "5 native log host modes PASS including real ARM6416 controls and fresh zero counters/public CPU fields; wrapper/log/task hooked units sanitized, rest static not. Default-off actual iOS unit Wall/Wextra/Werror compiles with no Linux counter dependencies. These are not whole-app default build20 claims.",
+    "build20": "Full feature20 Xcode/final numeric CPU/class/actual Linux global symbols inspected, disposable strict signed existing exact profile and installed same isolated Lab; auth/root/games/saves preserved.",
+    "actual20_sequence": "First actual3801 was completed ordinary16/status0 rather than requested Steam, so its40 low-memory samples are NOT Steam results. Display/report/current identity verified before explicit retirement. After absence, fresh3836 Steam starts and completes official updater42/guest0/worker0 again; known unclean shutdown causes repair/update, no bypass. Only after exact completion retired3836, verified absence and launched fresh3845 with new receipt.",
+    "updater_metrics": {
+      "pid": 3836,
+      "samples": 213,
+      "wall_seconds": 210.002,
+      "cpu_seconds": 332.340939,
+      "cpu_core_equivalents": 1.5825608279921142,
+      "last": {
+        "mono_ms": 341506072,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 61835392,
+        "resident_bytes": 194543616,
+        "virtual_bytes": 475007811584,
+        "available_known": 1,
+        "available_bytes": 2944432000,
+        "cpu_valid": 1,
+        "cpu_user_us": 319984751,
+        "cpu_system_us": 12436899
+      },
+      "classes_last": {
+        "mono_ms": 341506072,
+        "anonymous_guest_pages": 0,
+        "translation_tables": 1,
+        "translated_blocks": 0,
+        "code_words_bytes": 0,
+        "idle_flushes": 4,
+        "cap_flushes": 0,
+        "pressure_flushes": 0
+      },
+      "memory_warnings": 0
+    },
+    "current_Steam_metrics": {
+      "pid": 3845,
+      "samples": 235,
+      "wall_seconds": 229.001,
+      "cpu_seconds": 647.189688,
+      "cpu_core_equivalents": 2.826143501556762,
+      "peak_footprint": 2406455288,
+      "last": {
+        "mono_ms": 341824867,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 2271353136,
+        "resident_bytes": 1554612224,
+        "virtual_bytes": 482052554752,
+        "available_known": 1,
+        "available_bytes": 734914256,
+        "cpu_valid": 1,
+        "cpu_user_us": 603792769,
+        "cpu_system_us": 43477332
+      },
+      "classes_last": {
+        "mono_ms": 341824867,
+        "anonymous_guest_pages": 582571,
+        "translation_tables": 13,
+        "translated_blocks": 608461,
+        "code_words_bytes": 105855912,
+        "idle_flushes": 3,
+        "cap_flushes": 17,
+        "pressure_flushes": 12
+      },
+      "memory_warnings": 3,
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "current_identity": {
+      "pid": 3845,
+      "build": 20,
+      "install_uuid": "9BB06401-21A9-40BF-A202-C0ACE2F64FA8",
+      "console_exec_session": 18291,
+      "native_file": "kernel-3845-341595-865524000.log",
+      "state": "ACTIVE revalidate before touching; do not kill/restart/upgrade due observer timeout"
+    },
+    "interpretation": "Real3845 CPU647.189688s over229.001s =2.82614 native core equivalents, rather than mere waiting. At that snapshot logical anon582571pages, code_words105855912,13tables,17cap/12pressure flushes, footprint2271353136; cannot add logical guest counts to physical footprint or blame sole cache/allocator.",
+    "next21_hypothesis": "Current real GPU report ANGLE/Mesa llvmpipe software pipeline plus busy interpreter may make CEF too expensive. Isolated default-off LINUX_LAB_CEF_DISABLE_GPU=1 appends ONLY official -cef-disable-gpu to Lab Steam. No game GPU/FEX/Valve/auth/sandbox bypass changes. Actual ARM64 client ELF contains switch string; not proof switch is effective.",
+    "candidate21": "Production shell C string on/off compiled/Werror and /bin/sh -n syntax PASS (3fixedargv, switch0/1). Full21 feature build/final complete command/policy/CPU/class markers inspected, immutable unsigned saved and disposable existing-profile deep-strict signed. NOT INSTALLED or device A/B tested while3845 active. Require actual Steam/webhelper effective switch + true content interaction, not just native marker.",
+    "next_discriminator": "Preserve active20 identity and capture complete CPU/memory/UI/termination. Install21 only after that session ends or human genuinely finishes it; then compare effective browser flags, real Library/input and memory/CPU, preserve saved auth. No blind retries/limit increases or causal fix claim.",
+    "private_artifact_sha256": {
+      "run14/log-class-controls/evidence.json": "ac134bd6762a0001a8d7649e3dfed0b3d65314cbecfd63ad1d7781ec1e6830f8",
+      "run14/final-linked20.json": "8704c48aa3d79345d418b1c32f84c9f8308cb998ab3f1078044cde74d3d2a3df",
+      "run14/default-log-unit.json": "b60ac0034c932600ac1a9fd92965072dbf663d01a8128d16688b840df48342a0",
+      "run14/install20.json": "277762d75d474d62897444e5c858713610a10bbf6d84a75d4dd9343b3e427b93",
+      "run6/signed-lab20/evidence.json": "32b19273f5d6a9dad1508abafd8117b2103222420c54529811b410dd6c4a6ef8",
+      "run14/completed-standard20.txt": "4c6c0446b28b2aef08aeb7662d4524875731122bba74dc0f6a505164ab503fbf",
+      "run14/updater20-result.json": "17d3fcc90a9b6f39ce823700d19ad2bbca0e7ac533cfdb254c7cba0ec122d151",
+      "run14/second-native20-summary.json": "bb000ad957ff18f0f05f9b5ed114f855c0a2ed35d7a537895906248fc5abfea4",
+      "run14/postupdate-third/summary.json": "e2d1af46249bd01f987b93c5f8cb0002e44e329e0197fab60352555e62f8beca",
+      "run14/postupdate-third/kernel.log": "359fb6d77c8ebc74335b6e9827ee6c2d89c01fe1d7aed55ed65600b6d9ddb4f3",
+      "run14/current-steam-logs/login.log": "49ebb4a1021073f69f11031461b3e8e97d32d73fd7655c53794c817dfa924003",
+      "run14/reconstructed20-source.json": "06b95ce898610954ec23341df7ed71c8776c3383e058b7f11cbd45f19eb803b5",
+      "run14/session-syntax.json": "718515e497d04c416caba6dd847dac43f5c95a4da7224f5c3fbf9f3dad4cab4d",
+      "run14/final-linked21.json": "e3bacb9bb3543c348729b04cd2d20d90c15bc637cd911389cb9491a8167b9040",
+      "run6/signed-lab21/evidence.json": "79216e23c5b5624e5f4112b9d8f15567a200ba94a36d649f49d9b98beacaa33e",
+      "run14/official-client-switch-evidence.json": "73471ae7ae51f33c3f6b93a4627c76f6efeed8e83ccce1a811a7bbb6e67dbede"
+    },
+    "compiled20_source": {
+      "scope": "reconstructed known uncommitted Build20 overlay, NOT a snapshot captured at build time",
+      "parent": "9c69a1b7e09d87edef4c11c87d80e0ea64ad3efc",
+      "changed_compiled_source_sha256": {
+        "app/NativeKernelLog.c": "05cdc017893b3970dec42e5a10640be8f1da7b383c2fdd08912ce75c4039bc31",
+        "tools/native-log-control.c": "82048acfcd4e07638a36363f9b8a597e007bf32430d74ce1b471620311bb3e64",
+        "LinuxLab.xcodeproj/project.pbxproj": "4eb5714c053c420f1a55c84b1aab4e8066c3f7eb9fd219cd090e425be6df7ef1"
+      }
+    },
+    "candidate_source_sha256": {
+      "experiments/linux-steam/app/NativeKernelLog.c": "05cdc017893b3970dec42e5a10640be8f1da7b383c2fdd08912ce75c4039bc31",
+      "experiments/linux-steam/app/LinuxSteamSession.h": "7cbcd8d0a41c7813195b59b474898aeb79365683e9b87b3e320fa40f51b3fc93",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "49cd72ca4d224b0cf6c90b7147a182965209f6ddcb73f6c0a44e12d1e707aa9d",
+      "experiments/linux-steam/tools/native-log-control.c": "82048acfcd4e07638a36363f9b8a597e007bf32430d74ce1b471620311bb3e64",
+      "experiments/linux-steam/tools/build-lab.sh": "2ac15c5a4753701b5e70c69ade80e7ec691730736d48382f995be53beae74ef6",
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "4e785c73aeecbedecd6f674c574fedfb7b1dd0305f82ebe57be1fa4d5f794d7d"
+    },
+    "limits": [
+      "No repeated stable interactive Library/BPM or controller/touch proof",
+      "No genuine Steam Play->licensed Madeira game->return; bridge still125",
+      "No JIT device activation, no private entitlements, no credential automation, no primary app/main changes",
+      "Raw logs/rootfs/Valve packages/profiles stay private; no combined Wine/converter binary publication or exception expansion"
+    ]
   }
 }

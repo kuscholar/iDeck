@@ -17,6 +17,9 @@ export PATH="$(dirname "$LD_LLD"):$PATH"
 if [[ ${LINUX_LAB_COMPAT_TOOL:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]]; then
     echo 'Compatibility registration requires explicit Steam frontend opt-in' >&2;exit 2
 fi
+if [[ ${LINUX_LAB_CEF_DISABLE_GPU:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]];then
+    echo 'CEF GPU experiment requires explicit Steam frontend opt-in' >&2;exit 2
+fi
 if [[ ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 && ${LINUX_LAB_GUEST_LIFETIME:-0} != 1 ]];then
     echo 'Native worker accounting requires explicit guest lifetime tracking' >&2;exit 2
 fi
@@ -105,6 +108,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \
     LINUX_LAB_NATIVE_LOG="${LINUX_LAB_NATIVE_LOG:-0}" \
     LINUX_LAB_LAZY_PAGES="${LINUX_LAB_LAZY_PAGES:-0}" \
+    LINUX_LAB_CEF_DISABLE_GPU="${LINUX_LAB_CEF_DISABLE_GPU:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
     LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

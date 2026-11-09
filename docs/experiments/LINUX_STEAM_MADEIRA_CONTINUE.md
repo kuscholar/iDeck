@@ -1,3 +1,44 @@
+# Run14: real20 CPU/classes active;21 CEF GPU A/B prepared, NOT installed
+
+Read current EVIDENCE.run14 and latest investigation FIRST. Primary/main/pins
+unchanged; branch source parent9c69a1b. Actual19 Steam3640 endedSIGKILL9 after
+443.001s, ~2.9847GB footprint/21.55MB available/15warnings. Genuine saved login
+Success-OK00:59:02 and account header verified, contents black; no Library/input
+success. Fixed Library/View clicks only move pointer; no passwords/Guard.
+ActivityMonitor ended0.988s disconnected/onlykernel, no app CPU metrics.
+
+20 adds ONLY private public self CPU + existing independent atomic Linux counters.
+Full feature20 build/final markers/sign/install;5 logging host modes+16 real
+controls and default-off iOS unit Werror PASS. First3801 was actually completed
+ordinary16, NOT Steam. Verified completed+retired it. Fresh3836 Steam updater
+returned42/counters0; verified completed+retired it before post-update launch.
+
+CURRENT actual20 Steam PID3845, install9BB06401-21A9-40BF-A202-C0ACE2F64FA8.
+REVALIDATE; console18291; native kernel-3845-341595-865524000.log. Private
+run14/active-session20-postupdate.json. At229s CPU647.19s=2.826native cores,
+footprint2.271GB/peak2.406GB,3warnings. Logical anon582571pages, codewords105.9MB,
+13 tables,17cap/12pressure flushes. Noncoherent logical counters != footprint,
+codewords exclude metadata/disconnected blocks, no sole-root-cause claim.
+
+NEXT preserve this active test and collect complete real UI/resources/exit.
+Prepared21 adds default-off LINUX_LAB_CEF_DISABLE_GPU=1 -> official Steam
+-cef-disable-gpu ONLY (current actual GPU uses ANGLE/Mesa llvmpipe). Full21
+build/final launch+policy/CPU markers verified, shell command on/off syntax checks
+PASS, signed/deep-strict copy ready, NOT installed/device-qualified. Existing
+working target/root/auth/games preserved. Do not install/restart while3845 active
+or call compilation an effective GPU-path/content fix. After genuine end, test
+actual helper switch + real Library/input/memory/CPU before further changes.
+
+Noarg still diagnostic: actual launch mode must be observed, not assumed from
+CLI request. Old updater42 file belongs3836, not3845 result. Saved20 immutable
+unsigned and21 candidate private run14; reconstructed20 source is explicitly
+reconstructed, not build-time snapshot. No private entitlements/JIT claim, no
+Valve/FEX edits or credential/Guard/Mac-unlock automation. Bridge125 remains
+diagnostic, no game/return/repeat stability. Keep schedule active; no success
+sentinel/unload. Preserve every unrelated worktree, main, app and private data.
+
+--- Historical run13 and prior context ---
+
 # Run13: Lab19 grouping deployed; updater42 completes, fresh Steam active
 
 Read latest EVIDENCE.run13 and investigation FIRST. Source parent ca8216c, main

@@ -26,6 +26,8 @@ int main(int argc,char **argv){
         ideck_native_log_resources();size_t size;char *body=read_log(argv[2],&size);
         assert(strstr(body,"NATIVE_RESOURCE")&&strstr(body,"query_status=0 valid=1"));
         assert(strstr(body,"available_known=0")); // Host macOS API is deliberately unavailable.
+        assert(strstr(body,"cpu_valid=1")&&strstr(body,"LINUX_MEMORY_CLASSES"));
+        assert(strstr(body,"anonymous_guest_pages=0")&&strstr(body,"translation_tables=0"));
         free(body);puts("public-self-task-metrics-host-scope-only=PASS");return 0;
     }
     if(!strcmp(argv[1],"privacy-cap")){

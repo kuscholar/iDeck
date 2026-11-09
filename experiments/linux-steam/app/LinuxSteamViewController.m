@@ -7,6 +7,9 @@
 #import "ToolInstall.h"
 #import "RFBClient.h"
 #import "MetalFramebufferView.h"
+#if IDECK_LAB_NATIVE_LOG
+#import "NativeKernelLog.h"
+#endif
 #include <unistd.h>
 #include <stdatomic.h>
 
@@ -166,6 +169,13 @@
         if(compatibilityProbe){[self showStatus:@"Compatibility tool is not enabled; no guest started."];return;}
 #endif
         [self showStatus:@"Starting genuine ARM64 Linux Steam; waiting for its display."];
+#if IDECK_LAB_NATIVE_LOG
+#if IDECK_LAB_CEF_DISABLE_GPU
+        ideck_native_log_line("UI_GRAPHICS_POLICY cef_disable_gpu=1");
+#else
+        ideck_native_log_line("UI_GRAPHICS_POLICY cef_disable_gpu=0");
+#endif
+#endif
         __weak typeof(self) weakSelf=self;
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
 #if IDECK_LAB_COMPAT_TOOL

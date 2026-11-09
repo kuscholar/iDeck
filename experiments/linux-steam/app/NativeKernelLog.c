@@ -8,6 +8,16 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/resource.h>
+#include <stdatomic.h>
+#include <stdint.h>
+#if IDECK_LAB_NATIVE_LOG
+/* Exact pinned public diagnostic globals. Independent atomic observations,
+ * not coherent VM ownership, physical accounting or permission for handoff. */
+extern _Atomic long anon_page_count;
+extern _Atomic uint64_t asbestos_stat_instances,asbestos_stat_blocks,asbestos_stat_code_words;
+extern _Atomic uint64_t asbestos_stat_idle_flushes,asbestos_stat_cap_flushes,asbestos_stat_pressure_flushes;
+#endif
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #include <mach/mach.h>
@@ -85,12 +95,29 @@ void ideck_native_log_resources(void){
 #if TARGET_OS_IPHONE
     available=os_proc_available_memory();available_known=1;
 #endif
-    char row[384];snprintf(row,sizeof row,
-        "NATIVE_RESOURCE mono_ms=%llu query_status=%d valid=%d footprint_bytes=%llu resident_bytes=%llu virtual_bytes=%llu available_known=%d available_bytes=%llu",
+    struct rusage usage={0};int cpu_valid=getrusage(RUSAGE_SELF,&usage)==0;
+    uint64_t user_us=cpu_valid?(uint64_t)usage.ru_utime.tv_sec*1000000+usage.ru_utime.tv_usec:0;
+    uint64_t system_us=cpu_valid?(uint64_t)usage.ru_stime.tv_sec*1000000+usage.ru_stime.tv_usec:0;
+    char row[512];snprintf(row,sizeof row,
+        "NATIVE_RESOURCE mono_ms=%llu query_status=%d valid=%d footprint_bytes=%llu resident_bytes=%llu virtual_bytes=%llu available_known=%d available_bytes=%llu cpu_valid=%d cpu_user_us=%llu cpu_system_us=%llu",
         (unsigned long long)now.tv_sec*1000+(unsigned long long)now.tv_nsec/1000000,result,valid,
         valid?(unsigned long long)info.phys_footprint:0,valid?(unsigned long long)info.resident_size:0,
-        valid?(unsigned long long)info.virtual_size:0,available_known,(unsigned long long)available);
+        valid?(unsigned long long)info.virtual_size:0,available_known,(unsigned long long)available,cpu_valid,
+        (unsigned long long)user_us,(unsigned long long)system_us);
     ideck_native_log_line(row);
+#if IDECK_LAB_NATIVE_LOG
+    snprintf(row,sizeof row,
+        "LINUX_MEMORY_CLASSES mono_ms=%llu anonymous_guest_pages=%ld translation_tables=%llu translated_blocks=%llu code_words_bytes=%llu idle_flushes=%llu cap_flushes=%llu pressure_flushes=%llu",
+        (unsigned long long)now.tv_sec*1000+(unsigned long long)now.tv_nsec/1000000,
+        atomic_load_explicit(&anon_page_count,memory_order_relaxed),
+        (unsigned long long)atomic_load_explicit(&asbestos_stat_instances,memory_order_relaxed),
+        (unsigned long long)atomic_load_explicit(&asbestos_stat_blocks,memory_order_relaxed),
+        (unsigned long long)atomic_load_explicit(&asbestos_stat_code_words,memory_order_relaxed)*sizeof(unsigned long),
+        (unsigned long long)atomic_load_explicit(&asbestos_stat_idle_flushes,memory_order_relaxed),
+        (unsigned long long)atomic_load_explicit(&asbestos_stat_cap_flushes,memory_order_relaxed),
+        (unsigned long long)atomic_load_explicit(&asbestos_stat_pressure_flushes,memory_order_relaxed));
+    ideck_native_log_line(row);
+#endif
 #else
     ideck_native_log_line("NATIVE_RESOURCE query_status=unsupported valid=0 available_known=0");
 #endif

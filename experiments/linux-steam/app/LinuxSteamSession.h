@@ -8,6 +8,13 @@
 #else
 #define IDECK_LAB_VNC_SHARING ""
 #endif
+#if IDECK_LAB_CEF_DISABLE_GPU
+/* Official Steam client switch, not a Valve/renderer binary patch. This changes
+ * only this Lab browser experiment, never Madeira's game GPU implementation. */
+#define IDECK_LAB_CEF_GPU_ARGS " -cef-disable-gpu"
+#else
+#define IDECK_LAB_CEF_GPU_ARGS ""
+#endif
 #define IDECK_LINUX_STEAM_ARGS \
     "/bin/sh\0-c\0" \
     "set -eu; umask 077; " \
@@ -22,5 +29,5 @@
     "echo ready > /tmp/ideck-display-ready; " \
     "cd /Steam; export DISPLAY=:99 STEAM_RUNTIME=1; " \
     "export LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/Steam/steamrtarm64/panorama; " \
-    "./steamrtarm64/steam -clientbeta steamdeck_stable -nobigpicture > /tmp/ideck-steam.log 2>&1 & spid=$!; " \
+    "./steamrtarm64/steam -clientbeta steamdeck_stable -nobigpicture" IDECK_LAB_CEF_GPU_ARGS " > /tmp/ideck-steam.log 2>&1 & spid=$!; " \
     "wait \"$spid\"\0"

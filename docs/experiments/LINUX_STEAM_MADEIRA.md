@@ -1466,3 +1466,66 @@ samples footprint2.103GB/available903MB, no warning, guest black/cursor. Memory
 still grows: updater success is not whole-client memory/stability success. Keep
 this session active and inspect real UI/resources; no blind restart or sole
 root-cause claim. Old10752 is previous3625 completion, not this process result.
+
+## Run14 — actual CPU/classes and prepared CEF GPU-path discriminator
+
+Parent9c69a1b. Run13 next Steam3640 was NOT stable:443.001s sample window,
+footprint2,984,712,880/available21,554,512bytes,15 memory warnings then actual
+SIGKILL9. Account shell/header visible, library content black before/after
+Library/View clicks. Shared local display input was transported and cursor moved,
+not useful interaction proof. Exact fresh Steam SetLoginState Success-OK at
+2026-11-09T00:59:02 establishes saved legitimate login, no agent credentials/Guard.
+Requested10s ActivityMonitor capture ended0.988152s Device disconnected, TOC only
+kernel0; no app CPU results from that trace and no observer signal sent.
+
+**Single diagnostic hypothesis.** New20 only adds public RUSAGE_SELF CPU totals
+and existing pinned anonymous/Asbestos atomic counters to the private1Hz log.
+No allocation/cache/cap/JIT policy edit or new thread. Counts are independent
+noncoherent observations: anonymous guest pages are logical, code words exclude
+block metadata/disconnected blocks, neither equals physical footprint. Five host
+logging modes pass including real ARM6416 checks and initial zero counters/CPU
+fields; changed wrapper/log/task units sanitized, rest archive not fully. Actual
+flags-off iOS unit Werror/no Linux-counter dependency check passes, not a full
+new default20 app claim. Full feature20 build/final counter/CPU symbols and markers
+verified, disposable exact-profile sign/deep-strict/install preserved same Lab.
+
+**Actual mode correction:** first20 process3801 visibly completed ordinary16
+diagnostics instead of requested Steam; its low-memory samples are NOT Steam
+measurements. Only after report/identity/screen proved completion was it retired.
+Fresh3836 after verified absence runs real Steam, completes updater42/counters0
+again (client logged prior unclean shutdown). No update/hash verification bypass.
+Exact completion verified before retirement; fresh3845 after absence is current
+real Steam. Source noarg still selects diagnostics; launch intent alone is not
+proof of actual runtime mode. The uncommitted20 overlay was reconstructed from
+parent+known file edits and labelled reconstruction, not a captured source snapshot.
+
+Actual3845 by229.001s:647.189688 cumulative CPU seconds (~2.82614 native core
+equivalents), logical anonymous582571pages, translated words105855912bytes/
+608461blocks/13tables,17 cap/12 pressure flushes, footprint2,271,353,136bytes,
+peak2,406,455,288 and3 memory warnings. Busy computation is observed; no sole
+cache, allocation or rendering-cause inference. Do not sum logical guest counts
+as physical memory or advertise this as a stability/performance improvement.
+
+**Prepared next discriminator21, not yet deployed:** current GPU log names
+ANGLE/Mesa llvmpipe, a guest software GL path. Default-off
+LINUX_LAB_CEF_DISABLE_GPU=1 adds ONLY Steam's own -cef-disable-gpu in this Lab.
+The official ARM64 ELF contains that switch; binary unchanged. Production command
+C string on/off compiles Werror and passes shell syntax (3fixedargv/switch0or1).
+Full feature21 build and FINAL actual command/policy/CPU/class markers inspected;
+immutable unsigned bundle plus existing-profile signed/deep-strict copy prepared.
+No Wine/game GPU, FEX/Valve, sandbox/security/auth or assertion changes. This does
+not establish the switch's effect or fix; actual helper flags/render/input must
+be tested. Never replace active20's binary or terminate it just for a timeout.
+
+Current actual20 PID3845/install9BB06401-21A9-40BF-A202-C0ACE2F64FA8, console18291,
+private run14 active-session20-postupdate.json: REVALIDATE before action. Next
+collect complete resource/UI/exit evidence, and only after session ends test21
+against real Library and input. Keep auth/root/games/saves. No credential/Guard
+automation or Mac unlock request. No JIT physical activation inferred from pinned
+LinuxRunner host/Simulator documentation. GPU framebuffer Metal presentation is
+separate from actual guest GPU acceleration.
+
+EVIDENCE.run14 has exact hashes/receipts; raw logs/frames/rootfs/signing/Valve data
+stay private. Full stable Library/BPM/input -> Steam Play -> licensed Madeira
+game -> reliable return remains open, bridge125 diagnostic. No success sentinel,
+goal completion, combined-binary release or scheduler unload is justified.
