@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 12,
-  "recorded_at_utc": "2026-11-09T00:46:10.706419+00:00",
+  "latest_run": 13,
+  "recorded_at_utc": "2026-11-09T00:59:55.016605+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "8eaf7b61703d77f8d206faafebb180a17da525d5",
   "source_parent": "bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067",
@@ -2904,5 +2904,126 @@
       "No signal lease linked, no FEX/vendor/Valve/security edits, no account/cache transfer",
       "No public raw logs/rootfs/profiles/Valve packages; original app/main preserved"
     ]
+  },
+  "run13": {
+    "source_parent": "ca8216c442b72276157e4143de68f8b91a7789ca",
+    "hypothesis": "Run12 real-control4.0324x lazy fault amplification can be reduced by co-materializing contiguous absent guest pages inside the SAME native-page group and SAME reservation; no allocator lifetime rewrite or cap increase.",
+    "minimal_patch": "Default-off LINUX_LAB_LAZY_PAGES=1 builds verified copied kernel/memory.c. Under existing write lock/revalidated reservation, materialize absent neighbors bounded by native group/reservation and populated PTEs. Existing shared data refcount/unmap lifetime; original COW/shared/protection/JIT paths and anon logical cap unchanged. No raw vendor/FEX/Valve edits. Scene callbacks added for private state metrics.",
+    "host_footprint": {
+      "scope": "HOST real unsanitized ARM64 interpreter; public self-task footprint, not iPad/Steam or allocator-fix evidence",
+      "archive_sha256": "f43fbd5e08f2d5dcecbbce310028279e449b914b898989f31d50c5920c19d4d8",
+      "results": [
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 6160816,
+          "touched_footprint_bytes": 73318880,
+          "unmapped_footprint_bytes": 6128048,
+          "touch_delta_bytes": 67158064,
+          "guest_status": 0,
+          "reserve_mib": 128
+        },
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 4293088,
+          "touched_footprint_bytes": 72811024,
+          "unmapped_footprint_bytes": 5603808,
+          "touch_delta_bytes": 68517936,
+          "guest_status": 0,
+          "reserve_mib": 512
+        }
+      ],
+      "lazy_to_eager_touch_delta_ratio": 1.0202488267082863
+    },
+    "host_contract": "Actual ARM64 guest base+grouped20 lazy checks each and base+grouped16 ordinary controls each PASS, wrapper/grouped memory unit ASan/UBSan; rest dependency not fully sanitized. Lazy unaligned edges, zero, page protections, inaccessible/hole EFAULT, partial unmap/fixed replacement, COW/fork/wait, PROT_NONE lazy subset boundaries and final unmap. No native runtime restart allowed.",
+    "builds": "Full Lab19 feature build, final actual lazy/log/resource/scene markers and lazy symbol verified. Existing exact Air/profile/app/certificate/expiry validated; disposable signed copy/deep-strict verified; installed only same Lab. Full separate flags-off19 build PASS and lazy/log bridge marker absent.",
+    "actual_air": "Old3600 activated without termination and visible16-control/status0 verified before upgrade. Installed19/explicitSteam3625. Actual updater extraction -> Update complete/launchingSteam -> Shutdown, guest raw10752(exit42), guest/worker counters0. Not native crash or Library proof. Self111+ samples continue;217s samplewindow220 samples, peak1018481440bytes and0memory warnings, scene foreground/active only. Native same3625 intentionally restarted ONLY after exact completion/status42 evidence; post-update19 session just launched, not yet UI-qualified. First combined terminate/relaunch returned CoreDevice10004 with no new receipt/process; no Linux crash inferred. Plain launch after verified absence succeeds fresh3640 with new19 receipt, currently black guest and resources still growing; preserve session.",
+    "device_memory": {
+      "pid": 3625,
+      "samples": 220,
+      "duration_seconds": 217.002,
+      "maximum_footprint": 1018481440,
+      "last": [
+        {
+          "mono_ms": 340319873,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 61573272,
+          "resident_bytes": 203030528,
+          "virtual_bytes": 475007418368,
+          "available_known": 1,
+          "available_bytes": 2944694120
+        },
+        {
+          "mono_ms": 340320873,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 61573272,
+          "resident_bytes": 203030528,
+          "virtual_bytes": 475007418368,
+          "available_known": 1,
+          "available_bytes": 2944694120
+        }
+      ],
+      "memory_warnings": 0,
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ],
+      "process_events": 47
+    },
+    "interpretation": "Targeted host amplification reduced to1.02025x (68517936 vs67158064). Actual device completed official update without previous ~3GB pressure. Earlier18 and19 do not have identical client update state; no full causality/whole-Steam peak reduction percentage, stability or performance claim.",
+    "next_discriminator": "Preserve active post-update19 PID3640 after revalidating executable; console session37953. Read actual UI and resource trajectory: at78 samples peak2102974120/available903293272, no warnings. Does not prove stable memory or UI. If memory rises again isolate next layer; no blind retries or memory-cap changes. Old result10752 belongs3625.",
+    "private_artifact_sha256": {
+      "run13/host-lazy/build-evidence.json": "04bbd8bc15d56ae38cc0c95b9c0db6c9e40a075bda43e55b40ea09222d588212",
+      "run13/host-lazy-san/build-evidence.json": "8bddc11b1ce6b162867c9df053365d77b4d13a9b1b577dce89d3d22ef1288241",
+      "run13/page-control/evidence.json": "fec92a0aa2302f2eb3f34b772a4e2a007a368f4129532fb4bf7200d1acd4e859",
+      "run13/lazy-contract-boundaries/evidence.json": "535de5db0bcb27c8b94509cedbf5872b4f9a28bee587eaccbbedcc236ef8f527",
+      "run13/build19.log": "4f94db24fe9eca6ed3aa322021da333220feeee5af2c9b019d776624999d65c6",
+      "run13/final-linked19.json": "161387801cee8b2f8d9a4e896f4e5d88a7b2ed4a1ac25cfeed9c1c7e3c759d6d",
+      "run13/default19-linked.json": "720e53e6c8088250458cf5cb6e72b94f85704e994d0d889c03f2cce257ad2702",
+      "run13/install19.json": "ea7ee3325e484f56577f66528d49862f6a7584ed84436c095d88f281b5aa6861",
+      "run6/signed-lab19/evidence.json": "62c7d7f6ccbc4bfa9debdcddf04edffc6566d54971f0674daeddda82ee08bc49",
+      "run13/fourth-native19/summary.json": "a1a82b2525b678b59a35897c787159bac074a8a74bd62300627b8e6916e0a8e7",
+      "run13/fourth-native19/kernel.log": "2e75d683f380a9687d73f7e93ed12755561e851e343c9a4e66d7ae80775d92eb",
+      "run13/steam19-runtime-result.json": "17d3fcc90a9b6f39ce823700d19ad2bbca0e7ac533cfdb254c7cba0ec122d151",
+      "run13/steam19-final-updater.log": "64247aacae29d37555b2a9973255d65b484979d085ad73bc28406d317fb45bc2",
+      "run13/launch19-steam.json": "1610184156a72a38821d2e40a557cc23fa7896527217a8a4a000eb92b6e8405b",
+      "run13/steam19-first.png": "285b67240374247963ea40faee73edc8f68d873ea0013c36ca9c4d729d87db1b",
+      "run13/steam19-third.png": "db592d77dbf40df35d0ea144804e13236d5d0c3365871ba5c8e07006d45ab50f",
+      "run13/postupdate-receipt.json": "6688923684a827d686fc2e60208c154673b79e7d620425719ed01dab53011fa1",
+      "run13/postupdate-kernel-second.log": "5d816281a201c97c3951a6213eebaf534f7bb3d4156ff14d15adbdcb087b5dbd",
+      "run13/postupdate-first.png": "87c9019f7218bcf5f65169acbf328145ee3b641f45e119bf42565f961255847d",
+      "run13/launch19-postupdate.json": "2f64d2832807d178d741706f98b8aa85ed046ab8fdeff2293e0b81bb6ea37454",
+      "run13/after-postupdate-error-processes.json": "4eb93a396a51109d6a0f7634f4cb44cc29e7f1cc4ab397517af9af2faf86e2f0"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/tools/build-lazy-pages.py": "e4510e8104b8849f27727c615c82f5e9150630238334792d9c9936f3a4c66f47",
+      "experiments/linux-steam/tools/test-lazy-pages.sh": "35b19ee1c89e510064f1d1a801e1a8a352994312b8583b0c9aac744d20833a57",
+      "experiments/linux-steam/tools/test-page-footprint.sh": "0c1d71927263ae71e314d42b8926bb3bc8e8cdc5c6ff87182351bafe7dee4bfa",
+      "experiments/linux-steam/guest/lazy-pages-probe.c": "ea8eb5ffb998fccab96ca3b71c427fb78be3e6a8c8d20dcf57b5b4c40a5caeac",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "aede3d7e4a2f30b8f17ebfdc530548c1bca8b6525d2d7e03f98ef7b268a8b862",
+      "experiments/linux-steam/app/main.m": "d5ac81d626432a33ca832524e10c39c9e8b42fdd975498600c75f4914ade11da",
+      "experiments/linux-steam/tools/build-lab.sh": "3e90be8afe6c38f47f597eb7ee4851ff7f01b205b4671e7018993449abcb97f5",
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "656b930048c6fc9cae23f5540fe8ab0469ffdec7b174f1566023aada3c800ddf"
+    },
+    "limits": [
+      "No genuine interactive Library/BigPicture/controller/touch/repeat-stability proof",
+      "No licensed Madeira launch/game-return/full cleanup or converter combined-binary distribution",
+      "Sparse/COW/other allocations can still incur overhead; co-materialization charges actual neighboring guest pages against original cap",
+      "Do not infer full quiescence from current counters; no signal lease linked"
+    ],
+    "postupdate_observation": {
+      "pid": 3640,
+      "build": 19,
+      "console_exec_session": 37953,
+      "samples_observed": 78,
+      "peak_footprint": 2102974120,
+      "available_last": 903293272,
+      "memory_warnings": 0,
+      "ui": "black guest/cursor; no Library/login proof",
+      "active": true
+    }
   }
 }

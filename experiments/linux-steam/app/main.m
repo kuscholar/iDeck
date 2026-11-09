@@ -128,6 +128,12 @@
 @interface LinuxLabSceneDelegate : UIResponder <UIWindowSceneDelegate>
 @end
 @implementation LinuxLabSceneDelegate
+#if IDECK_LAB_NATIVE_LOG
+- (void)sceneDidBecomeActive:(UIScene *)scene {(void)scene;ideck_native_log_line("SCENE_STATE active");ideck_native_log_resources();}
+- (void)sceneWillResignActive:(UIScene *)scene {(void)scene;ideck_native_log_line("SCENE_STATE resign_active");ideck_native_log_resources();}
+- (void)sceneDidEnterBackground:(UIScene *)scene {(void)scene;ideck_native_log_line("SCENE_STATE background");ideck_native_log_resources();}
+- (void)sceneWillEnterForeground:(UIScene *)scene {(void)scene;ideck_native_log_line("SCENE_STATE foreground");ideck_native_log_resources();}
+#endif
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)options {
     if ([scene isKindOfClass:UIWindowScene.class])
         [(LinuxLabDelegate *)UIApplication.sharedApplication.delegate connectWindowScene:(UIWindowScene *)scene];

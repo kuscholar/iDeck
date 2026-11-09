@@ -1,3 +1,39 @@
+# Run13: Lab19 grouping deployed; updater42 completes, fresh Steam active
+
+Read latest EVIDENCE.run13 and investigation FIRST. Source parent ca8216c, main
+unchanged. LINUX_LAB_LAZY_PAGES=1 copied memory.c co-materializes absent neighbors
+within same native-page group AND SAME reservation under existing lock; existing
+data refcount ownership, COW/shared/JIT/logical cap preserved. Default off.
+Host64MiB lazy delta68517936 vs eager67158064 (1.02025x vs old4.0324x). Actual
+ARM64 base/grouped20 lazy contract + base/grouped16 ordinary controls PASS,
+wrapper/grouped memory unit sanitized; remaining archive not fully sanitized.
+Full feature19 build/final linked lazy+log+scene markers/sign/deep-strict/install
+PASS. Full default19 build/final absent lazy/log bridge PASS.
+
+Exact same Air/app/profile/certificate checked before upgrade, prior3600 visible
+completed16/status0. Actual19 PID3625 completed official Steam extraction/update,
+returned raw10752(exit42)/guest0/worker0, peak1018481440/0warnings during217s.
+This does not prove whole-Steam stability; update state differs from18. Only
+AFTER exact completion verified, combined terminate/relaunch refused10004 and
+no new PID/receipt. Plain launch AFTER verified absence succeeds fresh3640.
+
+CURRENT active19 Steam PID3640, executable install UUID
+CFAF156B-6A09-41F4-AF18-0899415498BC (REVALIDATE). Console handle37953; native
+file kernel-3640-340467-766994000.log; private run13 active-session19-postupdate.json.
+At78 samples footprint2.103GB/available903MB and0warnings, black guest/cursor.
+Memory still growing: no stable-memory/Library/login/BPM/input success. Preserve
+this actual current test; no overlapping experiment or kill for timeout. Old
+last-runtime-session10752 belongs3625, NOT3640 completion evidence.
+
+NEXT current real UI/resources/exit diagnosis. If grows to limit again isolate
+next allocating layer; don't claim first fix sole root cause or raise limits.
+Auth data/games/root remain intact. No credentials/Guard/Mac-unlock automation
+or new login request absent genuine login screen. Bridge125 still diagnostic;
+no actual game, return or repeat-stability proof. No STABLE_SUCCESS/unload.
+CLI only and all older isolation/licensing/private-artifact boundaries remain.
+
+--- Historical run12 and prior context ---
+
 # Run12: Lab18 actual SIGKILL preceded by memory-limit pressure
 
 Read EVIDENCE.run12 and latest investigation FIRST. Main/pins unchanged. Private

@@ -82,6 +82,12 @@ if [[ ${LINUX_LAB_NATIVE_LOG:-0} == 1 ]];then
     runtime="$log_stage/runtime"
 fi
 frontend_libs=""
+if [[ ${LINUX_LAB_LAZY_PAGES:-0} == 1 ]];then
+    lazy_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-lazy-pages.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-lazy-pages.py" "$src" "$out" "$runtime/libish.a" "$lazy_stage/runtime"
+    cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$lazy_stage/runtime/"
+    runtime="$lazy_stage/runtime"
+fi
 if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
     [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]] || { echo 'Steam frontend requires explicit TCP view opt-in' >&2; exit 2; }
     [[ ${LINUX_LAB_ROOTFS_SHA256:-} =~ ^[0-9a-f]{64}$ ]] || { echo 'A verified clean root installation hash is required' >&2; exit 2; }
@@ -98,6 +104,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \
     LINUX_LAB_NATIVE_LOG="${LINUX_LAB_NATIVE_LOG:-0}" \
+    LINUX_LAB_LAZY_PAGES="${LINUX_LAB_LAZY_PAGES:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
     LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

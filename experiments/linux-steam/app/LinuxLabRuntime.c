@@ -55,6 +55,10 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     if (!root_path || root_path[0] != '/') return -22;
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
+#if IDECK_LAB_LAZY_PAGES
+    extern const char *ideck_lazy_pages_marker(void);
+    if(strcmp(ideck_lazy_pages_marker(),"IDECK_LAZY_NATIVE_GROUP_V1"))return -5;
+#endif
 #if IDECK_LAB_GUEST_LIFETIME
     if(strcmp(ideck_guest_lifetime_marker(),"IDECK_GUEST_LIFETIME_V1"))return -5;
 #endif

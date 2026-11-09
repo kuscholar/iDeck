@@ -1399,3 +1399,70 @@ Hashes/exact artifacts in EVIDENCE.run12. Private run12/raw logs/frames/profiles
 stay outside Git. Native restart/signals/full handoff still unqualified. Genuine
 Library/BPM/input, Steam-discovered Play->licensed Madeira game->return and
 repeated stability remain incomplete; bridge125 is diagnostic, no STABLE_SUCCESS.
+
+## Run13 — bounded lazy-page grouping and actual Air updater completion
+
+Parent ca8216c; pinned vendor/base archives unchanged. The run12 real guest test
+identified independent guest4KiB/native16KiB allocations. This isolated experiment
+does not implement a shared slab allocator or alter FEX, COW, JIT, Valve or host
+memory limits. Default-off LINUX_LAB_LAZY_PAGES=1 generates a copied memory.c
+only after exact pinned-source checks. Under the existing write lock, a fault
+materializes contiguous absent neighbors inside BOTH its aligned native-page
+group and SAME reservation, stopping before any existing PTE. Original data
+refcounts own the mapping until all its guest pages are released. Protection,
+shared mappings and logical anonymous cap stay intact; this can materialize/charge
+neighbors earlier, and does not cure overhead in independent COW/sparse paths.
+
+**Discriminating tests.** Same unsanitized ARM64 interpreter64MiB touch/verify
+now adds68,517,936bytes for lazy vs67,158,064 eager (1.02025x), compared with4.0324x
+in run12. Actual base+grouped guest20-control contract passes: unaligned reservation
+edges, demand zero, independent data, per-page protections/EFAULT, partial unmap/
+hole/fixed replacement, COW child vs parent, and PROT_NONE reservation enabling
+only first/tail pages without exposing adjacent pages. Both base+grouped ordinary
+16 controls pass. Wrapper/grouped memory.c ASan/UBSan; remaining static units
+not fully instrumented. No iPad or Steam semantics inferred from these host tests.
+
+**Build/deploy.** Full feature19 Xcode build and final lazy/log/resource/scene
+markers/symbols verified. Separate all-default-off full19 build passes, final
+Mach-O lacks lazy/log bridge. Actual old3600 was resumed without restart and
+visibly completed16 checks/status0 before upgrade. Matching existing Air/app/
+certificate/profile/expiry checked; disposable19 signed/deep-strict verified,
+installed ONLY same isolated freshtest container, preserving auth/root/games/saves.
+
+**Actual Air19 process3625:** genuine updater UI is visible, completes extraction
+and logs Update complete, launching Steam then Shutdown. Initial guest raw
+10752 = exit42, guest/worker counters0, not native crash. During217s/220 public
+self-metric samples peak footprint1,018,481,440bytes and0 actual memory warnings;
+scene foreground/active logged. Prior18 had ~3GB pressure, but client/update
+states differ, so do not claim a controlled whole-Steam percentage reduction or
+stability. Source screenshot after update is black, NOT working Library.
+
+Only AFTER verified exact3625/status42 completion was a fresh SAME19 native
+post-update launch requested. CoreDevice10004 could not determine its PID;
+subsequent authoritative list is empty and receipt stays3625, so no Linux crash
+or successful new session is inferred. A plain launch AFTER verified absence
+is the next discriminating action; do not assume it displays Library yet. No account
+credential/Guard automation, root/cache transfer, existing working app overwrite,
+Mac unlock request or live test interruption. Preserve its new identity and
+collect real UI/input/resources next. Old last-runtime-session.json may be stale
+until the fresh session returns; never replay it as current completion proof.
+
+Reproduce copied archive with tools/build-lazy-pages.py and explicit new output;
+use --sanitize for semantic controls, unsanitized for resource measurements. Run
+tools/test-lazy-pages.sh with LINUX_LAB_LAZY_ARCHIVE and NEW external
+LINUX_LAB_LAZY_OUT. tools/test-page-footprint.sh accepts optional
+LINUX_LAB_PAGE_ARCHIVE and NEW output. Feature iOS build adds
+LINUX_LAB_LAZY_PAGES=1 to existing documented frontend/lifetime/worker/log flags.
+Scene lifecycle logging is diagnostics only; no foreground/background policy edit.
+
+Exact receipts/hashes in EVIDENCE.run13; private raw artifacts not in Git. Native
+restart guards and incomplete full shutdown remain. Bridge125 is diagnostic,
+no real Play/licensed Windows game/return or repeated Library/BPM/input stability.
+No STABLE_SUCCESS or combined-binary distribution/GO assessment is justified.
+
+Run13 post-update update: the verified-absent plain launch succeeds actual3640
+with fresh19 receipt (same install CFAF156B-6A09-41F4-AF18-0899415498BC). At78
+samples footprint2.103GB/available903MB, no warning, guest black/cursor. Memory
+still grows: updater success is not whole-client memory/stability success. Keep
+this session active and inspect real UI/resources; no blind restart or sole
+root-cause claim. Old10752 is previous3625 completion, not this process result.
