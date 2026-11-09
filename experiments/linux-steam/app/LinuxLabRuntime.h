@@ -26,4 +26,7 @@ int ideck_linux_lab_steam_frontend_with_tool(const char *root_path,const struct 
 /* Diagnostic125 only, with synthetic metadata; no Steam ownership/game claim. */
 int ideck_linux_lab_compatibility_tool_probe(const char *root_path,const struct ideck_tool_payload *tool);
 const char *ideck_linux_lab_stage(void);
+/* Private numeric diagnostic only. Nonblocking bounded task-table observation;
+ * last syscall may have returned. Never a stopped frame or handoff permission. */
+void ideck_linux_lab_log_tasks(void);
 #endif

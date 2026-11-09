@@ -44,7 +44,10 @@
     return YES;
 }
 #if IDECK_LAB_NATIVE_LOG
-- (void)sampleNativeResources {ideck_native_log_resources();}
+- (void)sampleNativeResources {
+    ideck_native_log_resources();
+    static unsigned count;if(++count%10==0)ideck_linux_lab_log_tasks();
+}
 - (void)applicationDidBecomeActive:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE active");ideck_native_log_resources();}
 - (void)applicationWillResignActive:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE resign_active");ideck_native_log_resources();}
 - (void)applicationDidEnterBackground:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE background");ideck_native_log_resources();}

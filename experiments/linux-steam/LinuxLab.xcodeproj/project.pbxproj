@@ -250,7 +250,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>21</string>
+				<string>22</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -353,7 +353,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>21</string>
+				<string>22</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -426,7 +426,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>21</string>
+				<string>22</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -462,7 +462,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>21</string>
+				<string>22</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>

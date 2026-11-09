@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 14,
-  "recorded_at_utc": "2026-11-09T01:22:35.853091+00:00",
+  "latest_run": 16,
+  "recorded_at_utc": "2026-11-09T02:15:11.260160+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "8eaf7b61703d77f8d206faafebb180a17da525d5",
   "source_parent": "bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067",
@@ -3187,5 +3187,153 @@
       "No JIT device activation, no private entitlements, no credential automation, no primary app/main changes",
       "Raw logs/rootfs/Valve packages/profiles stay private; no combined Wine/converter binary publication or exception expansion"
     ]
+  },
+  "run15": {
+    "source_checkpoint": "a39586804c9f2f58b9fa94957c0934254efca021",
+    "hypothesis": "Official Steam -cef-disable-gpu may avoid costly ANGLE/Mesa llvmpipe guest rendering. Verify actual helper switch and real UI/memory, not marker alone.",
+    "prior20_result": "Actual3845 raw native SIGKILL9 after339s samplewindow: peak2988678120/available17589272,26warnings, ~3.19nativeCPU cores,773190 logical guest pages/codewords180194776. Main/other apps untouched. No sole allocation-layer diagnosis.",
+    "actual21_sequence": "Only after authoritative noLab after3845 termination, prepared exact-profile21 installed same isolated container. RealSteam3992 finishes legitimate updater42/counters0 and remains completed. No blind kill: exact3992/executable/result rechecked before retirement. Verified absence then plain fresh21 launch4025 at01:59UTC.",
+    "effective_policy": "Actual new helper args01:59:12 include --disable-gpu and --disable-gpu-compositing (categorical redacted receipt). Switch really propagates; no sandbox/security/auth/Valve/gameGPU patch. No agent credentials/Guard.",
+    "actual_21_metrics_before_debugger": {
+      "pid": 4025,
+      "samples": 653,
+      "wall_seconds": 649.996,
+      "cpu_seconds": 139.632677,
+      "cpu_core_equivalents": 0.2148208250512311,
+      "peak_footprint": 993628808,
+      "last": {
+        "mono_ms": 344778050,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 853430680,
+        "resident_bytes": 1181794304,
+        "virtual_bytes": 478470668288,
+        "available_known": 1,
+        "available_bytes": 2152836712,
+        "cpu_valid": 1,
+        "cpu_user_us": 37836476,
+        "cpu_system_us": 101872217
+      },
+      "classes_last": {
+        "mono_ms": 344778050,
+        "anonymous_guest_pages": 133750,
+        "translation_tables": 9,
+        "translated_blocks": 59352,
+        "code_words_bytes": 10111688,
+        "idle_flushes": 5,
+        "cap_flushes": 0,
+        "pressure_flushes": 0
+      },
+      "memory_warnings": 0,
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "ui": "Physical screenshots still black X11 guest/cursor, no Steam desktop/header, login/Library or BPM success. Before incomplete debugger attempt ~650s with0warnings, footprint~853MB/peak~994MB and low~0.215core CPU. Memory pressure avoided during this sample, but no functional UI fix. Non-identical client/startup states limit causal/performance comparisons.",
+    "failed_debugger_observation": "Attempted read-only native module/function stack via authorized LLDB exact Air. Initial SB device command returnedStarted, not complete; a hyphenated script import was refused before executing; standard CLI sequence still left process state2(Attaching),0threads and Detach returnedfalse. No actual stack. Immediately later authoritative noLab + consoleSIGKILL9. Termination is temporally confounded by incomplete debugger attempt, NEVER counted as spontaneous Linux crash or pressure event. No user credentials/expressions/register payload or lock/security changes. No further attach attempts planned; use in-app numeric sampler.",
+    "private_artifact_sha256": {
+      "run14/postupdate-fourth/summary.json": "776e6ebab0c0e4b3ec5fb8ca69ab54e567680e783b20af3dd62e44b031fcc2eb",
+      "run14/launch20-postupdate.json": "bea810cb7bd57fb2f13084fe87ffd4c2bc160f4a1b98f799ce418360dab52042",
+      "run14/install21.json": "1221c5aadcf39bd4390e99dee748bb736a9b67238791e593dde9c25959604613",
+      "run15/rechecked-updater21-result.json": "17d3fcc90a9b6f39ce823700d19ad2bbca0e7ac533cfdb254c7cba0ec122d151",
+      "run15/postupdate-first/receipt.json": "20ffca3444a9f1d6c66b052d994252a970c5323fa53766aca3014efcaa9a5c63",
+      "run15/helper-switch-redacted.json": "9aaa5185b13f818ffa526cbec14088f64228de390b23414c91b1be257e13361d",
+      "run15/post-stack-observation/summary.json": "d22325b45318538ec50bff86a1d512fced50b10bb94b8247bf721ccee1af9837",
+      "run15/after-lldb-final/summary.json": "03bbf59adcf435f0c8ad5fb3acbbc06bd96e95444a7ffe4a848571361167875e",
+      "run15/launch21-postupdate.json": "403f4e3719bd507e29c190f5713de736a9c5f5b64e2add48cf21a44174d8c845",
+      "run15/postupdate21-fifth.png": "418d89c5ab2a982b2621e78bf9c42d06d94ca61f2616c7933e626ddaae637e1c"
+    },
+    "next_discriminator": "In-app nonblocking bounded numeric task progress/syscall snapshot without debugger; preserve same root/auth. No stable UI/game/return or success sentinel."
+  },
+  "run16": {
+    "source_parent": "a39586804c9f2f58b9fa94957c0934254efca021",
+    "hypothesis": "CEF GPU-disabled run is low-CPU black; numeric guest last-syscall/progress sampled without attaching can discriminate waiting vs progressing. Last syscall may already have returned; no deadlock inference just from one sample.",
+    "minimal_patch": "LINUX_LAB_NATIVE_LOG opt-in ideck_linux_lab_log_tasks:10s main-runloop callback, trylock pids and per-task general lock, max first1024IDs/128rows, explicit lock-busy/skipped/truncated flags. Copies numeric IDs/wait flag/lastsyscall/cycle/fault counters only, writes AFTER releasing kernel locks. No names/argv/registers/addresses/content; no new sampling thread or runtime/allocation/signal/JIT policy. Stage<7 refuses uninitialized table; default function is empty.",
+    "host_controls": "5 existing logging modes PASS plus real ARM64 live wait/touch/unmap snapshot control: phase0 refusal, deliberately held pids lock no recursive blocking, task2 general lock skipped, live and after-exit numeric snapshots, no payload fields. Wrapper/log/task-hook units ASan/UBSan; rest dependency not fully instrumented.",
+    "correction": "First new host check incorrectly searched WHOLE private kernel log for pc/sp instead of new sampler rows; existing PROCESS_EVENT has address diagnostics. It failed. Corrected only LINUX_TASK* row scope and reran NEW artifact output; finalPASS. No runtime privacy fix fabricated.",
+    "builds": "Full Lab22 feature and default-flags-off Xcode builds PASS. Final feature task symbol/numeric marker+GPU1 linked; final default excludes sampler/lazy/GPU1 payload. Immutable unsigned saved; exact existing profile deep-strict disposable signed. After authoritative4025 absence installed ONLY isolated same Lab, no auth/root/game/save data erase.",
+    "current_device": "Fresh22 launch requested after noLab verified; actual new receipt/mode/results still pending. Interpreter noJIT. Do not count compilation/install/intent as device task-sampler success.",
+    "source_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "bf601ed94f6b8ef2f4d523a72ad5e67f6dcc6c35c5e4e2f552cde2a269ecbe9c",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "c2cd97935c09b395dc96fc0f976672265a2d5c4ab703d78fe5d61e493f3c224a",
+      "experiments/linux-steam/app/LinuxLabRuntime.h": "04ffc393e8969c632561ffd6f470dbdb54155f710efc5a539ecb0bac7c27c904",
+      "experiments/linux-steam/app/main.m": "c83ebb01d2fa0f8c531940071c0bc1f778b00d73d780b66cc4e7438855972c7e",
+      "experiments/linux-steam/tools/native-log-control.c": "7c0b5888e3001684cafb9740570932a7e42c1585cf88ca886fb6191939e9a2cf",
+      "experiments/linux-steam/tools/task-log-control.c": "990f407003cec964dacdc1471851c8f547b3286c2ce5bcae0202ff895abe93f5",
+      "experiments/linux-steam/tools/test-task-logging.sh": "55e591789148e7b153bb1ece1dae7f4b80bce289a5ef7831162fd3cb230b249e"
+    },
+    "private_artifact_sha256": {
+      "run16/task-log-controls/evidence.json": "ac134bd6762a0001a8d7649e3dfed0b3d65314cbecfd63ad1d7781ec1e6830f8",
+      "run16/live-task-control/evidence.json": "414d38d551cc7b073e6bfe7d665be0e938c36ad69fdcf362a6119959c9e98b6f",
+      "run16/live-task-control-final/evidence.json": "9c9b1eb6b8f20f4a841c399ec20de12746c7764fea604d48b8cad30d7a6741b8",
+      "run16/final-linked22.json": "7e32e5ea8ea5d2c5b17b4eaa106945a54729f212765bcc8935b4ffbfdb166262",
+      "run16/default22-linked.json": "a50d9a476df8bd9aa3db9a17e6edd00d7ee4186878c5b27bc86e6662e7a00831",
+      "run16/build22.log": "d1efef3db9b5542e4d3754a3f7fb21cbf54a902773c65544f280bf0abcd40d3d",
+      "run16/default22-build.log": "074f7e95b607ade7ac74b3329ea641cea2745e38781d727c85a611be42598c20",
+      "run6/signed-lab22/evidence.json": "3874557fa925baf35793be1d929172c2c960b5a1a07afbbabc4f716a9bbb0908",
+      "run16/install22.json": "07a9c67978db80c3347f010c016778924bac3a10b40bb8119207eb262ddab450",
+      "run16/stack4025-receipt.json": "c63838c6b1542e6be3cba93371dc9ea09c052866074b45fb7fcc5e9c920e68cd",
+      "run16/stack4025-receipt2.json": "11be1b1a9eee84a9e6a9461e3b4bc695edde23deaeb516503e3cbe970230ed1b",
+      "run16/stack4025-final-receipt.json": "63cfa99d6d10f5c77b6f69a88e900b4402f508479dbb500f03bb84bf3eb34856",
+      "run16/after-lldb-processes.json": "eb3890cabe196771c4c381556eac20880fdf042cd0d2b4e44696813e01a65bf9",
+      "run16/before-install22.json": "386ec485a4f041b395b9579934ac5b56cb3b2a23f21f71c5581f07bc163c8b46",
+      "run16/before-launch22.json": "3bb7f8df30e54fd307bdea7b71de5dcc35742d8e00bc173301933b6141702173",
+      "run16/first-air22/receipt.json": "20459bbe05f538893a7585862cae2fae55cd151019e8d8f417952ff656215ac3",
+      "run16/first-air22/summary.json": "b589a03b072eda6a3f036c323b00ebc23b79ed90e7e3ef7ae87b142cb42c8009",
+      "run16/first-air22/kernel.log": "1bb671ab465f10e64b3548885acc9f4a9086641932bfbeeef13b392c4640abe6",
+      "run16/air22-first.png": "ee045c045bae9d07a8c2f97fa774909fa292da4c50d4fc8391547ce67a0da1a4"
+    },
+    "next_discriminator": "Identify actual22 native PID/mode, verify numeric task rows on Air, finish ordinary updater42 if needed, then inspect real CEF task waits and UI. Preserve live session; no debugger repeat or arbitrary restart. No fake UI/credential automation.",
+    "limits": [
+      "No interactive genuine Library/BPM/input/repeat stability",
+      "Diagnostic125 only, no licensed Madeira game or return",
+      "No FEX/Valve/vendor/security edits, no combined distribution or exception expansion",
+      "Keep raw logs/frames/Valve/rootfs/auth/profiles private; no STABLE_SUCCESS/unload"
+    ],
+    "actual_air_first": {
+      "pid": 4056,
+      "build": 22,
+      "metrics": {
+        "pid": 4056,
+        "samples": 113,
+        "wall_seconds": 110.002,
+        "cpu_seconds": 183.821923,
+        "cpu_core_equivalents": 1.6710780076725877,
+        "peak_footprint": 991791880,
+        "last": {
+          "mono_ms": 345114623,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 662702784,
+          "resident_bytes": 708280320,
+          "virtual_bytes": 476103868416,
+          "available_known": 1,
+          "available_bytes": 2343564608,
+          "cpu_valid": 1,
+          "cpu_user_us": 176032792,
+          "cpu_system_us": 7870911
+        },
+        "classes_last": {
+          "mono_ms": 345114623,
+          "anonymous_guest_pages": 148901,
+          "translation_tables": 7,
+          "translated_blocks": 27427,
+          "code_words_bytes": 4603560,
+          "idle_flushes": 3,
+          "cap_flushes": 0,
+          "pressure_flushes": 0
+        },
+        "memory_warnings": 0,
+        "scene_states": [
+          "SCENE_STATE foreground",
+          "SCENE_STATE active"
+        ]
+      },
+      "numeric_task_samples": 11,
+      "visible_ui": "genuine Steam updater extracting package, not CEF/Library/login success",
+      "sampler_on_Air": true,
+      "state": "active updater; do not overwrite/retire until current completion verified"
+    }
   }
 }

@@ -1,3 +1,43 @@
+# Run16: Lab22 installed, fresh launch pending;21 GPU1 black not fixed
+
+Read latest EVIDENCE.run15/run16 FIRST. Main/pins unchanged, parenta395868.
+Actual20/3845 SIGKILL with~2.989GB/26warnings. Only after absence installed21.
+Actual21/3992 updater exits42/counters0, rechecked before retirement. Fresh
+21/4025 helper really gets --disable-gpu/--disable-gpu-compositing.650s sample
+~853MB/peak994MB/0warnings/0.215CPUcores but BLACK guest/cursor, no UI success.
+
+IMPORTANT failed debugger caveat: no actual stack. SB select returnedStarted;
+hyphenated script refused. Standard CLI still state2Attaching/0threads, detach
+false; immediately later noLab + SIGKILL9. Confounded by debugger attempt, NOT
+spontaneous Linux/pressure crash evidence. No further attach attempts. No
+credential/Guard/security/lock action. Use in-app numeric sampler instead.
+
+Lab22 only adds LINUX_LAB_NATIVE_LOG opted-in bounded nonblocking task sampling
+every10s (1024IDs/128rows, skipbusy/truncated explicit). Numeric IDs/wait flag/
+lastsyscall/progress counters; no names/argv/registers/addresses/payload. Writes
+after unlocking; snapshots best-effort, last syscall can be stale. Default stub
+empty.5host log modes+real ARM64 live wait/touch/unmap/contended-lock checks PASS,
+wrapper/log/task hooks sanitized, rest not. Initial test scanned unrelated kernel
+address lines; corrected new-row scope, NEW run PASS. Full22 feature/default
+build/final payload checks, signed/deep-strict PASS.
+
+22 installed ONLY after exact4025 absence, same isolated freshtest/auth/root/
+games/saves. Fresh launch CLI console14583, private run16/launch22-steam.json
+and steam22-console.log. ACTUAL new PID4056/build22 receipt verified;11 real numeric task samples
+on Air and screenshot shows legitimate updater extracting package.110s resource
+window, no warnings, peak991791880bytes. This is NOT CEF/Library/login success.
+FIRST collect current completion/progress before touching4056. Source noarg can
+launch diagnostics: don't infer mode from requested args. If genuine updater42,
+verify completion/current identity before retirement, then after absence fresh
+Steam. NEVER reuse stale updater result, PID or overwrite live test.
+
+Full Library/BPM/input/Play->licensed Madeira game->return/repeated stability
+remain absent; bridge125 diagnostic. No FEX/Valve/vendor/JIT/cap changes, no
+Mac unlock request, no auth transfer/automation or combined-binary release.
+Keep task active, no STABLE_SUCCESS/unload. Private raw artifacts excluded.
+
+--- Historical run14/prior context ---
+
 # Run14: real20 CPU/classes active;21 CEF GPU A/B prepared, NOT installed
 
 Read current EVIDENCE.run14 and latest investigation FIRST. Primary/main/pins

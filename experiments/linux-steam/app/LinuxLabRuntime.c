@@ -32,6 +32,40 @@ const char *ideck_linux_lab_stage(void) {
     static const char *names[] = {"idle", "mount-root", "init-task", "runtime-directories", "device-filesystem", "child-task", "elf-load", "guest-running", "guest-exited"};
     return names[atomic_load(&phase)];
 }
+void ideck_linux_lab_log_tasks(void) {
+#if IDECK_LAB_NATIVE_LOG
+    /* Snapshot no guest strings, argv, registers, addresses or memory payload.
+     * Copy under nonblocking lifetime/general locks; write files AFTER unlock.
+     * Covers at most the first1024 allocated IDs /128 live rows. Truncation and
+     * skipped locks are explicit; absence is never proof a task does not exist.
+     */
+    if(atomic_load(&phase)<7){ideck_native_log_line("LINUX_TASK_SAMPLE unavailable=runtime_not_started");return;}
+    if(trylock(&pids_lock)){ideck_native_log_line("LINUX_TASK_SAMPLE unavailable=pid_lock_busy");return;}
+    struct row {int tid,tgid,waiting,zombie;unsigned syscall,stage;uint64_t cycles,faults,resolved,wait_ns;} rows[128];
+    unsigned count=0,skipped=0,last=task_last_pid_locked(),limit=last<1024?last:1024,scanned=0;
+    for(unsigned pid=1;pid<=limit&&count<128;pid++) {
+        scanned=pid;struct task *task=pid_get_task(pid);
+        if(!task||task->exiting||!task->group)continue;
+        if(trylock(&task->general_lock)){skipped++;continue;}
+        rows[count++]=(struct row){task->pid,task->tgid,task->blocking,task->zombie,
+            __atomic_load_n(&task->syscall_restart_num,__ATOMIC_RELAXED),
+            __atomic_load_n(&task->diagnostic_memory_stage,__ATOMIC_RELAXED),
+            __atomic_load_n(&task->cpu.cycle,__ATOMIC_RELAXED),
+            __atomic_load_n(&task->diagnostic_faults,__ATOMIC_RELAXED),
+            __atomic_load_n(&task->diagnostic_resolved_faults,__ATOMIC_RELAXED),
+            __atomic_load_n(&task->diagnostic_fault_ns,__ATOMIC_RELAXED)};
+        unlock(&task->general_lock);
+    }
+    unlock(&pids_lock);
+    char line[384];snprintf(line,sizeof line,"LINUX_TASK_SAMPLE rows=%u last_allocated=%u scanned_through=%u skipped_busy=%u truncated=%d best_effort=1",count,last,scanned,skipped,scanned<last);
+    ideck_native_log_line(line);
+    for(unsigned i=0;i<count;i++) {
+        const struct row *r=&rows[i];
+        snprintf(line,sizeof line,"LINUX_TASK tid=%d tgid=%d instrumented_wait=%d zombie=%d last_syscall=%u cycles=%llu faults=%llu resolved=%llu fault_wait_ns=%llu memory_stage=%u",r->tid,r->tgid,r->waiting,r->zombie,r->syscall,(unsigned long long)r->cycles,(unsigned long long)r->faults,(unsigned long long)r->resolved,(unsigned long long)r->wait_ns,r->stage);
+        ideck_native_log_line(line);
+    }
+#endif
+}
 static int wait_status = -1;
 static struct task *initial_child;
 extern int ideck_lab_bridge_install(void);

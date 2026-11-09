@@ -1529,3 +1529,72 @@ EVIDENCE.run14 has exact hashes/receipts; raw logs/frames/rootfs/signing/Valve d
 stay private. Full stable Library/BPM/input -> Steam Play -> licensed Madeira
 game -> reliable return remains open, bridge125 diagnostic. No success sentinel,
 goal completion, combined-binary release or scheduler unload is justified.
+
+## Run15 — effective GPU-disabled helper; lower memory, black UI persists
+
+Checkpointa395868. Actual20 process3845 eventually SIGKILL9:339s samplewindow,
+2,988,678,120byte footprint/17,589,272available/26warnings,3.19native cores. Only
+after authoritative absence installed prepared21 into same isolated container.
+Steam3992 legitimately updates/exits42/counters0. Exact identity/completion
+rechecked before retirement; verified absence then fresh21 Steam4025. Actual
+helper01:59:12 has --disable-gpu and --disable-gpu-compositing, not just native
+policy marker. No Valve, sandbox/security/auth/gameGPU patch or credentials.
+
+Physical screenshots remain black guest/cursor, no working Library/login/BPM.
+Before debugger attempt ~650s samplewindow stays~853MB/peak994MB,0warnings,
+~0.215nativeCPU cores. This avoids previous pressure during observation but is
+NOT a functioning UI fix. Client startup/update states differ; no controlled
+whole-client speed/memory improvement claim. Preserve data, no retry/assertion
+or memory-limit workaround.
+
+**Failed stack attempt, material caveat.** Read-only authorized LLDB intended
+to capture module/function names only then detach. SB device commands returned
+Started rather than completed. One hyphenated script name was rejected before
+execution. Standard CLI sequence then still reached state2(Attaching),0threads,
+detachfalse; NO actual stack. Immediately later authoritative process list empty
+and console SIGKILL9. This termination is confounded by incomplete debugger
+attachment; NEVER classify as spontaneous Linux crash or memory-pressure event.
+No password/Guard/guest-memory expressions or security/lock changes. No further
+debugger attaches; next diagnostic runs inside app without attachment.
+
+## Run16 — bounded nonblocking task diagnostics,22 built and installed
+
+Parenta395868. New opted-in ideck_linux_lab_log_tasks runs every10s, bounded
+first1024allocatedIDs/128rows. Trylocks protect task lifetime/general state;
+busy locks are skipped and limitations explicit. Numeric tid/tgid, instrumented
+wait, last syscall, cycles/fault counters only, writes occur AFTER kernel unlock.
+No comm/argv/register/address or arbitrary memory reads, no new sampler thread,
+allocation policy, runtime restart, signal/FEX/JIT/Valve/vendor edit. Last syscall
+may have already returned and snapshots are not coherent stopped frames.
+Stage<7 refuses not-yet-initialized table; flag-off stub is empty.
+
+Five logging host modes PASS. Separate real ARM64 guest waits on fixed own-file
+markers, touches/verifies64MiB and unmaps. Native tests prove startup refusal,
+held-pids-lock refusal without recursive blocking, held task2-general-lock skip,
+live/post-exit snapshots and new-row payload absence. Wrapper/log/task-hook units
+ASan/UBSan, remaining dependency units not fully instrumented. First privacy
+test wrongly searched unrelated PROCESS_EVENT address fields in whole log and
+failed; corrected scope to LINUX_TASK* rows, reran NEW output, finalPASS. No
+runtime privacy defect/fix claim from that test expectation.
+
+Full feature22/default22 Xcode builds pass. Final feature actual task symbol and
+numeric/GPU1 markers linked, default final lacks sampler/lazy/GPU1 payload.
+Immutable unsigned saved, exact existing-profile disposable signed/deep-strict.
+Only after authoritative4025 absence installed same isolated Lab22, auth/root/
+games/saves untouched; fresh explicit Steam launch now requested after absence.
+Actual mode/receipt/Air task rows not qualified yet. Interpreter noJIT.
+
+Reproduce: tools/test-task-logging.sh with prepared LINUX_LAB_ARTIFACTS,
+LINUX_LAB_LOG_ARCHIVE, LD_LLD, NEW external LINUX_LAB_TASK_LOG_OUT. Same documented
+feature build flags;22 adds private diagnostic only, GPU1 matches21. Next verify
+actual new native session and sampler output, finish legitimate updater42 if
+required, then inspect CEF task waits/progress. No repeated debugger or active
+session replacement just for timeout. Raw evidence hashes in EVIDENCE.run15/16.
+No actual Library/BPM/input, Play->licensedMadeira game->return/repeated stability
+yet; bridge125 diagnostic. Keep full objective/schedule, no success sentinel.
+
+Run16 actual follow-up: fresh22 PID4056 receipt/mode verified.11 real numeric
+task samples on Air and physical screenshot shows legitimate Steam updater
+extracting package.110s resource window peak991791880bytes/0warnings. This
+qualifies on-device sampler execution, NOT CEF/Library/login/UI stability.
+Preserve this active updater until actual current completion is verified.

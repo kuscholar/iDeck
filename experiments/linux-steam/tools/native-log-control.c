@@ -23,11 +23,12 @@ int main(int argc,char **argv){
     }
     assert(!ideck_native_log_start(argv[2]));assert(ideck_native_log_name());assert(ideck_native_log_start(argv[2])==-EBUSY);
     if(!strcmp(argv[1],"resources")){
-        ideck_native_log_resources();size_t size;char *body=read_log(argv[2],&size);
+        ideck_native_log_resources();ideck_linux_lab_log_tasks();size_t size;char *body=read_log(argv[2],&size);
         assert(strstr(body,"NATIVE_RESOURCE")&&strstr(body,"query_status=0 valid=1"));
         assert(strstr(body,"available_known=0")); // Host macOS API is deliberately unavailable.
         assert(strstr(body,"cpu_valid=1")&&strstr(body,"LINUX_MEMORY_CLASSES"));
         assert(strstr(body,"anonymous_guest_pages=0")&&strstr(body,"translation_tables=0"));
+        assert(strstr(body,"LINUX_TASK_SAMPLE unavailable=runtime_not_started"));
         free(body);puts("public-self-task-metrics-host-scope-only=PASS");return 0;
     }
     if(!strcmp(argv[1],"privacy-cap")){
@@ -47,6 +48,7 @@ int main(int argc,char **argv){
     if(!strcmp(argv[1],"kernel")&&argc==4){
         errno=0;assert(fcntl(666,F_GETFD)==-1&&errno==EBADF);
         assert(ideck_linux_lab_run(argv[3])==0);assert(ideck_linux_lab_live_guest_threads()==0);
+        ideck_linux_lab_log_tasks();
         size_t size;char *body=read_log(argv[2],&size);
         assert(strstr(body,"HOST_RESOURCES:")&&strstr(body,"PROCESS_EVENT")&&strstr(body,"exec_committed"));
         assert(!strcmp(ideck_native_log_bridge_marker(),"IDECK_NATIVE_LOG_BRIDGE_V1"));free(body);
