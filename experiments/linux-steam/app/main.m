@@ -2,19 +2,66 @@
 #import <UIKit/UIKit.h>
 #import "LinuxLabRuntime.h"
 #import "LinuxSteamViewController.h"
+#if IDECK_LAB_NATIVE_LOG
+#import "NativeKernelLog.h"
+#include <unistd.h>
+#endif
 
 @interface LinuxLabDelegate : UIResponder <UIApplicationDelegate>
 @property(nonatomic, strong) UIWindow *window;
 @property(nonatomic, strong) UITextView *output;
+@property(nonatomic, copy) NSString *nativeLogError;
+#if IDECK_LAB_NATIVE_LOG
+@property(nonatomic, strong) NSTimer *nativeResourceTimer;
+#endif
 - (void)connectWindowScene:(UIWindowScene *)scene;
 @end
 @implementation LinuxLabDelegate
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)options { return YES; }
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)options {
+#if IDECK_LAB_NATIVE_LOG
+    NSFileManager *fm=NSFileManager.defaultManager;
+    NSURL *support=[fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
+    NSURL *lab=[support URLByAppendingPathComponent:@"iDeckLinuxLab" isDirectory:YES];
+    NSURL *logs=[lab URLByAppendingPathComponent:@"NativeDiagnostics" isDirectory:YES];
+    NSError *error=nil;
+    BOOL ready=[fm createDirectoryAtURL:logs withIntermediateDirectories:YES attributes:@{NSFilePosixPermissions:@0700} error:&error];
+    int result=ready?ideck_native_log_start(logs.fileSystemRepresentation):-1;
+    if(result||!ideck_native_log_name())self.nativeLogError=@"Private diagnostics unavailable. No Linux session started.";
+    else {
+        NSDictionary *receipt=@{@"file":[NSString stringWithUTF8String:ideck_native_log_name()],@"schema":@1,
+            @"byte_limit":@(IDECK_NATIVE_LOG_LIMIT),@"pid":@(getpid()),@"physical_memory_bytes":@(NSProcessInfo.processInfo.physicalMemory),
+            @"build":[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"]?:@"unknown"};
+        NSData *data=[NSJSONSerialization dataWithJSONObject:receipt options:NSJSONWritingPrettyPrinted error:nil];
+        if(![data writeToURL:[lab URLByAppendingPathComponent:@"last-native-log.json"] options:NSDataWritingAtomic error:&error])
+            self.nativeLogError=@"Private diagnostics receipt unavailable. No Linux session started.";
+        if(!self.nativeLogError){
+            ideck_native_log_resources();
+            self.nativeResourceTimer=[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(sampleNativeResources) userInfo:nil repeats:YES];
+            [NSRunLoop.mainRunLoop addTimer:self.nativeResourceTimer forMode:NSRunLoopCommonModes];
+        }
+    }
+#endif
+    return YES;
+}
+#if IDECK_LAB_NATIVE_LOG
+- (void)sampleNativeResources {ideck_native_log_resources();}
+- (void)applicationDidBecomeActive:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE active");ideck_native_log_resources();}
+- (void)applicationWillResignActive:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE resign_active");ideck_native_log_resources();}
+- (void)applicationDidEnterBackground:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE background");ideck_native_log_resources();}
+- (void)applicationWillEnterForeground:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE foreground");ideck_native_log_resources();}
+- (void)applicationWillTerminate:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE terminate");ideck_native_log_resources();}
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {(void)application;ideck_native_log_line("APP_MEMORY_WARNING");ideck_native_log_resources();}
+#endif
 - (void)connectWindowScene:(UIWindowScene *)scene {
     /* Keep the one Linux runtime/controller across scene reconnects. */
     UIViewController *existing = self.window.rootViewController;
     self.window = [[UIWindow alloc] initWithWindowScene:scene];
     if (existing) { self.window.rootViewController=existing; [self.window makeKeyAndVisible]; return; }
+    if(self.nativeLogError){
+        UIViewController *controller=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
+        label.text=self.nativeLogError;label.numberOfLines=0;controller.view=label;self.window.rootViewController=controller;
+        [self.window makeKeyAndVisible];return;
+    }
     unsigned steamModes=0;
     for(NSString *mode in @[@"linux-steam-desktop",@"linux-steam-install-dependencies",@"linux-steam-compatibility-diagnostics"])
         if([NSProcessInfo.processInfo.arguments containsObject:mode])steamModes++;

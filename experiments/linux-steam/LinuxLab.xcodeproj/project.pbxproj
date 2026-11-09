@@ -77,6 +77,7 @@
 				<string>610000000000000000000004</string>
 				<string>610000000000000000000005</string>
 				<string>630000000000000000000001</string>
+				<string>630000000000000000000003</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -166,6 +167,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<string>600000000000000000000003</string>
 				<string>600000000000000000000004</string>
 				<string>600000000000000000000005</string>
+				<string>630000000000000000000002</string>
 			</array>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
@@ -211,6 +213,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
+					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -245,7 +248,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>16</string>
+				<string>18</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -261,6 +264,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
 				<string>0</string>
 				<key>LINUX_LAB_NATIVE_WORKERS</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -305,6 +310,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
+					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -339,7 +345,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>16</string>
+				<string>18</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -355,6 +361,8 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
 				<string>0</string>
 				<key>LINUX_LAB_NATIVE_WORKERS</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -406,7 +414,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>16</string>
+				<string>18</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -415,12 +423,15 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
+					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
 				<string>0</string>
 				<key>LINUX_LAB_NATIVE_WORKERS</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -433,7 +444,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>16</string>
+				<string>18</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -442,12 +453,15 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_COMPAT_TOOL=$(LINUX_LAB_COMPAT_TOOL)</string>
 					<string>IDECK_LAB_SHARED_DISPLAY=$(LINUX_LAB_SHARED_DISPLAY)</string>
 					<string>IDECK_LAB_NATIVE_WORKERS=$(LINUX_LAB_NATIVE_WORKERS)</string>
+					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
 				<key>LINUX_LAB_SHARED_DISPLAY</key>
 				<string>0</string>
 				<key>LINUX_LAB_NATIVE_WORKERS</key>
+				<string>0</string>
+				<key>LINUX_LAB_NATIVE_LOG</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -677,6 +691,24 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>620000000000000000000001</string>
+		</dict>
+		<key>630000000000000000000002</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/NativeKernelLog.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>630000000000000000000003</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>630000000000000000000002</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

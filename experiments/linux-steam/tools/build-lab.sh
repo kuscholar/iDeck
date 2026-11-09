@@ -75,6 +75,12 @@ if [[ ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 ]];then
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$worker_stage/runtime/"
     runtime="$worker_stage/runtime"
 fi
+if [[ ${LINUX_LAB_NATIVE_LOG:-0} == 1 ]];then
+    log_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-native-log.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-native-logging.py" "$src" "$out" "$runtime/libish.a" "$log_stage/runtime"
+    cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$log_stage/runtime/"
+    runtime="$log_stage/runtime"
+fi
 frontend_libs=""
 if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
     [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]] || { echo 'Steam frontend requires explicit TCP view opt-in' >&2; exit 2; }
@@ -91,6 +97,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_COMPAT_TOOL="${LINUX_LAB_COMPAT_TOOL:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \
+    LINUX_LAB_NATIVE_LOG="${LINUX_LAB_NATIVE_LOG:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
     LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

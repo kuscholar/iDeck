@@ -1334,3 +1334,68 @@ private outside Git. No success sentinel or goal completion is justified.
 
 Run11 implementation checkpoint: `8eaf7b61703d77f8d206faafebb180a17da525d5` (signed off). Lab16 is actually
 installed/device-diagnostic-validated; its first Steam process ended, cause unknown.
+
+## Run12 — actual Air memory pressure and isolated page amplification
+
+Parent6661cf39b42872795500d54b9c0173a560d0538f; external UUID/migration, branch,
+origin/current remote, pins and unrelated worktrees revalidated. Same isolated
+Air app/container/auth/root preserved, no new trust/login/Mac-unlock request.
+
+**Observed failure and minimal diagnostics.** Steam process ended without a guest
+result. Feature-flagged LINUX_LAB_NATIVE_LOG=1 redirects ONLY copied kernel/log.c
+from the unconnected fd666 to bounded4MiB app-private0600 logs. Suspect auth/argv
+keyword lines are omitted wholesale; raw logs remain PRIVATE regardless of this
+filter. No typed-input trace, Steam stdout collector, new native thread, memory
+limit change, assertion suppression, runtime restart or FEX/Valve/vendor edit.
+Lab18 samples public self-task footprint/resident/virtual and iOS available-memory
+at1Hz on the main runloop and records real memory warnings. Available memory is
+an instantaneous snapshot, not reserved capacity or permission to raise limits.
+
+Five host modes pass: privacy/cap, macOS public metrics, real ARM64 kernel events
+with fd666 closed plus standard16 guest controls, nonprivate directory refusal,
+symlink refusal. Logging/task/wrapper units sanitized, remaining static units not.
+Default host16/diagnostic125/protocol/packages6 and full default18 Xcode build
+pass. Final default Mach-O excludes the opted-in kernel bridge. Feature17/18 full
+builds and final bridge/resource code linkage inspected; disposable exact-profile
+signing/deep-strict verification/isolated install succeeded. Air17 diagnostic
+returns0/request1/guest0/worker0, not a genuine Steam Play or game launch.
+
+**Actual physical Air evidence.** Two17 Steam processes3308/3365 and18 process3571
+ended SIGKILL9/no core dump. For18,111 actual self-metric samples reach footprint
+3,004,584,152bytes with available1,683,240bytes, and4 actual memory warnings,
+then SIGKILL. Footprint+available is about3.006GB on this4,056,186,880byte-memory
+Air. This strongly supports memory-limit pressure, NOT a formal jetsam report
+or proof of the exact allocating layer. Resident1,683,734,528 is a different
+metric; no compression-only diagnosis. No new matching crash/jetsam report found.
+Scene-based lifecycle callbacks were not yet logged: empty app_states cannot
+exclude background transitions. Memory-warning callback was actually observed.
+
+Official Activity Monitor45.976s trace finalized naturally but started AFTER3365
+ended. All matching app tables are empty, so no per-app CPU/ledger results are
+claimed. Attempted guarded SIGINT found the profiler already gone and sent no
+signal. Current3600 is a DIFFERENT unclassified app instance; preserve it until
+state verified. Old launch18-steam.json actually describes the completed Lab17
+diagnostic3533. Its controlled upgrade termination is NOT spontaneous failure
+evidence. Actual18 Steam is real-launch18-steam.json. The initially unchecked
+shell dependency was corrected before the final successful18 installation.
+
+**Next discriminating test already executed on host.** Pinned LinuxRunner makes
+large private writable anonymous reservations lazy; first access materializes
+each guest4KiB page with its own native mmap. Actual unsanitized interpreter
+control on a16KiB-page Apple host writes/verifies IDENTICAL64MiB. A128MiB eager
+reservation adds67,174,472byte footprint; a512MiB lazy one adds270,876,888bytes
+(4.0324x), both guest0 and successful unmap. No Steam/account/rootfs involved.
+This proves this allocation amplification in the control, not its entire share
+of actual Steam memory. No allocator fix exists yet in this checkpoint.
+
+Reproduce: tools/test-page-footprint.sh with prepared LINUX_LAB_ARTIFACTS, LD_LLD
+and NEW external LINUX_LAB_PAGE_OUT. Next isolate a copied-memory.c feature flag
+that materializes contiguous absent pages only inside BOTH the same native-page
+group and same lazy reservation; retain existing data refcount lifetime, guest
+protection, unmap/COW semantics and logical anonymous cap. Do not introduce
+unowned shared slabs, blind mprotect/retry, global memory-limit or Wine/FEX edits.
+
+Hashes/exact artifacts in EVIDENCE.run12. Private run12/raw logs/frames/profiles
+stay outside Git. Native restart/signals/full handoff still unqualified. Genuine
+Library/BPM/input, Steam-discovered Play->licensed Madeira game->return and
+repeated stability remain incomplete; bridge125 is diagnostic, no STABLE_SUCCESS.

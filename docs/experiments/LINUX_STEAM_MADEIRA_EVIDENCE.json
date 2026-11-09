@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": "run11",
-  "recorded_at_utc": "2026-11-08T23:46:41.921743+00:00",
+  "latest_run": 12,
+  "recorded_at_utc": "2026-11-09T00:46:10.706419+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "8eaf7b61703d77f8d206faafebb180a17da525d5",
   "source_parent": "bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067",
@@ -2775,5 +2775,134 @@
       "experiments/linux-steam/tools/test-native-workers.sh": "9fc9a4542f7ca52ec4abafddb9a7f299d9eb5919406beeeef8c53f383e5ccf9a"
     },
     "implementation_checkpoint": "8eaf7b61703d77f8d206faafebb180a17da525d5"
+  },
+  "run12": {
+    "source_parent": "6661cf39b42872795500d54b9c0173a560d0538f",
+    "hypothesis": "Private native logs and public self-task resource samples distinguish external kill/memory pressure from guest-return or asserted kernel failure. Then isolate guest4KiB/native16KiB lazy-page amplification.",
+    "minimal_patch": "Opt-in copied kernel/log.c bridge to app-private0600 bounded4MiB log; sensitive keyword lines omitted, no Steam stdout/input trace. Public self task footprint/resident/virtual/available snapshots at1Hz on main runloop plus actual memory warnings; no memory/system limit or runtime restart change.",
+    "host_tests": "5 logging modes PASS (privacy/cap, public macOS metrics, real ARM64 kernel events withfd666closed+16guestchecks, unsafe-directory/symlink refusal). Changed logging/task/wrapper units ASan/UBSan, other static units not. Ordinary host16+diagnostic125/protocol+packages6 and full default18 build PASS.",
+    "builds": {
+      "Lab17": "full feature build/final MachO bridge marker verified, strict sign/install; actual Air diagnostic0/request1/guest0/worker0; two later Steam sessions3308/3365 end SIGKILL9",
+      "Lab18": "full feature/final MachO public resource sampler linked, strict sign/install, Steam3571 actual111samples ->4memory warnings ->SIGKILL9; default full build/final absent bridge verified"
+    },
+    "actual_air_memory": {
+      "pid": 3571,
+      "samples": 111,
+      "max_footprint": 3004584152,
+      "minimum_available": 1683240,
+      "last": [
+        {
+          "mono_ms": 339034497,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 2888208504,
+          "resident_bytes": 1615659008,
+          "virtual_bytes": 478335860736,
+          "available_known": 1,
+          "available_bytes": 118058888
+        },
+        {
+          "mono_ms": 339035497,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 2944897192,
+          "resident_bytes": 1635401728,
+          "virtual_bytes": 478392107008,
+          "available_known": 1,
+          "available_bytes": 61370200
+        },
+        {
+          "mono_ms": 339036497,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 2991984832,
+          "resident_bytes": 1670217728,
+          "virtual_bytes": 478438948864,
+          "available_known": 1,
+          "available_bytes": 14282560
+        },
+        {
+          "mono_ms": 339037497,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 3004584152,
+          "resident_bytes": 1683734528,
+          "virtual_bytes": 478451466240,
+          "available_known": 1,
+          "available_bytes": 1683240
+        }
+      ],
+      "app_states": [],
+      "memory_warning_count": 4,
+      "saturated": false
+    },
+    "interpretation": "Footprint3004584152 and available1683240 before SIGKILL strongly support memory-limit pressure. Not a formal jetsam cause without matching report, and no allocating-layer sole cause. Resident != footprint; do not infer compression alone. App lifecycle states empty: scene callbacks not yet instrumented; cannot exclude background transition.",
+    "profiling_limit": "ActivityMonitor trace is real Air but45.976s window started AFTER3365 ended; matching app tables empty. No per-app CPU/ledger metrics claimed; trace finalized naturally, no observer signal forwarded.",
+    "host_page_discriminator": {
+      "scope": "HOST real unsanitized ARM64 interpreter; public self-task footprint, not iPad/Steam or allocator-fix evidence",
+      "archive_sha256": "c88a4eb2dcc4f877fcb03a76087ed32376873f0e0b2593785feb12b073c94864",
+      "results": [
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 6177200,
+          "touched_footprint_bytes": 73351672,
+          "unmapped_footprint_bytes": 6144432,
+          "touch_delta_bytes": 67174472,
+          "guest_status": 0,
+          "reserve_mib": 128
+        },
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 4342192,
+          "touched_footprint_bytes": 275219080,
+          "unmapped_footprint_bytes": 6603184,
+          "touch_delta_bytes": 270876888,
+          "guest_status": 0,
+          "reserve_mib": 512
+        }
+      ],
+      "lazy_to_eager_touch_delta_ratio": 4.032437917785197
+    },
+    "next_discriminator": "Feature-gated copied memory.c: co-materialize contiguous absent guest pages only within same native16KiB-aligned group AND same lazy reservation, using existing data refcount lifetime. Test edges/protection/COW/unmap; then actual Air memory/UI. No runtime allocator patch implemented in run12.",
+    "corrections": "launch18-steam.json is old Lab17 completed diagnostic3533, not18 Steam; its install-related SIGKILL not spontaneous failure. Real18 launch is real-launch18-steam.json. Shell dependency checking corrected before actual final install18. Subsequent3600 unclassified; preserve until state verified.",
+    "private_artifact_sha256": {
+      "run12/final-linked17.json": "d1b7f2e53ac5817cabe2017be2d3ad3f76d7baade409863a54636f1633265fdb",
+      "run12/final-linked18.json": "fe459ad68288a8c99b07201fbee4bc2baa0784674a2f433ae0c0133a6adf683f",
+      "run12/default18-linked.json": "61cd944fd45b0f28d8072991c50914bfeb07b4c717cb7fc18a7177dc7c11022b",
+      "run12/default18-build.log": "f40b7eef226e71ea46a4503a6d85b1e243a6a9681bbd7134b29be7938d438e98",
+      "run12/log-resource-controls/evidence.json": "ac134bd6762a0001a8d7649e3dfed0b3d65314cbecfd63ad1d7781ec1e6830f8",
+      "run12/air17-control/summary.json": "b0e91d711b739a34444662760c8f59798dc91ff4e72aa7f17e2c8b25ead315b0",
+      "run12/air18-second/summary.json": "cc473c40dc405c6f8e29a0c1aabdf22486041021c56e63a3be840dccc7070981",
+      "run12/air18-second/kernel.log": "3785a5c14682a20e3b5fbe3671e72ee595a06f514c814387097a1c38f603bedc",
+      "run12/real-launch18-steam.json": "505112238a3e6c9e7b81ce37fca6351428aa6dd0407eee64c159fb844d5fe789",
+      "run12/activity-lab-summary.json": "d3363463d4845c5269db8f7450f9e151c14996d40e9e05843f42bbcf0d5f3c3c",
+      "run12/page-control-1/evidence.json": "866bea8c6e72100a8c1ba376bc5d25624a9c1c8ca839f942977b2c382153d9f4",
+      "run12/host-log-archive/build-evidence.json": "a65c6bcca84d5ff9153a1904c9cbad5e09fa2d97bd40753b12eb63c00deb0561",
+      "run12/install18.json": "ad014d32166893c7a2cd55f986beddb5f2ea523f6d2acd194613e1c0d0d26d08",
+      "run6/signed-lab17/evidence.json": "46518a092bb404c9c18af7d2c9bf96ed52ae68bc14ae2239f814ea20657dc60f",
+      "run6/signed-lab18/evidence.json": "21c8eecb05ebce9c0375e57fc7ce9cc0e9eda3129bc9031056449060be3fdd01"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/tools/build-lab.sh": "7812d75903f424ac8a4da724e0dcd1757bc6dff8340a4a1e0659c92903832ffa",
+      "experiments/linux-steam/tools/page-footprint-control.c": "2c58a8618435c8722c601a826a41d9a398b7b4942bf4439390572a0bd9cf2329",
+      "experiments/linux-steam/tools/test-page-footprint.sh": "31ed5984074e9c2933ce6c73eca8812967400ef952cccfaac81388979d86b1bc",
+      "experiments/linux-steam/tools/native-log-control.c": "90df6eef169f338fe82bfbf061264f071edd16567ac7bda59d040a51bb0b9476",
+      "experiments/linux-steam/tools/test-native-logging.sh": "8296b4e0f319b1b4bfa2af89052bcf91f3052ea8ce91c687a8891fd0f67644fe",
+      "experiments/linux-steam/tools/build-native-logging.py": "e2b3ad47188ab31ca20262bd9c4449db387e410bae4d78800eef83203e922aa2",
+      "experiments/linux-steam/app/NativeKernelLog.h": "5b5a43dc945a807518c584b1470489eea9fc023c2be3586442f830f27d765893",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "d4167f44954a02219e230af926d4b5324068b55995f967cbbb46933c32be8255",
+      "experiments/linux-steam/app/main.m": "c58e6ad9815482462f99c71f50e73a796f001558a5ac21b83236c0215465977c",
+      "experiments/linux-steam/app/NativeKernelLog.c": "fa80750fca340b3159f40ba5c3201fe59e394c5123ac1515d380c017d70c584f",
+      "experiments/linux-steam/guest/page-footprint-probe.c": "c23ea1a49000e980cce81b3da168d8ef295fdb336b91585d943c74ccd92850fe",
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "809e72ecbf013c949677e7c198a5374951ae6d8827febccee5861d244b5b2ebc"
+    },
+    "limits": [
+      "No interactive authenticated Library/BPM/input/device-stability success",
+      "Bridge125 is diagnostic; no licensed game or return",
+      "No signal lease linked, no FEX/vendor/Valve/security edits, no account/cache transfer",
+      "No public raw logs/rootfs/profiles/Valve packages; original app/main preserved"
+    ]
   }
 }

@@ -22,6 +22,9 @@
 #if IDECK_LAB_NATIVE_WORKERS
 #include "NativeWorkers.h"
 #endif
+#if IDECK_LAB_NATIVE_LOG
+#include "NativeKernelLog.h"
+#endif
 
 static atomic_bool consumed;
 static atomic_int phase;
@@ -57,6 +60,9 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
 #endif
 #if IDECK_LAB_NATIVE_WORKERS
     if(strcmp(ideck_native_workers_marker(),"IDECK_NATIVE_WORKERS_V1"))return -5;
+#endif
+#if IDECK_LAB_NATIVE_LOG
+    if(strcmp(ideck_native_log_bridge_marker(),"IDECK_NATIVE_LOG_BRIDGE_V1")||!ideck_native_log_name())return -5;
 #endif
     atomic_store(&phase, 1);
     char distro_data[4096];

@@ -1,3 +1,35 @@
+# Run12: Lab18 actual SIGKILL preceded by memory-limit pressure
+
+Read EVIDENCE.run12 and latest investigation FIRST. Main/pins unchanged. Private
+run12 real-launch18-steam.json PID3571 is TERMINAL SIGKILL9:111 samples, footprint
+3004584152/available1683240 and4 memory warnings. This supports memory pressure,
+not exact allocating-layer or formal jetsam cause. App scene lifecycle unlogged;
+no background exclusion. Later PID3600 is a DIFFERENT unclassified instance;
+revalidate/preserve before install/launch. Do not reuse stale PIDs or console IDs.
+
+Host unsanitized actual interpreter page control reproduces4.0324x footprint
+for same64MiB writes:128MiB eager67174472 vs512MiB lazy270876888 bytes. Native16KiB
+vs guest4KiB independent lazy-page mmap. No runtime allocator fix yet. NEXT add
+opted-in copied-memory.c native-page-group co-materialization bounded by same
+reservation and absent contiguous pages, using existing refcounts. Test edges,
+protection, COW and unmap before Air. No memory-limit increase, FEX/Valve edits,
+blind retries or assertion suppression. Original guest cap remains.
+
+Lab17/18 built/final linked/signed/installed in SAME isolated freshtest container;
+Air17 real diagnostic PASS0/request1/guest0/worker0. Lab18 resource metrics proven
+on Air, not successful Library. Default full build/bridge-absent check PASS,
+5 logging controls plus ordinary regressions PASS. Source noarg still launches
+diagnostics, not automatic Steam. Activity Monitor capture missed the actual
+process window; NO app CPU/ledger results. Real pending human force-close question
+from run11 remains unanswered; don't repeat login absent actual login screen.
+
+Auth/games/saves preserved. Full product goal remains unachieved; bridge125
+is only a diagnostic, no game or return. Keep scheduled research active, no
+STABLE_SUCCESS/unload. CLI only, NEVER request Mac unlock. Preserve other
+worktrees/apps/main and all private rootfs/auth/log/profile artifacts.
+
+--- Historical run11 and prior context ---
+
 # Run11 8eaf7b6: Lab16 installed, Air diagnostic PASS; Steam process ended
 
 FIRST current state supersedes old Lab13 auth-wait notes: PID2676 is gone. The
