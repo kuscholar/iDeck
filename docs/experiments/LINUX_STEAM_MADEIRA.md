@@ -2542,3 +2542,127 @@ and raw QR/login data; don't repeat or substitute29. Next perform a real
 unauthenticated Steam graceful-exit experiment using the join mechanisms,
 then qualify signal/storage/resource boundaries. No main/FEX/Valve changes,
 completion sentinel or task unload.
+
+
+## Run28 — genuine host Steam closes, real thread joins and zombie reap complete
+
+Test-time parent f962015e551bd95fedb60bcf284270f3c6445a47. New host-only
+`build-host-steam-shutdown.sh` builds separate copied archives with actual guest
+and auxiliary joins, cooperative profiler-stop support, existing packet/TCP/log/
+lazy-page overlays and native signal lease. Nothing is enabled in an App target.
+The ordinary ARM64 ELF control still passes all16 checks and reaps1 child.
+
+The first profiling-enabled real frontend attempt stalled in setup before Steam
+started; sampled VNC task was in connect/wait-for-signals, not an observed profiler
+lock. Its owned observer intentionally stopped only this private child. A second
+fresh clone with profiling disabled displayed the genuine Steam login window.
+Only its visually selected close button was clicked (2 pointer packets); no
+account/password/Guard/login action. The real frontend then returned status0,
+all registered guest/native worker pthread joins completed, native init wait4
+reaped7 children, full PID range2..MAX_PID had0 remaining entries, and the native
+signal lease restored successfully. The owner observed natural native exit0 at
+282.027s. This is actual HOST Steam shutdown evidence, NOT device/game/return.
+The one profiling A/B pair does not identify a sole cause or reproduce an Air
+failure. Both host sessions are now terminal; never reuse their old PIDs.
+
+Before native helper process exit, self footprint was248202320bytes and resident
+706707456bytes, versus1671552/2277376 before frontend. Anonymous charged guest
+pages0, translated blocks/codewords0, translation-table instances1. The pinned
+construct_task/native init path allocates an mm and translation table deliberately
+retained here; source-consistent with this counter, but no per-mm identity was
+recorded in the real run and it does not explain the whole residual footprint.
+No pressure-relief/free/reset workaround or full reclamation claim. Remaining
+root mounts/SQLite/native init/global caches/storage need an actual lifecycle.
+DONTNEED requested bytes are not reclaimed-memory measurements.
+
+Readonly actual prepared iOS archive inspection also found a strong external
+`current` collision: LinuxRunner TLS versus wineserver regular common storage.
+Prepared Wine source revision is not yet matched, and no combined link was
+attempted at this stage. It is a concrete next linkage discriminator, not a
+claim the whole combined App has failed or that renaming fixes runtime safety.
+Private run28 retains exact binaries/source/log/frame hashes, startup-failure
+samples, natural-exit receipts and the symbol inventory. Login/QR frames remain
+private. Source-only evidence contains numeric observations and hashes.
+
+One fresh readonly Air query again identifies old Lab23/4952/B265FEBE without
+input/stop/upgrade/restart/authentication. Pending25 choice remains unchanged.
+Main and other worktrees/data/vendor/FEX/Valve untouched. No actual Steam Play
+Madeira game or return, no repeated Air stability, no STABLE_SUCCESS or unload.
+Next isolate Linux task symbols in independent archives, then complete genuine
+root/storage/mapping and Madeira integration rather than equating joins with
+permission to start Wine.
+
+
+## Run29 — isolate Linux task TLS before combining with Wine
+
+Source-parent f962015e551bd95fedb60bcf284270f3c6445a47. A discriminating actual
+iOS relocatable link of the ordinary Linux kernel archive plus the prepared
+wineserver archive fails on duplicate `_current`. Linux defines task TLS; the
+server defines a regular global. New explicit `LinuxSymbolNamespace.h` changes
+ONLY the Darwin assembler label of Linux's declaration to
+`_ideck_linux_current`, retaining its C identifier. No `-Dcurrent` token macro,
+Objective-C selector rewrite, Wine/FEX/Valve edits or default target enablement.
+Force-include only for LinuxRunner and Linux C adapters, NEVER Wine compilation.
+
+`build-symbol-isolated.py` builds fresh host/iOS interpreter archives from exact
+pristine LinuxRunner d1419782da2e299fe22f1ddb85c70ae3d1e276b1 and the existing
+generated dirfd guard. Subsequent copied overlays inherit these compile commands.
+Darwin asm labels include the leading underscore explicitly; preprocessed
+assembly skips the C declaration. Build host and iOS configurations sequentially:
+the pinned cross-compiler probe uses fixed BSD-incompatible `/tmp` templates and
+concurrent configurations collided in one refused setup. No upstream/temp-file
+cleanup workaround. Earlier failed output directories remain separate/private.
+
+Actual results, with source/artifact hashes in private run29 and EVIDENCE.run29:
+
+- Fresh host-v4/iOS-v5 static archives build and all Linux-only namespace audits
+  pass. The adapter-forgotten-include negative object is correctly refused. An
+  unqualified adapter could otherwise bind to Wine's ordinary global despite a
+  namespaced archive: audit every Linux object, not just libish.
+- Real host controls pass16 ARM64 ELF checks, two simultaneous native TLS
+  threads remain isolated from a synthetic regular-global fixture, and actual
+  Objective-C `current` selector spelling/dispatch remains unchanged. Own test
+  harness/adapters use ASan/UBSan; this is NOT coverage of all LinuxRunner code
+  or actual Wine runtime behavior. Native init mm refcount1/pgdir_used0 observed
+  after this ELF, not attribution of real Steam's entire residual footprint.
+- Actual kernel+wineserver pair relocatable link now passes with two distinct
+  definitions: regular `_current` and TLS `_ideck_linux_current`. Engine/system
+  references deliberately remain unresolved. This is NOT a full executable/App
+  link or Wine execution. All-loading the engine too forces4 pre-existing gadget
+  aliases and fails both variants; that stress case is separate from normal
+  lazy App linkage and was not hidden with linker suppression.
+- Readonly symbol inventory finds no shared definitions with12 prepared
+  native archives (including wineserver) after isolation; pairing archive nm fails/incomplete, dynamic
+  frameworks are outside this inventory. No complete combined-link claim.
+  Primary Wine source pin9129e968 is clean/matches the baseline, but that alone
+  does not establish the old prepared server archive's exact source provenance.
+
+Reproduce with new private output directories (configure platforms sequentially;
+explicit MESON/NINJA/LD_LLD from the prepared toolchain, as in earlier runs):
+
+```sh
+python3 experiments/linux-steam/tools/build-symbol-isolated.py "$OUT/host" \
+  --platform host --meson "$MESON" --ninja "$NINJA"
+python3 experiments/linux-steam/tools/build-symbol-isolated.py "$OUT/ios" \
+  --platform ios --meson "$MESON" --ninja "$NINJA"
+LINUX_LAB_NAMESPACE_BUILD="$OUT/host" LINUX_LAB_NAMESPACE_TEST_OUT="$OUT/controls" \
+  bash experiments/linux-steam/tools/test-symbol-namespace.sh
+python3 experiments/linux-steam/tools/test-symbol-pair-link.py \
+  "$PREPARED_IOS/libish.a" "$OUT/ios/build/libish.a" \
+  "$PREPARED_SERVER" "$OUT/pair-link"
+```
+
+No App build/sign/install, physical input/restart/termination or credentials this
+run. Preserve old Air23/4952+B265FEBE and unanswered selected25 choice. Joined
+thread/signal controls and symbol isolation are components, not authorization
+to start Madeira. Still need native viewer shutdown, storage-writer boundary,
+root/global lifetime and a real return path. One possible next discriminator
+is retaining the dormant Linux kernel/root while completely ending/rejoining
+frontend processes, then creating a new init child after a native game session:
+this is a HYPOTHESIS, not implemented or proven by resetting consumed flags or
+registry counters. Never remount/reinitialize over a live or ambiguous kernel.
+
+No authentic Madeira game from Linux Steam Play, return, Bluetooth or repeated
+Air stability. Bridge remains diagnostic125; no STABLE_SUCCESS or task unload.
+Continue full product objective with exact final linked artifacts and real Air
+evidence, preserving main/all other worktrees/app accounts/games/saves.

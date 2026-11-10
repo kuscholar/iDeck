@@ -1,3 +1,51 @@
+# Latest Run29: actual kernel/Wine symbol collision isolated; no new App/device test
+
+Read EVIDENCE.run29, MD Run28/29 and private run28/29 FIRST. Baseline parent
+f962015e551bd95fedb60bcf284270f3c6445a47 already pushed; use fresh Git/remote
+state for current checkpoint. Branch experiment/linux-steam-madeira-ipad,
+origin kuscholar/iDeck, main2ac39be unchanged, vendor d141978 pristine.
+
+Run28 genuine HOST Steam login visually confirmed, normal close only (2 mouse
+packets, NO authentication), real guest/native joins, init wait4 reaped7/0left,
+signal restoration, NATURAL native0. Both old own host PIDs TERMINAL, don't reuse.
+Profile-on setup stalled in VNC connect; no-profile reached Steam, one A/B pair
+not sole-cause proof. Residual footprint248202320/resident706707456, pages0/
+blocks0/tables1; NOT complete reclamation/reset. Native init retained mm source-
+consistent; actual run28 didn't record per-mm identity. Raw QR/logs private.
+
+Run29 actual ordinary iOS kernel+prepared wineserver -r pair fails duplicate
+_current. New opt-in assembler label isolates Linux TLS _ideck_linux_current.
+NO token macro/ObjC selector/Wine/FEX/Valve/default target edits. All Linux task
+consumers require same forced header; Linux-only audit rejects forgotten adapter.
+Actual fresh host-v4+iOS-v5 archives,16 real ARM64 ELF checks/two TLS threads/
+regular-global fixture/ObjC selector pass. ASan/UBSan own harness/adapters only.
+Actual namespaced pair -r passes distinct globals; engine/system refs unresolved,
+NOT final App/Wine runtime/device. Twelve prepared native archives no observed
+overlap; pairing archive nm incomplete, not comprehensive. Wine source pin clean
+9129e968 matches, prepared archive provenance still not rebuilt/verified.
+Configure platforms SEQUENTIALLY: pinned BSD mktemp probe's fixed /tmp names
+collide under parallel setup; ios-v4 failure preserved, fresh ios-v5 passed.
+Initial assembler/asm-label/dirfd setup errors documented, not counted success.
+
+ONE fresh readonly Air check still identifies Lab23 PID4952/executableB265FEBE.
+No Air input/stop/install/restart/auth, no new App candidate deployed. Prior
+selected25 retirement choice PENDING; don't repeat, infer consent or substitute.
+Preserve console29282 noCtrlC. Old capped logs/updater4942 not current exit proof.
+CLI only, no Macunlock requests/security/trust/password/Guard automation.
+
+NEXT real implementation: qualify native retained-root frontend lifecycle,
+viewer/storage/mapping/signal ownership and exact Linux-only adapter archive
+linked with verified Madeira resources in isolated app. Potential dormant-kernel
+new-init-child restart is only a hypothesis; don't reset consumed/counters or
+reinitialize root from zero entries. Registry epochs and return not implemented.
+Do not enable joined prototypes by compilation alone. Bridge125 still NO GAME.
+Full genuine Air Library/BPM/input -> licensed Madeira game -> reliable return/
+repeat ACTIVE. No STABLE_SUCCESS/unload/goal completion; preserve all worktrees,
+working apps/accounts/games/saves. Raw packages/Valve/profiles/log/auth stay out
+of Git. Publish scoped signed-off checkpoints only during allowed local hours.
+
+--- Earlier Run27 context (historical) ---
+
 # Latest Run27: real profiler stop/join/buffer release HOST verified, not app linked
 
 Read EVIDENCE.run27/latest MD/private run27/profile-controls FIRST. Baseline

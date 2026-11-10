@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 23,
-  "recorded_at_utc": "2026-11-09T23:07:48.509324+00:00",
+  "latest_run": 29,
+  "recorded_at_utc": "2026-11-10T04:17:24.170182+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
-  "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+  "source_parent": "f962015e551bd95fedb60bcf284270f3c6445a47",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -6535,5 +6535,401 @@
       "experiments/linux-steam/tools/joined-profile-control.c": "78ffdc0564f823056b01ac8149113f7e04f452c17500ee047ab676142adf37df",
       "experiments/linux-steam/tools/test-joined-profile.sh": "58ffc252974a14faf500fa50f5e93e1f950bd4093e70bdb5181f25c53ca322dc"
     }
+  },
+  "run28": {
+    "scope": "HOST genuine Linux Steam login visually confirmed, normal close UI action, real guest/native joins + native-init zombie reaping + signal lease restoration; NOT full root/reset or Wine game/iPad success",
+    "control_sha256": "61ad6065197771bc6c89aadcb99231afa961b9e1baf4602229f0a1f2696b44fa",
+    "owner_result": {
+      "reason": "natural-child-exit",
+      "native_status": 0,
+      "elapsed_seconds": 282.027,
+      "pid": 73879,
+      "UI_and_game_success": false
+    },
+    "clicked": {
+      "coordinate": [
+        973,
+        196
+      ],
+      "packets": 2,
+      "Steam_dialog_close_visually_selected": true,
+      "credential_or_auth_action": false
+    },
+    "actual_console_sha256": "84fec3fa4fe6b8404415b0ed478d91488a4520f35a8c4f4fb4a1ff0c183078cc",
+    "reaped_zombies": 7,
+    "remaining_guest_PID_entries_excluding_native_init": 0,
+    "registered_guest_and_worker_joins_complete": true,
+    "native_signal_owner_restored": true,
+    "ordinary_profiling_disabled": true,
+    "kernel_logs": [
+      {
+        "path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run28/no-profile-owner/logs/kernel-73879-3063596-322897000.log",
+        "bytes": 56243,
+        "sha256": "bbabe0bbbc23540d14ddec3a1deaabf418f7377243a160970c4a7e0a418c3d11"
+      }
+    ],
+    "native_self_resource_rows": [
+      "NATIVE_RESOURCE mono_ms=3063596347 query_status=0 valid=1 footprint_bytes=1671552 resident_bytes=2277376 virtual_bytes=500518830080 available_known=0 available_bytes=0 cpu_valid=1 cpu_user_us=1339 cpu_system_us=2306",
+      "LINUX_MEMORY_CLASSES mono_ms=3063596347 anonymous_guest_pages=0 translation_tables=0 translated_blocks=0 code_words_bytes=0 idle_flushes=0 cap_flushes=0 pressure_flushes=0",
+      "LINUX_MADVISE_REQUESTS calls=0 dontneed_calls=0 dontneed_requested_bytes=0 free_calls=0 free_requested_bytes=0",
+      "NATIVE_RESOURCE mono_ms=3063878114 query_status=0 valid=1 footprint_bytes=248202320 resident_bytes=706707456 virtual_bytes=500659716096 available_known=0 available_bytes=0 cpu_valid=1 cpu_user_us=95466927 cpu_system_us=13839503",
+      "LINUX_MEMORY_CLASSES mono_ms=3063878114 anonymous_guest_pages=0 translation_tables=1 translated_blocks=0 code_words_bytes=0 idle_flushes=10 cap_flushes=3 pressure_flushes=0",
+      "LINUX_MADVISE_REQUESTS calls=2951 dontneed_calls=2947 dontneed_requested_bytes=721063936 free_calls=0 free_requested_bytes=0"
+    ],
+    "private_frame_hashes": {
+      "no-profile-login.png": "63bfd521fa48b806f83a92463a6c5819d41723b1e34626c9553a3a43cf37dcf0",
+      "no-profile-before-close.png": "755050b9abfffe9e46b24df69feb3e3449ee641c4d63a982614d07e427fc5495"
+    },
+    "actual_game": false,
+    "actual_Air": false,
+    "limits": [
+      "Source assertions/actual success logs qualify only observed registered thread sets and the measured PID table; not a full storage writer/root/mapping/reset or Wave-restart certificate.",
+      "App native viewer and UIKit/FEX/Wine resources are not part of this host helper. No whole app/real game/device validation.",
+      "Profile-enabled startup stalled before Steam in VNC connect. No-profile control reached real login; one A/B pair supports diagnostic interference but not sole cause/reproducibility or Air root cause.",
+      "Raw screenshots contain transient auth QR challenges and remain PRIVATE; never publish them."
+    ],
+    "source_parent": "f962015e551bd95fedb60bcf284270f3c6445a47",
+    "own_source_hashes": {
+      "experiments/linux-steam/tools/steam-shutdown-control.c": "7832b8ad2c0deafc38a50de73747c3b845bc69eace72cf328f514934f23b575a",
+      "experiments/linux-steam/tools/build-host-steam-shutdown.sh": "49c2ff914a787a7214ac2ca3679db09c96c30ce48bbfa01974652d3d357b2b98"
+    },
+    "prepared_symbol_boundary": {
+      "scope": "READ-ONLY prepared archive symbol inspection, NOT matching-version combined app link/runtime proof",
+      "linux_archive_sha256": "87ca3bdfdea7ae0ede9bef4c702f99f64fbad5f1c2876c4c3955e64643e009c5",
+      "prepared_wineserver_sha256": "701d0fbd431edbe74592569a153a145bdd41d96b6cb0913a608c894b8dac9703",
+      "matching_wine_source_version_not_verified": true,
+      "definitions": {
+        "linux": [
+          "00000000000020a8 (__DATA,__thread_vars) external _current"
+        ],
+        "prepared_wineserver": [
+          "0000000000004a18 (__DATA,__common) external _current"
+        ]
+      }
+    },
+    "remaining_context_source_observation": "Pinned construct_task creates native init PID1 mm; mem_init creates one asbestos instance, native init deliberately retained. This is source-consistent with one post-exit table; actual run28 did not record per-mm identity. Do not attribute the entire residual footprint to that instance.",
+    "Air": "One fresh readonly query still shows exact old Lab23/4952/B265FEBE. No input/stop/upgrade/login action; pending25 choice preserved.",
+    "next": "Namespace Linux task TLS and test exact archives before real combined app linkage. Qualify root/storage and address-space lifecycle; no new reset/free from counters."
+  },
+  "run29": {
+    "source_parent": "f962015e551bd95fedb60bcf284270f3c6445a47",
+    "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+    "scope": "Explicit isolated Linux task TLS namespace; HOST controls and actual iOS pair relocatable link ONLY, no final app/install/physical/game proof",
+    "observed_failure": "Actual ordinary iOS libish+wineserver pair fails duplicate _current; Linux thread_vars and wineserver common globals must remain distinct.",
+    "hypothesis": "A declaration-level Darwin assembler name can isolate Linux task TLS while preserving the C identifier and ObjC current selectors, without Wine/FEX/Valve/default runtime edits.",
+    "minimal_patch": "Opt-in forced header only for Linux components; independent pinned Meson archives, inherited overlay commands, and Linux-only consumer symbol audit. No token macro or target-wide Wine include.",
+    "sources": {
+      "experiments/linux-steam/app/LinuxSymbolNamespace.h": "cb0b5489db951b05789a61c1582e42bce6515e1e1707575e426de109220e67cd",
+      "experiments/linux-steam/tools/build-symbol-isolated.py": "dc4c135e61c58d432f694530d39c7b03aef8f9d9228c472899c4ed06e8640e28",
+      "experiments/linux-steam/tools/audit-linux-symbols.py": "5444322513eac13c5cc50ca6d3dad7da07f5d8b09ce45549aa92a32c1cf48d6e",
+      "experiments/linux-steam/tools/test-symbol-pair-link.py": "11166cf0cbc45b5fa81eb1cdd63a7cdb6616e16941e79e9485d1952c4ea79fbb",
+      "experiments/linux-steam/tools/test-symbol-namespace.sh": "e438141adf17c164680c475cf0e3a90cb90ddd6414ac9c915d6070629f25001b",
+      "experiments/linux-steam/tools/symbol-namespace-control.c": "9f4f8e57518f90c22ae7f56553a6a0482e1818b487bec6af8fe1cff0285b83af",
+      "experiments/linux-steam/tools/symbol-regular-current-control.c": "29071a2f96adfab32b4602286363ccfa2d25b5de4e31e7c27bf4fb970d57737e",
+      "experiments/linux-steam/tools/symbol-current-selector-control.m": "1e74ab80f54003955d505d15c921669da1cff5403178ef3a366a3be0d7ff8747"
+    },
+    "host_archives": {
+      "scope": "Darwin arm64 isolated archives/symbols only, NOT final app or runtime coexistence",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "platform": "host",
+      "sdk": null,
+      "namespace_header_sha256": "cb0b5489db951b05789a61c1582e42bce6515e1e1707575e426de109220e67cd",
+      "builder_sha256": "dc4c135e61c58d432f694530d39c7b03aef8f9d9228c472899c4ed06e8640e28",
+      "archives": {
+        "libish.a": {
+          "sha256": "05b27cebd0c1d834ae6d2d02a2ffa4d0db5b62ca33b08c7b00a1be931c628c07",
+          "namespaced_rows": [
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "00000000000020a8 (__DATA,__thread_vars) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current"
+          ]
+        },
+        "libish_emu.a": {
+          "sha256": "5e26ef9cad4e0d28cbd59970e7460b8244be6d84edaab47088e7b35ba54bfc81",
+          "namespaced_rows": []
+        },
+        "libfakefs.a": {
+          "sha256": "b0b8493138b64514c06646cf279b9bdb16ded0d852cf6b53bbd5043d21ca4992",
+          "namespaced_rows": []
+        }
+      },
+      "existing_dirfd_overlay_sha256": "03092b40a23c66858543dfe15749ae0d01d26645c8900f471ebda55777891f1a",
+      "compile_commands_sha256": "da8e64e71e337f8fdb9a526239f81bd7736a816535c32f7bdc042ebc6347946d"
+    },
+    "ios_archives": {
+      "scope": "Darwin arm64 isolated archives/symbols only, NOT final app or runtime coexistence",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "platform": "ios",
+      "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk",
+      "namespace_header_sha256": "cb0b5489db951b05789a61c1582e42bce6515e1e1707575e426de109220e67cd",
+      "builder_sha256": "dc4c135e61c58d432f694530d39c7b03aef8f9d9228c472899c4ed06e8640e28",
+      "archives": {
+        "libish.a": {
+          "sha256": "74d78e1e1e76160d119c4cd8bc4fb5ff41e56b3224cb5257ec0b1d81576826ab",
+          "namespaced_rows": [
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "00000000000020a8 (__DATA,__thread_vars) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current",
+            "                 (undefined) external _ideck_linux_current"
+          ]
+        },
+        "libish_emu.a": {
+          "sha256": "dd0130f2c2a4cd761cde1798de646d62453bf778f80838e814264582f97852c0",
+          "namespaced_rows": []
+        },
+        "libfakefs.a": {
+          "sha256": "c809d4b21f61b8aa9bb672ba08236c5cfdc2f22aeea0f17047494649e7dc3dd8",
+          "namespaced_rows": []
+        }
+      },
+      "existing_dirfd_overlay_sha256": "03092b40a23c66858543dfe15749ae0d01d26645c8900f471ebda55777891f1a",
+      "compile_commands_sha256": "91af4d84a484ef2e3bd74d64fb9b694b41da8b9bf759ac7686a0df1bf4c6a1a8"
+    },
+    "actual_host_controls": {
+      "scope": "HOST two real native TLS threads + synthetic regular global + actual ObjC selector + ARM64 ELF; NOT actual Wine runtime or iPad",
+      "status": 0,
+      "elf_checks": 16,
+      "forgotten_adapter_refused": true,
+      "namespace_consumer_audit_passed": true,
+      "log_sha256": "a44e8a00ad970b6a0662d3312b2363a6e0a4687c0f7f02cd56ee83227dbdd8ea",
+      "control_sha256": "411dfd05c5f2663a82edfd602a685c6201afd44410ede2758fde28647b915aca"
+    },
+    "actual_pair_link": {
+      "scope": "Actual iOS kernel/server pair relocatable link ONLY; NOT complete Mach-O App, Wine execution or iPad test",
+      "prepared_wine_source_revision_not_artifact_verified": true,
+      "results": [
+        {
+          "variant": "ordinary",
+          "status": 1,
+          "kernel_sha256": "0fa2cd8f69bbc4a7925e7d1ed27d99dd8bc068ab77059e432997e17190de58ff",
+          "wineserver_sha256": "701d0fbd431edbe74592569a153a145bdd41d96b6cb0913a608c894b8dac9703",
+          "log_sha256": "7fa44fa157f55c5115730395884002a9115c48ac3fbffbf06133783895ad2fb2"
+        },
+        {
+          "variant": "namespaced",
+          "status": 0,
+          "kernel_sha256": "74d78e1e1e76160d119c4cd8bc4fb5ff41e56b3224cb5257ec0b1d81576826ab",
+          "wineserver_sha256": "701d0fbd431edbe74592569a153a145bdd41d96b6cb0913a608c894b8dac9703",
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "current_definitions": [
+            "0000000000517d98 (__DATA,__common) external _current",
+            "000000000012d070 (__DATA,__thread_vars) external _ideck_linux_current"
+          ],
+          "output_sha256": "f11b8b6dcc7ffdc5a112c1417e76a4da5c6f3050f49a6567d1b36b58a4ac3e4f"
+        }
+      ]
+    },
+    "prepared_native_inventory": {
+      "scope": "Read-only global symbol inventory; nm failure is incomplete, not no-collision proof. Not archive source provenance/final link/dynamic/runtime/device proof.",
+      "nm_tool": "nm",
+      "inputs": [
+        {
+          "name": "libavcodec.a",
+          "bytes": 720968,
+          "sha256": "f3e8af531943f916ca81f717cada57e09e7f1ab803778a5ad2913adfa0283058",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libavformat.a",
+          "bytes": 595824,
+          "sha256": "eb363065d1ca48225bb27ebf22b8f25ecb700b75957c606a4daa855aae8361d9",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libavutil.a",
+          "bytes": 896488,
+          "sha256": "7a139dc3d3235b097b8370180ba5f2850572d9967cd3ccec9d9bd5049313e712",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libdxmt_combined.a",
+          "bytes": 88462048,
+          "sha256": "f8106bb9cc580c76f09465200c3f7e46380ede064e61b4fca951b419c512ed54",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libgmp.a",
+          "bytes": 911800,
+          "sha256": "d3edf76f950a913ca936fd3b100701ed7104e78a9ea4d996c1d4fb6b5ee2df0b",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libgnutls.a",
+          "bytes": 4096856,
+          "sha256": "0fb83703c784406dfd0652539fddf9fc00dec2774a8703a52547f9c42cba4fda",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libhogweed.a",
+          "bytes": 1144472,
+          "sha256": "dc28dd6d43172fb971dc78dc382e3a934c0c2a903e3d916215f815b5c1f8784c",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libmadeira_rppairing.a",
+          "bytes": 7194752,
+          "sha256": "653193848f37ced9dc12487077261b867eb7df836fb3b6b35200a9307ca1852c",
+          "nm_status": 1,
+          "overlapping_global_definitions": [],
+          "inventory_incomplete": true,
+          "diagnostic_prefix": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/nm: error: /Volumes/easystore/GitHub/FunProjects/iDeck/app/Madeira/libmadeira_rppairing.a(compiler_builtins-ebaa143ec3f80e51.compiler"
+        },
+        {
+          "name": "libnettle.a",
+          "bytes": 1584616,
+          "sha256": "d5d282d9693a6335727ac6d114adb5eaed2952674a4c71ba2d9f8b5beb1383c9",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libntdll_unix.a",
+          "bytes": 2422656,
+          "sha256": "17647328fa1609bed6e54d0b0fdb16bb2b4817cafc47d0a970856aa62db5a0d2",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libswresample.a",
+          "bytes": 121056,
+          "sha256": "8bdb8bd8175fae0dfa1381b09c659bb7b64851d7f9d1b0ed3ddba24fd656fd6a",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libwin32u_unix.a",
+          "bytes": 3518840,
+          "sha256": "649eacfc9bb9c95d8bc2010caff01b8b014fcfb5ac18e95fcdb42b7386cbbf15",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        },
+        {
+          "name": "libwineserver.a",
+          "bytes": 1345368,
+          "sha256": "701d0fbd431edbe74592569a153a145bdd41d96b6cb0913a608c894b8dac9703",
+          "nm_status": 0,
+          "overlapping_global_definitions": []
+        }
+      ]
+    },
+    "actual_host_observation": [
+      "HOST_NAMESPACE tls_isolated=1 regular_fixture_unchanged=1 objc_selector_current=1 elf_status=0 native_init_mm_refs=1 native_init_pgdir_used=0",
+      "scope=HOST_NAMESPACE_AND_ELF_ONLY_NOT_ACTUAL_WINE_RUNTIME_APP_OR_IPAD"
+    ],
+    "rejected_or_failed_attempts": [
+      "Initial forced header rejected preprocessed assembly; corrected to no-op for __ASSEMBLER__. No binary counted as passing.",
+      "Second declaration omitted Darwin literal leading underscore; archive audit rejected expected symbol mismatch. Corrected actual asm label, rebuilt fresh outputs.",
+      "First adapter link refused missing existing dirfd guard. Builder now reuses already-qualified generated dirfd overlay, preserving namespace command. Fresh host-v4 and ios-v5 archives used.",
+      "Parallel Meson configure collided in PINNED check-cc-arm64.sh fixed /tmp names (BSD mktemp template bug); ios-v4 setup failed. No vendor change/removal of foreign temp files; fresh sequential ios-v5 setup passed. Run platform builds sequentially.",
+      "All-loading engine also forces4 existing gadget aliases and fails both variants; narrowed discriminator to actual kernel+wineserver archives, explicitly not complete app link.",
+      "Native inventory nm cannot fully read libmadeira_rppairing.a; it remains incomplete, not no-collision proof. Twelve other prepared native archives show no shared global definitions after namespace, not full dynamic/link/runtime coverage."
+    ],
+    "limitations": [
+      "Actual pair link intentionally leaves engine/system dependencies unresolved; not full executable or final App. No Wine code executed.",
+      "The host regular current fixture is synthetic and tests only storage/TLS separation; actual prepared wineserver symbol is separately verified by relocatable link.",
+      "Primary Wine submodule read-only HEAD matches pinned9129e968 and clean; prepared server archive provenance is not rebuilt/artifact-verified. Do not treat pin alone as binary inclusion proof.",
+      "Native init PID1 mm refs1/pgdir_used0 observed after HOST ELF; source-consistent with retained table. Not per-mm attribution or explanation of real Steam248MB residual.",
+      "Join/native/signal components still no integrated App lifecycle, root/storage snapshot, retained-kernel epochs, authentic Madeira game or reliable return.",
+      "No Air input/termination/install or new screenshot. Exact old Lab23 PID4952+B265FEBE still alive at single readonly run28 query; pending25 choice preserved, no repeat or substitution.",
+      "Do not apply namespace forced include to Wine compilation. Every Linux C adapter using task.h needs it; audit Linux-only inputs before link. Final combined image legitimately retains Wine _current.",
+      "Linux-only build interpreter needs no JIT. No private entitlement, credential automation, FEX/Valve/main/vendor edits, stable success sentinel or scheduler unload."
+    ],
+    "prior_unsigned_app29_sha256": "1693d0a89471b8376c65ab05f3a24864873ab7e457003b461be8558416b77f42",
+    "prior_app29_namespace_symbol_present": false,
+    "next": "Implement/qualify a native retained-root frontend lifecycle after real joins and native signal restoration, including storage writer boundary and resuming frontend after Madeira. Next iOS app link must include verified Linux-only adapter archive with namespace and exact Wine resources; do not enable registry reset/default flags or replace live Air app.",
+    "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run29"
   }
 }
