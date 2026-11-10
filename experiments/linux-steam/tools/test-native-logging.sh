@@ -22,7 +22,7 @@ python3 - "$LINUX_LAB_LOG_OUT" <<'PY'
 from pathlib import Path
 import hashlib,json,subprocess,sys
 out=Path(sys.argv[1]);tests=[]
-for mode in ('privacy-cap','resources','kernel','nonprivate','symlink'):
+for mode in ('privacy-cap','resources','kernel','health','health-collision','nonprivate','symlink'):
  directory=out/(mode+'-logs')
  if mode=='symlink':
   target=out/'own-link-target';target.mkdir(mode=0o700);directory.symlink_to(target,target_is_directory=True)

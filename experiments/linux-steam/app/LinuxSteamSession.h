@@ -8,6 +8,12 @@
 #else
 #define IDECK_LAB_VNC_SHARING ""
 #endif
+#if IDECK_LAB_X11_TRACE
+#if !IDECK_LAB_STEAM_FRONTEND || !IDECK_LAB_NATIVE_LOG || !IDECK_LAB_COMPAT_TOOL
+#error X11 trace requires explicit frontend/native-log/compatibility-tool build opt-ins
+#endif
+#include "X11TraceInstall.h"
+#endif
 #if IDECK_LAB_CEF_DISABLE_GPU
 /* Official Steam client switch, not a Valve/renderer binary patch. This changes
  * only this Lab browser experiment, never Madeira's game GPU implementation. */
@@ -15,7 +21,7 @@
 #else
 #define IDECK_LAB_CEF_GPU_ARGS ""
 #endif
-#define IDECK_LINUX_STEAM_ARGS \
+#define IDECK_LINUX_STEAM_ARGS_IMPL(TRACE_ENV) \
     "/bin/sh\0-c\0" \
     "set -eu; umask 077; " \
     "head -c 12 /dev/urandom | base64 | head -c 8 > /tmp/ideck-vnc-password; " \
@@ -29,5 +35,10 @@
     "echo ready > /tmp/ideck-display-ready; " \
     "cd /Steam; export DISPLAY=:99 STEAM_RUNTIME=1; " \
     "export LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/Steam/steamrtarm64/panorama; " \
+    TRACE_ENV \
     "./steamrtarm64/steam -clientbeta steamdeck_stable -nobigpicture" IDECK_LAB_CEF_GPU_ARGS " > /tmp/ideck-steam.log 2>&1 & spid=$!; " \
     "wait \"$spid\"\0"
+#define IDECK_LINUX_STEAM_ARGS IDECK_LINUX_STEAM_ARGS_IMPL("")
+#if IDECK_LAB_X11_TRACE
+#define IDECK_LINUX_STEAM_TRACE_ARGS IDECK_LINUX_STEAM_ARGS_IMPL("export LD_PRELOAD=" IDECK_X11_TRACE_FILE "; ")
+#endif

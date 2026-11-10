@@ -24,6 +24,19 @@ static int inside(const char *candidate, const char *root, int same) {
     size_t n = strlen(root);
     return !strncmp(candidate, root, n) && (candidate[n] == '/' || (same && candidate[n] == 0));
 }
+static int library_install(const char *install) {
+    /* Actual Lab Steam defaults to /Steam. The planned shared library is a
+     * second fixed choice, not a prerequisite or a guest-selected host root.
+     * This remains syntax ONLY; native VFS resolution/ownership/licensing and
+     * execution must be checked by the eventual Madeira launch broker.
+     */
+    static const char *roots[]={IDECK_LAUNCH_ROOT,IDECK_LAUNCH_DEFAULT_ROOT};
+    for(unsigned i=0;i<sizeof roots/sizeof roots[0];i++) {
+        size_t length=strlen(roots[i]);
+        if(!strncmp(install,roots[i],length)&&install[length])return 1;
+    }
+    return 0;
+}
 int ideck_launch_validate(const void *frame, size_t size) {
     if (!frame || size != sizeof(struct ideck_launch_request)) return -1;
     struct ideck_launch_request r;
@@ -33,8 +46,7 @@ int ideck_launch_validate(const void *frame, size_t size) {
         !r.argument_bytes || r.argument_bytes > sizeof r.arguments) return -1;
     if (!path(r.install, sizeof r.install, 0) || !path(r.executable, sizeof r.executable, 0) ||
         !path(r.working, sizeof r.working, 0) || !path(r.compatdata, sizeof r.compatdata, 1)) return -1;
-    if (strncmp(r.install, IDECK_LAUNCH_ROOT, sizeof IDECK_LAUNCH_ROOT - 1) ||
-        !r.install[sizeof IDECK_LAUNCH_ROOT - 1] ||
+    if (!library_install(r.install) ||
         !inside(r.executable, r.install, 0) || !inside(r.working, r.install, 1)) return -1;
     size_t p = 0;
     for (unsigned i = 0; i < r.argc; i++) {

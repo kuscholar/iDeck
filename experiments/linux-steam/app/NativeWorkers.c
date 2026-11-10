@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <errno.h>
+#if IDECK_LAB_JOIN_NATIVE_WORKERS
+#include "NativeWorkerJoins.h"
+#endif
 #if IDECK_HOST_WORKER_CREATE_EAGAIN && defined(__APPLE__)
 #include <TargetConditionals.h>
 #if TARGET_OS_IPHONE
@@ -27,6 +30,8 @@ int ideck_native_worker_start(enum ideck_worker_kind kind,pthread_t *thread,
 #if IDECK_HOST_WORKER_CREATE_EAGAIN
     (void)attributes;(void)argument;
     int error=EAGAIN; /* explicitly generated HOST-ONLY negative archive */
+#elif IDECK_LAB_JOIN_NATIVE_WORKERS
+    int error=ideck_worker_joins_start(kind,thread,attributes,entry,argument);
 #else
     int error=pthread_create(thread,attributes,entry,argument);
 #endif

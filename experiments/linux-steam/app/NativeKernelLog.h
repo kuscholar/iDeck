@@ -12,6 +12,11 @@ void ideck_native_log_line(const char *line);
 /* Public self-task metrics only; available-memory is an instantaneous snapshot,
  * not a reserved budget or proof of why an external SIGKILL occurred. */
 void ideck_native_log_resources(void);
+/* One small atomically replaced, session-specific private receipt. Continues
+ * after the append log reaches its cap. Counts are observations, not a full
+ * native quiescence certificate or permission to launch Wine/restart Linux. */
+const char *ideck_native_health_name(void);
+int ideck_native_health(unsigned build,const char *stage,int guests,int workers);
 /* Defined ONLY by the opted-in copied kernel/log.c object. */
 const char *ideck_native_log_bridge_marker(void);
 #endif

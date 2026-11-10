@@ -78,6 +78,9 @@
 				<string>610000000000000000000005</string>
 				<string>630000000000000000000001</string>
 				<string>630000000000000000000003</string>
+				<string>640000000000000000000001</string>
+				<string>640000000000000000000003</string>
+				<string>650000000000000000000001</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -109,6 +112,7 @@
 				<string>$(LINUX_LAB_BUILD_DIR)/ideck-madeira</string>
 				<string>$(SRCROOT)/compatibilitytool.vdf</string>
 				<string>$(SRCROOT)/toolmanifest.vdf</string>
+				<string>$(LINUX_LAB_BUILD_DIR)/xlib-window-trace.so</string>
 			</array>
 			<key>outputPaths</key>
 			<array>
@@ -131,9 +135,28 @@ cp "$LINUX_LAB_BUILD_DIR/packet-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOU
 
 cp "$LINUX_LAB_BUILD_DIR/tcp-probe.elf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/tcp-probe.elf"
 
-mkdir -p "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility"
-cp "$LINUX_LAB_BUILD_DIR/ideck-madeira" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility/ideck-madeira"
-cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility/"
+compatibility="$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabCompatibility"
+if [[ ${LINUX_LAB_COMPAT_TOOL:-0} == 1 ]];then
+    [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]] || { echo 'Compatibility resources require the Steam frontend' &gt;&amp;2;exit 2; }
+    mkdir -p "$compatibility"
+    cp "$LINUX_LAB_BUILD_DIR/ideck-madeira" "$compatibility/ideck-madeira"
+    cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$compatibility/"
+else
+    # Remove ONLY the three generated resources when reusing DerivedData.
+    # Never recursively remove unknown files or any app data/container.
+    rm -f "$compatibility/ideck-madeira" "$compatibility/compatibilitytool.vdf" "$compatibility/toolmanifest.vdf"
+    if [[ -d "$compatibility" ]];then rmdir "$compatibility" 2&gt;/dev/null || true;fi
+fi
+
+diagnostics="$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/LabDiagnostics"
+if [[ ${LINUX_LAB_X11_TRACE:-0} == 1 ]];then
+    [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 &amp;&amp; ${LINUX_LAB_COMPAT_TOOL:-0} == 1 &amp;&amp; ${LINUX_LAB_NATIVE_LOG:-0} == 1 ]] || { echo 'Window diagnostics require frontend, tool and native logging' &gt;&amp;2;exit 2; }
+    mkdir -p "$diagnostics"
+    cp "$LINUX_LAB_BUILD_DIR/xlib-window-trace.so" "$diagnostics/xlib-window-trace.so"
+else
+    rm -f "$diagnostics/xlib-window-trace.so"
+    if [[ -d "$diagnostics" ]];then rmdir "$diagnostics" 2&gt;/dev/null || true;fi
+fi
 </string>
 		</dict>
 		<key>000000000000000000000009</key>
@@ -168,6 +191,9 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<string>600000000000000000000004</string>
 				<string>600000000000000000000005</string>
 				<string>630000000000000000000002</string>
+				<string>640000000000000000000000</string>
+				<string>640000000000000000000002</string>
+				<string>650000000000000000000000</string>
 			</array>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
@@ -216,6 +242,10 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
 					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
+					<string>IDECK_LAB_MADVISE_STATS=$(LINUX_LAB_MADVISE_STATS)</string>
+					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
+					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
+					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -250,7 +280,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>22</string>
+				<string>29</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -272,6 +302,14 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_LAZY_PAGES</key>
 				<string>0</string>
 				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
+				<string>0</string>
+				<key>LINUX_LAB_MADVISE_STATS</key>
+				<string>0</string>
+				<key>LINUX_LAB_PRIVATE_DISCARD</key>
+				<string>0</string>
+				<key>LINUX_LAB_GAME_FILE_POLICY</key>
+				<string>0</string>
+				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -319,6 +357,10 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
 					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
+					<string>IDECK_LAB_MADVISE_STATS=$(LINUX_LAB_MADVISE_STATS)</string>
+					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
+					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
+					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -353,7 +395,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>22</string>
+				<string>29</string>
 				<key>LINUX_LAB_RUNTIME_DIR</key>
 				<string>$(LINUX_LAB_BUILD_DIR)</string>
 				<key>LINUX_LAB_STEAM_FRONTEND</key>
@@ -375,6 +417,14 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_LAZY_PAGES</key>
 				<string>0</string>
 				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
+				<string>0</string>
+				<key>LINUX_LAB_MADVISE_STATS</key>
+				<string>0</string>
+				<key>LINUX_LAB_PRIVATE_DISCARD</key>
+				<string>0</string>
+				<key>LINUX_LAB_GAME_FILE_POLICY</key>
+				<string>0</string>
+				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -426,7 +476,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>22</string>
+				<string>29</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -438,6 +488,10 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
 					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
+					<string>IDECK_LAB_MADVISE_STATS=$(LINUX_LAB_MADVISE_STATS)</string>
+					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
+					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
+					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -450,6 +504,14 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_LAZY_PAGES</key>
 				<string>0</string>
 				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
+				<string>0</string>
+				<key>LINUX_LAB_MADVISE_STATS</key>
+				<string>0</string>
+				<key>LINUX_LAB_PRIVATE_DISCARD</key>
+				<string>0</string>
+				<key>LINUX_LAB_GAME_FILE_POLICY</key>
+				<string>0</string>
+				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -462,7 +524,7 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>22</string>
+				<string>29</string>
 				<key>LINUX_LAB_GUEST_LIFETIME</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
@@ -474,6 +536,10 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 					<string>IDECK_LAB_NATIVE_LOG=$(LINUX_LAB_NATIVE_LOG)</string>
 					<string>IDECK_LAB_LAZY_PAGES=$(LINUX_LAB_LAZY_PAGES)</string>
 					<string>IDECK_LAB_CEF_DISABLE_GPU=$(LINUX_LAB_CEF_DISABLE_GPU)</string>
+					<string>IDECK_LAB_MADVISE_STATS=$(LINUX_LAB_MADVISE_STATS)</string>
+					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
+					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
+					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -486,6 +552,14 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 				<key>LINUX_LAB_LAZY_PAGES</key>
 				<string>0</string>
 				<key>LINUX_LAB_CEF_DISABLE_GPU</key>
+				<string>0</string>
+				<key>LINUX_LAB_MADVISE_STATS</key>
+				<string>0</string>
+				<key>LINUX_LAB_PRIVATE_DISCARD</key>
+				<string>0</string>
+				<key>LINUX_LAB_GAME_FILE_POLICY</key>
+				<string>0</string>
+				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -733,6 +807,60 @@ cp "$SRCROOT/compatibilitytool.vdf" "$SRCROOT/toolmanifest.vdf" "$TARGET_BUILD_D
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>630000000000000000000002</string>
+		</dict>
+		<key>640000000000000000000000</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/GameFiles.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>640000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>640000000000000000000000</string>
+		</dict>
+		<key>640000000000000000000002</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/GameFilePolicy.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>640000000000000000000003</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>640000000000000000000002</string>
+		</dict>
+		<key>650000000000000000000000</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/X11TraceInstall.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>650000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>650000000000000000000000</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

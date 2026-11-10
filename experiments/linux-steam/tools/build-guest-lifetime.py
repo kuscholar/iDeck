@@ -13,7 +13,9 @@ p.add_argument('source',type=Path);p.add_argument('build',type=Path)
 p.add_argument('archive',type=Path);p.add_argument('output',type=Path)
 p.add_argument('--sanitize',action='store_true')
 p.add_argument('--fail-child-starts',action='store_true',help='HOST NEGATIVE CONTROL ONLY: return EAGAIN from guest child pthread creation')
+p.add_argument('--join-guests',action='store_true',help='ISOLATED PROTOTYPE: tracked joinable child pthreads; requires native registry initialization, not full Linux teardown')
 a=p.parse_args();source,build,archive,out=[x.resolve() for x in [a.source,a.build,a.archive,a.output]]
+assert not (a.join_guests and a.fail_child_starts),'Use independent failure controls, not a mixed prototype'
 pin='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()==pin
 assert not subprocess.check_output(['git','-C',str(source),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -40,6 +42,15 @@ assert body.count(start)==1
 if a.fail_child_starts:
  replacement=replacement.replace('int err = pthread_create(&task->thread, &task_thread_attr, task_thread, task);','(void)task; (void)task_thread; int err = EAGAIN; /* explicit host negative control; no native child created */')
 body=body.replace(start,replacement)
+if a.join_guests:
+ for f in ['JoinableGuests.c','JoinableGuests.h']:shutil.copy2(lab/'app'/f,out/f)
+ body='#include "JoinableGuests.c"\n'+body
+ detached='pthread_attr_setdetachstate(&task_thread_attr, PTHREAD_CREATE_DETACHED);'
+ assert body.count(detached)==1
+ body=body.replace(detached,'pthread_attr_setdetachstate(&task_thread_attr, PTHREAD_CREATE_JOINABLE);')
+ creation='int err = pthread_create(&task->thread, &task_thread_attr, task_thread, task);'
+ assert body.count(creation)==1
+ body=body.replace(creation,'int err = ideck_joinable_guest_start(&task->thread, &task_thread_attr, task_thread, task);')
 body+='''
 /* Outside the original entry's TLB/fiber cleanup: runs after those handlers. */
 void task_run_current(void) {
@@ -65,5 +76,7 @@ subprocess.run(['xcrun','ar','r',str(out/'libish.a'),str(obj)],check=True)
 assert hashof(archive)==basehash
 (out/'build-evidence.json').write_text(json.dumps(dict(linuxrunner=pin,base_archive_sha256=basehash,
  base_archive_unchanged=True,generated_task_sha256=hashof(generated),hooks_sha256=hashof(out/'GuestLifetime.c'),header_sha256=hashof(out/'GuestLifetime.h'),
- archive_sha256=hashof(out/'libish.a'),sanitized_translation_unit=a.sanitize,injected_child_create_failure=a.fail_child_starts,marker='IDECK_GUEST_LIFETIME_V1'),indent=2)+'\n')
+ archive_sha256=hashof(out/'libish.a'),sanitized_translation_unit=a.sanitize,injected_child_create_failure=a.fail_child_starts,
+ joinable_child_prototype=a.join_guests,join_registry_sha256=hashof(out/'JoinableGuests.c') if a.join_guests else None,
+ marker='IDECK_GUEST_LIFETIME_V1'),indent=2)+'\n')
 print('Copied guest lifetime archive built; inputs/vendor unchanged')

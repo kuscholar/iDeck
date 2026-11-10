@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 16,
-  "recorded_at_utc": "2026-11-09T02:15:11.260160+00:00",
+  "latest_run": 23,
+  "recorded_at_utc": "2026-11-09T23:07:48.509324+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "8eaf7b61703d77f8d206faafebb180a17da525d5",
-  "source_parent": "bc2bf2c9a1f4ecdb18c98fe840be7eb49b4f4067",
+  "source_checkpoint": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+  "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -28,10 +28,10 @@
   "device": {
     "prior_observed_gate": "Untrusted Developer",
     "trust_confirmation": "User explicitly confirmed developer trust; Lab8 actual launch/execution succeeds",
-    "current_probe": "Run6 Air TCP17 pass retained; run7 only revalidates same live Lab13 process, no device control rerun",
+    "current_probe": "Air23 exact process preserved. One F1 menu event pair transmitted; native screenshot still WHITE, no visible response or validated focus/delivery. No stop/restart/upgrade.",
     "launch_or_install_this_run": false,
     "signed_lab4": false,
-    "device_ELF_or_UI_success": "Actual ARM64 TCP ELF17 PASS; complete fakefs import PASS; native X11/RFB/Metal PASS; genuine Steam login window visually present. Interactive login/Library/BPM/game-return UNVERIFIED.",
+    "device_ELF_or_UI_success": "Historical actual Air ELF/TCP17, complete fakefs/native X11-RFB-Metal, user-authenticated genuine Library40/BPM observed in16/17; severe latency/memory pressure. No Madeira game/return/stability success.",
     "preserved": "production, Mac Allocator, phone installs/account/games/saves",
     "Mac_unlock_request_or_security_change": false,
     "signed_lab5": false,
@@ -3282,11 +3282,33 @@
       "run16/first-air22/receipt.json": "20459bbe05f538893a7585862cae2fae55cd151019e8d8f417952ff656215ac3",
       "run16/first-air22/summary.json": "b589a03b072eda6a3f036c323b00ebc23b79ed90e7e3ef7ae87b142cb42c8009",
       "run16/first-air22/kernel.log": "1bb671ab465f10e64b3548885acc9f4a9086641932bfbeeef13b392c4640abe6",
-      "run16/air22-first.png": "ee045c045bae9d07a8c2f97fa774909fa292da4c50d4fc8391547ce67a0da1a4"
+      "run16/air22-first.png": "ee045c045bae9d07a8c2f97fa774909fa292da4c50d4fc8391547ce67a0da1a4",
+      "run16/current-updater22-complete.json": "17d3fcc90a9b6f39ce823700d19ad2bbca0e7ac533cfdb254c7cba0ec122d151",
+      "run16/third-air22/kernel.log": "5b3e9919ba48e073bb873989d917746e1cb9f26bd50b4949989f71f7547517be",
+      "run16/postupdate-first/receipt.json": "f55f12d3416c5cacdff97e2cbe62d69366cb727e360b1c52c3054ae5f246a4af",
+      "run16/network4057/auth-categorical.json": "44a25701d61b4b2ee039db411861eba34734c0a90c25731ada119d5465e3723b",
+      "run16/postupdate22-first.png": "fc220f1e3bb207500842598e51983fcf3a529dccf32a595186bafea35b653229",
+      "run16/postupdate22-third.png": "6e15b6f5497ba9cabc283f9711984a6ac6a6019af070644eddd1fe74ab4b945b",
+      "run16/task-progress4057.json": "63f652e008e4f26bcceebd60d099fc42977d4f2900bcd8e1a698a984237ca5d2",
+      "run16/current-air22.png": "a4a10e31102fec04737bbe0508f9c8ab8dc6c2dcfcda3da1ea41fe0d2605bc23",
+      "run16/bigpicture-click/result.json": "2f289dd4ad6e5328ca8410e94ada7610118d86009548d4a453851cbcf0958efc",
+      "run16/bpm-welcome-enter/result.json": "d5eb3a4abc2cd043541c48b1c17e457b1c6dc2b7dbe10f5d28cc8fe71ecba305",
+      "run16/bpm-center-click/result.json": "7e8b6b48ddb5417aadfef8647c20d6d457eb5aa29a109a8593726db27da72aac",
+      "run16/bpm-focus-return/result.json": "80c4eaea1e9affa4e0ba48bc6a4575ca6af507d9af9a4435608bacbd885b3148",
+      "run16/after-bpm-focus-return.png": "1536ba535f8f6fd68237916f3ed7b508bfd338b881ba426b162e7d794f7e38ea",
+      "run16/bpm-later/summary.json": "9a2eb8349befd1083c699be9925dbb137ba3afecd4d1fc4ceec3ba68d500a5b1",
+      "run16/after-quickaccess-enter.png": "47ce0b0116589bdef8467de0aa844d65d2da5e46ca0479e2ad17762249294c76",
+      "run16/after-finish-guide.png": "553bfb8be20aa1b7874fc25ccdee0591bc804f22b44aa66f71332ac953293027",
+      "run16/after-bpm-info-continue.png": "44a3f01b26a623f2777d8ccc71a224427609f9113b329cf3b87bf636e6e5afb2",
+      "run16/bpm-finish-guide/result.json": "8e4ef11d8d3f4ba419ae7919aafa055cc3e3f948b796301f171274e33f2f2dd9",
+      "run16/after-bpm-info-continue/summary.json": "a666f45d8ae5aaabe601d08e62491d12dd670a54b49d2aca54521b9bb52bf5bb",
+      "run16/resume-nov9-processes.json": "e403a32448b7bea3b1446cb1ef576ec31fd6cb500913f5055bdfc7fdeeef2a42",
+      "run16/resume-nov9-active.png": "d9525f51e7e5f9e4344cdb75808342170e04f678e4a17015d75167e4954e47ca",
+      "run16/resume-nov9-active/summary.json": "b2c9eb3b2b0863fbbe0187ae1099a983c26b0f26d12ac88ac4b8dde51189a80e"
     },
-    "next_discriminator": "Identify actual22 native PID/mode, verify numeric task rows on Air, finish ordinary updater42 if needed, then inspect real CEF task waits and UI. Preserve live session; no debugger repeat or arbitrary restart. No fake UI/credential automation.",
+    "next_discriminator": "22/4057 no longer alive Nov9; new4320 completed ordinary16 control observed. Identity-verified completed diagnostic retired; isolated23 installed preserving same root/auth/storage, current4942 legitimate updater. Never reuse stale runtime result or PID.",
     "limits": [
-      "No interactive genuine Library/BPM/input/repeat stability",
+      "Genuine Big Picture home and onboarding scripted input verified once; no repeated stable Library/details navigation or physical controller/touch proof",
       "Diagnostic125 only, no licensed Madeira game or return",
       "No FEX/Valve/vendor/security edits, no combined distribution or exception expansion",
       "Keep raw logs/frames/Valve/rootfs/auth/profiles private; no STABLE_SUCCESS/unload"
@@ -3334,6 +3356,3031 @@
       "visible_ui": "genuine Steam updater extracting package, not CEF/Library/login success",
       "sampler_on_Air": true,
       "state": "active updater; do not overwrite/retire until current completion verified"
+    },
+    "actual_air_postupdate": {
+      "pid": 4057,
+      "build": 22,
+      "console_exec_session": 74810,
+      "install_uuid": "7ED6E716-85C4-4258-9300-AEC2E85E1193",
+      "native_file": "kernel-4057-345268-35871000.log",
+      "stage": "Historical22/4057: genuine Big Picture home rendered and onboarding input verified; process gone on Nov9, cause unknown. Not current live session.",
+      "fresh_saved_auth_success_utc": "2026-11-09T02:19:00",
+      "runtime_credential_automation": false,
+      "metrics_latest": {
+        "pid": 4057,
+        "samples": 1811,
+        "wall_seconds": 1325.005,
+        "cpu_seconds": 2617.508077,
+        "cpu_core_equivalents": 1.9754703393572097,
+        "peak_footprint": 2887719792,
+        "last": {
+          "mono_ms": 346593043,
+          "query_status": 0,
+          "valid": 1,
+          "footprint_bytes": 2672073536,
+          "resident_bytes": 1272446976,
+          "virtual_bytes": 482643296256,
+          "available_known": 1,
+          "available_bytes": 334193856,
+          "cpu_valid": 1,
+          "cpu_user_us": 2312490037,
+          "cpu_system_us": 305102069
+        },
+        "classes_last": {
+          "mono_ms": 346593043,
+          "anonymous_guest_pages": 662249,
+          "translation_tables": 14,
+          "translated_blocks": 386571,
+          "code_words_bytes": 67527496,
+          "idle_flushes": 28,
+          "cap_flushes": 916,
+          "pressure_flushes": 904
+        },
+        "memory_warnings": 483,
+        "scene_states": [
+          "SCENE_STATE foreground",
+          "SCENE_STATE active"
+        ]
+      }
+    },
+    "device_sampler_limit": "Actual first1024IDs/128rows cap reached, truncated=1; later threads can be excluded. Advancing cycle deltas prove sampled work continues but last syscall is not a coherent stopped frame or deadlock proof.",
+    "genuine_BPM_visual_input": "Actual Air22/4057: fixed Big Picture icon click reaches genuine onboarding; center click + Return advance Quick Access, parental-controls INFORMATIONAL page, Have fun. Return then visibly displays full genuine Big Picture home/game cards/news/navigation. No credential, Guard, parental-control setup or account action. Scripted RFB input is not physical touch/Bluetooth/controller evidence. No Library/details navigation or repeated stability qualified; last planned Right key did not execute because approval review usage limit. Current run Nov9 approvals work; earlier unexecuted action not counted.",
+    "observer_failure_limit": "One fresh kernel file copy returnsCoreDevice7000/POSIX60 socket closed; exact4057 remains alive and native screenshot succeeds. Not process death or Linux fault proof. No restart from copy error.",
+    "UI_observer_compile_limit": "Adding blanket Werror to existing pinned RFB decoder exposed its preexisting misleading indentation/unused static helper warnings before any click. Compiled our control with Werror separately and dependency with its existing build flags; no vendor patch or bypass, actual pointer/key packets2/4 written. All UI transports/private frames remain outside Git."
+  },
+  "run17": {
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "phase": "Linux frontend stability discriminator; game handoff remains diagnostic125",
+    "observed_failure": "Actual22 reaches genuine BPM but peak2.8877GB/483 memory warnings; host DONTNEED implementation zeros anonymous pages without releasing physical backing.",
+    "hypothesis": "CEF may issue guest MADV_DONTNEED requests that retain native footprint; first count actual requests, not infer from sampled last-syscall or implement speculative reclaim.",
+    "discriminating_test": "Real ARM64 host64MiB touch/discard/zero verification/unmap for eager128MiB and grouped lazy512MiB; observation-only copied mmap syscall counters; actual Air23 request totals vs resource samples.",
+    "minimal_patch": "Default-off LINUX_LAB_MADVISE_STATS=1 requires native log1; exact pristine pinned mmap.c copied, original sys_madvise wrapped without policy/return changes. Independent relaxed atomic request totals and requested bytes only; no addresses/payload. Feature marker checked at startup. Vendor/base archives unchanged.",
+    "host_control": {
+      "scope": "HOST real unsanitized ARM64 interpreter; public self-task footprint, not iPad/Steam or allocator-fix evidence",
+      "archive_sha256": "c7ef70d83b97d717b28c3a891e4b8f3214bf978cc7da7101bb1b963fd3d4f0a6",
+      "results": [
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 6078896,
+          "touched_footprint_bytes": 73236960,
+          "unmapped_footprint_bytes": 6062512,
+          "touch_delta_bytes": 67158064,
+          "guest_status": 0,
+          "discarded_footprint_bytes": 73236960,
+          "discard_reclaimed_bytes": 0,
+          "discard_zero_contents_verified": true,
+          "observed_advice_calls": 1,
+          "observed_dontneed_calls": 1,
+          "observed_dontneed_requested_bytes": 67108864,
+          "reserve_mib": 128
+        },
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 4211120,
+          "touched_footprint_bytes": 72729080,
+          "unmapped_footprint_bytes": 5505456,
+          "touch_delta_bytes": 68517960,
+          "guest_status": 0,
+          "discarded_footprint_bytes": 72729080,
+          "discard_reclaimed_bytes": 0,
+          "discard_zero_contents_verified": true,
+          "observed_advice_calls": 1,
+          "observed_dontneed_calls": 1,
+          "observed_dontneed_requested_bytes": 67108864,
+          "reserve_mib": 512
+        }
+      ],
+      "lazy_to_eager_touch_delta_ratio": 1.0202491840741568
+    },
+    "regressions": "Existing no-discard host control passes; five logging modes and ordinary16 pass. Wrapper/log/task/mmap observed units ASan/UBSan; dependency remainder not fully sanitized. Full feature Xcode23 succeeds; final linked counters/markers and exact Mach-O hash verified. Default-off iOS unitWerror passes, NOT full default23 app build. Fresh full default23 Xcode authorized buildPASS; final Mach-O has no madvise stats symbols/marker or lazy/GPU policy payload. Initial sandbox build stalled; only its exact own xcodebuild stopped, no device/service termination.",
+    "compiled_source": {
+      "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+      "source_sha256": {
+        "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "663bb097dfe80ce60c13c611e82d60c3be8766b5e61c04bc04d863ee9fee897e",
+        "experiments/linux-steam/app/NativeKernelLog.c": "0d0da6d1660d232bfcab3f9fbfb530c82e61c352ed35a50495be6bfc608c33a1",
+        "experiments/linux-steam/app/LinuxLabRuntime.c": "be1a6d61f7d921c3ae9c6fe929cf92c6cce3254fd68842d6f3d8300d77e0c51e",
+        "experiments/linux-steam/app/LinuxLabRuntime.h": "04ffc393e8969c632561ffd6f470dbdb54155f710efc5a539ecb0bac7c27c904",
+        "experiments/linux-steam/app/MadviseStats.h": "87be775501a16f57b8f05c6e75d1f92776e0879027e068ee391d3946ca650625",
+        "experiments/linux-steam/app/main.m": "c83ebb01d2fa0f8c531940071c0bc1f778b00d73d780b66cc4e7438855972c7e",
+        "experiments/linux-steam/app/LinuxSteamSession.h": "7cbcd8d0a41c7813195b59b474898aeb79365683e9b87b3e320fa40f51b3fc93",
+        "experiments/linux-steam/app/LinuxSteamViewController.m": "49cd72ca4d224b0cf6c90b7147a182965209f6ddcb73f6c0a44e12d1e707aa9d",
+        "experiments/linux-steam/tools/build-madvise-stats.py": "f58a61aabdeaade0e9cca53208bc4f465a03641e2fcb32449413af15870952f6",
+        "experiments/linux-steam/tools/build-lab.sh": "1cf2bcdaca7aeb01d6c8c172006b624055e2b18bf8fede7f4ff32cc24f62c5da"
+      },
+      "scope": "source bytes captured immediately after build; not a clean committed checkpoint yet"
+    },
+    "signed_candidate": {
+      "version": "23",
+      "signed_macho_sha256": "54bf7b43917ee7909d70f3406238d1da381577c52cd7abc0b41f8810490585d6",
+      "scene_marker": true,
+      "profile_covers_Air": true,
+      "deep_strict": true
+    },
+    "device_sequence": "Nov9 actual prior4057 absent.4320 foreground shows completed ordinary16 status0, native receipt4320. Exact completed instance retired then absence verified. Existing profile device/app/cert/expiry/deep-strict/hash checked. Installed only Lab23 same freshtest container without uninstall/auth transfer. Actual4942 receipt23; initial screenshot genuine updater, counters7DONTNEED/6795264requestedbytes,0warnings. Not CEF/login/BPM success. Own4942 initial tid2 native exit10752 + fresh result status10752/guest0/worker0 checked; exact completed4942 retired after identity then absence verified. FreshSteam23/4952 has new receipt/log. No duplicate runtime experiment.",
+    "first_air23_metrics": {
+      "pid": 4942,
+      "samples": 31,
+      "wall_seconds": 28.001,
+      "cpu_seconds": 67.603749,
+      "cpu_core_equivalents": 2.41433338095068,
+      "peak_footprint": 670550576,
+      "last": {
+        "mono_ms": 387703550,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 670550576,
+        "resident_bytes": 750157824,
+        "virtual_bytes": 476051832832,
+        "available_known": 1,
+        "available_bytes": 2335716816,
+        "cpu_valid": 1,
+        "cpu_user_us": 64565373,
+        "cpu_system_us": 3126979
+      },
+      "classes_last": {
+        "mono_ms": 387703550,
+        "anonymous_guest_pages": 135800,
+        "translation_tables": 7,
+        "translated_blocks": 144329,
+        "code_words_bytes": 30158016,
+        "idle_flushes": 0,
+        "cap_flushes": 0,
+        "pressure_flushes": 0
+      },
+      "memory_warnings": 0,
+      "madvise_requests_latest": {
+        "calls": 7,
+        "dontneed_calls": 7,
+        "dontneed_requested_bytes": 6795264,
+        "free_calls": 0,
+        "free_requested_bytes": 0
+      },
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "limitations": [
+      "Requested bytes include failed/repeated requests; not unique allocations, successful reclamation or sole-root-cause evidence",
+      "No allocation policy/FEX/Valve/vendor/main/security edits; no private entitlement/JIT activation",
+      "No licensed game or return; bridge diagnostic125; no STABLE_SUCCESS/scheduler unload",
+      "Weekday09 local outside commit/push window; leave scoped changes uncommitted"
+    ],
+    "next_experiment": "Preserve actual23/4952Steam. Discriminate real UI/navigation and discard requests vs footprint; requested bytes not unique/reclaimed. Do not restart for black display or observer timeout.",
+    "private_artifact_sha256": {
+      "run17/discard-observed-counts/evidence.json": "5a0b27c42199b731626d3153226ac2e5254a65398ed3f82c7daba18ebc7149f5",
+      "run17/ordinary-page-regression/evidence.json": "e8e0a77961187edc49a9ebe8b4d2df0ea3628e13e7a925c83ff674e504ca60a3",
+      "run17/logging-regression/evidence.json": "ac134bd6762a0001a8d7649e3dfed0b3d65314cbecfd63ad1d7781ec1e6830f8",
+      "run17/host-stats-san/build-evidence.json": "69e7b781951c2fd32df1faacf4d0de57ec206b6205d3abe94d7c97ee9dad77ce",
+      "run17/build23.log": "e7f0d724eefc3e05f14dd4003574fc0273610834662d652022b793e4b6fb84ab",
+      "run17/final-linked23.json": "e2fd7c1e2733cbe3ab3198b0afe88dcf8dd8c2a6f1edebcd7543a04b307cc130",
+      "run17/compiled23-source.json": "d644d8cfa6ed88521e075f7ec4597342e409220ee3cb7137e43187fd3a945536",
+      "run17/default-log-unit.json": "9d6118989e56e4a6be7d0260f9317776ff40fbfd42207420688eafe19a5cbb8e",
+      "run6/signed-lab23/evidence.json": "db4012f9aa48ed99cc2cfc7c883f1c6236fded3bd7d4360bb533bcbd7ec310d4",
+      "run17/install23.json": "8cbdf9f59447ec409ac125a30c8f6e41bd72fbfd13c2ed8ad1886202a346124a",
+      "run17/first-air23/receipt.json": "c4d7dcc691e050ef7004ae2eb11bf985b9e6d9e5f112db7aca71887c4d4cf62c",
+      "run17/first-air23/kernel.log": "144fbb409d786c3c89d279310b3718947d320310172981ceb0e1ce203768eb6d",
+      "run17/first-air23/summary.json": "f4de02ef22b301d28f7a555cb0ec5f9df1f0db08c84b8c4835bcb4f5353d3fa9",
+      "run17/first-air23.png": "46496a350c8189993edc7ce0bc0364d1e651128902767688320d9b592936c296",
+      "run17/updater23-finalcheck/summary.json": "53b538079a124aefbafed571c5d3acb225cbf1273bdcc5c5ecc69586834fc3d0",
+      "run17/updater23-finalcheck/kernel.log": "27468c25dd8f4473cd5f2838d85b4cd22065ab0f854c1fde47a5529945a01909",
+      "run17/updater23-completed-current.json": "17d3fcc90a9b6f39ce823700d19ad2bbca0e7ac533cfdb254c7cba0ec122d151",
+      "run17/absence-postupdater23.json": "60f35ac1be0914affd43b2839c6b60aec2803fe8902bef846d3a758277a61e5e",
+      "run17/postupdate-first/receipt.json": "a35afafbfba34ab78abfffba3072f657ca7b865112f7dbd128f2d77bd9090693",
+      "run17/postupdate-second/summary.json": "6e8f1652aaae081cb30469855c21387d512eb724e3dc1592182d0f4ff8e48206",
+      "run17/postupdate-second.png": "684b2bc90b9f85c67cd6c21b39c18a62320e8dfcc4b474e26cf151ee3a05508a",
+      "run17/default23-build-authorized.log": "b98ae254ec1fa77b0556aba37f5c244c8e04b8904fe8b92d5b7146783f01b380",
+      "run17/default23-linked.json": "0dceb71b954262b99f7970062f92aafdfe5172daeaf2586532dbf3000b3a2ef7",
+      "run17/steam23-auth-categorical.json": "d0bc7545d432522a2904e9f1e22580465be0fc54882d12d5b360f08f11449a8f",
+      "run17/bpm23-later.png": "5ef1eb28f25e2c43cd50c766e0f4f497ef7942f4354faef8bf8ec3e5eee23f64",
+      "run17/after-details23/summary.json": "5ffa3a0aa584391c81cc9265ed0183348b905c2623545ebefbd4986f9caafef5",
+      "run17/bpm23-menu.png": "82c75414c047e69db122ebfebd75839adbc0f02fc6a390fa5057a52ae190ab2f",
+      "run17/bpm23-open-details/result.json": "8e4ef11d8d3f4ba419ae7919aafa055cc3e3f948b796301f171274e33f2f2dd9",
+      "run17/bpm23-ratatan-details/result.json": "8d017b20566269400c96e75d3133f6eb38d0eb3e249b2bebf0db93431bc0b6f6",
+      "run17/library23-current.png": "7f190b65531dc9f6e5fd8279261c63580f8d7b1b4c788b75c08dd0e96b3d315e"
+    },
+    "updater23_completed_metrics": {
+      "pid": 4942,
+      "samples": 214,
+      "wall_seconds": 211.001,
+      "cpu_seconds": 325.179661,
+      "cpu_core_equivalents": 1.5411285301965394,
+      "peak_footprint": 1035389752,
+      "last": {
+        "mono_ms": 387886550,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 77514856,
+        "resident_bytes": 201703424,
+        "virtual_bytes": 475022655488,
+        "available_known": 1,
+        "available_bytes": 2928752536,
+        "cpu_valid": 1,
+        "cpu_user_us": 312756047,
+        "cpu_system_us": 12512217
+      },
+      "classes_last": {
+        "mono_ms": 387886550,
+        "anonymous_guest_pages": 0,
+        "translation_tables": 1,
+        "translated_blocks": 0,
+        "code_words_bytes": 0,
+        "idle_flushes": 4,
+        "cap_flushes": 0,
+        "pressure_flushes": 0
+      },
+      "memory_warnings": 0,
+      "madvise_requests_latest": {
+        "calls": 39,
+        "dontneed_calls": 39,
+        "dontneed_requested_bytes": 37859328,
+        "free_calls": 0,
+        "free_requested_bytes": 0
+      },
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "active_postupdate": {
+      "pid": 4952,
+      "build": 23,
+      "console_exec_session": 29282,
+      "native_file": "kernel-4952-387930-180028000.log",
+      "state": "active actualSteam startup; revalidate receipt before actions"
+    },
+    "postupdate_initial_metrics": {
+      "pid": 4952,
+      "samples": 54,
+      "wall_seconds": 51.001,
+      "cpu_seconds": 92.913283,
+      "cpu_core_equivalents": 1.8217933569930003,
+      "peak_footprint": 1568986192,
+      "last": {
+        "mono_ms": 387981185,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 1568986192,
+        "resident_bytes": 1839398912,
+        "virtual_bytes": 480351387648,
+        "available_known": 1,
+        "available_bytes": 1437281200,
+        "cpu_valid": 1,
+        "cpu_user_us": 76021608,
+        "cpu_system_us": 16970767
+      },
+      "classes_last": {
+        "mono_ms": 387981185,
+        "anonymous_guest_pages": 314084,
+        "translation_tables": 12,
+        "translated_blocks": 1062408,
+        "code_words_bytes": 188677088,
+        "idle_flushes": 1,
+        "cap_flushes": 3,
+        "pressure_flushes": 0
+      },
+      "memory_warnings": 0,
+      "madvise_requests_latest": {
+        "calls": 2198,
+        "dontneed_calls": 2194,
+        "dontneed_requested_bytes": 623087616,
+        "free_calls": 0,
+        "free_requested_bytes": 0
+      },
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "saved_auth": {
+      "scope": "categorical saved-auth evidence only; raw log private",
+      "success_timestamps": [
+        "2026-11-09 01:17:49",
+        "2026-11-09 02:19:00",
+        "2026-11-09 14:10:01"
+      ],
+      "raw_sha256": "9591ddc1d6d953b01aeb0f5d30b3cbe3727715ce1a40fe33d8dc8e82e1dd21a1"
+    },
+    "postupdate_current_metrics": {
+      "pid": 4952,
+      "samples": 1770,
+      "wall_seconds": 947.004,
+      "cpu_seconds": 1513.67781,
+      "cpu_core_equivalents": 1.5983858674303382,
+      "peak_footprint": 2620332816,
+      "last": {
+        "mono_ms": 388877188,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 2581617448,
+        "resident_bytes": 1063075840,
+        "virtual_bytes": 482920742912,
+        "available_known": 1,
+        "available_bytes": 424649944,
+        "cpu_valid": 1,
+        "cpu_user_us": 1298701583,
+        "cpu_system_us": 215055319
+      },
+      "classes_last": {
+        "mono_ms": 388877188,
+        "anonymous_guest_pages": 622770,
+        "translation_tables": 13,
+        "translated_blocks": 515301,
+        "code_words_bytes": 89102600,
+        "idle_flushes": 11,
+        "cap_flushes": 2891,
+        "pressure_flushes": 2880
+      },
+      "memory_warnings": 820,
+      "madvise_requests_latest": {
+        "calls": 14754,
+        "dontneed_calls": 14750,
+        "dontneed_requested_bytes": 2198466560,
+        "free_calls": 0,
+        "free_requested_bytes": 0
+      },
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "actual_BPM": "Actual23/4952 again reaches genuine full BPM home after real icon click; persisted onboarding skipped. FixedRight initially no visible selection change; clickRatatan eventually selects card, Return later reveals genuine Ratatan details/activity page. Large input/render delay and incomplete black menu areas mean NOT stable navigation. No Install/Play/account action. Actual09:30EST screenshot genuine Library AllGames40/Installed0. Real menu+Library selection works, but delayed and warning-heavy, NOT stable. No Install/Play pressed.",
+    "default23_final": {
+      "build": 23,
+      "full_default_xcode_pass": true,
+      "macho_sha256": "f32ceb5a57daaf28e6cd46bb19312fdff9a5d9f703acc4a07665a47b72dbb3aa",
+      "madvise_stats_and_experimental_payload_absent": true
+    }
+  },
+  "run18": {
+    "phase": "HOST ONLY conservative discard prototype; actual Air23 unchanged",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "observed_failure": "ActualAir23 fresh saved auth/BPM but slow navigation, peak2.4795GB/677 memory warnings at682s; 1.9969GB cumulative DONTNEED requests. Requests are not unique/reclaimed bytes.",
+    "hypothesis": "Replacing only whole exclusively owned anonymous backing objects with untouched zero-fill mappings can reclaim native footprint while preserving guest mappings.",
+    "minimal_patch": "Experimental PrivateDiscard.inc: whole exclusive anonymous backing replacement, default-off feature planned. Nonblocking mem write trylock, bounded64MiB full-object preflight; exact offsets/refcounts, anonymous writable and noCOW/shared/exec/file/retained refs. Allocate ALL replacement mappings before any PTE commit. Keepflags/reservations/logical accounting, invalidate translated range/generation, releaseold. NoMAP_FIXED/mprotect/cap/security change. Refusal/failure uses ORIGINAL syscall. Host-only test switch still refusesiOS; explicit experimental build option is separate, newXcode24 build underway; not installed.",
+    "host_footprint": {
+      "scope": "HOST real unsanitized ARM64 interpreter; public self-task footprint, not iPad/Steam or allocator-fix evidence",
+      "archive_sha256": "2035a125bd9819184464866cb15173faaaecfa4de5cedc5dc505a09467643ebf",
+      "results": [
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 6209968,
+          "touched_footprint_bytes": 73400824,
+          "unmapped_footprint_bytes": 6193584,
+          "touch_delta_bytes": 67190856,
+          "guest_status": 0,
+          "discarded_footprint_bytes": 73400824,
+          "discard_reclaimed_bytes": 0,
+          "discard_zero_contents_verified": true,
+          "observed_advice_calls": 1,
+          "observed_dontneed_calls": 1,
+          "observed_dontneed_requested_bytes": 67108864,
+          "reserve_mib": 128
+        },
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 4424112,
+          "touched_footprint_bytes": 72876536,
+          "unmapped_footprint_bytes": 6029744,
+          "touch_delta_bytes": 68452424,
+          "guest_status": 0,
+          "discarded_footprint_bytes": 6177200,
+          "discard_reclaimed_bytes": 66699336,
+          "discard_zero_contents_verified": true,
+          "observed_advice_calls": 1,
+          "observed_dontneed_calls": 1,
+          "observed_dontneed_requested_bytes": 67108864,
+          "reserve_mib": 512
+        }
+      ],
+      "lazy_to_eager_touch_delta_ratio": 1.0187758881952627
+    },
+    "test_limitations": [
+      "Only copied mmap/memory and controls sanitized; other dependency units not fully",
+      "File identity negative is explicit metadata fixture, not a real file-I/O test; standard guest filesystem controls run separately",
+      "Existing shared/readonly/file fallback semantics preserved, not claimed fixed or fully Linux-conformant",
+      "No actual Air reclamation or stable UI/game/return proof; currentSteam23 session preserved"
+    ],
+    "corrections": [
+      "Initial file fixture incorrectly kept P_ANONYMOUS while expecting file retention; corrected explicit file metadata/account fixture, not runtime fix",
+      "Next COW harness mm_copy used NULL exefile and crashed in fd_retain; supplied real kernel no-I/O description as loader invariant; not an app/runtime fault",
+      "First suite shell stopped before testing due Bash3 empty-array nounset; replaced optional arrays with positional args, fresh suite passes",
+      "Initial tight native-reader fixture timed out45s before evidence; use nonblocking optimization and pinned guest-style reader yield, no vendor lock change",
+      "First concurrent assertion read the same byte twice across original in-place zeroing and could falsely reject old-then-zero; changed to ONE atomic observation per byte, no whole-range atomicity claim. Final normal+allocationfail concurrency controls pass."
+    ],
+    "next_experiment": "Revalidate exact4952 and visible UI; obtain actual normal Steam exit/current completion or confirmed absence before deploying signed24. If still live, preserve and finish independent work. When available, compare actual linked24 request/replaced counts/footprint and genuine UI, not host-only effect. No game125/return/stability completion.",
+    "private_artifact_sha256": {
+      "run17/private-discard-suite-v2/evidence.json": "36ef23f67aac7b69e6fab8c5a612960be13286151a09a359fe0c6cd4d5a5329f",
+      "run17/discard-replaced-footprint/evidence.json": "d9216944946cf1b23945e537932e96d8a6820561737198b7d61286e6b777906d",
+      "run17/host-private-discard-unsan/build-evidence.json": "c3f941658f2ef7ce1a05cf1f1b89b4b5eae516279ee61b45dabee02e846c0196",
+      "run17/private-discard-control.log": "6d6cd886211b74a59de7e91ac658d82c6b13d8d1b08ea5cecf056a554f402983",
+      "run17/private-discard-control-v2.log": "ae9d04ea57191ff49fe8815996e0caf7262bf71874368c2468ebfffcc0cd7a46",
+      "run17/private-discard-suite-final/evidence.json": "830675e970ea8c54f1b31396e2fe9c79223d9d4b1c8357f81dd9800c21ba785f",
+      "run17/discard-replaced-try-footprint/evidence.json": "aeb2a83613288003cf108405b164693d036d20df730d32fb451e722e42b647c4",
+      "run17/discard-aligned-baseline/evidence.json": "cd0f44792baaa5636ead0398843d14120ef1f34127b5ea373bfb05b25bdd5a12",
+      "run17/private-discard-suite-concurrent.log": "7e5ddb163f17fd972199c03fb6f391ef600d0031fe37da47ccae381d9ca0ba83",
+      "run17/private-discard-suite-trylock/fail-second.log": "ae9b503c876899f356a4f0616e1e9613b64cc7a67fb9d3af5f49f675f6562376",
+      "run17/build24-cmake.log": "6d8611e9bec1c669dcb4c163e70da24306b75656607a8700e20a546bff48185c",
+      "run17/final-linked24.json": "5b6f57152e3367364dbd58357cbf8c85e2f66c89b5a5c7f10f01734d6cf7a080",
+      "run17/linked24-madvise-assembly.txt": "d5e3e437559812b9abbd3e30d5bb74565b60995527430b955a985a4874528e86",
+      "run6/signed-lab24/evidence.json": "81e5ea0316ae957c05e1140dd7bfd2ba44d9aff639be303adc81551ab2b7894f",
+      "run17/preexit23-current/summary.json": "3fe96de006f01191757692494fb0f640d529151f3947455ce38e1f1c7cda7235",
+      "run17/menu23-current.png": "715b4d643f98eb465fd393a7e49dc698212146e95a7699dd330f9d5f02abbfed",
+      "run17/steam23-power-current.png": "6c8e36d52fcdf7a0ecb45e54b4c029b9a7716d8618a3719d8e5985dfca0839d7",
+      "run17/default24-linked.json": "62ac298289766828ab204c2c74bd970a3d991ea9b74994131152d11297386da4",
+      "run17/default24-build.log": "b911d1e2275ef67c2aa3e5f2924f6218d9b055fc31e05955462699dbc55f3c0d",
+      "run17/private-discard-gating.json": "c1ce96440d749f29837aaffabcb17567e0453ef63c612bd41d9b57bfa35e329e",
+      "run17/endrun-processes.json": "0d8f0f061a86d9c924be5adbcc735935f2e57a61cf2277e11f32dc3726771a84",
+      "run17/endrun-screen.png": "72dfd53aca6b755d422f446908141d33e9595c3ddad965ccf44f1afa830c70af",
+      "run17/after-power23-current/kernel.log": "b7536950fcbcb5c8b6db98ef6be80dea5a109ddd18d1fcb5ce96f3bf322c1524",
+      "run17/after-power23-result.json": "17d3fcc90a9b6f39ce823700d19ad2bbca0e7ac533cfdb254c7cba0ec122d151"
+    },
+    "final_host_controls": {
+      "scope": "HOST only: real pinned memory objects and real ARM64 guest controls; mmap/memory/wrapper units sanitized, remaining dependency not fully; no iPad/Steam reclamation fix claim",
+      "tests": [
+        {
+          "name": "normal",
+          "status": 0,
+          "checks": [
+            "whole-private-discard-zero=PASS",
+            "whole-private-backing-replaced=PASS",
+            "logical-accounting-and-flags-preserved=PASS",
+            "generation-invalidated=PASS",
+            "replacement-writable=PASS",
+            "partial-original-fallback=PASS",
+            "retained-backing-original-fallback=PASS",
+            "busy-writer-lock-original-fallback=PASS",
+            "readonly-original-fallback=PASS",
+            "executable-original-fallback=PASS",
+            "shared-original-fallback=PASS",
+            "file-identity-original-fallback=PASS",
+            "unmapped-range-enomem=PASS",
+            "madv-free-original-contents=PASS",
+            "cow-child-discard-zero=PASS",
+            "cow-parent-retains-data=PASS",
+            "lazy-reservation-preserved=PASS",
+            "multi-backing-zero=PASS",
+            "multi-backing-replaced=PASS",
+            "multi-backing-accounting-preserved=PASS",
+            "concurrent-reader-no-stale-or-invalid-backing=PASS",
+            "all-test-mappings-released=PASS"
+          ],
+          "expected": 22,
+          "log_sha256": "a410f2275c7f8980f61afe37812ef4fefa945681a29fbe6d6d3f141df61d734f"
+        },
+        {
+          "name": "fail-second",
+          "status": 0,
+          "checks": [
+            "whole-private-discard-zero=PASS",
+            "whole-private-backing-replaced=PASS",
+            "logical-accounting-and-flags-preserved=PASS",
+            "generation-invalidated=PASS",
+            "replacement-writable=PASS",
+            "partial-original-fallback=PASS",
+            "retained-backing-original-fallback=PASS",
+            "busy-writer-lock-original-fallback=PASS",
+            "readonly-original-fallback=PASS",
+            "executable-original-fallback=PASS",
+            "shared-original-fallback=PASS",
+            "file-identity-original-fallback=PASS",
+            "unmapped-range-enomem=PASS",
+            "madv-free-original-contents=PASS",
+            "cow-child-discard-zero=PASS",
+            "cow-parent-retains-data=PASS",
+            "lazy-reservation-preserved=PASS",
+            "multi-backing-zero=PASS",
+            "allocation-failure-no-partial-commit=PASS",
+            "multi-backing-accounting-preserved=PASS",
+            "concurrent-reader-no-stale-or-invalid-backing=PASS",
+            "all-test-mappings-released=PASS"
+          ],
+          "expected": 22,
+          "log_sha256": "ec245183625d4732aef5f6e5749d121b1765cf80a45f9ae4903731e6f22c29ab"
+        },
+        {
+          "name": "lazy-pages-probe",
+          "status": 0,
+          "checks": [
+            "unaligned-reservation=PASS",
+            "demand-zero-edges=PASS",
+            "independent-page-bytes=PASS",
+            "protect-first-readonly=PASS",
+            "readonly-kernel-write-refused=PASS",
+            "protect-middle-none=PASS",
+            "none-kernel-read-refused=PASS",
+            "neighbor-after-protection=PASS",
+            "partial-unmap=PASS",
+            "hole-kernel-read-refused=PASS",
+            "fixed-replace-hole=PASS",
+            "restore-protection=PASS",
+            "fork-child-wait=PASS",
+            "private-cow-survives=PASS",
+            "full-unmap-after-split=PASS",
+            "lazy-none-reservation=PASS",
+            "enable-only-first-page=PASS",
+            "adjacent-lazy-none-stays-inaccessible=PASS",
+            "enable-only-tail-and-free=PASS",
+            "complete=PASS"
+          ],
+          "expected": 20,
+          "log_sha256": "f73155dacb9b61127a33636c9547aa19121ecc0f594b1c247d7f14b2a544a499"
+        },
+        {
+          "name": "probe",
+          "status": 0,
+          "checks": [
+            "elf-arm64=PASS",
+            "urandom-device=PASS",
+            "utimensat-file-null=PASS",
+            "filesystem=PASS",
+            "shared-mmap=PASS",
+            "clone-wait=PASS",
+            "shared-across-clone=PASS",
+            "unix-socketpair=PASS",
+            "openat-nondirectory=PASS",
+            "faccessat2-nondirectory=PASS",
+            "faccessat2-absolute-ignores-dirfd=PASS",
+            "openat-absolute-ignores-dirfd=PASS",
+            "ipv4-socket=PASS",
+            "thread-futex=PASS",
+            "native-bridge-roundtrip=PASS",
+            "complete=PASS"
+          ],
+          "expected": 16,
+          "log_sha256": "f73155dacb9b61127a33636c9547aa19121ecc0f594b1c247d7f14b2a544a499"
+        }
+      ]
+    },
+    "host_aligned_baseline": {
+      "scope": "HOST real unsanitized ARM64 interpreter; public self-task footprint, not iPad/Steam or allocator-fix evidence",
+      "archive_sha256": "c7ef70d83b97d717b28c3a891e4b8f3214bf978cc7da7101bb1b963fd3d4f0a6",
+      "results": [
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 6111688,
+          "touched_footprint_bytes": 73318928,
+          "unmapped_footprint_bytes": 6111688,
+          "touch_delta_bytes": 67207240,
+          "guest_status": 0,
+          "discarded_footprint_bytes": 73318928,
+          "discard_reclaimed_bytes": 0,
+          "discard_zero_contents_verified": true,
+          "observed_advice_calls": 1,
+          "observed_dontneed_calls": 1,
+          "observed_dontneed_requested_bytes": 67108864,
+          "reserve_mib": 128
+        },
+        {
+          "host_page_bytes": 16384,
+          "guest_touched_bytes": 67108864,
+          "reserved_footprint_bytes": 4309424,
+          "touched_footprint_bytes": 72761824,
+          "unmapped_footprint_bytes": 5472688,
+          "touch_delta_bytes": 68452400,
+          "guest_status": 0,
+          "discarded_footprint_bytes": 72761824,
+          "discard_reclaimed_bytes": 0,
+          "discard_zero_contents_verified": true,
+          "observed_advice_calls": 1,
+          "observed_dontneed_calls": 1,
+          "observed_dontneed_requested_bytes": 67108864,
+          "reserve_mib": 512
+        }
+      ],
+      "lazy_to_eager_touch_delta_ratio": 1.0185271705845977
+    },
+    "source_sha256": {
+      "experiments/linux-steam/app/PrivateDiscard.inc": "77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209",
+      "experiments/linux-steam/tools/private-discard-control.c": "5d09809495b9f3dd88f758fd50cdb46c2b2bbe3dc2dd20fd66e58551ff3d2179",
+      "experiments/linux-steam/tools/test-private-discard.sh": "5f2e7b31ff79ef8955b6c6598a4f072cf1cb50cc93bb70283343fce63aa9e7c8",
+      "experiments/linux-steam/tools/build-madvise-stats.py": "da0510cbb96a3ea5325f0a60bd133b054855b1835f2bba60dd106ddb90f2c3c8"
+    },
+    "candidate24": {
+      "version": 24,
+      "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+      "source_snapshot_sha256": {
+        "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "3fbdf176f6f449cffe51f75a34e151b17371c329b16c430f4d87b62ed34ab7aa",
+        "experiments/linux-steam/app/LinuxLabRuntime.c": "056374342fcb602bf6868109a8847d00cbf11b24de0ac3955a0bcb20502c1aab",
+        "experiments/linux-steam/app/NativeKernelLog.c": "4afd0a6373b058050468cd598a63c9caadeae0010279eff343b27458c5e131e1",
+        "experiments/linux-steam/app/PrivateDiscard.inc": "77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209",
+        "experiments/linux-steam/tools/build-madvise-stats.py": "da0510cbb96a3ea5325f0a60bd133b054855b1835f2bba60dd106ddb90f2c3c8",
+        "experiments/linux-steam/tools/build-lab.sh": "2af62fcf218e17f309a2aea1917160ca2e3f4ca0e19cdd296eb970c8746cfd97",
+        "experiments/linux-steam/app/MadviseStats.h": "87be775501a16f57b8f05c6e75d1f92776e0879027e068ee391d3946ca650625"
+      },
+      "macho_sha256": "6d2336843c0380dcf1b911dffe722da027fd425f59cb3c98bb41d2b94565e33d",
+      "exclusive_discard_symbols_marker_and_actual_syscall_callsite": true,
+      "assembly_sha256": "d5e3e437559812b9abbd3e30d5bb74565b60995527430b955a985a4874528e86",
+      "installed": false
+    },
+    "signed24": {
+      "version": "24",
+      "signed_macho_sha256": "eac5fd463bccdbe437dbd9280626ab75cc22b19de45a5005d2178d0f4f321fc9",
+      "scene_marker": true,
+      "profile_covers_Air": true,
+      "deep_strict": true
+    },
+    "device23_preexit_metrics": {
+      "pid": 4952,
+      "samples": 2383,
+      "wall_seconds": 1560.004,
+      "cpu_seconds": 2207.117466,
+      "cpu_core_equivalents": 1.4148152607301008,
+      "peak_footprint": 2681887600,
+      "last": {
+        "mono_ms": 389490188,
+        "query_status": 0,
+        "valid": 1,
+        "footprint_bytes": 2582125400,
+        "resident_bytes": 961314816,
+        "virtual_bytes": 482818228224,
+        "available_known": 1,
+        "available_bytes": 424141992,
+        "cpu_valid": 1,
+        "cpu_user_us": 1871406367,
+        "cpu_system_us": 335790191
+      },
+      "classes_last": {
+        "mono_ms": 389490188,
+        "anonymous_guest_pages": 624482,
+        "translation_tables": 13,
+        "translated_blocks": 529443,
+        "code_words_bytes": 91210504,
+        "idle_flushes": 33,
+        "cap_flushes": 2895,
+        "pressure_flushes": 2880
+      },
+      "memory_warnings": 820,
+      "madvise_requests_latest": {
+        "calls": 17646,
+        "dontneed_calls": 17642,
+        "dontneed_requested_bytes": 2789257216,
+        "free_calls": 0,
+        "free_requested_bytes": 0
+      },
+      "scene_states": [
+        "SCENE_STATE foreground",
+        "SCENE_STATE active"
+      ]
+    },
+    "default24": {
+      "version": 24,
+      "full_default_xcode_pass": true,
+      "private_discard_symbols_and_marker_absent": true,
+      "macho_sha256": "f32ceb5a57daaf28e6cd46bb19312fdff9a5d9f703acc4a07665a47b72dbb3aa"
+    },
+    "feature_gate": {
+      "incomplete_flags_refused_before_build": true,
+      "status": 2,
+      "stderr_sha256": "4f2222ee869f88ba1f52bd0508915c6783c2ffb6dd388b54777e02942e301566"
+    },
+    "current_session_limit": "Actual23/4952/executable reverified09:41EST, still native alive. UI Power focus+Return did not establish Steam exit; final frame is genuine Away/screensaver. Kernel log reached4MiB capacity after last1560s sample, so repeated identical summaries are CAPPED historical samples, NOT new live resource/absence/exit evidence. Old last-runtime-session10752 belongs updater4942, not4952. Preserve current session;24NOTinstalled, never retire based on stale result or observer timeout."
+  },
+  "run19": {
+    "phase": "Long-session evidence reliability and real default library-path compatibility",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "previous_goal_turn": "progress: actual genuine Library40/navigation evidence, host discard controls and signed24 prepared; not stable completion",
+    "current_device": "Actual23/4952 same B265FEBE-DE84-4F31-AB6A-235C8BF6F8F8 process alive09:46EST; genuine Away screen; no upgrade/termination/input/auth action this run. Kernel log capped, no fresh completion proof.",
+    "hypothesis": "Append-log saturation and an unidentified old updater result prevent reliable current-session observation during long tests.",
+    "minimal_patch": "With existing NATIVE_LOG opt-in, retain validated private native directory descriptor, one session-specific health JSON atomically renamed every10s main-runloop. Bounded numeric/self-task fields, PID/build/log identity, monotonic sequence/time, phase and limited guest/worker counters; continues after4MiB append cap. Reject arbitrary stage, unowned/foreign-process/collision/symlink. Atomic rename is not a power-loss durability guarantee. Steam/dependency/tool result JSON now schema2 withPID/build/native_log. No signal/runtime/guest memory policy change in this observer.",
+    "host_tests": {
+      "scope": "private bounded native logging and real host ARM64 kernel controls; no Steam/iPad/crash fix claim",
+      "tests": [
+        {
+          "mode": "privacy-cap",
+          "status": 0,
+          "log_sha256": "6d0d53b2d46735be89494ad0e50e06fd0579bc1e22a35f281f7a4fd1d0b1b39d"
+        },
+        {
+          "mode": "resources",
+          "status": 0,
+          "log_sha256": "537bf5ba3872c0aaeabe29cb5d2ab1b62e563238ca79d5699231ded3e3625405"
+        },
+        {
+          "mode": "kernel",
+          "status": 0,
+          "log_sha256": "ca163a9314afd3569a6f80d5eb6e20d0c168af615a22b79d21d9f4ef7f1dbf57"
+        },
+        {
+          "mode": "health",
+          "status": 0,
+          "log_sha256": "c3b16287a8bec5d7bc06b3813edd7c815046ca2bf1d4e7d2a307cb4cfe8587b2"
+        },
+        {
+          "mode": "health-collision",
+          "status": 0,
+          "log_sha256": "989e90e47a1c773744899987041058491f6ea175bd465b831707680e739c2ecb"
+        },
+        {
+          "mode": "nonprivate",
+          "status": 0,
+          "log_sha256": "d729613cd47fa773d15d039ab1852d584b3063fca242f079c188626ecfbb743e"
+        },
+        {
+          "mode": "symlink",
+          "status": 0,
+          "log_sha256": "d729613cd47fa773d15d039ab1852d584b3063fca242f079c188626ecfbb743e"
+        }
+      ]
+    },
+    "task_snapshot_regression": {
+      "scope": "HOST real ARM64 wait/touch/unmap; private numeric snapshots and nonblocking contention; not CEF/iPad/stop-barrier evidence",
+      "exit": 0,
+      "archive_sha256": "c10edcaa7cd78d46e9b030540479cb845fc7b38a188e293d8876400a1c8018c0",
+      "log_sha256": "3d46d74814b419c58f3832e2f5a7408df471a4dc38f22b2d1603222bdc8ceabd"
+    },
+    "candidate25": {
+      "version": 25,
+      "macho_sha256": "9811a585ff1e43a28ce33d7f1e6363ee6e9ea1f2a601c773f31eb3c6760ea1aa",
+      "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+      "source_sha256": {
+        "experiments/linux-steam/app/NativeKernelLog.c": "0cc92ce8a14e75a872e5dbfeae52e2b3722bed7aa249f04ebf77c4a9325c3c72",
+        "experiments/linux-steam/app/NativeKernelLog.h": "79f9c4f877e0a8d610428d9961c41c4e14460d74bb8dc714518bd619b8fba8c6",
+        "experiments/linux-steam/app/LinuxSteamViewController.m": "d8e0465b627357780944288583a827e0fe47c741c832cee878d72f96e6bde6bb",
+        "experiments/linux-steam/app/main.m": "0bcff8f0195937dc82464bc257e17d55da508eaedc9bab1d0094e9e2022d9194",
+        "experiments/linux-steam/app/PrivateDiscard.inc": "77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209",
+        "experiments/linux-steam/app/MadviseStats.h": "87be775501a16f57b8f05c6e75d1f92776e0879027e068ee391d3946ca650625",
+        "experiments/linux-steam/tools/build-madvise-stats.py": "da0510cbb96a3ea5325f0a60bd133b054855b1835f2bba60dd106ddb90f2c3c8",
+        "experiments/linux-steam/tools/build-lab.sh": "2af62fcf218e17f309a2aea1917160ca2e3f4ca0e19cdd296eb970c8746cfd97",
+        "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "8624785d11ec246b0ad3bd5e6f74e1ebc5be65f7507d1a4ce75fa73fb69411e6"
+      },
+      "health_and_discard_symbols_and_identity_markers_linked": true,
+      "installed": false,
+      "baseline_parser_captured_after_build_from_verified_unmodified_HEAD_sha256": "5d5130906c16b10b0eb4326bb04108108c657d32b2a751292fa0e4fd8983c29e",
+      "postbuild_source_change": "Current source now version26 with two-library-root parser fix; NOT included in immutable/signed25 artifact."
+    },
+    "signed25": {
+      "version": "25",
+      "signed_macho_sha256": "ba05a3b0ca88943ec002dc2329a3dbf8cce877219afae2c61820e30ba108c9c0",
+      "scene_marker": true,
+      "profile_covers_Air": true,
+      "deep_strict": true
+    },
+    "default25": {
+      "version": 25,
+      "full_default_build": true,
+      "experimental_health_and_discard_absent": true,
+      "macho_sha256": "f32ceb5a57daaf28e6cd46bb19312fdff9a5d9f703acc4a07665a47b72dbb3aa"
+    },
+    "test_limits": [
+      "Changed native observer/wrapper/host controls ASan/UBSan, remaining dependency not fully",
+      "Health timer runs on foreground main runloop; silence/stale sequence is NOT process death or a guest hang proof",
+      "Initial returned + tracked counters0 is NOT all-native quiescence/Wine permission",
+      "No on-Air25 health/discard/UI validation. Current23 and all other apps/auth/games/saves preserved"
+    ],
+    "new_bridge_evidence": {
+      "library_metadata": {
+        "raw_sha256": "80de884e15ffd0593673ce6aa0fdd993fe346eb92b041aefe3bb5d6e83dc640a",
+        "library_count": 1,
+        "default_Steam_root_present": true,
+        "planned_shared_root_present": false,
+        "other_path_count": 0,
+        "limit": "Categorical paths only; no account/manifest payload printed"
+      },
+      "compat_log": {
+        "raw_sha256": "277cf89a32665495b062aa7c8f4dcb1746f0fcab2f72a93d2c64e80d480c4e30",
+        "bytes": 164819,
+        "public_tool_name_mentions": {
+          "ideck-madeira-lab-v1": 10,
+          "ideck_madeira_lab": 0,
+          "iDeck Madeira": 5,
+          "ideck-madeira": 30
+        },
+        "limit": "Mentions would establish log presence only, not Steam Play invocation, licensed execution or game return"
+      },
+      "finding": "Actual library metadata has ONLY /Steam, no planned /mnt/ideck/SteamLibrary. Old parser rejects legitimate /Steam/steamapps/common/... requests. Compatibility log references custom tool, but references/history are NOT proof of accepted discovery or actual Steam Play.",
+      "prepared_fix": "Post-build25 source version26: syntax parser accepts exactly existing planned root plus /Steam/steamapps/common/. Same install containment, no parent/double-dot/prefix sibling/cross-library escape; no native path resolution or execution authorization. ASan/UBSan protocol hostile/truncation/mutation tests pass. Guest helper/VDF/IPC version unchanged; NOT included in signed25, NOT device-run."
+    },
+    "exit_log_investigation": "Read-only system/UI logs privately collected; fixed keyword/timestamp categories after14:30 yield no matched rows. Not proof Power event was absent/successful; actual normal exit still unverified.",
+    "user_gate": "Asked ONCE for authorization to end this active experimental session and install concrete signed25, because user prohibited restarting an active session. Reply pending. Do not repeat question, use elapsed time as approval, bypass locks or request Mac unlock. Continue independent work.",
+    "remaining": "Genuine Library/BPM rendered but responsiveness/stability fail. Bridge remains diagnostic125; no licensed Windows game/return or Bluetooth/physical touch qualification. Goal active, no STABLE_SUCCESS/unload.",
+    "private_artifact_sha256": {
+      "run19/processes-first.json": "082a9a35d91e89f1cc938968054d294f8173b8b3e03f31ce058af560fbf7e585",
+      "run19/screen-first.png": "aa500e097983e3b94617855302559c479104744f62135e8d87ba363d803ae746",
+      "run19/native-health-tests/evidence.json": "03fe01c0f5113d7d0019de34ff67fa508255440a2d142aa761eb95da4ea5c838",
+      "run19/task-log-regression/evidence.json": "64a8a0401e533bb2904263cffed6ac5304606815ca7a5bb4dc1fa509114f7179",
+      "run19/build25.log": "bd24277b743586d43ef03588120efb0aa25f62925dd558aacb55062be6fb0eb3",
+      "run19/final-linked25.json": "a138faa70cb73cc95b1521bc84239b542b17212ac4c47da5e27b994a6dc9bf5c",
+      "run6/signed-lab25/evidence.json": "634aa6ab146daa1358fc2cf5458078da175f0c6b90c5e72ab7c303386ce07ed5",
+      "run19/default25-build.log": "c1e56f98608553e360dc575d737ece19244337711e1f4c724da79ada30c8bd53",
+      "run19/default25-linked.json": "16cd9ff8d388bfd44d797cebfaa1ec6742c3adcdc9bffe835d91b1c57dc7113c",
+      "run19/exit-categorical-evidence.json": "a43bd9ee5ebaf38c5190c54b79e8c79ae82bbda4a268fdacd2b5a94030bb03fd",
+      "run19/library-path-categorical.json": "2c34f115826ab3f05ca73594f131d91e5c11b077d695564c7ea9bec5b65135d8",
+      "run19/compat-discovery-categorical.json": "06042581f2a936c5ed4d7936b60b4298cf8af35daf18881bab81266e73ae9abb",
+      "run19/default-library-protocol-test.log": "69262376a5c16785ec458f67afbd4d54a1eb202851774683ad7787f5b867c240"
+    },
+    "unbuilt26_source_sha256": {
+      "experiments/linux-steam/app/LaunchProtocol.c": "35c56b3831400391dac4e370de637f2eb12a80237d011c5fae7a34b65f8108b5",
+      "experiments/linux-steam/tests/protocol-test.c": "4f3477f368206bdd9bd05a31c2ecb882f02d099a9a3258cd5c38ea69aa84732e",
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "1b672f1f1f70fb447cfe1ae1e7c2748b4ff305bb5bdd3a0c5c0215b7a5e17f61"
+    }
+  },
+  "source_is_dirty": true,
+  "run20": {
+    "phase": "Native compatibility-request filesystem capability and default build resource isolation",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "observed_failure": "Actual Air default library is /Steam. Syntax-only validation was not native file/path authorization. A separate full default26 resource audit found the build phase copied LabCompatibility even with the tool disabled.",
+    "hypothesis": "A native app-owned data-directory capability plus bounded validated frame and no-symlink component opens can select the fixed real/default or shared library without accepting guest-selected native roots. Observe this preparation separately from legitimate Steam/Wine execution.",
+    "discriminating_test": "Synthetic PE32/PE64 native controls, mutation/replacement/alias attacks, concurrent observers; real ARM64 Linux helper through actual guest device bridge into native policy; full feature/default Xcode and final linked artifact inspection. No game invocation.",
+    "minimal_patch": "GameFiles opens relative to trusted native data/root dirfds, copies/validates frame, pins read-only singly-linked owned regular .exe with limited x86/x64 PE identity; detects observed metadata/path replacements. GameFilePolicy registers one native data root before guest startup; synchronous diagnostic opens/closes and newest sequence observation, no execution. LabBridge validates owned snapshot once. Explicit GAME_FILE_POLICY opt-in requires COMPAT_TOOL/NATIVE_LOG and Steam frontend; atomic health includes fixed numeric categorical fields only. Default resource phase now packages tools only when opted in, removes only its own three generated files on reuse, preserves unknown files.",
+    "host_file_policy_tests": {
+      "scope": "HOST native directory/file capabilities and synthetic PE identity bytes; no Steam/Madeira/game/device execution",
+      "status": 0,
+      "checks": [
+        "default-library-real-directory-resolution=PASS",
+        "pe64-identity-and-appid=PASS",
+        "working-directory-is-selected-native-directory=PASS",
+        "borrowed-executable-readonly-and-cloexec=PASS",
+        "unchanged-file-revalidates=PASS",
+        "busy-output-does-not-leak-or-overwrite=PASS",
+        "all-open-capabilities-closed=PASS",
+        "planned-shared-library-and-pe32=PASS",
+        "missing-selected-library-does-not-fall-back=PASS",
+        "executable-symlink-refused=PASS",
+        "installation-symlink-refused=PASS",
+        "nested-parent-symlink-refused=PASS",
+        "working-directory-symlink-refused=PASS",
+        "multiply-linked-executable-refused=PASS",
+        "fifo-refused-without-blocking=PASS",
+        "directory-not-executable=PASS",
+        "unsupported-machine-refused=PASS",
+        "dll-identity-refused=PASS",
+        "machine-optional-header-mismatch-refused=PASS",
+        "pe-offset-beyond-file-refused=PASS",
+        "truncated-request-refused=PASS",
+        "parent-traversal-refused=PASS",
+        "invalid-appid-refused=PASS",
+        "rejected-requests-leave-no-descriptors=PASS",
+        "modified-file-detected=PASS",
+        "path-replacement-detected=PASS",
+        "retained-handle-pins-original-object=PASS",
+        "installation-directory-replacement-detected=PASS",
+        "working-directory-replacement-detected=PASS",
+        "close-null-is-safe=PASS",
+        "all-final-handles-closed=PASS",
+        "data-root-missing-library-refused=PASS",
+        "library-created-after-root-registration-accepted=PASS",
+        "data-root-selected-missing-shared-no-fallback=PASS",
+        "data-root-shared-does-not-select-default=PASS",
+        "fixed-library-prefix-symlink-refused=PASS",
+        "data-root-truncated-frame-refused=PASS",
+        "data-root-invalid-native-capability-refused=PASS",
+        "policy-uninitialized-is-not-success=PASS",
+        "policy-invalid-capability-refused=PASS",
+        "policy-regular-file-root-refused=PASS",
+        "policy-native-root-registered-once=PASS",
+        "policy-retains-duplicate-not-borrowed-root=PASS",
+        "concurrent-policy-newest-completion-and-count=PASS",
+        "policy-malformed-snapshot-refused=PASS",
+        "policy-foreign-native-owner-refused=PASS",
+        "policy-requests-leave-only-one-retained-root=PASS",
+        "global-cwd-unchanged=PASS"
+      ],
+      "source_sha256": {
+        "app/GameFiles.c": "97b8edbf47a60a0a751e3ab98f40e1fb897c61d1035adccdcbaae6181820ec13",
+        "app/GameFiles.h": "2638d04db49d399126c018cf61d9d011c958cf57101e81db69785b24332e74b5",
+        "app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+        "tests/game-files-test.c": "c3c0a42b1a6c4e063002fe193e75ecc3e0975fd299d9d6d78060768089854f46"
+      },
+      "log_sha256": "b4633e6d4f66f79875a325cfae9e69808c15b9f3f7a753adb876a05486b07440"
+    },
+    "actual_host_arm64_bridge": {
+      "scope": "HOST real ARM64 exec/helper/IPC into native file policy; synthetic AppID480/PE identity only. Wrapper125 is NOT a game/Steam Play/license/device success. Native wrapper/policy units sanitized, dependency not fully.",
+      "tests": [
+        {
+          "mode": "default",
+          "status": 0,
+          "log_sha256": "b28e50526a1510db46a9502c9d4b7e3daac266bede73d8bc1cda215390dfdc39",
+          "health_sha256": "41f250cc66525f5a99d121b2fd996e6adc7b254ccd548fb21f57462125d7854a"
+        },
+        {
+          "mode": "shared",
+          "status": 0,
+          "log_sha256": "089cc57698af77d24a251b851d536055ba7c9fc8e7d44ed748afe57719df96a2",
+          "health_sha256": "ca3a1e39fc5d94ed4348d54e5fabb5015f57d0b2e6bd51710e80846dba3ff43a"
+        },
+        {
+          "mode": "symlink",
+          "status": 0,
+          "log_sha256": "788b8e2290c0a21483517ba9b505572cc2e2b1d5334dd70b2e303bcf110f03b5",
+          "health_sha256": "32c5dc69b099c594ee7ba9864c7df37d1391ae308bb6df4f516197b376c47db4"
+        }
+      ],
+      "helper_sha256": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072"
+    },
+    "native_log_regression": {
+      "scope": "private bounded native logging and real host ARM64 kernel controls; no Steam/iPad/crash fix claim",
+      "tests": [
+        {
+          "mode": "privacy-cap",
+          "status": 0,
+          "log_sha256": "6d0d53b2d46735be89494ad0e50e06fd0579bc1e22a35f281f7a4fd1d0b1b39d"
+        },
+        {
+          "mode": "resources",
+          "status": 0,
+          "log_sha256": "537bf5ba3872c0aaeabe29cb5d2ab1b62e563238ca79d5699231ded3e3625405"
+        },
+        {
+          "mode": "kernel",
+          "status": 0,
+          "log_sha256": "ca163a9314afd3569a6f80d5eb6e20d0c168af615a22b79d21d9f4ef7f1dbf57"
+        },
+        {
+          "mode": "health",
+          "status": 0,
+          "log_sha256": "c3b16287a8bec5d7bc06b3813edd7c815046ca2bf1d4e7d2a307cb4cfe8587b2"
+        },
+        {
+          "mode": "health-collision",
+          "status": 0,
+          "log_sha256": "989e90e47a1c773744899987041058491f6ea175bd465b831707680e739c2ecb"
+        },
+        {
+          "mode": "nonprivate",
+          "status": 0,
+          "log_sha256": "d729613cd47fa773d15d039ab1852d584b3063fca242f079c188626ecfbb743e"
+        },
+        {
+          "mode": "symlink",
+          "status": 0,
+          "log_sha256": "d729613cd47fa773d15d039ab1852d584b3063fca242f079c188626ecfbb743e"
+        }
+      ]
+    },
+    "resource_phase_controls": {
+      "scope": "HOST actual Xcode resource phase with synthetic helper; no device/runtime execution",
+      "script_sha256": "48700472dd8708be6aa09c88ecbe6f2992636345832b33996d7fc2e8a65f9210",
+      "tests": [
+        {
+          "mode": "default-fresh",
+          "exit": 0
+        },
+        {
+          "mode": "explicit-enabled",
+          "exit": 0
+        },
+        {
+          "mode": "default-reused-products",
+          "exit": 0
+        },
+        {
+          "mode": "enabled-again",
+          "exit": 0
+        },
+        {
+          "mode": "default-preserve-unknown",
+          "exit": 0
+        },
+        {
+          "mode": "missing-frontend-refused",
+          "exit": 2
+        }
+      ]
+    },
+    "protocol_regression": "ASan/UBSan fixed roots, hostile/truncated/mutated requests PASS; missing required feature opt-ins explicitly REFUSED2",
+    "candidate27": {
+      "version": 27,
+      "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+      "macho_sha256": "04869ed0f989253744e33de721160b4c522abbb4509f4ece8a57dd4ae39c7d3e",
+      "required_linked_symbols": [
+        "ideck_game_file_policy_start",
+        "ideck_game_file_policy_inspect",
+        "ideck_game_file_policy_observation",
+        "ideck_game_files_from_data",
+        "ideck_game_files_open",
+        "ideck_native_health",
+        "ideck_private_discard_marker"
+      ],
+      "policy_health_default_library_discard_markers": true,
+      "full_xcode_build": true,
+      "compatibility_resource_sha256": {
+        "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+        "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+        "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+      },
+      "installed": false
+    },
+    "signed27": {
+      "version": "27",
+      "signed_macho_sha256": "c4336e4ff9c08bd25215d4624a4e2d0333c59fd7c0e7742f467887896e549cde",
+      "scene_marker": true,
+      "profile_covers_Air": true,
+      "deep_strict": true
+    },
+    "default27": {
+      "version": 27,
+      "full_default_build": true,
+      "experimental_file_policy_health_discard_absent": true,
+      "compatibility_resource_absent": true,
+      "macho_sha256": "10c669639dbde0b2ef2d1d8acd6fa848ea74f355d901f28f1aecf9816222f42c"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/app/GameFiles.c": "97b8edbf47a60a0a751e3ab98f40e1fb897c61d1035adccdcbaae6181820ec13",
+      "experiments/linux-steam/app/GameFiles.h": "2638d04db49d399126c018cf61d9d011c958cf57101e81db69785b24332e74b5",
+      "experiments/linux-steam/app/GameFilePolicy.c": "fe3fa21835354ba1b33186006fde048030b06406e021b3aeadbb27fe94073de9",
+      "experiments/linux-steam/app/GameFilePolicy.h": "2aaba202dcc1f816dcce2b0e07f767c2a1bd68ac45a851faa2300d372987bc2f",
+      "experiments/linux-steam/app/LabBridge.c": "9381e10055a6be523d5656b1628d1db8e9e34b60da19777a576076fb9d513b0f",
+      "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+      "experiments/linux-steam/app/LaunchProtocol.h": "d8faa83407f7be2eadeabaa2c2267d10d4246e4d5fa52ce288d1a817ebedc02e",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "4473eaad196bd8e53ec0e09446a26fc9a97e3417e6c11e70db82425ab27e2e3c",
+      "experiments/linux-steam/app/NativeKernelLog.c": "42d89e7f7e19d9a0c5c59cfa31eaa4d34a9f7d3b3712c4fede2698179bdd94dd",
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "4f818cff630745fe119fb8fb2bc11dd1c9f39d61ad39c07c10ca9d2e71bc192f",
+      "experiments/linux-steam/tests/game-files-test.c": "c3c0a42b1a6c4e063002fe193e75ecc3e0975fd299d9d6d78060768089854f46",
+      "experiments/linux-steam/tools/test-game-files.sh": "3f9b9c232c0df58fa36cc1d7a693864adbb8c66d7e59c49cf11a6ae59a446c20",
+      "experiments/linux-steam/tools/test-files-bridge.sh": "2078e8fae7a1f906a8675e44d676c9416cdbd394316593f830f77e80cdb2b3df",
+      "experiments/linux-steam/tools/test-compat-resources.py": "e49636c9e08dc2840edcc66334c52208d352a50622614344980cacc7228068e7",
+      "experiments/linux-steam/tools/build-lab.sh": "28e725ffcf333d1a974c3654d9c87978142671d7ce2b194018dd1f7cd50af115",
+      "experiments/linux-steam/guest/files-bridge-probe.c": "61447ad993552844f128cbcacd4728219bf34473eb1316abebbe79b3aa5f3a6b",
+      "experiments/linux-steam/tools/files-bridge-control.c": "038185af3c4d5b9df00f7f5bb9e428b83e72136fe7c9a5f780871f861e99a13b"
+    },
+    "private_artifact_sha256": {
+      "run20/processes-check.json": "ef31c437614ff957dc21db6ed878cc84ab4ee1292c883264429988758de8a218",
+      "run20/game-files-controls-v2/evidence.json": "6bfa74d716c069a550a06747592fb4956ed4293ef0e5212aae8f0bef09129382",
+      "run20/files-bridge-controls/evidence.json": "24b8b711ce90b71d20eaae9311c3d60a63051fe12920269295184b3a5f754c0d",
+      "run20/files-bridge-health-controls/evidence.json": "1d37a56a371d5847018da940cef4bb84e5f2527d8045ba4b7a4e770f88b4bbc3",
+      "run20/native-log-regressions/evidence.json": "03fe01c0f5113d7d0019de34ff67fa508255440a2d142aa761eb95da4ea5c838",
+      "run20/resource-flag-controls/evidence.json": "2d9375f40f8ec2503fa2bf300f6bd57f7791ef9ec61ffde8d4c3f177589276c0",
+      "run20/protocol-result.log": "69262376a5c16785ec458f67afbd4d54a1eb202851774683ad7787f5b867c240",
+      "run20/policy-flag-refusal.log": "92b76d90aa28711ebecac580a4e3c7811725e8d19987dd8922e59398c6d16473",
+      "run20/feature26-build.log": "bf9a607962878250c6bc874aed089b952135ce7c3d0ef60da4b193f88169b7f0",
+      "run20/feature26-build-retry.log": "b2404d59b9c4b135ea4067340bd0ba91a815c28f6ab940ffd348ed9a8363feef",
+      "run20/feature27-build.log": "9ea1de6e0b74466f843d6e33e450e9e7e6eef01620fb3545fc7ca0b711744890",
+      "run20/default26-build.log": "e0b0d76c0d524ffc66c01a14312cb5ad777da7b34cb88bb915e19f19fa97e3b4",
+      "run20/default27-build.log": "96e6b93f8570e12a646722f2b4d50b8e3d381ac127d075067ea6130b0ac5ef3f",
+      "run20/final-linked26.json": "76a5cbf3ae35a5e8809ffa23a4ecd45ece73ddd93a110ee87b3fb02254367fa4",
+      "run20/final-linked27.json": "deed131bfcc5137a0bbad69a9a6ad1b1b3f8957ac1a01396afbce246094e96bf",
+      "run20/default27-linked.json": "ae5c9b0b75a45ddc25e8dadb155a4c2c0e8beb2e1edeaa0fb5d0d03b9038abbc",
+      "run6/signed-lab26/evidence.json": "d01cabd86b8240f869209f2be6411bd8d9e6353e1777c66310201643711258af",
+      "run6/signed-lab27/evidence.json": "0d348e6dda3c9e63425aa508f2d30e5d244f8bae746001c7753d0789a4bbdc74"
+    },
+    "device": "Exact Air current process23/4952 and B265FEBE-DE84-4F31-AB6A-235C8BF6F8F8 executable reverified in processes-check; no new device input, termination, installation, restart, credentials, trust or data change this run.",
+    "limits": [
+      "48 native host controls PASS, including512 concurrent requests, plus3 actual host ARM64 helper/policy controls and7 native logging modes; affected wrapper/policy/log units ASan/UBSan only, dependency not fully instrumented.",
+      "Synthetic AppID480 and128-byte PE identity fixtures contain no executable game/Valve code. Diagnostic125 is NOT game execution, Steam Play, ownership or licensing proof.",
+      "PE check is a limited identity/header check, not full image validation; ASCII contract, symlinks/bind mounts and multiply-linked executables remain conservative compatibility restrictions.",
+      "Pinning/revalidation is NOT an atomic storage freeze; guest writers must be stopped and a storage lease established before future Wine pathname reopens.",
+      "Native policy retains one app-root fd for one native lifetime; does not claim complete guest/native shutdown, Wine coexistence, Linux restart or signal/TLS cleanup.",
+      "No on-Air25/26/27 health/discard/policy/UI validation. Previous actual Library/BPM remains severely delayed and memory pressured, not stable.",
+      "Full default26 build succeeded but resource audit FAILED (helper always copied); fixed and full default27 Mach-O plus resource exclusion now PASS.",
+      "Initial sandboxed Xcode process stalled; only identity-verified task-owned host build was terminated, then exact CLI build succeeded with normal services. No iPad process or unrelated build touched. Full nm finds linker-local symbols; nm -g alone was insufficient."
+    ],
+    "active_session_gate": "One previous async request to end only current Lab23 and install signed25 remains PENDING. Preserve it; no repeated question/approval-by-time. Fresh actual absence/completion or explicit reply must precede upgrade. New signed26/27 not selected by that pending25 question.",
+    "next_experiment": "After safe current session end, verify signed25 on-Air fresh identity/health and conservative discard UI/memory A/B with bounded sampling. Candidate27 additionally enables native file policy; only actual Steam Play request can establish that path. Then complete all-native shutdown/storage ownership and legitimate Madeira integration; no diagnostic125 game claim.",
+    "uncommitted": "Outside weekday22-08 window; main and remote experiment unchanged, no commit/push, no STABLE_SUCCESS/unload."
+  },
+  "run21": {
+    "phase": "Tracked child pthread joins toward sequential Madeira handoff; current Air white-screen discrimination",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "previous_turn": "Progress: native game-file policy, actual host ARM64 helper/device contract, full feature/default27 and isolated signed candidates. No game/return or stable completion.",
+    "device": "Exact Air23/4952 B265FEBE-DE84-4F31-AB6A-235C8BF6F8F8 remains alive17:19EST. New native screenshot WHITE and passive shared RFB WHITE; no input/restart/install/stop/auth action.",
+    "observed_failure": "GuestLifetime reservation retires in a cleanup callback before TLS destructors finish; a zero count is insufficient for sequential handoff. Pinned guest children are native-detached so owner cannot currently join them.",
+    "hypothesis": "Register joinable native child handles at creation, seal further starts, and explicitly pthread_join them so native TLS completion is actually observed, rather than inferred from guest body/cleanup counters.",
+    "minimal_patch": "Unlinked JoinableGuests one-native-lifetime prototype: initialize/seal/join on serial native owner; creation registered under lock, positive pthread error propagation, native PID/owner checks, cumulative4096 bounded slots, capacity/creation failure does not leak reservations. Sealed gate refuses starts. Blocking joins remain pending, no cancellation, detach, reset, retry workaround or timeout-as-death. Opt-in --join-guests in copied-archive generator changes ONLY pinned child task attrs/start path and preserves GuestLifetime cleanup. Default generator path unchanged; vendor untouched.",
+    "host_controls": {
+      "scope": "HOST tracked child pthread join/TLS and actual ARM64 guest controls; NOT full Linux quiescence, iOS runtime, Wine/game/return or stability success",
+      "tests": [
+        {
+          "mode": "tls",
+          "status": 0,
+          "elapsed_seconds": 0.598,
+          "log_sha256": "16addcca4086749c0e6ad056832046be6919359f21d404fcbb2f0ad2a89d6ea7"
+        },
+        {
+          "mode": "failure",
+          "status": 0,
+          "elapsed_seconds": 0.09,
+          "log_sha256": "74f0da04cc95096a5589f3d3be1878b5f16852dce1aaf33326bc9dfaea3326bf"
+        },
+        {
+          "mode": "ordinary",
+          "status": 0,
+          "elapsed_seconds": 0.379,
+          "log_sha256": "a25d57d906b982708576d8a5ee4b6e8ebba6b65e13971f53dcbacc6b8cc574d8"
+        },
+        {
+          "mode": "orphan",
+          "status": 0,
+          "elapsed_seconds": 2.157,
+          "log_sha256": "f9f6b2e5d4e3e1b4ce2cbf90b56db48a8996a930fc362ab16ee2410581c6255f"
+        }
+      ],
+      "archive_sha256": "88ba9ede877892510be119b791cedb79e65ee57f60367c1745e566cf662f3eec"
+    },
+    "actual_arm64_results": {
+      "ordinary": "Registered2/joined2, host16 control results PASS, reentry still EBUSY",
+      "orphan": "One real guest child alive after parent/initial call returned, late marker absent before join. Join waited2011ms, late marker then exists, registered1/joined1; ordinary child ended naturally. No native or guest signal used in this prototype test."
+    },
+    "regressions": {
+      "scope": "host real ARM64 interpreter; wrapper sanitizers, static dependency not instrumented; no on-Air/Wine quiescence claim",
+      "tests": [
+        {
+          "mode": "observe",
+          "status": 0,
+          "elapsed_seconds": 4.405,
+          "log_sha256": "884455b313846052ac376db78aab013905fb516c01c50693cc7e768118f27130"
+        },
+        {
+          "mode": "signal",
+          "status": 0,
+          "elapsed_seconds": 4.228,
+          "log_sha256": "2e276218e24e2d1a42c20706e316b6c4ce7ad72adaa17b5052f2c7e05f3749fe"
+        },
+        {
+          "mode": "standard",
+          "status": 0,
+          "elapsed_seconds": 0.151,
+          "log_sha256": "8f4a65fd5f5f597f9454c99daea58499993caced54abe53d0a3a4efd9eabe937"
+        }
+      ]
+    },
+    "default_generated_task_unchanged_from_prior": true,
+    "default_generated_task_sha256": "5b246fe2faa75a8d6ce548ce93042032a47eab5fb6498e93cb2341cfb92acf6d",
+    "copied_archive": {
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "base_archive_sha256": "c88a4eb2dcc4f877fcb03a76087ed32376873f0e0b2593785feb12b073c94864",
+      "base_archive_unchanged": true,
+      "generated_task_sha256": "ea0bcba44367a0474240349796cb300c25009d9fc9ed1cc69c3ec460dbe37e5e",
+      "hooks_sha256": "6bff593ce8d3e95798241e14a6adbf83f557084a692d378be754365fcfc8bbb3",
+      "header_sha256": "aaf8299f45a941e35f947dc5b8d80f09e8b52d7b870a8489b01b95d4ad7d25d7",
+      "archive_sha256": "88ba9ede877892510be119b791cedb79e65ee57f60367c1745e566cf662f3eec",
+      "sanitized_translation_unit": true,
+      "injected_child_create_failure": false,
+      "joinable_child_prototype": true,
+      "join_registry_sha256": "0fc92b33d802d730cc88be6e18832c91279e6c2626f8c5ff398ffe03a4fa6fb8",
+      "marker": "IDECK_GUEST_LIFETIME_V1"
+    },
+    "ios": "JoinableGuests.c compiles -Wall -Wextra -Werror to actual iOS arm64 Mach-O OBJECT only. Not linked into app, not deployed, not a physical-device execution result.",
+    "white_screen": {
+      "native_screenshot_sha256": "9c1cdc45a83a2a4dda67da70e525543ce2f4d89eb49690da5cc084c385f86a33",
+      "independent_shared_rfb": {
+        "observer_exit": 0,
+        "proxy_exit": 0,
+        "frame_exists": true,
+        "frame_sha256": "70e8bcde0990fd6a3ae4d549a28ac9e90024033a023e1f0a6e85b8fd84d1a04d",
+        "scope": "Passive shared RFB capture only; no key/mouse/auth/trust or restart"
+      },
+      "guest_frame": {
+        "width": 1280,
+        "height": 800,
+        "observation": "Visually inspected white background and mouse cursor, same as native view. No interactive library visible."
+      },
+      "steam_log_metadata": {
+        "cef_log.txt": {
+          "size": 57095,
+          "lastModDate": "2026-11-09T21:22:57.000Z"
+        },
+        "console_log.txt": {
+          "size": 1632500,
+          "lastModDate": "2026-11-09T22:21:27.000Z"
+        },
+        "steamwebhelper.log": {
+          "size": 22703,
+          "lastModDate": "2026-11-09T21:23:56.000Z"
+        },
+        "webhelper.txt": {
+          "size": 305526,
+          "lastModDate": "2026-11-09T22:20:25.000Z"
+        }
+      },
+      "exact_x11_diagnostic": {
+        "source": "steamwebhelper.log",
+        "line_count": 12,
+        "line_sha256": [
+          "2b52a1ebc197d00a853d60ab754f674f78d478ace5ae4daf137bef7d0ca3e9ce",
+          "af957ac149f736a7654d6f5cd34ba74f4db15b2bfa1cc4cfa9fef1114bcefb40",
+          "e1d353e74bea09454040cb7b07cce7b978dfc192b00254104b3134cd49d04575",
+          "fd6bb7dbc4a118e891ee25ef32636e0d9c0353f2c385219aeb688b1357329484",
+          "bf7f95976530e1505b1415f57f9a20b0ad7fd28aea1279b3aebccf2524a45027",
+          "7445bb697dbf0f42f71cf1b6868694976d5b164d04f0e542db61069efa524b80",
+          "a3ce0b4eaa99c563cf34f497f25953fbce150e271d7539bda99782163b83341b",
+          "d718e721a83b1c7aba153dc31f936a9362a50b11e7c7af7c838445ff98ae5386"
+        ],
+        "limit": "Exact source diagnostics only; not proof of original cause or browser death"
+      },
+      "finding": "Both native screenshot and independent passive shared RFB decode are white. Narrows away from a native-view-only display issue, but does NOT exclude a common RFB decode/server issue or establish CEF/X11 root cause. Current Steam logs continue to update. Exact public x11_software_bitmap_presenter.cc145 diagnostic says XGetWindowAttributes failed for window; could be stale/destroyed windows, not proven original cause.",
+      "raw_log_sha256": {
+        "steamui_system.txt": "276f54ce36611499be46939e7222a72d582f1aee6ae06824a7e2e454228e2fa6",
+        "steamwebhelper.log": "81bb13d5c90b58921199149d83dc59f4babd9cf522e84383c611830d864fd1e3",
+        "cef_log.txt": "5b70e6168c47f909914e0b981d77db215616ea9a0c852fa4a92902484e757456",
+        "webhelper.txt": "07790dbc19829c7435a1117ad1be97ab6a292b71702bed3429f82f44832b2e55",
+        "console_log.txt": "1853a606d0a69759486d776acb78bb62194c9b0b63019bf056028d165ab0b3e9"
+      },
+      "rejected_inference": "Initial broad regex crash/CHECK keyword counts are NOT crash events; logs include setup/status text and historical sessions. Do not classify them as actual CEF crashes. No new browser-death, process-exit or quiescence conclusion.",
+      "interaction": "No key/mouse/Steam login/Guard/trust/stop/upgrade/restart. Native process4952/installB265FEBE identity reverified first. Passive RFB sharedClientInit preserves existing viewer; USB proxy bounded50s, actual end2.008s, no pair-record operations."
+    },
+    "source_sha256": {
+      "experiments/linux-steam/app/JoinableGuests.c": "0fc92b33d802d730cc88be6e18832c91279e6c2626f8c5ff398ffe03a4fa6fb8",
+      "experiments/linux-steam/app/JoinableGuests.h": "666abbd0c706299aa5fb619c09d53f96efe80b5879ec45882c4d6529c63c20e3",
+      "experiments/linux-steam/tools/build-guest-lifetime.py": "a6e3c6a0a93747cac5728f1528d70750111f52360eeb2a399d2a0c8a4715a65f",
+      "experiments/linux-steam/tests/joinable-guests-test.c": "5b7303d340cba5709b037703333e540af1e1ce9bee4f5285f9b63f67f254169b",
+      "experiments/linux-steam/tools/joinable-guest-control.c": "1d32a4f4ba8572ae70515a460e26bf763c0b2e7f1f7c99007007c49f87161dbf",
+      "experiments/linux-steam/tools/test-joinable-guests.sh": "d5764c93bd70ed26c0febe51478cee8da4cb68b91b01a43a30352270b6ec4b8c"
+    },
+    "private_artifact_sha256": {
+      "run21/processes-check.json": "04f749f634a49517950876623ae82ad776b2bf7ebe8283ae366f83c253356d65",
+      "run21/air-current.png": "9c1cdc45a83a2a4dda67da70e525543ce2f4d89eb49690da5cc084c385f86a33",
+      "run21/guest-current.png": "70e8bcde0990fd6a3ae4d549a28ac9e90024033a023e1f0a6e85b8fd84d1a04d",
+      "run21/rfb-result.json": "8a3450b1e89e58a087545ea9b129416f54ad28cb5c9e32c0311f176fff9affee",
+      "run21/rfb-capture.log": "58d0f877952dcb37f62c15f0f74221bb00e4799e319700105e4e644cdb366858",
+      "run21/rfb-transport/result.json": "d1d6a23179b43fbad8327dca0d6f44cde47a05bd2af405904fb7a8b4c041cfb5",
+      "run21/steam-files.json": "dd59e35d4207b2526662cfd42d997415925abd0e68ec938d873dc8d7e35f7bcb",
+      "run21/white-screen-evidence.json": "085dff6105d39f4b9fe441341c5ad5c56f9ab3039bd9434654eb9eef39e0af89",
+      "run21/join-control-v2/evidence.json": "4d55c936061828dfe7acb84d182ea0db20ce02e5b685f7c6c9ec9ac676b5256b",
+      "run21/join-control-v2/guest-archive/build-evidence.json": "6e18b200ef1ef3756c1ebea6d087c28fee1c21af7e251e2ee3e7ed4cb0293d80",
+      "run21/default-lifecycle/evidence.json": "8760ca596a1b5b7228d7321acdaac675c08443b3b9628f3d03e58a788af8793d",
+      "run21/default-lifetime/build-evidence.json": "40a9420d220362bf04c7864b9294891e22d5f72c2ccfbf4dc42945914b84e410",
+      "run21/JoinableGuests-ios.o": "1724cdb556a895e602609fc2d458eb35c7849a53237388f08131e1f892a264af"
+    },
+    "corrections": [
+      "First host test script failed on macOS Bash3 empty array with nounset before compilation; explicit default flag fixed, new v2 directory used; all4 controls then PASS.",
+      "Python py_compile attempted disallowed system cache write; used read-only compile() syntax validation instead. No permission or security changes.",
+      "Broad crash-keyword log counts rejected; exact source diagnostics and timestamps retained, raw account-bearing logs never published."
+    ],
+    "limitations": [
+      "Only CHILD guest pthreads covered; initial runtime is separately joined by existing wrapper. Timer/profile/TTY/forwarder TLS, detached worker ownership, mappings/mounts/global state, signal owner and storage lease remain unproven.",
+      "all_registered_children_joined is NOT Linux quiescence, Wine permission, memory cleanup or reset certificate; no stop operation implemented.",
+      "4096 cumulative child slots are NOT recycled during this prototype; unsuitable for long Steam lifetimes until resource bounds/reaping are addressed. No iOS app flag/runtime linkage.",
+      "Native registry and task/wrapper units ASan/UBSan; complete dependency not instrumented. Native synthetic TLS tests are not on-Air TLS/Steam evidence.",
+      "Candidate27 source snapshot predates this UNLINKED optional generator prototype. Signed27 remains unchanged and uninstalled; no new full iOS app build this run.",
+      "Bridge still returns125, no Wine/Dock/FEX/DXMT linked, no licensed game/return or stable success."
+    ],
+    "next_experiment": "Preserve live23 pending prior one-time user approval to retire it or real completion/absence; no repeated approval request. Device memory/discard25 A/B still pending. Independently extend lifecycle to auxiliary-worker join/stop ownership, then signal/storage handoff. Current white-screen hypothesis needs X11/window-lifetime vs common decoder/server discrimination, not blind memory/fatal suppression.",
+    "git": "Remote main2ac39be and experiment82b7861 freshly reverified17:23EST; main/vendor/FEX/Valve/other apps untouched. Outside allowed local commit window; changes uncommitted/unpushed. Goal active; no STABLE_SUCCESS or scheduler unload."
+  },
+  "run22": {
+    "phase": "Isolate current Steam white-screen X11/window-lifetime failure",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "previous_turn": "Progress: explicit child-native joins/TLS controls, actual Air+shared-RFB white frame and precise source diagnostics. No game/return or stable completion.",
+    "hypothesis": "If basic X11 GetWindowAttributes/live-window drawing is broken in LinuxRunner or its glibc/Xlib, an independent ARM64 own-window client will reproduce it. Compare wire-level client to actual distro libX11 under the same native host interpreter.",
+    "method": "Fresh private unauthenticated fakefs clones from stopped prepared run2 root, recognizable loginusers/userdata absence checks and no DB users. Install ONLY our own compiled ARM64 probes through the real guest VFS (no host SQL edits). Run real Xvfb on isolated :97, no Steam launch, no VNC/network server exposure. Two separate guest process/client connections each create16 own windows, query attributes before/after map, read pixels, destroy and verify expected BadWindow. Xlib variant links actual pinned/root distribution libraries and initializes genuine glibc through our own AArch64 entry stub. Its error handler is test-process-only, admits only the deliberately destroyed own window, never Steam.",
+    "wire": {
+      "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+      "status": 0,
+      "elapsed_seconds": 2.994,
+      "reports": {
+        "parent": {
+          "status": "0",
+          "failure_stage": "0",
+          "wire_error": "0",
+          "live_attributes": "32",
+          "expected_bad_windows": "16",
+          "images": "16",
+          "image_bytes": "131072",
+          "pixel_comparisons": "32768",
+          "framebuffer_fnv1a32": "4133264837",
+          "scope": "real_ARM64_X11_wire_own_windows_not_Steam_or_iPad_success"
+        },
+        "child": {
+          "status": "0",
+          "failure_stage": "0",
+          "wire_error": "0",
+          "live_attributes": "32",
+          "expected_bad_windows": "16",
+          "images": "16",
+          "image_bytes": "131072",
+          "pixel_comparisons": "32768",
+          "framebuffer_fnv1a32": "658546117",
+          "scope": "real_ARM64_X11_wire_own_windows_not_Steam_or_iPad_success"
+        }
+      },
+      "elf_sha256": "47a6d745f2ae32b16029d78cb51b7303c7f4a3fd25fbbd8907a7438943e1c695",
+      "runtime_log_sha256": "da7a10d157690ce734000eb09abcba7422b986c33055dc20e02cc1e7575bce96"
+    },
+    "xlib": {
+      "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+      "status": 0,
+      "elapsed_seconds": 3.622,
+      "reports": {
+        "parent": {
+          "status": "0",
+          "failure_stage": "0",
+          "wire_error": "0",
+          "live_attributes": "32",
+          "expected_bad_windows": "16",
+          "images": "16",
+          "image_bytes": "131072",
+          "pixel_comparisons": "32768",
+          "framebuffer_fnv1a32": "4133264837",
+          "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+        },
+        "child": {
+          "status": "0",
+          "failure_stage": "0",
+          "wire_error": "0",
+          "live_attributes": "32",
+          "expected_bad_windows": "16",
+          "images": "16",
+          "image_bytes": "131072",
+          "pixel_comparisons": "32768",
+          "framebuffer_fnv1a32": "658546117",
+          "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+        }
+      },
+      "elf_sha256": "fd9e4bd518e6102bc1d40dd382a0f6c59f2165c5f0eee5e887b21c1790c69fcb",
+      "runtime_log_sha256": "d816925370c184f8ae831155389069730a75bb3219e98020e224cce1c3d3ae90"
+    },
+    "comparison": {
+      "scope": "HOST raw X11 wire versus actual distro libX11/glibc; identical own-window counts and pixel checksums. Does not reproduce Steam/CEF or qualify Air.",
+      "wire_control_sha256": "6432cb91f0200a3fdad16eb64b1706c4d39e8b713b0eb30a151f16c3fd45889a",
+      "xlib_control_sha256": "9fee83012de37f5c03e53e3a12f297a9935507d492735d8d47565e67e350b59f",
+      "matched_roles": [
+        "parent",
+        "child"
+      ],
+      "compared_windows": 32,
+      "pixel_comparisons_per_control": 65536,
+      "expected_destroyed_window_errors_per_control": 32,
+      "limits": "Same-loopback/interpreter/root family; not Chrome multithreaded window ownership, memory pressure, shared memory, device or Metal validation"
+    },
+    "interpretation": "Both controls PASS with exact per-role counts and identical framebuffer checksums. Reject a broad always-broken basic X11/live-window/libX11/pixel path as sufficient explanation in this host configuration. Does NOT reject Chrome multi-thread/window-ownership race, shared-memory/GPU paths, app copied-archive overlays, memory pressure, common RFB decode/server or actual Air-specific faults. Expected BadWindow after destroy illustrates why original source log text alone is insufficient; no Steam causal fix claimed.",
+    "initial_failure": "Sandboxed first control Xvfb could not bind native local listeners; a guest socket placeholder existed before failed bind, then clients got ENOENT. This is failed test setup, NOT reproduction of Air white-screen/CEF crash. Fresh clone under normal unprivileged socket services completed successfully. Old failed artifacts preserved; no assertion/permission/security suppression.",
+    "dependencies": {
+      "x11-root-normal": {
+        "usr/bin/Xvfb": "d7e34c84456cb0325bc663121ac9b39d990ecfdab0854d834d4bb56c72118810",
+        "usr/lib/aarch64-linux-gnu/libX11.so.6.4.0": "94938979e2e2030f3471823a186eec66f994b128125ea2f4b4c18b502444b0a0",
+        "usr/lib/aarch64-linux-gnu/libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+        "root_source": "run2/steam-fakefs-v3 stopped unauthenticated clone; original unchanged"
+      },
+      "xlib-root": {
+        "usr/bin/Xvfb": "d7e34c84456cb0325bc663121ac9b39d990ecfdab0854d834d4bb56c72118810",
+        "usr/lib/aarch64-linux-gnu/libX11.so.6.4.0": "94938979e2e2030f3471823a186eec66f994b128125ea2f4b4c18b502444b0a0",
+        "usr/lib/aarch64-linux-gnu/libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+        "root_source": "run2/steam-fakefs-v3 stopped unauthenticated clone; original unchanged"
+      }
+    },
+    "air": {
+      "native_after_sha256": "5c00ea31a357a056ccd1fed8344b7a91c19a5f9c15dd21e8a9d4b132a49f6052",
+      "before_rfb_sha256": "70e8bcde0990fd6a3ae4d549a28ac9e90024033a023e1f0a6e85b8fd84d1a04d",
+      "observer_exit": 0,
+      "proxy_exit": 0,
+      "written_packets": 2,
+      "action": "One F1 Steam menu press/release; no credential/account/Guard/trust/exit or restart.",
+      "observation": "Native screenshot after input remains WHITE with cursor. Does NOT establish Steam focus, delivery to its input handler, input qualification, browser death or completed session.",
+      "correction": "Legacy private run_rfb_action result has a hardcoded visually-verified-navigation scope from earlier tests. Ignore that description for this run: packet writes only, no visible Steam navigation response."
+    },
+    "source_sha256": {
+      "experiments/linux-steam/guest/x11-window-probe.c": "4159863c2ad2e86d2a91c322a3822715213b00ffc4f4ec8b99b6208f6897a57c",
+      "experiments/linux-steam/guest/x11-window-control.sh": "93b043525d9cbdb15a14b0eca0c186cf44d69ec562f939146084bbbeb87e129d",
+      "experiments/linux-steam/guest/xlib-window-probe.c": "c3f910899948d4dad65df21b67bd6dbe3d77943d229e2af49704926821007f0a",
+      "experiments/linux-steam/guest/glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+      "experiments/linux-steam/tools/run-x11-window-control.py": "1eeeae3f1ba52dc609c1cb33b4334cf0fa21cbb40f5f186f23cbea20b3d90cdd"
+    },
+    "private_artifact_sha256": {
+      "run22/baseline-control/result.json": "ef14026666dc91eb498fc33b54760263f2ca65d698e8b2f13fd0a310f0c510e4",
+      "run22/normal-control/result.json": "6432cb91f0200a3fdad16eb64b1706c4d39e8b713b0eb30a151f16c3fd45889a",
+      "run22/xlib-control/result.json": "9fee83012de37f5c03e53e3a12f297a9935507d492735d8d47565e67e350b59f",
+      "run22/comparison.json": "ac837993ca4644976c0e43d38cc9fe63dddb988a7becb56670b4d976276f9522",
+      "run22/x11-window-probe.elf": "47a6d745f2ae32b16029d78cb51b7303c7f4a3fd25fbbd8907a7438943e1c695",
+      "run22/xlib-window-probe.elf": "fd9e4bd518e6102bc1d40dd382a0f6c59f2165c5f0eee5e887b21c1790c69fcb",
+      "run22/root-preflight.json": "f19b6796ed12999104d3bdb7ffca0c12859db9f3e559e0bb6a62d53d0132ae7f",
+      "run22/air-menu-observer.log": "4520c1ccde9864f66faddd52aaa8b4453a0f8be92f6ecb343c264b022255dc94",
+      "run22/air-after-menu.png": "5c00ea31a357a056ccd1fed8344b7a91c19a5f9c15dd21e8a9d4b132a49f6052"
+    },
+    "scope_limits": [
+      "HOST real ARM64 interpreter/glibc/Xvfb/libX11 and synthetic own windows; NOT actual on-Air ELF/Xlib/Metal qualification or Steam/CEF/UI fix.",
+      "No runtime, Valve, FEX, signing/profile, app binary, account/games/saves changes. No new app build/installation. Signed25/26/27 unchanged.",
+      "Air23/4952/exactB265FEBE executable reverified before testing; one menu key, no visible response. Live session preserved, prior retirement25 question still pending, no repeated approval request.",
+      "Probe reports and exact headers/pixel bytes are diagnostics, never authentication/license/Steam Play evidence. Existing custom bridge remains125, no Madeira game/return.",
+      "Raw source socket prototype failure masked parent failure with child status; child report/server log establish setup failure. Do not reinterpret fixture errors as runtime fix."
+    ],
+    "next_experiment": "Current Air needs fresh bounded25 health/discard A/B after safe session end/explicit prior retirement approval. For white-screen, add narrowly scoped Xlib window-lifetime numeric instrumentation only after positive/negative controls; no blind assertion/GPU/mprotect patch. Independently continue complete native stop/storage and legitimate Madeira integration.",
+    "git": "Isolated experiment82b7861, main2ac39be baseline preserved, all new tests private/opt-in. Outside allowed weekday commit window; no commit/push yet. Goal active, no success sentinel or scheduler unload.",
+    "distribution_packages": {
+      "libc6": {
+        "Version": "2.41-12+deb13u4",
+        "Architecture": "arm64",
+        "Status": "install ok installed"
+      },
+      "libx11-6": {
+        "Version": "2:1.8.12-1",
+        "Architecture": "arm64",
+        "Status": "install ok installed"
+      },
+      "libxcb1": {
+        "Version": "1.17.0-2+b1",
+        "Architecture": "arm64",
+        "Status": "install ok installed"
+      },
+      "xvfb": {
+        "Version": "2:21.1.16-1.3+deb13u4",
+        "Architecture": "arm64",
+        "Status": "install ok installed"
+      }
+    },
+    "historical_source_snapshot": "Earlier5 source files reconstructed AFTER tests into private run22/compiled-source-reconstructed and checked byte-for-byte against all5 previously recorded SHA256 values; no test results altered. Current Xlib probe/harness later extends warmup/stress and opt-in preload."
+  },
+  "run23": {
+    "phase": "Bounded Xlib window-lifetime diagnostic with real plain/interposed X11 comparisons",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "previous_turn": "Progress: raw-X11 and actual libX11/glibc controls with identical pixels; actual Air white screen did not visibly respond to one menu key. No root-cause/fix or stable completion.",
+    "hypothesis": "A narrow original-call-forwarding diagnostic can distinguish actual live-window queries versus destroy/query ordering without changing Xlib returns, attribute output, caller error handler or pixels. Must verify its effect before using it in real Steam.",
+    "minimal_patch": "Own ARM64 Linux .so exports only XGetWindowAttributes/XDestroyWindow wrappers, lazily resolves actual originals, passes exact pointers/arguments and returns, preserves errno by source design, emits bounded numeric PID/TID/call/window/op/phase/result/monotonic events to existing private stderr. No titles/pixels/properties/account/argv/pointer dumps, new fd/mutex/cancellation/thread, error handler, retry, GPU/mapping/assertion or Valve binary change. Explicit512KiB per budget-instance with omission marker. Failed writes are missing evidence; actual original still runs. Prototype ONLY, no iOS target/resource/Steam launcher enablement.",
+    "primary_v2_tests": {
+      "scope": "HOST real ARM64 distribution Xlib/glibc and own Xvfb windows. Exact plain/traced returns/pixels match, PID-qualified numeric stderr records, explicit bounded-cap continuation. NOT actual Steam/CEF or iPad/game/stability success",
+      "tests": {
+        "normal-plain": {
+          "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+          "status": 0,
+          "elapsed_seconds": 3.059,
+          "reports": {
+            "parent": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "4133264837",
+              "extra_attributes": "0",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            },
+            "child": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "658546117",
+              "extra_attributes": "0",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            }
+          },
+          "elf_sha256": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+          "preload_sha256": null,
+          "runtime_log_sha256": "ff639171d5f7e3eabfad1a47015a2675566a02f48a82c9bd05f4af138c1d241b"
+        },
+        "normal-traced": {
+          "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+          "status": 0,
+          "elapsed_seconds": 3.945,
+          "reports": {
+            "parent": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "4133264837",
+              "extra_attributes": "0",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            },
+            "child": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "658546117",
+              "extra_attributes": "0",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            }
+          },
+          "elf_sha256": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+          "preload_sha256": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19",
+          "runtime_log_sha256": "7f172c13943b40c9c5c58ce57ee7792631525ea6b1b287690ea0552ccbb35e55"
+        },
+        "stress-plain": {
+          "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+          "status": 0,
+          "elapsed_seconds": 3.213,
+          "reports": {
+            "parent": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "4133264837",
+              "extra_attributes": "4000",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            },
+            "child": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "658546117",
+              "extra_attributes": "4000",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            }
+          },
+          "elf_sha256": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+          "preload_sha256": null,
+          "runtime_log_sha256": "50cbdc9c6c83b3cbdbf96aca8172e719e1930940bece97b1a79cb97163320940"
+        },
+        "stress-traced": {
+          "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+          "status": 0,
+          "elapsed_seconds": 3.593,
+          "reports": {
+            "parent": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "4133264837",
+              "extra_attributes": "4000",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            },
+            "child": {
+              "status": "0",
+              "failure_stage": "0",
+              "wire_error": "0",
+              "live_attributes": "32",
+              "expected_bad_windows": "16",
+              "images": "16",
+              "image_bytes": "131072",
+              "pixel_comparisons": "32768",
+              "framebuffer_fnv1a32": "658546117",
+              "extra_attributes": "4000",
+              "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+            }
+          },
+          "elf_sha256": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+          "preload_sha256": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19",
+          "runtime_log_sha256": "a48efcab19bf4907633024bac9c4e3d995df22c6a4a80fb7ca54f17b3c30afff"
+        }
+      },
+      "trace_results": {
+        "normal-traced": [
+          {
+            "pid": 9,
+            "bytes": 13234,
+            "capped": false,
+            "rows": 130,
+            "get_success": 33,
+            "get_failure": 16,
+            "destroy": 16,
+            "sha256": "bd69d9c3ef009704dc32d1add26a05717b9f1627da11162bf1385cc977f9c2df"
+          },
+          {
+            "pid": 12,
+            "bytes": 13296,
+            "capped": false,
+            "rows": 128,
+            "get_success": 32,
+            "get_failure": 16,
+            "destroy": 16,
+            "sha256": "187bfd6ce1cd18e892db8261ef6d22ab8f4314d8a4230afdb9c78944d4806564"
+          }
+        ],
+        "stress-traced": [
+          {
+            "pid": 9,
+            "bytes": 524122,
+            "capped": true,
+            "rows": 5061,
+            "get_success": 2530,
+            "get_failure": 0,
+            "destroy": 0,
+            "sha256": "6562f60a1283c4520175d32c18c63517e816f8b2a5b3884db7a9671d4711a544"
+          },
+          {
+            "pid": 12,
+            "bytes": 523976,
+            "capped": true,
+            "rows": 4964,
+            "get_success": 2482,
+            "get_failure": 0,
+            "destroy": 0,
+            "sha256": "d84be521780773f5cbf5a26e1a33e31fbef1edb3b21cbd0b9b544a81308ac579"
+          }
+        ]
+      },
+      "tracer_sha256": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19"
+    },
+    "reproducible_build": {
+      "scope": "Linux ARM64 diagnostic build only; not iOS app linkage/execution or Steam compatibility",
+      "dependencies": {
+        "libX11.so.6.4.0": "94938979e2e2030f3471823a186eec66f994b128125ea2f4b4c18b502444b0a0",
+        "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13"
+      },
+      "sources": {
+        "guest/xlib-window-trace.c": "01ae69689a71af3612b3508e96b5a1cb8719cd6762fca50065797ad05b212b9d",
+        "guest/xlib-window-probe.c": "7ba11f14c565205b40c58707771a1a003e65cc95e2f5c3d9a9ea87832631dda0",
+        "guest/glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59"
+      },
+      "artifacts": {
+        "xlib-window-trace.so": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19",
+        "normal.elf": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+        "stress.elf": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498"
+      }
+    },
+    "repro_artifacts_match_v2": true,
+    "earlier_v1": {
+      "controls": {
+        "scope": "HOST real ARM64 distribution Xlib/glibc and own Xvfb windows. Exact plain/traced returns/pixels match, fork-separated numeric logs, explicit bounded-cap continuation. NOT actual Steam/CEF or iPad/game/stability success",
+        "tests": {
+          "normal-plain": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 3.667,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+            "preload_sha256": null,
+            "runtime_log_sha256": "4bfb0b1104d70c90c5dca61f57e95993bede5ed5fa5354e7754664719080f567"
+          },
+          "normal-traced": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 3.032,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+            "preload_sha256": "9bff9cd452988cdc1bc4df2bb9ae04212f3d0938140d027ab2e7826ae7a60481",
+            "runtime_log_sha256": "77f60eb3ee2ee68cafb64e308ed6d2a2f29bde0f891697e7362cea04bb06fdb3"
+          },
+          "stress-plain": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 6.198,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+            "preload_sha256": null,
+            "runtime_log_sha256": "356814d006196571bda600dd9db8f718cbdd043e99872af06779493d966701f1"
+          },
+          "stress-traced": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 3.533,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+            "preload_sha256": "9bff9cd452988cdc1bc4df2bb9ae04212f3d0938140d027ab2e7826ae7a60481",
+            "runtime_log_sha256": "ab7c58f7b0868b55b696b5ac73e8a927ef36f75417864fa6cacaec9bee41fcd0"
+          }
+        },
+        "trace_results": {
+          "normal-traced": [
+            {
+              "pid": 10,
+              "bytes": 13494,
+              "capped": false,
+              "rows": 130,
+              "get_success": 33,
+              "get_failure": 16,
+              "destroy": 16,
+              "sha256": "c21a5393b0220973efd2f4ef316853a6bda07bef6a9316892b371fb1936271db"
+            },
+            {
+              "pid": 13,
+              "bytes": 13296,
+              "capped": false,
+              "rows": 128,
+              "get_success": 32,
+              "get_failure": 16,
+              "destroy": 16,
+              "sha256": "5e71900d152aab72c9528eb6afc134ab68ac7965fdda03a2d2ecb9c579caff35"
+            }
+          ],
+          "stress-traced": [
+            {
+              "pid": 10,
+              "bytes": 524208,
+              "capped": true,
+              "rows": 4966,
+              "get_success": 2483,
+              "get_failure": 0,
+              "destroy": 0,
+              "sha256": "c86a4472897ded505161ce92d4420a267797661b93274dc724a19b6d3d981b2c"
+            },
+            {
+              "pid": 13,
+              "bytes": 524222,
+              "capped": true,
+              "rows": 4966,
+              "get_success": 2483,
+              "get_failure": 0,
+              "destroy": 0,
+              "sha256": "73966da3883ab7d69a81102798eef5845b18da441d16ad9bb838763de6a15404"
+            }
+          ]
+        },
+        "tracer_sha256": "9bff9cd452988cdc1bc4df2bb9ae04212f3d0938140d027ab2e7826ae7a60481"
+      },
+      "rejected_design": "File-per-process logger passed tested ordinary/fork/cap cases but descriptor ownership across shared-VM/exec/descriptor-table changes was not established. Replaced before app/Steam use by existing private diagnostic stderr, no persistent owned fd and no inherited logging mutex. This is design review, NOT observed Steam root cause or a device failure. Old source/artifacts kept immutable.",
+      "source_snapshot": "run23/compiled-v1-source"
+    },
+    "actual_forwarding_checks": "Normal and stress plain-versus-traced complete report dictionaries match for both client processes. Each normal matrix test32 windows/64 positive queries/32 expected destroyed-window errors/32 images/65536 pixel comparisons; hashes4133264837 and658546117. Warmup queries a real root window before fork; records remain qualified by PID. Stress adds4000 successful queries EACH client and explicit cap, preserving final pixels/negative controls and completion.",
+    "limits": [
+      "HOST actual ARM64 Linux/Xvfb/distro libX11/glibc only, not Steam CEF or Air execution. No Steam/account launched in controls.",
+      "Source intends errno preservation; return/counters/pixels are actual comparison evidence. No universal transparency/performance/safety claim for arbitrary client/thread/loader paths.",
+      "RTLD_NEXT resolution and LD_PRELOAD propagation/namespace in genuine Steam still unverified; unavailable original exits diagnostic125, never fabricates Xlib success/error. Must qualify selected Steam processes before interpreting absence.",
+      "Fork copies the current logging budget; CLONE_VM shares it. A cap/short write/interleaving can make coverage incomplete, even if a particular PID has no cap marker. No absent-event or root-cause claim from capped logs.",
+      "stderr must be app-owned private diagnostic output; unrelated stderr content stays private, only strict numeric rows are analyzed/publishable. No new file ownership or close operations in v2 logger.",
+      "Not in signed25/26/27, no new app build/installation, no in-place injection or alteration of current Air23. Prior retirement25 question remains pending, not repeated.",
+      "Complete native stop, auxiliary workers/signals/mounts/storage lease and actual legitimate Madeira game/return remain unimplemented/unproven. Compatibility bridge still125."
+    ],
+    "source_sha256": {
+      "experiments/linux-steam/guest/xlib-window-trace.c": "01ae69689a71af3612b3508e96b5a1cb8719cd6762fca50065797ad05b212b9d",
+      "experiments/linux-steam/guest/xlib-window-probe.c": "7ba11f14c565205b40c58707771a1a003e65cc95e2f5c3d9a9ea87832631dda0",
+      "experiments/linux-steam/guest/glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+      "experiments/linux-steam/tools/run-x11-window-control.py": "55d4dc06c05f875e75e6b5156eac8431dffc25803ce8668b6c35c94ed657fd6c",
+      "experiments/linux-steam/tools/test-xlib-window-trace.py": "9ef21c2a054fe0654024925fe324b82909ab373493531069070ddbfe7444efd4",
+      "experiments/linux-steam/tools/build-xlib-window-controls.sh": "84765a1dcc509ad928d29760b44b45a46853c41ca31d80744e7cf8e842de7554"
+    },
+    "next_experiment": "Integrate v2 trace as a separate explicit build/runtime opt-in with bundled trusted ELF, guarded preboot VFS installer and fixed Steam child environment; verify default exclusion/final Mach-O/payload, actual selected Steam trace activation. Preserve current Air23 until genuine completion/absence or existing explicit retirement approval. Device25 health/discard A/B is still first pending chosen experiment, never silently substitute a newer candidate.",
+    "git": "HEAD82b7861 experimental worktree, main/other worktrees/vendor/FEX/Valve/security/auth data preserved. Outside weekday22-08, source uncommitted/unpushed. Goal active, no STABLE_SUCCESS/scheduler unload.",
+    "private_artifact_sha256": {
+      "run23/controls/evidence.json": "de05a30adb13675fc10bc73f477cef1a0bb329a2d1c582cff05ef1d202513dfd",
+      "run23/compiled-v1-source.json": "ca0ab141e0bdeed6c177fae9869f9440f6c82055dd59d57a8043b86ed7cd279f",
+      "run23/v2-controls/evidence.json": "937f88f6235a8a54d58eb2bbd55547234fecb3e5f9d4af2e66c2e22d8c6d1dfd",
+      "run23/repro-build/build-evidence.json": "3bede4925df6c96a302590cd3bd442416e060826f575e14fa9ab8d27450279af",
+      "run23/v2/xlib-window-trace.so": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19",
+      "run23/v2/normal.elf": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+      "run23/v2/stress.elf": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+      "run23/air-processes-current.json": "ceb5c089a6848e100445d2ad1bb6c69032673b29672ed456d65c220bcaf8e1a7"
+    },
+    "last_readonly_device_check": "2026-11-09 18:06EST exact Air still reports Lab23 PID4952/executable B265FEBE. No install/restart/termination; no completion inferred from UI or capped log.",
+    "remote_revalidated": "2026-11-09 18:06EST origin/main2ac39be and origin/experiment82b7861 unchanged; outside permitted commit/push window."
+  },
+  "run24": {
+    "phase": "Explicit default-off Xlib lifetime diagnostic integrated into isolated Lab28; full feature/default builds and exact Air signing, NOT installed",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "observed_failure": "Actual Air23 last visually inspected WHITE; numeric XGetWindowAttributes failure not proven root cause. Existing live native4952 preserved; pending question concerns25, not28.",
+    "hypothesis": "A preboot-installed immutable own ELF and fixed Steam-child-only preload can enable numeric window-lifetime evidence without changing ordinary startup. Actual Steam activation remains unverified.",
+    "minimal_patch": "X11TraceInstall validates bounded ARM64 shared ELF and trusted native init context, reuses exact existing bytes or stages/verifies then publishes via no-overwrite VFS link, preserves conflicts/symlinks/stale/unknown state. Explicit LINUX_LAB_X11_TRACE=1 requires frontend/compat/nativeLog; explicit linux-steam-window-trace argument passes retained bundle bytes. Ordinary compiled launch bytes identical HEAD, no global preload or live injection.",
+    "tests": {
+      "install-tests/evidence.json": {
+        "scope": "HOST actual pinned fakefs/VFS and native installer ASan/UBSan; not actual Steam load, iPad or game execution",
+        "tests": [
+          {
+            "mode": "positive",
+            "status": 0,
+            "checks": [
+              "complete-trace-install=PASS",
+              "published-bytes-exact=PASS",
+              "published-one-link-readable-mode=PASS",
+              "owned-stage-gone=PASS",
+              "identical-existing-resource-reused=PASS"
+            ],
+            "log_sha256": "e92f13a5dcb860b035898c5b5084c73d7cf4421a8458db4c39d3ce9886b3fb0e"
+          },
+          {
+            "mode": "conflict",
+            "status": 0,
+            "checks": [
+              "existing-different-resource-refused=PASS",
+              "existing-resource-preserved=PASS",
+              "unrelated-note-preserved=PASS"
+            ],
+            "log_sha256": "32f95446d176068e9ddc3279a0216912cca5df7923ab2d29555d861146d774f3"
+          },
+          {
+            "mode": "symlink",
+            "status": 0,
+            "checks": [
+              "symlink-base-refused=PASS",
+              "alias-target-preserved=PASS"
+            ],
+            "log_sha256": "a8f2b8ed9139fe6831cddddb66a77c554d8624f20c80a075af1bfdd53afcc5ab"
+          },
+          {
+            "mode": "target-symlink",
+            "status": 0,
+            "checks": [
+              "symlink-target-refused-even-matching-bytes=PASS",
+              "alias-payload-preserved=PASS"
+            ],
+            "log_sha256": "11d9e1bcb10d97f553743f3e46157a96da4ff86e1e608f60c3c2f0a7333019fd"
+          },
+          {
+            "mode": "stale",
+            "status": 0,
+            "checks": [
+              "preexisting-stage-refused=PASS",
+              "stage-preserved=PASS",
+              "no-partial-target=PASS"
+            ],
+            "log_sha256": "4266e0d0075d77cb830484f4b0ee861e271c626cb2a4855c697263ca8e410e0d"
+          },
+          {
+            "mode": "published-stage",
+            "status": 0,
+            "checks": [
+              "matching-target-with-stale-alias-refused=PASS",
+              "both-existing-aliases-preserved=PASS"
+            ],
+            "log_sha256": "4a587f83774e9cbe3c233a8d63cfad8ab427ad00250b39e51d99a73f6928e4d4"
+          },
+          {
+            "mode": "noninit",
+            "status": 0,
+            "checks": [
+              "guest-context-refused=PASS",
+              "no-namespace-change=PASS"
+            ],
+            "log_sha256": "f61e537b1ef6316e993a51ee6d070eacbe824c4c6ac85782c6d93a08c345812d"
+          },
+          {
+            "mode": "invalid",
+            "status": 0,
+            "checks": [
+              "short-elf-refused=PASS",
+              "wrong-machine-refused=PASS",
+              "nonshared-elf-refused=PASS",
+              "invalid-input-no-namespace-change=PASS"
+            ],
+            "log_sha256": "2e78155df74b32d5ec4257a1c9f4fff81e3f7ed580841c8e10718bfd0b1f78a8"
+          }
+        ],
+        "elf_sha256": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19"
+      },
+      "resource-controls/evidence.json": {
+        "scope": "HOST actual Xcode resource phase with synthetic helper; no device/runtime execution",
+        "script_sha256": "1bbaec36b21b04a8d566bb3c457f67add2f80d111530657749379e3ec68e41e3",
+        "tests": [
+          {
+            "mode": "default-fresh",
+            "exit": 0
+          },
+          {
+            "mode": "explicit-enabled",
+            "exit": 0
+          },
+          {
+            "mode": "default-reused-products",
+            "exit": 0
+          },
+          {
+            "mode": "enabled-again",
+            "exit": 0
+          },
+          {
+            "mode": "default-preserve-unknown",
+            "exit": 0
+          },
+          {
+            "mode": "missing-frontend-refused",
+            "exit": 2
+          },
+          {
+            "mode": "trace-explicit-enabled",
+            "exit": 0
+          },
+          {
+            "mode": "trace-off-reused-products",
+            "exit": 0
+          },
+          {
+            "mode": "trace-enabled-again",
+            "exit": 0
+          },
+          {
+            "mode": "trace-off-preserve-unknown",
+            "exit": 0
+          },
+          {
+            "mode": "trace-missing-native-log-refused",
+            "exit": 2
+          }
+        ]
+      },
+      "launcher-gate-evidence.json": {
+        "scope": "HOST actual compiled launcher argv bytes; not Steam execution or device proof",
+        "ordinary_identical_HEAD": true,
+        "explicit_trace_only_one_environment": true,
+        "environment_after_display_before_Steam": true,
+        "sha256": {
+          "baseline": "bd0f5485576e04a9912d5786b58ee78bfbfba8b3cded382e5c0d4e50d9a6fbfa",
+          "ordinary": "bd0f5485576e04a9912d5786b58ee78bfbfba8b3cded382e5c0d4e50d9a6fbfa",
+          "traced": "f81f5cc80eaa0227efdc933d58b009fb7df5cc617a7a9866319c707321ffaaf3"
+        }
+      },
+      "default28-linked.json": {
+        "version": 28,
+        "full_default_build": true,
+        "diagnostic_installer_payload_path_and_preload_absent": true,
+        "diagnostic_and_compat_resources_absent": true,
+        "macho_sha256": "135dc760e3d167f448a456e6aa30c89e9a615336bf71c19ee560f8b966f222f6"
+      },
+      "host-regression.log": {
+        "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run24/host-regression.log",
+        "sha256": "49faa67b2603624c60f12d88f8fca2ed77e7634ce9399a72d107a1dc28b92e3c"
+      },
+      "feature28-runtime-opt-in.log": {
+        "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run24/feature28-runtime-opt-in.log",
+        "sha256": "f4a86d11b61fac6210adedda6d1477a286ee73006b11f1a93b7d69e10b064028"
+      },
+      "default28-build.log": {
+        "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run24/default28-build.log",
+        "sha256": "88d081c29dab859f62cce02a9c59d4a1f5f13a0fb0746d6763a5325298712b33"
+      },
+      "renamed-start-repro.log": {
+        "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run24/renamed-start-repro.log",
+        "sha256": "1b6b11112d8c36d05f4037f8fe592885d28c8ea0076dcebce7869ba2e91e49ca"
+      },
+      "feature-gate-refusal.log": {
+        "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run24/feature-gate-refusal.log",
+        "sha256": "afacdfe2b28d8c04999c6536474f6b8935257c303ae3cc50d49d654ff53075e8"
+      }
+    },
+    "limitations": [
+      "Host VFS, Xlib controls, successful builds and signing do NOT prove Steam namespace activation, on-Air trace, UI stability, game or return.",
+      "Lab28 has private-discard and game-file-policy disabled to isolate diagnostic. Existing unsigned xcode products now DEFAULT28; use immutable signed artifact only if separately selected.",
+      "Current user session not stopped; old capped log/updater status is not fresh current exit evidence.",
+      "Bridge remains125; Wine/FEX/DXMT not linked. Full native stop/storage/auth and real Play/game/return remain open."
+    ],
+    "correction": "Run22 diagnostic glibc-start.S overlapped an existing tracked helper. Detected by diff, restored original EXACT HEAD bytes before Lab28 compile, moved diagnostic to new xlib-glibc-start.S and updated own recipe. Rebuilt all three controls byte-identical to recorded run23 hashes. Old tested binaries preserved; no claim the original helper was never temporarily changed.",
+    "source_and_linked": {
+      "version": 28,
+      "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+      "macho_sha256": "b1db815f65e80f1ddfc87200b523d6b0693185b50328972ce357236171b438f1",
+      "source_sha256": {
+        "experiments/linux-steam/app/GameFilePolicy.c": "fe3fa21835354ba1b33186006fde048030b06406e021b3aeadbb27fe94073de9",
+        "experiments/linux-steam/app/GameFilePolicy.h": "2aaba202dcc1f816dcce2b0e07f767c2a1bd68ac45a851faa2300d372987bc2f",
+        "experiments/linux-steam/app/GameFiles.c": "97b8edbf47a60a0a751e3ab98f40e1fb897c61d1035adccdcbaae6181820ec13",
+        "experiments/linux-steam/app/GameFiles.h": "2638d04db49d399126c018cf61d9d011c958cf57101e81db69785b24332e74b5",
+        "experiments/linux-steam/app/JoinableGuests.c": "0fc92b33d802d730cc88be6e18832c91279e6c2626f8c5ff398ffe03a4fa6fb8",
+        "experiments/linux-steam/app/JoinableGuests.h": "666abbd0c706299aa5fb619c09d53f96efe80b5879ec45882c4d6529c63c20e3",
+        "experiments/linux-steam/app/MadviseStats.h": "87be775501a16f57b8f05c6e75d1f92776e0879027e068ee391d3946ca650625",
+        "experiments/linux-steam/app/PrivateDiscard.inc": "77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209",
+        "experiments/linux-steam/app/X11TraceInstall.c": "154c1c1936ece87556ecd1d383740649aa47dcfe261f24201601870a36e447cb",
+        "experiments/linux-steam/app/X11TraceInstall.h": "b33f109e82aa214c8ea5a62f4a5f37485f59481ae8dd688aa97749614e3a5e61",
+        "experiments/linux-steam/guest/files-bridge-probe.c": "61447ad993552844f128cbcacd4728219bf34473eb1316abebbe79b3aa5f3a6b",
+        "experiments/linux-steam/guest/x11-window-control.sh": "93b043525d9cbdb15a14b0eca0c186cf44d69ec562f939146084bbbeb87e129d",
+        "experiments/linux-steam/guest/x11-window-probe.c": "4159863c2ad2e86d2a91c322a3822715213b00ffc4f4ec8b99b6208f6897a57c",
+        "experiments/linux-steam/guest/xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+        "experiments/linux-steam/guest/xlib-window-probe.c": "7ba11f14c565205b40c58707771a1a003e65cc95e2f5c3d9a9ea87832631dda0",
+        "experiments/linux-steam/guest/xlib-window-trace.c": "01ae69689a71af3612b3508e96b5a1cb8719cd6762fca50065797ad05b212b9d",
+        "experiments/linux-steam/tests/game-files-test.c": "c3c0a42b1a6c4e063002fe193e75ecc3e0975fd299d9d6d78060768089854f46",
+        "experiments/linux-steam/tests/joinable-guests-test.c": "5b7303d340cba5709b037703333e540af1e1ce9bee4f5285f9b63f67f254169b",
+        "experiments/linux-steam/tools/build-madvise-stats.py": "da0510cbb96a3ea5325f0a60bd133b054855b1835f2bba60dd106ddb90f2c3c8",
+        "experiments/linux-steam/tools/build-xlib-window-controls.sh": "dc6b0cdf12523556f1c7af4bc620c4f658737abaaadfeccbcaef7fcaddda5357",
+        "experiments/linux-steam/tools/files-bridge-control.c": "038185af3c4d5b9df00f7f5bb9e428b83e72136fe7c9a5f780871f861e99a13b",
+        "experiments/linux-steam/tools/joinable-guest-control.c": "1d32a4f4ba8572ae70515a460e26bf763c0b2e7f1f7c99007007c49f87161dbf",
+        "experiments/linux-steam/tools/private-discard-control.c": "5d09809495b9f3dd88f758fd50cdb46c2b2bbe3dc2dd20fd66e58551ff3d2179",
+        "experiments/linux-steam/tools/run-x11-window-control.py": "55d4dc06c05f875e75e6b5156eac8431dffc25803ce8668b6c35c94ed657fd6c",
+        "experiments/linux-steam/tools/test-compat-resources.py": "8af49da9fcfe78ceb5489b022b7c2b7faaebfc279777163d53c89b474a006d09",
+        "experiments/linux-steam/tools/test-files-bridge.sh": "2078e8fae7a1f906a8675e44d676c9416cdbd394316593f830f77e80cdb2b3df",
+        "experiments/linux-steam/tools/test-game-files.sh": "3f9b9c232c0df58fa36cc1d7a693864adbb8c66d7e59c49cf11a6ae59a446c20",
+        "experiments/linux-steam/tools/test-joinable-guests.sh": "d5764c93bd70ed26c0febe51478cee8da4cb68b91b01a43a30352270b6ec4b8c",
+        "experiments/linux-steam/tools/test-private-discard.sh": "5f2e7b31ff79ef8955b6c6598a4f072cf1cb50cc93bb70283343fce63aa9e7c8",
+        "experiments/linux-steam/tools/test-x11-trace-install.sh": "61daa844c09e8365cf97b2c53cbf14fe0f02362b39c855daf73b310c3729f4de",
+        "experiments/linux-steam/tools/test-xlib-window-trace.py": "9ef21c2a054fe0654024925fe324b82909ab373493531069070ddbfe7444efd4",
+        "experiments/linux-steam/tools/x11-trace-install-control.c": "2928b28ed598d7199b62523fc6ad2f156e0d5d9d1b2c981fb31d9d7dfa8579a4",
+        "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "62b6f4919708a7bcfc58ece129f7e7a461b9ee43a57ffed9172b5a5e65cf70e2",
+        "experiments/linux-steam/LinuxLab.xcodeproj/xcshareddata/xcschemes/LinuxLab.xcscheme": "8f07ee2e70bed01af0c32d9b76775ed329757e35f090b9c648c5088f3fbd6736",
+        "experiments/linux-steam/README.md": "3ec6fd86a9995beaff83553aca6a2fdd14af200aa1e222588cb9c7c2283b6628",
+        "experiments/linux-steam/app/GuestLifetime.c": "6bff593ce8d3e95798241e14a6adbf83f557084a692d378be754365fcfc8bbb3",
+        "experiments/linux-steam/app/GuestLifetime.h": "aaf8299f45a941e35f947dc5b8d80f09e8b52d7b870a8489b01b95d4ad7d25d7",
+        "experiments/linux-steam/app/Info.plist": "6b59bd19a98290d9d62cea939ecfe67b14a83e3adc96f8dc0ddbbd1d8f3ddb70",
+        "experiments/linux-steam/app/LabBridge.c": "9381e10055a6be523d5656b1628d1db8e9e34b60da19777a576076fb9d513b0f",
+        "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+        "experiments/linux-steam/app/LabDeviceFS.h": "f1591b2b0a66f7195645fab84c0fe6cf7e17ff02bcdc964e1e0fc8b053bc2c9b",
+        "experiments/linux-steam/app/LabRootFS.h": "0fee91807a11040f842b3c1d8344d03ec3c9fbd6d5e55dbd0cabfb328ff26943",
+        "experiments/linux-steam/app/LabRootFS.m": "272d91beb8d2752775a0e598bb528d14e0ce6913f7a130f105e7dc0d151a9031",
+        "experiments/linux-steam/app/LabSocketPrefix.h": "c0b0dbf40899801d977620debfad9d0cf8f4d2532e567e2750ef853bf09c9065",
+        "experiments/linux-steam/app/LabSocketPrefix.m": "d12ae5dfd6683962692873d1ab73af6a112dd9b7d487670f22b6e9b3df997611",
+        "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+        "experiments/linux-steam/app/LaunchProtocol.h": "d8faa83407f7be2eadeabaa2c2267d10d4246e4d5fa52ce288d1a817ebedc02e",
+        "experiments/linux-steam/app/LinuxLabRuntime.c": "97771beed3ee88b1b272a3c8585748a3a25482c92bf7d36590accd01802bbd82",
+        "experiments/linux-steam/app/LinuxLabRuntime.h": "a8f5f407e4b04cea9fb1cb4b0c34050d2225e4109761fec3d5f860cfc05e0cd5",
+        "experiments/linux-steam/app/LinuxProcTCP.c": "740fba2a157d35355350cdff50b5fc6b542bf7b2d4d608e4af66e39e0bde67a7",
+        "experiments/linux-steam/app/LinuxSteamSession.h": "e34506380886e5399af080f60a000ddfbe3eefe003ea192e5f9c04665683dcca",
+        "experiments/linux-steam/app/LinuxSteamViewController.h": "9ddab24c4f4a5501f806802bc0d708a84433884e71f23818818835d001fb1c8c",
+        "experiments/linux-steam/app/LinuxSteamViewController.m": "6a325677bff6834edb65899d18f132aae9be4c29b8aad68a5b6da2c1ddd1ce72",
+        "experiments/linux-steam/app/NativeKernelLog.c": "42d89e7f7e19d9a0c5c59cfa31eaa4d34a9f7d3b3712c4fede2698179bdd94dd",
+        "experiments/linux-steam/app/NativeKernelLog.h": "79f9c4f877e0a8d610428d9961c41c4e14460d74bb8dc714518bd619b8fba8c6",
+        "experiments/linux-steam/app/NativeSignalLease.c": "79b8716b31ed242db3aa12bda45a5bd313c27936ce90740ba394b13e5f231427",
+        "experiments/linux-steam/app/NativeSignalLease.h": "37f0433bbcc965de69338cdeee33c59c3c43d6e687153225227382952d600f08",
+        "experiments/linux-steam/app/NativeWorkers.c": "f19da0638bf8d16fdaf468f54bd17bfe06ad3d19cf8346925748c36525c64363",
+        "experiments/linux-steam/app/NativeWorkers.h": "38a08180297d38c3812d4cf0cb5fb26938f2d01e26c030ba920180dc2ae8c7b4",
+        "experiments/linux-steam/app/PacketPipe.c": "e25934ea229b4c1b00681fd836d4e7a151061780c9f852b159dd9cc5372d27a4",
+        "experiments/linux-steam/app/ToolInstall.c": "e965949c37ba5817bac810114640241852be62ec267a63e1b96d6b7194efee45",
+        "experiments/linux-steam/app/ToolInstall.h": "4043d2b3ec7125129c75e108489bc7b5cc920ca33b2dc0b602c37d580096377e",
+        "experiments/linux-steam/app/main.m": "d55f58b844759deee363926ecc489d44eec3a00e55b0b7c1bf5f1c024692241f",
+        "experiments/linux-steam/compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+        "experiments/linux-steam/guest/clone.S": "b239f32af1e221faec5bb6ad0709a6a2edbaad3a2e4c07b57225c216240508b8",
+        "experiments/linux-steam/guest/compat-start.S": "a9ae83caf55a7cf7da485912430622f784fcfa4dfdf9ec1b59e41e63abc295bf",
+        "experiments/linux-steam/guest/compatibility.c": "f2128b59dd1d8d2382d2297ccd0f7dd178e22a0161be5a554090555e3ce56ea2",
+        "experiments/linux-steam/guest/glibc-start.S": "8aa4011f978a02769f5f647b99783bfabe6df0dd80415060eb88bf27bd9f5b10",
+        "experiments/linux-steam/guest/lazy-pages-probe.c": "ea8eb5ffb998fccab96ca3b71c427fb78be3e6a8c8d20dcf57b5b4c40a5caeac",
+        "experiments/linux-steam/guest/network-probe.c": "9e1883469bf42452c5ece3f13d12e60ef4958321e22d44335e5a54eb432b60c1",
+        "experiments/linux-steam/guest/packet-pipe-integration.c": "fc97ce2821eba91646a20d4b4d509d1ad9791bd0019dd3f525c8274204063cc5",
+        "experiments/linux-steam/guest/packet-pipe-probe.c": "b02eb7173d7336d731d13fbd02c5744086323cc2648baf20f011ce23e04690f1",
+        "experiments/linux-steam/guest/page-footprint-probe.c": "ef30526030dd623dff96f87294f1bc7debc82e100a34775327bb136c8f017718",
+        "experiments/linux-steam/guest/probe.c": "89608748cbcc84b87120f0af3be11051c4762f1f01eccdae262d6ec0eacbd170",
+        "experiments/linux-steam/guest/session-lifecycle-probe.c": "fba8a7ff128880b167930dc27893d543e717c5d60cc12fc95ef6980ae3685674",
+        "experiments/linux-steam/guest/tcp-view-probe.c": "6aa700fce4fb5d9cd18b3237812f9a90747a1cc1697e984db736035e6bc1fda4",
+        "experiments/linux-steam/guest/worker-forward-probe.c": "5e27e4cad248284b7110d52ea530eecca963ebd12567e180f6d25856b0d88341",
+        "experiments/linux-steam/guest/x11-control.sh": "439a6508a10ad529a7f544afc7cbff906f420e5fcb4d618ca962a3cbc611288b",
+        "experiments/linux-steam/patches/linuxrunner-dirfd.patch": "03092b40a23c66858543dfe15749ae0d01d26645c8900f471ebda55777891f1a",
+        "experiments/linux-steam/patches/linuxrunner-fakefs-case-alias.patch": "aca5b539d0793e8a8c40cccdc783a3ce111d79766d35186ff767c79ed5548f81",
+        "experiments/linux-steam/tests/archive-header-test.c": "a52e2e14229ddaa3864774372e24363c34f38c285d05dbb99e9aa2d7c644969d",
+        "experiments/linux-steam/tests/native-signal-lease-test.c": "ae9e2781b6a5541f423500320a36d75bf0de2d98bfccff97ead33ecda179ee09",
+        "experiments/linux-steam/tests/protocol-test.c": "4f3477f368206bdd9bd05a31c2ecb882f02d099a9a3258cd5c38ea69aa84732e",
+        "experiments/linux-steam/tests/socket-prefix-test.m": "75deaadc096ec8f0ab4be5bd837ec0f815f5897286fad84b01bc1a1502366832",
+        "experiments/linux-steam/tests/test_clean_root.py": "13c78ed585c8eea5e8ad9d2c4409c7489a2cad23a8a307cacffbe7daefa6b385",
+        "experiments/linux-steam/tests/test_overlay.py": "32fa2070b9c004c7da0075f3e23132ca82a533e6128dbae090c8604bdac5c67e",
+        "experiments/linux-steam/tests/test_packages.py": "b9db352b5689a20e13d9afa001236088c2085aa867430f83c81491fb2fd4764d",
+        "experiments/linux-steam/tests/test_rfb_usbmux.py": "9ff867681c31110bece4c22ea8ab58b1587a41dd82b561c218ab0b28b1d34bc9",
+        "experiments/linux-steam/tests/test_schedule.py": "346ea374b25bb450f81f242dc5b50a0fc1b0e062c66cf5f9ab27171ef158241f",
+        "experiments/linux-steam/tests/test_x11_control.py": "297321ea2df7a1cef7297d4123dea38ad829f5e3ce60717ff19ea6c2a21db649",
+        "experiments/linux-steam/toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8",
+        "experiments/linux-steam/tools/build-guest-lifetime.py": "a6e3c6a0a93747cac5728f1528d70750111f52360eeb2a399d2a0c8a4715a65f",
+        "experiments/linux-steam/tools/build-ios-archive.sh": "02e415e98059dfaeab176519a5eda96ea1105a880bfbbb9b3e0c595d2073d3e1",
+        "experiments/linux-steam/tools/build-lab.sh": "a455ab774a08dd5c089678f1ea74cb2190fd66cce03c884cccffac93cdcbfc41",
+        "experiments/linux-steam/tools/build-lazy-pages.py": "e4510e8104b8849f27727c615c82f5e9150630238334792d9c9936f3a4c66f47",
+        "experiments/linux-steam/tools/build-native-logging.py": "e2b3ad47188ab31ca20262bd9c4449db387e410bae4d78800eef83203e922aa2",
+        "experiments/linux-steam/tools/build-native-workers.py": "ce27be3e952b31f5a1ae9d9eef47e87f391014e5f62daa22e5d71f2419be6492",
+        "experiments/linux-steam/tools/build-pipe-observer.py": "7a2ac655ffea45fe4d100a13adb8260d5bf86f4743fdd940ab4b1be58426e3b0",
+        "experiments/linux-steam/tools/build-rfb-observer.sh": "709c201bdae1ea9a55edb8d136bf7ea71ece6e4d08ec496e1d5720a91168369a",
+        "experiments/linux-steam/tools/build-rootfs-tools.py": "3674930a1a3a4849cc91575a9d123ced13bb6c04c748b53b53a00316e1129a5a",
+        "experiments/linux-steam/tools/build-tcp-view.py": "e45ae4715b300bf2f3bb0c3f2f240a0ce8b10a18af600adb5817eae5e29534f2",
+        "experiments/linux-steam/tools/configure-schedule.py": "e497f7be1243ac2c1c58a36ab77fb4c96e6fb6d1cbc66f6c2758d0550a615d5c",
+        "experiments/linux-steam/tools/export-clean-root.py": "9a8781e6f85d6d37ed2cddfbe9f246320a673466ac01b7da6fd78faaf4b6d826",
+        "experiments/linux-steam/tools/forward-lab-rfb.py": "62521dc09bb8089598a14f54b93dbf150ee8a01b38ae562d65c75cd2405420c1",
+        "experiments/linux-steam/tools/host-embed.c": "99ee55ea0915d998cb2e5d83241bfc52518ffcc249d763eafed17f72b7f55b61",
+        "experiments/linux-steam/tools/make-steam-overlay.py": "12bc3c6210d7c0cd0d7c7086d50f2300aa81aecceea516a8f03330e59900e4d9",
+        "experiments/linux-steam/tools/native-log-control.c": "eb78bfbba42655f2b3c05b53643bcd3f92e1baa9f296a20748aff2b857a9f568",
+        "experiments/linux-steam/tools/native-state-control.c": "869f3b8d64b29ebd7208b687f23cfe5070d12aa01dc611b4ac51576dfc0f9d99",
+        "experiments/linux-steam/tools/native-workers-control.c": "785a655435d9f609d2f1b9917f228a65dacd490615e969356cbcd13d8e99e3e0",
+        "experiments/linux-steam/tools/overlay-dirfd.py": "d776f7abd778d4f2c316713956521d38c993a7d413120fd78e52185dfea8135c",
+        "experiments/linux-steam/tools/page-footprint-control.c": "dd30f69f2c92c73f3f071dc35ac1e947616c2d575710fd42d6e013944ad3b12f",
+        "experiments/linux-steam/tools/prepare-loader-control.py": "e0946eb7698becccf9aecb66cc10107ad612f80886e5a0b29ac9ec55dc15acd1",
+        "experiments/linux-steam/tools/rfb-capture.m": "e02d5257ecea1c09fba00d660ab17d8f7ce719d2e27abb83e9fd75a4fe2f13db",
+        "experiments/linux-steam/tools/run-x11-control.py": "e3d46309e9de59f4d9b319cfc5bc3901e2f2c173f6baa6d0b66867f1f2f2ed55",
+        "experiments/linux-steam/tools/session-lifecycle-control.c": "7f93fddfe3c94a640df870e373cd4e70a7e47c671478a5ccab8cea86ae36e582",
+        "experiments/linux-steam/tools/steam_packages.py": "3884a330b219e424e126c77a786918180249f2759257ef2ead49d2791ffdc03c",
+        "experiments/linux-steam/tools/task-log-control.c": "990f407003cec964dacdc1471851c8f547b3286c2ce5bcae0202ff895abe93f5",
+        "experiments/linux-steam/tools/test-host.sh": "a9d2f3e18d84ef32e16e1ecbf09ebb9fd013ed088b81b12d7772a6d938824dcf",
+        "experiments/linux-steam/tools/test-lazy-pages.sh": "35b19ee1c89e510064f1d1a801e1a8a352994312b8583b0c9aac744d20833a57",
+        "experiments/linux-steam/tools/test-native-logging.sh": "83f5f7444aa7ae95baadf36f641b7acfc9736c15ab00aaacc8bbdd35d1c8f37b",
+        "experiments/linux-steam/tools/test-native-signal-lease.sh": "99ef72397d71762e0ca6cb93e7dedba54d60a17ad6b2f58179ff51a391804aa7",
+        "experiments/linux-steam/tools/test-native-state.sh": "931404833a8f00e08ac4e81c0a276971c2f8b98116d9012894a87ec3946e5eb3",
+        "experiments/linux-steam/tools/test-native-workers.sh": "9fc9a4542f7ca52ec4abafddb9a7f299d9eb5919406beeeef8c53f383e5ccf9a",
+        "experiments/linux-steam/tools/test-packet-pipes.sh": "a8d4695ffcaa8a37000922a8bd2d9dc0890e63a669d5772d445dcc6fdaee9d84",
+        "experiments/linux-steam/tools/test-page-footprint.sh": "21ee5f1ea02eed3a8611ff09af83c889013a63a01915fd181789e16fc07b7da1",
+        "experiments/linux-steam/tools/test-session-lifecycle.sh": "376cf9cb1deae60915d7334628e1ad1187896b730565c6c14ef515f26a194bc0",
+        "experiments/linux-steam/tools/test-task-logging.sh": "55e591789148e7b153bb1ece1dae7f4b80bce289a5ef7831162fd3cb230b249e",
+        "experiments/linux-steam/tools/test-tcp-view.sh": "66fde75ae1b1c0f26f22c39a9376415218d0a8cc25100f1c33ea961a46512862",
+        "experiments/linux-steam/tools/test-tool-install.sh": "fdcb01ff74748e245bd80a3dacb9c2ba88fc6df1818f3b7327792af8d05cdf94",
+        "experiments/linux-steam/tools/tool-install-control.c": "42ad582bd64e427ced1db598c3d8242a178add98d5d7f75721893584fdfe79dc",
+        "experiments/linux-steam/tools/tool-runtime-control.c": "71ff45c83dbc7bdc97d013deec74f247029e8262f230af47ac675c721fa1972c"
+      },
+      "linked_symbols": [
+        "ideck_x11_trace_install",
+        "ideck_linux_lab_steam_frontend_with_trace",
+        "ideck_native_health"
+      ],
+      "explicit_runtime_argument": "linux-steam-window-trace",
+      "ordinary_and_traced_argv_both_linked": true,
+      "resource_sha256": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19",
+      "private_discard_and_game_file_policy_disabled": true,
+      "full_xcode_build": true,
+      "installed": false,
+      "actual_guest_trace_activation": false
+    },
+    "signed": {
+      "version": "28",
+      "signed_macho_sha256": "fb0380093123fc9e9abff7ef31d868f9bfe540a76d202822447efaaa9533850a",
+      "scene_marker": true,
+      "profile_covers_Air": true,
+      "deep_strict": true
+    },
+    "next": "Verify real unauthenticated Steam process tracing in a fresh private host root, then selected device diagnostic only after actual session end or explicit approval. Continue native handoff toward licensed game/return.",
+    "git": "Outside weekday22-08 window, scoped source remains uncommitted/unpushed; main/vendor/other worktrees preserved."
+  },
+  "run25": {
+    "phase": "Real unauthenticated host Steam/Xlib activation and live login input qualification; Lab29 unsigned final feature/default builds; NOT on-Air",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "origin": "https://github.com/kuscholar/iDeck.git",
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "baseline_pins_preserved": true,
+    "observed_failure": "V2 real host Steam reaches verification then initial wait status32000 (=125<<8), zero trace calls. Independent real libX11 RTLD_LOCAL plugin works plain but exits125 under v2. Global plugin works both. This is a flaw in the diagnostic, not a cause of earlier Air white-screen. Lab28 trace candidate should not be deployed.",
+    "hypothesis": "RTLD_NEXT alone cannot resolve Xlib from a locally loaded dependency group; a fixed-soname NOLOAD existing-library handle can forward those real calls without making the plugin global.",
+    "discriminating_tests": {
+      "scope-control/evidence.json": {
+        "scope": "HOST actual ARM64/glibc/Xlib local/global loader control, NOT actual Steam cause or iPad success",
+        "native_status": 0,
+        "results": [
+          {
+            "mode": "local",
+            "traced": 0,
+            "status": 0
+          },
+          {
+            "mode": "local",
+            "traced": 1,
+            "status": 125
+          },
+          {
+            "mode": "global",
+            "traced": 0,
+            "status": 0
+          },
+          {
+            "mode": "global",
+            "traced": 1,
+            "status": 0
+          }
+        ],
+        "runtime_sha256": "1d5b5247996811e7f0416b8241fa2bd6ee9a073ae113303d504ef9f0f2153018",
+        "artifacts": {
+          "scope.elf": "d5f1facb67489faa5b15789775118d9c5fef6964189b8f13990af80790f950bd",
+          "scope-plugin.so": "def9eb97a37ac46ab5e53f718d00bb2607c991bd8c534ab95568c0f0599fbbd7",
+          "xlib-window-trace.so": "333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19"
+        }
+      },
+      "v3-scope-control/evidence.json": {
+        "scope": "HOST actual ARM64/glibc/Xlib local/global loader control, NOT actual Steam cause or iPad success",
+        "native_status": 0,
+        "results": [
+          {
+            "mode": "local",
+            "traced": 0,
+            "status": 0
+          },
+          {
+            "mode": "local",
+            "traced": 1,
+            "status": 0
+          },
+          {
+            "mode": "global",
+            "traced": 0,
+            "status": 0
+          },
+          {
+            "mode": "global",
+            "traced": 1,
+            "status": 0
+          }
+        ],
+        "runtime_sha256": "e5f7673d1725d7d88b2b62a453c0a0258bcf62eca936d71499f609956ce905d9",
+        "artifacts": {
+          "scope.elf": "506f56134e845c802dec91d35ffef1aff010c62993eee4687472a1bc5cf61ca1",
+          "scope-plugin.so": "def9eb97a37ac46ab5e53f718d00bb2607c991bd8c534ab95568c0f0599fbbd7",
+          "xlib-window-trace.so": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432"
+        }
+      },
+      "v3-pixel-controls/evidence.json": {
+        "scope": "HOST real ARM64 distribution Xlib/glibc and own Xvfb windows. Exact plain/traced returns/pixels match, PID-qualified numeric stderr records, explicit bounded-cap continuation. NOT actual Steam/CEF or iPad/game/stability success",
+        "tests": {
+          "normal-plain": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 6.619,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+            "preload_sha256": null,
+            "runtime_log_sha256": "d75fd028a8e61aee253b96f7ed989150f52e2e2d3ae279d7e883fc620da67348"
+          },
+          "normal-traced": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 7.073,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "0",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+            "preload_sha256": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432",
+            "runtime_log_sha256": "5e5541427f65bc9eb35e5f9a8e47fc711e7aff511bfd7d271b406cbdd408c857"
+          },
+          "stress-plain": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 3.312,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+            "preload_sha256": null,
+            "runtime_log_sha256": "f01cda64da6ae4956c7c4ad903274dcb95d27287bf34006b849afd9dcf2d7d5b"
+          },
+          "stress-traced": {
+            "scope": "HOST real ARM64 Linux/Xvfb/X11 own-window lifetime and pixel controls; not Steam/CEF, iOS/Metal or stability success",
+            "status": 0,
+            "elapsed_seconds": 3.239,
+            "reports": {
+              "parent": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "4133264837",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              },
+              "child": {
+                "status": "0",
+                "failure_stage": "0",
+                "wire_error": "0",
+                "live_attributes": "32",
+                "expected_bad_windows": "16",
+                "images": "16",
+                "image_bytes": "131072",
+                "pixel_comparisons": "32768",
+                "framebuffer_fnv1a32": "658546117",
+                "extra_attributes": "4000",
+                "scope": "real_ARM64_libX11_own_windows_not_Steam_or_iPad_success"
+              }
+            },
+            "elf_sha256": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+            "preload_sha256": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432",
+            "runtime_log_sha256": "885c4c76b9339f9ec69d94cbc22e87fde2ab38271aca1b86ad674f28e95204ac"
+          }
+        },
+        "trace_results": {
+          "normal-traced": [
+            {
+              "pid": 23,
+              "bytes": 13688,
+              "capped": false,
+              "rows": 132,
+              "get_success": 33,
+              "get_failure": 16,
+              "destroy": 16,
+              "sha256": "944fcd6c198a96e3e24e8ef05b6d1bb4f14d913cda619338b526973051d64889"
+            },
+            {
+              "pid": 26,
+              "bytes": 13393,
+              "capped": false,
+              "rows": 129,
+              "get_success": 32,
+              "get_failure": 16,
+              "destroy": 16,
+              "sha256": "909db2108c34fac0ffa3b7ab0732bfd2bf73a0d43a14cbbf1d0720afb062a8c9"
+            }
+          ],
+          "stress-traced": [
+            {
+              "pid": 10,
+              "bytes": 524165,
+              "capped": true,
+              "rows": 4966,
+              "get_success": 2482,
+              "get_failure": 0,
+              "destroy": 0,
+              "sha256": "0bfee148254bfd73d52489205fb2363d693c64ed6950fe8ad4f275d448e39a9f"
+            },
+            {
+              "pid": 13,
+              "bytes": 523870,
+              "capped": true,
+              "rows": 4963,
+              "get_success": 2481,
+              "get_failure": 0,
+              "destroy": 0,
+              "sha256": "d56181773c4dcf6d6d481553d1af9a0444bb879eac2e9d4fc5db18bc1d718b08"
+            }
+          ]
+        },
+        "tracer_sha256": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432"
+      },
+      "install-v3-tests/evidence.json": {
+        "scope": "HOST actual pinned fakefs/VFS and native installer ASan/UBSan; not actual Steam load, iPad or game execution",
+        "tests": [
+          {
+            "mode": "positive",
+            "status": 0,
+            "checks": [
+              "complete-trace-install=PASS",
+              "published-bytes-exact=PASS",
+              "published-one-link-readable-mode=PASS",
+              "owned-stage-gone=PASS",
+              "identical-existing-resource-reused=PASS"
+            ],
+            "log_sha256": "e92f13a5dcb860b035898c5b5084c73d7cf4421a8458db4c39d3ce9886b3fb0e"
+          },
+          {
+            "mode": "conflict",
+            "status": 0,
+            "checks": [
+              "existing-different-resource-refused=PASS",
+              "existing-resource-preserved=PASS",
+              "unrelated-note-preserved=PASS"
+            ],
+            "log_sha256": "32f95446d176068e9ddc3279a0216912cca5df7923ab2d29555d861146d774f3"
+          },
+          {
+            "mode": "symlink",
+            "status": 0,
+            "checks": [
+              "symlink-base-refused=PASS",
+              "alias-target-preserved=PASS"
+            ],
+            "log_sha256": "a8f2b8ed9139fe6831cddddb66a77c554d8624f20c80a075af1bfdd53afcc5ab"
+          },
+          {
+            "mode": "target-symlink",
+            "status": 0,
+            "checks": [
+              "symlink-target-refused-even-matching-bytes=PASS",
+              "alias-payload-preserved=PASS"
+            ],
+            "log_sha256": "11d9e1bcb10d97f553743f3e46157a96da4ff86e1e608f60c3c2f0a7333019fd"
+          },
+          {
+            "mode": "stale",
+            "status": 0,
+            "checks": [
+              "preexisting-stage-refused=PASS",
+              "stage-preserved=PASS",
+              "no-partial-target=PASS"
+            ],
+            "log_sha256": "4266e0d0075d77cb830484f4b0ee861e271c626cb2a4855c697263ca8e410e0d"
+          },
+          {
+            "mode": "published-stage",
+            "status": 0,
+            "checks": [
+              "matching-target-with-stale-alias-refused=PASS",
+              "both-existing-aliases-preserved=PASS"
+            ],
+            "log_sha256": "4a587f83774e9cbe3c233a8d63cfad8ab427ad00250b39e51d99a73f6928e4d4"
+          },
+          {
+            "mode": "noninit",
+            "status": 0,
+            "checks": [
+              "guest-context-refused=PASS",
+              "no-namespace-change=PASS"
+            ],
+            "log_sha256": "f61e537b1ef6316e993a51ee6d070eacbe824c4c6ac85782c6d93a08c345812d"
+          },
+          {
+            "mode": "invalid",
+            "status": 0,
+            "checks": [
+              "short-elf-refused=PASS",
+              "wrong-machine-refused=PASS",
+              "nonshared-elf-refused=PASS",
+              "invalid-input-no-namespace-change=PASS"
+            ],
+            "log_sha256": "2e78155df74b32d5ec4257a1c9f4fff81e3f7ed580841c8e10718bfd0b1f78a8"
+          }
+        ],
+        "elf_sha256": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432"
+      },
+      "v3-artifacts/build-evidence.json": {
+        "scope": "Linux ARM64 diagnostic build only; not iOS app linkage/execution or Steam compatibility",
+        "dependencies": {
+          "libX11.so.6.4.0": "94938979e2e2030f3471823a186eec66f994b128125ea2f4b4c18b502444b0a0",
+          "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13"
+        },
+        "sources": {
+          "guest/xlib-window-trace.c": "24b9efa74fddc7b02b0b0679745653b318f469b86900ea511cf42e45279deea2",
+          "guest/xlib-window-probe.c": "7ba11f14c565205b40c58707771a1a003e65cc95e2f5c3d9a9ea87832631dda0",
+          "guest/xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+          "guest/xlib-scope-plugin.c": "bcbab7e23c357d4925c6eb3892684fdb6c7750c1a5c0205d6c47fd23b47152d2",
+          "guest/xlib-scope-control.c": "1377cd056ec928e2914e2df202a42f5ade1a5b96bd9327e1eeab1d99f40aaa3e"
+        },
+        "artifacts": {
+          "xlib-window-trace.so": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432",
+          "normal.elf": "7f2b3569aef5f5e9da595236c8618131f5fee0792e61836faf31fc9e7ea8a8e6",
+          "stress.elf": "7e7eaa5b7149c576c075716e3c21e368716e2a48a14b7d3ed641a4c620cef498",
+          "scope-plugin.so": "def9eb97a37ac46ab5e53f718d00bb2607c991bd8c534ab95568c0f0599fbbd7",
+          "scope.elf": "506f56134e845c802dec91d35ffef1aff010c62993eee4687472a1bc5cf61ca1"
+        }
+      }
+    },
+    "minimal_patch": "V3 retains RTLD_NEXT primary; only on miss obtains NOW|NOLOAD|LOCAL reference to already-loaded libX11.so.6, atomically retains one handle, closes concurrent losers, resolves real symbol. Numeric phase2 records successful route1/2 or fatal-125. No new DSO dependency load/GLOBAL promotion/DEEPBIND/Valve/FEX/GPU/assertion change. Reference intentionally extends Xlib lifetime, NOT transparent unload/race proof. Explicit app payload path/marker version3, build29; ordinary launch stays unchanged.",
+    "actual_host_ui": {
+      "scope": "HOST genuine ARM64 Linux Steam login visually confirmed twice, live fixed public fixture insertion/deletion visibly confirmed on second run. NOT Air/library/authentication/BPM/game/return/stability proof",
+      "native_owner": {
+        "pid": 44845,
+        "command": [
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/host-trace-v4/control",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/steam-root-v3",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/interactive-host/logs",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/payload-v3"
+        ],
+        "start_epoch": 1794268448.805035,
+        "control_sha256": "30082de894e53d29a7d17383bfaa7edbc24ceb7e83e58c505cc2ef78439a5ef3",
+        "scope": "OWN unauthenticated host test, not Air/UI/game proof"
+      },
+      "trace_count": 60,
+      "trace_pids": [
+        110,
+        151,
+        248,
+        250
+      ],
+      "trace_resolution_rows": [
+        {
+          "pid": 110,
+          "tid": 110,
+          "op": 2,
+          "phase": 2,
+          "call": 0,
+          "window": 0,
+          "result": 1,
+          "mono_ns": 3049522626857000,
+          "source": "client"
+        },
+        {
+          "pid": 250,
+          "tid": 250,
+          "op": 2,
+          "phase": 2,
+          "call": 0,
+          "window": 0,
+          "result": 1,
+          "mono_ns": 3049544576885000,
+          "source": "client"
+        },
+        {
+          "pid": 248,
+          "tid": 248,
+          "op": 2,
+          "phase": 2,
+          "call": 0,
+          "window": 0,
+          "result": 1,
+          "mono_ns": 3049544578495000,
+          "source": "client"
+        },
+        {
+          "pid": 250,
+          "tid": 250,
+          "op": 1,
+          "phase": 2,
+          "call": 0,
+          "window": 0,
+          "result": 1,
+          "mono_ns": 3049544579689000,
+          "source": "client"
+        },
+        {
+          "pid": 248,
+          "tid": 248,
+          "op": 1,
+          "phase": 2,
+          "call": 0,
+          "window": 0,
+          "result": 1,
+          "mono_ns": 3049544581210000,
+          "source": "client"
+        },
+        {
+          "pid": 151,
+          "tid": 151,
+          "op": 1,
+          "phase": 2,
+          "call": 0,
+          "window": 0,
+          "result": 1,
+          "mono_ns": 3049559183519000,
+          "source": "webhelper"
+        }
+      ],
+      "trace_get_false_rows": [],
+      "rejected_partial_trace_lines": 0,
+      "private_logs": {
+        "tmp/ideck-steam.log": {
+          "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/interactive-host/logs-snapshot/ideck-steam.log",
+          "sha256": "7774f66e658a34a8b601d82a384fb3f1e75e005d37448c76e2f0ca4d02404362",
+          "bytes": 17179
+        },
+        "tmp/ideck-x11vnc.log": {
+          "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/interactive-host/logs-snapshot/ideck-x11vnc.log",
+          "sha256": "350df9eece7a0287762322f653b8c6eb80b0fe887645c3ceaf90cb8206b8692f",
+          "bytes": 13333
+        },
+        "Steam/logs/steamwebhelper.log": {
+          "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/interactive-host/logs-snapshot/steamwebhelper.log",
+          "sha256": "a430c816736d3217c17ee921c49b5a82c77087b22cce21aca09027a6688602cb",
+          "bytes": 7119
+        },
+        "Steam/logs/steamui_login.txt": {
+          "private_path": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25/interactive-host/logs-snapshot/steamui_login.txt",
+          "sha256": "513bbb172a78c546d0ab2717a4dc66757393757e908a793d60839928e4d28095",
+          "bytes": 1491
+        }
+      },
+      "input_fixture": "ideck-test, not submitted; no password or Steam Guard interaction",
+      "visual_observations": {
+        "steam-v3-frame.png": "black initial first session frame",
+        "steam-v3-frame2.png": "real genuine Steam login first session; QR stays private",
+        "steam-v3-repeat-before.png": "real Steam login second session, empty username field",
+        "steam-v3-repeat-inserted.png": "fixed ideck-test visibly rendered in username field",
+        "steam-v3-repeat-erased.png": "field visibly empty after ten Backspaces"
+      },
+      "images_sha256": {
+        "steam-v3-frame.png": "8e2eaf37f701cdf9f2d72201fc2839e2271bdb6bc91b184bdb04046903c29cb7",
+        "steam-v3-frame2.png": "94b1240b8a7392f9ee3d425ce326c9898ba7da902d3a5da95ba34c55f8da2ca7",
+        "steam-v3-repeat-before.png": "bb047c8a35aba74f311f7a3c062f0cc78bd1670cea49f29e83cd35a8d5d11e65",
+        "steam-v3-repeat-inserted.png": "d966dfac91ceba6539e3d94f3d1b3a083f35cf48ce31f6d914980e7a3c7a00f0",
+        "steam-v3-repeat-erased.png": "43905a4b9b312f1a07c89d67368e51fc16018cf2c42ae14e4c6228b163f4cb8d"
+      },
+      "invalid_first_input_observation": "Earlier fixture-insert attempted after220s observer ended. Fresh ps/port check found no native owner/listener. Zero packets cannot diagnose Steam input. Cause of owner absence not proven; not a Steam crash claim. Later parent-held session qualifies actual interaction.",
+      "loader_limitations": "V3 NOLOAD fallback holds one existing libX11 reference for cached symbols; it extends library lifetime. No new dependency load/global promotion, but NOT transparent unload/race qualification. Explicit-handle dlsym/deepbinding may bypass wrappers; missing/capped/interleaved records are incomplete.",
+      "public_sources_for_flags": [
+        "https://raw.githubusercontent.com/bminor/glibc/master/bits/dlfcn.h",
+        "https://raw.githubusercontent.com/bminor/glibc/master/dlfcn/dlopen.c"
+      ],
+      "actual_game_launched": false,
+      "actual_Air_install": false,
+      "repeat-insert.log": {
+        "sha256": "82d785b238ca52a9bb4e8d77902bd33d5cb4b7717536ea99de5ff918d693d77c",
+        "packets": 22,
+        "actual_consumption": "visually observed, separate screenshot; not inferred from write"
+      },
+      "repeat-erase.log": {
+        "sha256": "76d624b31754b469f5d14c179befe64da08c31799bcf2ed675aa75dd3fd8fcde",
+        "packets": 22,
+        "actual_consumption": "visually observed, separate screenshot; not inferred from write"
+      },
+      "intentional_test_stop": {
+        "reason": "intentional-own-test-stop",
+        "native_status": -15,
+        "elapsed_seconds": 242.386,
+        "pid": 44845,
+        "UI_and_game_success": false
+      }
+    },
+    "iOS_builds": {
+      "final-linked29.json": {
+        "version": 29,
+        "scope": "Full unsigned feature iOS build/final linked artifact; NOT installed or on-device trace/UI validation",
+        "macho_sha256": "1693d0a89471b8376c65ab05f3a24864873ab7e457003b461be8558416b77f42",
+        "resource_sha256": "b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432",
+        "linked_markers": [
+          "IDECK_X11_TRACE_V3",
+          "linux-steam-window-trace",
+          "/ideck-diagnostics/x11-window-trace-v3.so",
+          "export LD_PRELOAD=/ideck-diagnostics/x11-window-trace-v3.so; "
+        ],
+        "linked_symbols": [
+          "ideck_x11_trace_install",
+          "ideck_linux_lab_steam_frontend_with_trace",
+          "ideck_native_health"
+        ],
+        "trace_explicit_opt_in": true,
+        "private_discard_and_game_file_policy": false,
+        "installed": false,
+        "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2"
+      },
+      "default29-linked.json": {
+        "version": 29,
+        "full_default_build": true,
+        "diagnostic_marker_path_preload_and_resources_absent": true,
+        "macho_sha256": "135dc760e3d167f448a456e6aa30c89e9a615336bf71c19ee560f8b966f222f6",
+        "scope": "Final linked default iOS artifact, not device validation"
+      }
+    },
+    "limitations": [
+      "No on-Air Lab29 installation or trace validation. One readonly exact Air query confirms4952/B265FEBE; no restart/input/upgrade/account action performed on Air. Pending one-time retirement25 question remains unanswered, not renewed/substituted.",
+      "Authenticating a host account is not attempted or required for this loader control. Genuine Library/BPM/authentication/game/return/stability are NOT qualified.",
+      "Initial input probe ran after prior220s observer ended, zero packets. Fresh native/port query found no owner/listener, so invalid as input regression; disappearance cause unproven, not a Steam crash claim. A new parent-held observer fixes test lifetime; actual insertion/erase then visibly pass.",
+      "V3 interposition does not cover explicit-handle dlsym or other namespaces/deep binding; bounded/interleaved/missing rows do not prove completeness. One retained Xlib reference affects unload semantics.",
+      "Host interpreter/UI/input is not Air/Metal/physical controller evidence. Joinable children remain unlinked prototype; full stop/auxiliary workers/signals/storage/auth and Madeira linkage unresolved.",
+      "Bridge125 remains diagnostic, no actual Windows game; no STABLE_SUCCESS or scheduler unload."
+    ],
+    "execution_corrections": [
+      "First own host controller refused its too-long Unix socket prefix BEFORE runtime; source changed to owned short transient /tmp socket directory only, private data/logs remain external. Original early-exit artifact kept.",
+      "First installer rerun used wrong environment variable and refused before tests; corrected exact declared variable then all8modes/23checks passed.",
+      "First default-sandbox Xcode startup stalled; identity-verified ONLY own xcodebuild terminated. Authorized system-service execution then feature29/default29 builds passed. No security/account/Mac lock changes."
+    ],
+    "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run25",
+    "next": "Preserve active Air session and pending25 choice. After safe end/explicit approval qualify selected health/discard experiment, then explicit v3 window trace if needed; no silent candidate substitution. Independently complete Linux stop/storage/legitimate Madeira game bridge. Goal stays active.",
+    "git": "Outside weekday22-08: all scoped new work uncommitted/unpushed, main/other worktrees/vendor intact.",
+    "artifact_hashes": {
+      "feature29-build-system-services.log": "889ce344202de5c75fd62e9470cc39c2a89d6024b75728947b761ad105c7637a",
+      "default29-build.log": "05ff200a3cac609f0bbfebd7f43a1f3f2687c229818c9fe0d8cb953b0e192c7c",
+      "lab29-source-hashes.json": "980aae01d96e12a5071c2e0fd1b57a55fa23e111f06c4fa0747c8b4db0ececd4",
+      "v3-source-hashes.json": "a7cd6ce5a1054e75fee1c0cc02b47e8efc90500790de4aaf82036c4cc26300ab"
+    },
+    "official_private_client_hashes": {
+      "steam": {
+        "sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+        "bytes": 10124968
+      },
+      "steamclient.so": {
+        "sha256": "6a0dc7ac66376b11fb91728ec2fdcf1ca3d062b5c33a6c24a3fd8038df333663",
+        "bytes": 47238400
+      },
+      "steamui.so": {
+        "sha256": "d937fd95c05597eccc55ffd69c1d804ffe0777c4134a9223bbef67de80f7f619",
+        "bytes": 39084592
+      },
+      "steamwebhelper": {
+        "sha256": "8e94ce7a6f6504e9f157da75d1c073b1affffe13b242209b1b2f46e0adcadb55",
+        "bytes": 10301976
+      },
+      "libcef.so": {
+        "sha256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb",
+        "bytes": 218132264
+      }
+    }
+  },
+  "run26": {
+    "phase": "Sequential-handoff prerequisite: actual auxiliary pthread join ownership, reusable slots and TLS completion prototype; not app-integrated",
+    "source_parent": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
+    "previous_turn": "Progress: actual genuine host Steam login rendered, fixed text insertion/deletion visibly qualified, probe scope flaw fixed; no new Air validation or game.",
+    "hypothesis": "Entry-body counts reaching zero do not prove auxiliary pthread/TLS completion. An owned managed reaper plus original-owner forwarding joins can provide actual completion without cumulative handle-slot growth or stealing existing joins.",
+    "minimal_patch": "New NativeWorkerJoins.c/h: one native serial owner/lifetime, joinable TIMER/PROFILE/TTY workers, dedicated owned reaper, reuse slots ONLY after real pthread_join, FORWARD retains original caller ownership through captured-generation external join. Seal refuses future creation; finish joins reaper and can remain pending for real live/TLS-held workers. Sticky join errors never certify completion. Own NativeWorkers.c uses it only under explicit prototype macro; copied-archive builder --join-workers removes only three matching detach calls and replaces only original forwarder join call. No new cancel/detach/reset, runtime/Wine permission, default app setting or FEX/Valve/vendor edits.",
+    "controls": {
+      "scope": "HOST actual tracked auxiliary pthread joins/TLS/reuse and pinned timer/TTY/forwarders/ARM64 controls; NOT complete Linux teardown, Wine game, iPad or stability proof",
+      "tests": [
+        {
+          "mode": "managed",
+          "status": 0,
+          "elapsed_seconds": 0.203,
+          "log_sha256": "e2cbe86b6b53e531907efb21d969e644f9d789b4bd16e175e4fad6c2056e0378"
+        },
+        {
+          "mode": "external",
+          "status": 0,
+          "elapsed_seconds": 0.024,
+          "log_sha256": "4f23a796add8402e3ebc7bf94d4af78056a29dd0924cca42eaf833d9807f6cde"
+        },
+        {
+          "mode": "reuse",
+          "status": 0,
+          "elapsed_seconds": 1.616,
+          "log_sha256": "26ea6f9c50c0f34fa65a5790310004dbad0cfd7da5718a5b728041505d728a08"
+        },
+        {
+          "mode": "failure",
+          "status": 0,
+          "elapsed_seconds": 0.142,
+          "log_sha256": "6187cbe6bc5d2e82c33865410f89ca550107da3b7276de2bd28e2531711afc41"
+        },
+        {
+          "mode": "join-failure",
+          "status": 0,
+          "elapsed_seconds": 0.151,
+          "log_sha256": "a06c7052b865565b33994f2a55b8a2fe567fb881772c3f8f8864dffb662b692b"
+        },
+        {
+          "mode": "timer",
+          "status": 0,
+          "elapsed_seconds": 0.132,
+          "log_sha256": "ac56b8ef2051eee3526be6ed9c4737bb156ad2d1d66cf18be56a50d5accf6a0c"
+        },
+        {
+          "mode": "timer-tls",
+          "status": 0,
+          "elapsed_seconds": 0.045,
+          "log_sha256": "f651c77c45743eec49a96c4982735d4dcc7543b49293583ff8586e0209d789aa"
+        },
+        {
+          "mode": "tty",
+          "status": 0,
+          "elapsed_seconds": 0.012,
+          "log_sha256": "8034aa34561be76cd25458a2f312b2ad0ecfde4d5ff012f16b82b3f318f66b5d"
+        },
+        {
+          "mode": "ordinary",
+          "status": 0,
+          "elapsed_seconds": 0.141,
+          "log_sha256": "bbf85fa70dd890dc9ebd483ca39c1badddcad02ec46d43c9f2b485030a5cc82b"
+        },
+        {
+          "mode": "forward",
+          "status": 0,
+          "elapsed_seconds": 0.087,
+          "log_sha256": "d4d4c5e1d0dea16f9cd87c27fa2a7fd40101ab53bcd119cf2aed87a00d29c873"
+        }
+      ],
+      "sources": {
+        "tools/native-worker-joins-control.c": "86c0683f690c19c021422e5c30ecc81da90a038f74278c17a5333d79ac3671c3",
+        "app/NativeWorkers.h": "38a08180297d38c3812d4cf0cb5fb26938f2d01e26c030ba920180dc2ae8c7b4",
+        "app/NativeWorkerJoins.c": "d0e0d2eae36d89458323c0660e0630aecfebbfedb72764f03da8d13897827398",
+        "app/NativeWorkers.c": "f628957cc42b3fae3b43b1c1d2dec55270dc9b8562bac1e0006d74ed4fdfb3e0",
+        "app/NativeWorkerJoins.h": "a7a3f430dcc298ae80d4740d9a1b32503149bf400bad52da6d77892cca15958d",
+        "tests/native-worker-joins-test.c": "21321ff7feb3ebc0c4a06a59099f36f4c7e83499ed15eac4c9ee6c8a52311ade"
+      },
+      "archive_sha256": "8ff077d93170415768385a9453ab404844388c5d9512be48cec7c7e9465281b0"
+    },
+    "default_regressions": {
+      "scope": "real host native worker providers/ARM64 controls; profiler deliberately remains live until host process exit; no iPad/Wine/full-cleanup or game claim",
+      "tests": [
+        {
+          "mode": "roles",
+          "status": 0,
+          "log_sha256": "06a848f21540d9cfc4b40587430b7b2838cff9db42d524b320ce7705c51d18d9"
+        },
+        {
+          "mode": "timer",
+          "status": 0,
+          "log_sha256": "ad754920fec063aa60455023f262cfd6f4f69a1e59ae47a90254f9894eff59f2"
+        },
+        {
+          "mode": "tty",
+          "status": 0,
+          "log_sha256": "215bce6bfb22ffe4d6553ecd70ecd7093d60754f3fb7f58d4e2dbe3fa07a03e9"
+        },
+        {
+          "mode": "forward",
+          "status": 0,
+          "log_sha256": "4241a901ccd8f053c13c8684e608587719d500a0195a5dc992ab2852e8217b32"
+        },
+        {
+          "mode": "profile",
+          "status": 0,
+          "log_sha256": "3246faad50225b8c064ef3c6c938b3230871e8193a52be52f2a7ee15782c90f6"
+        },
+        {
+          "mode": "underflow",
+          "status": 0,
+          "log_sha256": "9ec4e9e0b311009da41d778f620557c1e8be001ac4c5d86f9f401d934508d20c"
+        },
+        {
+          "mode": "failure",
+          "status": 0,
+          "log_sha256": "8520cdc56ce8ad1618b4bcdef86f890108aa6134ff514d1ef6ff9df53b3750c1"
+        }
+      ],
+      "archive_sha256": "cb32d7ee039807a3da4c7caf459f16741a122157bdb2654b0d1d58bffe908084",
+      "negative_archive_sha256": "cae61bd03ab8f5f10e928facfbb3f2b3eca66dd9042f1ec11bcdeed7c9fe477c"
+    },
+    "default_exclusion": {
+      "scope": "HOST default copied provider source and native counter instructions; NOT iOS final app or device proof",
+      "all_four_default_provider_sources_identical_previous": true,
+      "counter_text_identical_previous": true,
+      "default_counter_has_no_join_registry_reference": true,
+      "counter_text_sha256": "5af5acad93c96af829dbc64aaf7701640b91dde7176d25e50abd74d721cc704e",
+      "current_app_links_registry": false,
+      "prior_feature29_macho_sha256": "1693d0a89471b8376c65ab05f3a24864873ab7e457003b461be8558416b77f42",
+      "prior_feature29_new_registry_symbols_absent": true
+    },
+    "ios_object_only": {
+      "scope": "iOS arm64 object compile only, NOT final app linkage, installation or runtime proof",
+      "sha256": "1d403243f4fc9f5b0e100dc7a57e7f48587443a74cf80e02b0adcf0759de71b6",
+      "actual_app_linked": false
+    },
+    "exact_source_hashes": {
+      "app/NativeWorkerJoins.c": "d0e0d2eae36d89458323c0660e0630aecfebbfedb72764f03da8d13897827398",
+      "app/NativeWorkerJoins.h": "a7a3f430dcc298ae80d4740d9a1b32503149bf400bad52da6d77892cca15958d",
+      "app/NativeWorkers.c": "f628957cc42b3fae3b43b1c1d2dec55270dc9b8562bac1e0006d74ed4fdfb3e0",
+      "app/NativeWorkers.h": "38a08180297d38c3812d4cf0cb5fb26938f2d01e26c030ba920180dc2ae8c7b4",
+      "tests/native-worker-joins-test.c": "21321ff7feb3ebc0c4a06a59099f36f4c7e83499ed15eac4c9ee6c8a52311ade",
+      "tools/native-worker-joins-control.c": "86c0683f690c19c021422e5c30ecc81da90a038f74278c17a5333d79ac3671c3",
+      "tools/test-native-worker-joins.sh": "56b75bbf9f9a1f42b0b601284cb12ee7785d9f9cf6b9728e7b4e64d0e93a41e6",
+      "tools/build-native-workers.py": "cd5402394c5cae2913a9ae49ea6569f6a19ecda311e99efb25567ec29816f87a"
+    },
+    "critical_actual_observations": [
+      "Actual pinned timer callback sets held TLS; original entry-body accounting reaches0 while joining still waits. Only after deliberate test TLS release does actual join/reaper completion succeed.",
+      "Original native-offload path launched from real ARM64 ELF creates2 actual forwarders; original owner joins exactly2, registry does not steal or double-join. Native handler return37 preserved; this is harmless test handler, NOT game.",
+      "Actual pinned timer/TTY providers and ordinary16 ARM64 checks pass. TTY uses its ALREADY EXISTING original cleanup cancellation on this test process private stdin pipe; no new cancellation policy or user terminal/device operation. Fixture lives through joins.",
+      "8 active registry slots handle10008 real worker starts/joins with4 concurrent producers. Failed creation1000times leaves no counter/handle leak. Injected join error keeps completion false even with body count0. Foreign native fork/owner and detached attributes rejected.",
+      "Default7 regression modes pass. Its actual profiler control STILL leaves profiler1 alive after guests end, by design; new reaper cannot join an infinite profiler without an explicit cooperative stop. This remains a known next gate, NOT solved by counts or changed success criteria."
+    ],
+    "scope_limits": [
+      "Prototype only: not in Xcode target or app startup. iOS arm64 OBJECT compile is not final Mach-O linkage, device installation or execution. Prior feature29 Mach-O unchanged1693d0..., new registry symbols absent.",
+      "Complete Linux stop still requires actual guest/process shutdown, joining all guest entries, cooperative profiler stop when enabled, signal ownership, root/mapping/global cleanup and writer/storage lease. All tracked auxiliary joins alone never authorize Wine or runtime reset.",
+      "Guest-child join prototype still has4096 cumulative identities and is unlinked; native-worker slots here are reusable but do not remove that separate limit.",
+      "One native owner/lifetime, no epoch/reset/resume API. This component does not prove frontend restart after game, Library/BPM stability, Steamworks/auth/licensing, game or return.",
+      "Registry capacity can reject starts; pinned timer provider still has old unchecked pthread_create-error semantics. Do not enable new admissions gate in production until creation failure paths are qualified.",
+      "Native reaper may block on a real TLS destructor; this is evidence of pending work, not a timeout workaround or permission to reset."
+    ],
+    "device": "One readonly CoreDevice query identifies existing Air23/4952+B265FEBE. No input/stop/reinstall/restart/auth action, pending25 retirement choice preserved without repetition or candidate substitution. No current-device health claim from old cappedlog.",
+    "corrections": [
+      "Initial HOST failure-injection compile revealed unused trampoline under compile-time forced EAGAIN; guarded unused trampoline/cleanup in that HOST-only build. Final complete controls compile from exact retained source snapshot.",
+      "First reusable harness run failed before compilation because stock macOS bash3 set-u rejects an empty array; explicit zero-valued macro flags fixed it. Failed output retained; full-controls-v2 is the actual complete passing run."
+    ],
+    "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run26",
+    "next": "Add and validate an explicit cooperative profiler stop in the isolated copied archive, then qualify actual Linux frontend shutdown/guest joins/signal/storage ownership before connecting legitimate Madeira game launch. Device selected experiment waits for actual session end or explicit pending reply.",
+    "git": "Experimental branch unchanged82b7861; scoped work remains uncommitted/unpushed while outside weekday22-08. Main/other worktrees/apps/accounts/games/saves untouched. No success sentinel/task unload.",
+    "thread_sanitizer": {
+      "scope": "HOST ThreadSanitizer, own registry and tracked worker harness only; not all LinuxRunner races, app or iPad proof",
+      "tests": [
+        {
+          "mode": "managed",
+          "status": 0,
+          "elapsed_seconds": 0.45,
+          "log_sha256": "e2cbe86b6b53e531907efb21d969e644f9d789b4bd16e175e4fad6c2056e0378"
+        },
+        {
+          "mode": "external",
+          "status": 0,
+          "elapsed_seconds": 0.047,
+          "log_sha256": "4f23a796add8402e3ebc7bf94d4af78056a29dd0924cca42eaf833d9807f6cde"
+        },
+        {
+          "mode": "reuse",
+          "status": 0,
+          "elapsed_seconds": 1.867,
+          "log_sha256": "26ea6f9c50c0f34fa65a5790310004dbad0cfd7da5718a5b728041505d728a08"
+        }
+      ]
+    },
+    "ios_host_injection_rejection": {
+      "expected_compile_refusal": true,
+      "status": 1,
+      "specific_guard_seen": true,
+      "output_object_absent": true,
+      "log_sha256": "f7bd89dbbfd3964e28890ff1e09a504e67cc6b38003f4921c26e8c6abb3212d4"
     }
   }
 }

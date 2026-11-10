@@ -11,6 +11,12 @@
 #include <sys/resource.h>
 #include <stdatomic.h>
 #include <stdint.h>
+#if IDECK_LAB_GAME_FILE_POLICY
+#include "GameFilePolicy.h"
+#endif
+#if IDECK_LAB_MADVISE_STATS
+#include "MadviseStats.h"
+#endif
 #if IDECK_LAB_NATIVE_LOG
 /* Exact pinned public diagnostic globals. Independent atomic observations,
  * not coherent VM ownership, physical accounting or permission for handoff. */
@@ -27,9 +33,13 @@ extern _Atomic uint64_t asbestos_stat_idle_flushes,asbestos_stat_cap_flushes,asb
 #endif
 #endif
 static pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;
-static int attempted,fd=-1,saturated;
+static int attempted,fd=-1,saturated,capacity_reached;
 static size_t bytes;
 static char filename[96];
+static char healthname[120];
+static int health_directory=-1,health_written;
+static pid_t owner_pid;
+static uint64_t health_sequence;
 static int write_all(const char *body,size_t length){
     size_t offset=0;
     while(offset<length){ssize_t n=write(fd,body+offset,length-offset);
@@ -54,15 +64,67 @@ int ideck_native_log_start(const char *directory){
     if(clock_gettime(CLOCK_MONOTONIC,&now)){error=-errno;close(dir);goto done;}
     int length=snprintf(filename,sizeof filename,"kernel-%ld-%lld-%ld.log",(long)getpid(),(long long)now.tv_sec,now.tv_nsec);
     if(length<0||(size_t)length>=sizeof filename){error=-ENAMETOOLONG;close(dir);goto done;}
-    fd=openat(dir,filename,O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC,0600);error=fd<0?-errno:0;close(dir);
+    fd=openat(dir,filename,O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC,0600);error=fd<0?-errno:0;
     if(!error){const char header[]="IDECK_NATIVE_KERNEL_LOG_V1 private native kernel diagnostics; input tracing disabled\n";error=write_all(header,sizeof header-1);}
+    if(!error){health_directory=dir;owner_pid=getpid();snprintf(healthname,sizeof healthname,"health-%s.json",filename);}
+    else close(dir);
 done:
     if(error&&fd>=0){close(fd);fd=-1;}
     if(error)filename[0]=0;
     pthread_mutex_unlock(&lock);return error;
 }
 const char *ideck_native_log_name(void){pthread_mutex_lock(&lock);const char *name=filename[0]?filename:NULL;pthread_mutex_unlock(&lock);return name;}
+const char *ideck_native_health_name(void){pthread_mutex_lock(&lock);const char *name=healthname[0]?healthname:NULL;pthread_mutex_unlock(&lock);return name;}
 size_t ideck_native_log_bytes(void){pthread_mutex_lock(&lock);size_t n=bytes;pthread_mutex_unlock(&lock);return n;}
+int ideck_native_health(unsigned build,const char *stage,int guests,int workers){
+    static const char *stages[]={"idle","mount-root","init-task","runtime-directories","device-filesystem","child-task","elf-load","guest-running","guest-exited"};
+    unsigned phase=0;for(;phase<9;phase++)if(stage&&!strcmp(stage,stages[phase]))break;
+    if(!build||build>999999||phase==9||(guests<0&&guests!=-95&&guests!=-1)||(workers<0&&workers!=-95&&workers!=-1))return -EINVAL;
+    pthread_mutex_lock(&lock);int error=0;
+    if(health_directory<0){error=-ENODEV;goto done;}
+    if(owner_pid!=getpid()){error=-EXDEV;goto done;}
+    struct stat previous;
+    if(fstatat(health_directory,healthname,&previous,AT_SYMLINK_NOFOLLOW)==0){
+        if(!health_written||!S_ISREG(previous.st_mode)||previous.st_uid!=geteuid()||(previous.st_mode&0077)){error=-EPERM;goto done;}
+    }else if(errno!=ENOENT){error=-errno;goto done;}
+    struct timespec now;if(clock_gettime(CLOCK_MONOTONIC,&now)){error=-errno;goto done;}
+    unsigned long long mono=(unsigned long long)now.tv_sec*1000+(unsigned long long)now.tv_nsec/1000000;
+    uint64_t footprint=0;int valid=0;struct rusage cpu={0};int cpu_valid=getrusage(RUSAGE_SELF,&cpu)==0;
+#ifdef __APPLE__
+    task_vm_info_data_t info={0};mach_msg_type_number_t count=TASK_VM_INFO_COUNT;
+    valid=task_info(mach_task_self(),TASK_VM_INFO,(task_info_t)&info,&count)==KERN_SUCCESS&&count>=TASK_VM_INFO_REV1_COUNT;
+    if(valid)footprint=info.phys_footprint;
+#endif
+    char body[1536],temporary[160];uint64_t sequence=++health_sequence;
+    int length=snprintf(body,sizeof body,"{\"schema\":1,\"pid\":%ld,\"build\":%u,\"native_log\":\"%s\",\"sequence\":%llu,\"mono_ms\":%llu,\"phase\":%u,\"initial_call_returned\":%s,\"tracked_guest_entries\":%d,\"tracked_linux_workers\":%d,\"footprint_valid\":%d,\"footprint_bytes\":%llu,\"cpu_valid\":%d,\"cpu_user_us\":%llu,\"cpu_system_us\":%llu,\"append_log_capped\":%s,\"append_log_stopped\":%s}\n",
+        (long)owner_pid,build,filename,(unsigned long long)sequence,mono,phase,phase==8?"true":"false",guests,workers,valid,(unsigned long long)footprint,cpu_valid,
+        cpu_valid?(unsigned long long)cpu.ru_utime.tv_sec*1000000+cpu.ru_utime.tv_usec:0,
+        cpu_valid?(unsigned long long)cpu.ru_stime.tv_sec*1000000+cpu.ru_stime.tv_usec:0,capacity_reached?"true":"false",saturated?"true":"false");
+#if IDECK_LAB_GAME_FILE_POLICY
+    // Fixed categorical fields only. Never emit guest arguments, paths,
+    // environment, account payloads or any claim that Wine/game ran.
+    if(length>1&&(size_t)length<sizeof body){
+        struct ideck_game_file_observation observed={0};
+        int policy=ideck_game_file_policy_observation(&observed);
+        size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"file_policy\":{\"query_status\":%d,\"submitted\":%llu,\"completed_sequence\":%llu,\"appid\":%u,\"status\":%d,\"library\":%d,\"machine\":%u,\"diagnostic_only\":true,\"game_launched\":false}}\n",
+            policy,(unsigned long long)observed.submitted,(unsigned long long)observed.completed_sequence,
+            observed.appid,observed.status,observed.library,observed.machine);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+    int n=snprintf(temporary,sizeof temporary,".%s-%llu.tmp",healthname,(unsigned long long)sequence);
+    if(length<0||(size_t)length>=sizeof body||n<0||(size_t)n>=sizeof temporary){error=-EOVERFLOW;goto done;}
+    int output=openat(health_directory,temporary,O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC,0600);
+    if(output<0){error=-errno;goto done;}
+    size_t offset=0;
+    while(offset<(size_t)length){ssize_t wrote=write(output,body+offset,(size_t)length-offset);if(wrote<0&&errno==EINTR)continue;if(wrote<=0){error=wrote<0?-errno:-EIO;break;}offset+=(size_t)wrote;}
+    if(close(output)&&!error)error=-errno;
+    if(!error&&renameat(health_directory,temporary,health_directory,healthname))error=-errno;
+    if(error)unlinkat(health_directory,temporary,0);else health_written=1;
+done:
+    pthread_mutex_unlock(&lock);return error;
+}
 void ideck_native_log_line(const char *line){
     if(!line)return;
     pthread_mutex_lock(&lock);
@@ -78,6 +140,7 @@ void ideck_native_log_line(const char *line){
     }
     const char capped[]="native_log_capacity_reached\n";
     if(bytes>IDECK_NATIVE_LOG_LIMIT||size+1+sizeof capped-1>IDECK_NATIVE_LOG_LIMIT-bytes){
+        capacity_reached=1;
         if(bytes+sizeof capped-1<=IDECK_NATIVE_LOG_LIMIT)write_all(capped,sizeof capped-1);
         saturated=1;
     }else if(write_all(line,size)||write_all("\n",1)){saturated=1;}
@@ -116,6 +179,19 @@ void ideck_native_log_resources(void){
         (unsigned long long)atomic_load_explicit(&asbestos_stat_idle_flushes,memory_order_relaxed),
         (unsigned long long)atomic_load_explicit(&asbestos_stat_cap_flushes,memory_order_relaxed),
         (unsigned long long)atomic_load_explicit(&asbestos_stat_pressure_flushes,memory_order_relaxed));
+    ideck_native_log_line(row);
+#endif
+#if IDECK_LAB_MADVISE_STATS
+    struct ideck_madvise_stats advice={0};ideck_madvise_stats_read(&advice);
+    snprintf(row,sizeof row,"LINUX_MADVISE_REQUESTS calls=%llu dontneed_calls=%llu dontneed_requested_bytes=%llu free_calls=%llu free_requested_bytes=%llu",
+        (unsigned long long)advice.calls,(unsigned long long)advice.dontneed_calls,(unsigned long long)advice.dontneed_requested_bytes,
+        (unsigned long long)advice.free_calls,(unsigned long long)advice.free_requested_bytes);
+    ideck_native_log_line(row);
+#endif
+#if IDECK_LAB_PRIVATE_DISCARD
+    extern uint64_t ideck_private_discard_count(void),ideck_private_discard_replaced_bytes(void);
+    snprintf(row,sizeof row,"LINUX_PRIVATE_DISCARD replaced_calls=%llu replaced_guest_bytes=%llu",
+        (unsigned long long)ideck_private_discard_count(),(unsigned long long)ideck_private_discard_replaced_bytes());
     ideck_native_log_line(row);
 #endif
 #else

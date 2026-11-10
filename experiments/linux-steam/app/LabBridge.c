@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdatomic.h>
 #include <pthread.h>
+#if IDECK_LAB_GAME_FILE_POLICY
+#include "GameFilePolicy.h"
+#endif
 
 #define LAB_BRIDGE_MAJOR 242
 struct transaction { struct ideck_launch_response response; size_t offset; int consumed; pthread_mutex_t lock; };
@@ -22,11 +25,15 @@ static int open_bridge(int major, int minor, struct fd *fd) {
 }
 static ssize_t write_bridge(struct fd *fd, const void *bytes, size_t size) {
     struct transaction *t = fd->data;
-    if (ideck_launch_validate(bytes, size)) return _EINVAL;
     struct ideck_launch_request r;
+    if(!bytes||size!=sizeof r)return _EINVAL;
     memcpy(&r, bytes, sizeof r);
+    if (ideck_launch_validate(&r, sizeof r)) return _EINVAL;
     pthread_mutex_lock(&t->lock);
     if (t->consumed) { pthread_mutex_unlock(&t->lock); return _EBUSY; }
+#if IDECK_LAB_GAME_FILE_POLICY
+    ideck_game_file_policy_inspect(&r);
+#endif
     /* Diagnostic handler only: 125 means NOT launched. Never pretend a game ran. */
     t->response = (struct ideck_launch_response){IDECK_LAUNCH_MAGIC, IDECK_LAUNCH_VERSION, r.appid, 125};
     t->consumed = 1;

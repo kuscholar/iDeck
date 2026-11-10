@@ -9,16 +9,20 @@ case "$LINUX_LAB_PAGE_OUT" in /Volumes/easystore/*) ;; *) exit 2;; esac
 [[ ! -e "$LINUX_LAB_PAGE_OUT" ]] || exit 2
 src="$repo/vendor/LinuxRunner";host="$LINUX_LAB_ARTIFACTS/host";lab="$repo/experiments/linux-steam"
 : "${LINUX_LAB_PAGE_ARCHIVE:=$host/libish.a}"
+: "${LINUX_LAB_PAGE_DISCARD:=0}"
+: "${LINUX_LAB_PAGE_STATS:=0}"
+[[ "$LINUX_LAB_PAGE_DISCARD" == 0 || "$LINUX_LAB_PAGE_DISCARD" == 1 ]] || exit 2
+[[ "$LINUX_LAB_PAGE_STATS" == 0 || "$LINUX_LAB_PAGE_STATS" == 1 ]] || exit 2
 [[ $(git -C "$src" rev-parse HEAD) == d1419782da2e299fe22f1ddb85c70ae3d1e276b1 ]] || exit 2
 [[ -z $(git -C "$src" status --porcelain --untracked-files=no) ]] || exit 2
 mkdir -m 700 "$LINUX_LAB_PAGE_OUT"
-xcrun clang -DGUEST_ARM64=1 -DENGINE_ASBESTOS=1 -DLOG_HANDLER_DPRINTF=1 -DISH_INTERNAL=1 \
+xcrun clang -DIDECK_LAB_MADVISE_STATS="$LINUX_LAB_PAGE_STATS" -DTEST_DISCARD="$LINUX_LAB_PAGE_DISCARD" -DGUEST_ARM64=1 -DENGINE_ASBESTOS=1 -DLOG_HANDLER_DPRINTF=1 -DISH_INTERNAL=1 \
     -I "$src" -I "$host" -I "$lab/app" -Wall -Wextra -Werror -Wno-unused-parameter \
     "$lab/app/LinuxLabRuntime.c" "$lab/app/LabDeviceFS.c" "$lab/app/LabBridge.c" "$lab/app/LaunchProtocol.c" "$lab/tools/page-footprint-control.c" \
     "$LINUX_LAB_PAGE_ARCHIVE" -L "$host" -lish_emu -lfakefs -lsqlite3 -o "$LINUX_LAB_PAGE_OUT/control"
 for reserve in 128 512;do
     xcrun clang --target=aarch64-linux-gnu --ld-path="$(command -v "$LD_LLD")" -nostdlib -static -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
-        -DRESERVE_MIB="$reserve" "$lab/guest/page-footprint-probe.c" -Wl,-e,_start -o "$LINUX_LAB_PAGE_OUT/probe-$reserve.elf"
+        -DTEST_DISCARD="$LINUX_LAB_PAGE_DISCARD" -DRESERVE_MIB="$reserve" "$lab/guest/page-footprint-probe.c" -Wl,-e,_start -o "$LINUX_LAB_PAGE_OUT/probe-$reserve.elf"
 done
 python3 - "$LINUX_LAB_PAGE_OUT" "$LINUX_LAB_PAGE_ARCHIVE" <<'PY'
 from pathlib import Path

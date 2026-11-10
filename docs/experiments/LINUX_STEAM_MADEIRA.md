@@ -1,11 +1,13 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status: Phase 1 now has actual Air ARM64 ELF evidence: Lab8 TCP control
-completed status0 with17 PASS. Native Scene startup fixed. Full verified Linux
-image import, native X11/RFB/Metal and genuine Valve Linux Steam login window
-are now visually verified on Air. Run8 adds a host-verified installed diagnostic
-compatibility tool and unsigned Lab15; active Air13 is preserved. No authenticated/interactive device Steam login,
-Library/Big Picture or Madeira game/return/stability success yet. See run6.
+Status (run23): Actual Air ARM64 ELF, verified Linux image import, native
+X11/RFB/Metal, user-authenticated genuine Linux Steam Big Picture and the full
+Library have been observed (runs16–17). Browsing has severe delays and memory
+pressure; this is NOT stable operation. Lab23 remains live and preserved. Native
+game-file capability checks and real ARM64 helper-to-host controls pass on the
+host; feature/default iOS builds are checked separately. The bridge still
+returns diagnostic125, and no Madeira game/return cycle is implemented or
+verified. Read the latest run and EVIDENCE.json for exact artifact boundaries.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -1598,3 +1600,887 @@ task samples on Air and physical screenshot shows legitimate Steam updater
 extracting package.110s resource window peak991791880bytes/0warnings. This
 qualifies on-device sampler execution, NOT CEF/Library/login/UI stability.
 Preserve this active updater until actual current completion is verified.
+
+## Run16 follow-up — genuine Big Picture home on the physical Air
+
+The updater4056 completed with raw wait10752 (exit42), no guest/worker entries,
+and its own native exit record. Only after checking that completion and exact
+identity was it retired; fresh22/4057 then started in the same isolated container.
+Steam recorded a fresh saved-auth `Success-OK` at2026-11-09 02:19UTC. No agent
+credentials, Steam Guard operation or authentication-cache transfer occurred.
+
+Actual screenshots initially showed the desktop Steam header with black content.
+A fixed click on Steam's own Big Picture icon opened genuine onboarding. A center
+click and Return advanced Quick Access, an informational parental-controls page
+(no setup/security change), and Have fun. The final Return displayed the genuine
+Big Picture home: game cards, news, and Steam navigation prompts. The private
+`run16/after-finish-guide.png` was visually inspected. This is real on-Air rendering
+and scripted input evidence, superseding earlier statements that no BPM UI existed.
+It does not qualify physical touch/controller support, Library/details navigation,
+game execution, return, or repeated stability. An earlier changing-artwork/clock
+screen was an inactivity screen, not successful navigation.
+
+The last resource window covered1325.005seconds, with peak footprint2,887,719,792
+bytes,483 memory warnings, and~1.975 native CPU cores on average. Requested
+memory, resident memory and logical guest-page/code counters are distinct; none
+alone identifies an allocating layer. One CoreDevice log copy failed while the
+exact app remained alive and screenshots worked; that failure was not a crash.
+The planned next Right-key action never executed because automatic approval
+review hit a usage limit. That is a tooling boundary, not a Steam failure.
+
+On Nov9 the old4057 was absent; the cause/end time is unknown. A newer4320 in
+the same installed22 bundle was foregrounded without termination and actually
+showed completed ordinary16 diagnostics/status0. Its current receipt and screen,
+not the stale updater result file, established its mode. Only that completed
+identity was retired before the next isolated upgrade.
+
+## Run17 — measure discard requests before changing reclamation
+
+Source parent82b78613d532cd5f33cecd81da4bda27bad25ee2. LinuxRunner and libarchive
+pins remain unchanged. The host hypothesis is that guest `MADV_DONTNEED` may
+retain native backing: pinned `kernel/mmap.c` zeros anonymous memory but does
+not release its native pages. A real ARM64 control touches64MiB, discards it,
+samples public self-task footprint, verifies zero contents, then unmaps. Both
+eager128MiB and grouped-lazy512MiB reservations reclaim **zero bytes** at discard;
+unmapping does reduce footprint. This is host evidence, not proof Steam issued
+the same requests or that this is its sole memory problem.
+
+The minimal patch is observation only. Default-off `LINUX_LAB_MADVISE_STATS=1`
+requires `LINUX_LAB_NATIVE_LOG=1`. `tools/build-madvise-stats.py` verifies the exact
+pristine dependency pin and generates a copied mmap unit that counts calls and
+requested bytes, then calls the original syscall unchanged. Independent relaxed
+atomic totals cover DONTNEED and FREE, without addresses, argv or memory contents.
+Requested bytes include failed/repeated calls; they are not unique allocations,
+successful operations or reclaimed bytes. No runtime memory-policy fix is made.
+
+The counted host control records exactly one67,108,864-byte DONTNEED call in each
+case; the existing no-discard controls record zero. Five logging controls and
+ordinary16 tests pass. Wrapper/log/task/mmap observation units were ASan/UBSan
+instrumented; the rest of the dependency is not fully instrumented. Full feature
+Xcode23 builds, final linked symbols/marker checks and deep-strict signing pass.
+The unsigned Mach-O SHA256 is
+`1ea23c88804781364b36624c38b44ddf4f6475e6eed1850432cf868616594be6`.
+Default-off iOS unit compilation passes; a full default23 app build has not run.
+Exact source bytes captured immediately after compilation are hashed in EVIDENCE.
+
+After verified completed4320 retirement and Lab absence, the existing authorized
+profile was checked against the Air, app, certificate and expiration. Only the
+separate `com.kuschqin.ideck.freshtest` Lab was upgraded to23. The same private
+root/auth/games/saves remain intact. Actual23/4942 initially shows the legitimate
+Steam package extractor; the first28second sample records seven DONTNEED calls,
+6,795,264 requested bytes and zero memory warnings. This proves on-device request
+observation, not CEF/login/BPM or a reclamation fix.
+
+Reproduce the host discriminator with `tools/test-page-footprint.sh`, a NEW private
+`LINUX_LAB_PAGE_OUT`, prepared `LINUX_LAB_ARTIFACTS`, `LD_LLD`, the generated
+`LINUX_LAB_PAGE_ARCHIVE`, and `LINUX_LAB_PAGE_DISCARD=1 LINUX_LAB_PAGE_STATS=1`.
+For the feature build add `LINUX_LAB_MADVISE_STATS=1` to the recorded22 flags.
+Never overwrite an app or control binary being tested. The next discriminator
+is actual post-update Steam request growth against footprint and usable UI.
+Bridge125 still launches no game; Linux teardown, Madeira integration, reliable
+return and repeated stability remain open. No success sentinel/unload is justified.
+
+Run17 continued: own4942 native initial-child exit10752 and current result
+zero guest/workers verified before retiring its completed updater. Fresh23/4952
+then recorded saved-authSuccess14:10:01UTC. At181seconds, footprint2.362GB and
+2,725 DONTNEED calls requesting1.021GB; zero warnings in that window. Genuine
+desktop Steam header rendered but its main content remained black. A bounded
+fixed Big Picture icon click is being tested; transport success alone is not UI
+success. Preserve this current session. Full default23 Xcode build and final
+absence of observation/lazy/GPU policy symbols/markers also pass. Its first
+sandbox build stalled; only that own host build was stopped and rerun with
+normal authorized build-service access, without touching the Air session.
+
+Run17 navigation follow-up: the same actual23/4952 shows the genuine Big Picture
+home again, preserving completed onboarding. Input eventually selects Ratatan,
+then its real details/activity page, the Steam menu, and the full **Library,
+All Games40 / Installed0**. Private screenshots are hashed in EVIDENCE. These are
+real Library and scripted menu/input milestones; minutes of delay, incomplete
+transitional areas, screensaver activation and memory warnings explicitly fail
+stable responsiveness. At947seconds, peak footprint2,620,332,816bytes and820
+memory warnings; cumulative DONTNEED requests2,198,466,560bytes. No Install/Play,
+password, Guard or account operation was performed. Bridge125 is unchanged.
+
+## Run18 — conservative whole-backing discard experiment
+
+This follows actual Air23 discard/pressure evidence, not a blind allocation retry.
+`PrivateDiscard.inc` is included only by an explicitly selected copied mmap unit.
+A nonblocking write-lock attempt preflights at most64MiB and requires every page
+of every complete backing to belong exclusively to this same guest address
+space, with exact offsets/refcounts. Only writable private anonymous data without
+file identity, CoW, shared, executable or retained references qualifies. Allocate
+ALL new untouched anonymous backing objects before changing any PTE; then retain
+flags, offsets, reservations and logical accounting, invalidate the translated
+range/generation and release old backing. There is no MAP_FIXED, mprotect, cap
+increase or shared/COW/file rewrite. A busy lock, unsupported/partial range or
+allocation failure uses the pinned original syscall. Its existing fallback
+semantics are preserved, not claimed fully Linux-conformant or repaired.
+
+The normal and forced-second-allocation-failure host controls each pass22 checks,
+including retained references, a busy writer lock, permissions, alias/CoW parent
+preservation, reservations, all-before-commit failure behavior and100 discard
+iterations with a concurrent native reader. The real ARM64 guest lazy20 and
+ordinary16 regressions also pass. Affected mmap/memory/control units use
+ASan/UBSan; the remaining dependency is not fully instrumented. The file-identity
+negative is a declared metadata fixture, not a real-file I/O claim.
+
+The same aligned real ARM64 64MiB touch/discard fixture shows original eager and
+lazy controls reclaim0bytes. With the prototype, grouped-lazy backing releases
+66,699,336bytes of native footprint before zero-content verification. A64MiB
+subrange of one128MiB eager backing deliberately remains on the original path
+and reclaims0bytes. This establishes a bounded host effect, NOT an Air/Steam fix
+or proof that all actual Steam allocations qualify. Requested/replaced guest
+bytes are distinct from native footprint and must never be reported as physical
+reclamation totals.
+
+Failed controls are retained: a file fixture initially kept anonymous metadata
+while expecting file retention; corrected the fixture. A COW harness incorrectly
+omitted the loader's retained executable description and faulted in fd_retain;
+supplied a real kernel-owned no-I/O description. An initial Bash3 empty-array
+nounset failure occurred before tests. A tight native-reader stress timed out;
+the optimization now refuses a busy write lock, and the fixture uses the pinned
+reader quantum yield. A subsequent byte assertion read twice across original
+in-place zeroing and could reject old-then-zero; it now makes ONE atomic byte
+observation, without claiming whole-range atomicity. Fresh final controls pass;
+none of these harness failures is attributed to the actual iPad session.
+
+Reproduce: `tools/test-private-discard.sh` with prepared artifacts, LD_LLD and a
+NEW `LINUX_LAB_DISCARD_OUT`. The generator's `--host-private-discard` refuses iOS;
+`--host-fail-second` is host only. The separate explicit experimental build option
+is selected by DEFAULT OFF `LINUX_LAB_PRIVATE_DISCARD=1`, requiring request stats
+and grouped lazy pages. Lab24 checks the linked marker and logs only numeric
+replacement calls/guest bytes. Its first build lacked the CMAKE command and is
+being rerun with the already prepared dependency. It has not been installed.
+Preserve current actualSteam23 until verified normal session completion; do not
+replace a live session merely to deploy a candidate. Ordinary main/apps, accounts,
+rootfs and saves remain intact; no FEX/Valve/vendor/security edit or new JIT claim.
+The licensed game/return cycle and repeated stable operation remain unimplemented.
+
+Run18 build follow-up: explicit feature24 full Xcode build succeeds with prepared
+CMake. The actual final sys_madvise disassembly calls the exclusive-discard path;
+count/byte symbols, startup marker and log marker are linked. Unsigned Mach-O
+SHA256 `6d2336843c0380dcf1b911dffe722da027fd425f59cb3c98bb41d2b94565e33d`.
+Source bytes were snapshotted at compilation, and the disposable exact-profile
+candidate passes deep-strict signing. Full default24 build and final absence of
+experimental markers pass; incomplete opt-in flags refuse before building.
+**Lab24 is not installed or device-qualified.**
+
+The actual23/4952 executable was reverified at09:41EST. Steam Power selection and
+Return did not establish a normal exit; the later frame shows genuine inactivity
+artwork/Away. Preserve the session. Its private kernel log reached the4MiB cap
+at the last1560second sample, so later identical copied metrics are historical
+capped observations, not fresh resource/exit evidence. The old runtime result
+10752/zero workers is updater4942's result and cannot authorize retiring4952.
+No current-session exit or complete cleanup is inferred. Next obtain actual
+normal completion/absence before the isolated upgrade; never replace a live
+session for a prepared candidate or treat an observer timeout as termination.
+Source progress remains uncommitted/unpushed during the weekday09 local window
+required by AGENTS. Main and all other worktrees/apps remain untouched. Goal
+remains active; no game/return or stable-success claim/sentinel is justified.
+
+## Run19 — current-session health survives append-log saturation
+
+The previous goal turn made actual progress: real Air Library40/navigation,
+conservative host discard controls and staged signed24. At09:46EST the same
+actual23/4952 executable was still present and its screen showed genuine Steam
+Away artwork. No termination, installation, input, authentication or lock action
+was performed in this run. Normal Steam exit remains unverified. User approval
+was requested ONCE to end this specific active experimental session and upgrade
+to the concrete signed25; the reply is pending. Do not repeat that question or
+interpret elapsed time as permission. CLI-only operation remains required.
+
+**Observed failure:** the4MiB append cap prevents fresh runtime resource/exit
+observations during a long session, while an old unidentified updater result
+looks like completion. Lab25 keeps the existing append cap and adds a separate,
+session-specific health JSON under the validated native private diagnostics
+directory. It contains bounded numeric data, PID/build/native-log identity,
+monotonic sequence/time, public self footprint/CPU and phase/limited tracked
+entry counts. Atomic rename replaces this small receipt every10seconds on the
+existing main runloop even after the append log stops. There is no new sampling
+thread, signal owner, runtime restart or guest memory policy. A held extra native
+directory descriptor is observation infrastructure, not reclaimed Linux state.
+
+A completed initial call and zero tracked entries do NOT establish full native
+quiescence or permit Wine/restarting Linux. Health updates can stop when the app
+is suspended or the main runloop is blocked; missing/stale health is not process
+death or a guest hang. Atomic rename prevents partial reads but is not a power
+loss durability claim. Only fixed stage names and bounded build/count fields are
+accepted; arbitrary guest/user strings are not written. Foreign native processes,
+first-use file collisions, symlinks and failed temporary creation are refused,
+preserving previous receipts and unrelated files. Output is0600 in a0700 private
+directory. Steam/dependency/tool result reports now use schema2 and include PID,
+Build and native log identity, so an earlier updater cannot masquerade as current.
+
+Seven host logging modes pass, including actual capped-log continuation,
+invalid payload preservation, temporary collision, native-fork owner refusal,
+unknown/invalid counter handling and100 atomic updates with concurrent readers.
+The final private health JSON was independently parsed to verify PID/log-name,
+stage, cap, sequence, self metrics and permissions. Ordinary16 real ARM64 guest
+controls and the live task-snapshot wait/touch/unmap/lock-contention regression
+pass. Observer/wrapper/control units use ASan/UBSan; other dependency units are
+not fully instrumented. No on-Air health-file validation is claimed.
+
+Full feature25 Xcode build passes. Final health symbols, result identity markers
+and the existing discard marker are linked; exact source snapshot and hashes are
+in run19/final-linked25.json. Unsigned Mach-O:
+`9811a585ff1e43a28ce33d7f1e6363ee6e9ea1f2a601c773f31eb3c6760ea1aa`.
+Existing exact Air/profile disposable signing and deep-strict verification pass;
+signed candidate SHA256:
+`ba05a3b0ca88943ec002dc2329a3dbf8cce877219afae2c61820e30ba108c9c0`.
+Full default25 build passes and its actual final Mach-O excludes experimental
+health and discard symbols/markers. **25 is not installed**, and24 remains an
+immutable earlier candidate. Existing actual23/auth/root/games/saves are intact.
+
+### Real default library differs from the original bridge fixture
+
+Read-only actual Air metadata confirms one library at `/Steam`, with no library
+at the planned `/mnt/ideck/SteamLibrary`. The compatibility log references our
+custom tool, but retained log references are not accepted-discovery, Steam Play,
+ownership or game-execution evidence. System/UI logs were privately copied to
+investigate the Power action; fixed categorical filtering found no matching
+recent rows, which proves neither that an action was absent nor that exit worked.
+
+The old syntax parser only admitted the planned shared root, so a legitimate
+`/Steam/steamapps/common/...` request would be rejected. **After building25**, the
+prepared source26 parser adds exactly that default library root while preserving
+same-install executable/working containment, traversal and prefix-sibling
+refusal, bounded arguments and frame validation. ASan/UBSan hostile/truncated/
+mutated-frame tests pass for both fixed roots, including spaces and cross-library
+escape attempts. Guest helper, VDF, IPC version and diagnostic125 response are
+unchanged. This is still syntax validation, not native path resolution,
+authorization or game execution. The parser change is NOT in the signed25
+artifact; source is bumped to26 to prevent confusing different payloads with25.
+No26 iOS build or device validation has run.
+
+Next: retain the live23 session pending the user's requested active-session
+boundary. After a genuine end/absence or explicit approval to end that experiment,
+install only the isolated signed25 and verify real health freshness, memory
+replacement and interactive Library/BPM. Independent next bridge work is native
+filesystem capability/path validation and a bounded launch lifecycle, followed
+by real Madeira integration; do not present diagnostic125 as a game launch.
+Main/other worktrees/apps remain unchanged. Changes stay uncommitted outside the
+weekday22–08 window. No FEX/Valve/security edit, credential/Guard automation,
+combined binary release, success sentinel, scheduler unload or completion claim.
+
+## Run20 — native file capabilities and actual compatibility-device controls (Nov9)
+
+The preceding goal turn made concrete progress: candidate25 health identity,
+actual Air default library evidence and a two-root parser fix. This run resumes
+that work, rather than repeating the completed ELF/login/UI milestones. Mount
+UUID, origin/branch/worktree and live exact Air process were verified. Remote
+main remains2ac39be and experiment82b7861; LinuxRunner pin d1419782 and all
+other worktrees/working installations are unchanged. Lab23/4952 with executable
+install UUID B265FEBE-DE84-4F31-AB6A-235C8BF6F8F8 remains live. No device input,
+stop, install, restart, credentials, trust, account or filesystem change occurred.
+The previous one-time question about ending that session and installing25 is
+still pending; no reply is inferred from a continuation or elapsed time.
+
+### Failure, hypothesis and smallest useful implementation
+
+The real library is `/Steam`, and syntax validation alone cannot safely translate
+a guest request into a native executable path. The new `GameFiles` component
+copies/validates the fixed request, selects exactly default or planned shared
+library, and opens path components relative to trusted app-owned directory
+handles. It never follows native symlinks, changes cwd, creates game storage or
+executes commands. Executables must initially be singly-linked, native-owned
+regular `.exe` files with limited x86 PE32/x64 PE32+ identity. The bounded header
+check is NOT a complete PE verifier or a license check. ASCII names and refusal
+of symlinks/bind mounts/multiply-linked executables are compatibility limits.
+
+Handles pin observed inodes. Metadata/path revalidation detects tested file,
+installation and working-directory replacement, but is NOT an atomic freeze.
+Before future Wine path opens, the host must stop guest writers, obtain exclusive
+storage ownership and retain Valve's legitimate authentication/ownership launch.
+Linux auth does not automatically authenticate Madeira Dock's Windows Steam.
+
+`GameFilePolicy` registers one native app-prepared Linux root data descriptor
+before any guest task. A later Steam download may create a library normally;
+each request opens the selected fixed subtree. Native policy validates and
+closes temporary handles synchronously, recording only the newest completed
+sequence, request counts, AppID, errno, library kind and PE machine. It retains
+one root descriptor for one native app lifetime. No arbitrary native root can
+be registered by guest IPC. `LabBridge` now validates the owned frame snapshot
+instead of validating one frame and later copying potentially changed bytes.
+
+With explicit `LINUX_LAB_GAME_FILE_POLICY=1`, compatibility-tool/native-log/
+frontend opt-ins are required. The current atomic session health receipt includes
+fixed numeric policy results, diagnostic-only=true and game-launched=false; no
+paths, argv, environment, passwords or account payload. No sampler thread or
+Wine launch is added. **The helper still returns125; no game is launched.**
+
+### Tests and evidence boundaries
+
+- 48 ASan/UBSan native capability/policy controls PASS: two libraries/PE machines,
+spaces/nested working dir, file type/header errors, symlink/alias/traversal,
+path/content/directory replacement, unknown/missing library, late library creation,
+512 concurrent policy requests, native-owner refusal and descriptor accounting.
+- One thousand rejected native file requests leave no transient descriptors.
+- Eight concurrent threads submit512 requests; completed sequence/count remain
+correct, and only one app-root descriptor is retained after completion.
+- Three actual host LinuxRunner ARM64 executions invoke the existing compatibility
+helper and real `/dev/ideck-madeira` device into native policy. Default/shared
+synthetic game paths validate; outside symlink rejects. The real wrapper exits125.
+All three actual health JSON files were independently parsed and checked.
+- Seven existing native logging modes, ordinary16 ARM64 kernel controls, protocol
+ASan/UBSan hostile/truncation/mutation cases and missing opt-in refusal PASS.
+Only changed native wrapper/policy/log/control units are sanitized; the complete
+interpreter dependency is NOT fully instrumented.
+
+The synthetic AppID480 and128-byte PE identity fixtures contain no executable
+game or Valve code and make no ownership claim. These are host/native contract
+results, not actual Steam Play, Air policy, game or return evidence. Artifacts
+and exact hashes are in private run20 and EVIDENCE.run20.
+
+### Full iOS artifacts and default-resource correction
+
+Feature26 full Xcode, final linked markers/symbols and exact-profile disposable
+signing passed. Full default26 compiled and excluded runtime policy symbols,
+but the subsequent resource audit FAILED: the project always copied the tool,
+even when its flags were off. This is a real build isolation bug, not a device
+runtime fault. The build phase now copies the three generated tool resources
+only when enabled and removes only those three when reusing default build
+products. Unknown files are preserved. Six actual build-phase fixture cases
+PASS, including enable/disable/reuse, unknown-file preservation and invalid
+frontend refusal. Source version27 distinguishes this build-rule change.
+
+Full default27 PASS: final policy/health/discard symbols and markers absent,
+LabCompatibility absent. Full feature27 PASS: final local symbols, policy/health/
+default-library/discard markers and exact helper/VDF resource hashes inspected.
+The first `nm -g` check omitted linker-local symbols; full `nm` and bytes proved
+their presence. The initial sandboxed xcodebuild stalled; only that exact owned
+host build was terminated, then CLI build-services access succeeded. No device
+or unrelated build was terminated.
+
+Candidate27 unsigned Mach-O SHA256 `04869ed0f989253744e33de721160b4c522abbb4509f4ece8a57dd4ae39c7d3e`.
+Existing exact Air/profile signing plus deep-strict verification PASS; signed
+SHA256 `c4336e4ff9c08bd25215d4624a4e2d0333c59fd7c0e7742f467887896e549cde`.
+Default27 Mach-O SHA256 `10c669639dbde0b2ef2d1d8acd6fa848ea74f355d901f28f1aecf9816222f42c`.
+Immutable source/app snapshots and final-linked27.json are under run20; signed
+candidate is private run6/signed-lab27/LinuxLab.app. Candidate25 and26 remain
+preserved. **None is installed in this run.** Current Xcode products are feature27;
+use the explicitly selected immutable signed bundle, not an assumed build output.
+
+Reproduce host contracts with new private output directories:
+
+```sh
+LINUX_LAB_GAME_FILES_OUT="$PRIVATE/run20-new-files" \
+  bash experiments/linux-steam/tools/test-game-files.sh
+LINUX_LAB_FILES_BRIDGE_OUT="$PRIVATE/run20-new-bridge" \
+  bash experiments/linux-steam/tools/test-files-bridge.sh
+python3 experiments/linux-steam/tools/test-compat-resources.py \
+  "$PRIVATE/run20-new-resources"
+```
+
+The bridge test also needs the existing pinned host interpreter via
+LINUX_LAB_ARTIFACTS and ARM64 cross linker via LD_LLD. Full experimental build
+uses the previously documented frontend/TCP/packet/lifetime/worker/log/grouped
+lazy-page/discard flags and verified root hash, adding
+`LINUX_LAB_GAME_FILE_POLICY=1` to tools/build-lab.sh. Dependencies/private image
+are not assumed available in a new worktree. Profiles, rootfs, Valve files and
+raw logs remain outside Git; no combined Wine/Converter binary is distributed.
+
+Next device experiment remains25 health/discard A/B after verified current
+session end or the pending explicit approval. Only after that result should27's
+native policy be qualified through an actual Steam Play request. Real all-native
+Linux shutdown/storage lease, legitimate Madeira launch and restoration remain
+required; limited counters0, initial return, native process presence or125 are
+not substitutes. No new device success, stability, FPS or memory improvement is
+claimed. Main/other worktrees/data unchanged; source remains uncommitted outside
+weekday22–08. Goal ACTIVE; no success sentinel, scheduler unload or completion.
+
+## Run21 — explicit child-thread joins; current Air white-screen evidence
+
+The previous run made implementation/build progress, not a blocked/no-progress
+turn. Current Air23/4952 and its exact B265FEBE installation executable were
+revalidated17:19EST. Mount UUID matches, remote main2ac39be and experiment82b7861
+are unchanged, and pinned vendor sources remain pristine. No live user test was
+stopped, restarted or upgraded. The original one-time approval question remains
+pending; continuing the goal is not treated as consent to that specific action.
+
+### Current physical observation changes the failure focus
+
+The fresh native Air screenshot is WHITE with a pointer/keyboard button. A
+separate host observer using pinned RFBClient with shared ClientInit captured a
+1280x800 white guest frame with pointer too. The app's existing viewer was
+preserved; no keys/mouse/account input were sent. USB display observer ended
+normally after2.008s,76 client bytes/5215 server bytes, no pair-record operation.
+Native screenshot and independently decoded RFB agree. This narrows away from a
+native-view-only issue, but does NOT eliminate a common RFB decoder/server or
+guest-rendering problem. It is not current interactive Library evidence.
+
+Current isolated Steam logs still update. Selected exact public renderer
+messages at19:41/21:22/21:23 report
+`x11_software_bitmap_presenter.cc(145): XGetWindowAttributes failed for window`.
+That is not a proven root cause: windows may already be destroyed/stale, and
+neither browser death nor the original failure is established. Initial broad
+regex matches of the word crash included setup/history text and were rejected;
+never turn those counts into crash events. Old unresponsive-browser entries
+belong earlier sessions. Raw five selected logs and screenshots stay private;
+only hashes/categorical evidence in run21/white-screen-evidence.json are used.
+The capped kernel log and old updater4942 result are still not fresh exit proof.
+
+### One hypothesis: body cleanup does not imply native TLS completion
+
+Pinned task children use detached pthreads. GuestLifetime retires in a cleanup
+callback, which precedes native TLS destructors. Sequential Madeira handoff
+therefore needs actual native thread completion, not just zero task counters.
+
+New UNLINKED JoinableGuests prototype registers successfully created child
+handles under a native mutex, preserves positive pthread error semantics, seals
+future starts and joins each actual handle. Initialization/seal/join belong to
+one native owner thread/process. Creation failure/capacity/foreign owner/detached
+attributes are refused. There is no cancellation, detach workaround, runtime
+reset or timeout-as-death. A blocked pthread_join remains pending.
+
+The copied task-archive generator's explicit `--join-guests` option changes
+only that pinned child attribute and creation path and retains the existing
+GuestLifetime cleanup. The default generated task.c remains byte-identical to
+the earlier verified default source. Vendor task.c, FEX and ordinary app code
+are not changed. This is NOT yet an app build flag or an installed device change.
+
+Four ASan/UBSan host controls PASS:
+
+- A real TLS destructor remains blocked after its entry body returns. The join
+  remains pending until a separate test observer releases that destructor.
+- 1000 injected native create failures leave no reserved/created child handles;
+  capacity/seal/native owner/detached refusals are exercised independently.
+- Actual ARM64 ordinary16 ELF controls pass with2 registered/2 joined children.
+- A real ARM64 orphan survives initial return; the join waits2011ms, then its
+  late marker exists and1 registered/1 joined child is observed. The child ends
+  naturally; no stop signal is used. Runtime reentry continues to refuse EBUSY.
+
+Existing default lifetime observe/signal/ordinary controls PASS, including the
+ordinary16 guest checks. The copied task unit, native registry, wrapper and
+controls are sanitized; the full dependency is not. The new component compiles
+with -Wall/-Wextra/-Werror to an iOS arm64 Mach-O OBJECT, which is not a linked
+app, physical execution or Steam/Wine result. The first shell fixture attempt
+failed on macOS Bash3 empty-array/nounset before compilation; an explicit default
+flag fixed it and v2 tests passed. A Python bytecode-cache permission failure was
+handled with read-only compile() syntax validation, not broader permissions.
+
+Limits: this registry covers CHILD guest pthreads only. Initial runtime worker
+is already separately joined. Timer/profile/TTY/forwarder TLS, signal policy,
+mappings/mounts/global resource release and exclusive game storage remain open.
+The4096 cumulative slots are not recycled in this prototype; do not deploy it
+into long Steam sessions without addressing reaping/capacity. Even all registered
+children joined is NOT Linux quiescence, Wine permission or reset certification.
+The prototype is absent from immutable/signed27; candidate27 remains unchanged,
+uninstalled and preserved alongside25/26. No new full app build in this run.
+
+Reproduce in a NEW private output directory with the pinned prepared host build:
+
+```sh
+LINUX_LAB_JOIN_OUT="$PRIVATE/run21-new-joins" \
+  bash experiments/linux-steam/tools/test-joinable-guests.sh
+```
+
+Exact source/archives/test-log/actual screenshot/frame hashes are in EVIDENCE.run21.
+Next: auxiliary worker ownership/join/stop, then signal and storage handoff;
+current X11/window lifetime versus common decoder/server failure needs its own
+discriminator. On-device25 health/discard A/B still awaits a safe end of current
+23 or the existing explicit approval. Diagnostic125 remains NO GAME, with no
+Wine/Dock/FEX/DXMT linkage or licensed game/return/stability proof. Changes remain
+uncommitted outside local weekday22–08; preserve main/other worktrees/app data.
+Goal ACTIVE. No success sentinel, scheduler unload or completion claim.
+
+## Run22 — white-screen window-lifetime discriminator (Nov9)
+
+Prior turn was actual progress: native child joins/TLS controls and separate
+native/shared-RFB white-screen evidence. Current branch/origin/worktree/mount
+were verified, previous replies reviewed, and exact live Air23/4952 B265FEBE
+identity confirmed. No overlapping host X11 experiment was found. Main/other
+worktrees/working apps and pinned vendor remain unchanged.
+
+### Hypothesis and actual implementation
+
+Steam logged XGetWindowAttributes failures. The specific hypothesis is that a
+basic LinuxRunner X11/live-window or distro Xlib path could be generically broken.
+A source diagnostic alone does not distinguish that from a destroyed/stale
+window. Two new real ARM64 Linux controls isolate the layers without Steam,
+account data, RFB decoding or the iOS native view:
+
+- `x11-window-probe.c` implements bounded core X11 wire requests directly.
+- `xlib-window-probe.c` links the actual distribution libX11/glibc; our minimal
+  AArch64 glibc startup enters the real libc startup path. Its XError handler
+  belongs ONLY to that synthetic test process, never Steam/CEF.
+
+Both fork into two independent clients on a dedicated fresh Xvfb :97. Each
+creates16 own windows, queries before/after mapping, reads64x32 pixel images,
+destroys each window and checks the deliberately invalid window. Own windows
+are disjoint and have different fixed colors. The X11 layout reference is the
+[X.Org protocol definitions](https://cgit.freedesktop.org/xorg/proto/xproto/tree/Xproto.h);
+no third-party implementation was copied into these diagnostics.
+
+The root is a NEW private clone of the stopped, unauthenticated prepared run2
+image. No loginusers/userdata configuration, active source DB user or overlapping
+host experiment was found. The original clean root and Air prefix are unchanged.
+Our ELF is installed through the actual guest VFS, not fabricated fakefs SQL or
+host metadata. Every run has a new root/output and refuses an occupied :97 or
+recognizable account configuration. Only its own spawned server is stopped on
+normal guest exit. Observer timeout preserves the PID/live-state uncertainty;
+it is not interpreted as guest death or an automatic restart permission.
+
+### Evidence and what it rules out
+
+Real wire-level control: guest0,2.994s host duration. Real Xlib control: guest0,
+3.622s. Each has32 windows,64 successful live attribute queries,32 expected
+post-destroy BadWindow failures,32 image reads and65,536 pixel comparisons.
+For each client the two independent implementations produce identical hashes:
+parent4133264837, child658546117 (FNV1a32 of controlled pixels). Each client reads
+131072 image bytes. Exact library/Xvfb/ELF/log hashes and Debian versions are in
+EVIDENCE.run22 and private run22/comparison.json.
+
+This rejects an always-broken basic X11/live-window/Xlib/pixel path as a sufficient
+explanation in this host configuration. It does NOT reject a Chrome multithreaded
+window ownership/lifetime race, app copied-archive effects, shared memory/GPU,
+long-session memory pressure, common RFB decode/server fault or Air-specific
+behavior. The expected error on destroyed windows is a negative control; it is
+not proof that Steam's failures have this same cause. No causal runtime fix,
+assertion suppression, Valve/FEX modification or stable Steam result is claimed.
+
+The first sandboxed control FAILED before useful X11 testing: Xvfb could not
+bind local listeners, and a fakefs socket placeholder appeared before the failed
+native bind; clients then gotENOENT. Fresh normal unprivileged socket-services
+execution in a NEW root passed. This was failed setup, not reproduction of the
+Air/CEF white screen. The original failed artifacts remain private. The raw
+probe's parent error can be masked by a child's failure status; the child report
+and server log establish that initial setup failure. No security setting changed.
+
+### Actual Air response test
+
+After host controls ended, one harmless F1 Steam-menu key was sent through the
+existing paired shared display channel (two8-byte packets reported written).
+No credential text/Guard/account action, exit/restart or installation occurred.
+The subsequent actual native screenshot is still WHITE with a cursor; no Steam
+menu/navigation response is visible. Packet writes do NOT establish Steam focus,
+consumption of input, UI success, browser death or completed session. The old
+private navigation utility has a hardcoded historical visually-verified scope;
+that description is explicitly ignored for this run. The frame and actual
+screenshots, not the generic label, are authoritative.
+
+Current23, all saved auth/games/saves and signed25/26/27 candidates remain
+preserved. The earlier one-time retirement25 approval remains pending, no
+repeated question or consent inferred. No on-Air code/health/discard/native-file
+policy qualification is added by these host tests. All new programs are source
+only, outside the app target, and no new iOS build/install occurred.
+
+### Reproduction and next step
+
+Compile the freestanding wire probe with the existing AArch64 cross linker.
+Compile the dynamic control with the actual root's regular ELF libX11.so.6.4.0
+and libc.so.6 (guest symlink stubs are NOT native linker inputs), `-nostdlib
+-fPIE`, glibc-start.S and interpreter `/lib/ld-linux-aarch64.so.1`. Both use
+-Wall/-Wextra/-Werror. The new run-x11-window-control.py takes the pinned host
+interpreter, a stopped unauthenticated private fakefs, one own ELF and a NEW
+private output directory. Raw root/Valve/packages/logs stay outside Git.
+
+Next distinguish the actual Steam window lifetime versus long-session pressure
+with narrow numeric tracing and the already prepared25 health/discard device A/B
+once the live session can safely end. Independently finish native stop/signal/
+storage ownership and legitimate Madeira integration; do not replace the actual
+Steam UI or game runtime. Bridge125 is still diagnostic, no game/return or
+repeated stable operation. Changes remain uncommitted outside weekday22–08;
+no main merge, success sentinel, scheduler unload or completion claim.
+
+## Run23 — bounded window-lifetime tracer, forwarding verified on real Xlib
+
+Prior turn was PROGRESS: both raw-wire and genuine Xlib tests passed, while the
+actual Air stayed white after one menu key. The next hypothesis is whether a
+narrow diagnostic can record real window query/destroy ordering without changing
+the original client's return values or pixels. This is diagnostic preparation,
+not a causal Steam fix or a redefinition of the Library/game/return goal.
+
+### Minimal implementation and review correction
+
+Own ARM64 Linux `xlib-window-trace.so` interposes ONLY XGetWindowAttributes and
+XDestroyWindow. It forwards exact arguments and output pointer, returns the real
+result and saves/restores errno around its diagnostics by source design. It
+installs NO error handler, retry, new thread, pointer/title/property/pixel dump,
+GPU/memory/assertion change, credential operation or Valve binary patch. Lazy
+RTLD_NEXT resolution must still be qualified in real Steam's loader namespaces.
+An unavailable original ends the diagnostic process125, never fakes success.
+
+V1's per-process-file logger passed its ordinary/fork/cap host controls, but file
+handle ownership across shared-VM/exec/descriptor-table changes was not proven.
+It was replaced BEFORE any app/Steam integration. This was review of the probe's
+design, not a discovered Steam failure. Its original source and binaries remain
+private and immutable.
+
+V2 writes numeric PID/TID/call/window/op/phase/result/monotonic events to the
+caller's EXISTING private diagnostic stderr. It owns/closes no extra descriptor
+and has no inherited logging mutex. A lock-free byte budget limits each budget
+instance to512KiB with an explicit omission marker. Fork copies the current
+budget; CLONE_VM shares it. Short writes/interleaving/cap make coverage partial;
+an absent event is not proof a window or failure was absent. stderr must already
+be directed to the app's private diagnostic sink. No arbitrary stderr content
+is published; only strictly parsed numeric records are used.
+
+### Actual controls, rather than compilation alone
+
+The updated real Xlib/glibc client first queries/closes an actual display BEFORE
+fork, then each process exercises its own16-window lifecycle. Four fresh,
+unauthenticated root/Xvfb controls run sequentially:
+
+- Normal plain and normal traced complete with identical complete report
+  dictionaries, original success/error counts and controlled pixel hashes.
+- Stress plain and stress traced add4000 successful attribute queries PER client.
+  Both still finish all windows/images/negative controls with identical results.
+- Normal tracing has130 parent/128 child numeric rows,33/32 successful queries,
+  16 expected destroyed-window failures and16 destroy returns per process.
+- Stress tracing reaches the explicit cap (parent524122 numeric bytes,
+  child523976), then the real Xlib program continues to the same final pixels
+  and counts. Missing tail records are explicitly incomplete, not success proof.
+
+Pixel FNV1a32 values remain parent4133264837/child658546117. Plain/traced report
+identity is actual evidence for tested returns/counters/pixels; source-level
+errno preservation is not presented as a universal client/thread/loader proof.
+The changed diagnostic and test code compile with -Wall/-Wextra/-Werror. Existing
+helper/bridge/runtime paths are not modified. These are real HOST ARM64 Linux,
+distro glibc/libX11 and Xvfb executions, not Air/CEF/window-manager/Steam proof.
+
+Final v2 library SHA256:
+`333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19`.
+The source build recipe (currently uncommitted by the time window)
+reproduces exact hashes for the library and both test ELFs. Private run23
+compiled-v2-source captures the exact tested source; EVIDENCE.run23 contains
+source/dependency/artifact/log hashes and the full bounded-control observations.
+Earlier run22's five source files were reconstructed AFTER those tests and
+verified byte-for-byte against ALL five previously recorded hashes; they are
+retained privately. Later warmup/stress/preload additions do not rewrite its
+historical results or pretend to have been included in earlier test binaries.
+
+### Reproduction, current boundary and next action
+
+```sh
+LINUX_LAB_XLIB_ROOT="$PRIVATE/inspected-clean-fakefs" \
+LINUX_LAB_XLIB_OUT="$PRIVATE/new-xlib-artifacts" \
+  bash experiments/linux-steam/tools/build-xlib-window-controls.sh
+python3 experiments/linux-steam/tools/test-xlib-window-trace.py \
+  "$PRIVATE/new-xlib-artifacts" "$PRIVATE/stopped-unauthenticated-source-root" \
+  "$PRIVATE/new-xlib-controls" --ish "$PRIVATE/host/ish"
+```
+
+Use the existing explicit ARM64 linker via LD_LLD; native link inputs are actual
+regular distro ELF libX11.so.6.4.0/libc.so.6, not fakefs symlink-text entries.
+The wrapper installs ONLY own ELF data through guest VFS. No host SQL mutation,
+Steam/account launch, Valve export, credentials or signing assets in Git.
+
+V2 is NOT in any iOS target, bundle resource, signed25/26/27, installed Steam
+root or current Air session. No device injection/restart/upgrade occurred in
+this run. No actual Steam load/interposition has been established. Current23
+remains preserved; the old retirement25 question is pending without repetition.
+The bridge remains125, and complete Linux stop/storage/legitimate Madeira launch
+and game/return are still required.
+
+Next implement an explicit default-OFF app/launcher opt-in, trusted bundled-ELF
+preboot VFS installation and fixed Steam-child environment, with default
+exclusion and final artifact checks. Only real selected-process trace events may
+prove activation; build/ELF/process presence is insufficient. The chosen pending
+on-Air memory experiment remains25, not an unannounced substitution of a newer
+candidate. Maintain the full interactive Library/BPM/licensed game/return and
+repeated-stability objective. Main/other worktrees/vendor/FEX/Valve and all
+working data unchanged; outside weekday22–08, source uncommitted/unpushed.
+No success sentinel, task unload or completion claim.
+
+## Run24 — explicit diagnostic Lab28, signed but not installed
+
+The numeric Xlib probe is now integrated behind both a default-OFF build flag
+`LINUX_LAB_X11_TRACE=1` and explicit launch argument `linux-steam-window-trace`.
+A preboot native-init-only VFS installer validates the own bounded ARM64 shared
+ELF, rejects symlink/conflict/stale staging, verifies bytes and publishes through
+a no-overwrite link. No Steam/account files are edited. The ordinary launcher
+bytes remain exactly HEAD; only explicit diagnostic startup adds the fixed
+preload AFTER starting Xvfb/VNC and BEFORE Steam. The requested marker explicitly
+says activation is unverified; no live injection or diagnostic success claim.
+
+Actual host ASan/UBSan VFS controls pass8 modes/23 checks, resource phase passes
+11 cases, launcher bytes match baseline, and existing16 ARM64/protocol/bridge
+controls pass. Full feature28 and default28 Xcode builds pass. Final feature
+Mach-O contains both ordinary/traced argv, installer and new entry point; its
+bundled ELF is SHA256333057792adbb13e10a88219b09d422a2e5fa356ef860b35f2e88a4a74d56c19.
+Default final Mach-O/resources exclude the diagnostic. Private run24 contains
+exact source snapshot, logs and linked hashes. Existing exact Air-authorized
+profile signs a disposable copy and deep-strict verification passes; signed
+Mach-O fb0380093123fc9e9abff7ef31d868f9bfe540a76d202822447efaaa9533850a.
+**NOT installed or device-qualified.** Private discard/game-file policy are off
+in this trace candidate. Current build products are DEFAULT28; selected signed
+candidates are immutable separate copies.
+
+Correction: run22's new diagnostic startup filename overlapped an existing
+tracked glibc-start.S. Restored the original exactly from HEAD before this
+compile; diagnostic is now separately xlib-glibc-start.S. The updated build
+recipe reproduces all three run23 control hashes byte-for-byte. Historical
+tested binaries were not changed. No original-helper regression is concealed.
+
+Air23 native4952 remains identity-verified in the last readonly query, preserved
+without stop/restart/install/account action. The earlier retirement25 question
+is pending; do not substitute28 or treat a capped log/updater exit as current
+session exit. Ordinary build success is not Steam/CEF interposition, visible UI,
+stability or game proof. Next independently test real unauthenticated Steam
+activation in a new host root; actual device diagnostic waits for safe session
+end or explicit approval. Bridge125 and incomplete Linux-stop/storage/auth/Wine
+integration still block real game/return. No main/vendor/FEX/Valve edits, source
+uncommitted outside weekday22–08, no completion sentinel or scheduler unload.
+
+## Run25 — genuine host Steam login/input, diagnostic loader defect corrected
+
+**Result boundary:** actual genuine ARM64 Linux Steam rendered the login window
+in two host runs. In the second live session, fixed noncredential `ideck-test`
+appeared in the username field, then ten Backspaces visibly cleared it. Each
+operation wrote22 RFB packets, but the separate inspected screenshots prove the
+response; packet writes alone do not. No password/real account/Guard/submit.
+Private screenshots include transient login QR data and must NOT be published.
+This is HOST interpreter/X11/RFB evidence, not Air/Metal/Bluetooth, Library/BPM,
+licensed game/return or repeated stability qualification. Air23 is unchanged.
+
+### Failed diagnostic and smallest discriminator
+
+The v2 probe used in unsigned/signed Lab28 caused the first actual Steam host
+attempt to end125 after installation verification, with zero ordinary trace
+rows. A separate real glibc/libX11 plugin experiment distinguishes scope:
+RTLD_LOCAL plain0 / v2-traced125; RTLD_GLOBAL plain0 / v2-traced0. Thus the
+diagnostic itself has an unqualified loader-scope path. This is NOT the cause
+of the Air white screen that predates the probe. Do not deploy Lab28's tracer.
+
+V3 first uses RTLD_NEXT, then ONLY on miss obtains a fixed-soname existing
+libX11 reference with Linux NOW|NOLOAD|LOCAL. It does not load a new dependency,
+promote the plugin to global, deep-bind or change Valve binaries. One atomic
+winning reference remains for cached symbols; concurrent losers close theirs.
+This intentionally extends Xlib lifetime, so it is NOT a transparent unload or
+all-loader-race test. Phase2 records numeric resolution route1/2 or fatal-125.
+Original arguments, return/output and errno forwarding stay as before. The
+Linux flag definitions were checked against glibc's own
+[header](https://raw.githubusercontent.com/bminor/glibc/master/bits/dlfcn.h) and
+[loader entry](https://raw.githubusercontent.com/bminor/glibc/master/dlfcn/dlopen.c).
+
+The same4 local/global tests now all0, including actual before/after checks
+that local plugin symbols remain outside global scope. Real Xlib normal/fork
+and cap-stress plain/traced comparisons still pass with identical complete
+reports and pixel hashes. Actual VFS installer8modes/23checks also pass. V3 ELF
+SHA256 b24c76df23870634a81e29ef893f4359d71234f3fc86b2db4600d44bb1a6b432.
+The real Steam/client and steamwebhelper private logs then contain actual
+window-query/destroy events. The second live test snapshot has60 strictly
+parsed rows across4 guest PIDs, zero observed false attribute returns; this
+does not prove all windows/processes/errors were captured. Real Steam login
+and input confirmation is separate from these numeric rows.
+
+### Observer correction and reproducible boundaries
+
+The first220s observer returned before the initial input probe. A subsequent
+readonly native/port query found no owner/listener; that zero-packet probe is
+INVALID as a Steam input failure. The exact cause of owner disappearance was
+not established, and is not called a Steam crash. New observe-host-steam-trace.py
+keeps its own parent/child alive during UI observations, accepts only a private
+stop-request for its own directly created unreaped child, and explicitly
+records intentional shutdown. The second test ends after242.386s with SIGTERM
+by that owner, NOT a clean Linux teardown/Wine handoff or guest crash.
+
+Own build-host-steam-trace.sh creates only separate copied packet/TCP/lifetime/
+worker/logging/madvise/lazy archives from pristine d1419782; no installed root
+or vendor/base archive is edited. Fresh private unauthenticated root copies
+are used. The one short native socket directory uses system temporary storage
+for AF_UNIX length; all data/logs/binaries remain external. No overlapping
+runtimes, no account-cache transfer or host SQL metadata edits.
+
+Reproduce scope tests using build-xlib-window-controls.sh then
+`test-xlib-loader-scope.py ISH STOPPED_UNAUTH_ROOT ARTIFACTS NEW_OUTPUT`. For the
+real client use build-host-steam-trace.sh and
+`observe-host-steam-trace.py CONTROL OWN_ROOT OWN_PAYLOAD NEW_OUTPUT --seconds 600`.
+Inspect the actual login frame before optionally using rfb-login-fixture.m's
+fixed insert/erase; never submit or automate credentials. Its22 packets are
+transport evidence only; inspect the inserted/cleared images separately.
+
+### Lab29 and next device gate
+
+Source29 gives v3 its own preboot path/marker and retains both explicit build
+and explicit diagnostic-launch gates. Full unsigned feature/default iOS builds
+pass. Initial sandboxed Xcode startup stalled and only that identity-verified
+own build was terminated; authorized system-service execution passed without
+changing accounts/lock/security. Final feature Mach-O SHA256
+1693d0a89471b8376c65ab05f3a24864873ab7e457003b461be8558416b77f42
+contains v3 entry/marker/path, and bundled ELF matches the tested hash. Final
+default Mach-O excludes path/preload/diagnostic/tool resources; its hash is
+unchanged from default28. Immutable private run25/lab29-unsigned retains feature
+output; current generic xcode products are DEFAULT29. Lab29 NOT signed,
+installed or on-Air-qualified. Lab28 signed artifacts are retained but its
+trace experiment is superseded by the observed host loader defect.
+
+One readonly exact Air query still identifies4952/B265FEBE; no Air input/stop/
+upgrade/authentication action this run. Preserve the unanswered one-time25
+retirement choice; do not repeat or substitute29. After actual end or explicit
+approval qualify the selected health/discard A/B and, if needed, explicit v3
+window trace. Full native stop including TLS/auxiliary workers/signals/storage,
+legitimate Windows Steam/Madeira linkage, actual Play/game/return and repeated
+on-Air stability remain open. Existing child joins do not certify full reset.
+Bridge remains125. No FEX/Valve/main/other-worktree changes, no success sentinel
+or scheduler unload. Source uncommitted/unpushed outside weekday22–08.
+
+## Run26 — actual native worker joins toward sequential handoff
+
+The previous turn made progress on genuine host Steam login/input but did not
+qualify the Air white screen or any game. This experiment addresses an actual
+handoff prerequisite: body-entry counters may reach zero before TLS destructors
+finish. No counter-only result may authorize starting Madeira.
+
+Own NativeWorkerJoins.c/h adds an isolated owned reaper for joinable TIMER,
+PROFILE and TTY workers. FORWARD keeps its original join owner, captured under
+a generation before joining; there is no duplicate join or thread-ID reuse
+lookup after joining. Managed slots recycle only AFTER actual pthread_join,
+including TLS. One native serial owner initializes/seals/finishes; seal closes
+future creation, finish actually joins the reaper. Errors stay sticky and live
+TLS can keep a join pending. No forced cancel/detach/reset or runtime permission.
+The copied-archive builder's explicit --join-workers switches only these paths;
+ordinary app settings/defaults remain off and no vendor source changes.
+
+Actual host ASan/UBSan tests, not compilation alone:
+
+- Both managed and original-owner joins remain pending after body count0 while
+  a deliberately held TLS destructor is still active; only its release allows
+  completion. This also passes with the ACTUAL pinned timer provider callback.
+- 8 active slots reuse through10008 real joins with4 concurrent producers.
+  1000 creation failures leave no leaked handle/counter; an injected join error
+  leaves completion false even when the original body counter is zero.
+- Foreign owner/fork and detached attributes are rejected. Test-only host
+  failure injection cannot compile for iOS.
+- Real ARM64 native-offload fixture creates2 genuine forwarding workers and
+  preserves original caller ownership/return37. This is a harmless native
+  handler, NOT Madeira or a game.
+- Real timer/TTY providers,16 ordinary ARM64 controls and the existing7 default
+  worker regressions pass. TTY uses the source's ALREADY EXISTING cleanup cancel
+  on a private stdin pipe, not a new policy or any user's actual terminal. Its
+  native fixture remains alive until actual joins finish.
+
+Default generated source for all4 providers remains byte-identical to the
+previous ordinary overlay. The default counter object's actual text section
+is identical and references no join registry. The earlier immutable feature29
+Mach-O remains unchanged and contains no new registry symbols. New code only
+compiles as an iOS arm64 OBJECT: NOT app-linked/installed/on-device validated.
+Private run26 retains exact tested source, object/archive/log hashes, controls
+and regression evidence. Initial bash3 empty-array setup refusal and host-only
+unused-code compile correction are retained separately from the final passing
+full-controls-v2 run; no failed run is counted as passing.
+
+This is still partial ownership, NOT complete Linux teardown or Wine permission.
+In particular the existing actual profiler regression still has1 live sampler
+after guests exit: the source loop is infinite. It needs an explicit cooperative
+stop before a join can finish; counting it or suppressing it is insufficient.
+Guest child tracking still separately has4096 cumulative identities; this new
+worker-slot reuse does not remove that limit. Existing timer creation-error
+semantics must also be qualified before enabling a new admission gate. No epoch
+reset/resume, full guest-stop, signal/storage/global cleanup, actual Steam Play
+Madeira launch or game-return is claimed. The next discriminating experiment is
+cooperative profiler stop in an isolated copied archive, followed by actual
+frontend shutdown and measured native/resource boundaries.
+
+One readonly Air query revalidates old23/4952+B265FEBE. No device input/stop/
+upgrade/account action; unanswered retirement25 choice remains, not repeated
+or replaced with29. Main/other worktrees/apps/auth/games/saves preserved,
+prototype uncommitted outside weekday22–08, goal active, no STABLE_SUCCESS or
+scheduler unload.
+
+Additional run26 checks: actual ThreadSanitizer managed-TLS, external-owner-TLS
+and four-producer10008-reuse controls all pass without race diagnostics in the
+tested own registry/harness. This is not coverage of all LinuxRunner races.
+Actual iOS compilation with HOST join-failure injection is rejected by the
+specific HOST-only guard and creates no object. Source/default/device limits
+above are unchanged.

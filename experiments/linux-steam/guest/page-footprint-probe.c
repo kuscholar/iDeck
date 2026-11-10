@@ -30,13 +30,21 @@ static void await(const char *path) {
 }
 void _start(void) {
     const long size=(long)RESERVE_MIB*1024*1024;
-    long address=call(222,0,size,3,0x22,-1,0);
+    long address=call(222,0x4100000000L,size,3,0x32,-1,0);
     if(address<0 && address>=-4095)finish(14);
     volatile unsigned char *p=(volatile unsigned char *)address;
     marker("/memory-reserved");await("/start-touch");
     for(unsigned i=0;i<16384;i++) p[(long)i*4096]=(unsigned char)(5+i%241);
     for(unsigned i=0;i<16384;i++) if(p[(long)i*4096]!=(unsigned char)(5+i%241))finish(15);
-    marker("/memory-ready");await("/release");
+    marker("/memory-ready");
+#if TEST_DISCARD
+    await("/start-discard");
+    if(call(233,address,64L*1024*1024,4,0,0,0)!=0)finish(17);
+    marker("/memory-discarded");await("/release");
+    for(unsigned i=0;i<16384;i++)if(p[(long)i*4096]!=0)finish(18);
+#else
+    await("/release");
+#endif
     if(call(215,address,size,0,0,0,0)!=0)finish(16);
     marker("/memory-unmapped");finish(0);
 }

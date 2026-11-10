@@ -21,6 +21,11 @@ int ideck_linux_lab_live_guest_threads(void);
  * excludes UIKit/RFB/TLS destructors and never authorizes Wine/restart. */
 int ideck_linux_lab_native_worker_entries(void);
 struct ideck_tool_payload;
+struct ideck_x11_trace_payload;
+/* Explicit diagnostic build only. Bundle-owned Linux ELF bytes, preboot VFS
+ * installation and fixed child environment; no live-session injection. */
+int ideck_linux_lab_steam_frontend_with_trace(const char *root_path,
+    const struct ideck_tool_payload *tool,const struct ideck_x11_trace_payload *trace);
 /* Opt-in preboot installer; the payload belongs to the signed native app. */
 int ideck_linux_lab_steam_frontend_with_tool(const char *root_path,const struct ideck_tool_payload *tool);
 /* Diagnostic125 only, with synthetic metadata; no Steam ownership/game claim. */

@@ -13,6 +13,7 @@
 @property(nonatomic, copy) NSString *nativeLogError;
 #if IDECK_LAB_NATIVE_LOG
 @property(nonatomic, strong) NSTimer *nativeResourceTimer;
+- (void)writeNativeHealth;
 #endif
 - (void)connectWindowScene:(UIWindowScene *)scene;
 @end
@@ -29,6 +30,7 @@
     if(result||!ideck_native_log_name())self.nativeLogError=@"Private diagnostics unavailable. No Linux session started.";
     else {
         NSDictionary *receipt=@{@"file":[NSString stringWithUTF8String:ideck_native_log_name()],@"schema":@1,
+            @"health_file":[NSString stringWithUTF8String:ideck_native_health_name()],
             @"byte_limit":@(IDECK_NATIVE_LOG_LIMIT),@"pid":@(getpid()),@"physical_memory_bytes":@(NSProcessInfo.processInfo.physicalMemory),
             @"build":[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"]?:@"unknown"};
         NSData *data=[NSJSONSerialization dataWithJSONObject:receipt options:NSJSONWritingPrettyPrinted error:nil];
@@ -36,6 +38,7 @@
             self.nativeLogError=@"Private diagnostics receipt unavailable. No Linux session started.";
         if(!self.nativeLogError){
             ideck_native_log_resources();
+            [self writeNativeHealth];
             self.nativeResourceTimer=[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(sampleNativeResources) userInfo:nil repeats:YES];
             [NSRunLoop.mainRunLoop addTimer:self.nativeResourceTimer forMode:NSRunLoopCommonModes];
         }
@@ -46,7 +49,12 @@
 #if IDECK_LAB_NATIVE_LOG
 - (void)sampleNativeResources {
     ideck_native_log_resources();
-    static unsigned count;if(++count%10==0)ideck_linux_lab_log_tasks();
+    static unsigned count;if(++count%10==0){ideck_linux_lab_log_tasks();[self writeNativeHealth];}
+}
+- (void)writeNativeHealth {
+    unsigned build=[[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"] unsignedIntValue];
+    if(ideck_native_health(build,ideck_linux_lab_stage(),ideck_linux_lab_live_guest_threads(),ideck_linux_lab_native_worker_entries()))
+        ideck_native_log_line("NATIVE_HEALTH_WRITE failed=1");
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE active");ideck_native_log_resources();}
 - (void)applicationWillResignActive:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE resign_active");ideck_native_log_resources();}
@@ -66,7 +74,7 @@
         [self.window makeKeyAndVisible];return;
     }
     unsigned steamModes=0;
-    for(NSString *mode in @[@"linux-steam-desktop",@"linux-steam-install-dependencies",@"linux-steam-compatibility-diagnostics"])
+    for(NSString *mode in @[@"linux-steam-desktop",@"linux-steam-install-dependencies",@"linux-steam-compatibility-diagnostics",@"linux-steam-window-trace"])
         if([NSProcessInfo.processInfo.arguments containsObject:mode])steamModes++;
     if (steamModes) {
         BOOL conflict=steamModes!=1;

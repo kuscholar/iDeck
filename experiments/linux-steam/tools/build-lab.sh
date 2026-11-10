@@ -17,11 +17,23 @@ export PATH="$(dirname "$LD_LLD"):$PATH"
 if [[ ${LINUX_LAB_COMPAT_TOOL:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]]; then
     echo 'Compatibility registration requires explicit Steam frontend opt-in' >&2;exit 2
 fi
+if [[ ${LINUX_LAB_X11_TRACE:-0} == 1 && ( ${LINUX_LAB_COMPAT_TOOL:-0} != 1 || ${LINUX_LAB_NATIVE_LOG:-0} != 1 || ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ) ]];then
+    echo 'X11 trace requires explicit compatibility tool, native logging and Steam frontend' >&2;exit 2
+fi
+if [[ ${LINUX_LAB_GAME_FILE_POLICY:-0} == 1 && ( ${LINUX_LAB_COMPAT_TOOL:-0} != 1 || ${LINUX_LAB_NATIVE_LOG:-0} != 1 ) ]];then
+    echo 'Native game-file diagnostics require explicit compatibility tool and native logging' >&2;exit 2
+fi
 if [[ ${LINUX_LAB_CEF_DISABLE_GPU:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]];then
     echo 'CEF GPU experiment requires explicit Steam frontend opt-in' >&2;exit 2
 fi
 if [[ ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 && ${LINUX_LAB_GUEST_LIFETIME:-0} != 1 ]];then
     echo 'Native worker accounting requires explicit guest lifetime tracking' >&2;exit 2
+fi
+if [[ ${LINUX_LAB_MADVISE_STATS:-0} == 1 && ${LINUX_LAB_NATIVE_LOG:-0} != 1 ]];then
+    echo 'Madvise request observation requires explicit native logging' >&2;exit 2
+fi
+if [[ ${LINUX_LAB_PRIVATE_DISCARD:-0} == 1 && ( ${LINUX_LAB_MADVISE_STATS:-0} != 1 || ${LINUX_LAB_LAZY_PAGES:-0} != 1 ) ]];then
+    echo 'Private discard experiment requires explicit request observation and grouped lazy pages' >&2;exit 2
 fi
 mkdir -p "$LINUX_LAB_ARTIFACTS"
 sdk=$(xcrun --sdk iphoneos --show-sdk-path)
@@ -52,6 +64,9 @@ xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
 xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static \
     -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
     "$repo/experiments/linux-steam/guest/tcp-view-probe.c" -Wl,-e,_start -o "$out/tcp-probe.elf"
+xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -shared \
+    -ffreestanding -fno-builtin -fno-stack-protector -fPIC -O2 -Wall -Wextra -Werror \
+    "$repo/experiments/linux-steam/guest/xlib-window-trace.c" -Wl,-soname,ideck-x11-window-trace.so -o "$out/xlib-window-trace.so"
 runtime="$out"
 if [[ ${LINUX_LAB_PACKET_PIPES:-0} == 1 ]]; then
     packet_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-packet.XXXXXX")
@@ -85,6 +100,14 @@ if [[ ${LINUX_LAB_NATIVE_LOG:-0} == 1 ]];then
     runtime="$log_stage/runtime"
 fi
 frontend_libs=""
+if [[ ${LINUX_LAB_MADVISE_STATS:-0} == 1 ]];then
+    advice_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-madvise-stats.XXXXXX")
+    set --
+    [[ ${LINUX_LAB_PRIVATE_DISCARD:-0} != 1 ]] || set -- --experimental-private-discard
+    python3 "$repo/experiments/linux-steam/tools/build-madvise-stats.py" "$src" "$out" "$runtime/libish.a" "$advice_stage/runtime" ${1+"$@"}
+    cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$advice_stage/runtime/"
+    runtime="$advice_stage/runtime"
+fi
 if [[ ${LINUX_LAB_LAZY_PAGES:-0} == 1 ]];then
     lazy_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-lazy-pages.XXXXXX")
     python3 "$repo/experiments/linux-steam/tools/build-lazy-pages.py" "$src" "$out" "$runtime/libish.a" "$lazy_stage/runtime"
@@ -104,11 +127,15 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_BUILD_DIR="$out" LINUX_LAB_RUNTIME_DIR="$runtime" \
     LINUX_LAB_SHARED_DISPLAY="${LINUX_LAB_SHARED_DISPLAY:-0}" \
     LINUX_LAB_COMPAT_TOOL="${LINUX_LAB_COMPAT_TOOL:-0}" \
+    LINUX_LAB_X11_TRACE="${LINUX_LAB_X11_TRACE:-0}" \
+    LINUX_LAB_GAME_FILE_POLICY="${LINUX_LAB_GAME_FILE_POLICY:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \
     LINUX_LAB_NATIVE_LOG="${LINUX_LAB_NATIVE_LOG:-0}" \
     LINUX_LAB_LAZY_PAGES="${LINUX_LAB_LAZY_PAGES:-0}" \
     LINUX_LAB_CEF_DISABLE_GPU="${LINUX_LAB_CEF_DISABLE_GPU:-0}" \
+    LINUX_LAB_MADVISE_STATS="${LINUX_LAB_MADVISE_STATS:-0}" \
+    LINUX_LAB_PRIVATE_DISCARD="${LINUX_LAB_PRIVATE_DISCARD:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
     LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build

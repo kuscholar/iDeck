@@ -16,6 +16,7 @@
 #include "fs/path.h"
 #include "LinuxSteamSession.h"
 #include "ToolInstall.h"
+#include "X11TraceInstall.h"
 #if IDECK_LAB_GUEST_LIFETIME
 #include "GuestLifetime.h"
 #endif
@@ -24,6 +25,9 @@
 #endif
 #if IDECK_LAB_NATIVE_LOG
 #include "NativeKernelLog.h"
+#endif
+#if IDECK_LAB_MADVISE_STATS
+#include "MadviseStats.h"
 #endif
 
 static atomic_bool consumed;
@@ -82,13 +86,25 @@ static void *run_guest(void *unused) {
     task_run_current();
     return NULL;
 }
-static int run(const char *root_path, int mode, const struct ideck_tool_payload *tool) {
+static int run(const char *root_path, int mode, const struct ideck_tool_payload *tool,const struct ideck_x11_trace_payload *trace) {
     int steam_probe = mode == 1, compat_probe = mode == 2, distro_probe = mode == 3;
     int frontend = mode == 4, dependencies = mode == 5, tool_probe = mode == 6;
     int fake_root = distro_probe || frontend || dependencies || tool_probe;
     if (!root_path || root_path[0] != '/') return -22;
+#if IDECK_LAB_X11_TRACE
+    if(trace&&!frontend)return -22;
+#else
+    if(trace)return -95;
+#endif
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
+#if IDECK_LAB_MADVISE_STATS
+    if(strcmp(ideck_madvise_stats_marker(),"IDECK_MADVISE_STATS_V1"))return -5;
+#endif
+#if IDECK_LAB_PRIVATE_DISCARD
+    extern const char *ideck_private_discard_marker(void);
+    if(strcmp(ideck_private_discard_marker(),"IDECK_EXCLUSIVE_DISCARD_V1"))return -5;
+#endif
 #if IDECK_LAB_LAZY_PAGES
     extern const char *ideck_lazy_pages_marker(void);
     if(strcmp(ideck_lazy_pages_marker(),"IDECK_LAZY_NATIVE_GROUP_V1"))return -5;
@@ -168,6 +184,11 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
 #else
     if(tool)return -95;
 #endif
+    if(trace){
+#if IDECK_LAB_X11_TRACE
+        int created=0;if((err=ideck_x11_trace_install(trace,&created))<0)return err;
+#endif
+    }
     /* Keep PID 1 out of guest execution: its halt path calls host _exit(). */
     if ((err = prepare_guest_runtime_dirs()) < 0) return err;
     atomic_store(&phase, 5);
@@ -186,6 +207,11 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     }
     const char *program = distro_probe || frontend || dependencies || tool_probe ? "/bin/sh" : steam_probe ? "/Steam/steamrtarm64/steam" : compat_probe ? "/ideck-madeira" : "/probe";
     const char frontend_args[] = IDECK_LINUX_STEAM_ARGS;
+    const char *frontend_arguments=frontend_args;
+#if IDECK_LAB_X11_TRACE
+    const char traced_frontend_args[]=IDECK_LINUX_STEAM_TRACE_ARGS;
+    if(trace)frontend_arguments=traced_frontend_args;
+#endif
     const char tool_args[] = "/bin/sh\0-c\0"
         "set -eu; umask 077; exec > /tmp/ideck-compatibility-results.txt 2>&1; "
         "cd " IDECK_LAUNCH_ROOT "Control; "
@@ -226,7 +252,7 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     }
     atomic_store(&phase, 6);
     if ((err = do_execve(program, distro_probe || frontend || dependencies || tool_probe ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
-                         frontend ? frontend_args : tool_probe ? tool_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
+                         frontend ? frontend_arguments : tool_probe ? tool_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
     exit_hook = observe_exit;
     current = NULL;
     pthread_t worker;
@@ -244,13 +270,13 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     atomic_store(&phase, 8);
     return wait_status;
 }
-int ideck_linux_lab_run(const char *root_path) { return run(root_path, 0, NULL); }
-int ideck_linux_lab_steam_probe(const char *root_path) { return run(root_path, 1, NULL); }
-int ideck_linux_lab_compat_probe(const char *root_path) { return run(root_path, 2, NULL); }
-int ideck_linux_lab_distro_probe(const char *root_path) { return run(root_path, 3, NULL); }
+int ideck_linux_lab_run(const char *root_path) { return run(root_path,0,NULL,NULL); }
+int ideck_linux_lab_steam_probe(const char *root_path) { return run(root_path,1,NULL,NULL); }
+int ideck_linux_lab_compat_probe(const char *root_path) { return run(root_path,2,NULL,NULL); }
+int ideck_linux_lab_distro_probe(const char *root_path) { return run(root_path,3,NULL,NULL); }
 int ideck_linux_lab_steam_frontend(const char *root_path) {
 #if IDECK_LAB_STEAM_FRONTEND
-    return run(root_path, 4, NULL);
+    return run(root_path,4,NULL,NULL);
 #else
     (void)root_path; return -95;
 #endif
@@ -258,7 +284,7 @@ int ideck_linux_lab_steam_frontend(const char *root_path) {
 
 int ideck_linux_lab_dependencies(const char *root_path) {
 #if IDECK_LAB_STEAM_FRONTEND
-    return run(root_path, 5, NULL);
+    return run(root_path,5,NULL,NULL);
 #else
     (void)root_path; return -95;
 #endif
@@ -284,7 +310,7 @@ int ideck_linux_lab_native_worker_entries(void) {
 int ideck_linux_lab_steam_frontend_with_tool(const char *root_path,const struct ideck_tool_payload *tool) {
 #if IDECK_LAB_STEAM_FRONTEND && IDECK_LAB_COMPAT_TOOL
     if(!tool)return -22;
-    return run(root_path,4,tool);
+    return run(root_path,4,tool,NULL);
 #else
     (void)root_path;(void)tool;return -95;
 #endif
@@ -292,8 +318,17 @@ int ideck_linux_lab_steam_frontend_with_tool(const char *root_path,const struct 
 int ideck_linux_lab_compatibility_tool_probe(const char *root_path,const struct ideck_tool_payload *tool) {
 #if IDECK_LAB_STEAM_FRONTEND && IDECK_LAB_COMPAT_TOOL
     if(!tool)return -22;
-    return run(root_path,6,tool);
+    return run(root_path,6,tool,NULL);
 #else
     (void)root_path;(void)tool;return -95;
+#endif
+}
+
+int ideck_linux_lab_steam_frontend_with_trace(const char *root_path,const struct ideck_tool_payload *tool,const struct ideck_x11_trace_payload *trace) {
+#if IDECK_LAB_X11_TRACE && IDECK_LAB_STEAM_FRONTEND && IDECK_LAB_COMPAT_TOOL
+    if(!tool||!trace)return -22;
+    return run(root_path,4,tool,trace);
+#else
+    (void)root_path;(void)tool;(void)trace;return -95;
 #endif
 }

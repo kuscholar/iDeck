@@ -12,7 +12,9 @@ p.add_argument('source',type=Path);p.add_argument('build',type=Path)
 p.add_argument('archive',type=Path);p.add_argument('output',type=Path)
 p.add_argument('--sanitize',action='store_true')
 p.add_argument('--fail-worker-starts',action='store_true',help='HOST ONLY negative control: return EAGAIN, never an iOS build')
+p.add_argument('--join-workers',action='store_true',help='ISOLATED owned-reaper prototype; requires native initialization, not full teardown')
 a=p.parse_args();src,build,archive,out=map(lambda x:x.resolve(),[a.source,a.build,a.archive,a.output])
+assert not(a.join_workers and a.fail_worker_starts),'Use independent join and start-failure controls'
 pin='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()==pin
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -20,6 +22,8 @@ assert not out.exists();out.mkdir(parents=True)
 entries=json.loads((build/'compile_commands.json').read_text());lab=Path(__file__).resolve().parents[1]
 hashof=lambda f:hashlib.sha256(f.read_bytes()).hexdigest()
 for name in ['NativeWorkers.c','NativeWorkers.h']:shutil.copy2(lab/'app'/name,out/name)
+if a.join_workers:
+ for name in ['NativeWorkerJoins.c','NativeWorkerJoins.h']:shutil.copy2(lab/'app'/name,out/name)
 units=[('util/timer.c','timer_thread','TIMER','timer'),('kernel/guest_profile.c','sampler','PROFILE','profile'),
        ('fs/tty-real.c','real_tty_read_thread','TTY','tty'),('kernel/native_offload.c','pipe_forward_thread','FORWARD','forward')]
 objects=[];evidence={}
@@ -32,6 +36,7 @@ def compile_copy(relative,generated,object_name):
  for key,value in [('-MF',out/(object_name+'.d')),('-MQ',obj)]:
   if key in cmd:cmd[cmd.index(key)+1]=str(value)
  if a.sanitize:cmd+=['-fsanitize=address,undefined','-fno-omit-frame-pointer']
+ if a.join_workers:cmd+=['-DIDECK_LAB_JOIN_NATIVE_WORKERS=1']
  if a.fail_worker_starts and generated.name=='NativeWorkers.c':cmd+=['-DIDECK_HOST_WORKER_CREATE_EAGAIN=1']
  subprocess.run(cmd,cwd=entry['directory'],check=True);return obj
 for relative,name,kind,callback in units:
@@ -50,15 +55,25 @@ static void *{name}(void *argument) {{
  body=body[:m.start()]+replacement+body[m.end():]
  calls=list(re.finditer(r'pthread_create\([^;\n]*\b'+name+r'\s*,',body));assert len(calls)==1
  m=calls[0];body=body[:m.start()]+m.group(0).replace('pthread_create(','ideck_native_worker_start(IDECK_WORKER_'+kind+',',1)+body[m.end():]
+ if a.join_workers:
+  if kind=='FORWARD':
+   old='pthread_join(pipe->thread, NULL)';assert body.count(old)==1
+   body=body.replace(old,'ideck_worker_joins_external(pipe->thread, NULL)')
+  else:
+   old={'TIMER':'pthread_detach(timer->thread);','PROFILE':'pthread_detach(thread);','TTY':'pthread_detach(tty->thread);'}[kind]
+   assert body.count(old)==1;body=body.replace(old,'/* Owned reaper joins after body AND TLS completion. */')
+  body='#include "NativeWorkerJoins.h"\n'+body
  body='#include "NativeWorkers.h"\n'+body
  generated=out/relative.replace('/','_');generated.write_text(body)
  entry=next(x for x in entries if x['file'].endswith('/'+relative));cmd=shlex.split(entry['command']);object_name=Path(cmd[cmd.index('-o')+1]).name
  objects.append(compile_copy(relative,generated,object_name));evidence[relative]={'original_sha256':hashlib.sha256(original).hexdigest(),'generated_sha256':hashof(generated),'object':object_name}
 objects.append(compile_copy('util/timer.c',out/'NativeWorkers.c','ideck_NativeWorkers.c.o'))
+if a.join_workers:objects.append(compile_copy('util/timer.c',out/'NativeWorkerJoins.c','ideck_NativeWorkerJoins.c.o'))
 basehash=hashof(archive);target=out/'libish.a';shutil.copy2(archive,target)
 subprocess.run(['xcrun','ar','r',str(target),*[str(x) for x in objects]],check=True)
 assert hashof(archive)==basehash
 (out/'build-evidence.json').write_text(json.dumps(dict(linuxrunner=pin,base_archive_sha256=basehash,base_archive_unchanged=True,
  archive_sha256=hashof(target),units=evidence,counter_sha256=hashof(out/'NativeWorkers.c'),header_sha256=hashof(out/'NativeWorkers.h'),
- sanitized_units=a.sanitize,host_start_failure_injected=a.fail_worker_starts,marker='IDECK_NATIVE_WORKERS_V1'),indent=2)+'\n')
+ sanitized_units=a.sanitize,host_start_failure_injected=a.fail_worker_starts,joinable_worker_prototype=a.join_workers,
+ join_registry_sha256=hashof(out/'NativeWorkerJoins.c') if a.join_workers else None,marker='IDECK_NATIVE_WORKERS_V1'),indent=2)+'\n')
 print('Copied native-worker archive built; vendor/base unchanged')

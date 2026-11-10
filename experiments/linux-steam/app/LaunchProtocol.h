@@ -7,6 +7,7 @@
 #define IDECK_LAUNCH_VERSION 1u
 #define IDECK_LAUNCH_MAX_ARGS 32u
 #define IDECK_LAUNCH_ROOT "/mnt/ideck/SteamLibrary/steamapps/common/"
+#define IDECK_LAUNCH_DEFAULT_ROOT "/Steam/steamapps/common/"
 /* Fixed little-endian frame; ARM64 guest and iOS host are both little-endian.
  * No host pointer, pid, credentials or unconstrained environment values. */
 struct ideck_launch_request {

@@ -5,6 +5,9 @@
 #import "LabSocketPrefix.h"
 #import "LinuxLabRuntime.h"
 #import "ToolInstall.h"
+#if IDECK_LAB_X11_TRACE
+#import "X11TraceInstall.h"
+#endif
 #import "RFBClient.h"
 #import "MetalFramebufferView.h"
 #if IDECK_LAB_NATIVE_LOG
@@ -12,6 +15,21 @@
 #endif
 #include <unistd.h>
 #include <stdatomic.h>
+#if IDECK_LAB_GAME_FILE_POLICY
+#if !IDECK_LAB_COMPAT_TOOL || !IDECK_LAB_NATIVE_LOG
+#error Native game-file diagnostics require compatibility-tool and native-log opt-ins
+#endif
+#include "GameFilePolicy.h"
+#include <fcntl.h>
+#endif
+static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
+    NSMutableDictionary *result=[fields mutableCopy];result[@"schema"]=@2;result[@"pid"]=@(getpid());
+    result[@"build"]=[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"]?:@"unknown";
+#if IDECK_LAB_NATIVE_LOG
+    const char *name=ideck_native_log_name();if(name)result[@"native_log"]=[NSString stringWithUTF8String:name];
+#endif
+    return result;
+}
 
 @interface LabSteamInput : UIView <UIKeyInput,UITextInputTraits>
 @property(nonatomic,strong) LRRFBClient *client;
@@ -119,6 +137,10 @@
     @autoreleasepool {
         static atomic_bool requested;
         if(atomic_exchange(&requested,true)){[self showStatus:@"A frontend lifetime was already requested. Existing state was preserved."];return;}
+        BOOL windowTrace=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-window-trace"];
+#if !IDECK_LAB_X11_TRACE
+        if(windowTrace){[self showStatus:@"Window diagnostics are not enabled in this build; no guest started."];return;}
+#endif
         NSFileManager *fm=NSFileManager.defaultManager;
         NSURL *support=[fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
         NSURL *lab=[support URLByAppendingPathComponent:@"iDeckLinuxLab" isDirectory:YES];
@@ -140,11 +162,22 @@
             int result=ideck_linux_lab_dependencies(root.fileSystemRepresentation);
             NSDictionary *report=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),@"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),
                 @"linux_worker_entries":@(ideck_linux_lab_native_worker_entries())};
-            NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil];
+            NSData *data=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(report) options:NSJSONWritingPrettyPrinted error:nil];
             [data writeToURL:[lab URLByAppendingPathComponent:@"last-dependency-setup.json"] options:NSDataWritingAtomic error:nil];
             [self showStatus:[NSString stringWithFormat:@"Dependency control ended (status %d). Restart the Lab for Steam.",result]];
             return;
         }
+#if IDECK_LAB_GAME_FILE_POLICY
+        // Register only the native app-prepared data capability, before any
+        // Linux task exists. No guest path, descriptor, auth or command enters
+        // this registration API. Libraries may be created by Steam later.
+        int rootDirectory=open(root.fileSystemRepresentation,O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+        int dataDirectory=rootDirectory<0?-1:openat(rootDirectory,"data",O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+        int policy=dataDirectory<0?-1:ideck_game_file_policy_start(dataDirectory);
+        if(dataDirectory>=0)close(dataDirectory);if(rootDirectory>=0)close(rootDirectory);
+        if(policy){[self showStatus:@"Native game-file diagnostics could not bind this Lab root. No guest started."];return;}
+        ideck_native_log_line("IDECK_GAME_FILE_POLICY_V1 diagnostic_only=1 wrapper_exit=125 game_launched=0");
+#endif
         BOOL compatibilityProbe=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-compatibility-diagnostics"];
 #if IDECK_LAB_COMPAT_TOOL
         NSURL *resource=[NSBundle.mainBundle.resourceURL URLByAppendingPathComponent:@"LabCompatibility" isDirectory:YES];
@@ -161,12 +194,24 @@
             extern unsigned ideck_lab_bridge_requests(void);
             NSDictionary *report=@{@"status":@(result),@"native_bridge_requests":@(ideck_lab_bridge_requests()),@"diagnostic_only":@YES,
                 @"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),@"linux_worker_entries":@(ideck_linux_lab_native_worker_entries())};
-            NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:nil];
+            NSData *data=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(report) options:NSJSONWritingPrettyPrinted error:nil];
             [data writeToURL:[lab URLByAppendingPathComponent:@"last-compatibility-control.json"] options:NSDataWritingAtomic error:nil];
             [self showStatus:[NSString stringWithFormat:@"Compatibility diagnostic ended (status %d). No game was launched. Restart the Lab for Steam.",result]];return;
         }
 #else
         if(compatibilityProbe){[self showStatus:@"Compatibility tool is not enabled; no guest started."];return;}
+#endif
+        // This is a separate diagnostic launch, never live injection. These
+        // immutable bytes are retained by the launch block until preboot VFS
+        // installation has returned. CodeSignature covers the bundle resource.
+#if IDECK_LAB_X11_TRACE
+        NSData *x11Trace=nil;
+        if(windowTrace){
+            NSURL *traceURL=[NSBundle.mainBundle.resourceURL URLByAppendingPathComponent:@"LabDiagnostics/xlib-window-trace.so"];
+            x11Trace=[NSData dataWithContentsOfURL:traceURL];
+            if(x11Trace.length<64||x11Trace.length>262144){[self showStatus:@"Bundled window diagnostic is unavailable; no guest started."];return;}
+            ideck_native_log_line("IDECK_X11_TRACE_V3 requested=1 guest_activation=unverified");
+        }
 #endif
         [self showStatus:@"Starting genuine ARM64 Linux Steam; waiting for its display."];
 #if IDECK_LAB_NATIVE_LOG
@@ -182,13 +227,19 @@
             // Capturing the NSData objects here keeps their bytes alive until
             // the synchronous preboot installer and initial session return.
             struct ideck_tool_payload payload={toolBinary.bytes,toolBinary.length,toolDiscovery.bytes,toolDiscovery.length,toolManifest.bytes,toolManifest.length};
+#if IDECK_LAB_X11_TRACE
+            int result;
+            if(windowTrace){struct ideck_x11_trace_payload trace={x11Trace.bytes,x11Trace.length};result=ideck_linux_lab_steam_frontend_with_trace(root.fileSystemRepresentation,&payload,&trace);}
+            else result=ideck_linux_lab_steam_frontend_with_tool(root.fileSystemRepresentation,&payload);
+#else
             int result=ideck_linux_lab_steam_frontend_with_tool(root.fileSystemRepresentation,&payload);
+#endif
 #else
             int result=ideck_linux_lab_steam_frontend(root.fileSystemRepresentation);
 #endif
             NSDictionary *snapshot=@{@"status":@(result),@"stage":@(ideck_linux_lab_stage()),
-                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),@"linux_worker_entries":@(ideck_linux_lab_native_worker_entries())};
-            NSData *report=[NSJSONSerialization dataWithJSONObject:snapshot options:NSJSONWritingPrettyPrinted error:nil];
+                @"native_guest_threads":@(ideck_linux_lab_live_guest_threads()),@"linux_worker_entries":@(ideck_linux_lab_native_worker_entries()),@"window_trace_requested":@(windowTrace)};
+            NSData *report=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(snapshot) options:NSJSONWritingPrettyPrinted error:nil];
             [report writeToURL:[lab URLByAppendingPathComponent:@"last-runtime-session.json"] options:NSDataWritingAtomic error:nil];
             weakSelf.guestEnded=YES;
             [weakSelf showStatus:[NSString stringWithFormat:@"Linux session ended (status %d). Restart the Lab before another runtime session.",result]];
