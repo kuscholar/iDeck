@@ -2484,3 +2484,14 @@ tested own registry/harness. This is not coverage of all LinuxRunner races.
 Actual iOS compilation with HOST join-failure injection is rejected by the
 specific HOST-only guard and creates no object. Source/default/device limits
 above are unchanged.
+
+### Published source checkpoint after Run26
+
+Source-only checkpoint `5cfce802f932f7fad6fc43e1d25efaa28552bafc` is signed off
+and pushed to origin/experiment/linux-steam-madeira-ipad; remote readback
+verified2026-11-09T22:02EST. Main remains2ac39beff91251d36f3ad6331d3f8402b3c10e18.
+Per-run82b7861+dirty records describe their original exact tested snapshots,
+not a claim the later checkpoint was their test-time HEAD. No raw binary,
+Valve/rootfs/account/signing payload, working app or primary-worktree change.
+Goal remains incomplete; native profiler stop and full device/game/return gates
+above still apply.

@@ -6382,5 +6382,12 @@
       "output_object_absent": true,
       "log_sha256": "f7bd89dbbfd3964e28890ff1e09a504e67cc6b38003f4921c26e8c6abb3212d4"
     }
+  },
+  "source_checkpoint_after_run26": {
+    "source_commit": "5cfce802f932f7fad6fc43e1d25efaa28552bafc",
+    "branch": "experiment/linux-steam-madeira-ipad",
+    "published_remote_verified_at": "2026-11-09T22:02:23.686213-05:00",
+    "main_unchanged": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "scope": "Source/docs only. Tests were measured against recorded82b7861+dirty exact snapshots; committed source includes the tested controls/prototypes with their documented limits. No binary/profile/account/rootfs payload or device operation. Historical per-run git-dirty/time fields describe test time; inspect current git state."
   }
 }

@@ -1,3 +1,18 @@
+# Current published source checkpoint: 5cfce802f932f7fad6fc43e1d25efaa28552bafc
+
+Source/docs checkpoint signed off and remote-readback verified22:02EST Nov9.
+Branch experiment/linux-steam-madeira-ipad, origin kuscholar/iDeck. Main still
+2ac39beff91251d36f3ad6331d3f8402b3c10e18. Per-run parent82b7861+dirty fields below
+refer to exact test-time snapshots; use git status/rev-parse for current state.
+No binary/auth/rootfs/profile/Valve payload published, no Air installation or
+restart. Read Run26 evidence next. NEXT real implementation is explicit
+cooperative profiler stop and actual provider join/resource cleanup; preserve
+the unanswered25 retirement choice and active Air session. Full genuine Air
+Library/BPM/input, licensed Madeira game/return and repeated stability remain
+required. No STABLE_SUCCESS/unload or goal completion.
+
+--- Run26 test-time evidence before publication ---
+
 # Latest Run26: native auxiliary join/TLS ownership verified on HOST, not app linked
 
 Read EVIDENCE.run26/latest MD and private run26/full-controls-v2 FIRST. Previous
