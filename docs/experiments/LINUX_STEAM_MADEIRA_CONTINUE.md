@@ -1,3 +1,41 @@
+# Latest Run27: real profiler stop/join/buffer release HOST verified, not app linked
+
+Read EVIDENCE.run27/latest MD/private run27/profile-controls FIRST. Baseline
+source5cfce802f932f7fad6fc43e1d25efaa28552bafc and documentation
+208e65441a97696173b6fdcc0342887816a5b57e are actually pushed/read back.
+Parent208e654 is test-time source parent; use git for current revision/status.
+
+Builder --stop-profile requires --join-workers. Native owner only, actual
+guest-exited + child joins + sealed worker admission before stop; profiler
+checks outside locks, final dump then returns. Release requires actual full
+tracked worker/reaper joins and no TLB producers BEFORE disable/free. No new
+cancel/reset/revival/default/FEX/Valve change or Wine permission.
+
+Actual3 ASan/UBSan host cases PASS: enabled133samples/0dropped, disabled ordinary16,
+producer-leak cleanup EBUSY until explicit unregister. Real joins completed,
+file stable, logical retained allocations6291456->0 (NOT physical RSS/iPad).
+Wrong-owner/early/open-admission refused, idempotent release/no init revival.
+Default4 generated sources/counter text identical Run26, old feature29 MachO
+1693d0... unchanged/no new APIs. iOS arm64 ARCHIVE compile/symbols only, NOT
+new final app linkage/sign/install/device execution. Raw profiles/PCs private.
+
+NEXT implement/qualify actual genuine unauthenticated Steam/CEF graceful exit
+with joined guests/native workers and profile release, then real signal/root/
+memory/storage boundaries toward Madeira. No actual licensed game/return;
+bridge125. Child registry still4096 cumulative, no restart epochs, failed pre-
+exec cleanup lacks returned-call receipt: don't call phase6 safe. No complete
+Linux teardown or STABLE_SUCCESS/unload. Full Air UI+game+return goal ACTIVE.
+
+One fresh readonly Air old23/4952+B265FEBE alive; no device input/stop/install/
+restart/auth. Prior one-time25 retirement choice PENDING; don't repeat/infer
+continue/time consent or substitute29. Preserve console29282 noCtrlC, native
+viewer and all auth/games/saves. Capped kernel/updater4942 status not current
+exit proof. Lab29 unsigned, host-qualified v3 trace only;28 tracer obsolete.
+CLI only/no Macunlock/security/credentials/Guard/Valve/FEX changes. Main2ac39be
+and all other worktrees/installations preserved.
+
+--- Historical Run26 publication context ---
+
 # Current published source checkpoint: 5cfce802f932f7fad6fc43e1d25efaa28552bafc
 
 Source/docs checkpoint signed off and remote-readback verified22:02EST Nov9.

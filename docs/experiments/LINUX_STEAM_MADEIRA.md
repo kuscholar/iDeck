@@ -2495,3 +2495,50 @@ not a claim the later checkpoint was their test-time HEAD. No raw binary,
 Valve/rootfs/account/signing payload, working app or primary-worktree change.
 Goal remains incomplete; native profiler stop and full device/game/return gates
 above still apply.
+
+## Run27 — cooperative profiler exit and release after real joins
+
+The old actual profiler control retained sampler1 after guest completion. An
+owned reaper cannot join an infinite sampler. This new explicit --stop-profile
+copied-archive experiment requires --join-workers and adds an owner-only stop
+request after actual initial guest return, child joins and worker-start seal.
+Sampler checks outside profiler locks after its existing sleep, performs one
+final existing dump and returns. A separate buffer-release API requires actual
+worker/reaper joins and refuses any registered TLB producer BEFORE disabling
+profiling/freeing table or caches. No forced cancellation, reset or revival.
+The original ordinary/default profiler remains unchanged.
+
+Three actual ASan/UBSan host controls pass: enabled, disabled/ordinary16, and
+leaked-producer negative. Enabled controls collect133 actual ARM64 workload
+samples each with0 dropped in these runs, then real joins complete. The final
+file is nonempty/parsed and remains unchanged after joins. Logical retained
+profiler allocations6291456bytes become0 after release; this is allocation
+accounting, NOT physical RSS/peak memory or an iPad performance measurement.
+The producer test deliberately registers one extra native TLB after joins:
+release refuses EBUSY and keeps registration enabled until test unregister.
+Wrong owner, early phase and open admission are refused; repeated release is
+allowed and init after close cannot revive the sampler. Raw PCs/profile files
+remain private; only numeric observations/hashes are published.
+
+Default four generated provider sources and counter instructions remain
+identical to Run26. The new iOS arm64 ARCHIVE compiles and contains actual
+stop/release/owner-check symbols, while the prior feature29 final Mach-O is
+unchanged and has none. No new App target linkage/sign/install/device test.
+Private run27 retains exact snapshots, source/dependency/archive/object/log
+hashes and controls. This builds on signed/pushed source5cfce80 and documentation
+208e654; main remains2ac39be. Source-parent fields identify test-time baselines
+and dirty snapshots, not a self-referential later commit claim.
+
+These profiler buffers are only one resource category. Actual Steam/CEF exit,
+all guest/native joins, memory/root/signal ownership, storage writers and
+legitimate Madeira game/return still need qualification. Pre-execution failure
+cleanup lacks a returned-call receipt and is deliberately NOT inferred from
+phase6/zero counters. Registry restart/epochs are not implemented. Bridge125
+remains diagnostic, no game or full on-Air stability proof.
+
+One readonly current Air query still identifies old23/4952+B265FEBE, without
+input/restart/upgrade/account action. Preserve the pending25 retirement choice
+and raw QR/login data; don't repeat or substitute29. Next perform a real
+unauthenticated Steam graceful-exit experiment using the join mechanisms,
+then qualify signal/storage/resource boundaries. No main/FEX/Valve changes,
+completion sentinel or task unload.

@@ -36,6 +36,7 @@ static int process_owner(void){
     return !pid?-ENODEV:pid!=getpid()?-EXDEV:0;
 }
 static int serial_owner(void){int err=process_owner();return err?err:!pthread_equal(owner_thread,pthread_self())?-EPERM:0;}
+int ideck_worker_joins_owner_check(void){return serial_owner();}
 #if !IDECK_HOST_WORKER_JOIN_CREATE_EAGAIN
 static void body_done(void *argument){
     struct entry *e=argument;

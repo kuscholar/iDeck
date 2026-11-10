@@ -13,8 +13,10 @@ p.add_argument('archive',type=Path);p.add_argument('output',type=Path)
 p.add_argument('--sanitize',action='store_true')
 p.add_argument('--fail-worker-starts',action='store_true',help='HOST ONLY negative control: return EAGAIN, never an iOS build')
 p.add_argument('--join-workers',action='store_true',help='ISOLATED owned-reaper prototype; requires native initialization, not full teardown')
+p.add_argument('--stop-profile',action='store_true',help='ISOLATED cooperative profiler stop/release; requires joined guests, runtime boundary and --join-workers')
 a=p.parse_args();src,build,archive,out=map(lambda x:x.resolve(),[a.source,a.build,a.archive,a.output])
 assert not(a.join_workers and a.fail_worker_starts),'Use independent join and start-failure controls'
+assert not a.stop_profile or a.join_workers,'Profiler stop requires explicit native joins'
 pin='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()==pin
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -24,6 +26,8 @@ hashof=lambda f:hashlib.sha256(f.read_bytes()).hexdigest()
 for name in ['NativeWorkers.c','NativeWorkers.h']:shutil.copy2(lab/'app'/name,out/name)
 if a.join_workers:
  for name in ['NativeWorkerJoins.c','NativeWorkerJoins.h']:shutil.copy2(lab/'app'/name,out/name)
+if a.stop_profile:
+ for name in ['JoinedProfile.h','JoinedProfile.inc','JoinableGuests.h','LinuxLabRuntime.h']:shutil.copy2(lab/'app'/name,out/name)
 units=[('util/timer.c','timer_thread','TIMER','timer'),('kernel/guest_profile.c','sampler','PROFILE','profile'),
        ('fs/tty-real.c','real_tty_read_thread','TTY','tty'),('kernel/native_offload.c','pipe_forward_thread','FORWARD','forward')]
 objects=[];evidence={}
@@ -64,6 +68,17 @@ static void *{name}(void *argument) {{
    assert body.count(old)==1;body=body.replace(old,'/* Owned reaper joins after body AND TLS completion. */')
   body='#include "NativeWorkerJoins.h"\n'+body
  body='#include "NativeWorkers.h"\n'+body
+ if a.stop_profile and kind=='PROFILE':
+  old='    for (;;) {\n        nanosleep(&interval, NULL);';assert body.count(old)==1
+  body=body.replace(old,old+'\n        if(atomic_load_explicit(&ideck_profile_stopping,memory_order_acquire))break;')
+  old='    return NULL;\n}\n\nvoid guest_profile_init(void) {';assert body.count(old)==1
+  body=body.replace(old,'    dump();\n    atomic_store_explicit(&ideck_profile_completed,1,memory_order_release);\n'+old)
+  old='void guest_profile_init(void) {';assert body.count(old)==1
+  body=body.replace(old,old+'\n    if(atomic_load(&ideck_profile_stopping)||atomic_exchange(&ideck_profile_init_attempted,1))return;')
+  old='    /* Owned reaper joins after body AND TLS completion. */';assert body.count(old)==1
+  body=body.replace(old,'    atomic_store_explicit(&ideck_profile_started,1,memory_order_release);\n'+old)
+  body='#include <errno.h>\n#include <stdatomic.h>\n#include "JoinedProfile.h"\n#include "JoinableGuests.h"\n#include "LinuxLabRuntime.h"\nstatic _Atomic unsigned ideck_profile_stopping,ideck_profile_started,ideck_profile_completed,ideck_profile_init_attempted,ideck_profile_released;\n'+body
+  body+='\n#include "JoinedProfile.inc"\n'
  generated=out/relative.replace('/','_');generated.write_text(body)
  entry=next(x for x in entries if x['file'].endswith('/'+relative));cmd=shlex.split(entry['command']);object_name=Path(cmd[cmd.index('-o')+1]).name
  objects.append(compile_copy(relative,generated,object_name));evidence[relative]={'original_sha256':hashlib.sha256(original).hexdigest(),'generated_sha256':hashof(generated),'object':object_name}
@@ -75,5 +90,6 @@ assert hashof(archive)==basehash
 (out/'build-evidence.json').write_text(json.dumps(dict(linuxrunner=pin,base_archive_sha256=basehash,base_archive_unchanged=True,
  archive_sha256=hashof(target),units=evidence,counter_sha256=hashof(out/'NativeWorkers.c'),header_sha256=hashof(out/'NativeWorkers.h'),
  sanitized_units=a.sanitize,host_start_failure_injected=a.fail_worker_starts,joinable_worker_prototype=a.join_workers,
+ cooperative_profiler_stop=a.stop_profile,profile_stop_source_sha256=hashof(out/'JoinedProfile.inc') if a.stop_profile else None,
  join_registry_sha256=hashof(out/'NativeWorkerJoins.c') if a.join_workers else None,marker='IDECK_NATIVE_WORKERS_V1'),indent=2)+'\n')
 print('Copied native-worker archive built; vendor/base unchanged')

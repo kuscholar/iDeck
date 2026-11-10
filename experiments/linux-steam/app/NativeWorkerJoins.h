@@ -11,6 +11,8 @@
  * All tracked joins is NOT full Linux teardown or permission to launch Wine.
  */
 int ideck_worker_joins_initialize(void);
+/* Native serial ownership check only; NEVER quiescence or launch permission. */
+int ideck_worker_joins_owner_check(void);
 int ideck_worker_joins_start(enum ideck_worker_kind,pthread_t *,const pthread_attr_t *,void *(*)(void *),void *);
 int ideck_worker_joins_external(pthread_t,void **);
 /* Initialize/seal/finish are restricted to one native owner thread/lifetime. */
