@@ -38,6 +38,9 @@ fi
 if [[ ${LINUX_LAB_RFB_LIFETIME:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]];then
     echo 'RFB completion experiment requires explicit frontend opt-in' >&2;exit 2
 fi
+if [[ ${LINUX_LAB_RETAINED_FRONTEND:-0} == 1 ]];then
+    [[ ${LINUX_LAB_RFB_LIFETIME:-0} == 1 && ${LINUX_LAB_COMPAT_TOOL:-0} == 1 && ${LINUX_LAB_NATIVE_LOG:-0} == 1 && ${LINUX_LAB_GUEST_LIFETIME:-0} == 1 && ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 && ${LINUX_LAB_X11_TRACE:-0} == 0 ]] || { echo 'Retained frontend requires viewer completion, tool, native logging/lifetime workers and no X11 trace' >&2;exit 2; }
+fi
 mkdir -p "$LINUX_LAB_ARTIFACTS"
 sdk=$(xcrun --sdk iphoneos --show-sdk-path)
 out="$LINUX_LAB_ARTIFACTS/ios"
@@ -86,13 +89,17 @@ if [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]]; then
 fi
 if [[ ${LINUX_LAB_GUEST_LIFETIME:-0} == 1 ]]; then
     lifetime_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-lifetime.XXXXXX")
-    python3 "$repo/experiments/linux-steam/tools/build-guest-lifetime.py" "$src" "$out" "$runtime/libish.a" "$lifetime_stage/runtime"
+    set --
+    [[ ${LINUX_LAB_RETAINED_FRONTEND:-0} != 1 ]] || set -- --join-guests --guest-waves
+    python3 "$repo/experiments/linux-steam/tools/build-guest-lifetime.py" "$src" "$out" "$runtime/libish.a" "$lifetime_stage/runtime" ${1+"$@"}
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$lifetime_stage/runtime/"
     runtime="$lifetime_stage/runtime"
 fi
 if [[ ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 ]];then
     worker_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-workers.XXXXXX")
-    python3 "$repo/experiments/linux-steam/tools/build-native-workers.py" "$src" "$out" "$runtime/libish.a" "$worker_stage/runtime"
+    set --
+    [[ ${LINUX_LAB_RETAINED_FRONTEND:-0} != 1 ]] || set -- --join-workers --stop-profile --worker-waves
+    python3 "$repo/experiments/linux-steam/tools/build-native-workers.py" "$src" "$out" "$runtime/libish.a" "$worker_stage/runtime" ${1+"$@"}
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$worker_stage/runtime/"
     runtime="$worker_stage/runtime"
 fi
@@ -129,6 +136,11 @@ if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
     archive="$LINUX_LAB_ARTIFACTS/ios-libarchive-v2"
     frontend_libs="$archive/liblabrootfs.a $archive/libarchive/libarchive.a -lz"
 fi
+set --
+if [[ -n ${LINUX_LAB_BUILD_VERSION:-} ]];then
+    [[ $LINUX_LAB_BUILD_VERSION =~ ^[0-9]+$ ]] || exit 2
+    set -- CURRENT_PROJECT_VERSION="$LINUX_LAB_BUILD_VERSION"
+fi
 xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     -scheme LinuxLab -configuration Debug -destination 'generic/platform=iOS' \
     -derivedDataPath "$LINUX_LAB_ARTIFACTS/xcode" CODE_SIGNING_ALLOWED=NO \
@@ -137,6 +149,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_COMPAT_TOOL="${LINUX_LAB_COMPAT_TOOL:-0}" \
     LINUX_LAB_X11_TRACE="${LINUX_LAB_X11_TRACE:-0}" \
     LINUX_LAB_RFB_LIFETIME="${LINUX_LAB_RFB_LIFETIME:-0}" \
+    LINUX_LAB_RETAINED_FRONTEND="${LINUX_LAB_RETAINED_FRONTEND:-0}" \
     LINUX_LAB_GAME_FILE_POLICY="${LINUX_LAB_GAME_FILE_POLICY:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \
@@ -147,4 +160,4 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_PRIVATE_DISCARD="${LINUX_LAB_PRIVATE_DISCARD:-0}" \
     LINUX_LAB_STEAM_FRONTEND="${LINUX_LAB_STEAM_FRONTEND:-0}" \
     LINUX_LAB_ROOTFS_SHA256="${LINUX_LAB_ROOTFS_SHA256:-}" \
-    LINUX_LAB_FRONTEND_LIBS="$frontend_libs" build
+    LINUX_LAB_FRONTEND_LIBS="$frontend_libs" ${1+"$@"} build

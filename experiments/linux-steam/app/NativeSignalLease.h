@@ -5,7 +5,11 @@
 struct ideck_signal_lease;
 /* Native-owner assertions, NOT guest-controlled IPC. Unknown counts must be
  * negative. The caller must actually measure all categories before release.
- * The current Lab cannot attest other_native_workers, so MUST use -1. */
+ * other_native_workers covers other native work using Linux's signal policy,
+ * including embedded input/display tasks. Unknown must remain -1. Joined
+ * backend providers alone cannot attest an embedded viewer: its actual native
+ * completion boundary is additionally required. This never joins UIKit/GCD
+ * executor pthreads or certifies GPU/framework reclamation. */
 struct ideck_signal_quiescence {
     int runtime_call_returned;
     int future_guest_starts_disabled;

@@ -2880,3 +2880,112 @@ restart/account action, pending25 choice unchanged/not repeated. Main and other
 worktrees/working apps/auth/games/saves/vendor/FEX/Valve preserved. Full genuine
 Air Library/BPM -> Madeira game -> repeated stable return is NOT achieved. No
 STABLE_SUCCESS or scheduler unload; goal active.
+
+
+## Run33 — dedicated retained frontend owner integrated; current transport cycle still unverified
+
+Parent `3d565827eb82ad79f316b33ba86df22c764cecb2`; LinuxRunner stays pristine at
+`d1419782da2e299fe22f1ddb85c70ae3d1e276b1`, other pinned dependencies unchanged.
+Exact source/build/artifact SHA256s are in EVIDENCE.run33 and private run33.
+Main and other worktrees/apps/accounts/games/saves remain untouched.
+
+**Implementation.** Separate `LINUX_LAB_RETAINED_FRONTEND=1` plus explicit
+`linux-steam-retained-frontend` argument enables a process-lifetime native owner
+thread and mailbox. It retains the original root/kernel/native init; never resets
+consumed/global state or remounts a live root. Original/default API remains one-shot.
+Reentry requires the same native pthread, root and transport boundary, previous
+zero guest status and an actually DORMANT backend. Foreign thread/root/context
+changes are refused. The owner performs actual registered child/native/reaper
+joins, profiler stop/buffer release and native-init wait4 reap/full remaining-PID
+check. Only the explicit joined-registry wave APIs reopen admission; no counter,
+handle/history reset. Profiling is refused,4096 cumulative child handles remain.
+Owner thread must remain alive for this process lifetime; no rebinding contract.
+
+Review found a missing signal boundary: joining backend threads alone did not
+prove an embedded RFB decoder/input work item had returned. Current API therefore
+requires a bound drain callback for embedded transport, invokes it AFTER real
+backend joins/reap and BEFORE SIGUSR1/SIGPIPE restoration, and poisons the lifetime
+on any error. App callback closes frame/input admission on main, waits on the
+owner for actual RFB group completion, clears CPU display state and only then
+acknowledges. It never blocks main or substitutes timeout success. Restart UI
+is enabled only after backend DORMANT plus actual display completion. Late
+connector work is wave-guarded. Legacy one-shot stage remains unchanged; separate
+RETAINED_BACKEND_STATE records the current wave. Early/ambiguous failure preserves
+state and disables restart, with no forced cleanup/Wine admission.
+
+**Actual HOST evidence, distinguish exact source versions.**
+
+- BEFORE mandatory transport callback was added, actual shared C backend on a
+  dedicated pthread displayed two genuine Steam login windows, both visually
+  inspected and closed normally. Same native process/root/owner: both return
+  native0/guest0/DORMANT/reaped8, finally native process exits0 naturally.
+  Total734.527s includes manual observation delays and is NOT startup performance.
+  Source is pinned privately in run33/pre-transport-boundary-source/hashes.json.
+  This does not validate the later embedded-transport API or App composition.
+- Earlier ASan/UBSan own-adapter run remained black414s and was intentionally
+  stopped. Uninstrumented follow-up eventually rendered real login, but agent
+  requested stop before inspecting the latest frame. This observation mistake
+  grants neither normal-close nor restart credit; no sanitizer causation claim.
+- CURRENT callback API host fixture did NOT reach Steam or callback: Xvfb log0,
+  x11vnc startup log184, no display-ready/Steam log. Own900.223s observer deadline
+  intentionally terminated native process(-15), not a crash or cleanup result.
+  Read-only native sample shows x11vnc sys_connect awaiting managed peer ACK;
+  no Xvfb native thread in that later sample. Kernel PID6 exit status0 after
+  ~23.873s is consistent with bootstrap cleanup, not sufficient role/cause proof.
+- A further CURRENT-binary test on an independent account-free root lost its
+  tool/observer session. Fresh identity query finds the original native PID
+  absent but no terminal result receipt. Exit cause is UNKNOWN. Inherited Steam/
+  x11vnc logs predate this launch and are explicitly excluded. No inferred crash,
+  natural close, UI or cleanup success (private reconciliation.json).
+
+**Smaller discriminator.** Pinned fs/sock.c's successful AF_UNIX connect writes a
+managed fd pointer and waits for accept to establish unix_peer. Actual tiny static
+ARM64 ELF using the ordinary host embed control demonstrates: early accept in a
+forked child + byte roundtrip completes naturally0/0.356s; connect to own queued
+listener BEFORE accept never returns within5s and is intentionally terminated.
+No Steam/rootfs/CEF is needed. Standard Linux stream connect queues an accepted
+connection before userspace accept: see the separate connect/accept paths in
+[Linux v6.12 af_unix.c](https://github.com/torvalds/linux/blob/v6.12/net/unix/af_unix.c).
+This proves a contract mismatch, NOT the sole cause of Xvfb exit or a socket fix.
+No runtime networking patch is applied. Simply deleting the ACK is unsafe:
+credentials, SCM_RIGHTS queues, shutdown and fd lifetime depend on peer ownership.
+The actual source uses process/socket-ID native names, so a root-path/socket-name
+length theory is not supported.
+
+Reproduce only in a NEW private output (intentionally killed late case is expected
+failure evidence, never a clean teardown claim):
+
+```sh
+LINUX_LAB_ARTIFACTS="$PRIVATE_LAB" LINUX_LAB_CONNECT_OUT="$NEW_OUT"   LD_LLD="$LD_LLD" bash experiments/linux-steam/tools/test-unix-connect-order.sh
+LINUX_LAB_ARTIFACTS="$PRIVATE_LAB" LINUX_LAB_BACKEND_OUT="$NEW_BUILD"   LINUX_LAB_BACKEND_SANITIZE=0 NINJA="$NINJA"   bash experiments/linux-steam/tools/build-host-retained-backend.sh
+```
+
+**Build/regressions.** Full current feature33 Xcode and default33 builds pass;
+actual FINAL feature Mach-O includes retained backend, actual join/wave APIs,
+mandatory native drain methods, live-state and GPU-unverified markers. Feature
+SHA256 `bceaf5cef1f93dc65df011a6bc288d103ef43538d8e6cefe5b4b8cbc13cdbbd6`.
+Immutable private run33/feature33-boundary-unsigned/LinuxLab.app is UNSIGNED and
+UNINSTALLED. Final default excludes retained UI selectors/live-state marker,
+SHA256 `f9d2eafecc539eeb57c460ffdd7d4312b3de98cbc489c9718a5e09e418989df4`.
+Generic Xcode products are DEFAULT, not the feature copy. Eleven actual Xcode
+resource-phase synthetic cases pass; shell syntax/default C stub Werror pass.
+Initial missing NativeSignalLease link was corrected by linking its actual source;
+no assertion suppression or FEX/Valve/vendor patch. ASan applies to own host
+adapters where specified, not the entire underlying interpreter/archives.
+
+**Limits/next experiment.** No completed CURRENT callback backend+embedded viewer
+Steam cycle. RFB task completion does not join executor pthread/TLS or certify
+all captured objects/Metal command buffers/GPU/storage-writer reclamation. Kernel/
+root stay resident. No Linux+Wine combined App execution or legitimate game/return
+proof; compatibility bridge remains diagnostic125. Next establish exact Xvfb role/
+exit and pre-accept lifetime; design pending-connect ownership/credentials/rights
+and cancellation controls before a minimal copied-source fix. Then verify current
+complete viewer/backend cycle, namespaced Madeira linkage, actual game/return.
+
+ONE readonly Air identity query this run still observed Lab23 PID4952/install
+B265FEBE (historical by next run; revalidate). No Air input/stop/upgrade/restart/
+authentication, no profile/security/lock change, no Mac-unlock request. Prior
+selected25 upgrade question remains unanswered; do not infer consent or silently
+substitute33. No binary distribution until licensing/converter exception scope
+resolved. Full actual Air Library/BPM/input -> owned Madeira game -> repeated
+stable return goal is NOT achieved; no STABLE_SUCCESS or scheduler unload.

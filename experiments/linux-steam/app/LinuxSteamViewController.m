@@ -12,6 +12,12 @@
 #if IDECK_LAB_RFB_LIFETIME
 #import "LabRFBCompletion.h"
 #endif
+#if IDECK_LAB_RETAINED_FRONTEND
+#if !IDECK_LAB_RFB_LIFETIME || !IDECK_LAB_NATIVE_LOG || !IDECK_LAB_COMPAT_TOOL
+#error Retained frontend requires viewer completion, native logs and tool payload
+#endif
+#include "RetainedFrontend.h"
+#endif
 #import "MetalFramebufferView.h"
 #if IDECK_LAB_NATIVE_LOG
 #import "NativeKernelLog.h"
@@ -99,10 +105,23 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(nonatomic) CGSize latestSize;
 @property(nonatomic) BOOL deliveryQueued;
 @property(atomic) BOOL guestEnded;
+#if IDECK_LAB_RETAINED_FRONTEND
+@property(nonatomic,strong) NSThread *frontendOwner;
+@property(nonatomic,strong) NSCondition *frontendCommands;
+@property(nonatomic) BOOL frontendRequested;
+@property(nonatomic) BOOL retainedBackendReady;
+@property(nonatomic) BOOL retainedDisplayDrained;
+@property(atomic) unsigned retainedNextWave;
+@property(nonatomic,strong) NSURL *retainedRoot;
+@property(nonatomic,strong) UIButton *restartSteamButton;
+#endif
 #if IDECK_LAB_RFB_LIFETIME
 @property(atomic) BOOL acceptsFrames;
 #endif
 @end
+#if IDECK_LAB_RETAINED_FRONTEND
+static int LabDrainRetainedTransport(void *context,int guestStatus);
+#endif
 @implementation LinuxSteamViewController
 - (void)viewDidLoad {
     [super viewDidLoad];self.view.backgroundColor=UIColor.blackColor;self.frameLock=[NSLock new];
@@ -117,6 +136,18 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
     self.status=[[UILabel alloc]init];self.status.textColor=UIColor.whiteColor;self.status.backgroundColor=[UIColor colorWithWhite:0 alpha:.7];self.status.numberOfLines=0;self.status.translatesAutoresizingMaskIntoConstraints=NO;
     [self.view addSubview:self.status];
     UIButton *keyboard=[UIButton buttonWithType:UIButtonTypeSystem];[keyboard setTitle:@"⌨" forState:UIControlStateNormal];keyboard.backgroundColor=UIColor.secondarySystemBackgroundColor;keyboard.layer.cornerRadius=18;keyboard.translatesAutoresizingMaskIntoConstraints=NO;[keyboard addTarget:self action:@selector(toggleKeyboard) forControlEvents:UIControlEventTouchUpInside];[self.view addSubview:keyboard];
+#if IDECK_LAB_RETAINED_FRONTEND
+    if([NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-retained-frontend"]){
+        self.restartSteamButton=[UIButton buttonWithType:UIButtonTypeSystem];
+        [self.restartSteamButton setTitle:@"Restart Steam" forState:UIControlStateNormal];
+        self.restartSteamButton.enabled=NO;self.restartSteamButton.backgroundColor=UIColor.secondarySystemBackgroundColor;
+        self.restartSteamButton.translatesAutoresizingMaskIntoConstraints=NO;
+        [self.restartSteamButton addTarget:self action:@selector(restartRetainedSteam) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.restartSteamButton];
+        [NSLayoutConstraint activateConstraints:@[[self.restartSteamButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:8],
+            [self.restartSteamButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-8]]];
+    }
+#endif
     [NSLayoutConstraint activateConstraints:@[
         [keyboard.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:8],
         [keyboard.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-8],
@@ -135,6 +166,9 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 - (void)releaseInput {[self.input releaseInput];}
 #if IDECK_LAB_RFB_LIFETIME
 - (void)endDisplayForGuestStatus:(int)status {
+    [self endDisplayForGuestStatus:status completion:nil];
+}
+- (void)endDisplayForGuestStatus:(int)status completion:(dispatch_block_t)completion {
     dispatch_async(dispatch_get_main_queue(),^{
         self.acceptsFrames=NO;[self.input releaseInput];self.input.client=nil;
         LRRFBClient *client=self.client;
@@ -143,10 +177,14 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
             [self.frameLock lock];self.latest=nil;[self.frameLock unlock];
             self.input.pixels=CGSizeZero;[self.display clearFrame];
             if(self.client==client)self.client=nil;
+#if IDECK_LAB_RETAINED_FRONTEND
+            self.restartSteamButton.enabled=self.retainedBackendReady;
+#endif
 #if IDECK_LAB_NATIVE_LOG
             ideck_native_log_line("NATIVE_VIEWER_CLOSED tracked_rfb_tasks_returned=1 gpu_completion_unverified=1 no_linux_or_game_quiescence_claim=1");
 #endif
             [self showStatus:[NSString stringWithFormat:@"Linux session ended (status %d). Display connection closed. No other runtime was started.",status]];
+            if(completion)completion();
         };
         if(client)[client ideckStopWithCompletion:finished];else finished();
     });
@@ -167,11 +205,89 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
         self.input.pixels=size;[self.display presentPixels:latest width:(uint16_t)size.width height:(uint16_t)size.height];self.status.hidden=YES;
     });
 }
+#if IDECK_LAB_RETAINED_FRONTEND
+- (int)drainRetainedTransportStatus:(int)status {
+    NSAssert(!NSThread.isMainThread,@"Native owner waits, never main");
+    dispatch_semaphore_t done=dispatch_semaphore_create(0);self.guestEnded=YES;
+    [self endDisplayForGuestStatus:status completion:^{self.retainedDisplayDrained=YES;dispatch_semaphore_signal(done);}];
+    dispatch_semaphore_wait(done,DISPATCH_TIME_FOREVER);return 0;
+}
+- (void)connectRetainedDisplay:(NSURL *)root wave:(unsigned)wave {
+    __weak typeof(self) weakSelf=self;
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
+        NSURL *ready=[root URLByAppendingPathComponent:@"data/tmp/ideck-display-ready"];
+        BOOL found=NO;
+        for(unsigned i=0;i<600;i++){
+            if(self.guestEnded||self.retainedNextWave!=wave)return;
+            struct ideck_frontend_result state;
+            if(!ideck_retained_frontend_snapshot(&state)&&state.wave==wave&&
+               (state.phase==IDECK_FRONTEND_RUNNING || (wave==1&&state.phase==IDECK_FRONTEND_PREPARING&&!strcmp(ideck_linux_lab_stage(),"guest-running")))&&
+               [NSFileManager.defaultManager fileExistsAtPath:ready.path]){found=YES;break;}
+            [NSThread sleepForTimeInterval:.2];
+        }
+        if(!found){if(self.retainedNextWave==wave&&!self.guestEnded)[self showStatus:@"Retained Steam display readiness timed out. Existing session was preserved."];return;}
+        NSURL *url=[root URLByAppendingPathComponent:@"data/tmp/ideck-vnc-password"];
+        NSFileHandle *file=[NSFileHandle fileHandleForReadingAtPath:url.path];NSData *password=[file readDataOfLength:9];[file closeFile];
+        NSString *secret=password.length==8?[[NSString alloc]initWithData:password encoding:NSASCIIStringEncoding]:nil;
+        if(!secret){[self showStatus:@"Guest display authentication material is unavailable."];return;}
+        LRRFBClient *client=[[LRRFBClient alloc]initWithPort:5993 password:secret];
+        client.frameHandler=^(NSData *p,uint16_t w,uint16_t h,uint64_t f,uint64_t b){(void)f;(void)b;[weakSelf acceptPixels:p width:w height:h];};
+        client.statusHandler=^(NSString *status){if([status hasPrefix:@"Display error:"])[weakSelf showStatus:status];};
+        dispatch_async(dispatch_get_main_queue(),^{
+            if(self.guestEnded||!self.acceptsFrames||self.retainedNextWave!=wave)return;
+            self.client=client;self.input.client=client;[client start];
+        });
+    });
+}
+- (void)restartRetainedSteam {
+    NSAssert(NSThread.isMainThread,@"Retained UI admission belongs to main");
+    if(!self.restartSteamButton.enabled||!self.retainedBackendReady||!self.guestEnded||self.client)return;
+    self.restartSteamButton.enabled=NO;self.retainedBackendReady=NO;self.retainedDisplayDrained=NO;
+    self.guestEnded=NO;self.acceptsFrames=YES;self.retainedNextWave++;
+    [self.frontendCommands lock];self.frontendRequested=YES;[self.frontendCommands signal];[self.frontendCommands unlock];
+    [self showStatus:@"Restarting Steam in the retained Linux environment."];
+    [self connectRetainedDisplay:self.retainedRoot wave:self.retainedNextWave];
+}
+- (void)startRetainedOwnerRoot:(NSURL *)root lab:(NSURL *)lab binary:(NSData *)binary discovery:(NSData *)discovery manifest:(NSData *)manifest {
+    /* One process-lifetime owner thread. Do not cancel it or recreate the Linux
+     * kernel on scene changes. Its loop waits only while backend is dormant. */
+    dispatch_sync(dispatch_get_main_queue(),^{
+        self.retainedRoot=root;self.retainedNextWave=1;self.frontendCommands=[NSCondition new];self.frontendRequested=YES;
+        self.frontendOwner=[[NSThread alloc]initWithBlock:^{
+            for(;;){@autoreleasepool{
+                [self.frontendCommands lock];while(!self.frontendRequested)[self.frontendCommands wait];
+                self.frontendRequested=NO;[self.frontendCommands unlock];
+                struct ideck_tool_payload tool={binary.bytes,binary.length,discovery.bytes,discovery.length,manifest.bytes,manifest.length};
+                struct ideck_frontend_result result;
+                struct ideck_frontend_transport_boundary transport={1,LabDrainRetainedTransport,(__bridge void *)self};
+                int error=ideck_retained_frontend_run(root.fileSystemRepresentation,&tool,&transport,&result);
+                NSDictionary *fields=@{@"native_error":@(error),@"guest_status":@(result.guest_status),@"wave":@(result.wave),
+                    @"backend_phase":@(result.phase),@"reaped":@(result.reaped),@"actual_game":@NO};
+                NSData *report=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(fields) options:NSJSONWritingPrettyPrinted error:nil];
+                [report writeToURL:[lab URLByAppendingPathComponent:@"last-retained-frontend.json"] options:NSDataWritingAtomic error:nil];
+                dispatch_async(dispatch_get_main_queue(),^{
+                    self.guestEnded=YES;self.retainedBackendReady=!error&&!result.guest_status&&result.phase==IDECK_FRONTEND_DORMANT;
+                    if(self.retainedDisplayDrained){
+                        self.restartSteamButton.enabled=self.retainedBackendReady;
+                        [self showStatus:self.retainedBackendReady?@"Steam closed. Ready to restart in the retained environment.":@"Backend cleanup failed. Existing state was preserved."];
+                    }else [self endDisplayForGuestStatus:error?error:result.guest_status];
+                });
+            }}
+        }];
+        self.frontendOwner.name=@"iDeck Linux frontend owner";[self.frontendOwner start];
+    });
+    [self connectRetainedDisplay:root wave:1];
+}
+#endif
 - (void)startFrontend {
     @autoreleasepool {
         static atomic_bool requested;
         if(atomic_exchange(&requested,true)){[self showStatus:@"A frontend lifetime was already requested. Existing state was preserved."];return;}
         BOOL windowTrace=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-window-trace"];
+        BOOL retained=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-retained-frontend"];
+#if !IDECK_LAB_RETAINED_FRONTEND
+        if(retained){[self showStatus:@"Retained frontend is not enabled; no session started."];return;}
+#endif
 #if !IDECK_LAB_X11_TRACE
         if(windowTrace){[self showStatus:@"Window diagnostics are not enabled in this build; no guest started."];return;}
 #endif
@@ -248,6 +364,9 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
         }
 #endif
         [self showStatus:@"Starting genuine ARM64 Linux Steam; waiting for its display."];
+#if IDECK_LAB_RETAINED_FRONTEND
+        if(retained){[self startRetainedOwnerRoot:root lab:lab binary:toolBinary discovery:toolDiscovery manifest:toolManifest];return;}
+#endif
 #if IDECK_LAB_NATIVE_LOG
 #if IDECK_LAB_CEF_DISABLE_GPU
         ideck_native_log_line("UI_GRAPHICS_POLICY cef_disable_gpu=1");
@@ -312,6 +431,12 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
     }
 }
 @end
+#if IDECK_LAB_RETAINED_FRONTEND
+static int LabDrainRetainedTransport(void *context,int guestStatus){
+    LinuxSteamViewController *controller=(__bridge LinuxSteamViewController *)context;
+    return [controller drainRetainedTransportStatus:guestStatus];
+}
+#endif
 #else
 @implementation LinuxSteamViewController
 - (void)viewDidLoad {[super viewDidLoad];self.view.backgroundColor=UIColor.systemBackgroundColor;UILabel *label=[[UILabel alloc]initWithFrame:self.view.bounds];label.text=@"Linux Steam frontend is not enabled in this build.";label.numberOfLines=0;[self.view addSubview:label];}

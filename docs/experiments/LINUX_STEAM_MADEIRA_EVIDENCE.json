@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 32,
-  "recorded_at_utc": "2026-11-11T05:24:52.409823+00:00",
+  "latest_run": 33,
+  "recorded_at_utc": "2026-11-11T11:15:10.925451+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
-  "source_parent": "f6c1bcdb1bd4d405cccac360027112e6f8b65f2f",
+  "source_checkpoint": "3d565827eb82ad79f316b33ba86df22c764cecb2",
+  "source_parent": "3d565827eb82ad79f316b33ba86df22c764cecb2",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -7332,5 +7332,173 @@
       "Single readonly Air query still old23/4952/B265FEBE; pending25 choice preserved. No input/stop/install/restart/auth/signing action. Primary app/account/games/saves and all unrelated worktrees/FEX/Valve/vendor intact."
     ],
     "next": "Implement dedicated serial native session owner in isolated App using run31 real child/worker waves and signal lease, coordinate its dormant state with RFB completion and GPU/storage writer boundaries. Then namespaced Linux adapter+verified Madeira linkage/game/return. Do not reset consumed/counters or enable restart by zero counts alone."
+  },
+  "run33": {
+    "source_parent": "3d565827eb82ad79f316b33ba86df22c764cecb2",
+    "source_state": "Run33 source exact hashes below; publication revision in Git and private published receipt, not a self-referential document hash",
+    "source_sha256": {
+      "experiments/linux-steam/app/RetainedFrontend.c": "55c760976091de8513220ca2df81b81f8e491e932c54f0470531b91763d95653",
+      "experiments/linux-steam/app/RetainedFrontend.h": "41d568d97f40de7148bc28321dc22feaafb3dc42863cc48123c37986f12203da",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "634d65e536d668f28f070db9686fd362844cb158a1b8091bc2f9547fbaa16f77",
+      "experiments/linux-steam/app/NativeSignalLease.h": "e4df12731e4ced001217a1a1e77c3ce76c2cb3c1dda937ea6fadc8a4bf6d933e",
+      "experiments/linux-steam/app/main.m": "495ffec554d2df38df3502dbf7fed60734f520bec96613487d423e7e3dfba88e",
+      "experiments/linux-steam/tools/build-host-retained-backend.sh": "d481524defdb12df80e0294a56e5187e81666fb3af06e36d4cf602fedbd93f68",
+      "experiments/linux-steam/tools/retained-backend-control.c": "95145e97ad50699accf6d8cdb2552b36b383519bcf5197efd3eb3e323450a78a",
+      "experiments/linux-steam/tools/build-lab.sh": "48f69821944ad882e31d391ef2f73cec3a1631501789bbcd4c1483e936301191",
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "39c1a8600d0799965b5ebf1ca4bf6c4f65bda7bbde87154366c8fd9ec23bb078",
+      "experiments/linux-steam/guest/unix-connect-order-probe.c": "55c8572127aaec5b2fe86cf176940c4e2be9224cb23e4f8e8ea735587042ad1b",
+      "experiments/linux-steam/tools/test-unix-connect-order.sh": "6cbf0cf86623866f326440a39d18e49303da4bd675b9a7c6e2cd14743cad5ff5"
+    },
+    "private_artifacts": {
+      "owner/result.json": {
+        "private_path": "run33/owner/result.json",
+        "sha256": "2f0efc9209706c83755a4ecffbed36e993c3e1e25c81748f15f4fd92efcf2557"
+      },
+      "owner-uninstrumented/result.json": {
+        "private_path": "run33/owner-uninstrumented/result.json",
+        "sha256": "5331b7566a57095b4055888b491653bde96ac4081c50ed7c82f6a9bf5b39c4be"
+      },
+      "owner-repeat/result.json": {
+        "private_path": "run33/owner-repeat/result.json",
+        "sha256": "64610fe422ef3d2b58c4f55a21f8e1c17c66ea97e05a2e660cccb47f1d3f1606"
+      },
+      "owner-repeat/console.log": {
+        "private_path": "run33/owner-repeat/console.log",
+        "sha256": "10f354d1a0e929d5733657e5d03962b0f00c4fcc2078a4fb3d89d8dd7e802b66"
+      },
+      "owner-repeat/owner.json": {
+        "private_path": "run33/owner-repeat/owner.json",
+        "sha256": "f4bc2f37b5ccf17be4e29a946d44abb2cd2f93fcee2cbb1a1d2b1b70f1dbe2a7"
+      },
+      "pre-transport-boundary-source/hashes.json": {
+        "private_path": "run33/pre-transport-boundary-source/hashes.json",
+        "sha256": "3e775c7e3acb6e2defc9f97c2f9e867e25e7c7911142a8f50d4eca3bf0dad684"
+      },
+      "owner-boundary/result.json": {
+        "private_path": "run33/owner-boundary/result.json",
+        "sha256": "ec564582919320fc3781fc20e5b299640792c6dc028d56eedacc5fe1e2ec77b4"
+      },
+      "owner-boundary/owner.json": {
+        "private_path": "run33/owner-boundary/owner.json",
+        "sha256": "384ee34064d1667684e69d38661221d389198d25002aa331ba519be2ebbcba6e"
+      },
+      "boundary-pre-steam-sample.txt": {
+        "private_path": "run33/boundary-pre-steam-sample.txt",
+        "sha256": "91784c2c2b7ab5b8ed8fe942c3d18a1a1e1dcb94655eb1f76c26ae88e216a53e"
+      },
+      "owner-boundary-observed/owner.json": {
+        "private_path": "run33/owner-boundary-observed/owner.json",
+        "sha256": "6aa360dc09b0b4c766c57d39d374e1e76ec6f4c2624aed4db6f9eb7df6ac6549"
+      },
+      "owner-boundary-observed/reconciliation.json": {
+        "private_path": "run33/owner-boundary-observed/reconciliation.json",
+        "sha256": "8aace331af3e20005df288c40fdd42b719e984602930d200db0fe1c6a8c59044"
+      },
+      "unix-order/evidence.json": {
+        "private_path": "run33/unix-order/evidence.json",
+        "sha256": "93a69cc109e7e645f51bdb185b44348885a0394da8584b67b75c6477b17d7d2e"
+      },
+      "feature33-boundary-linked.json": {
+        "private_path": "run33/feature33-boundary-linked.json",
+        "sha256": "813c48e3fe5037bd4e4cf8997b92d83a40a3014e6e60314be25ece84c4c50904"
+      },
+      "default33-boundary-linked.json": {
+        "private_path": "run33/default33-boundary-linked.json",
+        "sha256": "554432a4824acb4ba0b223c6904a9517c99b8bcec8b77984b39913d9ffd13aae"
+      },
+      "resource-regression/evidence.json": {
+        "private_path": "run33/resource-regression/evidence.json",
+        "sha256": "c15b5a00fb7c9b4547cdb1fc66f22d143a11b62c5ab5e9e9f835526ff9173a1f"
+      },
+      "xcode-transport-boundary.log": {
+        "private_path": "run33/xcode-transport-boundary.log",
+        "sha256": "6c9f2fc585ce4cd851294f1d544fc6c416cf891bc062878c3ee2de3274ffc714"
+      },
+      "xcode-default-boundary.log": {
+        "private_path": "run33/xcode-default-boundary.log",
+        "sha256": "a35b665431239a699f0c9520956cb07e0229e0df3aed0d589c907fd914531155"
+      },
+      "air-processes.json": {
+        "private_path": "run33/air-processes.json",
+        "sha256": "db93d60d7430fd4527b6653b04453b2dfade8a0165fbae532176494c385ba629"
+      },
+      "feature33-boundary-unsigned": {
+        "private_path": "run33/feature33-boundary-unsigned/LinuxLab.app/LinuxLab",
+        "sha256": "bceaf5cef1f93dc65df011a6bc288d103ef43538d8e6cefe5b4b8cbc13cdbbd6"
+      }
+    },
+    "phase": "Isolated retained-frontend lifecycle integration and AF_UNIX startup discriminator; no game bridge execution",
+    "hypothesis": "A dedicated native owner with actual backend joins/reap plus an embedded-viewer drain before signal restoration can permit a retained-root frontend restart without resetting the original one-shot runtime",
+    "minimal_patch": "Separate opt-in retained backend and one process-lifetime NSThread mailbox; actual RFB task completion BEFORE signal lease release. Default launcher remains one-shot. No Wine admission based on this boundary.",
+    "host_pre_transport_boundary": {
+      "actual": "Two genuine unauthenticated Steam login windows visually inspected and normally closed; same process/root/owner; real joins and reaps8 each; natural native exit0",
+      "elapsed_seconds_total_including_manual_observation": 734.527,
+      "startup_performance_measurement": false,
+      "exact_source_snapshot": "run33/pre-transport-boundary-source/hashes.json",
+      "current_transport_callback_proven_by_this_test": false,
+      "other_results": "ASan/UBSan own-adapter first test black414s intentionally stopped; uninstrumented follow-up eventually showed real login but agent stopped before inspecting latest frame. No clean exit/restart credit for either."
+    },
+    "current_transport_api": {
+      "build_and_final_link": true,
+      "actual_embedded_viewer_steam_cycle": false,
+      "host_boundary_test": "Before-Steam display bootstrap stalled; own900.223s deadline/native-15. Drain callback not reached, not proof callback caused stall.",
+      "second_boundary_observer": "Observer session expired; fresh exact PID absent, result missing. No exit cause established. Copied old Steam/x11vnc logs predate launch and are excluded."
+    },
+    "connect_discriminator": {
+      "scope": "HOST actual minimal ARM64 connect ordering discriminator; NOT sole cause of Xvfb exit, Steam/device/game proof or a socket fix",
+      "tests": [
+        {
+          "mode": "early",
+          "status": 0,
+          "intentionally_terminated_after_timeout": false,
+          "elapsed_seconds": 0.356,
+          "guest_rows": [
+            "listen-ready=PASS",
+            "before-connect",
+            "connect-returned=PASS",
+            "acceptor-roundtrip=PASS",
+            "complete=PASS"
+          ],
+          "elf_sha256": "c209065fa5a16347f4d1f998bef566080c7eeb1e345833b3c3862f8fe6666b1c"
+        },
+        {
+          "mode": "late",
+          "status": -15,
+          "intentionally_terminated_after_timeout": true,
+          "elapsed_seconds": 5.006,
+          "guest_rows": [
+            "listen-ready=PASS",
+            "before-connect"
+          ],
+          "elf_sha256": "b3b8938b71d238ef1205e4f63244c0863aec5ff6ec47b8de2dd3188e50362839"
+        }
+      ]
+    },
+    "fault_evidence": "Native sample has x11vnc sys_connect waiting for managed peer ACK; no Xvfb native thread at sample time. Kernel log PID6 exits status0 after~23.873s; consistent with bootstrap timeout/cleanup but no causal attribution without role/exit signal evidence.",
+    "rejected_or_unproven": "Do not infer callback failure, native crash, root socket-prefix length, sole Xvfb root cause, or sanitizer causation. Do not delete peer handshake: credential/SCM_RIGHTS/lifetime consumers depend on it.",
+    "regressions": {
+      "full_feature_xcode": true,
+      "full_default_xcode": true,
+      "final_feature_markers": true,
+      "final_default_retained_ui_absent": true,
+      "actual_resource_phase_cases": 11,
+      "shell_syntax_and_default_C_stub_Werror": true
+    },
+    "device": {
+      "one_readonly_identity": "Existing Lab23 PID4952 installB265FEBE observed this run, historical by next run; revalidate before action",
+      "input_stop_restart_install_auth_action": false,
+      "pending_selected25_choice": "Unanswered; do not infer consent for upgrade25 or substitute33",
+      "app33_signed": false,
+      "app33_installed": false
+    },
+    "limitations": [
+      "Current mandatory transport-boundary version has no completed Steam cycle yet",
+      "No native Metal command-buffer/GPU lifetime barrier or full storage writer barrier",
+      "GCD task completion does not join executor pthread/TLS/captured-object destruction",
+      "Linux kernel/root remain resident;4096 cumulative child handles; no owner thread rebinding",
+      "No combined Linux+Wine app/runtime proof; no FEX/Valve/vendor modifications",
+      "No new Air Library/BPM/controller/Steam Play/game/return/stability qualification; bridge125"
+    ],
+    "next_discriminator": "Observe Xvfb role/termination and pre-accept client lifecycle; design isolated pending-connect ownership/credentials/SCM_RIGHTS tests before any copied-source network patch. Revalidate complete current backend+embedded viewer cycle, then namespaced Madeira linkage and real licensed game/return."
   }
 }

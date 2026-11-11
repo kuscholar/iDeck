@@ -81,6 +81,8 @@
 				<string>640000000000000000000001</string>
 				<string>640000000000000000000003</string>
 				<string>650000000000000000000001</string>
+				<string>710000000000000000000002</string>
+				<string>710000000000000000000004</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<integer>0</integer>
@@ -194,6 +196,8 @@ fi
 				<string>640000000000000000000000</string>
 				<string>640000000000000000000002</string>
 				<string>650000000000000000000000</string>
+				<string>710000000000000000000001</string>
+				<string>710000000000000000000003</string>
 			</array>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
@@ -247,6 +251,7 @@ fi
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
+					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -313,6 +318,8 @@ fi
 				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 				<key>LINUX_LAB_RFB_LIFETIME</key>
+				<string>0</string>
+				<key>LINUX_LAB_RETAINED_FRONTEND</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -365,6 +372,7 @@ fi
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
+					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -431,6 +439,8 @@ fi
 				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 				<key>LINUX_LAB_RFB_LIFETIME</key>
+				<string>0</string>
+				<key>LINUX_LAB_RETAINED_FRONTEND</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -499,6 +509,7 @@ fi
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
+					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -521,6 +532,8 @@ fi
 				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 				<key>LINUX_LAB_RFB_LIFETIME</key>
+				<string>0</string>
+				<key>LINUX_LAB_RETAINED_FRONTEND</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -550,6 +563,7 @@ fi
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
+					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -572,6 +586,8 @@ fi
 				<key>LINUX_LAB_X11_TRACE</key>
 				<string>0</string>
 				<key>LINUX_LAB_RFB_LIFETIME</key>
+				<string>0</string>
+				<key>LINUX_LAB_RETAINED_FRONTEND</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -873,6 +889,42 @@ fi
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>650000000000000000000000</string>
+		</dict>
+		<key>710000000000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/RetainedFrontend.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>710000000000000000000002</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>710000000000000000000001</string>
+		</dict>
+		<key>710000000000000000000003</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>app/NativeSignalLease.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>710000000000000000000004</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>710000000000000000000003</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

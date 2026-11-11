@@ -1,3 +1,49 @@
+# Latest Run33: retained-owner integration built; final transport Steam cycle NOT verified
+
+Read EVIDENCE.run33 and MD Run33 FIRST; parent3d56582, actual publication via Git.
+Source/default app/main/other worktrees/vendor/FEX/Valve preserved. CLI ONLY;
+never Mac-unlock/credentials/Guard/trust/lock automation. Full Air goal incomplete.
+
+Before mandatory embedded transport callback, actual dedicated-pthread C backend
+TWO genuine login render/normal-close/restart cycles NATURAL0, both reaped8;
+734.527s includes manual delays, NOT startup performance. Exact OLD source snapshot
+run33/pre-transport-boundary-source/hashes.json. Does NOT validate current API.
+
+CURRENT API binds same owner/root/transport. Requires actual child/native joins/
+reap then embedded RFB completion BEFORE signal restore. Failure poisons; original
+one-shot consumed/stage NOT reset. App process-lifetime NSThread/NSCondition mailbox,
+wave-guarded display, restart only DORMANT+drained. Profiling refused;4096 cumulative
+child capacity; no owner rebinding. GPU/Metal/storage full barrier UNVERIFIED;
+never infer Wine permission from this boundary. Bridge still125/no game.
+
+Current host test900s bootstrap stall, Steam/callback NOT reached. x11vnc native
+sys_connect waits managed peer ack; no later Xvfb thread in sample, PID6 exits0
+~23.873s but exact cause/role not proved. Minimal real ARM64 ELF confirms early
+accept+roundtrip0, late accept cannot get beyond connect5s; intentional own kill.
+No socket runtime patch. Peer refs/SCM_RIGHTS/credentials require a real ownership
+solution, not deleting ACK. Native path root-length theory unsupported by source.
+Second current binary observer session expired: original PID absent, NO terminal
+receipt. Never call a crash/clean close. Copied old Steam/x11vnc logs predate start,
+excluded in run33/owner-boundary-observed/reconciliation.json. All run33 host tests
+now terminal/identity absent; no stale PID target or live host test assumed.
+
+Full current feature33/default33 Xcode + final markers/resource11/syntax pass.
+Feature bceaf5ce...cdbbd6 immutable run33/feature33-boundary-unsigned/LinuxLab.app,
+UNSIGNED/UNINSTALLED. Generic Xcode output DEFAULT. No current Air UI/game proof.
+
+NEXT discriminate actual Xvfb process termination/pre-accept lifetime; minimal
+pending-connect/SCM_RIGHTS/credentials/cancellation controls before copied patch.
+Then complete CURRENT callback+embedded viewer cycle, verified namespaced
+Linux/Madeira combined linkage and real licensed game/return. Do not restart
+completed audit or call old source success current validation.
+
+ONE Air query observed23/4952/B265FEBE. Preserve live session/console29282, revalidate
+identity before any action. Pending SELECTED25 upgrade choice still unanswered;
+no inferred consent/substitution33. No Air input/stop/restart/install/auth. No
+STABLE_SUCCESS/scheduler unload. Publish -s scoped experiment only in allowed hours.
+
+--- Earlier Run32 context ---
+
 # Latest Run32: opt-in native RFB completion integrated/final-linked App, NOT Air tested
 
 Read EVIDENCE.run32 and MD Run32 first; parentf6c1bcdb1bd4d405cccac360027112e6f8b65f2f.

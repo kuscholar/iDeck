@@ -2,6 +2,10 @@
 #import <UIKit/UIKit.h>
 #import "LinuxLabRuntime.h"
 #import "LinuxSteamViewController.h"
+#if IDECK_LAB_RETAINED_FRONTEND
+#include "RetainedFrontend.h"
+#include <stdio.h>
+#endif
 #if IDECK_LAB_NATIVE_LOG
 #import "NativeKernelLog.h"
 #include <unistd.h>
@@ -53,6 +57,16 @@
 }
 - (void)writeNativeHealth {
     unsigned build=[[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"] unsignedIntValue];
+#if IDECK_LAB_RETAINED_FRONTEND
+    /* Legacy stage describes only the original one-shot call. Report the
+     * independent retained-owner state explicitly; never reset old stage to
+     * pretend the original runtime became reusable. No account/argv payload. */
+    struct ideck_frontend_result retained;
+    if(!ideck_retained_frontend_snapshot(&retained)){
+        char line[200];snprintf(line,sizeof line,"RETAINED_BACKEND_STATE wave=%u phase=%d native_error=%d guest_status=%d",retained.wave,retained.phase,retained.error,retained.guest_status);
+        ideck_native_log_line(line);
+    }
+#endif
     if(ideck_native_health(build,ideck_linux_lab_stage(),ideck_linux_lab_live_guest_threads(),ideck_linux_lab_native_worker_entries()))
         ideck_native_log_line("NATIVE_HEALTH_WRITE failed=1");
 }
@@ -74,7 +88,16 @@
         [self.window makeKeyAndVisible];return;
     }
     unsigned steamModes=0;
-    for(NSString *mode in @[@"linux-steam-desktop",@"linux-steam-install-dependencies",@"linux-steam-compatibility-diagnostics",@"linux-steam-window-trace"])
+#if IDECK_LAB_RETAINED_FRONTEND
+    /* Joined-provider configuration is a separate explicit experiment. Other
+     * modes must not enter its archives without their owning registries. */
+    if(![NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-retained-frontend"]){
+        UIViewController *error=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
+        label.text=@"This experimental build requires linux-steam-retained-frontend. No Linux session started.";
+        label.numberOfLines=0;error.view=label;self.window.rootViewController=error;[self.window makeKeyAndVisible];return;
+    }
+#endif
+    for(NSString *mode in @[@"linux-steam-desktop",@"linux-steam-install-dependencies",@"linux-steam-compatibility-diagnostics",@"linux-steam-window-trace",@"linux-steam-retained-frontend"])
         if([NSProcessInfo.processInfo.arguments containsObject:mode])steamModes++;
     if (steamModes) {
         BOOL conflict=steamModes!=1;
