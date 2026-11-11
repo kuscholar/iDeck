@@ -14,9 +14,11 @@ p.add_argument('--sanitize',action='store_true')
 p.add_argument('--fail-worker-starts',action='store_true',help='HOST ONLY negative control: return EAGAIN, never an iOS build')
 p.add_argument('--join-workers',action='store_true',help='ISOLATED owned-reaper prototype; requires native initialization, not full teardown')
 p.add_argument('--stop-profile',action='store_true',help='ISOLATED cooperative profiler stop/release; requires joined guests, runtime boundary and --join-workers')
+p.add_argument('--worker-waves',action='store_true',help='ISOLATED reaper reopen after actual finish joins, not provider/global reset')
 a=p.parse_args();src,build,archive,out=map(lambda x:x.resolve(),[a.source,a.build,a.archive,a.output])
 assert not(a.join_workers and a.fail_worker_starts),'Use independent join and start-failure controls'
 assert not a.stop_profile or a.join_workers,'Profiler stop requires explicit native joins'
+assert not a.worker_waves or a.join_workers,'Worker waves require actual native joins'
 pin='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()==pin
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -41,6 +43,7 @@ def compile_copy(relative,generated,object_name):
   if key in cmd:cmd[cmd.index(key)+1]=str(value)
  if a.sanitize:cmd+=['-fsanitize=address,undefined','-fno-omit-frame-pointer']
  if a.join_workers:cmd+=['-DIDECK_LAB_JOIN_NATIVE_WORKERS=1']
+ if a.worker_waves:cmd+=['-DIDECK_LAB_WORKER_WAVES=1']
  if a.fail_worker_starts and generated.name=='NativeWorkers.c':cmd+=['-DIDECK_HOST_WORKER_CREATE_EAGAIN=1']
  subprocess.run(cmd,cwd=entry['directory'],check=True);return obj
 for relative,name,kind,callback in units:
@@ -90,6 +93,6 @@ assert hashof(archive)==basehash
 (out/'build-evidence.json').write_text(json.dumps(dict(linuxrunner=pin,base_archive_sha256=basehash,base_archive_unchanged=True,
  archive_sha256=hashof(target),units=evidence,counter_sha256=hashof(out/'NativeWorkers.c'),header_sha256=hashof(out/'NativeWorkers.h'),
  sanitized_units=a.sanitize,host_start_failure_injected=a.fail_worker_starts,joinable_worker_prototype=a.join_workers,
- cooperative_profiler_stop=a.stop_profile,profile_stop_source_sha256=hashof(out/'JoinedProfile.inc') if a.stop_profile else None,
+ cooperative_profiler_stop=a.stop_profile,worker_wave_prototype=a.worker_waves,profile_stop_source_sha256=hashof(out/'JoinedProfile.inc') if a.stop_profile else None,
  join_registry_sha256=hashof(out/'NativeWorkerJoins.c') if a.join_workers else None,marker='IDECK_NATIVE_WORKERS_V1'),indent=2)+'\n')
 print('Copied native-worker archive built; vendor/base unchanged')

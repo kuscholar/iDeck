@@ -18,6 +18,10 @@ int ideck_worker_joins_external(pthread_t,void **);
 /* Initialize/seal/finish are restricted to one native owner thread/lifetime. */
 int ideck_worker_joins_seal(void);
 int ideck_worker_joins_finish(void);
+/* Explicit prototype only: re-create owned reaper after actual finish joins.
+ * Preserve generation/history/errors; NOT full Linux restart or Wine permission.
+ * Ordinary builds return -ENOTSUP. Profiler provider remains one lifetime. */
+int ideck_worker_joins_begin_next_wave(void);
 struct ideck_worker_joins_snapshot {
     uint64_t started,reaped,externally_joined,rejected;
     unsigned capacity,active,managed,external,joining,sealed,reaper_started,reaper_joined;

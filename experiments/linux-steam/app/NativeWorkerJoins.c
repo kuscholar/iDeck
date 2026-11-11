@@ -166,3 +166,20 @@ int ideck_worker_joins_snapshot(struct ideck_worker_joins_snapshot *out){
     }
     pthread_mutex_unlock(&registry_lock);return 0;
 }
+int ideck_worker_joins_begin_next_wave(void){
+#if IDECK_LAB_WORKER_WAVES
+    int error=serial_owner();if(error)return error;
+    pthread_mutex_lock(&registry_lock);
+    if(!sealed||finishing||!reaper_joined||active||fault)error=-EBUSY;
+    if(!error){
+        /* All old handles including the reaper have actually joined. No
+         * provider globals are reset; especially no profiler revival. */
+        int created=pthread_create(&reaper_thread,NULL,reaper,NULL);
+        if(created){fault=created;error=-created;}
+        else {sealed=0;reaper_started=1;reaper_joined=0;}
+    }
+    pthread_mutex_unlock(&registry_lock);return error;
+#else
+    return -ENOTSUP;
+#endif
+}

@@ -14,8 +14,10 @@ p.add_argument('archive',type=Path);p.add_argument('output',type=Path)
 p.add_argument('--sanitize',action='store_true')
 p.add_argument('--fail-child-starts',action='store_true',help='HOST NEGATIVE CONTROL ONLY: return EAGAIN from guest child pthread creation')
 p.add_argument('--join-guests',action='store_true',help='ISOLATED PROTOTYPE: tracked joinable child pthreads; requires native registry initialization, not full Linux teardown')
+p.add_argument('--guest-waves',action='store_true',help='PROTOTYPE: allow explicit reopen after actual joins, preserving cumulative capacity; NOT runtime reset')
 a=p.parse_args();source,build,archive,out=[x.resolve() for x in [a.source,a.build,a.archive,a.output]]
 assert not (a.join_guests and a.fail_child_starts),'Use independent failure controls, not a mixed prototype'
+assert not a.guest_waves or a.join_guests,'Guest waves require actual registered child joins'
 pin='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()==pin
 assert not subprocess.check_output(['git','-C',str(source),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -70,6 +72,7 @@ obj=out/'kernel_task.c.o';cmd[cmd.index('-o')+1]=str(obj)
 for key,value in [('-MF',out/'task.d'),('-MQ',obj)]:
  if key in cmd:cmd[cmd.index(key)+1]=str(value)
 if a.sanitize:cmd+=['-fsanitize=address,undefined','-fno-omit-frame-pointer']
+if a.guest_waves:cmd+=['-DIDECK_LAB_GUEST_WAVES=1']
 subprocess.run(cmd,cwd=entry['directory'],check=True)
 basehash=hashof(archive);shutil.copy2(archive,out/'libish.a')
 subprocess.run(['xcrun','ar','r',str(out/'libish.a'),str(obj)],check=True)
@@ -77,6 +80,6 @@ assert hashof(archive)==basehash
 (out/'build-evidence.json').write_text(json.dumps(dict(linuxrunner=pin,base_archive_sha256=basehash,
  base_archive_unchanged=True,generated_task_sha256=hashof(generated),hooks_sha256=hashof(out/'GuestLifetime.c'),header_sha256=hashof(out/'GuestLifetime.h'),
  archive_sha256=hashof(out/'libish.a'),sanitized_translation_unit=a.sanitize,injected_child_create_failure=a.fail_child_starts,
- joinable_child_prototype=a.join_guests,join_registry_sha256=hashof(out/'JoinableGuests.c') if a.join_guests else None,
+ joinable_child_prototype=a.join_guests,guest_wave_prototype=a.guest_waves,join_registry_sha256=hashof(out/'JoinableGuests.c') if a.join_guests else None,
  marker='IDECK_GUEST_LIFETIME_V1'),indent=2)+'\n')
 print('Copied guest lifetime archive built; inputs/vendor unchanged')

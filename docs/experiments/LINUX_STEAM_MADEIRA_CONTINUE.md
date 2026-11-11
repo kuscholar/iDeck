@@ -1,3 +1,76 @@
+# Latest Run31: TWO genuine HOST Steam login render/close/restart cycles pass
+
+Read EVIDENCE.run31 and MD Run31 first. Baseline35ff61c + exact run30/31 dirty
+source snapshots; check Git for current revision. Branch experiment/linux-steam-
+madeira-ipad/origin kuscholar/iDeck, main2ac39be/vendor d141978 preserved.
+
+Actual same native PID/root/kernel first login window -> close -> real all
+tracked joins -> reap8/0left -> signals restored -> explicit reacquisition ->
+new init child -> second REAL login window -> close -> joins -> reap7/0left ->
+signals restored -> NATURAL native0,239.934s total incl observations/manualclose.
+No credentials/Guard/submit. Private run31 QR/screenshots/logs stay out of Git.
+Initial black frames resolved; cannot call them a hang/causal failure. First
+sandbox attempt Xvfb bind/connect EPERM pre-Steam, native5; authorized SAME
+binary displays both. Both old owned host children TERMINAL, no stale PID use.
+
+--worker-waves requires --join-workers; owner can recreate reaper ONLY after
+actual finish joins, sealed/zeroactive/noerror. No history/generation/error reset
+or provider-global revival. DefaultENOTSUP. Profiler OFF and remains lifetime-
+closed.20 real worker/reaper waves + all10 old regressions ASan/UBSan PASS.
+iOS object compile only, NOT new App/sign/install/Air/Wine/game evidence.
+Run30 FOUR real ELF waves also pass, one-shot runtime API remains EBUSY.
+
+NEXT explicit isolated App retained-frontend lifecycle: native viewer close,
+storage-writer/signal ownership then correctly namespaced Linux adapters and
+verified Madeira linkage. Actual Steam Play -> licensed game -> return still
+absent, bridge125. No reset consumed/counters/remount/kernel blanket workaround.
+Cumulative4096 child handles and timer-create semantics remain limitations.
+No authenticated Library/BPM repeat/stability/game/Bluetooth qualification.
+
+ONE readonly Air still23/4952/B265FEBE. Preserve live session/console29282 no
+CtrlC; pending selected25 choice unresolved, don't repeat/infer/substitute newer
+candidate. No Air input/stop/upgrade/restart/account action. CLI only, no Macunlock
+requests/locks/security/trust/password/Guard/Valve/FEX edits. Preserve all main/
+other worktrees/data. Goal ACTIVE, no STABLE_SUCCESS/scheduler unload. Publish
+only scoped signed-off checkpoints in local allowed hours; git gives publication.
+
+--- Earlier Run30 context ---
+
+# Latest Run30: retained-root FOUR real ELF waves HOST verified, no Steam/device cycle
+
+Read EVIDENCE.run30 and latest MD first. Parent35ff61c0ec5f59f1fe8d6299a5694af7452ff92b
+actually pushed earlier; new30 edits UNCOMMITTED outside weekday22–08 at20:01EST
+Nov10. Main2ac39be/origin kuscholar/iDeck/experiment branch verified, vendor
+d141978 pristine; preserve all unrelated worktrees/installations/data.
+
+Explicit --guest-waves requires --join-guests. Owner-only reopen after sealed/
+actual full joins, no error/join underway, no counter/handle reset. Default
+ENOTSUP; cumulative4096 capacity remains (2-slot unit exhausts ENOSPC). Real
+TLS/body-complete-but-unjoined refuses; foreign owner refuses. Not a full Linux
+restart/handoff certificate. No App target enabled.
+
+Actual HOST same root/init/mm FOUR ARM64 ELF waves,16 separate PASS rows each,
+status0, child slots/joins2/4/6/8, complete PID2+ reap each. Original runtime
+one-shot API STILL EBUSY. ASan/UBSan own controls and all4 prior guest-join
+regressions pass; iOS registry object compile only. No actual Steam/CEF or
+Madeira game/return/device validation, no memory-reclamation claim. New helper
+keeps native init/root rather than reinitializing/remounting/resetting consumed.
+Private run30 has exact source/binary/regression/per-wave hashes.
+
+NEXT actual genuine Steam close then new frontend child in retained private
+fakefs root. Must address auxiliary-worker restart/epochs, native signal owner
+reacquisition, stale sockets/viewer and SQLite/storage writers before game.
+Profiler off first discriminator (run28 profile-on setup stalled). No blindly
+reopening/resetting resource registries or starting Wine from zero counters.
+
+ONE readonly Air check still4952/B265FEBE. Preserve Lab23, pending selected25
+choice/console29282 noCtrlC; no input/stop/install/restart/account actions. CLI
+only, no Macunlock/security/trust/credentials/Guard automation. No completion
+sentinel/unload; full genuine Air Steam -> licensed Madeira game -> reliable
+return/repeat remains required, diagnostic bridge still125, no game.
+
+--- Earlier Run29 context ---
+
 # Latest Run29: actual kernel/Wine symbol collision isolated; no new App/device test
 
 Read EVIDENCE.run29, MD Run28/29 and private run28/29 FIRST. Baseline parent

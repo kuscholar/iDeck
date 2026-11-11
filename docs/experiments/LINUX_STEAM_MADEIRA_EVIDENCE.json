@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 29,
-  "recorded_at_utc": "2026-11-10T04:17:24.170182+00:00",
+  "latest_run": 31,
+  "recorded_at_utc": "2026-11-11T05:10:03.592997+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
-  "source_parent": "f962015e551bd95fedb60bcf284270f3c6445a47",
+  "source_parent": "35ff61c0ec5f59f1fe8d6299a5694af7452ff92b",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -6931,5 +6931,304 @@
     "prior_app29_namespace_symbol_present": false,
     "next": "Implement/qualify a native retained-root frontend lifecycle after real joins and native signal restoration, including storage writer boundary and resuming frontend after Madeira. Next iOS app link must include verified Linux-only adapter archive with namespace and exact Wine resources; do not enable registry reset/default flags or replace live Air app.",
     "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run29"
+  },
+  "run30": {
+    "source_parent": "35ff61c0ec5f59f1fe8d6299a5694af7452ff92b",
+    "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+    "scope": "HOST retained native kernel/root/init and four real ELF guest waves, not Steam/CEF/Wine/App/device/game/return",
+    "observed_failure": "Ordinary runtime intentionally consumes one lifetime. Return to Steam requires an explicit lifecycle rather than clearing consumed/global state.",
+    "hypothesis": "After joining/reaping one complete ELF wave, native init/root may be retained and a fresh init child can execute within the same native lifetime.",
+    "minimal_patch": "Explicit prototype child registry reopen only after sealed/full real joins, no counters/handles/error reset; separate HOST helper uses pinned become_new_init_child/do_execve/task_run_current with independently joined initial child. No app/default target modifications.",
+    "actual_controls": {
+      "scope": "HOST retained root FOUR actual ARM64 ELF waves; NOT Steam/Wine/App/iPad or safe handoff",
+      "status": 0,
+      "elapsed_seconds": 0.436,
+      "gate_modes": [
+        "default",
+        "enabled"
+      ],
+      "rows": [
+        "RETAINED_ROOT wave=2 wait_status=0 joined=4 cumulative_slots=4 same_init_root_mm=1",
+        "RETAINED_ROOT wave=3 wait_status=0 joined=6 cumulative_slots=6 same_init_root_mm=1",
+        "RETAINED_ROOT wave=4 wait_status=0 joined=8 cumulative_slots=8 same_init_root_mm=1"
+      ],
+      "per_wave_reports": {
+        "1": {
+          "checks": 16,
+          "sha256": "bbdd3c5de9778734ca9e002cdc1bf97481fd582e753de8d5d524be44a6151906"
+        },
+        "2": {
+          "checks": 16,
+          "sha256": "bbdd3c5de9778734ca9e002cdc1bf97481fd582e753de8d5d524be44a6151906"
+        },
+        "3": {
+          "checks": 16,
+          "sha256": "bbdd3c5de9778734ca9e002cdc1bf97481fd582e753de8d5d524be44a6151906"
+        },
+        "4": {
+          "checks": 16,
+          "sha256": "bbdd3c5de9778734ca9e002cdc1bf97481fd582e753de8d5d524be44a6151906"
+        }
+      },
+      "control_sha256": "e3fa3940a30081b070f9ad552dcc42f0e8b5155d25066d8b3de045387f7b407e",
+      "log_sha256": "3c1d07309df1ace44bbd5790fffbcfa84546fcd5388e388984b09622dea965ff"
+    },
+    "regression": {
+      "scope": "HOST tracked child pthread join/TLS and actual ARM64 guest controls; NOT full Linux quiescence, iOS runtime, Wine/game/return or stability success",
+      "tests": [
+        {
+          "mode": "tls",
+          "status": 0,
+          "elapsed_seconds": 0.143,
+          "log_sha256": "16addcca4086749c0e6ad056832046be6919359f21d404fcbb2f0ad2a89d6ea7"
+        },
+        {
+          "mode": "failure",
+          "status": 0,
+          "elapsed_seconds": 0.15,
+          "log_sha256": "74f0da04cc95096a5589f3d3be1878b5f16852dce1aaf33326bc9dfaea3326bf"
+        },
+        {
+          "mode": "ordinary",
+          "status": 0,
+          "elapsed_seconds": 0.21,
+          "log_sha256": "deba7eef6b27eb2a2bae230c6a1b6ef38c8b4098588047096a3af53dbbba3a0b"
+        },
+        {
+          "mode": "orphan",
+          "status": 0,
+          "elapsed_seconds": 2.14,
+          "log_sha256": "571c8a477e0a388a0a4da50529afbed84758932f5c37fdbe4030ea23bc7b10a6"
+        }
+      ],
+      "archive_sha256": "169d880a954a25f03db7369538cf237b57ab69b2425e7fd1b1d978499e5dd007"
+    },
+    "ios_object_sha256": "bd3478d9c1410b11545bed395e9512119f7e0e97ac4268fdb77f4897bbb15e68",
+    "sources": {
+      "experiments/linux-steam/app/JoinableGuests.c": "e16329bacc76b8c58f9e9e20d219dbf75008f742852b8e50b2ddd968745440f2",
+      "experiments/linux-steam/app/JoinableGuests.h": "051a4612442e1050ce0e41888743bc0f990d673c420649823154dd9920748b28",
+      "experiments/linux-steam/tools/build-guest-lifetime.py": "6782f81685c7a3a72fb216d81611878e5f6791791d7ff8410e6a5f60c3ad2b37",
+      "experiments/linux-steam/tools/retained-root-control.c": "3f632ec34adda199e63628c64b1ca19ebe9a611a46d441de9cd9d12190114f26",
+      "experiments/linux-steam/tools/test-retained-root.sh": "05ef751465e5d9703318224a2bf1e08043c4ae94ebb0ae95824dea6a1bbcef5d",
+      "experiments/linux-steam/tests/guest-waves-test.c": "949aad4d3abd312e3ae9d9361e9341164dd19c717e5ff0ceebdaede008220387"
+    },
+    "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run30",
+    "observed_gates": [
+      "Default returns ENOTSUP even before registry initialize. Explicit flag requires join-guests in copied builder.",
+      "Enabled uninitialized ENODEV, open admission EBUSY, sealed but unjoined/live TLS EBUSY, foreign owner EPERM.",
+      "Real held TLS blocks join until explicit release; only after join next admission opens. Cumulative capacity2 test refuses ENOSPC after second wave, no recycled handle/counter reset.",
+      "Actual four-wave test independently preserves16 PASS lines per wave; wait statuses0, slots2/4/6/8 and joins match, native init/root/mm identity unchanged and no PID2+ task remains after each reap.",
+      "Original ideck_linux_lab_run still returns EBUSY on repeat, not modified to permit restarts."
+    ],
+    "limits": [
+      "Cumulative4096 native lifetime child capacity remains; reopen does not solve long Steam workloads or unlimited cycles.",
+      "No auxiliary worker closure/restart/epochs, profiler rebirth, actual display viewer stop, native signal lease cycle, Steam stale socket/client lifecycle, fakefs SQLite writer isolation or storage ownership proven by this ELF test.",
+      "No root remount/reset/unmap/pressure workaround. Native init and root deliberately retained, no physical memory recovery measurement.",
+      "ASan/UBSan covers own registry/helper and overlaid task unit, not entire pinned engine. iOS object compile is not final Mach-O/App link or physical evidence.",
+      "No actual Steam/CEF second wave or Madeira execution/authentication. Bridge125 diagnostic remains; no licensed game/return, Bluetooth or repeated Air stability.",
+      "One readonly Air query confirms preserved4952/B265FEBE. Pending selected25 choice unchanged; no input/stop/install/restart/account/security action. No Mac unlock request."
+    ],
+    "next": "Test a genuine Steam frontend shutdown and new child frontend with retained private fakefs root, using actual joined auxiliary providers and correctly reacquired signal ownership; keep profiler off for initial discriminator. Native viewer/storage boundary must be qualified before Wine. Preserve Air session and pending25 choice.",
+    "git": "Outside weekday22-08 at20:01EST Nov10: scoped source/docs remain uncommitted/unpushed. Remote experiment35ff61c and main2ac39be verified; other worktrees unchanged."
+  },
+  "run31": {
+    "source_parent": "35ff61c0ec5f59f1fe8d6299a5694af7452ff92b",
+    "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+    "scope": "HOST two genuine unauthenticated Steam login render+normal-close+actual joins/reap/signals in SAME native process and retained root; NOT App/Air/Wine/game/return/stability",
+    "observed_failure": "Ordinary native-worker registry seals for one lifetime; a subsequent actual frontend needs a new owned reaper after real old worker/reaper joins.",
+    "hypothesis": "Explicit reaper recreation after complete finish joins, retaining history/generation/errors and dormant root, permits genuine Steam frontend to start again without resetting kernel or consumed policy.",
+    "minimal_patch": "Opt-in --worker-waves requires --join-workers. Owner-only reopen after sealed/reaper-joined/zero-active/no-fault, new reaper pthread under lock; default ENOTSUP. Profiler remains closed; helper rejects profiling enabled. Separate HOST-only restart helper, no App/default/FEX/Valve edits.",
+    "sources": {
+      "experiments/linux-steam/app/NativeWorkerJoins.c": "cc2058aba0572435743566f8aba4c28d7bc164dd9a092e3c72a1e4526ba6a303",
+      "experiments/linux-steam/app/NativeWorkerJoins.h": "2098138bc75116c64917b30b1d353c390d8993f65852ff5b78609070fbc0d1c5",
+      "experiments/linux-steam/tools/build-native-workers.py": "a2bc9c1a539e1c45903d0c10b113c001191e6ff646fbbf04adb470a208064017",
+      "experiments/linux-steam/tools/build-host-steam-restart.sh": "63c5f2899d05124e569b361abaf2a91380217a988bfbe7727eb8a038c3680c83",
+      "experiments/linux-steam/tools/steam-restart-control.c": "2187d912ac03c515bc778ffa7da23bbe40443098bbbb8579006094cdbd7aaaae",
+      "experiments/linux-steam/tests/worker-waves-test.c": "5143a85dce77e12170e5eda0f5d177a5ec3cf2e90bbfc682f438bf96c27b6763",
+      "experiments/linux-steam/tools/test-worker-waves.sh": "d769e8f30cfdc22b5364e34cb9aba09102769fe97422a1cf32ec14ac9a51ab0c"
+    },
+    "control_sha256": "74dc237207eaaa99b9c926d161edea39c6362a3b95218ebe9f61d5e755fa8b22",
+    "console_sha256": "a59feb8a3ba59687abf7d98e05e06abb785f96b440db1efa750eae2f1aa98026",
+    "owner_result": {
+      "reason": "natural-child-exit",
+      "native_status": 0,
+      "elapsed_seconds": 239.934,
+      "pid": 56155,
+      "UI_and_game_success": false
+    },
+    "actual_rows": [
+      "HOST_RESTART_WAVE begin=1",
+      "HOST_SHUTDOWN_STAGE phase=before_frontend status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=frontend_call_returned status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=joining_guest_threads status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=guests_joined status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=joining_native_workers status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=native_workers_joined status=0 guest_entries=0 native_entries=0",
+      "HOST_GUEST_REAP before=8 reaped=8 after=0 status=0",
+      "HOST_STEAM_SHUTDOWN elf_control=0 tracked_threads_joined=1 native_signals_restored=1 guest_reaped=8 initial_wait_status=0",
+      "scope=HOST_STEAM_EXIT_RESOURCE_COMPONENTS_ONLY_NOT_FULL_ROOT_RESET_WINE_GAME_OR_IPAD_SUCCESS",
+      "HOST_RESTART_WAVE complete=1 status=0",
+      "HOST_RESTART_WAVE begin=2",
+      "HOST_SHUTDOWN_STAGE phase=before_frontend status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=frontend_call_returned status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=joining_guest_threads status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=guests_joined status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=joining_native_workers status=0 guest_entries=0 native_entries=0",
+      "HOST_SHUTDOWN_STAGE phase=native_workers_joined status=0 guest_entries=0 native_entries=0",
+      "HOST_GUEST_REAP before=7 reaped=7 after=0 status=0",
+      "HOST_STEAM_SHUTDOWN elf_control=0 tracked_threads_joined=1 native_signals_restored=1 guest_reaped=7 initial_wait_status=0",
+      "scope=HOST_STEAM_EXIT_RESOURCE_COMPONENTS_ONLY_NOT_FULL_ROOT_RESET_WINE_GAME_OR_IPAD_SUCCESS",
+      "HOST_RESTART_WAVE complete=2 status=0",
+      "scope=HOST_TWO_REAL_STEAM_WAVES_ONLY_NOT_WINE_APP_IPAD_SUCCESS"
+    ],
+    "unit": {
+      "scope": "HOST registry worker/reaper reopen, not full provider or runtime restart",
+      "tests": [
+        {
+          "mode": "default",
+          "status": 0,
+          "binary_sha256": "af81b565954ce571756cd3edca024a29e14d4ba413ae055e4679eb17e23130ff",
+          "log_sha256": "4810cda23aa4b13fc0b520fb92b2d0a1079b445b5c9340b25001fb33d49c8e4b"
+        },
+        {
+          "mode": "enabled",
+          "status": 0,
+          "binary_sha256": "295a941d3424a5d0b824717f5a80e51fb82037aa073018785ff0590a9217a51a",
+          "log_sha256": "193ab0b81b27f18c037ddd4666638032254089f1d9bebc9bf721884750c559dc"
+        }
+      ]
+    },
+    "regression": {
+      "scope": "HOST actual tracked auxiliary pthread joins/TLS/reuse and pinned timer/TTY/forwarders/ARM64 controls; NOT complete Linux teardown, Wine game, iPad or stability proof",
+      "tests": [
+        {
+          "mode": "managed",
+          "status": 0,
+          "elapsed_seconds": 0.085,
+          "log_sha256": "e2cbe86b6b53e531907efb21d969e644f9d789b4bd16e175e4fad6c2056e0378"
+        },
+        {
+          "mode": "external",
+          "status": 0,
+          "elapsed_seconds": 0.024,
+          "log_sha256": "4f23a796add8402e3ebc7bf94d4af78056a29dd0924cca42eaf833d9807f6cde"
+        },
+        {
+          "mode": "reuse",
+          "status": 0,
+          "elapsed_seconds": 1.733,
+          "log_sha256": "26ea6f9c50c0f34fa65a5790310004dbad0cfd7da5718a5b728041505d728a08"
+        },
+        {
+          "mode": "failure",
+          "status": 0,
+          "elapsed_seconds": 0.145,
+          "log_sha256": "6187cbe6bc5d2e82c33865410f89ca550107da3b7276de2bd28e2531711afc41"
+        },
+        {
+          "mode": "join-failure",
+          "status": 0,
+          "elapsed_seconds": 0.134,
+          "log_sha256": "a06c7052b865565b33994f2a55b8a2fe567fb881772c3f8f8864dffb662b692b"
+        },
+        {
+          "mode": "timer",
+          "status": 0,
+          "elapsed_seconds": 0.143,
+          "log_sha256": "ac56b8ef2051eee3526be6ed9c4737bb156ad2d1d66cf18be56a50d5accf6a0c"
+        },
+        {
+          "mode": "timer-tls",
+          "status": 0,
+          "elapsed_seconds": 0.047,
+          "log_sha256": "f651c77c45743eec49a96c4982735d4dcc7543b49293583ff8586e0209d789aa"
+        },
+        {
+          "mode": "tty",
+          "status": 0,
+          "elapsed_seconds": 0.026,
+          "log_sha256": "8034aa34561be76cd25458a2f312b2ad0ecfde4d5ff012f16b82b3f318f66b5d"
+        },
+        {
+          "mode": "ordinary",
+          "status": 0,
+          "elapsed_seconds": 0.211,
+          "log_sha256": "3c89eac49bcfba93794d13332d31f7528a480f9106b900518a0de57957c68ef7"
+        },
+        {
+          "mode": "forward",
+          "status": 0,
+          "elapsed_seconds": 0.085,
+          "log_sha256": "1aea605fb39329adb87b106842d8cf2aca225dd348d331b01bbf4ef244e919ec"
+        }
+      ],
+      "sources": {
+        "tools/native-worker-joins-control.c": "86c0683f690c19c021422e5c30ecc81da90a038f74278c17a5333d79ac3671c3",
+        "app/NativeWorkers.h": "38a08180297d38c3812d4cf0cb5fb26938f2d01e26c030ba920180dc2ae8c7b4",
+        "app/NativeWorkerJoins.c": "cc2058aba0572435743566f8aba4c28d7bc164dd9a092e3c72a1e4526ba6a303",
+        "app/NativeWorkers.c": "f628957cc42b3fae3b43b1c1d2dec55270dc9b8562bac1e0006d74ed4fdfb3e0",
+        "app/NativeWorkerJoins.h": "2098138bc75116c64917b30b1d353c390d8993f65852ff5b78609070fbc0d1c5",
+        "tests/native-worker-joins-test.c": "21321ff7feb3ebc0c4a06a59099f36f4c7e83499ed15eac4c9ee6c8a52311ade"
+      },
+      "archive_sha256": "b6d6b12fcb183eb36bb7403f22e14aafba83c9033a33b48554cbb1eac2ac4e60"
+    },
+    "ios_object_sha256": "a6bca4a8a2f640cf4d34796fb76988b547f0d8c3250ee604021dd821d011d900",
+    "actual_UI": {
+      "login_windows_visually_inspected": 2,
+      "normal_close_clicks": 2,
+      "packets_per_click": 2,
+      "credentials_or_Guard_actions": false,
+      "private_frame_hashes": {
+        "login-wave1.png": "356fa00494fa0a1415086c0af78fa9cfc1b7cdebc31fa79ce813a08aa3b76073",
+        "login-wave1-later.png": "356fa00494fa0a1415086c0af78fa9cfc1b7cdebc31fa79ce813a08aa3b76073",
+        "login-wave1-third.png": "bea35c50e9221d2baab8795944bb028c1616a01de14bf2e36db39b9240d6c616",
+        "before-close-wave1.png": "a20f3dc8d5d88d4e5fd9e82f69dfafed87a584d52d8f018b567d13b39201f67d",
+        "login-wave2.png": "756d16efe521d06be6b2681737e96757d620243c4e74f8d3ce790955d214d8cb",
+        "before-close-wave2.png": "e30e8128cae341d352776eb75cfc433dbb2296999d361442f5bca1de858c55cd"
+      },
+      "initial_black_frames_then_real_login": true,
+      "time_to_interactive_library_measured": false
+    },
+    "setup_failure": {
+      "first_sandboxed_owner_result": {
+        "reason": "natural-child-exit",
+        "native_status": 5,
+        "elapsed_seconds": 20.842,
+        "pid": 55814,
+        "UI_and_game_success": false
+      },
+      "diagnostic": "First attempt Xvfb listener bind failed, x11vnc connect errno1/EPERM; Steam not launched. Same immutable binary/reused private root after terminal cleanup, authorized host socket execution renders login. Not a Linux crash, not a causal patch/sole-cause or timing benchmark.",
+      "first_native_log_hashes": {
+        "kernel-55814-3154445-491180000.log": "3fca5146e06219b1c4c119a2b15fe908ca488a35cfed1ce49cd42c202a75be53"
+      }
+    },
+    "native_resource_rows": [
+      "NATIVE_RESOURCE mono_ms=3154513792 query_status=0 valid=1 footprint_bytes=1655168 resident_bytes=2244608 virtual_bytes=500517830656 available_known=0 available_bytes=0 cpu_valid=1 cpu_user_us=958 cpu_system_us=1386",
+      "LINUX_MEMORY_CLASSES mono_ms=3154513792 anonymous_guest_pages=0 translation_tables=0 translated_blocks=0 code_words_bytes=0 idle_flushes=0 cap_flushes=0 pressure_flushes=0",
+      "LINUX_MADVISE_REQUESTS calls=0 dontneed_calls=0 dontneed_requested_bytes=0 free_calls=0 free_requested_bytes=0",
+      "NATIVE_RESOURCE mono_ms=3154675205 query_status=0 valid=1 footprint_bytes=231212112 resident_bytes=694812672 virtual_bytes=500643086336 available_known=0 available_bytes=0 cpu_valid=1 cpu_user_us=62899325 cpu_system_us=8524341",
+      "LINUX_MEMORY_CLASSES mono_ms=3154675205 anonymous_guest_pages=0 translation_tables=1 translated_blocks=0 code_words_bytes=0 idle_flushes=7 cap_flushes=3 pressure_flushes=0",
+      "LINUX_MADVISE_REQUESTS calls=2748 dontneed_calls=2744 dontneed_requested_bytes=716431360 free_calls=0 free_requested_bytes=0",
+      "NATIVE_RESOURCE mono_ms=3154675205 query_status=0 valid=1 footprint_bytes=231228496 resident_bytes=694829056 virtual_bytes=500643659776 available_known=0 available_bytes=0 cpu_valid=1 cpu_user_us=62899337 cpu_system_us=8524375",
+      "LINUX_MEMORY_CLASSES mono_ms=3154675205 anonymous_guest_pages=0 translation_tables=1 translated_blocks=0 code_words_bytes=0 idle_flushes=7 cap_flushes=3 pressure_flushes=0",
+      "LINUX_MADVISE_REQUESTS calls=2748 dontneed_calls=2744 dontneed_requested_bytes=716431360 free_calls=0 free_requested_bytes=0",
+      "NATIVE_RESOURCE mono_ms=3154753494 query_status=0 valid=1 footprint_bytes=31327312 resident_bytes=711491584 virtual_bytes=500643348480 available_known=0 available_bytes=0 cpu_valid=1 cpu_user_us=109667027 cpu_system_us=14128570",
+      "LINUX_MEMORY_CLASSES mono_ms=3154753494 anonymous_guest_pages=0 translation_tables=1 translated_blocks=0 code_words_bytes=0 idle_flushes=11 cap_flushes=6 pressure_flushes=0",
+      "LINUX_MADVISE_REQUESTS calls=5114 dontneed_calls=5106 dontneed_requested_bytes=1403715584 free_calls=0 free_requested_bytes=0"
+    ],
+    "private_kernel_log_hashes": {
+      "kernel-56155-3154513-792671000.log": "6f18a66288e51b9241f531b2be91cbe8ac8c1bd84dffc507e530b173c4070f3c"
+    },
+    "limits": [
+      "Two observed host login renders/close cycles are not long-term stability, authenticated Library/BPM navigation, full Steamworks, downloads or game launch/return. No credentials entered/transferred.",
+      "Actual both waves fully join tracked guest/native workers then reaped8/7 and no PID2+ remains. No blanket proof all host/global/native display/framework resources are tracked.",
+      "Retains same root/kernel/native init; does not reinitialize consumed state or remount. Profiler disabled and intentionally not revived. Guest handle cumulative4096 limit remains; timer provider create-error limitations remain.",
+      "Native signal restoration/reacquisition occurs only within this owned HOST process; no concurrent Wine/UIKIt/display-viewer signal owner exercised. Native iOS RFB viewer and keyboard/Metal/input lifecycle still need App qualification.",
+      "No full combined final Mach-O/new Xcode app/sign/install/Air runtime proof; new iOS registry OBJECT compile only. Prepared wineserver provenance and proprietary exception remain distribution gates.",
+      "Air old Lab23/4952/B265FEBE confirmed by single readonly check; unanswered25 choice preserved; no Air input/termination/install/restart/auth, no primary app/phone data changes.",
+      "Both own host observers terminal (sandbox failure native5, authorized NATURAL0); no active host test, do not reuse old stored PIDs. Raw QR/screenshots/Valve/rootfs/logs/profiles remain private."
+    ],
+    "next": "Implement isolated App frontend lifecycle using retained kernel/root with joined child/native waves and signal ownership, stop native viewer and storage writers before switching; link correctly namespaced verified Linux adapters+Madeira in isolated target, then genuine Steam Play bridge/game/return. Pending Air25 retirement selection must be resolved or actual session absence verified before upgrades.",
+    "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run31"
   }
 }

@@ -2666,3 +2666,146 @@ No authentic Madeira game from Linux Steam Play, return, Bluetooth or repeated
 Air stability. Bridge remains diagnostic125; no STABLE_SUCCESS or task unload.
 Continue full product objective with exact final linked artifacts and real Air
 evidence, preserving main/all other worktrees/app accounts/games/saves.
+
+
+## Run30 — retained-root execution across four actual ELF guest waves (HOST only)
+
+Parent35ff61c0ec5f59f1fe8d6299a5694af7452ff92b, exact pinned pristine
+LinuxRunner d141978. Ordinary runtime's one-shot policy remains intact. A new
+explicit copied-archive `--guest-waves` option requires `--join-guests`; the
+registry can reopen admission only after owner-sealed, fully actually joined
+children, with no sticky error/join underway. It never resets cumulative
+handles/slots/errors and refuses ENOSPC at lifetime capacity. Default builds
+return ENOTSUP. This API is a child ownership component, NOT full runtime reset,
+Wine permission or a public reusable-session contract.
+
+The separate HOST helper starts the original ordinary runtime once, actually
+joins/reaps every guest, preserves native init1/root/mm, then uses the pinned
+new-init-child/ELF loader to run three further waves. Each initial child has its
+own actual native join; registered fork/thread children are sealed/joined each
+wave before native wait4 reaps and scans the whole remaining PID range. No
+mount_root/become_first_process/consumed-state reset on later waves. The original
+API still rejects repeat calls. It is not enabled in any iOS App target.
+
+Actual reproducible results in private run30/repro-final:
+
+- Four actual ARM64 ELF executions in one process each preserve16 PASS report
+  rows separately, guest wait status0. Native init/root/mm identities match.
+  Registered child slots/joins progress2,4,6,8 without resetting history; no
+  remaining PID2+ task after each reap. This is not four Steam launches.
+- ASan/UBSan own registry/adapter/overlaid-task controls pass. Real held TLS
+  remains unjoined even after body return; reopen refuses until real join.
+  Uninitialized/open/sealed-unjoined/foreign-thread/cumulative-capacity gates
+  behave as documented; disabled prototype is refused.
+- All four existing join regressions pass: held TLS,1000 creation failures,
+  ordinary16 ELF and orphan-child completion. New iOS arm64 registry object
+  compiles, NOT final App link/sign/install/device execution.
+
+Reproduce with a NEW private external output and prepared toolchain:
+
+```sh
+LINUX_LAB_ARTIFACTS="$PRIVATE_LAB" \
+LINUX_LAB_RETAINED_OUT="$OUT" LD_LLD="$LD_LLD" \
+  bash experiments/linux-steam/tools/test-retained-root.sh
+```
+
+The first attempt refused missing output parent before compilation; corrected
+parent creation and later final per-wave report/gate controls rerun passed.
+Raw artifacts/source hashes, per-wave reports and regression results remain
+private; redacted EVIDENCE.run30 records exact source and binary hashes.
+
+Limits: cumulative4096 child handles remain. No auxiliary worker epoch/restart,
+profiler restart, signal re-acquisition cycle, native viewer shutdown, genuine
+Steam stale sockets/CEF lifecycle, fakefs SQLite writer boundary, physical memory
+reclamation or Wine/Steamworks handoff proven. Native init/root are deliberately
+retained; no blind reset/free/mprotect/counter workaround. Next discriminate
+actual genuine Steam shutdown then a new frontend child in the retained root,
+with real auxiliary joins and signal ownership, before linking game execution.
+
+One readonly query again finds exact Air Lab23/4952/B265FEBE; no input/stop/
+upgrade/restart/authentication. Pending25 choice unchanged, do not repeat or
+substitute. Main/other worktrees/apps/accounts/games/saves/FEX/Valve preserved.
+Source/docs remain uncommitted outside weekday22–08 (20:01EST Nov10); remote
+experiment35ff61c and main2ac39be verified. Full genuine Air Library/BPM ->
+licensed Madeira game -> stable return/repeat remains active, not achieved.
+No STABLE_SUCCESS or scheduler unload.
+
+
+## Run31 — genuine Steam renders twice across retained-root shutdown/restart (HOST)
+
+Parent35ff61c0ec5f59f1fe8d6299a5694af7452ff92b plus exact run30/31 source hashes
+in EVIDENCE. Default one-shot App remains unchanged. An explicit copied-worker
+archive `--worker-waves` option requires `--join-workers`. Only its native owner
+can recreate the owned reaper after sealed, actually joined old workers/reaper,
+zero active entries and no sticky fault. History/generation/error are not reset.
+Default builds refuse ENOTSUP. No provider globals or profiler revival: this
+experiment refuses profiling-enabled startup, preserving the old one-lifetime
+profiler boundary. Child registry uses run30's separately gated admission.
+
+A separate host helper uses one retained fakefs root/kernel/native init. It runs
+the existing genuine Steam frontend once; after true initial/child/native joins,
+it reaps all guest zombies and restores native signal ownership. It captures
+another signal lease, explicitly reacquires the existing SIGUSR1/SIGPIPE policy,
+reopens joined child/worker admission, removes only old private display readiness
+paths and creates a new init child for the exact same fixed Steam launch/env.
+No mount/become-first-process/consumed reset. Both real frontend exit statuses
+are checked before proceeding. It is not linked into an iOS App target.
+
+Actual test results (private run31/owner-authorized):
+
+- Genuine login window visually inspected on BOTH waves, including new QR
+  challenge. Initial black frames were startup delay, not final UI evidence.
+  No username/password/Guard/submit action. Only each visually selected close
+  button was clicked,2 pointer packets each, and normal guest exit followed.
+- Same owned native process/root through both waves. Both initial statuses0;
+  actual guest/native joins complete; init wait4 reaps8 then7 with0 remaining
+  PID2+ entries; signal lease restoration succeeds twice. Owner observes
+  NATURAL native exit0 after239.934s. This duration includes observation/manual
+  inspection and close actions, NOT startup/performance or Library latency.
+- 20 real owned worker/reaper waves pass host ASan/UBSan tests, preserving
+  cumulative counters and managed/original-owner forwarder return values.
+  Early/open/not-actually-finished/foreign-owner gates refuse; default refusal
+  passes. All10 previous worker-join regressions pass, including real pinned
+  timer, held TLS, TTY, forwarding, failures and10008 active-slot reuse.
+- iOS arm64 registry OBJECT compiles; no new final Mach-O/sign/install/device
+  test. LinuxRunner/vendor/FEX/Valve/ordinary targets remain unchanged.
+
+The FIRST sandboxed host attempt failed before Steam: Xvfb could not bind local
+listeners and x11vnc connect returned EPERM. It naturally exited native5 with
+real cleanup; no Linux crash claim. The SAME immutable binary in authorized
+host socket execution, after confirmed terminal root ownership, displayed both
+real windows. No retry patch, ignored failure or suppression of Xlib/CEF checks.
+Raw native samples/logs and QR frames remain private; publish only hashes/counts.
+Both own observer children are now terminal; never act on their stored PIDs.
+
+Reproduce in fresh private output/root with explicit prepared NINJA/toolchain:
+
+```sh
+LINUX_LAB_ARTIFACTS="$PRIVATE_LAB" LINUX_LAB_RESTART_OUT="$OUT/build" \
+  NINJA="$NINJA" bash experiments/linux-steam/tools/build-host-steam-restart.sh
+LINUX_LAB_WORKER_WAVES_OUT="$OUT/units" \
+  bash experiments/linux-steam/tools/test-worker-waves.sh
+python3 experiments/linux-steam/tools/observe-host-steam-trace.py \
+  "$OUT/build/control" "$PRIVATE_UNUSED_ROOT" "$PREPARED_TOOL_BUNDLE" \
+  "$OUT/observer" --seconds 600
+```
+
+Observer deadline/intentional termination is never a clean cycle success; real
+close-window interaction and natural terminal receipt are required. Preserve
+source/binary hashes and verify account-free root first, as observer does.
+
+This is a HOST basic two-login-render/close/restart result, NOT authenticated
+Library/BPM navigation, game/return, stability qualification or iPad validation.
+No new Wine execution, Steamworks/license path, native iOS viewer/Metal/input
+handoff, full storage-writer barrier or memory reclamation proven. Root/kernel
+remain deliberately resident; cumulative4096 child handles and timer provider
+creation-error limitations remain. No combined binary distribution until
+component/proprietary converter exception obligations are resolved.
+
+One readonly Air query again shows old23/4952+B265FEBE. No Air input/stop/install/
+restart/authentication, pending25 choice unchanged/not repeated. Main/other
+worktrees/working apps/accounts/games/saves preserved. Full actual Air Steam ->
+licensed Madeira game -> stable return/repeat goal active; no STABLE_SUCCESS or
+scheduler unload. Next move these qualified components into an explicit isolated
+App lifecycle with native viewer/storage/signal ownership, then genuine bridge
+Madeira execution, preserving the active user test.

@@ -78,3 +78,15 @@ int ideck_joinable_guests_snapshot(struct ideck_joinable_guests_snapshot *out){
         .all_registered_children_joined=!error&&join_registry_sealed&&!join_registry_joining&&!join_registry_error&&join_registry_joined==join_registry_slots};
     pthread_mutex_unlock(&join_registry_lock);return error;
 }
+int ideck_joinable_guests_begin_next_wave(void){
+#if IDECK_LAB_GUEST_WAVES
+    pthread_mutex_lock(&join_registry_lock);int error=serial_owner();
+    if(!error&&(!join_registry_sealed||join_registry_joining||join_registry_error||
+               join_registry_joined!=join_registry_slots))error=-EBUSY;
+    if(!error&&join_registry_slots>=IDECK_JOIN_GUEST_CAPACITY)error=-ENOSPC;
+    if(!error)join_registry_sealed=0; /* No counter, handle or error reset. */
+    pthread_mutex_unlock(&join_registry_lock);return error;
+#else
+    return -ENOTSUP;
+#endif
+}

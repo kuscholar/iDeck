@@ -19,6 +19,11 @@ int ideck_joinable_guest_start(pthread_t *thread,const pthread_attr_t *attribute
                              void *(*entry)(void *),void *argument);
 int ideck_joinable_guests_seal(void);
 int ideck_joinable_guests_join(void);
+/* Explicit prototype build only. Reopens child admission after real joins,
+ * preserving cumulative handles/capacity. NOT a runtime restart/epoch reset:
+ * caller must separately own initial thread, root, workers, signals/storage.
+ * Ordinary builds refuse with -ENOTSUP. */
+int ideck_joinable_guests_begin_next_wave(void);
 struct ideck_joinable_guests_snapshot {
     unsigned slots,capacity,joined,sealed,joining;
     uint64_t rejected;
