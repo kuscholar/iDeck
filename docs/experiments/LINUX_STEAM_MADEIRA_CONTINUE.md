@@ -1,3 +1,40 @@
+# Latest Run32: opt-in native RFB completion integrated/final-linked App, NOT Air tested
+
+Read EVIDENCE.run32 and MD Run32 first; parentf6c1bcdb1bd4d405cccac360027112e6f8b65f2f.
+Current git gives published revision/status. Main2ac39be/vendor d141978 pristine,
+origin kuscholar/iDeck/experiment/linux-steam-madeira-ipad only.
+
+Prior31 HOST TWO genuine Steam login render/normal-close/restart cycles NATURAL0
+verified, no auth/game/device success.32 adds missing native viewer boundary:
+explicit LINUX_LAB_RFB_LIFETIME=1 generated pinned-source copy, recursive admission
+lock + actual GCD decoder/input group. Stop closes starts/input then main-queue
+completion after task bodies/callbacks return. Default includes original source.
+Feature controller closes input/frame admission at guest return, refuses late
+client start, drops queued frames/clears CPU frame after completion. GPU in-flight
+UNVERIFIED explicitly; not Linux/Wine/game quiescence. No App restart enabled.
+
+Four actual host socket/callback-held controls ASan/UBSan PASS, default RFB
+instructions identical. Full feature32 FINAL methods+GPUmarker verified, SHA
+1945259685fb50f4d932bc3b7e581f60f621804cab1166fd2193ea04b15a08b2, immutable
+private run32/feature32-unsigned/LinuxLab.app. Full default32 excludes new methods/
+marker/resources; current generic run32/xcode products DEFAULT.32 UNSIGNED/
+UNINSTALLED/device UI untested. Backend archives reused29, so run31 joined waves
+NOT included. No full Metal/GPU/storage/captured-object lifetime guarantee.
+
+NEXT real App integration: dedicated serial native session owner retains root,
+actual child/native joins+signal leases per31, coordinates native RFB completion
+and GPU/storage boundary. Do not reset consumed/global/counters or start Wine
+from task counts. Then namespaced exact Linux adapters + verified Madeira link
+and genuine Steam Play/owned game/return. Bridge125 still diagnostic.
+
+ONE current readonly Air23/4952/B265FEBE still alive. Preserve live session/
+console29282 noCtrlC, pending25 choice unresolved; no repeat/infer/substitute32.
+No device input/stop/upgrade/restart/login. CLI only, no Macunlock/lock/security/
+credential/Guard/Valve/FEX modifications. No stable sentinel/unload; full Air
+Library/BPM/input + licensed Madeira game/return/repeated stability goal ACTIVE.
+
+--- Earlier Run31 context ---
+
 # Latest Run31: TWO genuine HOST Steam login render/close/restart cycles pass
 
 Read EVIDENCE.run31 and MD Run31 first. Baseline35ff61c + exact run30/31 dirty

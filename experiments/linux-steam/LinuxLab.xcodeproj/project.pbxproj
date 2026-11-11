@@ -246,6 +246,7 @@ fi
 					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
+					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -310,6 +311,8 @@ fi
 				<key>LINUX_LAB_GAME_FILE_POLICY</key>
 				<string>0</string>
 				<key>LINUX_LAB_X11_TRACE</key>
+				<string>0</string>
+				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -361,6 +364,7 @@ fi
 					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
+					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -425,6 +429,8 @@ fi
 				<key>LINUX_LAB_GAME_FILE_POLICY</key>
 				<string>0</string>
 				<key>LINUX_LAB_X11_TRACE</key>
+				<string>0</string>
+				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -492,6 +498,7 @@ fi
 					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
+					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -512,6 +519,8 @@ fi
 				<key>LINUX_LAB_GAME_FILE_POLICY</key>
 				<string>0</string>
 				<key>LINUX_LAB_X11_TRACE</key>
+				<string>0</string>
+				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -540,6 +549,7 @@ fi
 					<string>IDECK_LAB_PRIVATE_DISCARD=$(LINUX_LAB_PRIVATE_DISCARD)</string>
 					<string>IDECK_LAB_GAME_FILE_POLICY=$(LINUX_LAB_GAME_FILE_POLICY)</string>
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
+					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -560,6 +570,8 @@ fi
 				<key>LINUX_LAB_GAME_FILE_POLICY</key>
 				<string>0</string>
 				<key>LINUX_LAB_X11_TRACE</key>
+				<string>0</string>
+				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -707,7 +719,7 @@ fi
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
 			<key>path</key>
-			<string>../../vendor/LinuxRunner/app/LinuxRunner/RFBClient.m</string>
+			<string>app/LabRFBClient.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>

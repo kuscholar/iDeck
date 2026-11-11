@@ -2809,3 +2809,74 @@ licensed Madeira game -> stable return/repeat goal active; no STABLE_SUCCESS or
 scheduler unload. Next move these qualified components into an explicit isolated
 App lifecycle with native viewer/storage/signal ownership, then genuine bridge
 Madeira execution, preserving the active user test.
+
+
+## Run32 — native RFB task-completion boundary integrated into opt-in App32
+
+Parent f6c1bcdb1bd4d405cccac360027112e6f8b65f2f. Previous run31 actual HOST
+Steam restart is progress, not App return proof. Current native viewer's stop
+only requests socket shutdown, so it cannot certify decoder/input callbacks
+returned. New `LINUX_LAB_RFB_LIFETIME=1` uses a generated copy of exact pristine
+LinuxRunner RFB source: one recursive admission lock guards start/input and stop;
+actual decoder/input GCD blocks belong to a group; stop closes future admission
+and notifies main after bodies/callbacks/autorelease pools return. No deadline
+or counter-only completion. `LabRFBClient.m` includes original source unchanged
+when disabled, preserving its license/notices rather than editing vendor.
+
+In the explicit feature App, guest-return closes UI input and frame admission.
+A client not yet connected cannot start after guest end (installation/start now
+shares main-queue ownership). RFB completion clears callbacks, retained latest
+CPU frame, viewport size and displayed frame. Pending main deliveries are dropped
+when frame admission is closed. This is NOT Metal command-buffer completion;
+runtime marker explicitly records gpu_completion_unverified=1. Existing ordinary
+one-shot runtime and Linux child/native registries are not enabled/reset here.
+
+Actual private run32 results:
+
+- Four real loopback protocol/socket controls pass ASan/UBSan: stop-before-start
+  then attempted start/input admits no connection; stalled handshake interrupted;
+  actual raw frame callback and actual input-queue callback held deliberately.
+  Completion remains absent during100ms hold and occurs only after release/return
+  on main dispatch QUEUE. CLI dispatch_main queue affinity is not NSThread identity.
+- Default original/wrapper compiled RFB instruction sections are identical at
+  host O2. No changes to original pinned vendor file or ordinary behavior.
+- Full Xcode feature32 build succeeds. FINAL actual Mach-O contains RFB completion
+  and controller guest-close methods and explicit GPU-unverified marker. Immutable
+  unsigned feature app hash1945259685fb50f4d932bc3b7e581f60f621804cab1166fd2193ea04b15a08b2.
+- Full default32 builds, excludes these methods/marker and compatibility resources.
+  Final default hash30805008c143d4706271a8d3b200b3b600f1b1f03e4e3378791c01d2999887d7.
+  Current generic run32/xcode products are DEFAULT; feature copy is run32/
+  feature32-unsigned/LinuxLab.app. No sign/install/on-Air App32 execution.
+
+Generator initially refused a nonunique initialization token; corrected exact
+match. Harness fixed its strong self capture, Python3.9 timeout classification
+and CLI queue/thread assumption. Inherited unused-static/indentation warnings
+are permitted explicitly in the host Werror compile; runtime checks/assertions
+are unchanged. A premature final-link audit refused while Xcode still ran; the
+same handle was re-polled to terminal success before final artifact inspection.
+All exact source/generated/test/build hashes are in EVIDENCE.run32/private run32.
+
+Reproduce source with build-rfb-lifetime.py NEW_OUT, compile own
+rfb-lifetime-control.m + LabRFBClient.m + pinned RFBProtocol.c using Foundation,
+ARC/blocks, ASan/UBSan, IDECK_LAB_RFB_LIFETIME=1 and include paths to generated
+source, lab app and vendor app/LinuxRunner. Then test_rfb_lifetime.py CONTROL
+NEW_OUT runs real localhost peers. Full normal build-lab.sh accepts the explicit
+LINUX_LAB_RFB_LIFETIME=1 only with frontend=1, generates copied input and passes
+flag to Xcode. The recorded direct Xcode builds reused verified private29 runtime
+archives and prepared rootfs pin, with fresh run32 input/DerivedData paths; they
+do not prove run31 backend join prototypes are included. Final App32 proof here
+is only the native viewer task boundary.
+
+Scope remains limited: group completion does not join GCD executor pthreads/TLS
+or certify all captured-object/framework/GPU resource reclamation. iOS UIKit
+behavior remains untested, no native storage-writer barrier or game handoff.
+Next use a dedicated serial session-owner thread to integrate real backend joins/
+signals/retained-root lifecycle, coordinate viewer and GPU/storage boundaries,
+then verified namespaced Linux/Madeira linkage and actual licensed game/return.
+Do not change consumed state or call zero counters a safe handoff.
+
+ONE readonly Air query still identifies23/4952/B265FEBE. No input/stop/install/
+restart/account action, pending25 choice unchanged/not repeated. Main and other
+worktrees/working apps/auth/games/saves/vendor/FEX/Valve preserved. Full genuine
+Air Library/BPM -> Madeira game -> repeated stable return is NOT achieved. No
+STABLE_SUCCESS or scheduler unload; goal active.

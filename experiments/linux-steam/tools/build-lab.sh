@@ -35,6 +35,9 @@ fi
 if [[ ${LINUX_LAB_PRIVATE_DISCARD:-0} == 1 && ( ${LINUX_LAB_MADVISE_STATS:-0} != 1 || ${LINUX_LAB_LAZY_PAGES:-0} != 1 ) ]];then
     echo 'Private discard experiment requires explicit request observation and grouped lazy pages' >&2;exit 2
 fi
+if [[ ${LINUX_LAB_RFB_LIFETIME:-0} == 1 && ${LINUX_LAB_STEAM_FRONTEND:-0} != 1 ]];then
+    echo 'RFB completion experiment requires explicit frontend opt-in' >&2;exit 2
+fi
 mkdir -p "$LINUX_LAB_ARTIFACTS"
 sdk=$(xcrun --sdk iphoneos --show-sdk-path)
 out="$LINUX_LAB_ARTIFACTS/ios"
@@ -99,6 +102,11 @@ if [[ ${LINUX_LAB_NATIVE_LOG:-0} == 1 ]];then
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$log_stage/runtime/"
     runtime="$log_stage/runtime"
 fi
+if [[ ${LINUX_LAB_RFB_LIFETIME:-0} == 1 ]];then
+    rfb_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-rfb-parent.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-rfb-lifetime.py" "$rfb_stage/source"
+    cp "$rfb_stage/source/LabRFBJoined.generated.inc" "$out/LabRFBJoined.generated.inc"
+fi
 frontend_libs=""
 if [[ ${LINUX_LAB_MADVISE_STATS:-0} == 1 ]];then
     advice_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-madvise-stats.XXXXXX")
@@ -128,6 +136,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_SHARED_DISPLAY="${LINUX_LAB_SHARED_DISPLAY:-0}" \
     LINUX_LAB_COMPAT_TOOL="${LINUX_LAB_COMPAT_TOOL:-0}" \
     LINUX_LAB_X11_TRACE="${LINUX_LAB_X11_TRACE:-0}" \
+    LINUX_LAB_RFB_LIFETIME="${LINUX_LAB_RFB_LIFETIME:-0}" \
     LINUX_LAB_GAME_FILE_POLICY="${LINUX_LAB_GAME_FILE_POLICY:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \

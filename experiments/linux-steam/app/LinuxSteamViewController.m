@@ -9,6 +9,9 @@
 #import "X11TraceInstall.h"
 #endif
 #import "RFBClient.h"
+#if IDECK_LAB_RFB_LIFETIME
+#import "LabRFBCompletion.h"
+#endif
 #import "MetalFramebufferView.h"
 #if IDECK_LAB_NATIVE_LOG
 #import "NativeKernelLog.h"
@@ -96,10 +99,16 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(nonatomic) CGSize latestSize;
 @property(nonatomic) BOOL deliveryQueued;
 @property(atomic) BOOL guestEnded;
+#if IDECK_LAB_RFB_LIFETIME
+@property(atomic) BOOL acceptsFrames;
+#endif
 @end
 @implementation LinuxSteamViewController
 - (void)viewDidLoad {
     [super viewDidLoad];self.view.backgroundColor=UIColor.blackColor;self.frameLock=[NSLock new];
+#if IDECK_LAB_RFB_LIFETIME
+    self.acceptsFrames=YES;
+#endif
     self.input=[[LabSteamInput alloc]initWithFrame:self.view.bounds];self.input.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;self.input.secureTextEntry=YES;
     __weak typeof(self) weakSelf=self;
     self.display=[[LRMetalFramebufferView alloc]initWithFailure:^(NSString *reason){[weakSelf showStatus:reason];}];
@@ -124,12 +133,37 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 - (void)showStatus:(NSString *)value {dispatch_async(dispatch_get_main_queue(),^{self.status.text=value;self.status.hidden=NO;});}
 - (void)toggleKeyboard {if(self.input.isFirstResponder)[self.input resignFirstResponder];else[self.input becomeFirstResponder];}
 - (void)releaseInput {[self.input releaseInput];}
+#if IDECK_LAB_RFB_LIFETIME
+- (void)endDisplayForGuestStatus:(int)status {
+    dispatch_async(dispatch_get_main_queue(),^{
+        self.acceptsFrames=NO;[self.input releaseInput];self.input.client=nil;
+        LRRFBClient *client=self.client;
+        dispatch_block_t finished=^{
+            client.frameHandler=nil;client.statusHandler=nil;
+            [self.frameLock lock];self.latest=nil;[self.frameLock unlock];
+            self.input.pixels=CGSizeZero;[self.display clearFrame];
+            if(self.client==client)self.client=nil;
+#if IDECK_LAB_NATIVE_LOG
+            ideck_native_log_line("NATIVE_VIEWER_CLOSED tracked_rfb_tasks_returned=1 gpu_completion_unverified=1 no_linux_or_game_quiescence_claim=1");
+#endif
+            [self showStatus:[NSString stringWithFormat:@"Linux session ended (status %d). Display connection closed. No other runtime was started.",status]];
+        };
+        if(client)[client ideckStopWithCompletion:finished];else finished();
+    });
+}
+#endif
 - (void)acceptPixels:(NSData *)pixels width:(uint16_t)width height:(uint16_t)height {
+#if IDECK_LAB_RFB_LIFETIME
+    if(!self.acceptsFrames)return;
+#endif
     // At most one pending main-queue delivery and one latest immutable frame.
     [self.frameLock lock];self.latest=pixels;self.latestSize=CGSizeMake(width,height);BOOL schedule=!self.deliveryQueued;self.deliveryQueued=YES;[self.frameLock unlock];
     if(!schedule)return;
     dispatch_async(dispatch_get_main_queue(),^{
         [self.frameLock lock];NSData *latest=self.latest;CGSize size=self.latestSize;self.latest=nil;self.deliveryQueued=NO;[self.frameLock unlock];
+#if IDECK_LAB_RFB_LIFETIME
+        if(!self.acceptsFrames)return;
+#endif
         self.input.pixels=size;[self.display presentPixels:latest width:(uint16_t)size.width height:(uint16_t)size.height];self.status.hidden=YES;
     });
 }
@@ -242,7 +276,11 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
             NSData *report=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(snapshot) options:NSJSONWritingPrettyPrinted error:nil];
             [report writeToURL:[lab URLByAppendingPathComponent:@"last-runtime-session.json"] options:NSDataWritingAtomic error:nil];
             weakSelf.guestEnded=YES;
+#if IDECK_LAB_RFB_LIFETIME
+            [weakSelf endDisplayForGuestStatus:result];
+#else
             [weakSelf showStatus:[NSString stringWithFormat:@"Linux session ended (status %d). Restart the Lab before another runtime session.",result]];
+#endif
         });
         NSURL *ready=[root URLByAppendingPathComponent:@"data/tmp/ideck-display-ready"];
         NSURL *passwordURL=[root URLByAppendingPathComponent:@"data/tmp/ideck-vnc-password"];
@@ -256,11 +294,21 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
         NSFileHandle *file=[NSFileHandle fileHandleForReadingAtPath:passwordURL.path];NSData *password=[file readDataOfLength:9];[file closeFile];
         NSString *secret=password.length==8?[[NSString alloc]initWithData:password encoding:NSASCIIStringEncoding]:nil;
         if(!secret){[self showStatus:@"Guest display authentication material is unavailable."];return;}
-        LRRFBClient *client=[[LRRFBClient alloc]initWithPort:5993 password:secret];self.client=client;
+        LRRFBClient *client=[[LRRFBClient alloc]initWithPort:5993 password:secret];
+#if !IDECK_LAB_RFB_LIFETIME
+        self.client=client;
+#endif
         client.frameHandler=^(NSData *pixels,uint16_t w,uint16_t h,uint64_t frames,uint64_t bytes){(void)frames;(void)bytes;[weakSelf acceptPixels:pixels width:w height:h];};
         client.statusHandler=^(NSString *status){if([status hasPrefix:@"Display error:"])[weakSelf showStatus:status];};
         // Never enable inputTraceHandler: it can expose typed keys.
+#if IDECK_LAB_RFB_LIFETIME
+        dispatch_async(dispatch_get_main_queue(),^{
+            if(self.guestEnded||!self.acceptsFrames)return;
+            self.client=client;self.input.client=client;[client start];
+        });
+#else
         dispatch_async(dispatch_get_main_queue(),^{self.input.client=client;});[client start];
+#endif
     }
 }
 @end

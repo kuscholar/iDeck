@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 31,
-  "recorded_at_utc": "2026-11-11T05:10:03.592997+00:00",
+  "latest_run": 32,
+  "recorded_at_utc": "2026-11-11T05:24:52.409823+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "82b78613d532cd5f33cecd81da4bda27bad25ee2",
-  "source_parent": "35ff61c0ec5f59f1fe8d6299a5694af7452ff92b",
+  "source_parent": "f6c1bcdb1bd4d405cccac360027112e6f8b65f2f",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -7230,5 +7230,107 @@
     ],
     "next": "Implement isolated App frontend lifecycle using retained kernel/root with joined child/native waves and signal ownership, stop native viewer and storage writers before switching; link correctly namespaced verified Linux adapters+Madeira in isolated target, then genuine Steam Play bridge/game/return. Pending Air25 retirement selection must be resolved or actual session absence verified before upgrades.",
     "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run31"
+  },
+  "run32": {
+    "source_parent": "f6c1bcdb1bd4d405cccac360027112e6f8b65f2f",
+    "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+    "scope": "Actual HOST RFB lifetime controls plus opt-in iOS App integration/final feature/default Mach-O proof; NOT on-Air runtime, full GPU/Linux/Wine/game quiescence",
+    "observed_failure": "Existing RFB stop requests socket shutdown but exposes no completion for decoder/input tasks; controller can still receive/paint queued frames after guest return.",
+    "hypothesis": "Serialize task admission with stop, track actual GCD decoder/input blocks, notify main only after task bodies return, and close controller input/frame admission at guest exit.",
+    "minimal_patch": "Pinned generated RFB source only under explicit LINUX_LAB_RFB_LIFETIME=1; original source wrapper for default. Recursive admission lock + dispatch_group_async for decoder/input + main-queue completion. Feature controller closes input/frame delivery and clears retained CPU frame after completion; startup connection admission on main rejects ended guest. No App runtime restart/child/native join flags enabled.",
+    "sources": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "193a278146095548c1064a4dcd7f8278210c21dfe1702cb46935d095d06d3c96",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "5f853c740e9a70dba5dd80271ae07ef353f67330a82a70467d17402f43db2b30",
+      "experiments/linux-steam/app/LabRFBClient.m": "d4fb96ee859c14b7d3a133904b584ebae11ca2a12648361ece3fc2c31f3ed618",
+      "experiments/linux-steam/app/LabRFBCompletion.h": "29c8646823d98eda99b24bb2b347c229611f3258648949ea80ca23752424bd7d",
+      "experiments/linux-steam/tools/build-lab.sh": "60ed5f895eacaba0526b6ff88fd77d07dee43cb6720f923a6936cacc31cbcc52",
+      "experiments/linux-steam/tools/build-rfb-lifetime.py": "79f1706e4961b25a355ede6ab6bebff4ab64ae2c6dd57929abde4f4adb803bbf",
+      "experiments/linux-steam/tests/rfb-lifetime-control.m": "ffac449b296ebe2eaa398051c028b72f367a3b9f09c8ae1bcd7403589f1747b2",
+      "experiments/linux-steam/tests/test_rfb_lifetime.py": "227dfb74398fbb5ce39c9bd29c7c01d3bad45e3657bf4547a2415d979db97942"
+    },
+    "generator": {
+      "scope": "Generated copied RFB lifetime component, NOT execution/App/device proof",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "original_sha256": "b49757d797cda38a7699470eb8790578ec0bb1db00f7f55bb88d8cb034251434",
+      "generated_sha256": "98491d81cb7ab97e13f4b6d24c19c7ac2a1be62fcfe8ea989378131bc0ae1525",
+      "generator_sha256": "79f1706e4961b25a355ede6ab6bebff4ab64ae2c6dd57929abde4f4adb803bbf"
+    },
+    "host": {
+      "scope": "HOST actual socket/GCD lifetime controls; no iOS App/UI/Steam/game proof",
+      "tests": [
+        {
+          "mode": "before-start",
+          "status": 0,
+          "peer_accepted": false,
+          "log_sha256": "6bfaaff17062b712133d47bb74f87f6e2f92494345e3e42d07b709bcc93abdf6"
+        },
+        {
+          "mode": "handshake-blocked",
+          "status": 0,
+          "peer_accepted": true,
+          "log_sha256": "5b3853c6ed8253669ba0c53c60fb9c5c4f411d7a2be274261a469bc40dc05a1d"
+        },
+        {
+          "mode": "frame-held",
+          "status": 0,
+          "peer_accepted": true,
+          "log_sha256": "5b3853c6ed8253669ba0c53c60fb9c5c4f411d7a2be274261a469bc40dc05a1d"
+        },
+        {
+          "mode": "input-held",
+          "status": 0,
+          "peer_accepted": true,
+          "log_sha256": "5b3853c6ed8253669ba0c53c60fb9c5c4f411d7a2be274261a469bc40dc05a1d"
+        }
+      ],
+      "control_sha256": "8be4c1762df9d75da4857080b770c636b16292b9e75e64f563587e8bf0bc155e"
+    },
+    "feature_final": {
+      "scope": "FINAL linked unsigned iOS App, NOT signed/installed/on-Air execution",
+      "sha256": "1945259685fb50f4d932bc3b7e581f60f621804cab1166fd2193ea04b15a08b2",
+      "info": "32",
+      "RFB_completion_method_linked": true,
+      "controller_completion_method_linked": true,
+      "explicit_gpu_unverified_marker": true
+    },
+    "default_final": {
+      "scope": "FINAL default iOS App experiment exclusion only; no on-device claim",
+      "sha256": "30805008c143d4706271a8d3b200b3b600f1b1f03e4e3378791c01d2999887d7",
+      "rfb_completion_excluded": true,
+      "controller_completion_excluded": true,
+      "compatibility_resources_absent": true
+    },
+    "default_instruction_identity": {
+      "scope": "Host default RFB compiled instruction section identity, not whole iOS runtime",
+      "identical": true,
+      "original_sha256": "9b5984b4afc519eef4412ed7ed2443302ef917d041c5393175267f24bef7093b",
+      "wrapper_sha256": "9b5984b4afc519eef4412ed7ed2443302ef917d041c5393175267f24bef7093b"
+    },
+    "private_artifact_root": "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run32",
+    "tests_observed": [
+      "Stop-before-start completion, then start/input attempts: server accepts no connection.",
+      "Actual TCP connection blocks before RFB handshake; stop interrupts receive and completion waits for decoder return.",
+      "Real RFB raw frame delivered; decoder callback deliberately held after entering. Completion remains absent during100ms hold, then occurs after actual release/return.",
+      "Real input key release writes, metrics callback held on input queue. Completion remains absent until that task actually returns. No account or credential actions, fixture password is fixed local test data.",
+      "All4 actual localhost controls pass ASan/UBSan source build; main DISPATCH QUEUE affinity tested, not NSThread identity in a CLI dispatch_main process.",
+      "Default original-source wrapper instruction section matches original RFBClient at host O2. Full default App excludes completion methods/log marker/tool resources.",
+      "Full iOS feature32 build passes and final Mach-O contains both RFB and controller completion methods and GPU-unverified marker; immutable unsigned copy retained. Feature32 NOT signed/installed."
+    ],
+    "failed_attempts": [
+      "First generator unique replacement assertion caught two _socket=-1 occurrences; narrowed exact initialization context. No passing source artifact from failed attempt.",
+      "Full Werror exposed inherited unused inline/indentation warnings and an own harness strong callback capture; baseline specific warnings permitted in host build, own capture changed to weak reference.",
+      "Python3.9 socket.timeout required explicit class handling; fixture initially misclassified expected no-connection timeout. Corrected, not runtime failure.",
+      "CLI dispatch_main completion did not satisfy NSThread.isMainThread; harness now verifies actual main dispatch queue using queue-specific key. No production executor change.",
+      "A final-link verification ran before its in-progress Xcode build ended and refused. Re-polled SAME handle, verified terminal success, then inspected/snapshotted actual final binary; no rebuild inferred from timeout."
+    ],
+    "limits": [
+      "GCD block-body/callback/autorelease-pool completion is not executor pthread/TLS destruction or reclamation of all captured objects/framework state. No full native-system quiescence certificate.",
+      "Main queue drops old queued frames and clears CPU image/input size; Metal command buffers already in flight are NOT drained or verified. Explicit runtime marker gpu_completion_unverified=1.",
+      "UIKit controller close/start-admission logic is compiled/final-linked, NOT device/UI tested. No simulator substitution.",
+      "No Linux child/native joins integrated in this App32; source run31 prototypes remain separate. Default one-shot consumed policy unchanged, no repeated App session API or actual Madeira execution.",
+      "No fresh authenticated Steam Library/BPM, Steam Play/game/return/Bluetooth or stability proof. Bridge remains125; no STABLE_SUCCESS/unload.",
+      "Single readonly Air query still old23/4952/B265FEBE; pending25 choice preserved. No input/stop/install/restart/auth/signing action. Primary app/account/games/saves and all unrelated worktrees/FEX/Valve/vendor intact."
+    ],
+    "next": "Implement dedicated serial native session owner in isolated App using run31 real child/worker waves and signal lease, coordinate its dormant state with RFB completion and GPU/storage writer boundaries. Then namespaced Linux adapter+verified Madeira linkage/game/return. Do not reset consumed/counters or enable restart by zero counts alone."
   }
 }
