@@ -112,16 +112,21 @@ fail:
     ideck_game_files_close(files);return error;
 }
 int ideck_game_files_executable(const struct ideck_game_files *files){return files?files->executable:-1;}
-int ideck_game_files_from_data(int data_directory,const void *frame,size_t size,struct ideck_game_files **out) {
+int ideck_game_files_from_roots(int data_directory,int shared_library_directory,const void *frame,size_t size,struct ideck_game_files **out) {
     if(!frame||size!=sizeof(struct ideck_launch_request)||!out)return -EINVAL;
     if(*out)return -EBUSY;
     struct ideck_launch_request request;memcpy(&request,frame,sizeof request);
     if(ideck_launch_validate(&request,sizeof request))return -EINVAL;
     int is_default=!strncmp(request.install,IDECK_LAUNCH_DEFAULT_ROOT,sizeof IDECK_LAUNCH_DEFAULT_ROOT-1);
-    int common=directory_below(data_directory,is_default?"Steam/steamapps/common":"mnt/ideck/SteamLibrary/steamapps/common");
+    int common=!is_default&&shared_library_directory>=0?
+        directory_below(shared_library_directory,"steamapps/common"):
+        directory_below(data_directory,is_default?"Steam/steamapps/common":"mnt/ideck/SteamLibrary/steamapps/common");
     if(common<0)return common;
     struct ideck_library_caps caps={.default_common=is_default?common:-1,.shared_common=is_default?-1:common};
     int result=ideck_game_files_open(&caps,&request,sizeof request,out);close(common);return result;
+}
+int ideck_game_files_from_data(int data_directory,const void *frame,size_t size,struct ideck_game_files **out) {
+    return ideck_game_files_from_roots(data_directory,-1,frame,size,out);
 }
 int ideck_game_files_working(const struct ideck_game_files *files){return files?files->working:-1;}
 uint32_t ideck_game_files_appid(const struct ideck_game_files *files){return files?files->appid:0;}

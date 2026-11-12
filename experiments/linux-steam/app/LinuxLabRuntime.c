@@ -17,6 +17,9 @@
 #include "LinuxSteamSession.h"
 #include "ToolInstall.h"
 #include "X11TraceInstall.h"
+#if IDECK_LAB_SHARED_LIBRARY
+#include "SharedSteamLibrary.h"
+#endif
 #if IDECK_LAB_GUEST_LIFETIME
 #include "GuestLifetime.h"
 #endif
@@ -127,6 +130,9 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     atomic_store(&phase, 2);
     if ((err = become_first_process()) < 0) return err;
     atomic_store(&phase, 3);
+#if IDECK_LAB_SHARED_LIBRARY
+    if((err=ideck_shared_steam_mount(root_path)))return err;
+#endif
     const char *dirs[] = {"/proc", "/tmp", "/root", "/root/.steam", "/dev"};
     for (unsigned i = 0; i < sizeof dirs / sizeof dirs[0]; i++) {
         err = generic_mkdirat(AT_PWD, dirs[i], i == 1 ? 01777 : 0700);

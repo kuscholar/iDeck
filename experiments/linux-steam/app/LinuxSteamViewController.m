@@ -19,6 +19,9 @@
 #include "RetainedFrontend.h"
 #endif
 #import "MetalFramebufferView.h"
+#if IDECK_LAB_METAL_DRAIN
+#import "LabMetalFramebufferDrain.h"
+#endif
 #if IDECK_LAB_NATIVE_LOG
 #import "NativeKernelLog.h"
 #endif
@@ -29,6 +32,14 @@
 #error Native game-file diagnostics require compatibility-tool and native-log opt-ins
 #endif
 #include "GameFilePolicy.h"
+#include "LaunchProtocol.h"
+#if IDECK_LAB_DOCK_STORAGE
+#include "WindowsLaunchMap.h"
+#import "LabWindowsLibrary.h"
+#endif
+#if IDECK_LAB_SHARED_LIBRARY
+#include "SharedSteamLibrary.h"
+#endif
 #include <fcntl.h>
 #endif
 static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
@@ -181,12 +192,23 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
             self.restartSteamButton.enabled=self.retainedBackendReady;
 #endif
 #if IDECK_LAB_NATIVE_LOG
+            #if IDECK_LAB_METAL_DRAIN
+            ideck_native_log_line("IDECK_METAL_COMMAND_DRAIN_V1 tracked_rfb_tasks_returned=1 tracked_gpu_and_main_bodies_completed=1 driver_storage_Wine_boundary_unverified=1");
+#else
             ideck_native_log_line("NATIVE_VIEWER_CLOSED tracked_rfb_tasks_returned=1 gpu_completion_unverified=1 no_linux_or_game_quiescence_claim=1");
+#endif
 #endif
             [self showStatus:[NSString stringWithFormat:@"Linux session ended (status %d). Display connection closed. No other runtime was started.",status]];
             if(completion)completion();
         };
-        if(client)[client ideckStopWithCompletion:finished];else finished();
+        dispatch_block_t transportFinished=^{
+#if IDECK_LAB_METAL_DRAIN
+            [self.display ideckCloseMetalWithCompletion:finished];
+#else
+            finished();
+#endif
+        };
+        if(client)[client ideckStopWithCompletion:transportFinished];else transportFinished();
     });
 }
 #endif
@@ -242,6 +264,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 - (void)restartRetainedSteam {
     NSAssert(NSThread.isMainThread,@"Retained UI admission belongs to main");
     if(!self.restartSteamButton.enabled||!self.retainedBackendReady||!self.guestEnded||self.client)return;
+#if IDECK_LAB_METAL_DRAIN
+    if(![self.display ideckReopenMetal]){[self showStatus:@"Display cleanup is incomplete or the GPU reported a failure. Session preserved."];return;}
+#endif
     self.restartSteamButton.enabled=NO;self.retainedBackendReady=NO;self.retainedDisplayDrained=NO;
     self.guestEnded=NO;self.acceptsFrames=YES;self.retainedNextWave++;
     [self.frontendCommands lock];self.frontendRequested=YES;[self.frontendCommands signal];[self.frontendCommands unlock];
@@ -261,15 +286,39 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                 struct ideck_frontend_result result;
                 struct ideck_frontend_transport_boundary transport={1,LabDrainRetainedTransport,(__bridge void *)self};
                 int error=ideck_retained_frontend_run(root.fileSystemRepresentation,&tool,&transport,&result);
-                NSDictionary *fields=@{@"native_error":@(error),@"guest_status":@(result.guest_status),@"wave":@(result.wave),
-                    @"backend_phase":@(result.phase),@"reaped":@(result.reaped),@"actual_game":@NO};
+                NSMutableDictionary *fields=[@{@"native_error":@(error),@"guest_status":@(result.guest_status),@"wave":@(result.wave),
+                    @"backend_phase":@(result.phase),@"reaped":@(result.reaped),@"actual_game":@NO} mutableCopy];
+                BOOL capturedRequestReady=NO;
+#if IDECK_LAB_CAPTURE_LAUNCH
+                struct ideck_launch_request capturedRequest;uint64_t capturedSequence=0;
+                int captureError=ideck_game_file_policy_pending(&capturedRequest,&capturedSequence);
+                capturedRequestReady=!captureError;
+                fields[@"capture_error"]=@(captureError);fields[@"captured_request_not_started"]=@(capturedRequestReady);
+                if(capturedRequestReady){fields[@"captured_sequence"]=@(capturedSequence);fields[@"captured_appid"]=@(capturedRequest.appid);}
+#if IDECK_LAB_DOCK_STORAGE
+                if(capturedRequestReady&&!error&&!result.guest_status&&result.phase==IDECK_FRONTEND_DORMANT){
+                    struct ideck_windows_launch_map mapped;
+                    int mapping=ideck_windows_launch_map(&capturedRequest,&mapped);
+                    fields[@"windows_mapping_error"]=@(mapping);
+                    if(!mapping){
+                        BOOL created=NO;NSError *bindingError=nil;
+                        NSURL *documents=[NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+                        BOOL bound=LabBindWindowsLibrary(root,documents,&created,&bindingError);
+                        fields[@"windows_prefix_bound"]=@(bound);fields[@"windows_library_vdf_created"]=@(created);
+                        fields[@"windows_prefix_error"]=@(bound?0:bindingError.code);fields[@"mapped_argc"]=@(mapped.argc);
+                    }
+                    // Metadata preparation only: no Wine startup, auth or writer permission.
+                }
+#endif
+                // No raw argument/frame serialization. This does not grant Wine or licensing permission.
+#endif
                 NSData *report=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(fields) options:NSJSONWritingPrettyPrinted error:nil];
                 [report writeToURL:[lab URLByAppendingPathComponent:@"last-retained-frontend.json"] options:NSDataWritingAtomic error:nil];
                 dispatch_async(dispatch_get_main_queue(),^{
                     self.guestEnded=YES;self.retainedBackendReady=!error&&!result.guest_status&&result.phase==IDECK_FRONTEND_DORMANT;
                     if(self.retainedDisplayDrained){
                         self.restartSteamButton.enabled=self.retainedBackendReady;
-                        [self showStatus:self.retainedBackendReady?@"Steam closed. Ready to restart in the retained environment.":@"Backend cleanup failed. Existing state was preserved."];
+                        [self showStatus:self.retainedBackendReady?(capturedRequestReady?@"Steam closed. Play request captured; Windows has not started.":@"Steam closed. Ready to restart in the retained environment."):@"Backend cleanup failed. Existing state was preserved."];
                     }else [self endDisplayForGuestStatus:error?error:result.guest_status];
                 });
             }}
@@ -323,7 +372,13 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         // this registration API. Libraries may be created by Steam later.
         int rootDirectory=open(root.fileSystemRepresentation,O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
         int dataDirectory=rootDirectory<0?-1:openat(rootDirectory,"data",O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+#if IDECK_LAB_SHARED_LIBRARY
+        int sharedDirectory=ideck_shared_steam_prepare(root.fileSystemRepresentation);
+        int policy=dataDirectory<0||sharedDirectory<0?-1:ideck_game_file_policy_start_shared(dataDirectory,sharedDirectory);
+        if(sharedDirectory>=0)close(sharedDirectory);
+#else
         int policy=dataDirectory<0?-1:ideck_game_file_policy_start(dataDirectory);
+#endif
         if(dataDirectory>=0)close(dataDirectory);if(rootDirectory>=0)close(rootDirectory);
         if(policy){[self showStatus:@"Native game-file diagnostics could not bind this Lab root. No guest started."];return;}
         ideck_native_log_line("IDECK_GAME_FILE_POLICY_V1 diagnostic_only=1 wrapper_exit=125 game_launched=0");

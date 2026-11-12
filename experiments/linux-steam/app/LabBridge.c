@@ -8,6 +8,10 @@
 #include <pthread.h>
 #if IDECK_LAB_GAME_FILE_POLICY
 #include "GameFilePolicy.h"
+#if IDECK_LAB_NATIVE_LOG
+#include "NativeKernelLog.h"
+#include <stdio.h>
+#endif
 #endif
 
 #define LAB_BRIDGE_MAJOR 242
@@ -33,6 +37,14 @@ static ssize_t write_bridge(struct fd *fd, const void *bytes, size_t size) {
     if (t->consumed) { pthread_mutex_unlock(&t->lock); return _EBUSY; }
 #if IDECK_LAB_GAME_FILE_POLICY
     ideck_game_file_policy_inspect(&r);
+#if IDECK_LAB_CAPTURE_LAUNCH && IDECK_LAB_NATIVE_LOG
+    struct ideck_game_file_observation observation;
+    if(!ideck_game_file_policy_observation(&observation)) {
+        char category[180];snprintf(category,sizeof category,"IDECK_NATIVE_LAUNCH_CAPTURE_V1 submitted=%llu completed=%llu status=%d library=%d machine=%u wrapper_result=125 game_started=0",
+            (unsigned long long)observation.submitted,(unsigned long long)observation.completed_sequence,observation.status,observation.library,observation.machine);
+        ideck_native_log_line(category);
+    }
+#endif
 #endif
     /* Diagnostic handler only: 125 means NOT launched. Never pretend a game ran. */
     t->response = (struct ideck_launch_response){IDECK_LAUNCH_MAGIC, IDECK_LAUNCH_VERSION, r.appid, 125};

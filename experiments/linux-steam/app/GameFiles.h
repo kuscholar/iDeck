@@ -25,6 +25,10 @@ int ideck_game_files_open(const struct ideck_library_caps *libraries,
  */
 int ideck_game_files_from_data(int data_directory,const void *frame,size_t size,
     struct ideck_game_files **out);
+/* Separate realfs library's native root (containing steamapps), not fakefs data.
+ * -1 keeps the legacy from_data route. Neither descriptor proves ownership. */
+int ideck_game_files_from_roots(int data_directory,int shared_library_directory,
+    const void *frame,size_t size,struct ideck_game_files **out);
 void ideck_game_files_close(struct ideck_game_files *files);
 /* Borrowed, read-only handles; caller must not close them. They pin observed
  * objects, not future path lookups by Wine. Never execute a host shell/command.

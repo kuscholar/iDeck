@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 33,
-  "recorded_at_utc": "2026-11-11T11:15:10.925451+00:00",
+  "latest_run": 38,
+  "recorded_at_utc": "2026-11-12T03:19:55.000539+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "3d565827eb82ad79f316b33ba86df22c764cecb2",
-  "source_parent": "3d565827eb82ad79f316b33ba86df22c764cecb2",
+  "source_checkpoint": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+  "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -28,7 +28,7 @@
   "device": {
     "prior_observed_gate": "Untrusted Developer",
     "trust_confirmation": "User explicitly confirmed developer trust; Lab8 actual launch/execution succeeds",
-    "current_probe": "Air23 exact process preserved. One F1 menu event pair transmitted; native screenshot still WHITE, no visible response or validated focus/delivery. No stop/restart/upgrade.",
+    "current_probe": "Run38 ONE readonly Air query still old Lab23/4952/B265FEBE. No input/stop/install/auth/signing or new device runtime evidence.",
     "launch_or_install_this_run": false,
     "signed_lab4": false,
     "device_ELF_or_UI_success": "Historical actual Air ELF/TCP17, complete fakefs/native X11-RFB-Metal, user-authenticated genuine Library40/BPM observed in16/17; severe latency/memory pressure. No Madeira game/return/stability success.",
@@ -320,7 +320,7 @@
       "sha256": "b41d62f142a721a9d46736c6f3e57d1f3763b0bebc4217fe8d9d5d982dad4a5e"
     }
   ],
-  "next_discriminator": "Await force-close clarification while inspecting delayed exit reports. Native kernel log build uses DPRINTF/writev666 but App never connects fd666; instrument a private native diagnostic sink for a bounded reproduction, not an assumed runtime fix. Preserve same Lab auth; no new login request unless genuine UI requires it.",
+  "next_discriminator": "Implement an explicit isolated COLD existing-Madeira setup/auth/JIT UI mode without Linux init/concurrency, correctly preserving ContentView input/lifecycle/URL flows, then real clean Linux/exclusive writer handoff and legitimate Windows LaunchApp/game/return. Existing device upgrade choice still pending.",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -7500,5 +7500,1705 @@
       "No new Air Library/BPM/controller/Steam Play/game/return/stability qualification; bridge125"
     ],
     "next_discriminator": "Observe Xvfb role/termination and pre-accept client lifecycle; design isolated pending-connect ownership/credentials/SCM_RIGHTS tests before any copied-source network patch. Revalidate complete current backend+embedded viewer cycle, then namespaced Madeira linkage and real licensed game/return."
+  },
+  "run34": {
+    "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "publication": "UNCOMMITTED/UNPUSHED as recorded Nov11 morning outside required local weekday22-08 window; last published815ddc5. Recheck current clock before commit/push.",
+    "source_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "f75c91b5da5a7a1f059e41c72dce6b481a546fb3081d8466dac9f1d9a1a80421",
+      "experiments/linux-steam/app/main.m": "1cba675b2e6c6b35b6f069047d0cf8a3b0b737f040f02cca124cf237a4b75bf2",
+      "experiments/linux-steam/tools/build-lab.sh": "d1ba60840453962e33415ce8266a2cb705d787ac091ca76d8fbfdb988ef7e752",
+      "experiments/linux-steam/tools/observe-host-steam-trace.py": "3043404c1d29d64700f003c56191378839332713d7163fde3db2da5da816d9b3",
+      "experiments/linux-steam/guest/casp-cow-probe.c": "835a6af08d35ea0d747d5a76ad818eb35d56de8d7af56b52e6a933e333ecc9c9",
+      "experiments/linux-steam/guest/clone.S": "b239f32af1e221faec5bb6ad0709a6a2edbaad3a2e4c07b57225c216240508b8",
+      "experiments/linux-steam/tools/build-casp-order.py": "1ad0c8e521640b08e06e393c5efc941b57e98026ea6c122893358232020859da",
+      "experiments/linux-steam/tools/casp_order_patch.py": "b3d78a41e0fd7f31d4f691ee61d365bdab24dfa3915e37e4c00c8bef4f88527d",
+      "experiments/linux-steam/tools/test-casp-lock-order.py": "b9e93b12a7f1bd187cf1a7b00bd04381cadd9e5a031688222e4a5c41232903c1",
+      "experiments/linux-steam/tools/casp-lock-order-control.c": "f58e18627810bb22825c0c37e180011b59364b873c9b32969163556f27996c90",
+      "experiments/linux-steam/tools/build-host-startup-diagnostics.py": "9f0ef4987601460f590cdee591e8868b2c2942e533206d4adb7e08efb4d3bfd7",
+      "experiments/linux-steam/tools/build-host-retained-rfb.py": "ac48492fbdedebc6a195b471767c9cdee3eb2f8003bea07dae8af89f9f900bc3",
+      "experiments/linux-steam/tools/retained-rfb-control.m": "0018649a2d16fc539b5e9dc447b2c066813da72937a6e58f8e04eddee5491ad7",
+      "experiments/linux-steam/app/RetainedFrontend.c": "55c760976091de8513220ca2df81b81f8e491e932c54f0470531b91763d95653",
+      "experiments/linux-steam/app/RetainedFrontend.h": "41d568d97f40de7148bc28321dc22feaafb3dc42863cc48123c37986f12203da",
+      "experiments/linux-steam/app/LabRFBClient.m": "d4fb96ee859c14b7d3a133904b584ebae11ca2a12648361ece3fc2c31f3ed618",
+      "experiments/linux-steam/tools/build-rfb-lifetime.py": "79f1706e4961b25a355ede6ab6bebff4ab64ae2c6dd57929abde4f4adb803bbf",
+      "experiments/linux-steam/app/NativeSignalLease.c": "79b8716b31ed242db3aa12bda45a5bd313c27936ce90740ba394b13e5f231427",
+      "experiments/linux-steam/app/NativeSignalLease.h": "e4df12731e4ced001217a1a1e77c3ce76c2cb3c1dda937ea6fadc8a4bf6d933e"
+    },
+    "private_artifacts": {
+      "air-processes.json": {
+        "private_path": "run34/air-processes.json",
+        "sha256": "be8016ad3862eb1c11ef967097b4719f1e9f733c1b4d42ef750cfb9e9caaa05e"
+      },
+      "owner/result.json": {
+        "private_path": "run34/owner/result.json",
+        "sha256": "a6a01e2648f954e935fd300b67f2cff2973cfdc6174ebdb244c6d65f88fe23fc"
+      },
+      "owner/console.log": {
+        "private_path": "run34/owner/console.log",
+        "sha256": "0bfe8e84ebd86d9fe8dba8a41181d9d62e2d303e7603a82c845178a0e0449c3d"
+      },
+      "startup-host/evidence.json": {
+        "private_path": "run34/startup-host/evidence.json",
+        "sha256": "30ce7822ec84d903d08fb60782acdc30f96e2632b3294050096d89cba5ea8886"
+      },
+      "embedded-host-v3/evidence.json": {
+        "private_path": "run34/embedded-host-v3/evidence.json",
+        "sha256": "742e286f5a8366bf41ba80a0faec50d70c775e33655ccd2082272c130e0992dd"
+      },
+      "embedded-owner/result.json": {
+        "private_path": "run34/embedded-owner/result.json",
+        "sha256": "9c411cd5ccacde496f9460ffe398a7b30dcf2b353db68280b97b306be470af3b"
+      },
+      "embedded-startup-native.txt": {
+        "private_path": "run34/embedded-startup-native.txt",
+        "sha256": "028ff23ec4b9e41489334ca009a87db75b8e63dc2d6f4d9ff572f61285da0f4f"
+      },
+      "embedded-still-black-native.txt": {
+        "private_path": "run34/embedded-still-black-native.txt",
+        "sha256": "202308001676f9b6192e6bca7c74054010bcbe7a421f53b72a9465c64678b15f"
+      },
+      "casp-order/evidence.json": {
+        "private_path": "run34/casp-order/evidence.json",
+        "sha256": "bd4224729591436f876c3190afd99ae1bc9e5a960eb768ba35ff69bed5b96ff8"
+      },
+      "casp-order-v2/evidence.json": {
+        "private_path": "run34/casp-order-v2/evidence.json",
+        "sha256": "cb3c84e7827f4c5da357b662730d299e67c68d957d343cc8e18cab3bc8465f80"
+      },
+      "casp-elf/baseline-evidence.json": {
+        "private_path": "run34/casp-elf/baseline-evidence.json",
+        "sha256": "2464823ea64eeccc156eb8e4584b7121519973a6781ea57304cc26062089b2b4"
+      },
+      "casp-elf/baseline-native.txt": {
+        "private_path": "run34/casp-elf/baseline-native.txt",
+        "sha256": "c233380e30cab81282c6b6b9403b3ca96fc6121cbfe046b1876a75bea718c717"
+      },
+      "casp-elf/candidate-evidence.json": {
+        "private_path": "run34/casp-elf/candidate-evidence.json",
+        "sha256": "c7bde6d063e725ff2b502dc8e612c057fb96453dc4719f7e6341a2e6d13270d6"
+      },
+      "casp-engine/evidence.json": {
+        "private_path": "run34/casp-engine/evidence.json",
+        "sha256": "8ee31e64260bf2e0aafabb381dead81317fce04223767f59253359bf59141671"
+      },
+      "casp-ios-build.log": {
+        "private_path": "run34/casp-ios-build.log",
+        "sha256": "373781a471b0fdce05d707ad9029eeefc0c752db8dcd5539d376aacf525b9eb2"
+      },
+      "casp-ios-engine-v2/evidence.json": {
+        "private_path": "run34/casp-ios-engine-v2/evidence.json",
+        "sha256": "beee3fe09adedc562f8d1fed529cc2f1a804fd863d16b7072b6423a3bcd6f6bb"
+      },
+      "embedded-casp-host/evidence.json": {
+        "private_path": "run34/embedded-casp-host/evidence.json",
+        "sha256": "369d61cdb3268dac2f916cfb93f612639edd39b8e8e25e331fee53bc8f4e2290"
+      },
+      "embedded-casp-owner/reconciliation.json": {
+        "private_path": "run34/embedded-casp-owner/reconciliation.json",
+        "sha256": "4c69a786b4b221837102028e7e4c9b5de94d59a8613f40ef582a21cdb8a785b9"
+      },
+      "bounded-observer-owner.json": {
+        "private_path": "run34/bounded-observer-owner.json",
+        "sha256": "8d53ef2c40c1feab4f93a742f80c77731c91f331fb116769d453d285b5261524"
+      },
+      "embedded-casp-owner-v2/owner.json": {
+        "private_path": "run34/embedded-casp-owner-v2/owner.json",
+        "sha256": "6e6cd1992dd4052647442d5aa4e851439860c6147f76f6e858835ab48fc9f8c9"
+      },
+      "embedded-casp-owner-v2/result.json": {
+        "private_path": "run34/embedded-casp-owner-v2/result.json",
+        "sha256": "b8984355e4bceb1b0169903d3943cd5f3467916fd9d8c2025dbe44c0081e3dba"
+      },
+      "embedded-casp-owner-v2/console.log": {
+        "private_path": "run34/embedded-casp-owner-v2/console.log",
+        "sha256": "6c0a215c780198592fef277dde5954d62961de96bd3ddb64b7b83051c177c89e"
+      },
+      "embedded-casp-owner-v2/native-sample-090.txt": {
+        "private_path": "run34/embedded-casp-owner-v2/native-sample-090.txt",
+        "sha256": "8058f33846412131d8b9ccd5b402f7ab393a6da832bb6244bea8874a04561659"
+      },
+      "embedded-casp-owner-v2/native-sample-240.txt": {
+        "private_path": "run34/embedded-casp-owner-v2/native-sample-240.txt",
+        "sha256": "1cb66c876cfc6c6464ef4575fa998bd0badbb114894d91053f464b2bc5250ec4"
+      },
+      "candidate-v2-wave1-inspected.png": {
+        "private_path": "run34/candidate-v2-wave1-inspected.png",
+        "sha256": "312326fd9740b0483772f00b9625c20c0e1fc0cf82fe95eb940390118c9d5785"
+      },
+      "candidate-v2-wave2-inspected.png": {
+        "private_path": "run34/candidate-v2-wave2-inspected.png",
+        "sha256": "40bc7ca0601846ba6403b40c8a5017d96b133d1292e4868822c32a2918576d3b"
+      },
+      "feature34-linked.json": {
+        "private_path": "run34/feature34-linked.json",
+        "sha256": "d943b7e2686aa20edc9597a7e8a5041fea024718f519e74f03a186ef30a46421"
+      },
+      "default34-linked.json": {
+        "private_path": "run34/default34-linked.json",
+        "sha256": "731a944c17c8c072f289c9e0cd1e84b1761b6c018cc91260a0c4feefd75647b5"
+      },
+      "feature-build-result.json": {
+        "private_path": "run34/feature-build-result.json",
+        "sha256": "f8e326274875f507df5cbd9d4c1116fa9a6866a818cd4055066231d8334f1c88"
+      },
+      "default-build-result.json": {
+        "private_path": "run34/default-build-result.json",
+        "sha256": "f8e326274875f507df5cbd9d4c1116fa9a6866a818cd4055066231d8334f1c88"
+      },
+      "casp-gates.json": {
+        "private_path": "run34/casp-gates.json",
+        "sha256": "422f1a24da8cbceae5874e70e5b74ae13e6255228e7c2b9d1d68fab048da9e6f"
+      }
+    },
+    "phase": "Retained frontend/backend+real embedded RFB integration; isolated CASP/CoW lock-order compatibility fix; full game/return goal remains incomplete",
+    "observed_failure": "Unmodified-engine real embedded-viewer Steam test stayed black562.18s. Two native samples show CASP global mutex owner waiting for MM CoW writer, while CASP mutex waiters retain MM readers. Xvfb/RFB were running, not the prior pre-Steam connect ACK stall. Own test intentionally stopped, not crash/cleanup proof.",
+    "hypothesis": "Faulting __tlb_write_ptr under pair_atomic_lock in c_casp_pair creates a lock-order cycle with mm readers retained during guest CPU execution.",
+    "discriminating_tests": {
+      "native_model": "Actual pinned helper extracted verbatim with modeled real pthread rwlock translation-upgrade boundary. Original serial32/64 cases pass but controlled lock schedule deadlocks; candidate serial cases and schedule pass under ASan/UBSan with recovery disabled. This is NOT full guest/device evidence.",
+      "rejected_initial_model": "First model receipt is REJECTED: pointer expression temporarily formed out-of-bounds pointer and UBSan recovered despite status0. Corrected parenthesized offset and enabled -fno-sanitize-recover=all; strict v2 logs clean.",
+      "real_ARM64_baseline": {
+        "scope": "ACTUAL static ARM64 ELF in pinned HOST Linux interpreter; NOT iPad/Steam/game or clean shutdown proof",
+        "native_status": -15,
+        "intentional_owned_timeout_termination": true,
+        "elapsed_seconds": 10.456,
+        "guest_rows": [
+          "real-casp64-serial=PASS",
+          "real-fork-clone-contenders-started",
+          "cow-casp-start"
+        ],
+        "sample_status": 0,
+        "probe_sha256": "26cf787e15d4d89434bb2e76e6bb688d3d77b481707e59e86984af7c8479e305",
+        "host_control_sha256": "009a197aca429744692bfa537f7c8353fcb9e1aa6ba9c0930531ef480b915850"
+      },
+      "real_ARM64_candidate": {
+        "scope": "ACTUAL static ARM64 ELF with copied CASP-order engine in HOST; NOT iPad/Steam/game proof",
+        "native_status": 0,
+        "intentional_owned_timeout_termination": false,
+        "elapsed_seconds": 0.813,
+        "guest_rows": [
+          "real-casp64-serial=PASS",
+          "real-fork-clone-contenders-started",
+          "cow-casp-start",
+          "cow-casp-complete=PASS",
+          "real-cow-isolation-and-joins=PASS",
+          "complete=PASS"
+        ],
+        "probe_sha256": "26cf787e15d4d89434bb2e76e6bb688d3d77b481707e59e86984af7c8479e305",
+        "host_control_sha256": "dc89fa4311e99f04f4443b1519388b466d86ae4c26f07bc0713d2e5e8251108b"
+      },
+      "exact_transform": "Shared casp_order_patch.py produces byte-identical helper function to strict model candidate. Candidate actual final host/iOS disassembly has translation misses BEFORE ___lock."
+    },
+    "minimal_patch": "Copy exact pinned emu/tlb.c, resolve writable translations before global pair mutex; retain existing comparison/writeback and original memory protections. Copy/replace only engine archive member. No vendor/FEX/Valve/original archive changes. Explicit LINUX_LAB_CASP_ORDER=1 requires frontend/native logs, default0.",
+    "real_Steam": {
+      "empty_boundary_control": "Original engine current API performs two real unauthenticated login render/normal-close/restart cycles with empty transport fixture; natural0,399.627s including operator delays. Not embedded viewer proof.",
+      "first_candidate_attempt": "Observer disconnected; fresh exact child PID35003 absent and terminal receipt missing. Cause UNKNOWN, not a fix/failure/crash result. Reconciled before later test.",
+      "current_embedded_candidate": {
+        "reason": "natural-child-exit",
+        "native_status": 0,
+        "elapsed_seconds": 453.777,
+        "pid": 38304,
+        "native_samples": [
+          {
+            "after_seconds": 90,
+            "status": 0
+          },
+          {
+            "after_seconds": 240,
+            "status": 0
+          }
+        ],
+        "UI_and_game_success": false
+      },
+      "observed_UI": "Both actual login windows visually inspected via real in-process RFB images; fixed close requested only after inspection. Both real RFB decoder/input group completions acknowledged before signal restoration. Same native PID38304/root/owner; both native0/guest0/DORMANT/reaped7; final owner joined and native process natural0.",
+      "credentials_or_Guard_submitted": false,
+      "total_seconds_are_startup_performance": false,
+      "qualification": "HOST login render/close/restart only, NOT authenticated Library/BPM/game/Metal/Air stability proof"
+    },
+    "build": {
+      "ios_feature": {
+        "scope": "FINAL unsigned iOS34 marker AND translated write lookups before mutex in actual c_casp_pair disassembly; NOT device execution",
+        "sha256": "874806065a69df3296932e3345307867088ad45178e3399d117c1fe29676b4a9",
+        "version": "34",
+        "bundle_id": "com.kuschqin.ideck.linuxlab",
+        "new_engine_marker_linked": true,
+        "actual_translation_miss_calls_before_pair_lock": true,
+        "native_viewer_backend_boundary_linked": true,
+        "signed": false,
+        "installed": false,
+        "symbol_audit": "Full nm confirms hidden native/ObjC methods; nm -g alone excluded those local symbols"
+      },
+      "ios_default": {
+        "scope": "FINAL default Lab uses unchanged original engine/CASP lock order, opt-in marker/retained UI absent; NOT device regression proof",
+        "sha256": "5d36218b7bcdff8f4f010bf8b2b381e4609cc2e8622dc103e92836ea060bcefe",
+        "experimental_marker_absent": true,
+        "retained_UI_absent": true,
+        "old_engine_order_preserved": true,
+        "signed": false,
+        "installed": false
+      },
+      "gates": [
+        {
+          "case": "no-frontend",
+          "exit": 2,
+          "refused_before_artifact_writes": true
+        },
+        {
+          "case": "no-logs",
+          "exit": 2,
+          "refused_before_artifact_writes": true
+        },
+        {
+          "case": "invalid-flag",
+          "exit": 2,
+          "refused_before_artifact_writes": true
+        }
+      ],
+      "corrections": "Initial iOS copied compile put include flags before xcrun tool name; fixed launcher-aware insertion and rebuilt. Initial nm-g audit missed hidden local native methods; full nm/disassembly verifies actual backend/viewer methods.",
+      "signing_installation_or_profile_change": false
+    },
+    "device": {
+      "identity": "One actual readonly Air23/4952/B265FEBE process query; revalidate next run",
+      "app34_installed": false,
+      "pending_selected25_choice": "Unanswered; no repeat/inferred consent/substitution34",
+      "Mac_unlock_or_security_change_or_credential_automation": false
+    },
+    "constraints": "Normal application compatibility/build/runtime work only; no cybersecurity operations or security-setting/lock/authentication change. Main/other worktrees/accounts/games/saves retained.",
+    "limitations": [
+      "Current patch addresses this lock-order family, not all Steam freezes or full atomic implementation correctness",
+      "CASP/STXP interaction and existing CASP32 misalignment/cross-page semantics remain unqualified",
+      "Bare ELF used real fork/CLONE_VM/mm/CoW/CASP64 in HOST interpreter, not physical Air",
+      "Native embedded RFB completion does not certify GCD executor/TLS/framework/GPU/Metal reclamation or full storage writer barrier",
+      "Kernel/root remain resident;4096 cumulative guest handles; profiler off; no owner rebinding",
+      "Only Linux Lab final link: no namespaced combined Linux/Madeira App/game execution yet, bridge remains diagnostic125",
+      "No new Air login/Library/BPM/input/Bluetooth/game/return/stability evidence; no combined binary distribution/license exception expansion"
+    ],
+    "next_experiment": "Use qualified retained+RFB+CASP components for correctly namespaced combined Linux/Madeira target, explicit GPU/storage/runtime lifetime boundaries and legitimate game handoff. Preserve live Air23 and pending selected25 upgrade boundary; no silent install34. When actual device access/upgrade permits, run real ELF and genuine UI/game/return repeated cycles before any stable claim.",
+    "official_Steam_ELF_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d"
+  },
+  "run35": {
+    "phase": "Combined app integration + actual Metal command-boundary qualification; game bridge remains125",
+    "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "source_uncommitted": true,
+    "commit_push_gate": "Weekday midday EST outside22-08; no commit/push",
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "remote_experiment": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "observed_failure": "Earlier link proof only paired kernel/server; active Air23 cannot be interrupted without user choice. GPU main-body completion previously unverified.",
+    "hypotheses": [
+      "Qualified namespaced Linux can link with actual full Madeira code in one iOS Mach-O",
+      "Real MTLCommandBuffer + main accounting completion can bound frontend GPU submission before restart/handoff"
+    ],
+    "discriminating_tests": [
+      "Full combined iOS App35 and36 build, audit actual final symbols/instructions, separate Wine global/Linux TLS",
+      "Actual host Metal blit/readback, closed admission, completion ordering, two subscribers, reentrant reopen refusal and next real command wave",
+      "Actual default controller compilation without new Metal flag"
+    ],
+    "corrected_attempts": [
+      "Missing FramebufferMetalPipeline.m is actually inline header",
+      "Uninitialized prepared dependency checkout rejected before writes; explicit read-only pinned root",
+      "Global Linux linker flags incorrectly affected helper; moved to MAIN target only",
+      "Sandbox Metal nil/77 is unavailable, not success; normal physical host Metal passes",
+      "Sandbox Xcode workspace access failure not source/device result; normal full build passes",
+      "Sandbox codesign NOT_TRUSTED; normal existing-system deep strict verification0 without trust changes"
+    ],
+    "actual_combined35": {
+      "scope": "FINAL full iOS Mach-O contains qualified Linux/frontend, real Wine/FEX/DXMT code and separate current identities; NOT execution/game/device proof",
+      "macho_sha256": "7a459f77fbee55840fba24f32cbf4b8c2147ede78bee91d472392b14f3f9419f",
+      "bundle_identifier": "com.kuschqin.ideck.linuxlab",
+      "build": "35",
+      "wine_regular_current": [
+        "00000001047b1528 (__DATA,__common) external _current"
+      ],
+      "Linux_namespaced_TLS": [
+        "0000000102bb08f0 (__DATA,__thread_vars) external _ideck_linux_current"
+      ],
+      "Wine_entrypoints_actual_definitions": true,
+      "FEXCore_definition_count": 3770,
+      "DXMT_definition_count": 5459,
+      "Linux_genuine_frontend_controller": true,
+      "CASP_actual_order_verified": true,
+      "helper_excludes_Linux": true,
+      "developer_signed": false,
+      "installed": false,
+      "game_bridge_still_diagnostic125": true,
+      "binary_distribution_allowed": false
+    },
+    "signed35": {
+      "scope": "Existing matching Air development profiles + deep strict signed disposable Lab35, NOT installation/execution",
+      "signed_macho_sha256": "5b41400c124fb3bc4ce710b9d4e0e8afbcff61be9a0be6c2d0c5e417298410f2",
+      "unsigned_source_macho_unchanged": true,
+      "main_bundle": "com.kuschqin.ideck.freshtest",
+      "display_name": "iDeck Linux Lab",
+      "helper_bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+      "installed": false,
+      "device_session_untouched": true,
+      "sandbox_verification_exit": 1,
+      "sandbox_error": "CSSMERR_TP_NOT_TRUSTED",
+      "deep_strict_exit": 0,
+      "normal_environment_output": ""
+    },
+    "actual_combined36": {
+      "scope": "FINAL full app36 Linux/Wine/FEX/DXMT + actual tracked Metal boundary linked, NOT device or game execution",
+      "macho_sha256": "de7db5cea7f02225845bf4c540ed31a06388bc236c246c1dd1139572f6a7acaf",
+      "build": "36",
+      "symbols": {
+        "_current": [
+          "00000001047b1528 (__DATA,__common) external _current"
+        ],
+        "_ideck_linux_current": [
+          "0000000102bb0b80 (__DATA,__thread_vars) external _ideck_linux_current"
+        ],
+        "-[LabMetalDrain trackCommand:completion:]": [
+          "00000001009df210 (__TEXT,__text) non-external -[LabMetalDrain trackCommand:completion:]"
+        ],
+        "-[LabMetalDrain closeWithCompletion:]": [
+          "00000001009df620 (__TEXT,__text) non-external -[LabMetalDrain closeWithCompletion:]"
+        ],
+        "-[LabMetalDrain reopen]": [
+          "00000001009df6f0 (__TEXT,__text) non-external -[LabMetalDrain reopen]"
+        ],
+        "-[LRMetalFramebufferView ideckCloseMetalWithCompletion:]": [
+          "00000001009e0770 (__TEXT,__text) non-external -[LRMetalFramebufferView ideckCloseMetalWithCompletion:]"
+        ],
+        "-[LRMetalFramebufferView ideckReopenMetal]": [
+          "00000001009e07e4 (__TEXT,__text) non-external -[LRMetalFramebufferView ideckReopenMetal]"
+        ]
+      },
+      "Wine_FEX_sources_changed": false,
+      "game_bridge_still_diagnostic125": true,
+      "signed": false,
+      "installed": false,
+      "driver_storage_and_Wine_quiescence_verified": false
+    },
+    "host_gpu_test": {
+      "exit_code": 0,
+      "output": "PASS actual Metal commands, closed admission, completion body, drain and reopen\n",
+      "scope": "actual HOST Metal only; no iPad/driver/storage/Wine proof"
+    },
+    "Air_actions": {
+      "readonly_query_once": true,
+      "observed_lab": "23",
+      "observed_pid": 4952,
+      "observed_installation_prefix": "B265FEBE",
+      "identity_must_be_revalidated": true,
+      "input_stop_install_auth": false,
+      "pending_choice": "Combined35 plus subsequent same-Lab iterations vs preserve current test; supersedes old selected25 question. No reply yet. No consent inferred."
+    },
+    "minimal_changes": [
+      "Linux-only namespaced adapter/archive builder",
+      "Private full app source/payload assembly, actual Linux entry and MAIN-target-only link flags",
+      "Opt-in actual Metal command tracker/generated pinned view/controller completion boundary"
+    ],
+    "regression_results": {
+      "full_ios35": true,
+      "full_ios36": true,
+      "actual_final_methods_symbols": true,
+      "actual_host_Metal": true,
+      "default_controller_compile": true,
+      "Python_syntax": true,
+      "diff_check": true,
+      "device_validation": false,
+      "full_default_app_rebuild_this_run": false
+    },
+    "limitations": [
+      "Bridge diagnostic125; no game execution from Linux Steam",
+      "No new Air UI/stability/JIT or game/return evidence",
+      "Metal tracks command and per-view main bodies only; driver/global resources/storage/Wine admission unverified",
+      "Prepared compiled component provenance not re-established solely by source commit; not rebuilt",
+      "Original default app/project/Wine/FEX/vendor untouched",
+      "Existing Lab identity source override only disposable packaging; old installed user session preserved",
+      "Converter/component exception unresolved; no combined binary distribution"
+    ],
+    "next_experiment": "Await explicit existing pending upgrade choice, then revalidate Air/profile/identity and exercise genuine UI and retained shutdown/restart in selected qualified isolated artifact. Continue shared-game storage writer/actual Madeira init/JIT/licensing contract; never treat125 or DORMANT as game permission.",
+    "private_artifacts": [
+      {
+        "private_path": "run35/combined35-linked.json",
+        "sha256": "6b80b0b643be361a1af013f15c17d4e17cf3063c36b468c3642584728ff99841"
+      },
+      {
+        "private_path": "run35/hybrid35-sign-verified.json",
+        "sha256": "078e4b0f0f477b47a455cf213c2b621cd7e00c55ef61a11ff46fe3208f889bd1"
+      },
+      {
+        "private_path": "run35/hybrid35-air-sign/sign-result.json",
+        "sha256": "878c4e75f5a05ecdbc031ccf6a8db6693ad63edd276b262600312bf696b56df7"
+      },
+      {
+        "private_path": "run35/combined36-linked.json",
+        "sha256": "15cc49ea4cead96b37030dee5bb716f283dedacdf99bae82fa1ff9ba2e3d710a"
+      },
+      {
+        "private_path": "run35/hybrid36-final-build-result.json",
+        "sha256": "e1eefd686f0a101f0d677536f46ec7907f2460408ff0aab39c531df8ba2d75d3"
+      },
+      {
+        "private_path": "run35/metal-drain-control-final.json",
+        "sha256": "a948cecb8074538dcbd17106481e95c01f18f8d7778c78cfa9437613c1b9f652"
+      },
+      {
+        "private_path": "run35/metal-drain-control-v3.json",
+        "sha256": "b14f730cc48c2d758fa9dff0243ecffad4947e4fe15c5a15a8e3e6a94718e77d"
+      },
+      {
+        "private_path": "run35/metal-default-controller.json",
+        "sha256": "3f0313f3a2397e8d4e83452bf105208d4319c4549110b7ef83875b0232e66999"
+      },
+      {
+        "private_path": "run35/qualified-metal-v3/evidence.json",
+        "sha256": "cbe7eec64f90cfed0cf70ec0a8a0a273a3008f632ce38af313c5bfb4449abed5"
+      },
+      {
+        "private_path": "run35/namespaced-linux-v2/evidence.json",
+        "sha256": "b4aa29c7ec0b477c6d3d0f0c9da3b2920d1e0a6d5007e0a77e9794453ae7e09b"
+      },
+      {
+        "private_path": "run35/metal-source-final/evidence.json",
+        "sha256": "3e52ae55466c687b733f6293080b7b3987055061b5edc022fd8436b4186c84c9"
+      },
+      {
+        "private_path": "run35/remote-readback.txt",
+        "sha256": "ec412004c9664a852ad758a1a51cab46f76eda5d3c0ea6636b7d36b5cb7d015a"
+      },
+      {
+        "private_path": "run35/final-source-hashes.json",
+        "sha256": "454bc44f5c75a2ecec4867c91abab4c0b739e81df7b0a07be34ac9a705d45fd7"
+      }
+    ],
+    "source_files_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "f75c91b5da5a7a1f059e41c72dce6b481a546fb3081d8466dac9f1d9a1a80421",
+      "experiments/linux-steam/app/LabMetalDrain.h": "99cc9de4383583957e44d64b7f8dda22ec5a0b8f0ab059ba556881274d6e0b29",
+      "experiments/linux-steam/app/LabMetalDrain.m": "16999305dc44e4f14a7d6fc2df3d4734f04b6d23d0a9b02053b0237780f1e1f1",
+      "experiments/linux-steam/app/LabMetalFramebufferDrain.h": "2042dd8f2bba9917925f7f21fa70af4680494a9fedde0d3d83ea602239e8e2d7",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "2ac9247b5596363675776d01e3570b0c0372e22e14ec7fef4d0c59f9bf938a91",
+      "experiments/linux-steam/app/main.m": "1cba675b2e6c6b35b6f069047d0cf8a3b0b737f040f02cca124cf237a4b75bf2",
+      "experiments/linux-steam/guest/casp-cow-probe.c": "835a6af08d35ea0d747d5a76ad818eb35d56de8d7af56b52e6a933e333ecc9c9",
+      "experiments/linux-steam/tools/build-casp-order.py": "1ad0c8e521640b08e06e393c5efc941b57e98026ea6c122893358232020859da",
+      "experiments/linux-steam/tools/build-host-retained-rfb.py": "ac48492fbdedebc6a195b471767c9cdee3eb2f8003bea07dae8af89f9f900bc3",
+      "experiments/linux-steam/tools/build-host-startup-diagnostics.py": "9f0ef4987601460f590cdee591e8868b2c2942e533206d4adb7e08efb4d3bfd7",
+      "experiments/linux-steam/tools/build-hybrid-app.py": "8e1135aae0fbbbcc35d14d4752d58669b023b4e43545f2b4d3ac43a96ccced04",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "2e007b6e4a7af2cf7353d7f42b5d4861491ca712a22243675645cc3c886907a0",
+      "experiments/linux-steam/tools/build-lab.sh": "d1ba60840453962e33415ce8266a2cb705d787ac091ca76d8fbfdb988ef7e752",
+      "experiments/linux-steam/tools/build-metal-drain.py": "d4f13ab38e846f0daead5928734e85d6513b26d1256efeb2721de57f09a99e88",
+      "experiments/linux-steam/tools/casp-lock-order-control.c": "f58e18627810bb22825c0c37e180011b59364b873c9b32969163556f27996c90",
+      "experiments/linux-steam/tools/casp_order_patch.py": "b3d78a41e0fd7f31d4f691ee61d365bdab24dfa3915e37e4c00c8bef4f88527d",
+      "experiments/linux-steam/tools/metal-drain-control.m": "cabd847ea6a419e9feabc3520b8f54d83c23c166e4814628cb5ab6dc5c71ca2c",
+      "experiments/linux-steam/tools/observe-host-steam-trace.py": "3043404c1d29d64700f003c56191378839332713d7163fde3db2da5da816d9b3",
+      "experiments/linux-steam/tools/retained-rfb-control.m": "0018649a2d16fc539b5e9dc447b2c066813da72937a6e58f8e04eddee5491ad7",
+      "experiments/linux-steam/tools/test-casp-lock-order.py": "b9e93b12a7f1bd187cf1a7b00bd04381cadd9e5a031688222e4a5c41232903c1"
+    },
+    "STABLE_SUCCESS": false,
+    "scheduler_unloaded": false,
+    "goal_complete": false
+  },
+  "run36": {
+    "phase": "Actual shared-library VFS implementation and host ARM64 control; real game bridge remains125",
+    "previous_turn_classification": "progress: combined final artifacts and actual GPU-boundary evidence, not a verified wait",
+    "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "source_uncommitted": true,
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "remote_experiment": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "commit_push_gate": "Weekday13:45EST outside22-08; left uncommitted/unpushed",
+    "observed_problem": "Native writes into fakefs backing data risk inconsistent fakefs metadata; current sequential game storage contract missing",
+    "hypothesis": "Separate app-private realfs Steam library can expose the same files to Linux and native host without editing fakefs metadata",
+    "minimal_patch": [
+      "SharedSteamLibrary helper/opt-in actual LinuxLabRuntime call before guest children",
+      "Native Lab-root/SharedSteamLibrary -> guest /mnt/ideck/SteamLibrary realfs mount; preserve default /Steam and existing mountpoint files",
+      "Explicit --shared-library in Linux-only qualified adapter builder"
+    ],
+    "discriminating_tests": [
+      {
+        "scope": "Actual HOST ARM64 ELF with separate realfs library; runtime-entry uses realfs root, custom control fakefs root; wrappers ASan/UBSan, static dependencies not sanitizer rebuilt. Two serial NATIVE processes, NOT same-app runtime restart, iPad, Steam depot/ownership, game or Wine proof",
+        "results": [
+          {
+            "phase": "first",
+            "native_status": 0,
+            "seconds": 0.501,
+            "native_reads_guest_writes_and_rename": true
+          },
+          {
+            "phase": "again",
+            "native_status": 0,
+            "seconds": 0.082,
+            "native_reads_guest_writes_and_rename": true
+          }
+        ],
+        "commands": [
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/shared-library-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run36/shared-fake-final/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/shared-library-control.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run36/shared-fake-final/control"
+          ]
+        ],
+        "runtime_entry": false,
+        "input_archive_hashes_before_and_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "probe_sha256": "f0ff60e5ca3bb49425effefe1498d27c76538b4297d747040c7a50710de5c7d9",
+        "source_sha256": {
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "981cba4f2079ba908a0e3e61809efc33be370c0f3d41001fa62601e7544f6ae3",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/tools/shared-library-control.c": "fc3b5def16f9ad60ac57a6ca27b242af91d4bb768c1da62c8a9dae84b4573388",
+          "experiments/linux-steam/guest/shared-library-probe.c": "3dbf6e7c58a5b799595060c8adb2acd121f41545c0d8afc758480d8435e83c5f"
+        },
+        "logs": {
+          "first": "fedefdb7f593da753e452734190eeb1b735c32dff00353639cd66011fd98afee",
+          "again": "d6e03f6edaca57208aee9b4cab16e261f1e70b046bf37341888e055c60f31b8e"
+        }
+      },
+      {
+        "scope": "Actual HOST ARM64 ELF with separate realfs library; runtime-entry uses realfs root, custom control fakefs root; wrappers ASan/UBSan, static dependencies not sanitizer rebuilt. Two serial NATIVE processes, NOT same-app runtime restart, iPad, Steam depot/ownership, game or Wine proof",
+        "results": [
+          {
+            "phase": "first",
+            "native_status": 0,
+            "seconds": 0.257,
+            "native_reads_guest_writes_and_rename": true
+          },
+          {
+            "phase": "again",
+            "native_status": 0,
+            "seconds": 0.041,
+            "native_reads_guest_writes_and_rename": true
+          }
+        ],
+        "commands": [
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/shared-library-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run36/shared-runtime-final/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LinuxLabRuntime.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabBridge.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LaunchProtocol.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/host-embed.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run36/shared-runtime-final/control"
+          ]
+        ],
+        "runtime_entry": true,
+        "input_archive_hashes_before_and_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "probe_sha256": "f0ff60e5ca3bb49425effefe1498d27c76538b4297d747040c7a50710de5c7d9",
+        "source_sha256": {
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "981cba4f2079ba908a0e3e61809efc33be370c0f3d41001fa62601e7544f6ae3",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+          "experiments/linux-steam/app/LabBridge.c": "9381e10055a6be523d5656b1628d1db8e9e34b60da19777a576076fb9d513b0f",
+          "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+          "experiments/linux-steam/tools/host-embed.c": "99ee55ea0915d998cb2e5d83241bfc52518ffcc249d763eafed17f72b7f55b61",
+          "experiments/linux-steam/guest/shared-library-probe.c": "3dbf6e7c58a5b799595060c8adb2acd121f41545c0d8afc758480d8435e83c5f"
+        },
+        "logs": {
+          "first": "f73155dacb9b61127a33636c9547aa19121ecc0f594b1c247d7f14b2a544a499",
+          "again": "f73155dacb9b61127a33636c9547aa19121ecc0f594b1c247d7f14b2a544a499"
+        }
+      }
+    ],
+    "actual_ios_artifact": {
+      "scope": "FINAL full iOS app37 has actual namespaced shared-library mount + Metal boundary + Wine/FEX/DXMT, not device execution or games",
+      "macho_sha256": "7cafbe4278cfbbd0c7587775d7b07bb9d544782c0467da52bfeed246ebd528a4",
+      "build": "37",
+      "display_name": "iDeck Linux Lab",
+      "actual_definitions": {
+        "_ideck_shared_steam_mount": [
+          "00000001009dec98 (__TEXT,__text) non-external (was a private external) _ideck_shared_steam_mount"
+        ],
+        "_current": [
+          "00000001047b1528 (__DATA,__common) external _current"
+        ],
+        "_ideck_linux_current": [
+          "0000000102bb0b80 (__DATA,__thread_vars) external _ideck_linux_current"
+        ],
+        "-[LabMetalDrain trackCommand:completion:]": [
+          "00000001009df704 (__TEXT,__text) non-external -[LabMetalDrain trackCommand:completion:]"
+        ]
+      },
+      "actual_mount_calls_do_mount": true,
+      "signed": false,
+      "installed": false,
+      "game_bridge_still_diagnostic125": true
+    },
+    "final_actual_mount_caller_count": 1,
+    "default_runtime_object": {
+      "compiled": true,
+      "shared_mount_reference_absent": true
+    },
+    "source_syntax_and_diff_checks": true,
+    "initial_corrected_failures": [
+      "Missing parent output directory corrected before execution",
+      "Resolved ld.lld symlink lost executable basename; retain absolute ld.lld driver path; no guest ran in failed attempt"
+    ],
+    "Air": {
+      "readonly_query_success": true,
+      "observed_lab": 23,
+      "observed_pid": 4952,
+      "observed_install_prefix": "B265FEBE",
+      "device_actions_this_run": false,
+      "pending_choice": "Existing combined35 and subsequent same-Lab iterations vs preserving live test; unanswered, never repeated or inferred",
+      "revalidate_before_action": true
+    },
+    "launch_contract_findings": [
+      "Existing Dock uses genuine Windows Steam client login and Valve LaunchApp; Linux auth is not that session",
+      "Normal ContentView full launch requires JIT and full initialization, not just wine_process_start",
+      "GameFiles accepts explicit common-directory capabilities; legacy from_data path is NOT this new native shared source",
+      "Steam shared-library registration and actual native request routing not yet wired"
+    ],
+    "limitations": [
+      "Two SERIAL host native processes for each root mode; not same-app runtime restart",
+      "Sanitizers cover own wrappers/helper, static dependencies not sanitizer rebuilt",
+      "No actual Wine writes/Steam depot/license/bridge/game/return validation",
+      "No new Air ELF/UI/stability execution",
+      "No writer exclusivity or GPU-driver/storage/global-native permission claim",
+      "Game bridge remains diagnostic125",
+      "App37 unsigned/uninstalled; signed35 and immutable35/36 preserved",
+      "No FEX/Wine/vendor/Valve/production/security/auth changes",
+      "Combined binary distribution exception unresolved"
+    ],
+    "private_artifacts": [
+      {
+        "private_path": "run36/air-processes.json",
+        "sha256": "61b672b9c4327578e910db82716c5cca8fd0fe95a5ff58128c1a0e301ca35713"
+      },
+      {
+        "private_path": "run36/shared-fake-final/evidence.json",
+        "sha256": "615488a2aa23e2139a0dfba2c1f29de17918e25961f596267209876dd0a26b75"
+      },
+      {
+        "private_path": "run36/shared-runtime-final/evidence.json",
+        "sha256": "48a0e9c3313b3ef54f8daa3d151ba038e2636f0b6b74c435b653b19fe9125090"
+      },
+      {
+        "private_path": "run36/shared-ios/evidence.json",
+        "sha256": "0b2d5f73bcc2e89692c382bc673aaa5b747df8878ac5e33a3c6bcf5b5d03a2b9"
+      },
+      {
+        "private_path": "run36/hybrid37-build-result.json",
+        "sha256": "04dfa6d9ab110e8351afa4a1ff111fbaaa97c29718e5a59e7f4c4b65f3292c7e"
+      },
+      {
+        "private_path": "run36/final37-linked.json",
+        "sha256": "8eb1606ec5a5c1f4888010ac1cb76aabb52bffca135e6fba2b137c7824bb5ffc"
+      },
+      {
+        "private_path": "run36/default-runtime-result.json",
+        "sha256": "00174c5c3b1f42fcb02dd19dc8431ad735e2d8d62511d3156580abb7ff9f4db7"
+      },
+      {
+        "private_path": "run36/shared-mount-final-assembly.txt",
+        "sha256": "96e03dc3e172781df7dda0df5e653e88864b61156697dd15118f1a64bec83a48"
+      },
+      {
+        "private_path": "run36/final37-shared-call.txt",
+        "sha256": "2694434da7e0324bf7486b79b6559b4b78d28402b36e84e45a94bedf55228016"
+      },
+      {
+        "private_path": "run36/source-hashes.json",
+        "sha256": "e40945c48e24c5b48b693316047c605ac902b035dc724734e7a225e1bf8c55b3"
+      }
+    ],
+    "source_files_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "f75c91b5da5a7a1f059e41c72dce6b481a546fb3081d8466dac9f1d9a1a80421",
+      "experiments/linux-steam/app/LabMetalDrain.h": "99cc9de4383583957e44d64b7f8dda22ec5a0b8f0ab059ba556881274d6e0b29",
+      "experiments/linux-steam/app/LabMetalDrain.m": "16999305dc44e4f14a7d6fc2df3d4734f04b6d23d0a9b02053b0237780f1e1f1",
+      "experiments/linux-steam/app/LabMetalFramebufferDrain.h": "2042dd8f2bba9917925f7f21fa70af4680494a9fedde0d3d83ea602239e8e2d7",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "2ac9247b5596363675776d01e3570b0c0372e22e14ec7fef4d0c59f9bf938a91",
+      "experiments/linux-steam/app/SharedSteamLibrary.c": "981cba4f2079ba908a0e3e61809efc33be370c0f3d41001fa62601e7544f6ae3",
+      "experiments/linux-steam/app/SharedSteamLibrary.h": "d92dd8d22b576262dc2f3ecfd3cbe268cb7e79c7a36e12d3798fd0cf837ae1ef",
+      "experiments/linux-steam/app/main.m": "1cba675b2e6c6b35b6f069047d0cf8a3b0b737f040f02cca124cf237a4b75bf2",
+      "experiments/linux-steam/guest/casp-cow-probe.c": "835a6af08d35ea0d747d5a76ad818eb35d56de8d7af56b52e6a933e333ecc9c9",
+      "experiments/linux-steam/guest/shared-library-probe.c": "3dbf6e7c58a5b799595060c8adb2acd121f41545c0d8afc758480d8435e83c5f",
+      "experiments/linux-steam/tools/build-casp-order.py": "1ad0c8e521640b08e06e393c5efc941b57e98026ea6c122893358232020859da",
+      "experiments/linux-steam/tools/build-host-retained-rfb.py": "ac48492fbdedebc6a195b471767c9cdee3eb2f8003bea07dae8af89f9f900bc3",
+      "experiments/linux-steam/tools/build-host-startup-diagnostics.py": "9f0ef4987601460f590cdee591e8868b2c2942e533206d4adb7e08efb4d3bfd7",
+      "experiments/linux-steam/tools/build-hybrid-app.py": "8e1135aae0fbbbcc35d14d4752d58669b023b4e43545f2b4d3ac43a96ccced04",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "a844b9818b576adf598736f8d7fccd3e5568842197507c604116fa32646d54ad",
+      "experiments/linux-steam/tools/build-lab.sh": "d1ba60840453962e33415ce8266a2cb705d787ac091ca76d8fbfdb988ef7e752",
+      "experiments/linux-steam/tools/build-metal-drain.py": "d4f13ab38e846f0daead5928734e85d6513b26d1256efeb2721de57f09a99e88",
+      "experiments/linux-steam/tools/casp-lock-order-control.c": "f58e18627810bb22825c0c37e180011b59364b873c9b32969163556f27996c90",
+      "experiments/linux-steam/tools/casp_order_patch.py": "b3d78a41e0fd7f31d4f691ee61d365bdab24dfa3915e37e4c00c8bef4f88527d",
+      "experiments/linux-steam/tools/metal-drain-control.m": "cabd847ea6a419e9feabc3520b8f54d83c23c166e4814628cb5ab6dc5c71ca2c",
+      "experiments/linux-steam/tools/observe-host-steam-trace.py": "3043404c1d29d64700f003c56191378839332713d7163fde3db2da5da816d9b3",
+      "experiments/linux-steam/tools/retained-rfb-control.m": "0018649a2d16fc539b5e9dc447b2c066813da72937a6e58f8e04eddee5491ad7",
+      "experiments/linux-steam/tools/shared-library-control.c": "fc3b5def16f9ad60ac57a6ca27b242af91d4bb768c1da62c8a9dae84b4573388",
+      "experiments/linux-steam/tools/test-casp-lock-order.py": "b9e93b12a7f1bd187cf1a7b00bd04381cadd9e5a031688222e4a5c41232903c1",
+      "experiments/linux-steam/tools/test-shared-library.py": "c77ebb20b8da6399ff19421d227c9595448d602f847e2acc86fbdab4b6bb682f"
+    },
+    "next_experiment": "Connect explicit shared-directory capabilities/path mapping to a real Steam request and supported Madeira init/JIT/auth and actual exclusive writer/runtime handoff. On existing pending user consent, revalidate session and exercise selected qualified Lab on Air. Preserve existing data; never infer authorization or mark125 as execution.",
+    "goal_complete": false,
+    "STABLE_SUCCESS": false,
+    "scheduler_unloaded": false
+  },
+  "run37": {
+    "phase": "Real ARM64 IPC to separate shared-file roots and owned native request snapshot; no Windows execution",
+    "previous_turn_classification": "progress: actual shared VFS/source/ELF evidence, not a wait",
+    "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "source_uncommitted": true,
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "remote_experiment": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "publication_gate": "Weekday16:25EST outside22-08; no commit/push",
+    "observed_failures": [
+      "Legacy shared native lookup incorrectly points inside fakefs data instead of separate realfs root",
+      "Inspected request discarded before native handoff",
+      "First full App38 dead-stripped pending getter without a product caller"
+    ],
+    "hypothesis": "Explicit native shared-root registration plus a reserved one-slot owned request can deliver actual guest IPC metadata to a real post-frontend native receiver without conflating capture with game execution",
+    "minimal_patch": [
+      "SharedSteamLibrary native pre-init preparation, explicit dual-root registration",
+      "GameFiles_from_roots; legacy from_data delegates without changing default mapping",
+      "Capture flag default0, reserved bounded owned request + native peek/discard, categorical bridge log",
+      "Actual retained-owner post-frontend getter; only seq/AppID/not-started fields serialized"
+    ],
+    "actual_host_controls": {
+      "capture_on": {
+        "scope": "Actual HOST ARM64 ELF -> /dev/ideck-madeira -> native shared-files inspection/capture. Wrapper/helper ASan/UBSan; static deps not instrumented. Own Windows PE NOT executed, NO Steam/game/licensing/iPad proof",
+        "capture_enabled": true,
+        "exit_code": 0,
+        "seconds": 0.665,
+        "commands": [
+          [
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/toolchains/llvm-mingw-20260421-ucrt-macos-universal/bin/x86_64-w64-mingw32-clang",
+            "-nostdlib",
+            "-Wl,-entry,mainCRTStartup",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/windows-exit-probe.c",
+            "-lkernel32",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/capture-preinit-on/own-windows-probe.exe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/capture-launch-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/capture-preinit-on/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-DIDECK_LAB_GAME_FILE_POLICY=1",
+            "-DIDECK_LAB_CAPTURE_LAUNCH=1",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LinuxLabRuntime.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabBridge.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LaunchProtocol.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFiles.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFilePolicy.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/capture-launch-control.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/capture-preinit-on/control"
+          ]
+        ],
+        "input_archives_before_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+          "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "3ebe2dd18fbcf44d86d88254934cdea8c0dc63344957753cb1643dfc8bfcf43d",
+          "experiments/linux-steam/app/GameFiles.c": "b61a915090bf07981ca37653182dc7e2ed33d25df996b67411ca07d1ac2653f5",
+          "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
+          "experiments/linux-steam/tools/capture-launch-control.c": "76214fd4ade64ffd233364b2f37d938ad9b7a31e7217ef0897af9d19b8f17dfa",
+          "experiments/linux-steam/guest/capture-launch-probe.c": "881132cb5a6d65352ae59016084fba901106af2336338cb5d38ad87f8cabf3db",
+          "experiments/linux-steam/guest/windows-exit-probe.c": "5510718f670e442a114c0e7da4b4e8a315a09619b347bd1348274636563b548e"
+        },
+        "guest_probe_sha256": "ef2de6844c5dbf1ec0a1c56bdffa7ee2c81f5f2da2113b5645b2e6c8bbe75bd6",
+        "Windows_fixture_sha256": "8b88d39435c7fa08a5f5616f6cdfe6545fb45f0da2d5ccceb52cd526e7ff3591",
+        "log_sha256": "2ac6adce35ce08d71e2f03e736cf1445090ea4c2693d714e02eaf46e8b99c6e4",
+        "Windows_fixture_executed": false
+      },
+      "capture_off": {
+        "scope": "Actual HOST ARM64 ELF -> /dev/ideck-madeira -> native shared-files inspection/capture. Wrapper/helper ASan/UBSan; static deps not instrumented. Own Windows PE NOT executed, NO Steam/game/licensing/iPad proof",
+        "capture_enabled": false,
+        "exit_code": 0,
+        "seconds": 0.624,
+        "commands": [
+          [
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/toolchains/llvm-mingw-20260421-ucrt-macos-universal/bin/x86_64-w64-mingw32-clang",
+            "-nostdlib",
+            "-Wl,-entry,mainCRTStartup",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/windows-exit-probe.c",
+            "-lkernel32",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/capture-preinit-off/own-windows-probe.exe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/capture-launch-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/capture-preinit-off/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-DIDECK_LAB_GAME_FILE_POLICY=1",
+            "-DIDECK_LAB_CAPTURE_LAUNCH=0",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LinuxLabRuntime.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabBridge.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LaunchProtocol.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFiles.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFilePolicy.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/capture-launch-control.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/capture-preinit-off/control"
+          ]
+        ],
+        "input_archives_before_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+          "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "3ebe2dd18fbcf44d86d88254934cdea8c0dc63344957753cb1643dfc8bfcf43d",
+          "experiments/linux-steam/app/GameFiles.c": "b61a915090bf07981ca37653182dc7e2ed33d25df996b67411ca07d1ac2653f5",
+          "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
+          "experiments/linux-steam/tools/capture-launch-control.c": "76214fd4ade64ffd233364b2f37d938ad9b7a31e7217ef0897af9d19b8f17dfa",
+          "experiments/linux-steam/guest/capture-launch-probe.c": "881132cb5a6d65352ae59016084fba901106af2336338cb5d38ad87f8cabf3db",
+          "experiments/linux-steam/guest/windows-exit-probe.c": "5510718f670e442a114c0e7da4b4e8a315a09619b347bd1348274636563b548e"
+        },
+        "guest_probe_sha256": "ef2de6844c5dbf1ec0a1c56bdffa7ee2c81f5f2da2113b5645b2e6c8bbe75bd6",
+        "Windows_fixture_sha256": "ea6890f7ee8d8ec9142a5640e1bf3be1aef47111464f254caf840340d0751fc8",
+        "log_sha256": "9f134450c1caccbb709a3df6d62610cc4e1797a48d95b384f0dd4de4cbe0500d",
+        "Windows_fixture_executed": false
+      },
+      "shared_fakefs_regression": {
+        "scope": "Actual HOST ARM64 ELF with separate realfs library; runtime-entry uses realfs root, custom control fakefs root; wrappers ASan/UBSan, static dependencies not sanitizer rebuilt. Two serial NATIVE processes, NOT same-app runtime restart, iPad, Steam depot/ownership, game or Wine proof",
+        "results": [
+          {
+            "phase": "first",
+            "native_status": 0,
+            "seconds": 0.612,
+            "native_reads_guest_writes_and_rename": true
+          },
+          {
+            "phase": "again",
+            "native_status": 0,
+            "seconds": 0.197,
+            "native_reads_guest_writes_and_rename": true
+          }
+        ],
+        "commands": [
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/shared-library-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/shared-fake-regression/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/shared-library-control.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run37/shared-fake-regression/control"
+          ]
+        ],
+        "runtime_entry": false,
+        "input_archive_hashes_before_and_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "probe_sha256": "f0ff60e5ca3bb49425effefe1498d27c76538b4297d747040c7a50710de5c7d9",
+        "source_sha256": {
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "3ebe2dd18fbcf44d86d88254934cdea8c0dc63344957753cb1643dfc8bfcf43d",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/tools/shared-library-control.c": "fc3b5def16f9ad60ac57a6ca27b242af91d4bb768c1da62c8a9dae84b4573388",
+          "experiments/linux-steam/guest/shared-library-probe.c": "3dbf6e7c58a5b799595060c8adb2acd121f41545c0d8afc758480d8435e83c5f"
+        },
+        "logs": {
+          "first": "63b0ac10c34b4ec9d886aaf89e1a6ab70d7bcf9d390f7e39afd634b539f0a739",
+          "again": "8252eeeddd5105cc1eaf463dc94c3207f4a948d3f95bc3a9719319e8f37ac4b5"
+        }
+      }
+    },
+    "final_ios_artifact": {
+      "scope": "FINAL full App38 actual native shared registration, real guest bridge inspection and post-frontend pending getter calls, NOT device/game execution",
+      "macho_sha256": "fd4f26d0338f8ffd30795d874ba500923aab59ee0de6652150b8ab161d466824",
+      "build": "38",
+      "actual_definitions": {
+        "_ideck_game_file_policy_pending": [
+          "00000001009df7d4 (__TEXT,__text) non-external (was a private external) _ideck_game_file_policy_pending"
+        ],
+        "_ideck_game_file_policy_start_shared": [
+          "00000001009df1b0 (__TEXT,__text) non-external (was a private external) _ideck_game_file_policy_start_shared"
+        ],
+        "_ideck_game_files_from_roots": [
+          "00000001009e07f4 (__TEXT,__text) non-external (was a private external) _ideck_game_files_from_roots"
+        ],
+        "_ideck_shared_steam_prepare": [
+          "00000001009e0c88 (__TEXT,__text) non-external (was a private external) _ideck_shared_steam_prepare"
+        ],
+        "_current": [
+          "00000001047b9528 (__DATA,__common) external _current"
+        ],
+        "_ideck_linux_current": [
+          "0000000102bb4bf8 (__DATA,__thread_vars) external _ideck_linux_current"
+        ]
+      },
+      "receiver_call_counts": {
+        "_ideck_game_file_policy_pending": 1,
+        "_ideck_game_file_policy_start_shared": 1,
+        "_ideck_game_file_policy_inspect": 1
+      },
+      "Windows_game_executed": false,
+      "response_still_125": true,
+      "signed": false,
+      "installed": false,
+      "binary_distribution_allowed": false
+    },
+    "default_controller": {
+      "actual_compile": true,
+      "receiver_registration_refs_absent": true,
+      "full_default_app_rebuild": false
+    },
+    "corrected_test_expectation": "Native Darwin -EAGAIN=-35, not Linux-11; test corrected, no production errno workaround",
+    "receiver_link_correction": "Pending getter absent in first actual final Mach-O; real owner call added, full rebuild, final getter/registration/inspection calls present",
+    "tool_handle_note": "Final auditor handle later unavailable; completed artifact receipt/call snippets exist; no restart or crash inference",
+    "Air": {
+      "readonly_process_query_success": true,
+      "old_lab": 23,
+      "observed_pid": 4952,
+      "observed_install_prefix": "B265FEBE",
+      "own_receipt_copy": {
+        "receipt_copy_exit": 0,
+        "device_session_untouched": true,
+        "receipt_build": "23",
+        "receipt_pid": 4952
+      },
+      "UI_health_or_performance_validation": false,
+      "pending_user_choice": "Existing combined35 plus subsequent same-Lab iterations vs preserve old test remains unanswered; repeated continue is not that choice",
+      "input_stop_upgrade_signing_auth_actions": false
+    },
+    "regression_limits": [
+      "ASan/UBSan covers own helper/wrappers, not static kernel/engine dependency rebuild",
+      "Two concurrent valid native requests tested; not exhaustive scheduling proof",
+      "Own Windows PE only inspected, never executed or treated as licensed game",
+      "No actual Steam Play/on-Air request capture execution",
+      "Request still Linux path syntax; no Windows mapping or authentic Dock start yet",
+      "No exclusive runtime/storage writer grant from capture or DORMANT",
+      "Native discard API only source/host control, no on-device cancel/exit workflow",
+      "Raw arguments remain in app memory, not logged/persisted",
+      "Protocol remains diagnostic125; no Windows game/return/stability success",
+      "App38 unsigned/uninstalled; signed35 and immutable35-37 preserved",
+      "No FEX/Valve/vendor/main/other-worktree/account/security/Codex-state changes",
+      "Combined binary license exception unresolved"
+    ],
+    "next_experiment": "Native shared path/prefix/library mapping plus actual writer/runtime handoff, existing Madeira init/JIT/genuine Dock login/LaunchApp. Preserve user session pending prior explicit upgrade choice; no secret transfer, fake status or one-session reset. Then actual Air game/return repeated validation.",
+    "source_files_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "f75c91b5da5a7a1f059e41c72dce6b481a546fb3081d8466dac9f1d9a1a80421",
+      "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
+      "experiments/linux-steam/app/GameFilePolicy.h": "c197f98b5f481564f2ed89216adfd6f47cbf1044506023d46227e570614c6eaf",
+      "experiments/linux-steam/app/GameFiles.c": "b61a915090bf07981ca37653182dc7e2ed33d25df996b67411ca07d1ac2653f5",
+      "experiments/linux-steam/app/GameFiles.h": "5ba7b8147bf393b1723e11e39d0c9b511356d56d5d2317462aa2af14a13268de",
+      "experiments/linux-steam/app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+      "experiments/linux-steam/app/LabMetalDrain.h": "99cc9de4383583957e44d64b7f8dda22ec5a0b8f0ab059ba556881274d6e0b29",
+      "experiments/linux-steam/app/LabMetalDrain.m": "16999305dc44e4f14a7d6fc2df3d4734f04b6d23d0a9b02053b0237780f1e1f1",
+      "experiments/linux-steam/app/LabMetalFramebufferDrain.h": "2042dd8f2bba9917925f7f21fa70af4680494a9fedde0d3d83ea602239e8e2d7",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "565440e303fd67bbdac6ee95e4b5fec7e1b903b170a7a4db3e4ef32da8159e1a",
+      "experiments/linux-steam/app/SharedSteamLibrary.c": "3ebe2dd18fbcf44d86d88254934cdea8c0dc63344957753cb1643dfc8bfcf43d",
+      "experiments/linux-steam/app/SharedSteamLibrary.h": "095ac4486f4132f87a8f10b76c42b472fbb2131bf0da37c1f7dcde7f2ae179cb",
+      "experiments/linux-steam/app/main.m": "1cba675b2e6c6b35b6f069047d0cf8a3b0b737f040f02cca124cf237a4b75bf2",
+      "experiments/linux-steam/guest/capture-launch-probe.c": "881132cb5a6d65352ae59016084fba901106af2336338cb5d38ad87f8cabf3db",
+      "experiments/linux-steam/guest/casp-cow-probe.c": "835a6af08d35ea0d747d5a76ad818eb35d56de8d7af56b52e6a933e333ecc9c9",
+      "experiments/linux-steam/guest/shared-library-probe.c": "3dbf6e7c58a5b799595060c8adb2acd121f41545c0d8afc758480d8435e83c5f",
+      "experiments/linux-steam/guest/windows-exit-probe.c": "5510718f670e442a114c0e7da4b4e8a315a09619b347bd1348274636563b548e",
+      "experiments/linux-steam/tools/build-casp-order.py": "1ad0c8e521640b08e06e393c5efc941b57e98026ea6c122893358232020859da",
+      "experiments/linux-steam/tools/build-host-retained-rfb.py": "ac48492fbdedebc6a195b471767c9cdee3eb2f8003bea07dae8af89f9f900bc3",
+      "experiments/linux-steam/tools/build-host-startup-diagnostics.py": "9f0ef4987601460f590cdee591e8868b2c2942e533206d4adb7e08efb4d3bfd7",
+      "experiments/linux-steam/tools/build-hybrid-app.py": "8e1135aae0fbbbcc35d14d4752d58669b023b4e43545f2b4d3ac43a96ccced04",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "a3eae1ea5863deed4e47e1db89c93ab069fd941a0cea81d4c19223b277a172da",
+      "experiments/linux-steam/tools/build-lab.sh": "d1ba60840453962e33415ce8266a2cb705d787ac091ca76d8fbfdb988ef7e752",
+      "experiments/linux-steam/tools/build-metal-drain.py": "d4f13ab38e846f0daead5928734e85d6513b26d1256efeb2721de57f09a99e88",
+      "experiments/linux-steam/tools/capture-launch-control.c": "76214fd4ade64ffd233364b2f37d938ad9b7a31e7217ef0897af9d19b8f17dfa",
+      "experiments/linux-steam/tools/casp-lock-order-control.c": "f58e18627810bb22825c0c37e180011b59364b873c9b32969163556f27996c90",
+      "experiments/linux-steam/tools/casp_order_patch.py": "b3d78a41e0fd7f31d4f691ee61d365bdab24dfa3915e37e4c00c8bef4f88527d",
+      "experiments/linux-steam/tools/metal-drain-control.m": "cabd847ea6a419e9feabc3520b8f54d83c23c166e4814628cb5ab6dc5c71ca2c",
+      "experiments/linux-steam/tools/observe-host-steam-trace.py": "3043404c1d29d64700f003c56191378839332713d7163fde3db2da5da816d9b3",
+      "experiments/linux-steam/tools/retained-rfb-control.m": "0018649a2d16fc539b5e9dc447b2c066813da72937a6e58f8e04eddee5491ad7",
+      "experiments/linux-steam/tools/shared-library-control.c": "fc3b5def16f9ad60ac57a6ca27b242af91d4bb768c1da62c8a9dae84b4573388",
+      "experiments/linux-steam/tools/test-capture-launch.py": "c6dbd7801b5f23a88d4e0d9de924b09e2251c19f93a7e1520d3d3fdd2cee08a5",
+      "experiments/linux-steam/tools/test-casp-lock-order.py": "b9e93b12a7f1bd187cf1a7b00bd04381cadd9e5a031688222e4a5c41232903c1",
+      "experiments/linux-steam/tools/test-shared-library.py": "c77ebb20b8da6399ff19421d227c9595448d602f847e2acc86fbdab4b6bb682f"
+    },
+    "private_artifacts": [
+      {
+        "private_path": "run37/capture-preinit-on/evidence.json",
+        "sha256": "5c05ccaeb4912a8369fa6b9eef4d3c738212a54fd442536bf8d8821a0000b820"
+      },
+      {
+        "private_path": "run37/capture-preinit-off/evidence.json",
+        "sha256": "f5dbc02d845bf3f190d835a430de6cc295b6ecb99409be0d3534a9f2ebfb4dfb"
+      },
+      {
+        "private_path": "run37/shared-fake-regression/evidence.json",
+        "sha256": "e42e7c37f5a19ca4d6d2a24ec96e56d4f674ea447e266980d7ff40d324ed4ca0"
+      },
+      {
+        "private_path": "run37/capture-ios-final/evidence.json",
+        "sha256": "7889510a6ec5d4f4a597b3befb83dee05bc7aeb6288cc8870951cb4185263536"
+      },
+      {
+        "private_path": "run37/pre-report-method-check.json",
+        "sha256": "e207c3ffc9af3fab9c8cc2ff82835ca77574b24575ec2948f13c12e9b4b5e0fe"
+      },
+      {
+        "private_path": "run37/final38-linked.json",
+        "sha256": "cd7d1827df756a32913e3b920614690a26279eb5cb75e2215eebc5cceee9d6ca"
+      },
+      {
+        "private_path": "run37/final38-receiver-calls.json",
+        "sha256": "e32f1d180003115122e73836d4560e3db3fe92e7b81f420c6193bd5640985d5c"
+      },
+      {
+        "private_path": "run37/hybrid38-final-build-result.json",
+        "sha256": "b756292532f23d806286b40dd1d10b5bff5a3089f6ee92b0c85f75d18d47cf14"
+      },
+      {
+        "private_path": "run37/default-controller-result.json",
+        "sha256": "6347c99f02422bca72bcdddd18cf6ce3e6da83aca556cee26ae217a6196b12e1"
+      },
+      {
+        "private_path": "run37/air-processes.json",
+        "sha256": "403e64890d61e2bfeec38abcf76f0f87df251736bc189863286b988833c11fca"
+      },
+      {
+        "private_path": "run37/air-readonly/result.json",
+        "sha256": "1688cd6e209f45c0cb072906a1ecad51ec2669daa040fe159b5fab8fe28cacd9"
+      },
+      {
+        "private_path": "run37/air-readonly/last-native-log.json",
+        "sha256": "a35afafbfba34ab78abfffba3072f657ca7b865112f7dbd128f2d77bd9090693"
+      },
+      {
+        "private_path": "run37/source-hashes.json",
+        "sha256": "43588ff6b914f17ab15ae7427f9bcc530b1695e55ca54170ae3936ded77b77e7"
+      }
+    ],
+    "goal_complete": false,
+    "STABLE_SUCCESS": false,
+    "scheduler_unloaded": false
+  },
+  "run38": {
+    "phase": "Physical C-contained shared storage / Windows mapping / prefix metadata binding, not game execution",
+    "previous_turn_classification": "progress: actual native guest IPC capture and final receiver correction",
+    "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "remote_experiment_before_publication": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+    "source_uncommitted_at_recording": true,
+    "publication_policy": "Current local time after22:00; commit/push only after staged review and separate fresh clock check, record actual receipt",
+    "observed_constraint": "Actual existing Dock.games rejects a shared-folder symlink escaping drive_c; do not relax ordinary guard",
+    "hypothesis": "New explicit physical drive_c/SteamLibrary can be mounted into Linux and pass unchanged normal Dock discovery",
+    "minimal_patch": [
+      "Opt-in --dock-storage requires capture/shared/Metal and refuses old outer SharedSteamLibrary without migration",
+      "WindowsLaunchMap maps only shared library to C paths and keeps NUL argv boundaries, not a shell/MADEIRA_ARGS transport",
+      "Native LabWindowsLibrary prepares matching Documents/wine alias and fresh library metadata only, preserves existing data/settings",
+      "Actual post-frontend native receiver maps/binds metadata, does not start Wine"
+    ],
+    "actual_host_controls": {
+      "new_layout_IPC_and_mapping": {
+        "scope": "Actual HOST ARM64 ELF -> /dev/ideck-madeira -> native shared-files inspection/capture. Wrapper/helper ASan/UBSan; static deps not instrumented. Own Windows PE NOT executed, NO Steam/game/licensing/iPad proof",
+        "dock_storage": true,
+        "capture_enabled": true,
+        "exit_code": 0,
+        "seconds": 0.634,
+        "commands": [
+          [
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/toolchains/llvm-mingw-20260421-ucrt-macos-universal/bin/x86_64-w64-mingw32-clang",
+            "-nostdlib",
+            "-Wl,-entry,mainCRTStartup",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/windows-exit-probe.c",
+            "-lkernel32",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/dock-capture-final/own-windows-probe.exe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/capture-launch-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/dock-capture-final/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_DOCK_STORAGE=1",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-DIDECK_LAB_GAME_FILE_POLICY=1",
+            "-DIDECK_LAB_CAPTURE_LAUNCH=1",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LinuxLabRuntime.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabBridge.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LaunchProtocol.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFiles.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFilePolicy.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/WindowsLaunchMap.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/capture-launch-control.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/dock-capture-final/control"
+          ]
+        ],
+        "input_archives_before_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+          "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "74dae57985db5dbf03bb14df5912c1bdb0bf7b865e667cdc523e8ddc12cbe748",
+          "experiments/linux-steam/app/GameFiles.c": "b61a915090bf07981ca37653182dc7e2ed33d25df996b67411ca07d1ac2653f5",
+          "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
+          "experiments/linux-steam/app/WindowsLaunchMap.c": "5e2895e3a0e2e85d78c547717110deee81268676ce626688d50701167c11699e",
+          "experiments/linux-steam/tools/capture-launch-control.c": "5735ff2dc96c70b48df7004fb610b04a42c9f1803b5937faa9b59a0ebbd9d7b7",
+          "experiments/linux-steam/guest/capture-launch-probe.c": "881132cb5a6d65352ae59016084fba901106af2336338cb5d38ad87f8cabf3db",
+          "experiments/linux-steam/guest/windows-exit-probe.c": "5510718f670e442a114c0e7da4b4e8a315a09619b347bd1348274636563b548e"
+        },
+        "guest_probe_sha256": "ef2de6844c5dbf1ec0a1c56bdffa7ee2c81f5f2da2113b5645b2e6c8bbe75bd6",
+        "Windows_fixture_sha256": "b7a2e7c9d0829f1d3067024606b90a0dbf5a7fd1f3738dc9577b99021676a169",
+        "log_sha256": "2ac6adce35ce08d71e2f03e736cf1445090ea4c2693d714e02eaf46e8b99c6e4",
+        "Windows_fixture_executed": false
+      },
+      "old_layout_regression": {
+        "scope": "Actual HOST ARM64 ELF -> /dev/ideck-madeira -> native shared-files inspection/capture. Wrapper/helper ASan/UBSan; static deps not instrumented. Own Windows PE NOT executed, NO Steam/game/licensing/iPad proof",
+        "dock_storage": false,
+        "capture_enabled": true,
+        "exit_code": 0,
+        "seconds": 0.331,
+        "commands": [
+          [
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/toolchains/llvm-mingw-20260421-ucrt-macos-universal/bin/x86_64-w64-mingw32-clang",
+            "-nostdlib",
+            "-Wl,-entry,mainCRTStartup",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/windows-exit-probe.c",
+            "-lkernel32",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/legacy-capture-final/own-windows-probe.exe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "--target=aarch64-linux-gnu",
+            "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+            "-nostdlib",
+            "-static",
+            "-ffreestanding",
+            "-fno-builtin",
+            "-fno-stack-protector",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/capture-launch-probe.c",
+            "-Wl,-e,_start",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/legacy-capture-final/probe"
+          ],
+          [
+            "xcrun",
+            "clang",
+            "-fsanitize=address,undefined",
+            "-fno-sanitize-recover=all",
+            "-fno-omit-frame-pointer",
+            "-DGUEST_ARM64=1",
+            "-DENGINE_ASBESTOS=1",
+            "-DLOG_HANDLER_DPRINTF=1",
+            "-DISH_INTERNAL=1",
+            "-DIDECK_LAB_DOCK_STORAGE=0",
+            "-DIDECK_LAB_SHARED_LIBRARY=1",
+            "-DIDECK_LAB_GAME_FILE_POLICY=1",
+            "-DIDECK_LAB_CAPTURE_LAUNCH=1",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+            "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-unused-parameter",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LinuxLabRuntime.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabBridge.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LaunchProtocol.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/SharedSteamLibrary.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFiles.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/GameFilePolicy.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/WindowsLaunchMap.c",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/capture-launch-control.c",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libish_emu.a",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host/libfakefs.a",
+            "-lsqlite3",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/legacy-capture-final/control"
+          ]
+        ],
+        "input_archives_before_after": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+          "experiments/linux-steam/app/LabDeviceFS.c": "a11988cd786f8cadde9c991d8fb9482ade6a3ecf99a8cc2713d362362fdc17cd",
+          "experiments/linux-steam/app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+          "experiments/linux-steam/app/LaunchProtocol.c": "7a4bf62c2031f2344b18b4f1f527c0b05d34ff7c8c8a77d408c96de0ff0abd3b",
+          "experiments/linux-steam/app/SharedSteamLibrary.c": "74dae57985db5dbf03bb14df5912c1bdb0bf7b865e667cdc523e8ddc12cbe748",
+          "experiments/linux-steam/app/GameFiles.c": "b61a915090bf07981ca37653182dc7e2ed33d25df996b67411ca07d1ac2653f5",
+          "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
+          "experiments/linux-steam/app/WindowsLaunchMap.c": "5e2895e3a0e2e85d78c547717110deee81268676ce626688d50701167c11699e",
+          "experiments/linux-steam/tools/capture-launch-control.c": "5735ff2dc96c70b48df7004fb610b04a42c9f1803b5937faa9b59a0ebbd9d7b7",
+          "experiments/linux-steam/guest/capture-launch-probe.c": "881132cb5a6d65352ae59016084fba901106af2336338cb5d38ad87f8cabf3db",
+          "experiments/linux-steam/guest/windows-exit-probe.c": "5510718f670e442a114c0e7da4b4e8a315a09619b347bd1348274636563b548e"
+        },
+        "guest_probe_sha256": "ef2de6844c5dbf1ec0a1c56bdffa7ee2c81f5f2da2113b5645b2e6c8bbe75bd6",
+        "Windows_fixture_sha256": "42328075c5c3bb1063886899ba6fc88f3577440377f434e06893cd9eaadc144c",
+        "log_sha256": "2ac6adce35ce08d71e2f03e736cf1445090ea4c2693d714e02eaf46e8b99c6e4",
+        "Windows_fixture_executed": false
+      },
+      "native_metadata_and_selected_Dock_discovery": {
+        "scope": "HOST filesystem preparation + exact selected production Dock parser/discovery methods with synthetic fixture; NOT full MadeiraDock runtime, Steam/client/auth/license/game or iPad proof",
+        "commands": [
+          [
+            "xcrun",
+            "clang",
+            "-fobjc-arc",
+            "-fblocks",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-DIDECK_LAB_STEAM_WINDOWS_ROOT=\"Program Files (x86)/Steam\"",
+            "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabWindowsLibrary.m",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/windows-library-control.m",
+            "-framework",
+            "Foundation",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/native-control"
+          ],
+          [
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/native-control",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/scratch-root",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native"
+          ],
+          [
+            "xcrun",
+            "swiftc",
+            "-module-cache-path",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/swift-module-cache",
+            "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/app/Madeira/SteamKeyValues.swift",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/main.swift",
+            "-o",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/discovery"
+          ],
+          [
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/discovery",
+            "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run38/windows-library-native/scratch-root/MadeiraPrefix/drive_c"
+          ]
+        ],
+        "native_output": "PASS native prefix binding, C-contained library metadata, idempotence and existing-data retention; no Wine/Steam execution\n",
+        "discovery_output": "PASS exact production Dock discovery finds C-contained synthetic manifest; NOT Valve licensing/launch\n",
+        "production_Dock_source_sha256": "c5abd7b4587cc93d79a83aac42c1b3527ced05d7a4807d20c4f036a406dcdb73",
+        "parser_source_sha256": "8e4d9e0da3c5111d8314cb3110f8462ff06a0906cab7f124ecd607741ca567cf",
+        "extracted_source_sha256": "1f953367db8fa137ae5cf7ab590ad53db14358f54de112d623bbff3d50fb5b00",
+        "native_helper_sha256": "c2aea2bae2feb80f5137d566f9814522279c354391a6a10e0c93f9e7ed1ea01f",
+        "client_relativeRoot_from_source": "Program Files (x86)/Steam"
+      }
+    },
+    "failed_attempts": [
+      "First fixture input was mutated during partial attempt; final test owns a fresh fixture-only copy",
+      "Restricted Foundation atomic existing-settings write Cocoa513; owner0644/no flags observed; normal host execution passes without permission/trust/system changes"
+    ],
+    "prefix_template_member_inventory": {
+      "members": 138,
+      "SteamLibrary_members": 0,
+      "libraryfolders_members": 0,
+      "payload_extracted": false,
+      "scope": "Names only, not Wine startup"
+    },
+    "actual_ios_artifact": {
+      "scope": "FINAL full iOS App39 contains real physical-Dock storage, path mapping and prefix metadata binding calls; NOT Windows/Steam/game/device execution",
+      "macho_sha256": "ed727d64a7dcff813e1b60577385501ac39deb817ceb6c28001e39a72e6049ef",
+      "build": "39",
+      "definitions": {
+        "_LabBindWindowsLibrary": [
+          "00000001009e14dc (__TEXT,__text) non-external (was a private external) _LabBindWindowsLibrary"
+        ],
+        "_ideck_windows_launch_map": [
+          "00000001009e0f78 (__TEXT,__text) non-external (was a private external) _ideck_windows_launch_map"
+        ],
+        "_ideck_shared_steam_prepare": [
+          "00000001009e2298 (__TEXT,__text) non-external (was a private external) _ideck_shared_steam_prepare"
+        ],
+        "_ideck_game_file_policy_pending": [
+          "00000001009dfac4 (__TEXT,__text) non-external (was a private external) _ideck_game_file_policy_pending"
+        ],
+        "_current": [
+          "00000001047b9528 (__DATA,__common) external _current"
+        ],
+        "_ideck_linux_current": [
+          "0000000102bb4c28 (__DATA,__thread_vars) external _ideck_linux_current"
+        ]
+      },
+      "actual_call_counts": {
+        "_LabBindWindowsLibrary": 1,
+        "_ideck_windows_launch_map": 1
+      },
+      "signed": false,
+      "installed": false,
+      "game_response_still_125": true,
+      "binary_distribution_allowed": false
+    },
+    "flag_off_controller_actual_compile": true,
+    "flag_off_mapper_binder_refs_absent": true,
+    "full_default_app_runtime_test": false,
+    "source_syntax_and_diff_checks": true,
+    "Air": {
+      "one_readonly_process_query": true,
+      "observed_lab": 23,
+      "observed_pid": 4952,
+      "observed_install_prefix": "B265FEBE",
+      "input_stop_restart_upgrade_auth_signing_actions": false,
+      "pending_prior_choice": "Combined35 plus later same-Lab iterations unanswered; no repeated question, continue/time consent or substitution39"
+    },
+    "limitations": [
+      "Selected exact production discovery methods + actual parser tested, not full Windows Steam/Valve acceptance/auth/licensing",
+      "Synthetic own manifest/PE fixtures outside Git and never executed as Windows game",
+      "No shared-library registration in real Linux Steam or automatic old-library migration",
+      "Captured argv mapping is metadata; no direct Wine launch/argument transport or exclusive writer/runtime permission",
+      "No new Air UI/stability/game/return evidence",
+      "App39 unsigned/uninstalled; signed35/immutable35-38 preserved",
+      "Only normal Wine prefix is prepared; future supported runtime-mode selection/init/auth still needs real integration",
+      "No component/converter binary exception inferred; binary distribution remains unresolved"
+    ],
+    "next_experiment": "Implement an explicit isolated COLD existing-Madeira setup/auth/JIT UI mode without Linux init/concurrency, correctly preserving ContentView input/lifecycle/URL flows, then real clean Linux/exclusive writer handoff and legitimate Windows LaunchApp/game/return. Existing device upgrade choice still pending.",
+    "source_files_sha256": {
+      "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "f75c91b5da5a7a1f059e41c72dce6b481a546fb3081d8466dac9f1d9a1a80421",
+      "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
+      "experiments/linux-steam/app/GameFilePolicy.h": "c197f98b5f481564f2ed89216adfd6f47cbf1044506023d46227e570614c6eaf",
+      "experiments/linux-steam/app/GameFiles.c": "b61a915090bf07981ca37653182dc7e2ed33d25df996b67411ca07d1ac2653f5",
+      "experiments/linux-steam/app/GameFiles.h": "5ba7b8147bf393b1723e11e39d0c9b511356d56d5d2317462aa2af14a13268de",
+      "experiments/linux-steam/app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+      "experiments/linux-steam/app/LabMetalDrain.h": "99cc9de4383583957e44d64b7f8dda22ec5a0b8f0ab059ba556881274d6e0b29",
+      "experiments/linux-steam/app/LabMetalDrain.m": "16999305dc44e4f14a7d6fc2df3d4734f04b6d23d0a9b02053b0237780f1e1f1",
+      "experiments/linux-steam/app/LabMetalFramebufferDrain.h": "2042dd8f2bba9917925f7f21fa70af4680494a9fedde0d3d83ea602239e8e2d7",
+      "experiments/linux-steam/app/LabWindowsLibrary.h": "140d3e90970b6e30353de781791a9fa002cfc03d6d7bca558a35c04fd339b1e7",
+      "experiments/linux-steam/app/LabWindowsLibrary.m": "c2aea2bae2feb80f5137d566f9814522279c354391a6a10e0c93f9e7ed1ea01f",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "c24683605d862fe6449cd0a67e1ff61fdc920bed503b5727101f32a6fe424258",
+      "experiments/linux-steam/app/LinuxSteamViewController.m": "e9a9903c8382723cf41843054b5d98492d6473009c86a351d7ea46f39c958ac7",
+      "experiments/linux-steam/app/SharedSteamLibrary.c": "74dae57985db5dbf03bb14df5912c1bdb0bf7b865e667cdc523e8ddc12cbe748",
+      "experiments/linux-steam/app/SharedSteamLibrary.h": "ccff8eb0030288d499bb118c36af327cf349bd314b68c0f5c39db80496cad7d0",
+      "experiments/linux-steam/app/WindowsLaunchMap.c": "5e2895e3a0e2e85d78c547717110deee81268676ce626688d50701167c11699e",
+      "experiments/linux-steam/app/WindowsLaunchMap.h": "6fdc9264be177f8c68f091b2fe2b79a2abe545177e255e8fcc3e3f446b9f7cb4",
+      "experiments/linux-steam/app/main.m": "1cba675b2e6c6b35b6f069047d0cf8a3b0b737f040f02cca124cf237a4b75bf2",
+      "experiments/linux-steam/guest/capture-launch-probe.c": "881132cb5a6d65352ae59016084fba901106af2336338cb5d38ad87f8cabf3db",
+      "experiments/linux-steam/guest/casp-cow-probe.c": "835a6af08d35ea0d747d5a76ad818eb35d56de8d7af56b52e6a933e333ecc9c9",
+      "experiments/linux-steam/guest/shared-library-probe.c": "3dbf6e7c58a5b799595060c8adb2acd121f41545c0d8afc758480d8435e83c5f",
+      "experiments/linux-steam/guest/windows-exit-probe.c": "5510718f670e442a114c0e7da4b4e8a315a09619b347bd1348274636563b548e",
+      "experiments/linux-steam/tools/build-casp-order.py": "1ad0c8e521640b08e06e393c5efc941b57e98026ea6c122893358232020859da",
+      "experiments/linux-steam/tools/build-host-retained-rfb.py": "ac48492fbdedebc6a195b471767c9cdee3eb2f8003bea07dae8af89f9f900bc3",
+      "experiments/linux-steam/tools/build-host-startup-diagnostics.py": "9f0ef4987601460f590cdee591e8868b2c2942e533206d4adb7e08efb4d3bfd7",
+      "experiments/linux-steam/tools/build-hybrid-app.py": "8e1135aae0fbbbcc35d14d4752d58669b023b4e43545f2b4d3ac43a96ccced04",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "76f1e57ecf93a8449a48446ab4a470075d69eb370d2d139ac402fbfbd7c47ff2",
+      "experiments/linux-steam/tools/build-lab.sh": "d1ba60840453962e33415ce8266a2cb705d787ac091ca76d8fbfdb988ef7e752",
+      "experiments/linux-steam/tools/build-metal-drain.py": "d4f13ab38e846f0daead5928734e85d6513b26d1256efeb2721de57f09a99e88",
+      "experiments/linux-steam/tools/capture-launch-control.c": "5735ff2dc96c70b48df7004fb610b04a42c9f1803b5937faa9b59a0ebbd9d7b7",
+      "experiments/linux-steam/tools/casp-lock-order-control.c": "f58e18627810bb22825c0c37e180011b59364b873c9b32969163556f27996c90",
+      "experiments/linux-steam/tools/casp_order_patch.py": "b3d78a41e0fd7f31d4f691ee61d365bdab24dfa3915e37e4c00c8bef4f88527d",
+      "experiments/linux-steam/tools/metal-drain-control.m": "cabd847ea6a419e9feabc3520b8f54d83c23c166e4814628cb5ab6dc5c71ca2c",
+      "experiments/linux-steam/tools/observe-host-steam-trace.py": "3043404c1d29d64700f003c56191378839332713d7163fde3db2da5da816d9b3",
+      "experiments/linux-steam/tools/retained-rfb-control.m": "0018649a2d16fc539b5e9dc447b2c066813da72937a6e58f8e04eddee5491ad7",
+      "experiments/linux-steam/tools/shared-library-control.c": "fc3b5def16f9ad60ac57a6ca27b242af91d4bb768c1da62c8a9dae84b4573388",
+      "experiments/linux-steam/tools/test-capture-launch.py": "f234f83bd0753037bc645932c7dfb07f77f208b3ba04ba24d9fbab0a6039777a",
+      "experiments/linux-steam/tools/test-casp-lock-order.py": "b9e93b12a7f1bd187cf1a7b00bd04381cadd9e5a031688222e4a5c41232903c1",
+      "experiments/linux-steam/tools/test-shared-library.py": "c77ebb20b8da6399ff19421d227c9595448d602f847e2acc86fbdab4b6bb682f",
+      "experiments/linux-steam/tools/test-windows-library.py": "783cd059d18cd11e4d0333fbd7a443a3dfe82590e8db3f4317e5d94ce37dee48",
+      "experiments/linux-steam/tools/windows-library-control.m": "4aa12ae57fedf1e1fff97886a4f5397ab3c1c3cea405f20744b049ef888aaf20"
+    },
+    "private_artifacts": [
+      {
+        "private_path": "run38/dock-capture-final/evidence.json",
+        "sha256": "22e2c10c291c56a4ee736590158cc8b42e8d5236a62c6045e3396a97ec856546"
+      },
+      {
+        "private_path": "run38/legacy-capture-final/evidence.json",
+        "sha256": "45380189b193fe33df1da5e5145a85641df781bae83da4ae4f1c05b645f16ab5"
+      },
+      {
+        "private_path": "run38/windows-library-native/evidence.json",
+        "sha256": "77f77320648ead5ac866b4e6ca0ab85541fecf123e422ce6a2d14cf5239dc52d"
+      },
+      {
+        "private_path": "run38/dock-ios/evidence.json",
+        "sha256": "34f505600f183f1aa7509b12d163c23b3a64dd61467130e663192bed081ea105"
+      },
+      {
+        "private_path": "run38/final39-linked.json",
+        "sha256": "e512cc37f34ae1399b51c61d23c8cfb8f7d79fb87d3e7217f134d80a25ae4ad9"
+      },
+      {
+        "private_path": "run38/final39-calls.json",
+        "sha256": "525fa467663bf4c572d4a0f7f44c36734295822996525311ea17c705bc63cf98"
+      },
+      {
+        "private_path": "run38/hybrid39-build-result.json",
+        "sha256": "85f00b9f9cac926be8e1adb08493009c96a31a9c3db0258c9a20026466add010"
+      },
+      {
+        "private_path": "run38/without-dock-controller-result.json",
+        "sha256": "21c9bcb41aa9a558d0e82fb7debbea4bf0b5249df8172c34d8651ee2a13b3414"
+      },
+      {
+        "private_path": "run38/air-processes.json",
+        "sha256": "b9d4dc1f805648d543eef16443c35233945559698caa56e6ee75a421554bfbb4"
+      },
+      {
+        "private_path": "run38/source-hashes.json",
+        "sha256": "2aad14b23a6611c1db044d925baf339c6dc3d9bd752d3a9df382774e179252e9"
+      }
+    ],
+    "goal_complete": false,
+    "STABLE_SUCCESS": false,
+    "scheduler_unloaded": false
   }
 }

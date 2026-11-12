@@ -1,3 +1,250 @@
+# Latest Run38: physical drive_c shared storage + Windows mapping/native Dock discovery; App39
+
+Read MD Run38 and EVIDENCE.run38 FIRST. Source parent815ddc5; origin main2ac39be
+unchanged. Run34-38 source may now be published after22:00EST; verify actual Git/
+remote receipt and fresh clock EACH commit/push, never assume publication from
+this note. Preserve all other worktrees/changes. Full goal ACTIVE/incomplete.
+CLI only; no cybersecurity/settings/lock/credentials/Guard/trust/FEX/Valve/vendor/
+Codex-state changes, Mac-unlock requests, second researcher or concurrent runtime.
+
+Actual Dock.games rejects external drive_c symlinks. New --dock-storage requires
+capture/shared/Metal and uses Lab-root/MadeiraPrefix/drive_c/SteamLibrary, mounted
+at same guest /mnt/ideck/SteamLibrary. Refuses old outer SharedSteamLibrary, no
+migration; old layout default unchanged. WindowsLaunchMap maps only shared paths,
+retains NUL argv boundaries, no shell/MADEIRA_ARGS/permission/auth claim.
+
+Native prefix binding Documents/wine -> dedicated MadeiraPrefix; fresh Windows
+libraryfolders metadata only if absent, pinned client root read from actual
+SteamRuntimeFiles. Existing settings and other prefix/save retained. Controller
+post-frontend successful/DORMANT path maps/binds, NOT starts Wine/writer/auth.
+
+Actual HOST ARM64 device IPC/capture with physical C layout + mapped argv passes;
+old-layout regression passes. Two native requests/own PE fixture only, never
+Windows execution/license proof. HOST Foundation binding/idempotence/settings/
+existing-save retention passes normal execution; sandbox atomic fixture update
+Cocoa513 is environment, no system setting fix. EXACT selected real Dock discovery
+methods + actual parser find synthetic C-contained manifest, not Valve acceptance.
+Read-only prefix-template138 names have no shared/config collision, not Wine init.
+
+Full App39 + FINAL mapper/binder calls and separate current identities verified.
+Immutable private run38/hybrid39-unsigned/Madeira.app SHAed727d64...e6049ef,
+UNSIGNED/UNINSTALLED. Signed35/immutable35-38 preserved. New flagOFF iOS controller
+compiles with mapper/binder refs absent. Protocol remains125, NO game started.
+
+ONE Air query still old Lab23/4952/installB265FEBE (REVALIDATE). Existing combined35
++ subsequent same-Lab-iteration choice unanswered, no repeat/continue/time consent
+or silent substitution39. No device input/stop/install/auth/signing this run;
+production/phone/Mac Allocator/auth/games/saves preserved. No active runtime tests.
+
+NEXT explicit COLD native Madeira setup/auth/JIT mode in SAME isolated app, no
+Linux initialization/concurrency or one-session reset; use existing supported
+ContentView lifecycle/input/URL handling, no auth/cache transfer. Then actual
+Steam Play -> clean Linux/exclusive-writer handoff -> genuine Windows LaunchApp.
+Runtime setup, Wine execution/teardown/Linux return/repeated game cycles remain
+incomplete. Linux library registration and old-library migration NOT supplied.
+Actual Air upgrade still waits existing choice. No STABLE_SUCCESS/task unload/
+completion/combined binary distribution before license scope is resolved.
+
+--- Earlier Run37 continuity ---
+
+# Latest Run37: real ARM64 IPC -> native shared request capture; final App38 receiver present
+
+Read MD Run37 and EVIDENCE.run37 FIRST. Published/source parent815ddc5,
+remote main2ac39be unchanged. Run34-37 dirty UNCOMMITTED/UNPUSHED outside
+weekday22-08 (last16:25EST). Preserve all edits/worktrees. Full goal ACTIVE.
+CLI-only, no cybersecurity/settings/lock/account/credential/Guard/trust operations,
+Mac-unlock requests, FEX/Valve/vendor/Codex-state edits or subagents.
+
+Fixed actual shared-source mismatch: native preparation BEFORE Linux init,
+explicit separate shared fd registration, GameFiles_from_roots; from_data keeps
+legacy/default mapping. One bounded owned8216-byte request reserved under mutex
+before file inspection; concurrent requests cannot overwrite/in-flight-repopulate.
+Native peek/discard APIs, NOT execution/license/storage/Wine permission. No raw
+argument/frame serialization/logging. ProtocolV1 response125 remains NOT launched.
+--capture-launch requires --shared-library AND --metal-drain, default flags0.
+
+Actual ARM64 ELF via real /dev/ideck-madeira in LinuxLabRuntime -> native separate
+shared-file inspection -> owned request peek. Busy/decline/next and two native
+concurrent callers/join controls pass. Capture OFF actual IPC also passes with
+no pending request. Ordinary/default file routes pass. ASan/UBSan own wrappers,
+static deps not instrumented; archive hashes before/after unchanged. New own
+Windows PE fixture ExitProcess7 INSPECTED ONLY, NEVER executed; no Steam license.
+Native EAGAIN test corrected -11->-EAGAIN(Darwin35), not production workaround.
+Real fakefs/shared I/O regression two serial native processes0/0, NOT app restart.
+
+First full App38's final nm missed pending getter due no product caller. Added
+ACTUAL retained-owner post-frontend peek + categorical seq/AppID/not-started
+private result/status, rebuilt. Final full App38 now actual receiver+registration+
+bridge-inspect calls and separate current identities verified. Immutable private
+run37/hybrid38-unsigned/Madeira.app SHAfd4f26d0...d466824, UNSIGNED/UNINSTALLED.
+Default iOS controller flags0 compiles with new receiver refs absent. Final
+auditor tool handle missing after completed receipt; no restart/crash inference.
+
+ONE readonly Air query still Lab23/4952/installB265FEBE (REVALIDATE). Own last
+native-log receipt read-only confirms23/4952, no usable health path, no health/
+CPU/UI claim. No Steam/account data extraction or device input/stop/install/auth.
+Pending combined35 + subsequent same-Lab-iteration choice unanswered; don't repeat,
+infer from continue/time or silently substitute38. Signed35/immutable35-37 and
+production/phone/Mac Allocator/auth/games preserved. No active runtime tests left.
+
+NEXT real native path mapping/shared writer handoff, isolated Windows prefix/
+Steam-library metadata and existing Madeira JIT/full-init/genuine Dock login/
+LaunchApp. Do NOT equate Linux auth/PE/AppID/capture/DORMANT to permission.
+Native discard currently source/host only. No Windows execution/teardown/Linux
+return/repeated game-cycle proof. No fakeUI/DRM/auth bypass/reset. Combined
+binary exception unresolved; no distribution. No STABLE_SUCCESS/task unload.
+Actual Air upgrade still waits existing user choice; advance independent work.
+
+--- Earlier Run36 continuity ---
+
+# Latest Run36: separate shared library, real ARM64 I/O PASS, full App37; NOT Air/game proof
+
+Read MD Run36 and EVIDENCE.run36 FIRST. Published/source parent815ddc5,
+remote main2ac39be unchanged. Run34-36 dirty UNCOMMITTED/UNPUSHED, weekday
+13:45EST outside22-08 window. Preserve all edits/worktrees. Goal ACTIVE/incomplete.
+CLI only, no cybersecurity/settings/lock/account operation, Mac unlock request,
+credential/Guard/trust automation, FEX/Valve/vendor edit or subagents.
+
+New SharedSteamLibrary mounts native Lab-root/SharedSteamLibrary as realfs at
+/mnt/ideck/SteamLibrary, outside fakefs data. Empty guest placeholder only; no
+native-lifetime remount or existing-file hiding. Initial native owner, no reset.
+Opt-in --shared-library / IDECK_LAB_SHARED_LIBRARY(default0), Linux adapters only.
+Default /Steam/auth/games/prefix untouched. NOT exclusive-writer permission.
+
+Actual ARM64 ELF f0ff60e5...e5c7d9, scratch fakefs-root -> realfs library reads
+native seed, writes/fsync/closes/renames, real fork-child writes/wait4, native
+verifies bytes. TWO serial native processes repeat over same files. SAME ELF
+also TWO actual LinuxLabRuntime-entry processes over realfs root; original
+repeat-start-16 retained. Both ASan/UBSan wrappers nonrecovering, static deps not
+instrumented; before/after archive hashes unchanged. NOT same-app restart/Wine/
+Steam depot/ownership/device/game/return proof. No active tests left running.
+
+Namespaced iOS adapters/full App37 PASS. FINAL actual mount->do_mount and unique
+Linux TLS/Wine global + GPU methods verified. Immutable private
+run36/hybrid37-unsigned/Madeira.app SHA7cafbe42...d528a4, UNSIGNED/UNINSTALLED,
+source .linuxlab, label iDeck Linux Lab. Signed35 and immutable35/36 preserved.
+Default actual iOS runtime object compiles with shared-mount reference ABSENT.
+
+Steam library NOT yet registered in real Steam or wired into GameFilePolicy.
+Existing GameFiles_from_data addresses fakefs data, NOT new native shared source;
+use explicit shared common-directory capability for eventual bridge. Dock's
+Windows client login/LaunchApp is separate from Linux Steam auth. Never copy/
+convert tokens or treat AppID/fixture/executable as ownership. Normal ContentView
+JIT/full-init contract must be preserved; bridge remains diagnostic125.
+
+ONE readonly current Air query still Lab23/4952/installB265FEBE (REVALIDATE).
+Pending concrete combined35 + subsequent same-Lab-iteration choice unanswered;
+no repeat, time/continue inference or silent substitution37. No Air input/stop/
+restart/install/auth/signing this run. User live session/apps/accounts/games
+preserved. Independent storage work advanced; no mere blocker restatement.
+
+NEXT shared native capability/path mapping + actual writer/runtime handoff and
+legitimate Madeira init/JIT/license flow. On actual permission, choose qualified
+signed Lab artifact and run actual Air UI/close/restart, then genuine Play/game/
+return. No combined binary distribution until exception scope resolved. No
+STABLE_SUCCESS/scheduler unload/goal complete. Earlier notes are historical.
+
+--- Earlier Run35 continuity ---
+
+# Latest Run35: FULL combined app35/36; old Air session preserved; game bridge still125
+
+Read MD Run35 and EVIDENCE.run35 FIRST. Published815ddc5, remote main2ac39be
+unchanged. Run34/35 UNCOMMITTED/UNPUSHED outside weekday22-08 EST window;
+check clock EACH commit/push, preserve all edits. Full Air game/return goal ACTIVE.
+CLI-only normal app development; no cybersecurity/settings/lock/account operations.
+Never ask Mac unlock or automate credentials/Guard/trust. No subagents/overlap.
+
+Full actual App35 links namespaced Linux + real Wine/FEX/DXMT, separate TLS/global
+current identities, CASP translation-before-mutex verified in FINAL Mach-O.
+FEX/Wine sources/vendor untouched, prepared component inputs read-only. Reused
+compiled payload provenance not rebuilt merely by pinned source HEAD. Initial
+missing .m/uninitialized deps/global helper LDFLAGS failures corrected and logged.
+
+Immutable run35/hybrid35-unsigned/Madeira.app SHA7a459f77...9419f. Disposable
+hybrid35-air-sign copy explicitly uses SAME existing com.kuschqin.ideck.freshtest
+and .JITHelper, display iDeck Linux Lab. Existing profiles cover Air/debug,
+expire Nov13 UTC, exact identity matched. Signed/deep strict normal environment0,
+SHA5b41400c...8410f2. NOT installed. Sandbox verify NOT_TRUSTED is environment
+boundary, NOT device/Linux failure; no trust change. Profile recheck before install.
+
+New shared LabMetalDrain + generated PINNED view tracks REAL command/main bodies;
+close rejects new submissions, no completion-before-accounting, no reentrant
+reopen, subsequent actual GPU wave passes. REAL HOST Metal blit/readback+3commands+
+2subscribers bounded natural0/PASS; NOT Air/driver-global/storage/Wine permission.
+Opt-in --metal-drain (source IDECK_LAB_METAL_DRAIN default0), Linux-only flags.
+Controller RFB actual tasks -> Metal real completion -> retained boundary.
+Full App36 + actual final drain methods/TLS identities verified, immutable
+run35/hybrid36-unsigned/Madeira.app SHAde7db5ce...a7acaf, UNSIGNED/UNINSTALLED.
+Default controller separately compiles; no full default build35 claim.
+
+ONE readonly Air35 query still old Lab23 PID4952/installB265FEBE (REVALIDATE).
+Old selected25 question superseded by materially changed pending combined35+
+subsequent same-Lab iteration choice. Await actual YES to end old Lab/preserve
+its data/upgrade. No reply yet: no repeated question/time/continue inference,
+no silent selected-artifact substitution. No device stop/input/install/auth this
+run; phone/production/Mac Allocator unchanged. Don't target stale host test PIDs.
+
+Next on approval: recheck exact current identity/profile, choose qualified signed
+Lab artifact transparently, exercise Air genuine Steam/input/normal close/restart.
+Then explicit shared-game filesystem writer and actual Madeira init/JIT/legitimate
+license contract; bridge remains diagnostic125. No game/return/Stability proof,
+no global reset/secret transfer/FEX/Valve edit, no combined binary distribution
+until converter/component exception resolved. No STABLE_SUCCESS or scheduler stop.
+
+--- Previous Run34 continuity (historical) ---
+
+# Latest Run34: real CASP/CoW fix + TWO HOST Steam/embedded-RFB cycles, NOT Air/game success
+
+Read EVIDENCE.run34 and MD Run34 FIRST. Parent/last published815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7.
+Run34 source UNCOMMITTED/UNPUSHED outside weekday22–08 local window; check current
+clock before EACH later commit/push. Preserve these edits and all other worktrees.
+Main2ac39be/vendor d141978 pristine. User additionally forbids cybersecurity work;
+normal app compatibility/build/runtime only. CLI only; no Mac-unlock/security/
+lock/credentials/Guard/trust automation. Full Air game/return goal ACTIVE/incomplete.
+
+Original-engine embedded RFB test black562s: TWO actual native samples show
+CASP mutex owner in CoW MM-writer wait, other CASP waiters hold MM readers.
+Not the prior pre-Steam AF_UNIX ACK issue (still a separate unfixed limitation).
+Minimal extracted actual helper + modeled native locks reproduces; strict v2
+ASan/UBSan model passes candidate (initial recovering-UBSan shim result rejected).
+REAL static ARM64 CASPAL64/fork/CLONE_VM/128-page CoW ELF also reproduces baseline
+lock cycle; own bounded termination -15, not crash/cleanup. SAME ELF candidate
+naturally0/0.813s with real CoW isolation/worker wait4 PASS. Host-only, not Air.
+
+Shared casp_order_patch.py moves ONLY writable translation before global CASP
+mutex; exact model/production helper byte equality checked. Copied engine archive,
+original/vendor/FEX/Valve unchanged. CASP/STXP mix + existing CASP32 misalignment/
+cross-page remain unqualified, no broad atomic correctness claim. Explicit
+LINUX_LAB_CASP_ORDER=1 requires frontend/native logs, default0 unchanged.
+
+Actual candidate real embedded RFB same hostPID38304/root/owner TWO visually
+inspected genuine LOGIN windows -> actual RFB close -> actual decode/input group
+completion BEFORE signal restore -> backend0/guest0/DORMANT/reaped7 EACH -> owner
+joined -> NATURAL process0/453.777s total incl operator delay. No auth submitted.
+90/240s native samples lack original cycle. ALL host tests TERMINAL; no stalePID.
+First candidate observer went missing/PID35003 absent/no receipt: UNKNOWN cause,
+not crash/fix proof; detached bounded later observer preserved actual final result.
+
+Full unsigned iOS feature34/default34 builds + FINAL actual instruction order
+and marker/hidden methods verified. Feature SHA87480606...b4a9 immutable private
+run34/feature34-unsigned/LinuxLab.app; UNSIGNED/UNINSTALLED, source .linuxlab ID.
+Default excludes marker/retained UI and preserves old engine order. Gate3 refuses
+before writes. No new profiles/device action. Never claim build proves Air/game.
+
+NEXT advance qualified components into correctly namespaced COMBINED Linux+
+Madeira target and explicit GPU/storage/runtime boundaries; genuine game handoff/
+return remains diagnostic125, NOT executed. No permission inferred from DORMANT,
+no global/consumed/counter reset or auth-secret copying. Kernel/root retained,
+4096 cumulative handle capacity/profiling-off remain. Resolve converter/component
+license scope before binary distribution. No Bluetooth/Metal/game stability proof.
+
+ONE Air readonly query still23/4952/B265FEBE. Preserve live user session and
+console29282; revalidate identity before touching it. Pending SELECTED25 upgrade
+choice unanswered: no repeat/inferred consent/substitution34. No Air restart/
+install/input/login or phone data changes. No STABLE_SUCCESS/scheduler unload.
+
+--- Earlier Run33 context ---
+
 # Latest Run33: retained-owner integration built; final transport Steam cycle NOT verified
 
 Read EVIDENCE.run33 and MD Run33 FIRST; parent3d56582, actual publication via Git.

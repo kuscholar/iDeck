@@ -41,6 +41,10 @@ fi
 if [[ ${LINUX_LAB_RETAINED_FRONTEND:-0} == 1 ]];then
     [[ ${LINUX_LAB_RFB_LIFETIME:-0} == 1 && ${LINUX_LAB_COMPAT_TOOL:-0} == 1 && ${LINUX_LAB_NATIVE_LOG:-0} == 1 && ${LINUX_LAB_GUEST_LIFETIME:-0} == 1 && ${LINUX_LAB_NATIVE_WORKERS:-0} == 1 && ${LINUX_LAB_X11_TRACE:-0} == 0 ]] || { echo 'Retained frontend requires viewer completion, tool, native logging/lifetime workers and no X11 trace' >&2;exit 2; }
 fi
+[[ ${LINUX_LAB_CASP_ORDER:-0} == 0 || ${LINUX_LAB_CASP_ORDER:-0} == 1 ]] || exit 2
+if [[ ${LINUX_LAB_CASP_ORDER:-0} == 1 ]];then
+    [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 && ${LINUX_LAB_NATIVE_LOG:-0} == 1 ]] || { echo 'CASP ordering experiment requires explicit frontend and native logging' >&2;exit 2; }
+fi
 mkdir -p "$LINUX_LAB_ARTIFACTS"
 sdk=$(xcrun --sdk iphoneos --show-sdk-path)
 out="$LINUX_LAB_ARTIFACTS/ios"
@@ -129,6 +133,12 @@ if [[ ${LINUX_LAB_LAZY_PAGES:-0} == 1 ]];then
     cp "$runtime/libish_emu.a" "$runtime/libfakefs.a" "$lazy_stage/runtime/"
     runtime="$lazy_stage/runtime"
 fi
+if [[ ${LINUX_LAB_CASP_ORDER:-0} == 1 ]];then
+    casp_stage=$(mktemp -d "$LINUX_LAB_ARTIFACTS/ios-casp-order.XXXXXX")
+    python3 "$repo/experiments/linux-steam/tools/build-casp-order.py" "$src" "$out" "$runtime/libish_emu.a" "$casp_stage/runtime"
+    cp "$runtime/libish.a" "$runtime/libfakefs.a" "$casp_stage/runtime/"
+    runtime="$casp_stage/runtime"
+fi
 if [[ ${LINUX_LAB_STEAM_FRONTEND:-0} == 1 ]]; then
     [[ ${LINUX_LAB_TCP_VIEW:-0} == 1 ]] || { echo 'Steam frontend requires explicit TCP view opt-in' >&2; exit 2; }
     [[ ${LINUX_LAB_ROOTFS_SHA256:-} =~ ^[0-9a-f]{64}$ ]] || { echo 'A verified clean root installation hash is required' >&2; exit 2; }
@@ -150,6 +160,7 @@ xcodebuild -project "$repo/experiments/linux-steam/LinuxLab.xcodeproj" \
     LINUX_LAB_X11_TRACE="${LINUX_LAB_X11_TRACE:-0}" \
     LINUX_LAB_RFB_LIFETIME="${LINUX_LAB_RFB_LIFETIME:-0}" \
     LINUX_LAB_RETAINED_FRONTEND="${LINUX_LAB_RETAINED_FRONTEND:-0}" \
+    LINUX_LAB_CASP_ORDER="${LINUX_LAB_CASP_ORDER:-0}" \
     LINUX_LAB_GAME_FILE_POLICY="${LINUX_LAB_GAME_FILE_POLICY:-0}" \
     LINUX_LAB_GUEST_LIFETIME="${LINUX_LAB_GUEST_LIFETIME:-0}" \
     LINUX_LAB_NATIVE_WORKERS="${LINUX_LAB_NATIVE_WORKERS:-0}" \

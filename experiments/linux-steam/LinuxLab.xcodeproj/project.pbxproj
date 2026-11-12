@@ -252,6 +252,7 @@ fi
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
+					<string>IDECK_LAB_CASP_ORDER=$(LINUX_LAB_CASP_ORDER)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -320,6 +321,8 @@ fi
 				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 				<key>LINUX_LAB_RETAINED_FRONTEND</key>
+				<string>0</string>
+				<key>LINUX_LAB_CASP_ORDER</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -373,6 +376,7 @@ fi
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
+					<string>IDECK_LAB_CASP_ORDER=$(LINUX_LAB_CASP_ORDER)</string>
 				</array>
 				<key>HEADER_SEARCH_PATHS</key>
 				<array>
@@ -441,6 +445,8 @@ fi
 				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 				<key>LINUX_LAB_RETAINED_FRONTEND</key>
+				<string>0</string>
+				<key>LINUX_LAB_CASP_ORDER</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -510,6 +516,7 @@ fi
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
+					<string>IDECK_LAB_CASP_ORDER=$(LINUX_LAB_CASP_ORDER)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -534,6 +541,8 @@ fi
 				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 				<key>LINUX_LAB_RETAINED_FRONTEND</key>
+				<string>0</string>
+				<key>LINUX_LAB_CASP_ORDER</key>
 				<string>0</string>
 			</dict>
 		</dict>
@@ -564,6 +573,7 @@ fi
 					<string>IDECK_LAB_X11_TRACE=$(LINUX_LAB_X11_TRACE)</string>
 					<string>IDECK_LAB_RFB_LIFETIME=$(LINUX_LAB_RFB_LIFETIME)</string>
 					<string>IDECK_LAB_RETAINED_FRONTEND=$(LINUX_LAB_RETAINED_FRONTEND)</string>
+					<string>IDECK_LAB_CASP_ORDER=$(LINUX_LAB_CASP_ORDER)</string>
 				</array>
 				<key>LINUX_LAB_COMPAT_TOOL</key>
 				<string>0</string>
@@ -588,6 +598,8 @@ fi
 				<key>LINUX_LAB_RFB_LIFETIME</key>
 				<string>0</string>
 				<key>LINUX_LAB_RETAINED_FRONTEND</key>
+				<string>0</string>
+				<key>LINUX_LAB_CASP_ORDER</key>
 				<string>0</string>
 			</dict>
 		</dict>

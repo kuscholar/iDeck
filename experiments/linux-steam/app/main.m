@@ -2,6 +2,13 @@
 #import <UIKit/UIKit.h>
 #import "LinuxLabRuntime.h"
 #import "LinuxSteamViewController.h"
+#if IDECK_LAB_CASP_ORDER
+#if !IDECK_LAB_STEAM_FRONTEND || !IDECK_LAB_NATIVE_LOG
+#error CASP ordering experiment requires explicit frontend and native logging
+#endif
+#include <string.h>
+extern const char ideck_casp_order_marker[];
+#endif
 #if IDECK_LAB_RETAINED_FRONTEND
 #include "RetainedFrontend.h"
 #include <stdio.h>
@@ -41,6 +48,11 @@
         if(![data writeToURL:[lab URLByAppendingPathComponent:@"last-native-log.json"] options:NSDataWritingAtomic error:&error])
             self.nativeLogError=@"Private diagnostics receipt unavailable. No Linux session started.";
         if(!self.nativeLogError){
+#if IDECK_LAB_CASP_ORDER
+            if(strcmp(ideck_casp_order_marker,"IDECK_CASP_TRANSLATION_BEFORE_PAIR_LOCK_V1"))
+                self.nativeLogError=@"Experimental engine identity mismatch. No Linux session started.";
+            else ideck_native_log_line(ideck_casp_order_marker);
+#endif
             ideck_native_log_resources();
             [self writeNativeHealth];
             self.nativeResourceTimer=[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(sampleNativeResources) userInfo:nil repeats:YES];
