@@ -1,3 +1,24 @@
+# CRITICAL Run38 packaging correction: use candidate40, NOT combined35-39
+
+Source18f1aef733d1831bdad73217dad5a3b5ca5feb00 signed-off/pushed/read back;
+remote main unchanged. Subsequent correction may be a newer commit: check actual
+Git state/remote and fresh allowed-hours clock. Read MD Run38 final-package
+correction and EVIDENCE.run38 first. Full goal still ACTIVE.
+
+FINAL App39 (and earlier combined generator) omitted RootFS Info pin and three
+LabCompatibility resources. Earlier build/sign/link claims were narrow only;
+DO NOT INSTALL old signed35 as a functional frontend. Old user Air23 untouched.
+Fixed PRIVATE build generator derives pin from compiled flags, compiles own
+ARM64 helper + exact VDFs, adds actual main resource phase and validates FINAL
+Info/hashes/ELF. Fresh generated full40 passes; real39 fails new artifact gate.
+verify-hybrid-package.py can check post-build/re-sign candidate independently.
+No Valve/rootfs/auth payload in bundle/Git; private rootfs input still required.
+Actual unsigned40 SHA6cd4ea83...e294516; matching-profile signed40/deep strict0
+and post-sign package verification PASS. Signed40 NOT installed. Read final40/
+sign40 receipts for exact hashes; no device/UI/game inference.
+Preserve old immutable artifacts as evidence. Candidate40 supersedes35-39; pending
+old-session upgrade choice remains, no silent install/substitution or inference.
+
 # Latest Run38: physical drive_c shared storage + Windows mapping/native Dock discovery; App39
 
 Read MD Run38 and EVIDENCE.run38 FIRST. Source parent815ddc5; origin main2ac39be

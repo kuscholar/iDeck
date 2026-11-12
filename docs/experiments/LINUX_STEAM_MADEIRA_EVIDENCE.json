@@ -13,9 +13,9 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": 38,
-  "recorded_at_utc": "2026-11-12T03:19:55.000539+00:00",
+  "recorded_at_utc": "2026-11-12T03:41:27.943922+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+  "source_checkpoint": "18f1aef733d1831bdad73217dad5a3b5ca5feb00",
   "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
   "target": {
     "product": "iPad13,1",
@@ -320,7 +320,7 @@
       "sha256": "b41d62f142a721a9d46736c6f3e57d1f3763b0bebc4217fe8d9d5d982dad4a5e"
     }
   ],
-  "next_discriminator": "Implement an explicit isolated COLD existing-Madeira setup/auth/JIT UI mode without Linux init/concurrency, correctly preserving ContentView input/lifecycle/URL flows, then real clean Linux/exclusive writer handoff and legitimate Windows LaunchApp/game/return. Existing device upgrade choice still pending.",
+  "next_discriminator": "Use signed40 resource-qualified candidate only after existing explicit permission to end/upgrade old Lab23; never install broken-packaging35-39. Continue explicit cold native Madeira setup/auth/JIT mode and real supported game handoff, preserving full Air stability goal.",
   "recurrence": {
     "kind": "macOS user LaunchAgent + official Codex CLI queue/resume",
     "label": "com.kusch.ideck-linux-steam-ipad-305m",
@@ -9111,7 +9111,7 @@
       "Only normal Wine prefix is prepared; future supported runtime-mode selection/init/auth still needs real integration",
       "No component/converter binary exception inferred; binary distribution remains unresolved"
     ],
-    "next_experiment": "Implement an explicit isolated COLD existing-Madeira setup/auth/JIT UI mode without Linux init/concurrency, correctly preserving ContentView input/lifecycle/URL flows, then real clean Linux/exclusive writer handoff and legitimate Windows LaunchApp/game/return. Existing device upgrade choice still pending.",
+    "next_experiment": "Use signed40 resource-qualified candidate only after existing explicit permission to end/upgrade old Lab23; never install broken-packaging35-39. Continue explicit cold native Madeira setup/auth/JIT mode and real supported game handoff, preserving full Air stability goal.",
     "source_files_sha256": {
       "experiments/linux-steam/LinuxLab.xcodeproj/project.pbxproj": "f75c91b5da5a7a1f059e41c72dce6b481a546fb3081d8466dac9f1d9a1a80421",
       "experiments/linux-steam/app/GameFilePolicy.c": "1e076f0866fc5a91289f00e3eccd95adbe34fb7ed8770eaf305efcfa6da4c04e",
@@ -9199,6 +9199,121 @@
     ],
     "goal_complete": false,
     "STABLE_SUCCESS": false,
-    "scheduler_unloaded": false
+    "scheduler_unloaded": false,
+    "source_publication": {
+      "commit": "18f1aef733d1831bdad73217dad5a3b5ca5feb00",
+      "remote_readback": "18f1aef733d1831bdad73217dad5a3b5ca5feb00\trefs/heads/experiment/linux-steam-madeira-ipad\n2ac39beff91251d36f3ad6331d3f8402b3c10e18\trefs/heads/main\n",
+      "local_time": "2026-11-11T22:23:51.485405-05:00",
+      "signed_off": true,
+      "only_experiment_branch_pushed": true
+    },
+    "packaging_correction": {
+      "observed_actual_app39": {
+        "RootFS_Info_pin_present": false,
+        "compatibility_ELF_present": false,
+        "discovery_VDF_present": false,
+        "tool_VDF_present": false
+      },
+      "earlier_combined35_39": "Build/sign/link evidence only; NOT qualified frontend candidates; DO NOT INSTALL old signed35",
+      "minimal_patch": "Derive pin from actual compiled flags; compile own ARM64 tool/copy exact VDFs; actual main resource phase; one reusable FINAL package validator",
+      "new_full_actual_App40": {
+        "scope": "Fresh full App40 actual linked runtime metadata + own boot resource prerequisites; NOT on-Air execution",
+        "macho_sha256": "6cd4ea83aab910d3b1714f952ff21b0a6ab837d9a189b29b23d10a553e294516",
+        "definitions": {
+          "_LabBindWindowsLibrary": [
+            "00000001009e14dc (__TEXT,__text) non-external (was a private external) _LabBindWindowsLibrary"
+          ],
+          "_ideck_windows_launch_map": [
+            "00000001009e0f78 (__TEXT,__text) non-external (was a private external) _ideck_windows_launch_map"
+          ],
+          "_ideck_game_file_policy_pending": [
+            "00000001009dfac4 (__TEXT,__text) non-external (was a private external) _ideck_game_file_policy_pending"
+          ],
+          "_current": [
+            "00000001047b9528 (__DATA,__common) external _current"
+          ],
+          "_ideck_linux_current": [
+            "0000000102bb4c28 (__DATA,__thread_vars) external _ideck_linux_current"
+          ]
+        },
+        "signed": false,
+        "installed": false,
+        "separate_signing_copy_prepared": true
+      },
+      "final_package": {
+        "scope": "Actual FINAL app pin/own resources/ARM64 ELF only, NOT runtime/device/Steam/game proof",
+        "rootfs_pin": "8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a",
+        "resources_sha256": {
+          "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+          "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+          "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+        },
+        "ARM64_ELF": true,
+        "build": "40"
+      },
+      "signing": {
+        "exit_code": 0,
+        "seconds": 6.858,
+        "scope": "Disposable existing-profile development signing/deep strict only, not device execution",
+        "installed": false,
+        "active_lab_session_untouched": true,
+        "signed_macho_sha256": "71a187397f1d91d3a16aa726c2bb6a57d08c0a532dcf5b531ff47fe9b5ed049e",
+        "rootfs_and_own_resources_verified_after_signing": true
+      },
+      "signed_package": {
+        "scope": "Actual FINAL app pin/own resources/ARM64 ELF only, NOT runtime/device/Steam/game proof",
+        "rootfs_pin": "8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a",
+        "resources_sha256": {
+          "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+          "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+          "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+        },
+        "ARM64_ELF": true,
+        "build": "40"
+      },
+      "old_actual39_rejected": {
+        "old_actual_app": "39",
+        "validator_exit": 1,
+        "observed_error": "AssertionError: Final app is missing the actual compiled RootFS pin",
+        "scope": "Actual old combined app rejected, NOT iPad runtime observation"
+      },
+      "candidate": "40 supersedes35-39, no installation until prior current-session permission",
+      "device_runtime_success": false,
+      "no_Valve_rootfs_auth_in_bundle_or_Git": true,
+      "private_artifacts": [
+        {
+          "private_path": "run38/hybrid40/prepare-evidence.json",
+          "sha256": "7f974ed5c89957d424246a316fcb7e13f787a937f514bf291e3e3d2424ee5553"
+        },
+        {
+          "private_path": "run38/hybrid40/build-result.json",
+          "sha256": "c4a904b7abf61acf0c38a02f2eb2e79dad47bed5352f4c4f2f34fd273ba7cb63"
+        },
+        {
+          "private_path": "run38/hybrid40/package-validation.json",
+          "sha256": "a73343bd24c466423f52698678e3a2280c7db2fcd6b467640f8a599fec5e8595"
+        },
+        {
+          "private_path": "run38/old39-boot-resource-gate.json",
+          "sha256": "c71a175cdfdf9e140d656f9cca29f02c0ecbf48b04b73fd1c8bed1ba45dbea7a"
+        },
+        {
+          "private_path": "run38/final40-linked.json",
+          "sha256": "7c34974ceea8b0131939ddbf9e6de0c7759bbc4b3c7c1b56f4126fc886a2db5b"
+        },
+        {
+          "private_path": "run38/final40-package-validation.json",
+          "sha256": "a73343bd24c466423f52698678e3a2280c7db2fcd6b467640f8a599fec5e8595"
+        },
+        {
+          "private_path": "run38/sign40-verified.json",
+          "sha256": "fe980864770fbff63a77b3bda5d739de21a75d406e6bb3d20f139c232fe4e10c"
+        },
+        {
+          "private_path": "run38/sign40-package-validation.json",
+          "sha256": "a73343bd24c466423f52698678e3a2280c7db2fcd6b467640f8a599fec5e8595"
+        }
+      ]
+    }
   }
 }

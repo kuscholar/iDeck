@@ -3630,3 +3630,57 @@ helper. Actual Air testing remains at the explicit pending upgrade choice. No
 secret copying, DRM/auth bypass, FEX edit or binary-license-exception expansion.
 Combined binary distribution still blocked by unresolved component/converter
 exception scope. No STABLE_SUCCESS, scheduler unload, final GO or goal completion.
+
+### Run38 final-package correction after source checkpoint18f1aef
+
+Scoped source checkpoint **18f1aef733d1831bdad73217dad5a3b5ca5feb00** was signed
+off and pushed/read back on origin/experiment/linux-steam-madeira-ipad at
+2026-11-11 22:23EST; remote main2ac39be unchanged. It publishes the Run34–38 source
+controls, not device/game success. Private run38/source-publication.json records
+actual remote readback. New findings below require a following scoped correction.
+
+**Actual boot blocker, not link failure.** Read-only final App39 inspection found
+NO LinuxLabRootFSSHA256 Info key and NO LabCompatibility/ideck-madeira,
+compatibilitytool.vdf or toolmanifest.vdf. The full-link generator had not carried
+the standalone Lab's boot packaging into the combined target. Earlier combined
+App35–39 build/sign/link evidence is STILL valid only in that narrow scope;
+none is a qualified frontend deployment candidate. In particular signed35 is
+historical, **DO NOT INSTALL it** as a functional frontend. No user test/install
+was interrupted by this discovery. A successful Mach-O link cannot detect missing
+NSBundle resources or configuration; no prior device failure was invented.
+
+**Smallest correction.** build-hybrid-app.py now reads the rootfs pin from ACTUAL
+qualified Linux compile flags, writes it to its PRIVATE Info.plist, compiles the
+existing OWN compatibility tool as real static ARM64 ELF, copies the exact two
+tracked VDFs and wires that folder into the ACTUAL main PBX resource phase.
+No Valve/rootfs/auth asset is bundled/copied. Actual phase identifier A3000003
+was inspected, no ordinary source project change. Generator verifies FINAL
+processed Info and resource hashes/ELF, not just prepared inputs. New read-only
+verify-hybrid-package.py is reusable after a manual build, packaging or re-sign.
+
+**Discriminating artifact test.** Real old App39 is rejected for missing compiled
+pin. Fresh full App40 built FROM THE GENERATOR, not a hand-repaired reused product,
+passes: final pin equals compiled macro, all three real resource hashes match,
+compatibility tool ELF64/little-endian/e_machine183 (ARM64). Full build and actual
+final runtime definitions also checked. This establishes required package inputs,
+NOT successful on-device bootstrap/Steam/UI/game or licensing. Rootfs archive
+remains private input in the existing app container, not in this app/repository.
+See run38/hybrid40/package-validation.json and final40-linked.json for exact
+final artifact/resource hashes. Preserve immutable unsigned40; prepare a separate
+matching-profile .freshtest signing copy only. Recheck existing Air main/helper
+profile expiry/device/identity; no account/trust/security changes.
+
+Corrected40 is the prospective candidate, superseding broken-packaging35–39.
+The pending user choice still governs ending old Lab23 before any upgrade. No
+silent substitution, no new ask/repeated unlock request, no install/sign success
+inferred from unsigned validation. Full original goal remains active and unmet.
+
+Corrected40 final unsigned Mach-O SHA256
+6cd4ea83aab910d3b1714f952ff21b0a6ab837d9a189b29b23d10a553e294516.
+Matching existing Air main/helper profiles and development identity revalidated;
+disposable .freshtest App40 signing + normal-environment deep-strict verification
+return0, post-sign resource/pin/ARM64 verification also passes. Signed Mach-O
+hash is in EVIDENCE.run38.packaging_correction.signing/sign40-verified.json.
+**Signed40 NOT installed**, old Lab23 unchanged. No account/key/trust setting,
+private entitlement, user-data migration or credential/Guard action. Old signed35
+remains retained evidence only. Actual on-Air ELF/UI/game/return still unverified.

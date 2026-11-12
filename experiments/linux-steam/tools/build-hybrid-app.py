@@ -14,6 +14,7 @@ import hashlib
 import json
 import os
 import plistlib
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -35,6 +36,9 @@ assert subprocess.check_output(['git','-C',str(deps/'wine'),'rev-parse','HEAD'],
 runtime=linux/'runtime';e=json.loads((linux/'evidence.json').read_text())
 for name,h in e['archives_sha256'].items():assert hashof(runtime/name)==h,name
 compiler=a.llvm_mingw.resolve()/'bin/x86_64-w64-mingw32-clang';assert compiler.is_file()
+root_pins={x.split('=',1)[1].strip('"') for command in e.get('commands',[]) for x in command if x.startswith('-DIDECK_LAB_ROOTFS_SHA256=')}
+assert len(root_pins)==1 and re.fullmatch('[0-9a-f]{64}',next(iter(root_pins))),'Qualified Linux artifact must record its actual compiled rootfs pin'
+root_pin=next(iter(root_pins));ld_lld=base/'tool-bin/ld.lld';assert ld_lld.is_file()
 out.mkdir(mode=0o700);stage=out/'source';stage.mkdir();copied=[];payload=[]
 files=subprocess.check_output(['git','ls-files','-z','--','app','build','COPYING','LICENSE','LICENSE-EXCEPTION.md','LICENSES'],cwd=repo).split(b'\0')
 for raw in files:
@@ -72,7 +76,13 @@ if mono.is_dir():supplement(mono,stage/'build/wine-mono/wine-mono-11.0.0')
 swift=native/'MadeiraApp.swift';text=swift.read_text();assert text.count('\n@main\n')==1
 swift.write_text(text.replace('\n@main\n','\n// Alternate entry exists only in this private Linux Lab build.\n'))
 entry=native/'HybridLinuxMain.m';entry.write_bytes((lab/'app/main.m').read_bytes())
-info=native/'Info.plist';metadata=plistlib.loads(info.read_bytes());metadata['CFBundleDisplayName']='iDeck Linux Lab';info.write_bytes(plistlib.dumps(metadata))
+info=native/'Info.plist';metadata=plistlib.loads(info.read_bytes());metadata['CFBundleDisplayName']='iDeck Linux Lab';metadata['LinuxLabRootFSSHA256']=root_pin;info.write_bytes(plistlib.dumps(metadata))
+# These are OWN guest compatibility-tool resources, never Valve/rootfs/auth data.
+compat=native/'LabCompatibility';compat.mkdir()
+resource_cmd=['xcrun','clang','--target=aarch64-linux-gnu','--ld-path='+str(ld_lld),'-nostdlib','-static','-ffreestanding','-fno-builtin','-fno-stack-protector','-O2','-Wall','-Wextra','-Werror',str(lab/'guest/compatibility.c'),str(lab/'guest/compat-start.S'),'-Wl,-e,_start','-o',str(compat/'ideck-madeira')]
+subprocess.run(resource_cmd,check=True)
+for name in ('compatibilitytool.vdf','toolmanifest.vdf'):shutil.copy2(lab/name,compat/name)
+resource_hashes={x.name:hashof(x) for x in compat.iterdir()}
 project=stage/'app/Madeira.xcodeproj/project.pbxproj';text=project.read_text()
 # These are read-only compiler/archive inputs. No source/build command runs in
 # the prepared FEX checkout; never change its contribution-restricted code.
@@ -94,6 +104,11 @@ for identifier,name in [('A8000003','Debug'),('A8000004','Release')]:
     anchor=identifier+' /* '+name+' */ = {\n\t\t\tisa = XCBuildConfiguration;\n\t\t\tbuildSettings = {'
     assert text.count(anchor)==1
     text=text.replace(anchor,anchor+'\n\t\t\t\tOTHER_LDFLAGS = '+json.dumps(extra)+';')
+text=text.replace('/* End PBXBuildFile section */','\t\tC0E100000000000000000005 /* LabCompatibility in Resources */ = {isa = PBXBuildFile; fileRef = C0E100000000000000000006; };\n/* End PBXBuildFile section */')
+text=text.replace('/* End PBXFileReference section */','\t\tC0E100000000000000000006 /* LabCompatibility */ = {isa = PBXFileReference; lastKnownFileType = folder; path = '+json.dumps(str(compat))+'; sourceTree = "<absolute>"; };\n/* End PBXFileReference section */')
+resource_anchor='A3000003 /* Resources */ = {\n\t\t\tisa = PBXResourcesBuildPhase;\n\t\t\tbuildActionMask = 2147483647;\n\t\t\tfiles = ('
+assert text.count(resource_anchor)==1
+text=text.replace(resource_anchor,resource_anchor+'\n\t\t\t\tC0E100000000000000000005 /* LabCompatibility in Resources */,')
 project.write_text(text)
 cmd=['xcodebuild','-project',str(project.parent),'-scheme','Madeira','-configuration','Debug','-destination','generic/platform=iOS',
  '-derivedDataPath',str(out/'xcode'),'CODE_SIGNING_ALLOWED=NO','ENABLE_DEBUG_DYLIB=NO',
@@ -104,11 +119,15 @@ record={'scope':'Private isolated FULL source app + Linux frontend build inputs;
  'dirty_experiment_source_inputs':copied,'prepared_payloads':payload,'linux_input_evidence_sha256':hashof(linux/'evidence.json'),
  'Linux_entry_source_sha256':hashof(lab/'app/main.m'),'private_project_sha256':hashof(project),
  'read_only_dependency_root':str(deps),'Wine_FEX_sources_modified':False,'provisioning_installation_or_auth_action':False,
- 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'binary_distribution_allowed':False,'build_command':cmd}
+ 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
 (out/'prepare-evidence.json').write_text(json.dumps(record,indent=2)+'\n')
 if a.build:
     env=dict(os.environ,LLVM_MINGW=str(a.llvm_mingw.resolve()))
     with (out/'xcode.log').open('xb') as log:result=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT)
     (out/'build-result.json').write_text(json.dumps({'exit_code':result.returncode,'signed':False,'installed':False})+'\n')
+    if not result.returncode:
+        product=out/'xcode/Build/Products/Debug-iphoneos/Madeira.app'
+        verification=subprocess.check_output([os.sys.executable,str(lab/'tools/verify-hybrid-package.py'),str(product),str(out/'prepare-evidence.json')],text=True)
+        (out/'package-validation.json').write_text(verification)
     raise SystemExit(result.returncode)
 print('Prepared private combined project, no build/install/runtime action')
