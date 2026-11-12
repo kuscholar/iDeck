@@ -1,10 +1,13 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run38): Actual Air ARM64 ELF, verified Linux image import, native
+Status (run39): Actual Air ARM64 ELF, verified Linux image import, native
 X11/RFB/Metal, user-authenticated genuine Linux Steam Big Picture and the full
 Library have been observed (runs16–17). Browsing has severe delays and memory
-pressure; this is NOT stable operation. Lab23 remains live and preserved; combined35 is signed but not installed, and
-combined36 adds a host-tested GPU command boundary (not Air-tested). Native
+pressure; this is NOT stable operation. Lab23 remains live and preserved. Read
+Run38's packaging correction before considering any combined build:35–39 lack
+required boot resources. Run39 adds an explicit cold native Madeira setup route
+and qualifies its prefix/callback integration locally; no native setup UI or
+combined game handoff has been validated on Air. Native
 game-file capability checks and real ARM64 helper-to-host controls pass on the
 host; feature/default iOS builds are checked separately. The bridge still
 returns diagnostic125, and no Madeira game/return cycle is implemented or
@@ -3684,3 +3687,125 @@ hash is in EVIDENCE.run38.packaging_correction.signing/sign40-verified.json.
 **Signed40 NOT installed**, old Lab23 unchanged. No account/key/trust setting,
 private entitlement, user-data migration or credential/Guard action. Old signed35
 remains retained evidence only. Actual on-Air ELF/UI/game/return still unverified.
+
+
+## Run39 — cold native setup, actual installer prefix conflict and isolated callback
+
+**Scope/source/device.** Parent/source checkpoint
+`4f57a96521a564afb5791def8d6d3dd70237d9a7`; origin experiment same and main
+`2ac39beff91251d36f3ad6331d3f8402b3c10e18` on fresh readback. Migration complete,
+required easystore UUID verified before writes. Same pinned Linux/Wine/FEX inputs,
+ordinary source/main/other worktrees untouched. One read-only Air process receipt
+still identifies old Lab23 PID4952 at its B265FEBE installation. This is process
+identity evidence, not a fresh interactive/stability result. No device input,
+stop, install, restart, credentials, Guard, trust, lock or settings change.
+
+**Missing prerequisite/hypothesis.** A metadata-only Linux bridge cannot use a
+fresh Madeira runtime until this isolated app has its own native setup, JIT and
+legitimate Windows Steam authentication. Reusing the existing native UI in an
+explicit cold process should establish that setup path without starting Linux or
+resetting either engine's single-session state. It does not itself execute a
+captured game request or prove Windows Steamworks interoperability.
+
+**Smallest implementation.** The private full-app generator's new
+`--madeira-setup` option adds `LabMadeiraSetup.swift` and a C startup selector ONLY
+to its main target. Explicit `madeira-linux-lab-setup` is mutually exclusive with
+Linux/other Madeira experiment arguments. It branches before the retained-Linux
+argument guard, requires the Linux stage still be `idle`, prepares the existing
+pinned private root and known native library binding, then presents the real
+existing `ContentView`. Same original Metal-HUD/screen bootstrap, controller,
+hardware input and authorized JIT URL handlers; no mock UI or credential entry.
+The native ready notification drains at most16 queued URLs in memory; no raw URL
+or account payload logging. `last-cold-setup.json` records categorical initial
+setup facts only; it is NOT a continuing game-status monitor. UI actions remain
+user-controlled. The original auto-start rule already excludes `madeira-` args;
+no stored auto-start preference is overwritten to implement this exclusion.
+The original IDeckState's own first-run preference initialization is unchanged.
+
+**Discriminator exposed a real filesystem mismatch.** Run38's binding puts
+`Documents/wine` at a symlink to the physical Lab `MadeiraPrefix`. The exact
+production `SteamRuntimeFiles.destination` rejects that logical path. Read-only
+source inspection also finds the initial root/hive checks in
+`SteamRuntimeInstaller.prepare` and PE checks in `SteamUIExperiment.isPE` require
+physical paths. This is a HOST reproduced installation prerequisite failure,
+not an invented Air crash or evidence that authentication/networking failed.
+App41 compiled/linked/packages correctly but cannot be treated as a qualified
+native-setup candidate on that basis.
+
+**Minimal targeted adaptation.** New `LabMadeiraPrefix` resolves only the known
+`Documents/wine` -> this Lab's `LinuxSteamRootFS/MadeiraPrefix` binding. An
+unrelated prefix/binding is returned unchanged. With `--madeira-setup`, the
+builder wraps the two exact native prefix entry expressions in its PRIVATE
+copies of `MadeiraDock.prefix` and `SteamUIExperiment.runtimePrefix`; source
+contract drift aborts preparation. Production app sources, installer/PE/path
+checks, FEX/Wine/vendor and original prefixes are not changed. The existing Dock
+installer actually calls `prepare(prefix: MadeiraDock.prefix)`. Its downstream
+checks now receive the physical Lab path rather than being removed/weakened.
+Host control reproduces the old rejection, then the same exact method accepts
+the physical-prefix destination, with ordinary/other-binding behavior unchanged.
+No full network installer, native registry/Wine initialization or license result
+is inferred from this test.
+
+**Callback integration.** Existing inherited registered schemes include
+`madeira-steamui`; when this Lab is re-signed as `.freshtest`, the actual callback
+selector can prefer that working-app scheme. The cold Lab now registers ONLY
+`ideck-linux-lab`, retained across a bundle-ID override. Exact existing callback
+selection is tested, and final package validation checks the real processed
+Info.plist. No external app or signing identity is changed. This is application
+routing, not evidence of physical JIT approval or successful callback delivery.
+
+**Local controls.** Own C mode selector compiled/run under ASan/UBSan and exact
+selected production Swift auto-start/callback methods pass. Actual iOS entry
+compiled with the new feature OFF has no cold-setup factory/URL/selector
+references. Full unsigned App41 and42 build; real final41 C/Swift definitions
+and ARM64 call sites, separate Linux TLS/Wine global `current`, rootfs pin and
+all three own boot resources were inspected. App42 includes physical prefix
+adaptation but precedes the isolated callback metadata correction. These are
+retained intermediate artifacts, not device/UI success. Final corrected App43
+results and exact hashes are recorded in the run39 evidence below/JSON.
+
+**Reproduce with NEW private outputs.**
+
+```sh
+python3 experiments/linux-steam/tools/test-cold-setup-policy.py "$NEW_POLICY_OUT"
+python3 experiments/linux-steam/tools/test-native-prefix.py "$NEW_PREFIX_OUT"
+python3 experiments/linux-steam/tools/build-hybrid-app.py \
+  "$PREPARED_PAYLOAD_CHECKOUT" "$QUALIFIED_DOCK_IOS" "$PRIVATE_LAB" \
+  "$NEW_HYBRID_OUT" --dependency-root "$PINNED_DEPS" \
+  --llvm-mingw "$EXISTING_LLVM_MINGW" --build-number 43 --madeira-setup --build
+python3 experiments/linux-steam/tools/verify-hybrid-package.py \
+  "$NEW_HYBRID_OUT/xcode/Build/Products/Debug-iphoneos/Madeira.app" \
+  "$NEW_HYBRID_OUT/prepare-evidence.json"
+# Only after permission to end the preserved old Lab and a matching-profile
+# installation, the cold setup launch argument is madeira-linux-lab-setup.
+# Never combine it with linux-steam-retained-frontend or other diagnostics.
+```
+
+Private artifacts: `.madeira-install/linux-steam-ipad/run39`. The rootfs archive
+still comes from the same Lab's existing private input; no Valve/account/cache
+transfer or bundled Valve/rootfs payload. Real native setup UI, own Windows
+auth/JIT, Steam Play -> exclusive-writer handoff -> genuine Windows game -> full
+Wine teardown -> Linux frontend restore and repeated Air cycles all remain
+unverified/incomplete. The existing user choice about ending the live old Lab
+and upgrading/iterating is still pending; no repeated question or inferred consent
+from continuation/time. Combined binary distribution remains blocked by unresolved
+component/converter exception scope. No STABLE_SUCCESS or task completion.
+
+
+Final corrected App43 full Xcode build returns0. Actual final Mach-O SHA256
+`6f32f08afa0c7e61fe8101f18efadde2c6d5da90df210ad1e9732e40c283382a`.
+Required processed Info/rootfs pin/three ARM64 compatibility resources and ONLY
+`ideck-linux-lab` callback pass final package validation. Actual ARM64 calls to
+the C selector, Swift controller/URL handlers and both canonical-prefix overloads
+are present; Linux TLS and Wine global remain distinct. Swift symbol lookup had
+to use demangling (the raw type name is compressed), not a source/binary fix.
+No Air install/runtime result follows from these artifact checks.
+
+Disposable private .freshtest App43 signing and deep-strict verification return0;
+post-sign boot resource/callback checks pass. Actual embedded main/helper profiles
+match their bundle IDs and cover Air. Existing profile expiry2026-11-13T04:43:44Z,
+so recheck before later use; this cannot be extended by re-signing. Signed Mach-O
+SHA256 `23a23d1f4088bc26c0434636a1b3a32c0f66678af3eebc23b8581a3c0ce1ad02`.
+**Signed43 NOT installed**, old user Lab23 retained. No new profile/account/key/
+trust/settings/credential changes or binary publication. Exact private signing
+receipt/hash and limitations are in EVIDENCE.run39.

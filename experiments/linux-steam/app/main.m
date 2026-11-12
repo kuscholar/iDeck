@@ -2,6 +2,20 @@
 #import <UIKit/UIKit.h>
 #import "LinuxLabRuntime.h"
 #import "LinuxSteamViewController.h"
+#if IDECK_LAB_MADEIRA_SETUP
+#import "LabRootFS.h"
+#import "LabWindowsLibrary.h"
+#include "SharedSteamLibrary.h"
+#include "LabStartupMode.h"
+#include <string.h>
+#if !IDECK_LAB_NATIVE_LOG
+#error Cold setup requires native diagnostics in its isolated target
+#endif
+#include <unistd.h>
+static int startupMode;
+extern void *ideck_lab_madeira_setup_controller(void);
+extern void ideck_lab_madeira_setup_open_url(const char *);
+#endif
 #if IDECK_LAB_CASP_ORDER
 #if !IDECK_LAB_STEAM_FRONTEND || !IDECK_LAB_NATIVE_LOG
 #error CASP ordering experiment requires explicit frontend and native logging
@@ -22,6 +36,14 @@ extern const char ideck_casp_order_marker[];
 @property(nonatomic, strong) UIWindow *window;
 @property(nonatomic, strong) UITextView *output;
 @property(nonatomic, copy) NSString *nativeLogError;
+#if IDECK_LAB_MADEIRA_SETUP
+@property(nonatomic) BOOL nativeSetupPresented;
+@property(nonatomic) BOOL nativeSetupReady;
+@property(nonatomic,strong) NSMutableArray<NSURL *> *pendingSetupURLs;
+- (void)routeSetupURL:(NSURL *)url;
+- (void)coldSetupDidAppear:(NSNotification *)note;
+- (void)startColdMadeiraSetup;
+#endif
 #if IDECK_LAB_NATIVE_LOG
 @property(nonatomic, strong) NSTimer *nativeResourceTimer;
 - (void)writeNativeHealth;
@@ -30,6 +52,9 @@ extern const char ideck_casp_order_marker[];
 @end
 @implementation LinuxLabDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)options {
+#if IDECK_LAB_MADEIRA_SETUP
+    if(startupMode>0){self.pendingSetupURLs=[NSMutableArray new];[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(coldSetupDidAppear:) name:@"IDeckLinuxMadeiraSetupReady" object:nil];}
+#endif
 #if IDECK_LAB_NATIVE_LOG
     NSFileManager *fm=NSFileManager.defaultManager;
     NSURL *support=[fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
@@ -89,6 +114,43 @@ extern const char ideck_casp_order_marker[];
 - (void)applicationWillTerminate:(UIApplication *)application {(void)application;ideck_native_log_line("APP_STATE terminate");ideck_native_log_resources();}
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {(void)application;ideck_native_log_line("APP_MEMORY_WARNING");ideck_native_log_resources();}
 #endif
+#if IDECK_LAB_MADEIRA_SETUP
+- (void)routeSetupURL:(NSURL *)url {
+    if(startupMode<=0)return;
+    if(self.nativeSetupReady)ideck_lab_madeira_setup_open_url(url.absoluteString.UTF8String);
+    else if(self.pendingSetupURLs.count<16)[self.pendingSetupURLs addObject:url];
+}
+- (void)coldSetupDidAppear:(NSNotification *)note {
+    (void)note;if(!self.nativeSetupPresented)return;self.nativeSetupReady=YES;
+    NSArray<NSURL *> *pending=[self.pendingSetupURLs copy];[self.pendingSetupURLs removeAllObjects];
+    for(NSURL *url in pending)ideck_lab_madeira_setup_open_url(url.absoluteString.UTF8String);
+}
+- (void)startColdMadeiraSetup {
+    UIViewController *placeholder=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
+    label.text=@"Preparing the isolated Madeira setup. Linux will remain stopped.";label.numberOfLines=0;placeholder.view=label;self.window.rootViewController=placeholder;
+    if(strcmp(ideck_linux_lab_stage(),"idle")){label.text=@"Cold setup requires a fresh app process. Existing runtime preserved.";return;}
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{
+        NSFileManager *fm=NSFileManager.defaultManager;
+        NSURL *support=[fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
+        NSURL *lab=[support URLByAppendingPathComponent:@"iDeckLinuxLab" isDirectory:YES];
+        NSURL *documents=[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+        NSURL *input=[documents URLByAppendingPathComponent:@"LinuxLabInput/steam-rootfs.tar.gz"];
+        NSString *pin=[NSBundle.mainBundle objectForInfoDictionaryKey:@"LinuxLabRootFSSHA256"];
+        NSError *error=nil;NSURL *root=LabPrepareSteamRoot(lab,input,pin,&error);
+        BOOL ready=NO,created=NO;
+        if(root){int shared=ideck_shared_steam_prepare(root.fileSystemRepresentation);if(shared>=0){close(shared);ready=LabBindWindowsLibrary(root,documents,&created,&error);}}
+        BOOL idle=!strcmp(ideck_linux_lab_stage(),"idle");
+        NSDictionary *state=@{@"mode":@"cold-madeira-setup",@"prefix_bound":@(ready),@"created_library_metadata":@(created),@"linux_stage_idle":@(idle),@"Windows_game_started":@NO};
+        [[NSJSONSerialization dataWithJSONObject:state options:0 error:nil]writeToURL:[lab URLByAppendingPathComponent:@"last-cold-setup.json"] options:NSDataWritingAtomic error:nil];
+        dispatch_async(dispatch_get_main_queue(),^{
+            if(!ready||!idle){label.text=error.localizedDescription?:@"Isolated prefix setup failed. Existing data retained; no runtime started.";return;}
+            self.nativeSetupPresented=YES;
+            self.window.rootViewController=(__bridge_transfer UIViewController *)ideck_lab_madeira_setup_controller();
+            ideck_native_log_line("IDECK_COLD_MADEIRA_SETUP_V1 linux_stage_idle=1 setup_presented=1 user_auth_and_JIT_required=1 game_started=0");
+        });
+    });
+}
+#endif
 - (void)connectWindowScene:(UIWindowScene *)scene {
     /* Keep the one Linux runtime/controller across scene reconnects. */
     UIViewController *existing = self.window.rootViewController;
@@ -99,6 +161,13 @@ extern const char ideck_casp_order_marker[];
         label.text=self.nativeLogError;label.numberOfLines=0;controller.view=label;self.window.rootViewController=controller;
         [self.window makeKeyAndVisible];return;
     }
+#if IDECK_LAB_MADEIRA_SETUP
+    if(startupMode){
+        if(startupMode>0)[self startColdMadeiraSetup];
+        else {UIViewController *c=[UIViewController new];UILabel *l=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];l.text=@"Select one isolated startup mode. No runtime started.";l.numberOfLines=0;c.view=l;self.window.rootViewController=c;}
+        [self.window makeKeyAndVisible];return;
+    }
+#endif
     unsigned steamModes=0;
 #if IDECK_LAB_RETAINED_FRONTEND
     /* Joined-provider configuration is a separate explicit experiment. Other
@@ -180,11 +249,23 @@ extern const char ideck_casp_order_marker[];
 - (void)sceneDidEnterBackground:(UIScene *)scene {(void)scene;ideck_native_log_line("SCENE_STATE background");ideck_native_log_resources();}
 - (void)sceneWillEnterForeground:(UIScene *)scene {(void)scene;ideck_native_log_line("SCENE_STATE foreground");ideck_native_log_resources();}
 #endif
+#if IDECK_LAB_MADEIRA_SETUP
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)contexts {
+    (void)scene;LinuxLabDelegate *owner=(LinuxLabDelegate *)UIApplication.sharedApplication.delegate;
+    for(UIOpenURLContext *context in contexts)[owner routeSetupURL:context.URL];
+}
+#endif
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)options {
     if ([scene isKindOfClass:UIWindowScene.class])
         [(LinuxLabDelegate *)UIApplication.sharedApplication.delegate connectWindowScene:(UIWindowScene *)scene];
+#if IDECK_LAB_MADEIRA_SETUP
+    for(UIOpenURLContext *context in options.URLContexts)[(LinuxLabDelegate *)UIApplication.sharedApplication.delegate routeSetupURL:context.URL];
+#endif
 }
 @end
 int main(int argc, char **argv) {
+#if IDECK_LAB_MADEIRA_SETUP
+    startupMode=ideck_lab_startup_mode(argc,(const char *const *)argv);
+#endif
     @autoreleasepool { return UIApplicationMain(argc, argv, nil, NSStringFromClass(LinuxLabDelegate.class)); }
 }

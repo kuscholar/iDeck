@@ -1,3 +1,59 @@
+# Latest Run39: cold Madeira setup prerequisite; use corrected App43
+
+Read MD Run39 + EVIDENCE.run39 FIRST. Source parent4f57a965; next source checkpoint
+may now be newer, verify Git/remote/status/time. Main2ac39be and all unrelated
+worktrees/production/phone/account/game/save state preserved. Full goal ACTIVE.
+No cybersecurity/lock/settings/auth/Guard/FEX/Valve/vendor/Codex changes, no
+Mac-unlock requests or subagents. Required volume UUID verified.
+
+New --madeira-setup PRIVATE full target, explicit madeira-linux-lab-setup ONLY;
+reject mixed Linux/other Madeira args before existing retained-Linux guard.
+Linux stage must stay idle; prepare pinned root/known binding then actual
+ContentView/bootstrap/controller/hardware/JIT URL handlers. No automatic Linux
+initialization, credential entry, runtime/session reset or game handoff. Exact
+old auto-start rule excludes madeiraprefix arg. Initial last-cold-setup.json is
+NOT continuing status. Queued URL cap16, no raw URLs/auth logged.
+
+Real HOST exact installer method rejected Run38 logical Documents/wine alias.
+App41 compiled but not a qualified native setup candidate. New LabMadeiraPrefix
+resolves ONLY known binding -> physical MadeiraPrefix; unrelated paths unchanged.
+Builder wraps two exact native root expressions in PRIVATE MadeiraDock and
+SteamUIExperiment copies; normal source and all installer/PE/path checks retained.
+Exact production destination method now passes physical prefix, old alias still
+fails. This is NOT full installer/network/registry/Wine/auth/device success.
+
+Inherited callback could return to working-app madeira-steamui after resign ID.
+App43 now ONLY registers ideck-linux-lab; exact production callback selector and
+FINAL processed Info verified. App42 is pre callback correction. Preserve old
+intermediate outputs, do not install them just because they built.
+
+Final corrected full unsigned43 passes; SHA6f32f08a...c283382a, actual C/Swift/
+prefix calls and separate Linux TLS/Wine current verified. FeatureOFF actual ObjC
+entry has no cold symbols. ASan/UBSan C chooser + exact Swift auto-start/callback
+and real filesystem/prefix destination controls pass. See private run39 receipts.
+Rootfs input/pin/resources remain required and no Valve/rootfs/auth bundled.
+Disposable .freshtest43 signed/deep strict0, post-sign package checks + actual
+embedded main/helper Air coverage verified. NOT installed. Existing profiles
+expire2026-11-13T04:43:44Z; recheck at use, no account/profile workaround. See
+EVIDENCE.run39.signing; signing is never installation/runtime success.
+
+ONE read-only Air query: exact old Lab23 PID4952/installB265FEBE still present.
+REVALIDATE before actions. No device input/stop/upgrade/restart/auth. Existing
+old-session termination + isolated upgrade/subsequent iteration question still
+pending; no repetition/inferred consent from continue/time/heartbeat. Current
+candidate43 supersedes35–42, explain this if permission arrives. CLI only.
+
+NEXT after existing user choice: revalidate actual app/profile/device, upgrade
+ONLY isolated .freshtest Lab preserving container, launch cold setup explicitly,
+verify real native UI and Linux idle, then normal user auth/JIT/runtime setup.
+Never automate credentials/Guard/trust or borrow production/Linux auth. Then
+Steam Play -> clean Linux/exclusive writer -> real native Madeira launch ->
+full Wine teardown/Linux restore. Bridge still125, NO Windows execution or
+repeated Air game/return proof. Converter/component license scope unresolved:
+NO combined binary distribution, STABLE_SUCCESS, scheduler unload or completion.
+
+--- Earlier continuity retained below ---
+
 # CRITICAL Run38 packaging correction: use candidate40, NOT combined35-39
 
 Source18f1aef733d1831bdad73217dad5a3b5ca5feb00 signed-off/pushed/read back;

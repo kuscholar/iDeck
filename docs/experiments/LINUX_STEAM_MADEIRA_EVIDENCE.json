@@ -9315,5 +9315,135 @@
         }
       ]
     }
+  },
+  "run39": {
+    "phase": "cold native Madeira setup prerequisite; genuine Linux Steam -> licensed Madeira game/return still incomplete",
+    "source_parent": "4f57a96521a564afb5791def8d6d3dd70237d9a7",
+    "remote_experiment_before": "4f57a96521a564afb5791def8d6d3dd70237d9a7",
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "volume_UUID_verified": "580CADCD-33F5-4D78-9530-2287615873CA",
+    "private_artifacts": ".madeira-install/linux-steam-ipad/run39",
+    "device": {
+      "target": "Air4 iPad13,1",
+      "OS": "27.2 historical; not freshly queried this run",
+      "one_read_only_process_query": "same old Lab23 PID4952, installation identity matched private run configuration",
+      "query_receipt_sha256": "27584bf20896159a800904f6eee2d59cf72f1ea883950f5e16a7c02a18a49eb1",
+      "live_user_test_preserved": true,
+      "input_stop_install_restart": false,
+      "UI_auth_JIT_game_validation_this_run": false
+    },
+    "observed_failure": "Existing Documents/wine Lab binding is a symlink; exact existing native installer destination method rejects the logical path. Inherited callback metadata also selects a shared working-app scheme after bundle-ID override.",
+    "hypothesis": "Expose normal supported native setup in a cold process, resolve only the known Lab prefix at native entry roots, and register a Lab-only callback without removing existing installer/PE/path checks.",
+    "minimal_patch": {
+      "flag": "build-hybrid-app.py --madeira-setup",
+      "argument": "madeira-linux-lab-setup",
+      "selection": "mutually exclusive with Linux/other Madeira diagnostic args; before retained Linux guard; stage must remain idle",
+      "UI": "actual existing ContentView bootstrap/input/URL handlers, no Linux kernel initialization or credential entry",
+      "prefix": "LabMadeiraPrefix + exact private-copy native root expression wrappers only; original app sources unchanged",
+      "callback": "ideck-linux-lab only",
+      "initial_receipt": "last-cold-setup.json is setup facts only, NOT continuing game status"
+    },
+    "discriminating_tests": {
+      "mode_policy": {
+        "receipt_sha256": "bfb46fad1e0a0f94a278544bb335e09b6a7ec84ec6850ffdcb46a06cf5ff7174",
+        "native_output": "PASS explicit cold selection, existing Linux selection, experiment exclusivity and system args\n",
+        "swift_output": "PASS exact production auto-start rule excludes cold setup without changing stored preferences\nPASS exact callback selection returns the isolated Lab scheme after bundle-ID override\n",
+        "scope": "HOST actual mode policy + exact selected production auto-start rule, NOT UI/bootstrap/Linux exclusion on device/JIT/auth/game success"
+      },
+      "actual_installer_destination": {
+        "receipt_sha256": "c3ca34453aad0d5690c7390f22bd6857807703f447d9c0b59fe0f98274d3f3d3",
+        "output": "REPRODUCED exact installer method rejects the existing Lab prefix alias\nPASS known Lab binding resolves to physical prefix; unrelated prefix/binding unchanged; installer checks retained\n",
+        "scope": "HOST exact installer destination + native Lab prefix adapter, NOT full installer/auth/Wine/Air proof"
+      },
+      "feature_OFF_iOS_entry": {
+        "receipt_sha256": "0cd4c1c6d476de31143b750707b438dbb2d6d6462efa9fb442c99ecb9a8b222e",
+        "no_cold_undefined_symbols": true,
+        "scope": "actual compiled ObjC entry only, not a complete default app/device test"
+      },
+      "full_builds": {
+        "41": {
+          "result": "pass",
+          "limit": "does not resolve native prefix binding"
+        },
+        "42": {
+          "result": "pass",
+          "limit": "pre isolated callback correction"
+        },
+        "43": {
+          "result": "pass",
+          "build_receipt_sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "final_link_receipt_sha256": "aab6b9f202e6ff9b498fd866ceedabf3c4bdc875a34667533748623323bee410",
+          "final_unsigned_macho_sha256": "6f32f08afa0c7e61fe8101f18efadde2c6d5da90df210ad1e9732e40c283382a",
+          "actual_C_Swift_and_prefix_call_sites": {
+            "_ideck_lab_startup_mode": [
+              "0000000100008944\tbl\t_ideck_lab_startup_mode"
+            ],
+            "_ideck_lab_madeira_setup_controller": [
+              "0000000100005a24\tbl\t_ideck_lab_madeira_setup_controller"
+            ],
+            "_ideck_lab_madeira_setup_open_url": [
+              "0000000100004df8\tbl\t_ideck_lab_madeira_setup_open_url",
+              "0000000100005060\tbl\t_ideck_lab_madeira_setup_open_url"
+            ],
+            "_$s7Madeira03LabA6PrefixO9canonical_9documents9linuxRoot10Foundation3URLVAI_A2ItFZ": [
+              "0000000100039c2c\tbl\t_$s7Madeira03LabA6PrefixO9canonical_9documents9linuxRoot10Foundation3URLVAI_A2ItFZ"
+            ],
+            "_$s7Madeira03LabA6PrefixO9canonicaly10Foundation3URLVAGFZ": [
+              "000000010003cfa0\tbl\t_$s7Madeira03LabA6PrefixO9canonicaly10Foundation3URLVAGFZ",
+              "00000001003d5be0\tbl\t_$s7Madeira03LabA6PrefixO9canonicaly10Foundation3URLVAGFZ"
+            ]
+          },
+          "package": {
+            "scope": "Actual FINAL app pin/own resources/ARM64 ELF/callback metadata only, NOT runtime/device/Steam/game proof",
+            "rootfs_pin": "8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a",
+            "resources_sha256": {
+              "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+              "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+              "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+            },
+            "ARM64_ELF": true,
+            "cold_callback_scheme": "ideck-linux-lab",
+            "build": "43"
+          },
+          "scope": "full unsigned final artifact only, NOT device/UI/auth/JIT/game"
+        }
+      }
+    },
+    "regressions": "C chooser ordinary/Linux path unchanged, exact production auto-start/callback methods, unrelated prefix/binding unchanged, new feature OFF ObjC object has no cold references; full app + actual final calls and separate Linux TLS/Wine global verified",
+    "limits": [
+      "No native setup UI on Air",
+      "No installer network/registry/Wine execution or Windows authentication success from host path test",
+      "Bridge still diagnostic125, not a launched game",
+      "No Linux auth/cache transfer or assumed Windows Steamworks compatibility",
+      "Full native teardown/Linux restart/repeated game cycle unqualified",
+      "Prepared Wine/FEX/DXMT compiled payload provenance not rebuilt this run",
+      "Combined binary distribution blocked by component/converter license scope"
+    ],
+    "next_experiment": "After existing user choice permits ending old Lab, revalidate identity/profile and upgrade isolated Lab only; cold setup should present actual native UI with Linux idle, then legitimate user-owned auth/JIT/runtime setup. Do not restart active test or infer consent. Then implement actual exclusive-writer/Steam Play-to-Madeira handoff.",
+    "signing": {
+      "scope": "Disposable private Air-profile signature and FINAL boot-resource/callback metadata checks; NOT installation/runtime/UI/auth/game proof",
+      "signed_macho_sha256": "23a23d1f4088bc26c0434636a1b3a32c0f66678af3eebc23b8581a3c0ce1ad02",
+      "sign_exit_code": 0,
+      "deep_strict_exit_code": 0,
+      "seconds": 25.471,
+      "installed": false,
+      "active_lab_session_untouched": true,
+      "package": {
+        "scope": "Actual FINAL app pin/own resources/ARM64 ELF/callback metadata only, NOT runtime/device/Steam/game proof",
+        "rootfs_pin": "8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a",
+        "resources_sha256": {
+          "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+          "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+          "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+        },
+        "ARM64_ELF": true,
+        "cold_callback_scheme": "ideck-linux-lab",
+        "build": "43"
+      },
+      "embedded_main_helper_and_Air_rechecked": true,
+      "receipt_sha256": "78f9bb0b1db94ed7cd7031b044e9d6d3203eaef7b372b39807b3bb4e587f6de7",
+      "existing_matching_profiles_expire_UTC": "2026-11-13T04:43:44Z"
+    },
+    "complete": false
   }
 }

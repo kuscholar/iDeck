@@ -25,6 +25,7 @@ p.add_argument('--llvm-mingw',type=Path,required=True)
 p.add_argument('--dependency-root',type=Path,help='Pinned read-only Wine/FEX headers/libraries when payload checkout lacks submodules')
 p.add_argument('--build',action='store_true')
 p.add_argument('--build-number',type=int,default=35)
+p.add_argument('--madeira-setup',action='store_true',help='Explicit cold native setup mode, mutually exclusive with Linux experiments')
 a=p.parse_args();prepared,linux,base,out=(getattr(a,n).resolve() for n in ('prepared','linux_runtime','artifacts','output'))
 assert all(str(x).startswith('/Volumes/easystore/') for x in (prepared,linux,base,out)) and not out.exists()
 assert 1 <= a.build_number <= 2147483647
@@ -34,6 +35,7 @@ assert (deps/'FEX/.git').exists() and (deps/'wine/.git').exists(),'Dependency ch
 assert subprocess.check_output(['git','-C',str(deps/'FEX'),'rev-parse','HEAD'],text=True).strip()=='f59cab95659e8add0c88f0c76ec1cf483c536dbf'
 assert subprocess.check_output(['git','-C',str(deps/'wine'),'rev-parse','HEAD'],text=True).strip()=='9129e9684daaeae70da9435e7c6060e59392634e'
 runtime=linux/'runtime';e=json.loads((linux/'evidence.json').read_text())
+assert not a.madeira_setup or e.get('physical_Dock_storage_enabled') is True,'Cold setup requires qualified physical Dock storage'
 for name,h in e['archives_sha256'].items():assert hashof(runtime/name)==h,name
 compiler=a.llvm_mingw.resolve()/'bin/x86_64-w64-mingw32-clang';assert compiler.is_file()
 root_pins={x.split('=',1)[1].strip('"') for command in e.get('commands',[]) for x in command if x.startswith('-DIDECK_LAB_ROOTFS_SHA256=')}
@@ -76,7 +78,13 @@ if mono.is_dir():supplement(mono,stage/'build/wine-mono/wine-mono-11.0.0')
 swift=native/'MadeiraApp.swift';text=swift.read_text();assert text.count('\n@main\n')==1
 swift.write_text(text.replace('\n@main\n','\n// Alternate entry exists only in this private Linux Lab build.\n'))
 entry=native/'HybridLinuxMain.m';entry.write_bytes((lab/'app/main.m').read_bytes())
-info=native/'Info.plist';metadata=plistlib.loads(info.read_bytes());metadata['CFBundleDisplayName']='iDeck Linux Lab';metadata['LinuxLabRootFSSHA256']=root_pin;info.write_bytes(plistlib.dumps(metadata))
+info=native/'Info.plist';metadata=plistlib.loads(info.read_bytes());metadata['CFBundleDisplayName']='iDeck Linux Lab';metadata['LinuxLabRootFSSHA256']=root_pin
+cold_callback='ideck-linux-lab' if a.madeira_setup else None
+if cold_callback:
+    # A manually signed Lab may have another bundle ID. Its JIT callback must
+    # still return to this Lab, never the installed working iDeck/Madeira app.
+    metadata['CFBundleURLTypes']=[{'CFBundleURLName':'iDeck Linux Lab callback','CFBundleURLSchemes':[cold_callback]}]
+info.write_bytes(plistlib.dumps(metadata))
 # These are OWN guest compatibility-tool resources, never Valve/rootfs/auth data.
 compat=native/'LabCompatibility';compat.mkdir()
 resource_cmd=['xcrun','clang','--target=aarch64-linux-gnu','--ld-path='+str(ld_lld),'-nostdlib','-static','-ffreestanding','-fno-builtin','-fno-stack-protector','-O2','-Wall','-Wextra','-Werror',str(lab/'guest/compatibility.c'),str(lab/'guest/compat-start.S'),'-Wl,-e,_start','-o',str(compat/'ideck-madeira')]
@@ -92,11 +100,37 @@ flags=['-I'+str(lab/'app'),
  '-DIDECK_LAB_STEAM_FRONTEND=1','-DIDECK_LAB_RETAINED_FRONTEND=1','-DIDECK_LAB_RFB_LIFETIME=1','-DIDECK_LAB_CASP_ORDER=1',
  '-DIDECK_LAB_COMPAT_TOOL=1','-DIDECK_LAB_GUEST_LIFETIME=1','-DIDECK_LAB_NATIVE_WORKERS=1','-DIDECK_LAB_NATIVE_LOG=1',
  '-DIDECK_LAB_LAZY_PAGES=1','-DIDECK_LAB_MADVISE_STATS=1']
+if a.madeira_setup:flags+=['-DIDECK_LAB_MADEIRA_SETUP=1']
 assert 'C0E100000000000000000001' not in text
 text=text.replace('/* End PBXBuildFile section */','\t\tC0E100000000000000000001 /* HybridLinuxMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E100000000000000000002; settings = {COMPILER_FLAGS = '+json.dumps(' '.join(flags))+'; }; };\n/* End PBXBuildFile section */')
 text=text.replace('/* End PBXFileReference section */','\t\tC0E100000000000000000002 /* HybridLinuxMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = '+json.dumps(str(entry))+'; sourceTree = "<absolute>"; };\n/* End PBXFileReference section */')
 anchor='A3000002 /* Sources */ = {\n\t\t\tisa = PBXSourcesBuildPhase;\n\t\t\tbuildActionMask = 2147483647;\n\t\t\tfiles = ('
 assert text.count(anchor)==1;text=text.replace(anchor,anchor+'\n\t\t\t\tC0E100000000000000000001 /* HybridLinuxMain.m in Sources */,')
+cold_sources={}
+if a.madeira_setup:
+    for stem,kind,extension,build_id,ref_id in [
+        ('LabStartupMode','sourcecode.c.c','.c','C0E100000000000000000007','C0E100000000000000000008'),
+        ('LabMadeiraSetup','sourcecode.swift','.swift','C0E100000000000000000009','C0E10000000000000000000A'),
+        ('LabMadeiraPrefix','sourcecode.swift','.swift','C0E10000000000000000000B','C0E10000000000000000000C')]:
+        target=native/(stem+extension);target.write_bytes((lab/'app'/(stem+extension)).read_bytes())
+        cold_sources['experiments/linux-steam/app/'+target.name]=hashof(target)
+        text=text.replace('/* End PBXBuildFile section */','\t\t'+build_id+' = {isa = PBXBuildFile; fileRef = '+ref_id+'; };\n/* End PBXBuildFile section */')
+        text=text.replace('/* End PBXFileReference section */','\t\t'+ref_id+' = {isa = PBXFileReference; lastKnownFileType = '+kind+'; path = '+json.dumps(str(target))+'; sourceTree = "<absolute>"; };\n/* End PBXFileReference section */')
+        text=text.replace(anchor,anchor+'\n\t\t\t\t'+build_id+' /* cold setup source */,')
+    # Plain C startup policy includes its own header, no Linux/Wine header flags.
+    (native/'LabStartupMode.h').write_bytes((lab/'app/LabStartupMode.h').read_bytes())
+    cold_sources['experiments/linux-steam/app/LabStartupMode.h']=hashof(native/'LabStartupMode.h')
+    # Adapt only this Lab's known prefix binding at its two native entry roots.
+    # Keep all production installer/PE/path checks intact, and ordinary source
+    # untouched. Fail preparation if either exact source contract has changed.
+    roots={
+        'MadeiraDock.swift':'FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("wine")',
+        'SteamUIExperiment.swift':'runtimePrefix(documents: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0], arguments: ProcessInfo.processInfo.arguments, selectedRuntime: MadeiraConfig.get("steam-runtime"))',
+    }
+    for name,expression in roots.items():
+        file=native/name;source=file.read_text();assert source.count(expression)==1,(name,'native prefix root changed')
+        file.write_text(source.replace(expression,'LabMadeiraPrefix.canonical('+expression+')'))
+        cold_sources['private-adapted/'+name]=hashof(file)
 frontend=runtime/'libideck_linux_frontend.a'
 extra='$(inherited) -Wl,-force_load,'+str(frontend)+' '+ ' '.join(str(runtime/n) for n in ('libish.a','libish_emu.a','libfakefs.a'))
 extra+=' '+str(base/'ios-libarchive-v2/liblabrootfs.a')+' '+str(base/'ios-libarchive-v2/libarchive/libarchive.a')+' -framework MetalKit -framework ImageIO -lz'
@@ -119,7 +153,7 @@ record={'scope':'Private isolated FULL source app + Linux frontend build inputs;
  'dirty_experiment_source_inputs':copied,'prepared_payloads':payload,'linux_input_evidence_sha256':hashof(linux/'evidence.json'),
  'Linux_entry_source_sha256':hashof(lab/'app/main.m'),'private_project_sha256':hashof(project),
  'read_only_dependency_root':str(deps),'Wine_FEX_sources_modified':False,'provisioning_installation_or_auth_action':False,
- 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
+ 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
 (out/'prepare-evidence.json').write_text(json.dumps(record,indent=2)+'\n')
 if a.build:
     env=dict(os.environ,LLVM_MINGW=str(a.llvm_mingw.resolve()))
