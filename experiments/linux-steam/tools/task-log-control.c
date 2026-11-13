@@ -47,5 +47,5 @@ int main(int argc,char **argv) {
     }
     free(body);puts("real-guest-live-and-post-exit-numeric-snapshots=PASS");
     puts("not-started-and-contended-locks-do-not-block=PASS");
-    puts("no-register-address-argument-or-name-payload=PASS");return 0;
+    puts("non-futex-rows-have-no-register-address-argument-or-name-payload=PASS");return 0;
 }

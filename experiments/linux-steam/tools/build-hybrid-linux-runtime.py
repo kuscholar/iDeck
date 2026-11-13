@@ -21,10 +21,16 @@ p.add_argument('--metal-drain',action='store_true',help='Track real Metal comman
 p.add_argument('--shared-library',action='store_true',help='Mount a separate app-private realfs Steam library, preserving default /Steam')
 p.add_argument('--capture-launch',action='store_true',help='Capture one checked native request; response remains125, no game execution')
 p.add_argument('--dock-storage',action='store_true',help='New physical drive_c library layout and metadata mapping only')
+p.add_argument('--register-shared-library',action='store_true',help='Register the shared install location before first Steam guest, retaining prior metadata')
+p.add_argument('--retire-empty-probe',action='store_true',help='Retire only the exact empty legacy Control probe directories through Linux VFS')
+p.add_argument('--file-map-cleanup',action='store_true',help='Release native file backings only when pt_map rejects ownership; no cap/allocation retry')
+p.add_argument('--fork-map-failure',action='store_true',help='Return ENOMEM on failed child page-table/reservation allocation; no capacity/retry changes')
 a=p.parse_args();ns,base,out=(getattr(a,n).resolve() for n in ('namespace_root','artifacts','output'))
 assert all(str(x).startswith('/Volumes/easystore/') for x in (ns,base,out)) and not out.exists()
 assert not a.capture_launch or (a.shared_library and a.metal_drain),'Capture integration needs explicit shared library and tracked Metal boundary'
 assert not a.dock_storage or a.capture_launch,'Dock storage needs explicit capture/shared/Metal integration'
+assert not a.register_shared_library or a.dock_storage,'Library registration requires the explicit physical Dock storage layout'
+assert not a.retire_empty_probe or a.register_shared_library,'Empty-probe retirement requires explicit shared-library registration'
 repo=Path(__file__).resolve().parents[3];lab=repo/'experiments/linux-steam';src=repo/'vendor/LinuxRunner';build=ns/'build'
 assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()=='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -44,9 +50,17 @@ run('build-native-workers.py',src,build,out/'guests/libish.a',out/'workers','--j
 run('build-native-logging.py',src,build,out/'workers/libish.a',out/'logging')
 run('build-madvise-stats.py',src,build,out/'logging/libish.a',out/'advice')
 run('build-lazy-pages.py',src,build,out/'advice/libish.a',out/'lazy')
+kernel=out/'lazy/libish.a'
+if a.file_map_cleanup:
+    run('build-file-map-cleanup.py',src,build,kernel,out/'file-map-cleanup')
+    kernel=out/'file-map-cleanup/libish.a'
+if a.fork_map_failure:
+    run('build-fork-map-failure.py',src,build,kernel,out/'fork-map-failure',
+        '--memory-source',out/'lazy/memory.c','--mmap-source',out/'advice/mmap.c')
+    kernel=out/'fork-map-failure/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
 runtime=out/'runtime';runtime.mkdir()
-for source,name in [(out/'lazy/libish.a','libish.a'),(out/'engine/libish_emu.a','libish_emu.a'),(build/'libfakefs.a','libfakefs.a')]:shutil.copy2(source,runtime/name)
+for source,name in [(kernel,'libish.a'),(out/'engine/libish_emu.a','libish_emu.a'),(build/'libfakefs.a','libfakefs.a')]:shutil.copy2(source,runtime/name)
 run('build-rfb-lifetime.py',out/'rfb')
 sdk=subprocess.check_output(['xcrun','--sdk','iphoneos','--show-sdk-path'],text=True).strip()
 flags=['-target','arm64-apple-ios26.0','-isysroot',sdk,'-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DLOG_HANDLER_DPRINTF=1','-DISH_INTERNAL=1',
@@ -70,6 +84,10 @@ if a.dock_storage:
 if a.shared_library:
     flags+=['-DIDECK_LAB_SHARED_LIBRARY=1']
     sources += [lab/'app/SharedSteamLibrary.c']
+if a.register_shared_library:
+    flags+=['-DIDECK_LAB_REGISTER_SHARED_LIBRARY=1']
+    sources += [lab/'app/SharedLibraryConfig.c',lab/'app/SharedLibraryRegister.c']
+if a.retire_empty_probe:flags+=['-DIDECK_LAB_RETIRE_EMPTY_PROBE=1']
 if a.metal_drain:
     run('build-metal-drain.py',out/'metal')
     flags+=['-DIDECK_LAB_METAL_DRAIN=1']
@@ -96,5 +114,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'linuxrunner':original['linuxrunner'],'namespace_base_evidence_sha256':hashof(ns/'evidence.json'),
  'namespace_header_sha256':hashof(ns/'LinuxSymbolNamespace.h'),'base_archives_unchanged':True,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

@@ -5,6 +5,14 @@
 enum ideck_frontend_phase { IDECK_FRONTEND_UNUSED,IDECK_FRONTEND_PREPARING,
     IDECK_FRONTEND_RUNNING,IDECK_FRONTEND_DRAINING,IDECK_FRONTEND_DORMANT,IDECK_FRONTEND_POISONED };
 struct ideck_frontend_result {unsigned wave,reaped;int guest_status,error,phase;};
+/* Linux wait status, not a native exit code. Valve's steam.sh restarts for
+ * exit 42. Signals/stops, other exits and a failed drain never admit a wave.
+ * This grants Linux-only reentry; it does not authorize Wine/game startup. */
+static inline int ideck_frontend_update_exit(int status) { return status == (42 << 8); }
+static inline int ideck_frontend_restart_ready(const struct ideck_frontend_result *result) {
+    return result && !result->error && result->phase == IDECK_FRONTEND_DORMANT &&
+        (result->guest_status == 0 || ideck_frontend_update_exit(result->guest_status));
+}
 struct ideck_frontend_transport_boundary {
     int embedded; /* 0: no in-process viewer. 1: mandatory drain callback. */
     int (*drain)(void *context,int guest_status);

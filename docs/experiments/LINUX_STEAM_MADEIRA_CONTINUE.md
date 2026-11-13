@@ -1,3 +1,310 @@
+# CURRENT Run41: actual52 RFB allocation abort; qualify CoW granularity next
+
+52 full build/final linked branch inspection/deep matchingAir sign/install and
+actual17010 updater verified. Later exact52 crash SIGABRT NSAllocateMemoryPages
+->NSData->LRRFBClient update; NOT50 fork NULL store. Repeated native file mmap
+ENOMEM persists. No capacity/stableUI/game/return proof. Exact receipts/hashes
+in EVIDENCE.run41.actual52. Native historical sequence54/phase8 is NOTlive state.
+New unexpected17126 same installed52 path exists, Air Home. Preserve/revalidate
+identity/current receipt before any stop/upgrade; no blind restart.
+
+New HOST actual pinned CoW measurement:64 adjacent4KiB writes ->64backings;
+16KiB host rounding yields1MiB for256KiBguest (ratio4). Parent/child bytes and
+accounting PASS. test-cow-backing.py + private cow-backing-reproducible. Not
+RSS/exactVMregions/solecause proof. NEXT qualify privateCoW compatible-native
+page grouping and rollback on HOST before iOS runtime changes. No grouping
+patch yet. PureLinux51 parked/neverinstalled. Fork52 avoids tested NULL crash
+onHOST25 but device failure-path execution not proven.
+
+Keep full hybrid objective active, bridge125/game/return incomplete. CLI ONLY,
+no Macunlock/security/credentials/Guard/trust/FEX/Valve/vendor/Codex changes.
+Profiles expire2026-11-13T04:43:44Z main/helper+2sec, check fresh everyuse.
+Do not bypass or claim signature refusal is Linux crash. User oldLab upgrade
+consent resolved; preserve all unrelated work/apps/accounts/games/saves.
+Main2ac39be unchanged; scope Run40+41 source pending reviewed signed-off
+checkpoint in current weekday22-08 window. No STABLE_SUCCESS/unload/completion.
+
+--- Historical details; above supersedes old process/build state ---
+
+# CURRENT Run41: actual50 SIGSEGV in fork PTE copy; host fix qualified,52 building
+
+Read latest MD/EVIDENCE.run41 FIRST. Actual50PID16772 CRASHED, exact device
+SIGSEGV/KERN_INVALID_ADDRESS0 pt_copy_on_write+232 -> mm_copy -> clone. UUID
+and final disassembly match NULL child PTE store. NOT47 RFB NSData abort.
+Final trace18mapping failures/max sampled67,702regions; root native pressure
+cause/region limit unproved. Numeric futex diagnostics observed, not cause proof.
+
+Unexpected16901 same installed50 executable exists; last-native-log copied now
+STILL dead16772. Inspect receipt/scene/state BEFORE stopping/upgrading. Never
+blindly target stale PIDs. User permits old Lab termination/upgrades; preserve
+unexpected actual user tests, all auth/root/game/save/apps/production/phone.
+
+New defaultOFF --fork-map-failure: checked fork-only tables, allocation before
+ref transfer, partial anonymous accounting, reservation errors -> mm_copy cleanup
+-> clone ENOMEM. HOST exact baseline memory.c722 fault reproduced;25 fixed
+actual kernel copy/clone controls ASan/UBSan PASS. Private fork-map-control-v4.
+No iOS failure injection, cap/clock/watchdog/FEX/Valve/vendor changes. Other
+unchecked engine/ordinary-map allocations remain. Full52 not yet built/installed;
+fork-ios components building. Pure Linux51 PARKED, never installed.
+
+CLI ONLY; no Mac unlock/security/credential/Guard/trust/Codex changes/subagents.
+BranchHEAD/remote b12d781, main2ac39be untouched. All scoped Run40+41 DIRTY
+UNCOMMITTED/UNPUSHED outside weekdays22-08. Existing profile main expires
+2026-11-13T04:43:44Z, recheck before signing/use. Bridge125; licensed Madeira
+game/return/stable loop unimplemented. No STABLE_SUCCESS/unload/goal complete.
+
+--- Earlier history below; above supersedes stale active process state ---
+
+# LIVE Run41: actual50 PID16772 running, preserve active Library navigation test
+
+Read latest MD/EVIDENCE.run41 FIRST.50 full Xcode/finalscene+resources/futex
+marker/deep matching Air signing PASS. Actual same-container install50 exit0,
+app list50. Signed MachO a474144def1982630d980407d1ab663b43d1b8828a8fff61c76a42c43034cad6.
+Unexpected postinstall16757 at Home had stale49 receipt (NOT current health);
+first guard refused BEFORE launching. Own source Linux starts only after
+didFinish/scene. Controlled fresh --terminate-existing -> actual50 PID16772,
+new current native receipt, real updater screenshot. Prewarm hypothesis only.
+
+Current16772 native file kernel-16772-664772-554414000.log, session auto42->wave2
+RUNNING. Actual real Steam Store/chrome rendered after initial black. One Library
+click opens white menu; Library first-row follow-up observer underway/recent:
+read private run41/rfb50-library-home-click before/after. Do NOT restart/install
+over this live test or infer UI success from ACK/PID. Current bounded log had no
+MMAP_FAILURE/signal5 yet. Numeric futex metadata really appears; decode actual
+hung renderer thread only after failure, no arbitrary memory dereference.
+
+Separate PRIVATE Linux-only CONTROL51 prepared, not signed/installed, same
+qualified kernel/engine/frontend/archive hashes as50, no Windows runtime linked.
+Purpose only to isolate combined-link/initializer side effects IF50 fails. It
+is NOT a replacement architecture/game bridge success. Generator
+build-linux-frontend-control.py; actual symbols/bytes inspected. First link missed
+CoreGraphics, corrected v2 passes. No runtime changes to make it link.
+Do not install this control over a recovered or active user50 session.
+
+49 prior renderer267/272 CrashHungProcess FATAL captured, not original ENOMEM.
+Its21min final health still guest165, no usableUI; owned failed49 ended SIGTERM
+(no forced kill), absence verified before50. Known file-map failure leak patched
+defaultOFF and provenhost; no claim original capacity solved. No clock/budget/
+watchdog/FEX/Valve/vendor/security/Codex changes. CLI only, no Mac unlock asks,
+credentials/Guard/trust automation or subagents. Main2ac39be unchanged, source
+dirty UNCOMMITTED/UNPUSHED outside weekday22-08 (HEAD/remote b12d781).
+Profiles expire2026-11-13T04:43:44Z; recheck at sign/use. Shared auth/root/games
+preserved, bridge125, actual licensed Madeira game/return/stability unqualified.
+No STABLE_SUCCESS/scheduler unload/goal completion. Full objective ACTIVE.
+
+--- Earlier details/history below; above supersedes stale live state ---
+
+# LIVE Run41: actual49 PID16532, automatic update->retained wave2 verified; renderer hung
+
+Read latest MD/EVIDENCE.run41 FIRST. 49 actual signed/installed same .freshtest
+container; PID16532 (REVALIDATE) active. Official updater42 completed, real
+backend/RFB/Metal drains then ONE automatic restart -> RUNNING wave2 SAMEPID.
+DO NOT restart/install over it blindly. No root reimport/auth transfer.
+
+Wave2 partial desktop chrome -> black X11 cursor, not usable Library/BPM. Actual
+renderer267/thread272 emits Chromium126 child_thread_impl.cc351 CrashHungProcess
+Crashing because hung -> wait5; public exact source fetched. Main267 blocked
+futex98 with small/unchanged cycles. Bounded current log MMAP_FAILURE count0,
+not proof original memory cause fixed. Pretrap footprint2313361424/available
+692905968/regions52593. Repeated official update version1792618285 installed0
+also observed47, not proven cause; pinned DroidDeck installer/session inspected,
+no Android/sandbox/repair copied. No watchdog/assertion suppression or blindretry.
+
+DefaultOFF --file-map-cleanup proven host baseline3 failed-transfer leaks/fixed3
+releases+3 successful transfers; actual full host copied backend7 logging+16ELF
+regressions pass.22iOS/full49/finalmarkers/deep signing passed, narrow scope.
+New own task snapshot blocked-futex numeric metadata source added (op/expected/
+bitset/timed/caller addresses only, no memory read); existing controls running.
+Next finish actual-futex host fixture then build50 diagnostic WITHOUT altering
+wait/wake/clocks/budget/watchdog. Don't claim diagnosis from a sent input or PID.
+
+CLI only, no Mac-unlock/security/credentials/Guard/trust/FEX/Valve/vendor/Codex
+changes or subagents. User old Lab upgrade consent RESOLVED, preserve unrelated
+user tests/apps/data. Existing profile expiry2026-11-13T04:43:44Z. Dirty Run40+41
+UNCOMMITTED/UNPUSHED in daytime (HEAD/remote b12d781), main2ac39be unchanged.
+Bridge125; real licensed Madeira game/return/stable loop still unimplemented.
+No STABLE_SUCCESS, scheduler unload or goal completion.
+
+--- Earlier detail retained below; above supersedes stale live/candidate fields ---
+
+# LIVE Run41: genuine Store -> transport0x3000 -> actual47 native allocation abort
+
+Read latest MD/EVIDENCE.run41. Current47 PID16203 died SIGABRT: exact crash
+NSAllocateMemoryPages -> NSData -> RFB update. Unexpected new47 idlePID16392
+observed Home/phase0/guest0, inspected but not stopped. Revalidate identity and
+active state before next upgrade. One Exit radio selected, confirmation never
+connected; NOT normal exit/game return. No other local writer found.
+
+Store really rendered; ordinary Library click visibly affected menu/content,
+but explicit0x3000 and black content, NOT usable Library/BPM. Native first2MiB
+shared mmapENOMEM then networkservice100 signal9; later utilities exit127 with
+libcef map-segment errors. Original cause still unqualified. New defaultOFF
+--file-map-cleanup fixes separately proven pt_map metadata-failure mapping leak
+in copied realfs.c; baseline3 leaks/fixed3 releases +3 success ownership controls
+ASan/UBSan/Mach coverage pass,22iOS units pass, vendor/base unchanged. Do not
+increase caps/retry/suppress assertions or call this original-root fix.
+
+Full48 update-exit policy/package/link PASS, NOT signed/installed. Full49 building
+with cleanup + public self VM region/internal/external/compressed accounting.
+Next inspect49 receipts, exact current Air/profile/idle instance before isolated
+sign/install/test; preserve auth/games/root and all other apps. Signed47 still
+installed. Profile expiry2026-11-13T04:43:44Z. No Mac unlock/security/credentials/
+Guard/trust/FEX/Valve/vendor/Codex changes or subagents. No stable marker or goal
+completion. Bridge125; licensed native game and return still unimplemented.
+Dirty source/docs UNCOMMITTED/UNPUSHED outside weekday22-08, main unchanged.
+
+--- Earlier continuity below; latest live state above supersedes it ---
+
+# LIVE Run41: real47 updater complete; post-update Steam PID16203 active
+
+Read latest MD/EVIDENCE.run41 FIRST. Actual47 installed, initial16191 real updater
+completed42 (wait10752)/native0/DORMANT4/reaped1, guests/workers0 and RFB/Metal
+drain marker. Empty probe dirs3/no files removed; library registration0/changed1.
+UI incorrectly labels successful42 cleanup as failed. Same47 fresh post-update
+PID16203 now shows saved-login splash -> actual desktop chrome/black content.
+REVALIDATE identity; preserve this live session, no blind new install/restart.
+New source handles exact42 Linux-only restart, automatic max1 after all real
+drains and no captured game; all65536 wait statuses ASan/UBSan pass. NOT installed
+or device-validated yet. No Wine/game permission, bridge125. Build48 pending.
+No Library interaction/BPM/current game/return/stability result. Main unchanged;
+dirty Run40+41 UNCOMMITTED/UNPUSHED outside weekday22-08. User upgrade consent
+resolved; CLI only, no Mac-unlock/security/credentials/Guard/trust/FEX/Valve/vendor
+or Codex edits, no subagents. Never copy account secrets. Full goal ACTIVE.
+
+--- Previous detail/history follows; live state above takes precedence ---
+
+# Latest Run41 update: real45 cold UI verified; Linux mount empty-probe fix building47
+
+User authorized old Lab end/upgrade; no pending consent gate. Read EVIDENCE.run41
+and latest MD Run41 first. Keep Run40+41 edits UNCOMMITTED outside weekday22-08;
+HEAD/remote b12d781, main2ac39be unchanged. CLI only, no Mac unlock/security/
+credentials/Guard/trust/FEX/Valve/vendor/Codex changes or subagents.
+
+Real missing scene manifest caused44 UIKit SIGTRAP, exact UUID confirmed. Fixed45
+full build/sign/install completed AFTER installer observer175s timeout; actual
+placeholderLoading meant pending, not Linux failure. No duplicate install.
+First45 PID16132 stayed black/idle; LLDB batch only connected, never stopped,
+expressions failed; later health sequence advanced8->31, no stale suspended state.
+Do NOT claim inspected window state/JIT success. SAME45 controlled fresh launch
+--terminate-existing + madeira-linux-lab-setup produced PID16153, actual native
+setup screenshot and cold receipt prefix_bound1/Linux idle1/game_started0.
+Extra UISceneClassName proposal46 is REJECTED as necessary fix, built but NEVER
+installed; only own proposal source/log edits removed, main.m matches actual45.
+Keep the REAL scene-manifest fix in private generator/final package checker.
+Fresh-launch receipt is not proof args reached an existing process; require a
+verified fresh own test and actual current receipt/window. Native UI's Windows
+Steam32 VA warning was not lowered/bypassed; no Wine/game ran.
+
+Then actual45 fresh linux-steam-retained-frontend PID16155 failed BEFORE guest
+exec: native -39 ENOTEMPTY, no Steam UI success. Actual bounded app-directory
+inventory confirms old fakefs mountpoint contains ONLY empty
+steamapps/common/Control from old owned compatibility diagnostics. No files.
+New --retire-empty-probe defaultOFF requires registration+Dock flags. Linux VFS
+validates exact empty chain, rmdir only those empty dirs BEFORE native mount;
+any file/other name/symlink refuses, old empty-mount guard remains. No raw host
+rmdir behind meta.db, no game/account/data migration or deletion. Categorical
+retired-directory count/files_deleted0 log only. No runtime-lifetime reset.
+
+Host actual fakefs/realfs sanitizer controls7 pass: OFF refusal preserved, ON
+full/partial/empty okay, file/other-dir retained/refused. Actual ARM64 ELF read
+through cleanup->shared mount->registration passes fresh+merge; interrupted0
+means preservation/no guest. iOS retire-ios + full47 next; read receipts first.
+Current device remains owned failed45 PID16155 (REVALIDATE) until verified47 ready.
+No overlapping runtime/overwrite. Native profile expiry2026-11-13T04:43:44Z.
+Next47 launch Linux frontend FRESH, verify actual dirs_retired3, registration,
+real Steam UI/saved auth/input/storage, not just PID/Frame/BrowserReady. Bridge
+still125, no real game/return/stability. No combined binary distribution clearance,
+STABLE_SUCCESS, scheduler unload or goal completion.
+
+--- Older Run41 detail follows; live state above takes precedence ---
+
+# Run41: user explicitly authorized ending old Lab and upgrading
+
+The user NOW says “允许结束旧 Lab 并升级”. Prior pending-choice gate is RESOLVED;
+do not ask again or treat it as pending. Same isolated Lab/iteration authorization,
+CLI only; preserve unrelated apps/main/accounts/games/saves. No Mac-unlock asks,
+credentials/Guard/trust automation, settings/lock/security/FEX/Valve/Codex edits.
+Read MD Run41/EVIDENCE.run41 and actual newest private receipts FIRST.
+
+Run40 uncommitted source/docs preserved. HEAD/remote b12d781, main2ac39be. Current
+weekday daytime means NO commit/push, do not drop these edits. Volume UUID verified.
+Old Lab23 PID4952 got SIGTERM; immediate query still present but later exact query
+absent, so NO SIGKILL was sent. This is not clean frontend/game teardown proof.
+Verified matching unexpired Air main/helper profiles/cert, upgraded SAME .freshtest
+container to actual44, no uninstall/data erase; before/after Linux root marker
+matches. No auth/save transfer. First CLI launch64 was argument-order harness
+error corrected; actual launch44 PID16066 immediately exited back Home.
+
+Actual specific .ips UUID matches the final44 Mach-O. UIKitCore top symbol
+UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption, EXC_BREAKPOINT.
+Final44 Info has NO UIApplicationSceneManifest; standalone working Lab DOES.
+last-native-log still23, no fresh cold setup result, process absent. These are
+actual startup failure evidence, not Steam/CEF or entitlement refusal.
+
+Smallest fix: private generator copies EXACT standalone Lab UIScene manifest
+(LinuxLabSceneDelegate), new final package gate requires it. Actual old44 fails
+new gate. Full fresh45 Xcode passes; sign/install/device test IN PROGRESS, read
+actual private run41 newest receipts/status first. Do not overwrite/restart a live
+new45 blindly. Existing profile expiry2026-11-13T04:43:44Z, recheck at actual use.
+Native CoreDevice screenshot command works: no DeviceHub GUI/Mac unlock needed.
+
+NEXT actual45 cold native setup should show real UI, write new build receipt
+with Linux idle. Then actual Linux frontend retained mode with preserved saved
+login + registered shared library, normal real input/Storage/windows depots.
+Native game bridge still125 and no real game/return. No Valve acceptance/stability/
+full teardown/license distribution clearance/STABLE_SUCCESS or goal completion.
+
+--- Earlier continuity retained as history; pending-choice text below is obsolete ---
+
+# Latest Run40: opt-in Linux shared install-library registration
+
+Read MD Run40 + EVIDENCE.run40 FIRST. Source parent b12d781, main2ac39be retained.
+Recheck actual status/remote/time; Run40 source/docs are UNCOMMITTED/UNPUSHED:
+validation finished after08:00 weekday. HEAD/remote b12d781. Do not drop edits or
+commit/push before a fresh allowed-window check. Preserve every unrelated worktree and app/state.
+CLI only, no Mac-unlock requests, cybersecurity/settings/auth/Guard/trust/FEX/
+Valve/vendor/Codex edits or subagents. Full goal ACTIVE; no completion claim.
+
+New qualified builder --register-shared-library requires explicit Dock/shared/
+capture/Metal flags. Native initial PID1 registrar BEFORE first Steam guest,
+not on retained restart/cold native setup. Caller owns private root exclusively;
+PID1 alone is not writer admission. Bounded256KiB KV span plan appends one unused
+numeric entry; keeps original bytes/comments/unknown fields/other libraries.
+Fresh config has primary /Steam + /mnt/ideck/SteamLibrary. Exact backup and
+original mode retained, O_EXCL stage verified + old content rechecked + rename.
+Existing interrupted stage/backup retained; error is not automatic cleanup/retry.
+Only categorical V1 numeric result, never raw file/account data. No migration.
+
+Actual HOST fresh/merge each run a real ARM64 ELF via Linux syscalls reading the
+new fakefs config + shared realfs. Own wrappers ASan/UBSan; deps not rebuilt with
+sanitizers. Both native guest0, repeat byte-identical, old metadata/mode retained.
+Interrupted fixture harness0 verifies original/stage retention, NO guest started.
+Exact existing native KV reader sees default/old/shared entries, NOT Valve proof.
+Initial test header AT_PWD corrected only in own harness. Final test receipt
+run40/library-registration4. Final22 namespaced iOS units pass; actual optionOFF
+Runtime.o no registrar reference, ON has it. Full App44 PASSES; actual register/plan/controller calls + distinct Linux TLS/
+Wine global + processed rootfs/resources/callback verified. Unsigned SHA
+9f1fdeb6...ccfaa39. Private signed44/deep strict0/embedded main+helper Air coverage
+and post-sign package checks pass; signed SHA07dbcc4e...4f4605a. NOT installed.
+See final44-linked.json and sign44-verified.json for exact hashes.
+
+ONE Air query still exact old Lab23 PID4952/installB265FEBE; revalidate before
+any action. No device input/stop/install/restart/auth. Existing old-session end +
+isolated upgrade/iteration question remains pending, do not repeat/infer consent.
+Signed43 retained; corrected signed44 includes registration and has finished
+actual final package/link + own matching-profile checks. No silent
+install/substitution. Existing profile expiry2026-11-13T04:43:44Z; never assume
+validity later or work around expired/missing authorization.
+
+NEXT after valid old-session choice: isolate-only upgrade; first real native
+setup/Linux idle/JIT/auth, then real Steam storage/library UI and Windows depot
+download to fixed shared library. Don't borrow/copy Linux or production auth.
+Actual Steam Play -> license-checked Madeira -> full teardown -> Linux restore
+still absent, response125. No stable repeated Air game-return/Bluetooth/perf proof,
+combined binary license clearance, STABLE_SUCCESS or scheduler unload.
+
+--- Earlier continuity retained below ---
+
 # Latest Run39: cold Madeira setup prerequisite; use corrected App43
 
 Read MD Run39 + EVIDENCE.run39 FIRST. Source parent4f57a965; next source checkpoint

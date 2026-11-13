@@ -168,6 +168,14 @@ void ideck_native_log_resources(void){
         valid?(unsigned long long)info.virtual_size:0,available_known,(unsigned long long)available,cpu_valid,
         (unsigned long long)user_us,(unsigned long long)system_us);
     ideck_native_log_line(row);
+    // Public self-task accounting only. Region count distinguishes mapping
+    // pressure from resident/compressed-memory growth; no VM contents sampled.
+    snprintf(row,sizeof row,
+        "NATIVE_VM_CLASSES valid=%d region_count=%u internal_bytes=%llu external_bytes=%llu reusable_bytes=%llu compressed_bytes=%llu",
+        valid,valid?(unsigned)info.region_count:0,
+        valid?(unsigned long long)info.internal:0,valid?(unsigned long long)info.external:0,
+        valid?(unsigned long long)info.reusable:0,valid?(unsigned long long)info.compressed:0);
+    ideck_native_log_line(row);
 #if IDECK_LAB_NATIVE_LOG
     snprintf(row,sizeof row,
         "LINUX_MEMORY_CLASSES mono_ms=%llu anonymous_guest_pages=%ld translation_tables=%llu translated_blocks=%llu code_words_bytes=%llu idle_flushes=%llu cap_flushes=%llu pressure_flushes=%llu",

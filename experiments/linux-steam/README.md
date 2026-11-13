@@ -378,3 +378,54 @@ The generator's explicit `--fail-child-starts` and harness
 `LINUX_LAB_LIFETIME_NEGATIVE=1` are HOST negative controls for EAGAIN rollback,
 never production flags. No such failure archive is used by build-lab.sh. These
 results do not substitute for physical-iPad Wine/game/return qualification.
+
+
+### Combined Lab: official updater restart and file-map failure (Run41)
+
+The retained Linux frontend recognizes Linux wait0 and10752 (normal exit42);
+Valve's steam.sh explicitly requests a restart on42. Reentry still requires
+actual native/backend/viewer cleanup and the same owner/root/transport. The UI
+automatically honors only ONE updater restart per app lifetime; a repeated42
+requires an explicit button. No retry on errors/signals, no Wine/game permission.
+
+Reproduce the exact file-backend failed-transfer test in a NEW private output:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 experiments/linux-steam/tools/test-file-map-cleanup.py \
+  "$PRIVATE_LAB" "$NEW_MAP_CONTROL"
+```
+
+It compiles the pinned realfs_mmap body with only a host pt_map failure stub,
+then checks actual native mapping coverage. Three branches leak on baseline
+metadata failure; the opt-in copied fix releases them, leaving success ownership
+unchanged. This is not evidence that it fixes the original memory exhaustion.
+The qualified private builder accepts explicit `--file-map-cleanup`; defaultOFF,
+base/vendor/FEX/Valve/caps unchanged. Public self-task VM class logs distinguish
+region growth from internal/external/compressed physical pressure.
+
+`rfb-navigation.m` is a host development observer for one ordinary pointer click
+and private before/after frames on the already authenticated app-local display.
+Use only with the bounded `forward-lab-rfb.py` exact-device transport and the
+Lab's own ephemeral RFB key. No text/credential entry or guest command API.
+A sent click is not proof of semantic UI response; inspect actual frames. Never
+publish account screenshots or raw Steam logs. Current actual47 Store rendering
+was followed by0x3000, black Library and native frame-allocation abort; no current
+interactive Library/BPM/game/return/stability is claimed. See latest evidence doc.
+
+
+Fork allocation failure discriminator (Run41): use explicit
+`--fork-map-failure` together with the already qualified hybrid options. It
+patches private copied kernel units only; it never edits pinned LinuxRunner or
+changes ordinary allocation, memory budget or Valve/FEX. Host negative controls:
+
+```sh
+python3 experiments/linux-steam/tools/test-fork-map-failure.py \
+  "$LINUX_LAB_ARTIFACTS" "$LINUX_LAB_ARTIFACTS/host/libish.a" \
+  "$LINUX_LAB_ARTIFACTS/NEW-private-fork-control"
+```
+
+Baseline reproduces the pinned NULL child-PTE store. Fixed25 actual kernel
+copy/clone cases cover root/intermediate/leaf and reservation failures, success,
+refcounts and partial anonymous accounting. HOST3 changed units ASan/UBSan;
+no iOS failure injection, engine-wide allocator qualification or capacity fix.
+Use only new private output paths. See experiment evidence for device results.

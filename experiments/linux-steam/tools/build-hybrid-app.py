@@ -79,6 +79,11 @@ swift=native/'MadeiraApp.swift';text=swift.read_text();assert text.count('\n@mai
 swift.write_text(text.replace('\n@main\n','\n// Alternate entry exists only in this private Linux Lab build.\n'))
 entry=native/'HybridLinuxMain.m';entry.write_bytes((lab/'app/main.m').read_bytes())
 info=native/'Info.plist';metadata=plistlib.loads(info.read_bytes());metadata['CFBundleDisplayName']='iDeck Linux Lab';metadata['LinuxLabRootFSSHA256']=root_pin
+# The original app uses SwiftUI's scene adoption; our private UIKit C entry
+# requires the same explicit scene contract as the working standalone Lab.
+scene_manifest=plistlib.loads((lab/'app/Info.plist').read_bytes())['UIApplicationSceneManifest']
+assert scene_manifest['UISceneConfigurations']['UIWindowSceneSessionRoleApplication'][0]['UISceneDelegateClassName']=='LinuxLabSceneDelegate'
+metadata['UIApplicationSceneManifest']=scene_manifest
 cold_callback='ideck-linux-lab' if a.madeira_setup else None
 if cold_callback:
     # A manually signed Lab may have another bundle ID. Its JIT callback must
@@ -153,7 +158,7 @@ record={'scope':'Private isolated FULL source app + Linux frontend build inputs;
  'dirty_experiment_source_inputs':copied,'prepared_payloads':payload,'linux_input_evidence_sha256':hashof(linux/'evidence.json'),
  'Linux_entry_source_sha256':hashof(lab/'app/main.m'),'private_project_sha256':hashof(project),
  'read_only_dependency_root':str(deps),'Wine_FEX_sources_modified':False,'provisioning_installation_or_auth_action':False,
- 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
+ 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'scene_manifest':scene_manifest,'scene_contract_source_sha256':hashof(lab/'app/Info.plist'),'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
 (out/'prepare-evidence.json').write_text(json.dumps(record,indent=2)+'\n')
 if a.build:
     env=dict(os.environ,LLVM_MINGW=str(a.llvm_mingw.resolve()))

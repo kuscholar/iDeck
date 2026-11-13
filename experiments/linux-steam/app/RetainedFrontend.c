@@ -86,7 +86,7 @@ int ideck_retained_frontend_run(const char *root,const struct ideck_tool_payload
     pthread_mutex_lock(&state_lock);int error=0;unsigned wave=state.wave+1;
     if(owner_pid&&owner_pid!=getpid())error=-EXDEV;
     else if(owner_pid&&!pthread_equal(owner,pthread_self()))error=-EPERM;
-    else if(owner_pid&&(state.phase!=IDECK_FRONTEND_DORMANT||state.guest_status))error=-EBUSY;
+    else if(owner_pid&&!ideck_frontend_restart_ready(&state))error=-EBUSY;
     else if(owned_root&&strcmp(owned_root,root))error=-EXDEV;
     else if(owner_pid&&(owned_transport.embedded!=transport->embedded||owned_transport.drain!=transport->drain||owned_transport.context!=transport->context))error=-EXDEV;
     if(!error&&!owner_pid){

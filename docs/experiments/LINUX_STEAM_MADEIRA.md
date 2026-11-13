@@ -1,17 +1,14 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run39): Actual Air ARM64 ELF, verified Linux image import, native
-X11/RFB/Metal, user-authenticated genuine Linux Steam Big Picture and the full
-Library have been observed (runs16–17). Browsing has severe delays and memory
-pressure; this is NOT stable operation. Lab23 remains live and preserved. Read
-Run38's packaging correction before considering any combined build:35–39 lack
-required boot resources. Run39 adds an explicit cold native Madeira setup route
-and qualifies its prefix/callback integration locally; no native setup UI or
-combined game handoff has been validated on Air. Native
-game-file capability checks and real ARM64 helper-to-host controls pass on the
-host; feature/default iOS builds are checked separately. The bridge still
-returns diagnostic125, and no Madeira game/return cycle is implemented or
-verified. Read the latest run and EVIDENCE.json for exact artifact boundaries.
+Status (run41): genuine authenticated ARM64 Linux Steam Library/BPM was seen
+on Air in runs16–17, but stable browsing and a licensed Madeira game/return loop
+remain unqualified. Current50 rendered genuine Store, then actual native crash
+proved an unchecked fork page-table allocation (pt_copy_on_write+232). Minimal
+fork failure handling passes25 actual HOST kernel controls plus existing16ELF
+regressions; full52/final Mach-O/deep signing pass, device upgrade in progress.
+No on-Air52 result yet. Account/root/games/saves and production/main preserved.
+The compatibility bridge remains diagnostic125; no claim of actual game handoff.
+Read latest Run41 continuation/EVIDENCE/CONTINUE for current process and artifacts.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -3809,3 +3806,421 @@ SHA256 `23a23d1f4088bc26c0434636a1b3a32c0f66678af3eebc23b8581a3c0ce1ad02`.
 **Signed43 NOT installed**, old user Lab23 retained. No new profile/account/key/
 trust/settings/credential changes or binary publication. Exact private signing
 receipt/hash and limitations are in EVIDENCE.run39.
+
+
+## Run40 — opt-in Linux Steam library registration before first guest
+
+**Starting state.** Source/remote experiment b12d781f624f22e8ea96fa0cc8f43d5ce844eb7a;
+remote main2ac39be and all unrelated worktrees retained. Verified migration status
+and required mounted UUID before writes. Same pinned LinuxRunner/Wine/FEX input
+revisions; no vendor/FEX/Valve or ordinary app source edits. ONE current read-only
+Air query still matches old Lab23 PID4952/B265FEBE. This does not establish live
+interaction/stability. Existing user upgrade choice remains unanswered; no stop,
+input, install, auth/Guard/trust, lock/settings action or repeated unlock request.
+
+**Observed gap/hypothesis.** Shared realfs mount + Windows metadata mapping alone
+cannot make Steam install to the mapped location. Default /Steam games are not
+silently supported by the C-contained mapper. Register the fixed shared library
+in Linux Steam's own libraryfolders.vdf before its first guest starts, then test
+whether Valve actually sees/uses it. This run implements the registration, not
+existing-game migration or a download-manager handoff.
+
+**Minimal isolated implementation.** New --register-shared-library in the qualified
+runtime builder requires --dock-storage and its existing capture/shared/Metal
+prerequisites. Flag OFF is unchanged. The initial LinuxLabRuntime frontend path
+calls the registrar as native PID1 after the shared mount/tool preparation and
+BEFORE any guest child. Retained frontend restart does not rewrite it. The cold
+native setup route never initializes Linux, hence does not invoke it either.
+PID1 is a caller condition, NOT an exclusive-writer certificate: caller must own
+the private root before guest execution; never call this against a running Steam.
+
+A bounded256KiB text KV planner keeps existing raw entries/comments/unknown fields,
+uses an unused numeric index, and leaves an already registered location byte-for-
+byte. A fresh file registers both /Steam and /mnt/ideck/SteamLibrary. Handles
+ordinary quoted/unquoted tokens, braces in quoted values/comments, BOM, key case
+and legacy flat entries. Incomplete/unsupported metadata fails before publication.
+The native VFS adapter preserves an exact old-file backup, writes/verifies an
+O_EXCL stage, rechecks old content before rename and retains original file mode.
+It never removes another attempt's pre-existing stage/backup or migrates games,
+accounts, default config trees or manifests. A retained old stage/backup requiring
+attention causes a startup error, not blind retry/deletion. Categorical V1 numeric
+error/changed marker only; no account/file payload in logs. New-file permissions
+and backup are private. No filesystem durability/ownership/authentication/game
+permission is inferred from successful close/rename.
+
+**Discriminating HOST tests.** Actual fakefs mounted root plus the realfs shared
+source; own wrapper/helper compiled with ASan/UBSan, static dependencies not
+sanitizer-rebuilt. Fresh and merge cases each execute a real freestanding ARM64
+Linux ELF through the interpreter; its Linux open/read/close sees the actual new
+library configuration, native guest status0. Merge retains other library paths,
+unknown fields and byte-exact backup plus file mode; repeat is byte-identical.
+An interrupted-publication fixture retains original/stale stage and starts NO
+guest; harness0 means only that preservation assertion passed. The exact existing
+SteamKeyValues reader independently reads default/retained/shared entries. This
+is NOT Valve-client library discovery or successful storage/download/UI/auth.
+Additional ordinary metadata controls cover existing modern/legacy/BOM/key-case,
+last duplicate path semantics, incomplete file and bounded output.
+
+Initial harness compile missed fs/path.h for AT_PWD; fixed own control header,
+not LinuxRunner/runtime. Earlier outputs remain private evidence. Final host
+receipt is run40/library-registration4/evidence.json; logs and source/archive
+hashes are in EVIDENCE.run40. No credentials or actual games were used.
+
+**iOS/regression boundaries.** Final22 namespaced iOS arm64 adapter units compile
+with registration ON and exact copied pinned archives retained. The actual
+Runtime object compiled OFF has no registration receiver reference, while the ON
+object does. Other shared mount reference remains present. These are component
+results, not a full default app, device execution or runtime permission. Full
+private App44 is built separately below; no result inferred while compiling.
+
+Reproduce with NEW private outputs:
+
+```sh
+python3 experiments/linux-steam/tools/test-library-registration.py \
+  "$PRIVATE_LAB" "$NEW_REGISTRATION_TEST" --ld-lld "$PRIVATE_LAB/tool-bin/ld.lld"
+python3 experiments/linux-steam/tools/build-hybrid-linux-runtime.py \
+  "$NAMESPACED_IOS_BASE" "$PRIVATE_LAB" "$NEW_REGISTERED_IOS" \
+  --ninja "$EXISTING_NINJA" --metal-drain --shared-library --capture-launch \
+  --dock-storage --register-shared-library
+# Feed NEW_REGISTERED_IOS into build-hybrid-app.py --madeira-setup --build.
+# Never edit a rootfs or overwrite an app that is still being tested.
+```
+
+**Remaining/full goal.** Real Valve storage UI/repair/update behavior and Windows
+depot installation in this library remain unverified. No game license, Steam Play
+invocation, Windows game execution, full Wine teardown/Linux restore or repeated
+Air cycle is supplied by this metadata step. Bridge stays diagnostic125. Preserve
+old Lab23 and pending choice; prepare/verify future candidate privately and recheck
+profile expiry/device before any permitted install. No public combined binary
+pending license scope resolution. No STABLE_SUCCESS, scheduler unload or goal
+completion. Fresh local clock governs every commit/push; if validation completes
+after08:00 weekday, leave the scoped edits uncommitted/unpushed.
+
+
+Final full App44 Xcode build returns0. Actual unsigned Mach-O SHA256
+`9f1fdeb62f4e59279a637fb016e1964bc1f28d97be0221debb024e961ccfaa39`;
+real ARM64 calls to shared_library_register, shared_library_plan and native setup
+controller are present, together with distinct Linux TLS/Wine global. Final
+processed rootfs pin/own ARM64 resources/isolated callback all pass. This full
+build reuses prepared Wine/FEX/DXMT payloads; it does not re-establish their source
+provenance or validate an on-device game. Exact receipt/log/input hashes recorded.
+
+A separate disposable .freshtest44 signature is prepared from that unsigned app.
+Fresh existing main/helper development profiles, Air coverage and certificate
+match verified, including embedded-profile readback. Deep-strict returns0 and
+post-sign final resource/callback checks pass. Signed Mach-O SHA256
+`07dbcc4e890c4921ef3ab379a462c705893437679c3ad065215ddf2b14f4605a`.
+**Signed44 NOT installed**; old Lab23 unchanged. Existing profile expiry is
+2026-11-13T04:43:44Z; recheck at any later use, no account/profile/trust workaround.
+Signed43 retained as previous candidate;44 adds registration. Do not silently
+install an earlier build just because it was already signed.
+
+Validation finished outside the allowed weekday22:00–08:00 publication window.
+Latest fresh local time recorded in EVIDENCE.run40.publication. New source/docs
+remain UNCOMMITTED/UNPUSHED in this isolated worktree, HEAD/remote b12d781; no main
+merge/force push or new wait automation. Preserve these edits for continuation.
+No actual Valve acceptance, new Air interaction, native game or stable return
+cycle was observed. User-only boundary remains the existing live-session upgrade
+choice; do not repeat/infer consent or stop that session.
+
+
+## Run41 — authorized Air upgrade; actual UIKit scene boot failure
+
+User explicitly replied **允许结束旧 Lab 并升级**. This supersedes the previous
+pending live-session choice; continue authorized isolated upgrades/iterations,
+without repeating consent/unlock requests. Unrelated apps/main/auth/games/saves
+remain preserved. Daytime source/docs stay uncommitted outside the repo window.
+
+Fresh Air app/process/profile/certificate checks matched old Lab23 and prepared
+signed44. SIGTERM request returned0; immediate process query was too early, later
+exact identity query found it gone, so NO force-kill occurred. Do not count an
+OS app termination as a clean Linux or game-return boundary. Same .freshtest app
+upgraded to real version44, without uninstall/reset. Existing Linux image marker
+copied before/after matches; this is concrete marker retention, not new saved-login
+or byte-level save validation. No account cache/credential export or migration.
+
+First CLI launch failed locally64 because --device followed the positional app
+arguments. Correct ordering before the app ID led to actual launch PID16066.
+This local command error is not an iPad trust/signature/entitlement/runtime failure.
+Actual native CoreDevice screenshot then shows Home, process query finds no44,
+new cold result absent and native receipt remains stale23. Normal .ips capture
+identifies actual44 by exact final Mach-O UUID; UIKitCore SIGTRAP/EXC_BREAKPOINT
+at UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption. No Steam/CEF
+initialization or current native setup success is inferred from the launch ACK.
+
+**Single hypothesis/minimal fix.** Combined generator inherited a SwiftUI baseline
+Info with no UIApplicationSceneManifest after replacing its App entry with UIKit.
+Copy the exact manifest already used by the standalone working Linux Lab, whose
+scene delegate is LinuxLabSceneDelegate. New final package gate checks it; actual
+old44 fails. No runtime, Valve, Wine/FEX/vendor or ordinary gaming code change.
+Fresh full45 builds from the corrected generator; signing/install/device test is
+recorded separately below as it completes. Prior44 link/resource/signature proofs
+remain narrow and do not establish boot validity. Raw crash/screenshots/profiles
+and receipts remain private under run41; only categorical evidence/hashes published.
+
+
+Full corrected45 Xcode and disposable Air signing/final scene delegate + processed
+manifest/pin/resources/callback checks pass. Later failed44 background PID16106
+appeared before replacement; inspected Home screenshot and still-stale23 receipt
+before ending that failed startup instance with SIGTERM. No force-kill issued.
+Actual45 install command timed out after175s; subsequent native app list remains44,
+no Lab process alive, and actual screen shows the Lab **Loading…** placeholder.
+This is an in-flight installer state, not a Linux crash or fix validation. No
+second installation or blind app launch is started while it remains pending.
+
+
+### Run41 controlled45 result and shared-mount discriminator
+
+Installer later committed45, verified by actual app list; no second installation.
+First activation PID16132 showed black while scene callbacks/main health ran with
+zero Linux workers/guest entries. LLDB batch observer reached connected, not
+stopped; expressions/window reads failed. Health advanced sequence8->31 afterward,
+so no debugger window/JIT result or dead/stuck-process claim. SAME45 binary with
+explicit fresh --terminate-existing cold args produced PID16153: actual native
+setup UI screenshot + new receipt prefix_bound=true, linux_stage_idle=true,
+Windows_game_started=false. This proves the extra UISceneClassName proposal was
+not necessary; exact prior black activation cause remains unmeasured, including
+whether activation reused an existing process without applying new args. Extra
+46 compiled but was NEVER installed; removed only those own unneeded proposal/log
+edits. Real scene-manifest fix retained; main.m matches actual device-tested45.
+Apple's sceneClass documentation informed the proposal, not causal proof:
+https://developer.apple.com/documentation/uikit/uisceneconfiguration/sceneclass
+The displayed Windows Steam32 VA guard was not lowered or treated as Linux Steam
+failure; no Windows client/game/JIT execution occurred in this setup test.
+
+Next fresh45 linux-steam-retained-frontend PID16155 reached a native mount guard,
+returned Linux ENOTEMPTY(-39), poisoned retained wave1 BEFORE guest execution.
+Actual directory inventory is only steamapps/common/Control, final directory
+empty, date2026-11-08; exact path is created by the old own compatibility probe.
+No account/Steam UI success is inferred. Preserve the original empty-mount guard.
+
+Minimal opt-in --retire-empty-probe (requires explicit registration/Dock flags)
+validates only this exact empty probe chain through Linux VFS, then rmdir of
+empty known dirs before mount. Each rmdir still refuses nonempty directories;
+any file, other name or symlink stops without hiding contents. No native host
+rmdir behind fakefs meta.db, no file/manifest/game/save/auth removal or migration,
+no one-session reset or blind retry. New native marker reports only directories
+retired and files_deleted=0. Default OFF keeps prior behavior.
+
+Actual HOST sanitizer controls7 pass: OFF legacy refused and normal empty mount
+works; ON full/partial known empty chains mount, normal empty works; a save-like
+fixture file and unrelated directory cause refusal with all content retained.
+Own wrappers sanitized, static archives not sanitizer rebuilt. Integrated actual
+ARM64 ELF reads after cleanup->mount->registration pass fresh+merge; interrupted
+publication harness0 means preservation and NO guest, not Steam success. Private
+receipts empty-probe-control and empty-probe-registration carry exact hashes.
+iOS/runtime/App47 results recorded as they complete; current failed45 session
+preserved until a verified candidate is ready. No actual Steam/game/return proof.
+
+
+### Run41 actual47 update and exact restart discriminator
+
+Full App47 Xcode and matched Air signing/package checks pass; actual same-container
+install returns0 and device app list confirms47. First PID16191 logs exact empty
+probe cleanup3directories/files_deleted0 and registration error0/changed1. Actual
+Air screenshot shows genuine Steam updater extracting its official package. This
+is not login/Library/game validation.
+
+Updater completes with Linux wait10752 (normal exit42), native_error0, backend
+DORMANT4/reaped1, zero guest/worker entries and real RFB/Metal drain completion
+marker. Existing UI nevertheless says cleanup failed because it only accepts
+status0. This contradicts its own successful cleanup receipt. Valve steam.sh
+in the preserved private official tree explicitly defines/restarts on42.
+
+After completed cleanup, fresh SAME installed47 launch PID16203 preserves the
+updated prefix/auth. Real screen advances saved-login splash -> desktop Steam
+chrome, content black at latest sample; no interactive Library proof yet. Keep
+this active session. Raw screens/logs/transport credentials remain private.
+
+Minimal source correction admits Linux-only reentry for raw0 or10752 after all
+existing DORMANT/native-error/owner/root/transport gates. An automatic update
+restart is limited to ONE per native app lifetime, only42 after actual viewer
+drain and no captured game request. Repeated42 requires an explicit button,
+other exits never automatically retry. Game/native-Wine gate remains status0;
+this is not game launch permission or complete runtime teardown. ASan/UBSan
+classification control checks all65536 wait statuses, error/phase/null/negative
+controls and passes. Patch is NOT installed; do not interrupt active47 for it.
+Full next iOS build and actual navigation evidence remain pending. No stable
+Library/BPM/game/return claim. New source/docs remain uncommitted outside window.
+
+
+### Run41 Store render -> transport0x3000 -> native allocation abort
+
+Existing bounded USB app-local RFB observer with its own ephemeral private
+transport key captured genuine Steam Store rendering, followed by Unexpected
+Transport Error0x3000. One ordinary Library pointer click visibly changed the
+menu/content; content became black and the dialog persisted. This is real input
+consumption, NOT an interactive usable Library/BPM. No credential/Guard action or
+Continue Anyway/error suppression. Before/after images remain private.
+
+Actual current native log first shows a2MiB shared host mmap fail native12/
+Linux-12 near mono661867733, then network utility100 exits signal9. Subsequent
+network utilities exec then exit127; their real stderr says libcef.so failed to
+map segment. Do not confuse this later loader failure with the original failure.
+A normal Exit Steam radio selection was visually confirmed, but confirmation
+observer found the app-local port already closed; no successful normal exit
+claimed. Exact actual47 PID16203 crash report confirms SIGABRT with stack
+NSAllocateMemoryPages -> NSData initWithBytes -> LRRFBClient update. No jetsam
+or successful frontend/game return is inferred. An unexpected new47 PID16392
+was observed idle, zero guests/workers, Home screenshot; identity inspected and
+preserved before any next action, no competing local experiment writer found.
+
+**One targeted failure-path hypothesis.** Pinned realfs_mmap creates a native
+mapping then returns pt_map's error without releasing it in three branches.
+pt_map's metadata malloc failure does not take ownership; anonymous and SysV IPC
+callers already release on failure. New private-copy --file-map-cleanup releases
+ONLY its newly created mapping on rejected transfer, preserving error/errno.
+No PTE/cap/FEX/Valve/vendor change or retry. Default is OFF. This does not explain
+or repair the first host ENOMEM, and no sole-root-cause claim is made.
+
+Exact pinned realfs_mmap function with host-only deterministic pt_map failure
+and actual native mmap/self Mach region coverage reproduces three baseline leaks;
+fixed three failures release their mappings, three successes remain transferred.
+Both wrappers use ASan/UBSan; no failure injection reaches an app/device. Initial
+Darwin mincore oracle was rejected (successful return need not mean coverage),
+replaced with Mach VM coverage; an Apple/Linux macro header-order harness error
+was fixed. Original failed artifacts retained, final hashes in evidence JSON.
+
+All22 namespaced iOS units compile with cleanup enabled and immutable base
+archives unchanged. New own log exposes public self region_count, internal,
+external, reusable and compressed totals to distinguish region/physical pressure;
+no guest/native contents or memory limits sampled/changed. Full unsigned48 update
+policy build/package/link pass after actual sandbox workspace-denial retry via
+authorized CLI;48 not installed. Full49 adds cleanup/VM accounting and is building.
+Do not claim signed/install/device fix success before actual receipts. Current
+source/docs uncommitted/unpushed in daytime; main and all unrelated state retained.
+
+
+### Run41 actual49: update handoff verified; separate renderer hang
+
+Full49 build, final markers/package and disposable matching Air main/helper
+profile signing/deep-strict pass. Actual signed Mach-O SHA256
+3bc0669f34299cdf3742e82f3c0724db4d8f1b4d86f5b976ac07759d18c57801.
+Idle unexpected47 instance was verified with zero guests and normal SIGTERM
+ended it; no force-kill. Same-container49 installation returns0; independent app
+list49 and actual launch/receipt PID16532 prove install/execution. No uninstall,
+other app/phone/account/game/save or profile/security changes.
+
+The official updater again extracts version1792618285 after reporting installed
+version0. It exits42; actual native log confirms real backend/RFB/Metal drain,
+IDECK_STEAM_UPDATE_RESTART_V1 automatic_count1 and retained RUNNING wave2 in SAME
+PID16532. This is actual update/reentry proof, NOT full teardown/Wine/game return.
+The repeated installed0/background-check pattern also exists in47; its role in
+the failures is a hypothesis, not assumed cache corruption or root reimport.
+Pinned DroidDeck installer/session were fetched and inspected again at f33d5b9:
+https://github.com/Droid-Deck/DroidDeck/blob/f33d5b9e09ed27d68137aba4e711f8fca9eb93e9/tools/linuxfs/overlay/usr/local/bin/droiddeck-steam-install
+https://github.com/Droid-Deck/DroidDeck/blob/f33d5b9e09ed27d68137aba4e711f8fca9eb93e9/tools/linuxfs/overlay/usr/local/bin/droiddeck-session
+They align beta state and -clientbeta; no Android repair/sandbox/process logic
+was copied and no live package/account state was edited.
+
+Wave2 shows partial desktop chrome then black X11 cursor. Bounded current native
+log has ZERO MMAP_FAILURE records, but this short window does not prove the
+original allocation fault fixed. Actual CEF renderer guest267/thread272 emits
+child_thread_impl.cc351 **Crashing because hung**, guest wait status5. Exact
+Chromium126.0.6478.183 source identifies CrashHungProcess, not a generic crash:
+https://github.com/chromium/chromium/blob/126.0.6478.183/content/child/child_thread_impl.cc#L349
+Main267 samples persist at futex98 with small then unchanged cycle counts.
+Before trap native footprint2,313,361,424, available692,905,968, region_count52593.
+No sole deadlock/CPU/memory cause is established. Preserve current49 session.
+No interactive Library/BPM/game/return/stability result or assertion suppression.
+
+Final host full copied-backend file-map cleanup + own wrappers pass seven native
+log modes and16 real ARM64 kernel controls; ASan/UBSan only own/overlaid units,
+not the whole interpreter. Earlier ordinary-harness run used a join-required
+archive without admission, so clone/thread cases failed; corrected original
+lifetime+new log/cleanup archive passes, no runtime-provider reset.
+
+Next add bounded numeric-only metadata for blocked ARM64 futex calls: op/expected/
+bitset/timed plus syscall caller addresses, no memory dereference or arbitrary
+register/stack/heap dump. Existing task-lifetime/nonblocking locks remain. Source
+is added, tests/next build/device qualification pending. Do not change clocks,
+budgets or watchdog behavior before this discriminator. Dirty source remains
+uncommitted/unpushed outside weekday22-08, main unchanged, full goal ACTIVE.
+
+
+Blocked-futex diagnostic source is now locally qualified: real host ARM64 ELF
+creates a pthread-like guest, main actually blocks FUTEX_WAIT_PRIVATE, native
+observer records operation128/expected0/no timeout/caller addresses WITHOUT a
+memory read, then an ordinary guest wake and exit0 complete. Changed observer/
+wrapper units ASan/UBSan. Existing real wait/touch/unmap/nonblocking contention
+controls pass.22 iOS native units compile; App50 building, not signed/installed.
+Op-defined registers only; syscall PC/number/blocking are rechecked before
+accepting a best-effort row. No actual CEF wait/caller result until device data.
+Pinned clock_gettime maps guest MONOTONIC to the same native clock futex uses;
+no evidence for a clock patch or watchdog suppression. No such change made.
+
+
+### Run41 continuation: actual50 native fork-copy fault and minimal allocation control
+
+Actual50 PID16772 did NOT finish usable Library navigation. Exact device crash
+Madeira-2026-11-12-141207.ips records SIGSEGV/KERN_INVALID_ADDRESS0 in
+pt_copy_on_write+232, then mm_copy/copy_task/clone_task/sys_clone. Final signed
+Mach-O UUID6e28a7a7-5261-321c-8e48-ea717f4af2d6 matches. Narrow disassembly
+identifies a store through the returned child PTE; pinned leaf calloc is
+unchecked. This is NOT the earlier47 NSData/RFB allocation abort. Final native
+trace has18 mapping failures and max sampled67,702 VM regions; no exact Darwin
+region cap or sole allocation-pressure cause is proved. Private crash/native
+log/disassembly hashes are recorded in EVIDENCE.run41.actual50.
+
+New defaultOFF --fork-map-failure overlays only private copies of memory.c,
+mmap.c and fork.c. A fork-only checked PTE allocator returns NULL safely at
+each level. The caller allocates before changing the source backing refcount,
+charges even partially copied anonymous pages before releasing a failed child,
+bump-invalidates source/destination generations and propagates failure through
+mm_copy to clone ENOMEM. Reservation-copy failure is no longer silently lost.
+Successful shared/private/PROT_NONE copies retain original semantics. Ordinary
+pt_map allocator, engine allocator, budgets, clocks, watchdogs and Valve/FEX
+are unchanged; unchecked allocations there remain real limitations.
+
+HOST exact kernel baseline reproduces the same memory.c722 NULL PTE store.
+Fixed25 controls pass: success plus every one of10 root/intermediate/leaf
+allocations and both reservation allocations through actual mm_copy AND
+clone. Parent backing bytes/flags/refcounts and anonymous accounting survive
+partial-child destruction. Changed3units ASan/UBSan, not whole engine. Initial
+harness lacked init-only exefile and hit fd_retain; corrected own harness opens
+/dev/null before target. Source-line UBSan evidence is required, not any crash.
+Private fork-map-control-v4 holds logs/receipt; device effect remains unverified.
+
+Pure Linux link-control51 is prepared but PARKED/never installed; captured
+fork fault is a better current discriminator. Current unexpected new main16901
+has exact installed50 path but last-native-log still refers to dead16772; do
+not call this a recovered Steam session or kill blindly. Revalidate state first.
+Next full hybrid52 keeps same root/auth/game storage and only adds checked
+fork failure handling. No successful Library/game/return/stability claim.
+Run40+41 source remains uncommitted/unpushed during weekday daytime.
+
+
+### Run41 final52 device outcome and next memory discriminator
+
+Full52 Xcode/package passed;22 native units and linked disassembly show checked
+fork allocations, source ref transfer after the NULL check, mm_copy partial-child
+release and clone -ENOMEM before task_set_mm. Disposable matching Air signature
+and deep strict verify passed. Same-container install exit0 and independent app
+list52 confirmed. Actual new identity PID17010/installUUID
+F62769EE-5E58-46FE-A783-946EB4673C2E; real official updater painted.
+
+Later actual device crash Madeira-2026-11-12-144522.ips proves52 PID17010
+SIGABRT from NSAllocateMemoryPages/NSData/LRRFBClient update. This differs from
+50's fork NULL store, but does NOT prove the new fork failure branch executed
+or that capacity improved. Last health sequence54/phase8 is historical, not live
+now; guest149, footprint2,395,019,760. Final bounded native log has repeated
+2MiB host file mmap ENOMEM12; exact counts/hashes in EVIDENCE.actual52.
+No usable Library/BPM/game/return success. Home screenshot and unexpected newer
+main17126 observed; preserved without kill/relaunch, don't assume it is Steam.
+
+New reproducible HOST measurement (test-cow-backing.py) uses real pinned
+pt_copy_on_write and actual parent user_write:64 adjacent4KiB guest writes create
+64 distinct native CoW backings. Guest262,144 bytes round to1,048,576 bytes on
+this16KiB-native-page host (ratio4). Child bytes remain0 and anonymous accounting
+returns0. This measures rounded mapping capacity, NOT physical resident bytes,
+exact VM region count or a Darwin region limit. Initial own format mismatch
+failed Werror before execution; fixed cast, reproducible control passes.
+
+Next discriminate whether co-materializing a native-page group of compatible
+private CoW entries reduces this amplification while preserving mixed/shared/
+protection boundaries, source offsets/file metadata, allocation rollback and
+per-page accounting. No grouping runtime patch is yet applied. Pure Linux51
+remains parked/uninstalled. No retry/assertion/cap/watchdog/FEX/Valve change.
+Current allowed commit window reopened; publish only scoped source/tests/redacted
+evidence checkpoint after review. Existing profiles expire04:43:44Z Nov13;
+revalidate before further deployment, never bypass expiration or user approval.

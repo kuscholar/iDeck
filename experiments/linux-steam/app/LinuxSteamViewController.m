@@ -125,6 +125,7 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(atomic) unsigned retainedNextWave;
 @property(nonatomic,strong) NSURL *retainedRoot;
 @property(nonatomic,strong) UIButton *restartSteamButton;
+@property(nonatomic) unsigned automaticUpdateRestarts;
 #endif
 #if IDECK_LAB_RFB_LIFETIME
 @property(atomic) BOOL acceptsFrames;
@@ -288,6 +289,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                 int error=ideck_retained_frontend_run(root.fileSystemRepresentation,&tool,&transport,&result);
                 NSMutableDictionary *fields=[@{@"native_error":@(error),@"guest_status":@(result.guest_status),@"wave":@(result.wave),
                     @"backend_phase":@(result.phase),@"reaped":@(result.reaped),@"actual_game":@NO} mutableCopy];
+                fields[@"steam_update_restart_requested"]=@(ideck_frontend_update_exit(result.guest_status));
                 BOOL capturedRequestReady=NO;
 #if IDECK_LAB_CAPTURE_LAUNCH
                 struct ideck_launch_request capturedRequest;uint64_t capturedSequence=0;
@@ -315,10 +317,21 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                 NSData *report=[NSJSONSerialization dataWithJSONObject:LabIdentifiedResult(fields) options:NSJSONWritingPrettyPrinted error:nil];
                 [report writeToURL:[lab URLByAppendingPathComponent:@"last-retained-frontend.json"] options:NSDataWritingAtomic error:nil];
                 dispatch_async(dispatch_get_main_queue(),^{
-                    self.guestEnded=YES;self.retainedBackendReady=!error&&!result.guest_status&&result.phase==IDECK_FRONTEND_DORMANT;
+                    self.guestEnded=YES;self.retainedBackendReady=!error&&ideck_frontend_restart_ready(&result);
                     if(self.retainedDisplayDrained){
                         self.restartSteamButton.enabled=self.retainedBackendReady;
-                        [self showStatus:self.retainedBackendReady?(capturedRequestReady?@"Steam closed. Play request captured; Windows has not started.":@"Steam closed. Ready to restart in the retained environment."):@"Backend cleanup failed. Existing state was preserved."];
+                        BOOL update=ideck_frontend_update_exit(result.guest_status);
+                        NSString *message=self.retainedBackendReady?(update?@"Steam update completed. Ready to restart.":(capturedRequestReady?@"Steam closed. Play request captured; Windows has not started.":@"Steam closed. Ready to restart in the retained environment.")):
+                            (error?@"Backend cleanup failed. Existing state was preserved.":@"Steam exited unexpectedly. Existing state was preserved; no automatic retry.");
+                        [self showStatus:message];
+                        // Honor exactly one documented updater restart, only after
+                        // the real backend and viewer drains. Repeated 42 requires
+                        // an explicit tap; errors and game requests never retry.
+                        if(self.retainedBackendReady&&update&&!capturedRequestReady&&self.automaticUpdateRestarts==0){
+                            self.automaticUpdateRestarts++;
+                            ideck_native_log_line("IDECK_STEAM_UPDATE_RESTART_V1 decoded_exit=42 automatic_count=1 backend_and_viewer_drained=1 game_started=0");
+                            [self restartRetainedSteam];
+                        }
                     }else [self endDisplayForGuestStatus:error?error:result.guest_status];
                 });
             }}
