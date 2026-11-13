@@ -13,10 +13,10 @@ flags=['-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DISH_INTERNAL=1','-I'+str(src),
 rows=[];env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0')
 for name,unit in [('granularity','cow-backing-control.c'),('boundary','cow-group-boundary-control.c')]:
  binary=out/name;subprocess.run(['xcrun','clang',*flags,'-DIDECK_COW_GROUPED=1',tools/unit,out/'kernel/libish.a','-L'+str(host),'-lish_emu','-lfakefs','-lsqlite3','-o',binary],check=True)
- for mode in (['measure'] if name=='granularity' else ['all','protection','shared','hole','different','offset','file','mmap-fail','data-fail']):
+ for mode in (['measure'] if name=='granularity' else ['all','protection','shared','hole','different','offset','file','mmap-fail','data-fail','concurrent']):
   log=out/(name+'-'+mode+'.log')
   with log.open('x') as f:r=subprocess.run([binary,*([] if name=='granularity' else [mode])],stdout=f,stderr=subprocess.STDOUT,env=env,timeout=20)
   assert not r.returncode,(mode,log)
   rows.append({'case':name+'-'+mode,'exit':r.returncode,'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest()})
 (out/'evidence.json').write_text(json.dumps({'scope':'HOST real anonymous CoW mapping/granularity and rollback; memory-unit sanitized, dependencies not. Not iOS/Steam/capacity/game proof','cases':rows,'archive_sha256':hashlib.sha256((out/'kernel/libish.a').read_bytes()).hexdigest()},indent=2)+'\n')
-print('HOST 10 actual CoW grouping/rollback controls pass')
+print('HOST 11 actual CoW grouping/rollback/concurrency controls pass')

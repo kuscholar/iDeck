@@ -4274,3 +4274,12 @@ already-existing valid pair matching Air/Lab/helper/same certificate, expiring
 Nov20 04:42:34/36Z. No account/profile/security change. Disposable53 signature
 is running (observer70342); not installed yet. Do not repeat obsolete expiry
 gate or restart a build already completed.
+
+Source checkpoint b100272 was signed-off/pushed/read back. Additional HOST
+four-writer native pthread test passes: synchronized concurrent writes into
+one CoW group preserve every byte and child old contents; combined11 cases
+pass with copied memory-unit/harness ASan/UBSan. Runtime helper unchanged
+from qualified full53; only tests/evidence extended. Exact signing child13616
+currently targets the disposable53 MAIN app (original observer70342 live).
+Other codesign child targets unrelated rollback153 and is untouched. No
+new signing/install/restart attempt or claim of a blocked password/unlock.

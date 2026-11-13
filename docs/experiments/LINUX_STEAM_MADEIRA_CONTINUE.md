@@ -1,3 +1,12 @@
+# SIGNATURE WAIT VERIFIED: original70342, actual codesign13616 MAIN53
+
+Do not repeat/restart signing. Source b100272 pushed/readback. Extra HOST
+four-concurrent-writer control passes;11cases now pass, helper/runtime53
+unchanged. New tests/evidence pending commit. Signer13616 exact target is
+run42/hybrid53-air-sign/Madeira.app; another unrelated codesign rollback153
+exists and is untouched. This is verified ongoing signing, not a new
+credential/lock gate. No device upgrade/53UI proof yet.
+
 # UPDATE Run42: full53+final Mach-O PASS; signature live70342, not installed
 
 Actual helper/caller/error branch/invalidate/release inspected; HOST injection

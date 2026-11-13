@@ -13,7 +13,7 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": 42,
-  "recorded_at_utc": "2026-11-13T04:46:04.055654+00:00",
+  "recorded_at_utc": "2026-11-13T04:52:03.451540+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "18f1aef733d1831bdad73217dad5a3b5ca5feb00",
   "source_parent": "e1a6005a0805e8cd8891d222ea7fb8cd71c9a97b",
@@ -10912,6 +10912,76 @@
         "2026-11-20T04:42:36Z"
       ],
       "no_new_profile_or_account_security_action": true
+    },
+    "host_concurrency_controls": {
+      "scope": "HOST real anonymous CoW mapping/granularity and rollback; memory-unit sanitized, dependencies not. Not iOS/Steam/capacity/game proof",
+      "cases": [
+        {
+          "case": "granularity-measure",
+          "exit": 0,
+          "log_sha256": "53449c18bfb4a690932af767a7ee5d49eb0af6e24daa58e9c06c5ba54344ac16"
+        },
+        {
+          "case": "boundary-all",
+          "exit": 0,
+          "log_sha256": "e78c93970cffc24f3138e069522605037e573ca35e1ce76900ff79bac5c7b0fe"
+        },
+        {
+          "case": "boundary-protection",
+          "exit": 0,
+          "log_sha256": "f053367258c3f0448ef898c2bd30281ed8e94d74a7702b1b952dfa8edf642c24"
+        },
+        {
+          "case": "boundary-shared",
+          "exit": 0,
+          "log_sha256": "a0ce436ae4a7b5fb31a2d4c366e95b1efc56d1749d5e4966c2441d9939dd5887"
+        },
+        {
+          "case": "boundary-hole",
+          "exit": 0,
+          "log_sha256": "2d0072f3ad1d61d24c95ef3043b109bde1e32a5cef6df8f0215c8e5df875e2ef"
+        },
+        {
+          "case": "boundary-different",
+          "exit": 0,
+          "log_sha256": "0a025e77df37a30580347d93e7f7b98139a2819aa9197f76a312dd03f7e5f76a"
+        },
+        {
+          "case": "boundary-offset",
+          "exit": 0,
+          "log_sha256": "60bb594571d996fc95eaa83380ac7a28e1aeb2cc22fb5ff1fde95ab57d81ac54"
+        },
+        {
+          "case": "boundary-file",
+          "exit": 0,
+          "log_sha256": "55d5875de9e6a7e76dc1a9da1aa697460f30d1973b83c2eca027656680d8b19f"
+        },
+        {
+          "case": "boundary-mmap-fail",
+          "exit": 0,
+          "log_sha256": "732b7802b0689c68f81ed24f04806005f5f595a39b567be0bf7a33a04f4624f2"
+        },
+        {
+          "case": "boundary-data-fail",
+          "exit": 0,
+          "log_sha256": "937c8dedb77a01fdbdc9aeb7d3a0ad6bdc4346a2e1e5446f56ed847fc944a067"
+        },
+        {
+          "case": "boundary-concurrent",
+          "exit": 0,
+          "log_sha256": "e4a6ac25cfa77f49b6215f7a7db0b20c20a4af5dcc3ef5f9eba411fcb296b9f0"
+        }
+      ],
+      "archive_sha256": "c9876c91683f6f48fd88a7c758ad69e05da5d74b29c6eb83f9bb00e0a4454530"
+    },
+    "host_concurrency_receipt_sha256": "d1764c2212254bc6d51aa13ddb6f7792bc27690b156151577ad455c50d674966",
+    "source_checkpoint": "b100272781203662c6afe1194ac299be1b424d9a",
+    "signer_observation": {
+      "handle": 70342,
+      "exact_codesign_PID": 13616,
+      "actual_target": "run42/hybrid53-air-sign/Madeira.app",
+      "state": "same original job running; not terminal/not installed",
+      "unrelated_other_target_left_untouched": true
     }
   }
 }
