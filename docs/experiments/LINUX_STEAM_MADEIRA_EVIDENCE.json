@@ -13,7 +13,7 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": 42,
-  "recorded_at_utc": "2026-11-13T04:52:03.451540+00:00",
+  "recorded_at_utc": "2026-11-13T05:01:12.329567+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "18f1aef733d1831bdad73217dad5a3b5ca5feb00",
   "source_parent": "e1a6005a0805e8cd8891d222ea7fb8cd71c9a97b",
@@ -10825,8 +10825,8 @@
       "host_injection_absent_in_builder": true
     },
     "full53": {
-      "state": "full Xcode and final unsigned artifact verified; signature running",
-      "final": {
+      "state": "Built, signed, deep verified, installed; actual launch REFUSED before Linux",
+      "final_unsigned": {
         "full_Xcode_exit": 0,
         "package": {
           "scope": "Actual FINAL app scene/pin/own resources/ARM64 ELF/callback metadata only, NOT runtime/device/Steam/game proof",
@@ -10847,9 +10847,31 @@
         "caller_and_helper_disassembly_sha256": "f6e459a0bd579e724b0a477b81b0c5ff8aecaf4c653617db6e707d00f9d0883a",
         "scope": "Final unsigned bytes/symbols only; not device/Steam proof"
       },
-      "observer_session_build": 66631,
-      "observer_session_sign": 70342,
-      "not_installed": true
+      "final_signed": {
+        "deep_strict": true,
+        "package": true,
+        "profiles": [
+          {
+            "bundle": "com.kuschqin.ideck.freshtest",
+            "Air": true,
+            "expiry": "2026-11-20T04:42:36Z"
+          },
+          {
+            "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+            "Air": true,
+            "expiry": "2026-11-20T04:42:34Z"
+          }
+        ],
+        "macho_sha256": "02d583e1b51c6629b7b475d8a5ba1d82777cf49eb1e79a90dd44139baa40be88",
+        "not_installed_yet": true
+      },
+      "signed": true,
+      "signed_receipt_sha256": "7046b967f92d4609f2455009b2ee774da84a9c6fc139c0b2580daba94d154ccd",
+      "install_exit": 0,
+      "install_receipt_sha256": "18008269bd166e139c9cea44d37f3365d98f607b9edb5c0f8923d71484237657",
+      "independent_installed_version": 53,
+      "install_UUID": "AEE12339-C654-431C-AAFE-1863B8240CB6",
+      "no_Linux_execution_or_UI_result": true
     },
     "Air_state": {
       "new_identity": {
@@ -10901,7 +10923,7 @@
       "Combined licensing exception scope unresolved; no binary distribution",
       "Bridge125, licensed Madeira game and return loop unimplemented"
     ],
-    "next_discriminator": "Finish live full53 build, inspect final linked grouping/fork symbols. Existing profiles may expire; revalidate fresh before signing. Do not restart active/unexpected Air instance. Then bounded same-prefix real Steam Library test when deployment authorized/available.",
+    "next_discriminator": "User reports actual Air OS prompt/opens installed53 through official flow; do not modify trust/lock/security or repeat refusal. Once permitted, one controlled fresh same-prefix launch; collect actual Library/input/memory/failures. Continue independent host work in meantime; no stable success or game bridge125 upgrade claimed.",
     "signing_preflight": {
       "old_embedded_main_expired": true,
       "new_existing_pair_found": true,
@@ -10975,13 +10997,151 @@
       "archive_sha256": "c9876c91683f6f48fd88a7c758ad69e05da5d74b29c6eb83f9bb00e0a4454530"
     },
     "host_concurrency_receipt_sha256": "d1764c2212254bc6d51aa13ddb6f7792bc27690b156151577ad455c50d674966",
-    "source_checkpoint": "b100272781203662c6afe1194ac299be1b424d9a",
+    "source_checkpoint": "c24ac82f15c080f2bffd9c931d6044ddc6472cb3",
     "signer_observation": {
       "handle": 70342,
       "exact_codesign_PID": 13616,
       "actual_target": "run42/hybrid53-air-sign/Madeira.app",
-      "state": "same original job running; not terminal/not installed",
+      "state": "completed exit0; original70342 terminal, do not resume/restart",
       "unrelated_other_target_left_untouched": true
+    },
+    "old_idle_session_end": {
+      "PID": 17126,
+      "fresh_phase": 0,
+      "guest_count": 0,
+      "SIGTERM_only": true,
+      "later_absence_verified": true,
+      "no_uninstall_or_data_migration": true
+    },
+    "launch53_gate": {
+      "error_code": 10002,
+      "domain": "com.apple.dt.CoreDeviceError",
+      "underlying": "FBSOpenApplicationServiceErrorDomain1 / FBSOpenApplicationErrorDomain3 Security",
+      "system_reason": "invalid code signature, inadequate entitlements or profile not explicitly trusted by user",
+      "receipt_sha256": "ca6e013d79385c928e697365ccec33676331096fe02901945ce3cc1fa25d0e98",
+      "raw_artifact": "run42/launch53-private.json",
+      "classification": "pre-Linux OS launch refusal, NOT Linux/CoW/Steam crash",
+      "local_signed_audit": {
+        "scope": "Read-only local signed main/helper audit, not device trust approval or runtime execution",
+        "rows": [
+          {
+            "bundle": "main",
+            "actual_signer_in_profile": true,
+            "critical_entitlements_match": true,
+            "Air_in_profile": true,
+            "valid_time": true,
+            "requested_entitlement_keys": [
+              "application-identifier",
+              "com.apple.developer.kernel.increased-memory-limit",
+              "com.apple.developer.team-identifier",
+              "get-task-allow",
+              "keychain-access-groups"
+            ]
+          },
+          {
+            "bundle": "helper",
+            "actual_signer_in_profile": true,
+            "critical_entitlements_match": true,
+            "Air_in_profile": true,
+            "valid_time": true,
+            "requested_entitlement_keys": [
+              "application-identifier",
+              "com.apple.developer.team-identifier",
+              "get-task-allow",
+              "keychain-access-groups"
+            ]
+          }
+        ],
+        "no_security_setting_changes": true
+      },
+      "local_audit_sha256": "c29a1068535c09d64e9a3bd0f53e39221e307a489b5c3dbd1ee4f97eb79daf83",
+      "pending_user_action": "Manually open iDeck Linux Lab on Air and report exact OS prompt; user alone handles any official developer trust/verification. No Mac unlock needed.",
+      "no_bypass_or_repeat_install_or_launch": true,
+      "not_proven_sole_trust_cause": true
+    },
+    "actual_ARM64_fork_CoW_guest": {
+      "evidence": {
+        "scope": "HOST actual ARM64 lazy/protection/fork/privateCoW fixture on combined copied stack; changed units/wrappers sanitized, engine not; NOT Air/Steam execution proof",
+        "guest_compile": [
+          "xcrun",
+          "clang",
+          "--target=aarch64-linux-gnu",
+          "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+          "-nostdlib",
+          "-static",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-stack-protector",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/lazy-pages-probe.c",
+          "-Wl,-e,_start",
+          "-o",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run42/cow-arm64-guest-v2/probe.elf"
+        ],
+        "host_compile": [
+          "xcrun",
+          "clang",
+          "-DIDECK_LAB_GUEST_LIFETIME=1",
+          "-DIDECK_LAB_NATIVE_LOG=1",
+          "-DIDECK_LAB_LAZY_PAGES=1",
+          "-fsanitize=address,undefined",
+          "-DGUEST_ARM64=1",
+          "-DENGINE_ASBESTOS=1",
+          "-DLOG_HANDLER_DPRINTF=1",
+          "-DISH_INTERNAL=1",
+          "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/vendor/LinuxRunner",
+          "-I/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+          "-I/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-Wno-unused-parameter",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LinuxLabRuntime.c",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabDeviceFS.c",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LabBridge.c",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/LaunchProtocol.c",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/app/NativeKernelLog.c",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/cow-guest-control.c",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run42/host-cow-stack/libish.a",
+          "-L/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/host",
+          "-lish_emu",
+          "-lfakefs",
+          "-lsqlite3",
+          "-o",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run42/cow-arm64-guest-v2/control"
+        ],
+        "guest_sha256": "3c2b87a17ed4de7dc6e5b86ec1f04ae0a4804867fb6e7ef0420697732f6f9906",
+        "archive_sha256": "f2c006390356d7dbda9ff2edaff97e69b518c35efc16851c9650b8c9a1a8e48b",
+        "log_sha256": "78f07f2cdf28d9cc01ca315149ee3ea4adb65a99c7cf93e6c7956e175f6d484d",
+        "exit": 0,
+        "checks": [
+          "unaligned-reservation=PASS",
+          "demand-zero-edges=PASS",
+          "independent-page-bytes=PASS",
+          "protect-first-readonly=PASS",
+          "readonly-kernel-write-refused=PASS",
+          "protect-middle-none=PASS",
+          "none-kernel-read-refused=PASS",
+          "neighbor-after-protection=PASS",
+          "partial-unmap=PASS",
+          "hole-kernel-read-refused=PASS",
+          "fixed-replace-hole=PASS",
+          "restore-protection=PASS",
+          "fork-child-wait=PASS",
+          "private-cow-survives=PASS",
+          "full-unmap-after-split=PASS",
+          "lazy-none-reservation=PASS",
+          "enable-only-first-page=PASS",
+          "adjacent-lazy-none-stays-inaccessible=PASS",
+          "enable-only-tail-and-free=PASS",
+          "complete=PASS"
+        ]
+      },
+      "receipt_sha256": "b6d66debaf4f03ba565185d94b6dd9184301233d0069f730426762e39a6f850d",
+      "first_harness_failure": "Initial generic host-embed omitted required private native_log_start and was correctly refused idle-5 before any guest. Dedicated runner starts own sink; corrected actual20checks pass. No runtime policy bypass."
     }
   }
 }

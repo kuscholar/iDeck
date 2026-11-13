@@ -1,3 +1,30 @@
+# CURRENT Run42:53 installed; OS launch refused pre-Linux; user prompt pending
+
+Original sign70342 terminal0, full/deep/mainhelper/package pass. SignedSHA
+02d583e1b51c6629b7b475d8a5ba1d82777cf49eb1e79a90dd44139baa40be88.
+Idle17126 revalidated phase0/guest0, ordinary SIGTERM+absence then samecontainer
+install53exit0; appsversion53 confirmed. UUID AEE12339-C654-431C-AAFE-1863B8240CB6.
+NO actual53 Linux/Steam execution: one launch CoreDevice10002/FBS Security3
+refused for generic signature/entitlement/profiletrust reason. Local actual
+signer/profile/Air/expiry/gettask/appID/team audit passes. Sole trust cause NOT
+proven. User asked to manually open Lab on Air, report actual prompt and do
+any official developer trust/verification themselves; question PENDING. Don't
+repeat installs/launches/refusal/Macunlock asks or bypass security/locks/auth.
+
+Independent HOST actual ARM64 ELF20checks PASS on combined lazy/fork/group
+stack (cow-arm64-guest-v2). Initial harness lacked private log initialization
+and correctly refused idle-5 before guest; corrected runner starts own sink.
+11native CoW/concurrency/rollback controls and7log/16ELF regressions also pass;
+NOT device UI/memory/stability proof. Source c24ac82 pushed. New runner/docs
+pending scoped signed-off checkpoint. Full goal ACTIVE, bridge125, licensed
+Madeira game/return unimplemented. No stable marker/unload/completion.
+
+Next read fresh user reply and actual Air state. Once OS allows execution,
+one controlled installed53 same-prefix run to Library/input/memory metrics.
+No old profile gate (current main/helper valid Nov20, old47 expired irrelevant).
+
+--- Earlier history; above supersedes old signing/process/build state ---
+
 # SIGNATURE WAIT VERIFIED: original70342, actual codesign13616 MAIN53
 
 Do not repeat/restart signing. Source b100272 pushed/readback. Extra HOST

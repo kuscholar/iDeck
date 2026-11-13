@@ -4283,3 +4283,41 @@ from qualified full53; only tests/evidence extended. Exact signing child13616
 currently targets the disposable53 MAIN app (original observer70342 live).
 Other codesign child targets unrelated rollback153 and is untouched. No
 new signing/install/restart attempt or claim of a blocked password/unlock.
+
+
+### Run42 deployment53 and pre-runtime OS gate (2026-11-13)
+
+Original signer70342 completed exit0; actual main/helper/deep-strict and final
+package checks pass. Signed Mach-O SHA256
+02d583e1b51c6629b7b475d8a5ba1d82777cf49eb1e79a90dd44139baa40be88.
+Fresh Air17126 still phase0/guest0 was identity-verified, ordinary SIGTERM
+ended it and absence was checked before upgrade. No forced kill/uninstall.
+Same .freshtest container install exit0, independent apps list53; installUUID
+AEE12339-C654-431C-AAFE-1863B8240CB6. No prefix/auth/game/save transfer.
+
+One actual launch refused BEFORE Linux: CoreDevice10002 -> FBS service1 /
+FBS app3 Security, OS says invalid signature, inadequate entitlements OR
+profile not explicitly user-trusted. Do not narrow this generic reason to a
+proven sole trust cause. Read-only local audit extracts public signer certs
+from disposable main/helper: actual certificates belong to embedded profiles,
+Air is present, Nov20 expiry valid, appID/team/get-task-allow match. Public
+certificate extraction first used the wrong optional-argument syntax; corrected
+--extract-certificates=PREFIX audit passes. No private-key/security modification.
+This is NOT a Linux crash or negative CoW group result. No repeated installation
+or launch; user asked to manually open Lab on Air and report exact OS prompt,
+handling only any required official trust/verification themselves. No Macunlock.
+
+Independent actual ARM64 ELF regression now passes20 checks on combined
+lazy+checked-fork+CoW-group copied kernel: demand-zero/protection, private
+fork isolation, partial unmap/replacement and complete cleanup. Changed
+memory/fork/mmap plus own wrappers sanitized, not entire interpreter. Initial
+generic harness omitted required private log sink and correctly failed idle-5
+BEFORE guest execution; dedicated cow-guest-control.c starts the sink, then
+test-cow-guest.py runs the existing real ELF fixture and checks all20results.
+Reproducible commands/hashes in private cow-arm64-guest-v2/evidence.json and
+redacted EVIDENCE.run42. Does NOT qualify device UI/stability/game/return.
+
+Signed source checkpoint c24ac82 pushed/readback; follow-up runner/evidence
+committed separately in allowed window. Full objective active, bridge125 and
+licensed native game/return still incomplete. Keep installed53/auth unchanged
+at user-only OS gate; no STABLE_SUCCESS/scheduler unload/goal completion.
