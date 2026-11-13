@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 38,
-  "recorded_at_utc": "2026-11-13T04:36:52.679213+00:00",
+  "latest_run": 42,
+  "recorded_at_utc": "2026-11-13T04:46:04.055654+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "18f1aef733d1831bdad73217dad5a3b5ca5feb00",
-  "source_parent": "815ddc555d7a1c3e10fdc067bf0ebf395ca0fdf7",
+  "source_parent": "e1a6005a0805e8cd8891d222ea7fb8cd71c9a97b",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -10711,6 +10711,207 @@
       "parent_child_bytes_and_final_accounting": "PASS",
       "no_physical_RSS_or_region_limit_or_sole_cause_claim": true,
       "next": "Discriminating HOST private CoW native-page grouping test, requiring same original data/flags/contiguous offsets, no shared/protection crossing; preserve rollback, file metadata and per-page accounting before any iOS build"
+    }
+  },
+  "run42": {
+    "source_parent": "e1a6005a0805e8cd8891d222ea7fb8cd71c9a97b",
+    "phase": "Frontend stability: qualify anonymous private CoW native grouping",
+    "hypothesis": "Compatible neighboring private anonymous CoW pages cause avoidable native-page mapping amplification; grouping may reduce capacity pressure. Not yet device/root-cause proof.",
+    "minimal_patch": "DefaultOFF --cow-native-group; original same backing/flags/contiguous offsets inside one native-aligned group. File/memfd/shared/ptrace use original policy; allocate copy+data before any PTE/refcount/generation mutation. No fallible commit; logical accounting unchanged.",
+    "host_controls": {
+      "scope": "HOST real anonymous CoW mapping/granularity and rollback; memory-unit sanitized, dependencies not. Not iOS/Steam/capacity/game proof",
+      "cases": [
+        {
+          "case": "granularity-measure",
+          "exit": 0,
+          "log_sha256": "53449c18bfb4a690932af767a7ee5d49eb0af6e24daa58e9c06c5ba54344ac16"
+        },
+        {
+          "case": "boundary-all",
+          "exit": 0,
+          "log_sha256": "e78c93970cffc24f3138e069522605037e573ca35e1ce76900ff79bac5c7b0fe"
+        },
+        {
+          "case": "boundary-protection",
+          "exit": 0,
+          "log_sha256": "f053367258c3f0448ef898c2bd30281ed8e94d74a7702b1b952dfa8edf642c24"
+        },
+        {
+          "case": "boundary-shared",
+          "exit": 0,
+          "log_sha256": "a0ce436ae4a7b5fb31a2d4c366e95b1efc56d1749d5e4966c2441d9939dd5887"
+        },
+        {
+          "case": "boundary-hole",
+          "exit": 0,
+          "log_sha256": "2d0072f3ad1d61d24c95ef3043b109bde1e32a5cef6df8f0215c8e5df875e2ef"
+        },
+        {
+          "case": "boundary-different",
+          "exit": 0,
+          "log_sha256": "0a025e77df37a30580347d93e7f7b98139a2819aa9197f76a312dd03f7e5f76a"
+        },
+        {
+          "case": "boundary-offset",
+          "exit": 0,
+          "log_sha256": "60bb594571d996fc95eaa83380ac7a28e1aeb2cc22fb5ff1fde95ab57d81ac54"
+        },
+        {
+          "case": "boundary-file",
+          "exit": 0,
+          "log_sha256": "55d5875de9e6a7e76dc1a9da1aa697460f30d1973b83c2eca027656680d8b19f"
+        },
+        {
+          "case": "boundary-mmap-fail",
+          "exit": 0,
+          "log_sha256": "732b7802b0689c68f81ed24f04806005f5f595a39b567be0bf7a33a04f4624f2"
+        },
+        {
+          "case": "boundary-data-fail",
+          "exit": 0,
+          "log_sha256": "937c8dedb77a01fdbdc9aeb7d3a0ad6bdc4346a2e1e5446f56ed847fc944a067"
+        }
+      ],
+      "archive_sha256": "65c544bff9b74ef2da701df2e31595e0499c7a814c214cd791b7076a9319f3e1"
+    },
+    "host_receipt_sha256": "4e93a3827d47814adad589bfb6bbed647254b95211f769b2b22bf0b2dfb42666",
+    "baseline": "run41 actual64writes/64backings/256KiBguest/1MiB native-rounded mapping capacity",
+    "grouped_measured": "same64writes/16backings/256KiBguest/256KiB native-rounded mapping capacity",
+    "extra_tests": "Both parent/child writes, partial grouped unmap/refcount/accounting; different backing/offset, file fallback metadata, shared/protection/hole, injected mmap/data failures preserve old bytes/refcounts/generation.10 cases.",
+    "regressions": {
+      "scope": "private bounded native logging and real host ARM64 kernel controls; no Steam/iPad/crash fix claim",
+      "tests": [
+        {
+          "mode": "privacy-cap",
+          "status": 0,
+          "log_sha256": "6d0d53b2d46735be89494ad0e50e06fd0579bc1e22a35f281f7a4fd1d0b1b39d"
+        },
+        {
+          "mode": "resources",
+          "status": 0,
+          "log_sha256": "537bf5ba3872c0aaeabe29cb5d2ab1b62e563238ca79d5699231ded3e3625405"
+        },
+        {
+          "mode": "kernel",
+          "status": 0,
+          "log_sha256": "ca163a9314afd3569a6f80d5eb6e20d0c168af615a22b79d21d9f4ef7f1dbf57"
+        },
+        {
+          "mode": "health",
+          "status": 0,
+          "log_sha256": "c3b16287a8bec5d7bc06b3813edd7c815046ca2bf1d4e7d2a307cb4cfe8587b2"
+        },
+        {
+          "mode": "health-collision",
+          "status": 0,
+          "log_sha256": "989e90e47a1c773744899987041058491f6ea175bd465b831707680e739c2ecb"
+        },
+        {
+          "mode": "nonprivate",
+          "status": 0,
+          "log_sha256": "d729613cd47fa773d15d039ab1852d584b3063fca242f079c188626ecfbb743e"
+        },
+        {
+          "mode": "symlink",
+          "status": 0,
+          "log_sha256": "d729613cd47fa773d15d039ab1852d584b3063fca242f079c188626ecfbb743e"
+        }
+      ]
+    },
+    "ios_components": {
+      "units": 22,
+      "receipt_sha256": "5f702ccfae79d7b800a12645ccde92440f0da73f1987a6e2b992da1d4970ad5d",
+      "kernel_archive_sha256": "4d9ab12d1b32abd093513f96793a38a23d419d0712804048079e3707226c9253",
+      "host_injection_absent_in_builder": true
+    },
+    "full53": {
+      "state": "full Xcode and final unsigned artifact verified; signature running",
+      "final": {
+        "full_Xcode_exit": 0,
+        "package": {
+          "scope": "Actual FINAL app scene/pin/own resources/ARM64 ELF/callback metadata only, NOT runtime/device/Steam/game proof",
+          "scene_delegate": "LinuxLabSceneDelegate",
+          "rootfs_pin": "8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a",
+          "resources_sha256": {
+            "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+            "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+            "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+          },
+          "ARM64_ELF": true,
+          "cold_callback_scheme": "ideck-linux-lab",
+          "build": "53"
+        },
+        "macho_sha256": "20346e078795a0cb0bafc3acd567fcfca23e1119289683a44e34876df4de32aa",
+        "group_marker": true,
+        "host_injection_absent": true,
+        "caller_and_helper_disassembly_sha256": "f6e459a0bd579e724b0a477b81b0c5ff8aecaf4c653617db6e707d00f9d0883a",
+        "scope": "Final unsigned bytes/symbols only; not device/Steam proof"
+      },
+      "observer_session_build": 66631,
+      "observer_session_sign": 70342,
+      "not_installed": true
+    },
+    "Air_state": {
+      "new_identity": {
+        "schema": 1,
+        "byte_limit": 4194304,
+        "build": "52",
+        "file": "kernel-17126-667321-72793000.log",
+        "health_file": "health-kernel-17126-667321-72793000.log.json",
+        "physical_memory_bytes": 4056186880,
+        "pid": 17126
+      },
+      "health": {
+        "schema": 1,
+        "pid": 17126,
+        "build": 52,
+        "native_log": "kernel-17126-667321-72793000.log",
+        "sequence": 1,
+        "mono_ms": 667321077,
+        "phase": 0,
+        "initial_call_returned": false,
+        "tracked_guest_entries": 0,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 4916872,
+        "cpu_valid": 1,
+        "cpu_user_us": 63288,
+        "cpu_system_us": 99433,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": -19,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        }
+      },
+      "no_stop_launch_install": true,
+      "health_is_phase0_sequence1_not_current_Steam_proof": true
+    },
+    "limitations": [
+      "Host sanitizer covers changed memory unit/harness, dependencies not whole engine",
+      "Mapping capacity is NOT measured physical RSS/VM region limit",
+      "No CoW grouping device execution or Steam interaction/stability evidence",
+      "Combined licensing exception scope unresolved; no binary distribution",
+      "Bridge125, licensed Madeira game and return loop unimplemented"
+    ],
+    "next_discriminator": "Finish live full53 build, inspect final linked grouping/fork symbols. Existing profiles may expire; revalidate fresh before signing. Do not restart active/unexpected Air instance. Then bounded same-prefix real Steam Library test when deployment authorized/available.",
+    "signing_preflight": {
+      "old_embedded_main_expired": true,
+      "new_existing_pair_found": true,
+      "valid_matching_Air_profiles": 2,
+      "same_certificate": true,
+      "expiry_UTC": [
+        "2026-11-20T04:42:34Z",
+        "2026-11-20T04:42:36Z"
+      ],
+      "no_new_profile_or_account_security_action": true
     }
   }
 }

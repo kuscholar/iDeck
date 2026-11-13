@@ -25,6 +25,7 @@ p.add_argument('--register-shared-library',action='store_true',help='Register th
 p.add_argument('--retire-empty-probe',action='store_true',help='Retire only the exact empty legacy Control probe directories through Linux VFS')
 p.add_argument('--file-map-cleanup',action='store_true',help='Release native file backings only when pt_map rejects ownership; no cap/allocation retry')
 p.add_argument('--fork-map-failure',action='store_true',help='Return ENOMEM on failed child page-table/reservation allocation; no capacity/retry changes')
+p.add_argument('--cow-native-group',action='store_true',help='Group compatible private anonymous CoW pages inside one native-page range; no file/shared/cap changes')
 a=p.parse_args();ns,base,out=(getattr(a,n).resolve() for n in ('namespace_root','artifacts','output'))
 assert all(str(x).startswith('/Volumes/easystore/') for x in (ns,base,out)) and not out.exists()
 assert not a.capture_launch or (a.shared_library and a.metal_drain),'Capture integration needs explicit shared library and tracked Metal boundary'
@@ -58,6 +59,10 @@ if a.fork_map_failure:
     run('build-fork-map-failure.py',src,build,kernel,out/'fork-map-failure',
         '--memory-source',out/'lazy/memory.c','--mmap-source',out/'advice/mmap.c')
     kernel=out/'fork-map-failure/libish.a'
+if a.cow_native_group:
+    memory=out/'fork-map-failure/memory.c' if a.fork_map_failure else out/'lazy/memory.c'
+    run('build-cow-native-group.py',src,build,kernel,memory,out/'cow-native-group')
+    kernel=out/'cow-native-group/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
 runtime=out/'runtime';runtime.mkdir()
 for source,name in [(kernel,'libish.a'),(out/'engine/libish_emu.a','libish_emu.a'),(build/'libfakefs.a','libfakefs.a')]:shutil.copy2(source,runtime/name)
@@ -114,5 +119,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'linuxrunner':original['linuxrunner'],'namespace_base_evidence_sha256':hashof(ns/'evidence.json'),
  'namespace_header_sha256':hashof(ns/'LinuxSymbolNamespace.h'),'base_archives_unchanged':True,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

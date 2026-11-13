@@ -4224,3 +4224,53 @@ remains parked/uninstalled. No retry/assertion/cap/watchdog/FEX/Valve change.
 Current allowed commit window reopened; publish only scoped source/tests/redacted
 evidence checkpoint after review. Existing profiles expire04:43:44Z Nov13;
 revalidate before further deployment, never bypass expiration or user approval.
+
+
+## Run42: anonymous CoW native-page grouping (2026-11-12)
+
+Baseline signed source e1a6005 now pushed/read back on the experiment branch;
+main2ac39be preserved. Mount UUID and remote/worktree state reverified.
+Current Air17126 belongs to installed52 and has its own receipt, phase0,
+zero guests/workers, sequence1. No stop, relaunch, upgrade or credential action.
+This supersedes earlier stale16772/17010 receipts; it is not a live Steam result.
+
+Observed52 native file ENOMEM/RFB allocation abort remains the actual failure.
+Hypothesis: compatible anonymous CoW pages amplify native mapping capacity.
+New defaultOFF --cow-native-group overlays private memory.c, original vendor
+unchanged. Only same-backed/same-flag/contiguous-offset private anonymous pages
+inside one native-aligned group qualify. File/memfd/shared/ptrace use original
+path; mixed protections/holes/backings/offsets stop expansion. Allocate/copy
+before any mutation; no fallible operation after invalidation/commit starts.
+Original parent/child accounting/refcount ownership stays per logical page.
+
+Discriminating HOST test now reports64writes ->16backings and256KiB rounded
+mapping capacity, compared with baseline64backings/1MiB. Same256KiB guest data.
+Actual10 kernel controls pass (memory unit+harness ASan/UBSan): parent AND child
+writes, partial group unmap, mixed protection/shared/hole, different backing/
+offset, file fallback offset/fd retention and mmap/data failure rollback.
+No physical RSS/native region limit/device benefit claim. First runner lacked
+parent output directory; fixed own mkdir(parents=True), no kernel failure.
+
+Existing7 logging modes and16 actual ARM64 ELF checks pass against grouped
+copied memory archive.22 iOS units compile, no host failure injection in iOS.
+Full unsigned53 building in private run42/hybrid53 (observer66631); preserve
+this job and read its actual result instead of duplicating it. Not signed or
+installed; no final Mach-O/device/grouping UI/game/return proof yet. Exact
+artifact hashes and commands in EVIDENCE.run42 and private receipts.
+
+Reproduce HOST: python3 experiments/linux-steam/tools/test-cow-native-group.py
+ARTIFACTS NEW_PRIVATE_OUTPUT. Preserve profile expiration checks (main expires
+2026-11-13T04:43:44Z); do not bypass expiry or infer crash from signing refusal.
+Next finish full53, verify actual linked branches/marker and then qualify actual
+Air Steam rendering/Library under normal memory pressure, preserving saved
+auth/root/game/save. Goal active; no STABLE_SUCCESS or scheduler unload.
+
+Full53 Xcode subsequently passed. Final actual unsigned Mach-O contains the
+group marker and mem_ptr -> ideck_cow_native_group call; negative/error branch
+and invalidation/release calls inspected in bounded disassembly. No host
+injection symbol present. Final package/scene/rootfs/guest resources pass.
+Old embedded47 profile expired; read-only Xcode profile inventory finds an
+already-existing valid pair matching Air/Lab/helper/same certificate, expiring
+Nov20 04:42:34/36Z. No account/profile/security change. Disposable53 signature
+is running (observer70342); not installed yet. Do not repeat obsolete expiry
+gate or restart a build already completed.

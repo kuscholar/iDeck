@@ -7,6 +7,10 @@
 #include "kernel/calls.h"
 #include "kernel/mm.h"
 #include "fs/real.h"
+#ifndef IDECK_COW_GROUPED
+#define IDECK_COW_GROUPED 0
+#endif
+int ideck_cow_inject_failure;
 int main(void) {
     assert(mount_root(&realfs,"/")==0 && become_first_process()==0);
     const page_t first=0x400;const pages_t count=64;
@@ -26,7 +30,8 @@ int main(void) {
         if(j==distinct){seen[distinct++]=p->data;rounded_total+=(p->data->size+real_page_size-1)/real_page_size*real_page_size;}
     }
     assert(atomic_load(&anon_page_count)==charged);
-    assert(distinct==count && real_page_size>=PAGE_SIZE);
+    unsigned expected=IDECK_COW_GROUPED?(unsigned)(count*PAGE_SIZE/real_page_size):(unsigned)count;
+    assert(distinct==expected && real_page_size>=PAGE_SIZE);
     printf("HOST original_cow_backings=%u guest_bytes=%llu native_page_size=%zu rounded_mapping_bytes=%zu amplification=%zu\n",distinct,(unsigned long long)count*PAGE_SIZE,real_page_size,rounded_total,(size_t)(rounded_total/(count*PAGE_SIZE)));
     mem_destroy(&child);assert(!pt_unmap(current->mem,first,count));assert(atomic_load(&anon_page_count)==0);
     puts("Parent writes isolated from child; accounting returns0; this measures rounded mapping capacity, NOT physical resident bytes or exact VM region count");

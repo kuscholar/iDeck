@@ -1,3 +1,39 @@
+# UPDATE Run42: full53+final Mach-O PASS; signature live70342, not installed
+
+Actual helper/caller/error branch/invalidate/release inspected; HOST injection
+absent. Package resources pass. Build66631 completed0, do NOT rerun. Signature
+70342 uses already-existing current Xcode profiles matchingAir/Lab/helper/cert,
+expire Nov20 04:42:34/36Z. Old embedded47 expired but not current gate. No
+account/security/profile changes. Re-poll70342 then revalidate current17126
+identity/health before upgrade. No actual53 device benefit/test yet.
+
+# CURRENT Run42: HOST CoW grouping10pass, full53 live build observer66631
+
+Read latest MD/EVIDENCE.run42 FIRST. Parent checkpoint e1a6005 pushed/readback.
+New defaultOFF --cow-native-group qualifies compatible PRIVATE ANON same-backed
+flags/offsets inside native-page group only; original file/shared/ptrace paths
+unchanged. HOST64writes16backings256KiBrounded vs baseline64backings1MiB.
+10controls memory-unitASan/UBSan incl both-side writes, partialunmap, boundaries,
+filemetadata fallback and injectedfailrollback PASS. Existing7log/16ELF pass;
+22iOS compile. No device benefit/RSS/exactregionlimit/solecause claim.
+
+Actual full unsigned53 building private run42/hybrid53, live exec session66631.
+Re-poll same handle/read build-result+xcode.log; DON'T restart due timeout.
+Not signed/installed/final artifact verified yet. Profile main expires
+2026-11-13T04:43:44Z, helper+2sec; revalidate before every signing/use.
+
+Air fresh current17126 same52 installedpath, own native receipt now exists,
+healthphase0/sequence1/guest0. No action taken, preserve/revalidate before any
+upgrade. Actual52test17010 died RFB NSAllocateMemoryPages/NSData abort after
+native mmapENOMEM; NOT50 forkNULL. No stableUI/game/return; bridge125.
+
+CLIonly/no Macunlock/security/auth/Guard/trust/FEX/Valve/vendor/Codex edits.
+Main2ac39be unchanged. Run42 source pending scoped signed-off allowed-window
+checkpoint; no STABLE_SUCCESS/unload/completion. Finish full53/final marker
+then actual Air discriminator when signing/connectivity permit.
+
+--- Earlier history; above supersedes stale build/process fields ---
+
 # CURRENT Run41: actual52 RFB allocation abort; qualify CoW granularity next
 
 52 full build/final linked branch inspection/deep matchingAir sign/install and

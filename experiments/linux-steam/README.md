@@ -429,3 +429,19 @@ copy/clone cases cover root/intermediate/leaf and reservation failures, success,
 refcounts and partial anonymous accounting. HOST3 changed units ASan/UBSan;
 no iOS failure injection, engine-wide allocator qualification or capacity fix.
 Use only new private output paths. See experiment evidence for device results.
+
+
+Anonymous CoW granularity experiment (Run42), default **off**:
+`--cow-native-group` in `build-hybrid-linux-runtime.py`. Only compatible
+private anonymous pages in a native-page-aligned interval qualify; file,
+memfd, shared and ptrace mappings retain the previous path. Host controls:
+
+```sh
+python3 experiments/linux-steam/tools/test-cow-native-group.py \
+  "$LINUX_LAB_ARTIFACTS" "$LINUX_LAB_ARTIFACTS/NEW-private-cow-control"
+```
+
+Ten actual kernel cases cover granularity, both-side writes/partial unmap,
+boundaries and allocation rollback. Host injection is explicitly prohibited
+in iOS builds. Native-rounded mapping bytes are not physical RSS or an exact
+VM-region count. Read device evidence before claiming Steam improvement.
