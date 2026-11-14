@@ -13140,7 +13140,7 @@
       "no_restart_upgrade_debugger_or_terms_acceptance": true
     },
     "single_input": {
-      "user_reply": "\u5141\u8bb8",
+      "user_reply": "允许",
       "scope": "The previously requested one Escape",
       "executed_count": 1,
       "transport": {
@@ -13206,5 +13206,598 @@
       "Combined binary distribution license gate remains unresolved; private signing only"
     ],
     "next": "Async user choice pending: explicit end-current-Lab+upgrade60, or preserve session and user lightly touches screensaver. Preserve current59 until that answer; no repeated Escape or terms acceptance. After genuine UI returns inspect installation/custom tool/Play bridge, legitimate Madeira game and complete return/stability."
+  },
+  "run51": {
+    "phase": "Actual same-Air Build60 authenticated desktop Library, BPM home and BPM Library; after screensaver hide content black then white; preserve live session, no game/return success",
+    "source_parent": "bb3ac021dd19a28bc7c4adba3c7f2c0d8e366423",
+    "user_reply": "允许结束当前 Lab，升级 Build 60",
+    "selected_device": "Air4/iPad13,1; CoreDevice AB2C7829-AA96-580F-837A-C82244CFF022",
+    "old_process": {
+      "PID": 19056,
+      "exact_URI_verified": true,
+      "normal_termination_exit": 0,
+      "absence_verified_before_install": true
+    },
+    "new_process": {
+      "PID": 19384,
+      "build": 60,
+      "installed_UUID": "B55DD703-F281-4556-9A49-09550951953B",
+      "install_exit": 0,
+      "launch_exit": 0,
+      "native_receipt": {
+        "schema": 1,
+        "byte_limit": 4194304,
+        "build": "60",
+        "wine_initial_file": "wine-initial-kernel-19384-828357-531478000.log.json",
+        "file": "kernel-19384-828357-531478000.log",
+        "health_file": "health-kernel-19384-828357-531478000.log.json",
+        "physical_memory_bytes": 4056186880,
+        "pid": 19384
+      },
+      "initial_health": {
+        "schema": 1,
+        "pid": 19384,
+        "build": 60,
+        "native_log": "kernel-19384-828357-531478000.log",
+        "sequence": 5,
+        "mono_ms": 828397539,
+        "phase": 7,
+        "initial_call_returned": false,
+        "tracked_guest_entries": 20,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 749308632,
+        "cpu_valid": 1,
+        "cpu_user_us": 90750852,
+        "cpu_system_us": 5082086,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      },
+      "initial_Wine_receipt": {
+        "native_log": "kernel-19384-828357-531478000.log",
+        "generation": 0,
+        "observer_error": 0,
+        "schema": 1,
+        "create_error": 0,
+        "body_exit_code": 0,
+        "phase": 0,
+        "body_result_source": 0,
+        "initial_joined": 0,
+        "game_exit_qualified": false,
+        "pid": 19384,
+        "initial_created": 0,
+        "all_Wine_workers_qualified": false,
+        "build": 60
+      },
+      "latest_health": {
+        "schema": 1,
+        "pid": 19384,
+        "build": 60,
+        "native_log": "kernel-19384-828357-531478000.log",
+        "sequence": 1511,
+        "mono_ms": 843457751,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 142,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2093537680,
+        "cpu_valid": 1,
+        "cpu_user_us": 23443607713,
+        "cpu_system_us": 1670343144,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 12,
+          "last_action": 7,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      }
+    },
+    "storage": "Same isolated bundle upgraded in place, no uninstall or prefix/account transfer. Original apps/main/games/saves untouched.",
+    "actual_screen": "Physical screenshots prove real desktop Library, real BPM home/menu and all40/installed0 Library. Later screensaver, black after pointer wake, then white blank; no game executed.",
+    "updater": "Official1792618285 extraction started16:29:37UTC, restart/verify16:32:51/52; saved login/UI subsequently restored. Version0 re-extraction remains unexplained, not bypassed.",
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run51",
+    "artifacts_sha256": {
+      "receipt60-private.json": "f6394c25e162ef14bfff12f7107b1f269bde2a4fb6e1834a9bcf628e64e11de6",
+      "health60-first-private.txt": "b360767b0c5e1a7bd6461b81c8467df27e638339cb8731d79a4ebf3ebd18c0ec",
+      "wine60-first-private.txt": "6402b318e8fd076294d0546486b38625109b95ebfa23b86cc214423db6ecdfff",
+      "bootstrap60-first-private.txt": "15bbe75d263004821653fc04eb9dd07a01e1c7d51234d08fbbebd57e2d92fb4f",
+      "screen60-first-private.png": "8333c32e4aab9002d7b141c7e3425fc3dfac445b3e4e80f8ae97bf5209b9a334",
+      "screen60-progress-private.png": "4560bb9deafc9341302ed461a7ac0167e428cbfbcbe40e49a26ac22ce0b99581",
+      "bootstrap60-progress-private.txt": "15bbe75d263004821653fc04eb9dd07a01e1c7d51234d08fbbebd57e2d92fb4f",
+      "screen60-library-later-private.png": "e7ff2c537573e6449ad04122165338d71e2c3715a398bb4bd46447527ec69898",
+      "screen60-bpm-later-private.png": "ffcdaa0799c1a52ff68d1ce2c1ba180f8266e78d5a11d2be5c2095730d328419",
+      "screen60-bpm-library-settled-private.png": "7b9fdf45039ec02cf756dc7b149aa572ba298b2361fa9daeb2108c728b9e115e",
+      "screen60-after-pointer-wake-private.png": "d7decdd0c4306df2ec0283126b3eb8bd36301385e153463a2a0fa5d22a54e112",
+      "screen60-after-fresh-frame-private.png": "b92e8d8b376fc7ac925c49e7f46111ebd15b46f3f760c631f0fa2fa08ee1486b",
+      "webhelper60-wake-private.txt": "de626d1b42996e22b583174b5cd001475a1c2ad4ed681f1b1c1314c7dc9d0230",
+      "health60-post-sample-private.txt": "ebb3c57836faab94dd9fcfaf47d76eb8ac2ea1a3964ffd2968e4e3c2dfdde01d",
+      "native60-black-private.txt": "b7d6078256f70d68b51295f823a3e7b417b6abb136a23b990c6a3aef1a9fff8f",
+      "rfb-frame-observer/fresh-device-frame-private.png": "ac8ad7e38a63fbcad827c43f9c08f9c742706a7875d8562acdd057779e66c216",
+      "rfb-frame-observer/observer-result.json": "55c3500c3e87fdc26da55b1ae3fd807b5465b3b64996876bd9173eb94be91b33",
+      "screen60-resumed-private.png": "23b05d8696c0d131934861d2e35295f52e3157705f6b00a4c72db8009a13cd74",
+      "x11-state-real/evidence.json": "72d2567eb94072f0d2586f33f92d3b4171f1f76e1294d90f8dad8bb998c9dd5f",
+      "x11-state-real/runtime.log": "7f3af07c46689730de4adf7ca3dc472a4d82a792e67f0f2b50b835df91e77cd7",
+      "health60-final-private.json": "d5e73e21fd7225ac48a0e29d190c856dd721bb0f9400804438ce7bc07273a6a9",
+      "webhelper60-final-private.txt": "8a725410c0f4f47677e26728c14d2f58e7945e0ee37b0988413fe6a7624906d8",
+      "webhelper60-final-categorical.json": "e398bcd319c35f1fef5abddfeba3afc7e45fd34fcb075defaec19eabd8bf082f"
+    },
+    "limits": [
+      "Source/build/installed60 distinct from real UI evidence. Actual desktop+BPM navigation confirmed, no stable game/return qualification.",
+      "Library has40 titles/installed0; no game install/Steam Play request. Bridge125 diagnostic, native Winegeneration0/game_exit false.",
+      "Native log4MiB capped; partial numeric task snapshot cannot prove no fault/deadlock/all-worker state.",
+      "No terms/auth/Guard/trust/security/OS changes, no active60 restart or overwrite.",
+      "Read-only host ps approval review failed due usage limit; not executed and not a determination of unsafe action. No bypass/retry.",
+      "Finalhealth1511/142entries/2093537680bytes remains guest-active, bridge0 and navigation12; no fresh game/return or body execution. All4 browser-unresponsive lines in fresh copied cumulative log are historical, not current60. Screensaver lifecycle still advances, so cannot infer browser death from blank frame."
+    ],
+    "next": "Preserve exact19384/UUID pending next fresh identity check. Inspect reference WM/session behavior; prepare bounded numeric X11 viewability/focus evidence or isolated WM control before next UI experiment. Continue real tool/game/return goal.",
+    "observation_UTC": "2026-11-14T20:27:58.131457+00:00",
+    "observed_input": {
+      "navigation_receipt_sequence": 12,
+      "last_action": 7,
+      "actual_UI_response": [
+        "desktop Library",
+        "BPM transition/home",
+        "back opens MainMenu",
+        "down/activate opens Library"
+      ],
+      "limits": "Dispatch-only ACK does not establish every key delivered or selection. Five grid keys sent but selected title not proven; never activated. No credential/EULA automation."
+    },
+    "blank_discriminator": {
+      "screensaver_created_UTC": "16:41:55",
+      "screensaver_visible_UTC": "16:41:59",
+      "one_fixed_pointer_action_UTC": "16:43:30",
+      "actual_webhelper_Screensaver_WasHidden": 1,
+      "after_hide": "physical black; later separate shared read-only RFB and physical frame white blank",
+      "one_back_after_hide": "dispatch acknowledged; no visible menu or new MainMenu WasHidden0",
+      "causality": "Not simultaneous captures; no claim observer caused color change or sole native Metal fault. No window manager in current Xvfb/x11vnc session; investigate window mapping/focus before causal patch."
+    },
+    "sampler": {
+      "status": 21,
+      "error": "Cannot find process for provided pid",
+      "timeout": false,
+      "post_check": "Exact same19384/installationUUID still live and health advances; sampler failure is not crash evidence",
+      "retry": false
+    },
+    "fresh_shared_RFB": {
+      "capture_exit": 0,
+      "forward_exit": 0,
+      "shared_ClientInit": true,
+      "device_input_sent": false,
+      "Steam_credentials_used": false,
+      "frame_size": [
+        1280,
+        800
+      ],
+      "image": "white blank with pointer; later physical screenshot also white",
+      "transport": "existing own app display port5993 through selected-device usbmuxd public ListDevices/Connect; no pairing record operations; own transport secret private",
+      "observers": "both terminal0, no persistent observer"
+    },
+    "official_steam_ELF": {
+      "machine": "AArch64",
+      "sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+      "bytes": 10124968,
+      "limit": "Read-only disk copy, not all mapped bytes"
+    },
+    "independent_implementation": {
+      "purpose": "Distinguish actual X11 viewability/geometry/input-focus from CEF rendering when content goes blank, before adding window manager",
+      "source": "experiments/linux-steam/guest/x11-window-state.c",
+      "scope": "HOST mocked read-only X11 protocol controls and actual static ARM64 Linux ELF build; NOT LinuxRunner execution or Steam/Air/UI validation",
+      "cases": 19,
+      "ELF_sha256": "850282bb7d1683de241b2892db81d84c1ed4b3e22ea3ef45f43d81300832e1d7",
+      "ELF_bytes": 8656,
+      "source_sha256": {
+        "guest/x11-window-state.c": "53ccbaea3e669c9b3a522f38f0de697935da60ad68948c60ed43f59cd5126d2f",
+        "tools/x11-state-control.c": "434c991b1ef4517da791f794ae66e189b1861160c3bd2e8ad8a6da10ae8ea03c",
+        "tools/test-x11-state.py": "37d72e126334278df17238c8956631c1269868c3cd09bc750e82ba95722dbc53"
+      },
+      "controls": "Actual protocol/transport with fragmented reads/writes/EINTR, null or nested focus, top32 child cap plus extra focus, disappearing Window/Drawable valid flags, malformed lengths/sequence/opcodes, EOF, deadline, refused/nonblocking connection errors; ASan/UBSan",
+      "read_only": "Fixed display99, only GetWindowAttributes/GetGeometry/QueryTree/GetInputFocus. No titles/properties/pixels/input/client mutation. Numeric metadata only; non-atomic snapshot explicit. Max20s/32children+focus,65536byte reply cap.",
+      "validation_limits": "Actual ARM64 LinuxRunner/Xvfb/Xlib synthetic own-window execution passed, NOT Air/Steam/CEF execution, no causal WM fix. NOT bundled/installed; live60 unchanged.",
+      "rejected_attempts": [
+        "V1 fixture asserted absolute clock<=21500 instead of elapsed deadline; corrected fixture; no production timeout change.",
+        "V2 cross-link failed because resolving ld.lld symlink changes multicall argv0 to lld; preserve original ld.lld name.",
+        "Review adds explicit attributes_valid/geometry_valid to avoid treating vanished window default map_state0 as actual unmapped."
+      ],
+      "actual_host_Linux_execution": {
+        "scope": "HOST real ARM64 LinuxRunner/Xvfb/Xlib own-window state transitions, NOT Air/Steam/CEF/game qualification",
+        "exit": 0,
+        "elapsed_seconds": 2.859,
+        "cases": 4,
+        "ids": {
+          "root": 543,
+          "a": 2097153,
+          "b": 2097154,
+          "c": 2097155
+        },
+        "reports": [
+          {
+            "schema": 1,
+            "status": 0,
+            "error": 0,
+            "requests": 10,
+            "root": 543,
+            "root_width": 640,
+            "root_height": 480,
+            "focus": 2097153,
+            "revert_to": 1,
+            "children_total": 3,
+            "children_recorded": 3,
+            "focus_extra": 0,
+            "elapsed_ms": 1,
+            "atomic_snapshot": false,
+            "Steam_UI_qualified": false,
+            "root_attributes": {
+              "id": 543,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 0,
+              "y": 0,
+              "width": 640,
+              "height": 480
+            },
+            "windows_bottom_to_top_then_extra_focus": [
+              {
+                "id": 2097153,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 2,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 19,
+                "y": 23,
+                "width": 64,
+                "height": 32
+              },
+              {
+                "id": 2097154,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 2,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 119,
+                "y": 123,
+                "width": 160,
+                "height": 90
+              },
+              {
+                "id": 2097155,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 0,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": -9,
+                "y": 8,
+                "width": 45,
+                "height": 27
+              }
+            ]
+          },
+          {
+            "schema": 1,
+            "status": 0,
+            "error": 0,
+            "requests": 10,
+            "root": 543,
+            "root_width": 640,
+            "root_height": 480,
+            "focus": 2097154,
+            "revert_to": 1,
+            "children_total": 3,
+            "children_recorded": 3,
+            "focus_extra": 0,
+            "elapsed_ms": 1,
+            "atomic_snapshot": false,
+            "Steam_UI_qualified": false,
+            "root_attributes": {
+              "id": 543,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 0,
+              "y": 0,
+              "width": 640,
+              "height": 480
+            },
+            "windows_bottom_to_top_then_extra_focus": [
+              {
+                "id": 2097153,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 0,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 19,
+                "y": 23,
+                "width": 64,
+                "height": 32
+              },
+              {
+                "id": 2097154,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 2,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 119,
+                "y": 123,
+                "width": 160,
+                "height": 90
+              },
+              {
+                "id": 2097155,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 0,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": -9,
+                "y": 8,
+                "width": 45,
+                "height": 27
+              }
+            ]
+          },
+          {
+            "schema": 1,
+            "status": 0,
+            "error": 0,
+            "requests": 10,
+            "root": 543,
+            "root_width": 640,
+            "root_height": 480,
+            "focus": 2097153,
+            "revert_to": 1,
+            "children_total": 3,
+            "children_recorded": 3,
+            "focus_extra": 0,
+            "elapsed_ms": 1,
+            "atomic_snapshot": false,
+            "Steam_UI_qualified": false,
+            "root_attributes": {
+              "id": 543,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 0,
+              "y": 0,
+              "width": 640,
+              "height": 480
+            },
+            "windows_bottom_to_top_then_extra_focus": [
+              {
+                "id": 2097153,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 2,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 19,
+                "y": 23,
+                "width": 64,
+                "height": 32
+              },
+              {
+                "id": 2097154,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 2,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 119,
+                "y": 123,
+                "width": 160,
+                "height": 90
+              },
+              {
+                "id": 2097155,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 0,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": -9,
+                "y": 8,
+                "width": 45,
+                "height": 27
+              }
+            ]
+          },
+          {
+            "schema": 1,
+            "status": 0,
+            "error": 0,
+            "requests": 8,
+            "root": 543,
+            "root_width": 640,
+            "root_height": 480,
+            "focus": 2097153,
+            "revert_to": 1,
+            "children_total": 2,
+            "children_recorded": 2,
+            "focus_extra": 0,
+            "elapsed_ms": 0,
+            "atomic_snapshot": false,
+            "Steam_UI_qualified": false,
+            "root_attributes": {
+              "id": 543,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 0,
+              "y": 0,
+              "width": 640,
+              "height": 480
+            },
+            "windows_bottom_to_top_then_extra_focus": [
+              {
+                "id": 2097153,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 2,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": 19,
+                "y": 23,
+                "width": 64,
+                "height": 32
+              },
+              {
+                "id": 2097155,
+                "x_error": 0,
+                "attributes_valid": 1,
+                "geometry_valid": 1,
+                "map_state": 0,
+                "override_redirect": 0,
+                "class": 1,
+                "event_mask": 0,
+                "x": -9,
+                "y": 8,
+                "width": 45,
+                "height": 27
+              }
+            ]
+          }
+        ],
+        "dependencies": {
+          "usr/lib/aarch64-linux-gnu/libX11.so.6.4.0": "94938979e2e2030f3471823a186eec66f994b128125ea2f4b4c18b502444b0a0",
+          "usr/lib/aarch64-linux-gnu/libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13"
+        },
+        "artifacts": {
+          "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+          "x11-window-state.elf": "850282bb7d1683de241b2892db81d84c1ed4b3e22ea3ef45f43d81300832e1d7",
+          "fixture.elf": "3fd49a3dad559f7514200321eaa398921f32902d1491f9494f41a02c7c34c798",
+          "runtime.log": "7f3af07c46689730de4adf7ca3dc472a4d82a792e67f0f2b50b835df91e77cd7"
+        }
+      },
+      "real_control_provenance": "Normal host ps confirmed no experiment processes; lsof on exact stopped prepared fakefs meta.db/WAL/SHM found no users. New CoW clone run51/x11-state-clean-root from run2/steam-fakefs-v3, recognized account data absent. Own ELFs installed through guest VFS; original fakefs/data untouched. One own :99 Xvfb, no VNC/Steam/device/network exposure; parent observer terminal0.",
+      "interpretation": "Actual no-WM Xvfb reports map/unmap/remap/focus/destroy correctly. Reject generic always-broken window/focus semantics as sufficient cause in this host configuration. Does not rule out Steam/CEF-specific mapping/WM expectations, rendering/thread faults, memory pressure, or on-Air differences."
+    },
+    "reference_inspected": {
+      "repo": "Droid-Deck/DroidDeck",
+      "revision": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
+      "path": "tools/linuxfs/overlay/usr/local/bin/droiddeck-session",
+      "blob": "b8137ddc14afdd24760b7ca4c38f49121c571337",
+      "lines": "487-562 actually fetched/inspected: gamescope wraps Steam; not equivalent to current Xvfb and no permission to copy Android graphics",
+      "protocol_reference": "https://www.x.org/releases/X11R7.7/doc/xproto/x11protocol.html"
+    },
+    "later_read_only_revalidation": {
+      "local_time": "2026-11-14 15:36 EST",
+      "exact_PID": 19384,
+      "installation_UUID": "B55DD703-F281-4556-9A49-09550951953B",
+      "observer_exit": 0,
+      "actual_physical_screen": "still white blank with cursor/native controls",
+      "changes": "No input/termination/restart/upgrade",
+      "earlier_failure": "default sandbox CoreDeviceService init timeout; terminal1 is not device crash. Normal authorized service access succeeded after stated approval quota reset, and host ps found no experiment processes."
+    },
+    "fresh_browser_categorical": {
+      "scope": "Categorical event timestamps only, never raw Steam arguments/payload",
+      "unresponsive_events": [
+        {
+          "time": "2026-11-09 01:02:57",
+          "kill_word_present": true
+        },
+        {
+          "time": "2026-11-09 02:20:24",
+          "kill_word_present": true
+        },
+        {
+          "time": "2026-11-10 18:01:29",
+          "kill_word_present": true
+        },
+        {
+          "time": "2026-11-12 18:44:29",
+          "kill_word_present": true
+        }
+      ],
+      "current_launch_counts": {
+        "browser_start": 7,
+        "mainmenu_show": 1,
+        "screensaver_hide": 7,
+        "screensaver_show": 6
+      },
+      "first": {
+        "browser_start": "2026-11-14 16:34:21",
+        "mainmenu_show": "2026-11-14 16:39:32",
+        "screensaver_hide": "2026-11-14 16:41:55",
+        "screensaver_show": "2026-11-14 16:41:59"
+      },
+      "last": {
+        "browser_start": "2026-11-14 16:35:28",
+        "mainmenu_show": "2026-11-14 16:39:32",
+        "screensaver_hide": "2026-11-14 20:41:03",
+        "screensaver_show": "2026-11-14 20:41:11"
+      },
+      "interpretation": "All4 unresponsive kills are historical Nov9/10/12, none current60. Actual Screensaver show/hide lifecycle continues through20:41UTC while physical frame blank. This is not proof of full browser/renderer health or input/UI success."
+    }
   }
 }

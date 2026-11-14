@@ -1,3 +1,51 @@
+# LIVE Run51: Build60 actual Library/BPM/input, blank after screensaver; preserve
+
+Read latest MD/EVIDENCE.run51 FIRST. Parentbb3ac02, UUID/origin/worktrees/main
+verified. User explicitly approved ending CURRENT59 and upgrading60; DONE.
+Actual sameID install/launch0, current60PID19384 installationUUID
+B55DD703-F281-4556-9A49-09550951953B. Revalidate before actions, never stale59.
+No uninstall/auth transfer/working-app or phone changes. CLIonly,noMacunlock.
+
+Real desktopLibrary + BPMhome/menu + BPMall40/installed0 Library physically
+confirmed. Saved auth restored, no credentials/Guard/EULA automation. Fivegrid
+keys did not prove exact target; no activate/download. Sequence12/action7 means
+native dispatch only. Screensaver visible16:41:59UTC; one pointer wake logs
+WasHidden1at16:43:30, but content black. Oneback no menu. Later shared read-only
+RFB and later physicalframe whiteblank; no causal/nativeMetal claim. Bothowned
+observers terminal0, no input/pairing records. Owntransportsecret private.
+
+CPU sampler cannot-find-pid21 is NOT crash: subsequent exactPID/UUID live and
+health115 advances:140entries/2218465752bytes; captrue; bridge0/gamefalse.
+Winegeneration0/UNKNOWN; legacyphase8 NOT stop. Preserve60; no samplerretry or
+new device experiment. Host ps review could not complete due usage limit; NOT
+executed, no unsafe determination/bypass/retry. Independent work continues.
+
+Finalhealth1511/142entries/2093537680bytes, bridge0/nav12. Current webhelper
+Screensaver lifecycle advances through20:41UTC despitewhite; ALL4 cumulative
+unresponsive-kill lines historicalNov9/10/12, NOTcurrent60. No browserdeath or
+renderinghealth claim. No deviceinput/restart during finalreads.
+
+Independent new x11-window-state.c: fixed :99 read-only window/focus/geometry
+metadata, no pixel/property/input/auth. HOST19 ASanUBSan protocol cases pass,
+actual staticARM64ELF SHA850282bb7d1683de241b2892db81d84c1ed4b3e22ea3ef45f43d81300832e1d7.
+Private run51/x11-state-v4. NOT bundled/Air-run, no new Xcode build. Actual HOST LinuxRunner+Xvfb+Xlib
+control4casesPASS0/2.859s: map/unmap/remap/focus/destroy, negative geometry and
+no-WM mask. Ownobserver87492terminal0. FreshunauthedCoWroot/privateartifacts;
+no Steam/VNC/device write. Basic no-WM X11 semantics work; CEF-specific/pressure
+and Air behavior unresolved. Current60/19384 revalidated15:36EST, stillwhite.
+Quota reset passed and normal read-only checks worked; no bypass. Root
+status/validity/race/cap/deadline explicit. Testscript test-x11-state.py.
+
+NEXT discriminator: integrate the qualified read-only state ELF behind an
+explicit Lab build gate, capture goodLibrary vs blank mapping/focus before
+causal WM patch. Do not overwrite live60/root. No Android graphics copy/FEX/
+Valve/security edits. Need genuine Windows download/toolPlay->qualifiedLinux
+shutdown->nativeDocklegitimateauth/JIT/game->fullteardown/return. Bridge125
+notgame; repeatedfullstability incomplete. NoSTABLE_SUCCESS/schedulerunload.
+Rawrun51 private; scopedsource/redactedrecords only experiment permittedhours.
+
+--- HISTORICAL; header supersedes old pending-user/current59 claims ---
+
 # LIVE Run50: one approvedEscape sent, no UI exit; signed60 ready, userchoice pending
 
 Read latest MD/EVIDENCE.run50 FIRST. Parentc47252c, volumeUUID/origin/branch/

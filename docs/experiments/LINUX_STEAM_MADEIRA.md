@@ -1,11 +1,11 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run50): user explicitly allowed ONE Escape; exact live59 revalidated and
-one event sent. Screen stayed in Steam Screensaver, so transport is not input/UI
-success. No repetition/restart/terms acceptance. Newer60 now signed in a separate
-copy with matching Air main/helper profiles, deep strict and unchanged code
-verified; NOT installed. Preserve current59 pending user choice: upgrade current
-Lab or personally touch the screensaver. Real game/return/stability goal ACTIVE.
+Status (run51): user explicitly approved ending current59 and upgrading60.
+Same-ID install/launch succeeded. Actual Air60 showed authenticated desktop
+Library, real BPM home/menu and BPM Library (40 titles, installed0). After idle
+screensaver, one pointer wake hid it but content stayed black, later white.
+Fresh shared RFB and a later physical screen were both blank; not a proven
+native-only Metal fault. Current60/19384 preserved, no game/return/stability.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -4869,3 +4869,138 @@ Original unsigned60 and current installed59/data remain unchanged. NOT installed
 or new device validation; no binary distribution. Private run50, redacted hashes
 in EVIDENCE.run50. Full licensed-game/return/repeated stability remains unproven;
 no STABLE_SUCCESS or scheduler unload.
+
+## Run51 — approved Build60 upgrade, actual UI/input, then blank after screensaver
+
+Source parent bb3ac021dd19a28bc7c4adba3c7f2c0d8e366423; same isolated Air4,
+volume UUID/origin/branch/worktrees verified. User explicitly authorized ending
+current Lab and upgrading60. Exact59/19056 identity was verified, normally
+terminated and absent before same-ID install. Actual install/launch0; current
+Build60/19384 installation B55DD703-F281-4556-9A49-09550951953B. No uninstall,
+account transfer, credential/Guard/EULA automation or working-app modification.
+
+Official updater1792618285 extracted and restarted; saved login restored. Actual
+physical desktop Library, BPM home, MainMenu and all40/installed0 BPM Library
+were observed. Numeric per-session dispatch sequences1..12 survived native log
+cap. These prove native dispatch only; screenshots/Steam window logs establish
+which actions changed UI. Five grid keys did not prove target selection, and no
+activation/download/terms acceptance was attempted on an uncertain target.
+
+At16:41:55UTC Steam created Screensaver, visible16:41:59. One fixed pointer
+action made its official WasHidden1 at16:43:30, but content stayed black; one
+subsequent back was acknowledged without visible/new logged MainMenu response.
+Later a shared read-only RFB full frame was white blank with pointer (1280x800),
+and a subsequent physical screenshot also white blank. These are not simultaneous
+color captures: no claim the observer changed the screen or identified a Metal
+bug. Both owned observers ended0, no device input, pairing-record operation,
+Steam credential or persistent forwarding. App-local display transport data
+remains private. This narrows the failure beyond solely stale native black canvas.
+
+A bounded official CPU sampler returned21/cannot-find-pid, but subsequent exact
+19384 identity and advancing health remained present. Sampling failure/timeout
+is not guest death. Latest sampled health115:140guest entries, footprint
+2218465752bytes, navigation12/action7, bridge0/game_launchedfalse. Legacyphase8
+is not Linux shutdown. Winegeneration0/UNKNOWN is not a Wine/game run. Partial
+capped native task log is not complete thread/fault/deadlock evidence. No sampler
+retry, debugger, restart or new installation. Current process must be revalidated
+before any later action.
+
+Hypothesis for next discriminator: current Xvfb+x11vnc starts no window manager;
+pinned DroidDeck session instead runs Steam inside gamescope (source lines
+487..562 actually fetched/inspected this run). This is a meaningful architecture
+difference, not proof of the blank's cause or permission to port Android Vulkan.
+Prepare numeric window mapping/focus evidence/own-window control before adding a
+WM. Existing basic X11 map/pixel controls do not cover Steam transient/focus/hide
+contracts. Read-only host ps escalation was not executed because automatic
+approval review hit usage limits; not a safety rejection, no bypass/retry.
+Continue independent source/evidence work and preserve live60.
+
+Private run51 contains exact artifact hashes in EVIDENCE.run51, including actual
+screens, log/health receipts and fresh shared RFB. Official Steam disk ELF hash
+7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d,
+10124968bytes/AArch64; not proof all mapped bytes. Full game/return/repeated
+stability objective ACTIVE. Bridge125 is diagnostic. No success sentinel or
+scheduler unload. Scoped source/redacted evidence only, no main merge.
+
+### Run51 independent implementation: read-only X11 state discriminator
+
+New own freestanding ARM64 ELF x11-window-state.c uses the published
+[X.Org core X11 protocol](https://www.x.org/releases/X11R7.7/doc/xproto/x11protocol.html).
+It connects only fixed :99 and queries setup/root attributes, geometry, root
+children and input focus. No titles, properties, pixels, keystrokes, focus/map
+changes or authentication operations. It records top32 children in stacking
+order plus a focused window outside that selection. All-window count/truncation,
+per-window validity/error, unsigned IDs and signed positions are explicit; a
+disappeared resource is not silently treated as unmapped. Reply cap65536bytes,
+20s operation deadline, partial/non-atomic snapshot and UI-unqualified flags.
+This is a discriminator, not a window manager or causal Steam fix.
+
+Actual protocol/transport controls pass19 cases with ASan/UBSan: fragmented
+read/write and EINTR; null/nested/omitted focus; capped top32; disappeared
+Window/Drawable; wrong error opcode/sequence/packet, huge reply/mismatched tree,
+EOF/deadline/connect refusal and nonblocking-connect failure. The syscall fixture
+rejects every X request outside the four read-only opcodes. Final static ARM64
+ELF builds -Wall/-Wextra/-Werror, SHA
+850282bb7d1683de241b2892db81d84c1ed4b3e22ea3ef45f43d81300832e1d7.
+No new Xcode/app build, guest execution or Air qualification. It is deliberately
+NOT yet bundled/installed; current60's binary/root/session stay unchanged.
+
+V1 fixture used an absolute clock bound instead of elapsed deadline; corrected
+without extending production deadline. V2 cross-link resolved ld.lld to generic
+lld and lost argv0 selection; preserve original prepared linker path. Review
+added validity bits so a lost window cannot appear as known unmapped/zero-size.
+Private failed attempts remain in run51; finalcontrols in x11-state-v4.
+
+Reproduce without device/socket/rootfs operation:
+
+```sh
+python3 experiments/linux-steam/tools/test-x11-state.py \
+  "$NEW_PRIVATE_EXTERNAL_OUTPUT" --ld-lld "$PREPARED_ELF_LD_LLD"
+```
+
+Next qualify this ELF against a separate stopped unauthenticated Xvfb control
+and then integrate its explicitly gated bounded state output in a future Lab;
+compare actual good Library vs blank on the same engine before proposing WM
+changes. Do not inject it into/overwrite the current active fakefs. Actual Play/
+Windows game/return and repeat stability remain incomplete; goal unchanged.
+
+### Run51 actual LinuxRunner/Xvfb execution, not only mocked controls
+
+After approval service's stated reset time, normal read-only host process check
+succeeded and found no other experiment. Exact prepared fakefs DB/WAL/SHM had
+no lsof users. A NEW CoW clone from stopped unauthenticated run2/steam-fakefs-v3
+was created at private run51/x11-state-clean-root; no recognized loginusers or
+userdata, no display socket/lock. Original root untouched. Two own ELFs were
+installed through real guest VFS, never host SQL/metadata fabrication.
+
+New genuine distro Xlib fixture creates ONLY its own :99 windows. A separate
+static wire probe runs after each synchronized control transition. Actual
+LinuxRunner interpreter+Xvfb host execution0,2.859s, allfour cases PASS: initial
+map/focusa, unmapa/focusb, remapa/focusa, destroyb. It correctly observes the
+unmapped third window and negative x coordinate. Fixed geometry, IDs, focus,
+counts, valid flags, no SubstructureRedirect consumer and destroyed-window
+absence checked against fixture's own IDs. Own Xvfb stopped on normal exit;
+observer87492 terminal0, no Steam/VNC/device interaction or remaining host test.
+Actual libX11/glibc hashes match prior controls, hostish
+935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3.
+
+This rejects always-broken basic mapping/focus semantics in this host setup as
+a sufficient explanation, while leaving CEF/WM-specific hide/show expectations,
+rendering/thread faults, long-session pressure and Air-specific behavior open.
+No new runtime workaround is justified yet. Probe still NOT bundled/installed
+in60. This real host result supersedes the earlier pending host-execution gate.
+Reproduce with run-x11-state-control.py and a NEW previously stopped unauthed
+root; its timeout preserves live PID uncertainty rather than silently killing
+or restarting it. Current Air60 was independently revalidated15:36EST: exact
+19384/installationUUID, physical screen still white blank. No input/restart.
+The earlier sandboxed CoreDevice init timeout was host service setup, not a
+Linux crash. No Mac unlock/security change.
+
+Final read-only collection: health1511/142guest entries/2093537680bytes,
+navigation12/action7 and bridge0 unchanged. Cumulative webhelper has4
+unresponsive-kill messages, ALLhistorical Nov9/10/12; none in current60. Fresh
+Screensaver show/hide lifecycle continues through20:41UTC although physical
+frame remains white. Do not mistake cumulative historical errors or blank
+content for browser death; neither advancing lifecycle nor app presence proves
+interactive rendering. Preserve this session; next read-only window/focus
+discriminator remains justified, no broad WM/render retry patch.
