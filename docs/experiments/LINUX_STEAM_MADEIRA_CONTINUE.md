@@ -1,3 +1,39 @@
+# LIVE Run50: one approvedEscape sent, no UI exit; signed60 ready, userchoice pending
+
+Read latest MD/EVIDENCE.run50 FIRST. Parentc47252c, volumeUUID/origin/branch/
+worktrees/remotes verified, main2ac39be unchanged. Exactcurrent59/19056 URI UUID
+CED6F4B3-5948-4663-A9BE-FFE0ED4677D9+receiptmatch. Preserve apps/auth/games/saves.
+
+User replied“允许” to ONEEscape question. Exactlyone backnotificationposted0.
+Physicalinitial+settledscreens STILLSteamScreensaver; NOTdelivery/UI success.
+No repeat/alternate input.59logcapped, no new numericack onthisinstalledbuild;
+admission/RFB/Steam stage unknown. Health1808/143guests/1629084072bytes/bridge0.
+No termsacceptance, restart, upgrade or debugger. Do NOTclaimfrozenapp/rootcause.
+
+NEW asyncchoicepending: user permits endCURRENTLab+upgrade60 OR preservesession
+and personally lighttouchscreensaver. NOanswer yet; consumedEscape consent is
+NOTthischoice. Keepcurrent59 untilactualreply; no repeatedbuttons/lockrequests.
+CLIonly,noMacunlock/security/auth/Guard/trustautomation.
+
+Independentfull60 nowDISPOSABLESIGNED: run50/signed60/Madeira.app. Existing59
+main/helperprofiles exactAirUDID/app/cert/expiryNov20 verified; no newprofiles.
+Signobserver23224terminal0,validation59116terminal0;deepstrict/entitlements/
+unsigned-signedcodeidentityPASS. SignedSHA
+3f1603b74ad6c041763123c67366391e85224e7835f66c55b155bfd23fd75350.
+TextSHA23a336df6bc5e389b35b4f3d1ef19760dca6959ac8b189b0466b6901a46cd18f.
+Codesign '-' output formatparse failed; read-only ':-' XMLfixed, notsignfailure.
+Originalunsigned60andlive59untouched. NOTinstalled/devicevalidated. No public
+binarylicenseclearance. Rawlogs/screens/profiles/privatepayloads outsideGit.
+
+Afteractualchoice revalidate exactcurrentidentitybeforeend/install. Ownnormal
+retainedCLI launchmode perpreviouslaunchreceipt, no credentials or accountcache
+transfer. Verify numericnavigation ack/physicalUI, genuineinstall/Windowsdepot/
+customtoolPlaycapture, then qualifiedLinuxshutdown/nativeDockauth/JIT/game and
+fullteardown/return. Bridge125notgame, no stablecycle. FullgoalACTIVE; noSTABLE_
+SUCCESS/unload/merge. Signed-offsource/redactedevidenceonlyexperimentallowedhours.
+
+--- HISTORICAL states below; currentheader supersedes liveclaims ---
+
 # LIVE Run49: actual59 Screensaver preserved; Escape approval pending; unsigned60 ready
 
 Read MD/EVIDENCE.run49 FIRST. Parent3c839d0 branch/origin/worktrees/remotes verified;

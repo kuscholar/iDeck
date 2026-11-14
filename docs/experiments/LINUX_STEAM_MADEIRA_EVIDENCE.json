@@ -13093,5 +13093,118 @@
       "Specific input approval and personal terms choice remain pending; no automatic acceptance or forced restart"
     ],
     "next": "After explicit input approval inspect awakened real UI, personally resolved EULA or alternate owned game installation, genuine compatibility-tool selection and Play capture. Preserve59 if user test active. Future60 upgrade only after exact identity/current test recheck; actual native auth/JIT/game and full cleanup/return still required."
+  },
+  "run50": {
+    "source_parent": "c47252ccf0d4c472b44edd0ba14ec47bb97ab355",
+    "phase": "Explicit one-Escape permission exercised; no screen exit observed. Prepare matching signed60, preserve live59 pending upgrade-or-physical-touch choice.",
+    "observed_UTC": "2026-11-14T16:26:17.094801+00:00",
+    "volume_UUID": "580CADCD-33F5-4D78-9530-2287615873CA",
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "live_session": {
+      "build": 59,
+      "PID": 19056,
+      "installed_UUID": "CED6F4B3-5948-4663-A9BE-FFE0ED4677D9",
+      "exact_CoreDevice_URI_and_native_receipt_match": true,
+      "health": {
+        "schema": 1,
+        "pid": 19056,
+        "build": 59,
+        "native_log": "kernel-19056-809681-609389000.log",
+        "sequence": 1808,
+        "mono_ms": 827751769,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 143,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 1629084072,
+        "cpu_valid": 1,
+        "cpu_user_us": 38258298177,
+        "cpu_system_us": 2642705664,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        }
+      },
+      "physical_screen_before": "Steam Screensaver artwork",
+      "physical_screen_after": "Still changing Steam Screensaver artwork; no return to Library/terms observed",
+      "no_restart_upgrade_debugger_or_terms_acceptance": true
+    },
+    "single_input": {
+      "user_reply": "\u5141\u8bb8",
+      "scope": "The previously requested one Escape",
+      "executed_count": 1,
+      "transport": {
+        "exit": 0,
+        "action": "back",
+        "scope": "Notification transport only; NOT input delivery/physical touch/Steam UI success"
+      },
+      "screen_response_verified": false,
+      "native_dispatch_ack_available": false,
+      "native_ack_limit": "Installed59 append log capped; numeric navigation health is implemented in newer60 but not on current59",
+      "repeat_or_alternate_input_sent": false,
+      "scope_not_extended_to_terms_or_upgrade": true
+    },
+    "source_inspection": {
+      "current_guards": "Lab foreground/window/lifetime/client/physical-touch/first-responder/dimensions/throttle may refuse before RFB; no specific refusal or cause proven.",
+      "RFB": "Pinned key encoding/input serialization inspected read-only. No source patch/assertion/guard relaxation or security change."
+    },
+    "prepared60": {
+      "sign": {
+        "exit": 0,
+        "device_app_cert_profile_preflight": true,
+        "profile_expiry": {
+          "com.kuschqin.ideck.freshtest": "2026-11-20T04:42:36",
+          "com.kuschqin.ideck.freshtest.JITHelper": "2026-11-20T04:42:34"
+        },
+        "installed": false,
+        "source_unchanged": true
+      },
+      "validation": {
+        "scope": "Disposable signed60 main/helper ID+Air/profile/certificate/deep strict and unchanged actual code verified. NOT installed/device tested.",
+        "deep_strict": true,
+        "text_sha256": "23a336df6bc5e389b35b4f3d1ef19760dca6959ac8b189b0466b6901a46cd18f",
+        "unsigned_signed_code_equal": true,
+        "signed_executable_sha256": "3f1603b74ad6c041763123c67366391e85224e7835f66c55b155bfd23fd75350",
+        "entitlements_verified": true,
+        "initial_output_format_error": "codesign - entitlements output was not plist; read-only :- XML form fixed parsing, not a signature failure",
+        "installed": false
+      },
+      "profiles_source": "Existing previously validated59 embedded main/helper development profiles; exact app+Air+unexpired+common existing certificate verified",
+      "separate_disposable_copy": true,
+      "installed": false,
+      "original_unsigned60_unchanged": true,
+      "sign_observer23224_terminal0": true,
+      "validation_observer59116_terminal0": true
+    },
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run50",
+    "artifacts_sha256": {
+      "receipt-private.json": "35e2d15542b706053c8605283a39e8505b2082dda561662e47d8353df985ff18",
+      "screen-before-private.png": "840e2a77a640756a03e8f36bd3ea5a73d72013a2037c56b52f20ea22d7959bd8",
+      "screen-after-escape-private.png": "380cdc232165b2a8f7d565ca253baf2f143c21549373fc01f351976e5407ff18",
+      "screen-after-settle-private.png": "ebdbc0f6ae5695e6b84d2602e945369ec49ad629eea9c1c74f84b846c8942ce1",
+      "health-after-private.txt": "3a62080201e8fc54ccb89d3a3b3f8093180a44dbcbaa00168476ab77cfd4ead8",
+      "webhelper-after-private.txt": "ca41f9fc5c9cb40db08e4d5616c04e0202c6776d64acc6d759b82c63edcae4f3",
+      "approved-one-escape/receipt.json": "9279e9e2c5da326fe28e787d61fb2d2d42c0690bdb5ed0e17870002cb98f7448",
+      "signed60/result.json": "6b631883d862ba09b722d53a9776891b641a9a41f8e8aec2361c93f9bec6ba44",
+      "signed60/validation.json": "6cf01fac6ba745a21d0ad2d6aaf2aeb7e8677ba0f3771d8bdbe23c41fb92b36d"
+    },
+    "limits": [
+      "Transport acceptance is not proof native callback, RFB write or Steam key delivery",
+      "One Escape permission was consumed, not repeated; cannot infer EULA acceptance or success",
+      "No current game/Play bridge/Windows execution/return/repeated stability proof",
+      "Current59 remains live, signed60 is not installed or device-validated",
+      "Combined binary distribution license gate remains unresolved; private signing only"
+    ],
+    "next": "Async user choice pending: explicit end-current-Lab+upgrade60, or preserve session and user lightly touches screensaver. Preserve current59 until that answer; no repeated Escape or terms acceptance. After genuine UI returns inspect installation/custom tool/Play bridge, legitimate Madeira game and complete return/stability."
   }
 }

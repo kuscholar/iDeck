@@ -1,12 +1,11 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run49): same actual59/19056 remains active on Air; genuine Steam logs
-identify the changing artwork as Screensaver, not game execution. No installation
-or Play/bridge result. One Escape input was refused by automatic review; specific
-user approval is pending, no alternate input attempted. Preserve live59. Private
-unsigned60 now adds actual initial-Wine-body result provenance and bounded
-numeric receipt; host/iOS/full build/final call sites pass, NOT deployed. Real
-Library/BPM/input proof remains48; full game/return/repeated stability ACTIVE.
+Status (run50): user explicitly allowed ONE Escape; exact live59 revalidated and
+one event sent. Screen stayed in Steam Screensaver, so transport is not input/UI
+success. No repetition/restart/terms acceptance. Newer60 now signed in a separate
+copy with matching Air main/helper profiles, deep strict and unchanged code
+verified; NOT installed. Preserve current59 pending user choice: upgrade current
+Lab or personally touch the screensaver. Real game/return/stability goal ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -4837,3 +4836,36 @@ selection/Play capture, then qualified Linux shutdown and native legitimate
 Dock auth/JIT/game. One initial Wine body/join is still insufficient for all
 workers/signals/storage/render quiescence or reliable return. No stable-success
 marker, scheduler unload, main merge or binary publication.
+
+
+## Run50: authorized single Escape; signed60 prepared without replacing live59
+
+Read continuation/evidence first and verified mounted UUID, migration completion,
+clean parentc47252c, branch/origin/worktrees and both remote refs. Exact CoreDevice
+URI and native receipt still identify59/19056/UUIDCED6F4B3-5948-4663-A9BE-FFE0ED4677D9.
+User explicitly replied “允许” to the prior ONE Escape question. Exactly one
+back notification was posted, transportexit0. Initial and settled physical frames
+still show changing genuine Steam Screensaver artwork. No exit to Library/terms
+was observed; native append log is capped so callback/RFB delivery cannot be
+inferred. No repeated/alternate input, debugger, restart, upgrade or acceptance.
+Latest health1808/143Linux entries/1629084072bytes/zero bridge requests. Source
+admission guards and pinned RFB encoding inspected, no sole-cause claim or patch.
+
+Specific next-choice question is pending: allow ending CURRENT Lab and upgrading
+already built60, or preserve session and user lightly touches screensaver. Do not
+infer this new choice from the consumed Escape permission. No repeated Mac-unlock
+request or automatic legal/authentication interaction.
+
+Independent concrete preparation: private disposable copy of unsigned60, reusing
+only existing59 main/helper development profiles. Exact Air UDID/app IDs, expiry
+Nov20 and common existing login-keychain certificate match; no new profiles,
+account/security/keychain changes. tools/resign-app.py exits0. Deep-strict,
+actual main/helper get-task-allow/app identifiers and unsigned/signed __text
+identity pass. Initial entitlement-output parsing failed because codesign's '-'
+output was not plist; read-only ':-' XML form resolved it, not a signing failure.
+Signed Mach-O SHA3f1603b74ad6c041763123c67366391e85224e7835f66c55b155bfd23fd75350;
+__text SHA23a336df6bc5e389b35b4f3d1ef19760dca6959ac8b189b0466b6901a46cd18f.
+Original unsigned60 and current installed59/data remain unchanged. NOT installed
+or new device validation; no binary distribution. Private run50, redacted hashes
+in EVIDENCE.run50. Full licensed-game/return/repeated stability remains unproven;
+no STABLE_SUCCESS or scheduler unload.
