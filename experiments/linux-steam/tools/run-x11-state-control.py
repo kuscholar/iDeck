@@ -16,6 +16,7 @@ import time
 
 p=argparse.ArgumentParser(description=__doc__)
 for name in ('ish','root','elf','output','ld_lld'):p.add_argument(name,type=Path)
+p.add_argument('--watch-elf-sha256',help='Run the exact already-built watch ELF; compile only our Xlib fixture in cross-sample mode')
 a=p.parse_args();ish,root,elf,out=(getattr(a,n).resolve() for n in ('ish','root','elf','output'))
 linker=a.ld_lld.absolute();lab=Path(__file__).resolve().parents[1]
 assert all(str(x).startswith('/Volumes/easystore/') for x in (ish,root,elf,out,linker))
@@ -23,6 +24,8 @@ assert not out.exists() and (root/'meta.db').is_file() and (root/'data').is_dir(
 for name in ('Steam/config/loginusers.vdf','Steam/userdata','root/.steam/config/loginusers.vdf','tmp/.X99-lock','tmp/.X11-unix/X99'):
     assert not (root/'data'/name).exists(),'Occupied/authenticated root refused'
 out.mkdir(mode=0o700)
+if a.watch_elf_sha256:
+    assert len(a.watch_elf_sha256)==64 and hashlib.sha256(elf.read_bytes()).hexdigest()==a.watch_elf_sha256
 library=root/'data/usr/lib/aarch64-linux-gnu';dependencies=[library/'libX11.so.6.4.0',library/'libc.so.6']
 for path in dependencies:assert path.read_bytes()[:4]==b'\x7fELF'
 build=['xcrun','clang','--target=aarch64-linux-gnu','--ld-path='+str(linker),'-nostdlib','-fPIE',
@@ -30,6 +33,7 @@ build=['xcrun','clang','--target=aarch64-linux-gnu','--ld-path='+str(linker),'-n
        str(lab/'guest/x11-state-fixture.c'),str(lab/'guest/xlib-glibc-start.S'),
        *map(str,dependencies),'-Wl,-pie,-e,_start,-dynamic-linker,/lib/ld-linux-aarch64.so.1',
        '-o',str(out/'fixture.elf')]
+if a.watch_elf_sha256:build.insert(2,'-DX11_STATE_WATCH_CONTROL=1')
 with (out/'build.log').open('xb') as log:subprocess.run(build,stdout=log,stderr=log,check=True,timeout=60)
 with (root/'.ideck-x11-state.lock').open('x') as lock:
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -52,6 +56,27 @@ timeout 90 /x11-state-fixture
         try:status=process.wait(timeout=110)
         except subprocess.TimeoutExpired:
             (out/'result.json').write_text(json.dumps(dict(status='observer-timeout-state-unproven',pid=process.pid))+'\n');raise
+    (out/'observer-result.json').write_text(json.dumps(dict(exit=status,elapsed_seconds=round(time.monotonic()-start,3)))+'\n')
+    if a.watch_elf_sha256:
+        # Preserve failure evidence too, before checking outcome. A host timeout
+        # never licenses stopping/restarting an unrelated app or experiment.
+        for name in ('x11-state-watch.jsonl','x11-state-watch-child.json','x11-state-ids.json'):
+            src=root/'data'/name
+            if src.exists():
+                raw=src.read_bytes();assert len(raw)<=2097152;(out/name).write_bytes(raw)
+        assert status==0,('Inspect private watch/root logs',status)
+        stream=(out/'x11-state-watch.jsonl').read_bytes();records=[json.loads(line) for line in stream.splitlines()]
+        ids=json.loads((out/'x11-state-ids.json').read_text());child=json.loads((out/'x11-state-watch-child.json').read_text())
+        assert len(records)==2 and child['fixture_stage']==0 and child['sigterm_result']==0 and child['reaped']==1 and child['wait_status']==15
+        for i,d in enumerate(records):
+            assert d['status']==0 and d['error']==0 and d['root']==ids['root'] and not d['atomic_snapshot'] and not d['Steam_UI_qualified']
+            assert d['focus']==ids['a' if i==0 else 'b'] and d['children_total']==3
+            windows={w['id']:w for w in d['windows_bottom_to_top_then_extra_focus']}
+            assert windows[ids['a']]['map_state']==(2 if i==0 else 0) and windows[ids['b']]['map_state']==2 and windows[ids['c']]['map_state']==0
+        delta=records[1]['begin_mono_ms']-records[0]['begin_mono_ms'];assert delta>=30000
+        (out/'before.jsonl').write_bytes(stream[:stream.index(b'\n')+1]);(out/'after.jsonl').write_bytes(stream)
+        evidence=dict(scope='HOST real ARM64 LinuxRunner/Xvfb/Xlib with exact packaged watch ELF, two actual timed samples and own child SIGTERM/reap; NOT Air/Steam/game or full-runtime teardown',exit=status,samples=2,sample_delta_ms=delta,child=child,ids=ids,records=records,watch_ELF_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),fixture_ELF_sha256=hashlib.sha256((out/'fixture.elf').read_bytes()).hexdigest(),host_ish_sha256=hashlib.sha256(ish.read_bytes()).hexdigest(),elapsed_seconds=round(time.monotonic()-start,3))
+        (out/'evidence.json').write_text(json.dumps(evidence,indent=2)+'\n');print(json.dumps({k:evidence[k] for k in ('scope','exit','samples','sample_delta_ms','elapsed_seconds','child')}));raise SystemExit(0)
     assert status==0,('Inspect private logs',status)
     ids=json.loads((root/'data/x11-state-ids.json').read_text());reports=[]
     for i in range(4):

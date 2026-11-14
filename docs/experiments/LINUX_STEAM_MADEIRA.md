@@ -1,11 +1,12 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run53): same Air60 identity reverified; fresh physical screen still
-white. Preserve active session; specific signed61 upgrade choice remains pending.
-Independent bounded numeric window-stream analyzer implemented:32 controls pass,
-including4 existing real Linux/Xvfb receipts. No new runtime/device-input/build/
-install; signed61 executable/resource hashes unchanged. No fresh on-Air observer
-or Steam Play/game/return/stability proof. Full goal remains ACTIVE.
+Status (run54): exact signed61 watch ELF executed under real host LinuxRunner:
+2 samples30.008s apart correctly capture own window hide/focus change; own
+synthetic child SIGTERM/reap succeeds. Default fixture code equivalent. Current
+Air60 identity still present and preserved; no new device UI/input/restart or
+upgrade. Specific61 choice remains pending across3 goal turns. Independent
+preparation complete; next decisive Air experiment awaits that user-only boundary.
+No stable Library/game/return qualification or success/scheduler change.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5140,3 +5141,67 @@ physical Library/BPM vs blank. Only then a targeted mapping/focus/render fix.
 Bridge125 still diagnostic; real licensed Madeira game/return/repeated stability
 not achieved. No STABLE_SUCCESS or scheduler unload. Scoped signed-off source/
 redacted evidence only on experiment branch in allowed hours.
+
+## Run54 — execute the exact packaged watch ELF, not only a rebuilt control
+
+Parent8233c3e, volumeUUID/migration/worktrees/branch/origin and actual remote
+refs verified before writes. No other host experiments in actual process list.
+Stopped unauthenticated seed fakefs DB/WAL/SHM had no open lsof users; new private
+CoW root run54/watch-root, recognizable loginusers/userdata/display lock absent.
+No source seed/active prefix/account/game/save change. The first read-only
+plist pipe parser required seekable stdin; corrected to read bytes before
+plist parsing, UUID matched. No storage writes before successful verification.
+
+Hypothesis: the already signed61 watcher must actually sample across its real
+30s sleep and terminate/reap as an owned child, otherwise it could confound
+window evidence or block later handoff. New optional X11_STATE_WATCH_CONTROL
+mode in OWN Xlib fixture only; existing app/observer source/binaries untouched.
+The actual signedapp resource is SHA
+9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60,
+not a newly compiled substitute. Copied through real guest VFS into new root.
+
+Actual host LinuxRunner/Xvfb/Xlib control exit0,2 rows, sample interval30008ms,
+wholecontrol36.465s. First row own a/b mapped/focusa; after a hide/focusb the
+second row correctly aUnmapped/bViewable/focusb. Third control window remains
+unmapped. Only its own unreaped guest child24 received intentionalSIGTERM;
+send0,waitpid reaped1/rawstatus15. Parent/Xvfb normal cleanup and host observer
+56818 terminal0; actual hostPID26723 ended. No observer-timeout/death inference,
+SIGKILL, native device-PID signal or service stop. This proves this HOST watcher
+path and own-child control, NOT full Linux/Wine worker/signal/storage/Metal
+teardown or physical Steam/game/return. Hostish935ea1c9 is recorded, not assumed
+equivalent to every patched iOS archive. Timings are synthetic host observations,
+not Steam/device performance or improvement. No VNC/Steam/network/auth action.
+
+Default fixture optimized AArch64 LLVM IR exactly equals priorHEAD after
+excluding ONLY module/source filename metadata, SHA
+cf60c6e5f64ee3778dc427a8dd0098ac654e270defa8515ed7a3cf9fc4c919d1.
+No new default semantics; optional runner mode enforces the actual watch hash.
+Existing bounded analyzer consumes real two-row stream, detects new advancing
+record, retains native-session/UI/cause/game_return qualifications FALSE.
+Prepared signed61 main and watcher hashes unchanged. No rebuild/re-sign/install.
+Reproduce with NEW stopped unauthenticated root and NEW private outputs:
+
+```sh
+python3 experiments/linux-steam/tools/run-x11-state-control.py \
+  "$PINNED_HOST_ISH" "$NEW_UNAUTHED_ROOT" "$SIGNED61_WATCH_ELF" \
+  "$NEW_PRIVATE_OUTPUT" "$ELF_LD_LLD" \
+  --watch-elf-sha256 9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60
+```
+
+Fresh actual Air process listing still exact60/19384/installationUUID. No new
+screenshot this run: last physicalwhite belongs Run53. No input/restart/install.
+Specific61 upgrade choice from Run52 remains unanswered through Run53/54; the
+latest automatic goal again forbids active-session restart, not an approval.
+The original60 upgrade permission was already executed. Keep current60/auth/
+games/saves and signed61 intact; no repeated approval question/Mac-unlock request.
+
+Blocked audit: same user-only boundary persists for3 goal turns; independent
+preparation is now complete at its limited scopes (protocol, realVFS, native
+build/link/sign, interpretation and exact watcher runtime). The next decisive
+Air goodLibrary-vsblank experiment requires ending60/installing61; more synthetic
+controls cannot substitute. After scoped signed-off checkpoint, mark thread goal
+blocked on that precise boundary. No goal completion, successsentinel or task
+LaunchAgent unload. On actual specific choice revalidate native identity, profile
+and device, normal isolated sameID upgrade/no uninstall or account transfer,
+then actual interactive UI, genuine Play->licensed Madeira game/fullreturn/
+repeat stability. The original complete objective remains unchanged.

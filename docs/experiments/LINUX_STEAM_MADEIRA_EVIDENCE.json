@@ -14518,5 +14518,259 @@
     ],
     "next": "After actual61 upgrade choice, revalidate exact current60 before authorized normal Lab-only stop/same-ID upgrade; preserve auth/games/saves. Capture two own observer streams and physical goodLibrary/BPM vs blank, analyze complete fresh records with independently established session identity, then discriminate mapping/focus vs rendering. Continue genuine licensed game/return goal.",
     "updated_UTC": "2026-11-14T21:23:27.995390+00:00"
+  },
+  "run54": {
+    "phase": "Same packaged ARM64 watch ELF actual host lifetime/cross-sample control; pending61 upgrade still requires user choice",
+    "source_parent": "8233c3e9aecb7ac007a4cad9101cf8ff161f6fff",
+    "previous_goal_turn": "PROGRESS: bounded artifact interpretation implementation32 controls + actual current Air process/screen evidence; not device/game success",
+    "verified_state": {
+      "volume_UUID": "580CADCD-33F5-4D78-9530-2287615873CA",
+      "origin": "https://github.com/kuscholar/iDeck.git",
+      "branch": "experiment/linux-steam-madeira-ipad",
+      "remote_experiment": "8233c3e9aecb7ac007a4cad9101cf8ff161f6fff",
+      "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+      "initial_worktree_clean": true,
+      "other_worktrees_preserved": true,
+      "no_other_host_experiments_in_actual_process_check": true
+    },
+    "device": {
+      "model": "Air4/iPad13,1",
+      "PID": 19384,
+      "build": 60,
+      "installation_UUID": "B55DD703-F281-4556-9A49-09550951953B",
+      "actual_fresh_identity_present": true,
+      "UI_observation": "No new screenshot/input this run; last physicalwhite is Run53, do not relabel as fresh UI evidence.",
+      "mutations": "None: no stop/restart/input/install/account/profile/trust/security or lock action."
+    },
+    "hypothesis": "The exact watch ELF in signed61 must actually observe a change across its real30s sleep, and our synthetic child must accept termination/reap, not merely compile or pass mocked calls. A broken watcher lifecycle could confound the next Air discriminator or block handoff.",
+    "method": "No host experiment found, exact stopped unauthenticated seed fakefs DB/WAL/SHM had no lsof users, new private CoW clone run54/watch-root, no recognizable auth data/display lock. Install copied exact signed61 ELF bytes through guest VFS only; compile our Xlib fixture in explicit watch mode. One own Xvfb :99, no VNC/Steam/network/device interaction. After first complete row hide own windowa/focusb, await actual second row; SIGTERM only own still-unreaped synthetic guest child then bounded WNOHANG wait, no SIGKILL/restart.",
+    "actual_control": {
+      "scope": "HOST real ARM64 LinuxRunner/Xvfb/Xlib with exact packaged watch ELF, two actual timed samples and own child SIGTERM/reap; NOT Air/Steam/game or full-runtime teardown",
+      "exit": 0,
+      "samples": 2,
+      "sample_delta_ms": 30008,
+      "child": {
+        "fixture_stage": 0,
+        "child": 24,
+        "sigterm_result": 0,
+        "reaped": 1,
+        "wait_status": 15
+      },
+      "ids": {
+        "root": 543,
+        "a": 2097153,
+        "b": 2097154,
+        "c": 2097155
+      },
+      "records": [
+        {
+          "schema": 1,
+          "status": 0,
+          "error": 0,
+          "requests": 10,
+          "begin_mono_ms": 3472956414,
+          "root": 543,
+          "root_width": 640,
+          "root_height": 480,
+          "focus": 2097153,
+          "revert_to": 1,
+          "children_total": 3,
+          "children_recorded": 3,
+          "focus_extra": 0,
+          "elapsed_ms": 1,
+          "atomic_snapshot": false,
+          "Steam_UI_qualified": false,
+          "root_attributes": {
+            "id": 543,
+            "x_error": 0,
+            "attributes_valid": 1,
+            "geometry_valid": 1,
+            "map_state": 2,
+            "override_redirect": 0,
+            "class": 1,
+            "event_mask": 0,
+            "x": 0,
+            "y": 0,
+            "width": 640,
+            "height": 480
+          },
+          "windows_bottom_to_top_then_extra_focus": [
+            {
+              "id": 2097153,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 19,
+              "y": 23,
+              "width": 64,
+              "height": 32
+            },
+            {
+              "id": 2097154,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 119,
+              "y": 123,
+              "width": 160,
+              "height": 90
+            },
+            {
+              "id": 2097155,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": -9,
+              "y": 8,
+              "width": 45,
+              "height": 27
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "status": 0,
+          "error": 0,
+          "requests": 10,
+          "begin_mono_ms": 3472986422,
+          "root": 543,
+          "root_width": 640,
+          "root_height": 480,
+          "focus": 2097154,
+          "revert_to": 1,
+          "children_total": 3,
+          "children_recorded": 3,
+          "focus_extra": 0,
+          "elapsed_ms": 4,
+          "atomic_snapshot": false,
+          "Steam_UI_qualified": false,
+          "root_attributes": {
+            "id": 543,
+            "x_error": 0,
+            "attributes_valid": 1,
+            "geometry_valid": 1,
+            "map_state": 2,
+            "override_redirect": 0,
+            "class": 1,
+            "event_mask": 0,
+            "x": 0,
+            "y": 0,
+            "width": 640,
+            "height": 480
+          },
+          "windows_bottom_to_top_then_extra_focus": [
+            {
+              "id": 2097153,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 19,
+              "y": 23,
+              "width": 64,
+              "height": 32
+            },
+            {
+              "id": 2097154,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 119,
+              "y": 123,
+              "width": 160,
+              "height": 90
+            },
+            {
+              "id": 2097155,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": -9,
+              "y": 8,
+              "width": 45,
+              "height": 27
+            }
+          ]
+        }
+      ],
+      "watch_ELF_sha256": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60",
+      "fixture_ELF_sha256": "c371ebd600cc2583550102159dbf119a84a38674bc36deecedda400711318908",
+      "host_ish_sha256": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+      "elapsed_seconds": 36.465
+    },
+    "default_fixture_regression": {
+      "scope": "Actual ARM64 optimized IR equivalence for original/default own Xlib fixture, excluding only source filename metadata; NOT Air/Steam regression proof",
+      "equal": true,
+      "normalized_IR_sha256": "cf60c6e5f64ee3778dc427a8dd0098ac654e270defa8515ed7a3cf9fc4c919d1"
+    },
+    "analysis": {
+      "new_complete_rows": 1,
+      "new_record_time_advanced": true,
+      "new_sample_in_supplied_stream": true,
+      "native_session_bound": false,
+      "Steam_UI_qualified": false,
+      "game_return_qualified": false
+    },
+    "minimal_patch": [
+      "experiments/linux-steam/guest/x11-state-fixture.c optional watch control ONLY",
+      "experiments/linux-steam/tools/run-x11-state-control.py optional pinned-watch mode ONLY"
+    ],
+    "regression_limits": "Default fixture optimized ARM64 IR is exactly identical to HEAD excluding source filename metadata. The runtime observer/source, native app, default launch/session policy and signed61 are unchanged; no new iOS build/sign/install. Host component execution does not qualify device teardown or Wine/game return.",
+    "signed61_unchanged": {
+      "main_sha256": "b96aa2ae2a9e2d6713f809ee9ea2178094d0c3b1379264c6879bbbf2277e8a90",
+      "watch_ELF_sha256": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60"
+    },
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run54",
+    "artifact_sha256": {
+      "watch-control/evidence.json": "cfcc2bbde7b6d5b4fcea9db776a7dfc815c2e84d9abab2ced7f04fd7c9ffa4c3",
+      "watch-control/observer-result.json": "e123b6975dc5711ffd7092de024586029c563c90cdb8ad3ad440274458b37a78",
+      "watch-control/runtime.log": "698185bde014575abe705db1c73d199e5c59ce8f534e31a9cbf89a00d4f6e9a0",
+      "watch-control/x11-state-watch.jsonl": "8bbce7241ffc383c9a1e326fd8fdb60e1fd142be21888e6d2d4a98d7bbc37f8d",
+      "watch-control/x11-state-watch-child.json": "abb84d1cdff5ed8d168036f0edabfa77dc4f32211c831dfaa1e2ce68e5f715af",
+      "default-fixture-equivalence.json": "adbc1934c4d9aab41df720cdb7c8ec25302f0d38f19ecf346f968b9272e1a230",
+      "watch-analysis-private.json": "a5c52d4ef2296223b3d9fcd6d3de77b675182a96c4383defa53f411398df9991",
+      "air-processes-private.json": "45c4848f9f09789ab8e3db2fea3d388bb179c4ae2f0c612ce782f056e9dc3782"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/guest/x11-state-fixture.c": "54b464ae36debb093ef0c34945506d82e418344e7fe5c8af5d1531071a34c271",
+      "experiments/linux-steam/tools/run-x11-state-control.py": "b09c76ca1fbbed257c3bbee4614e0ae85951fc1322f60096e5024b05f5b3291e"
+    },
+    "pending_boundary_audit": {
+      "same_boundary": "Specific permission to end currently active60 and upgrade already signed61, while user prohibits restarting active sessions. Repeated goal/continue is not the requested choice.",
+      "consecutive_goal_turns": "Run52 asked after concrete signed61 readiness; Run53 and currentRun54 still no explicit choice. Current exact60 is live.",
+      "independent_preparation_now_complete": "Observer protocol/VFS/native integration/full app/final linked/signature, interpretation controls and exact-watch real Linux lifetime are qualified at their stated scopes. Next decisive physical-Air experiment requires this upgrade; further host-only tests cannot substitute.",
+      "completion": "Not achieved: no current stable interactive Air Library/BPM, Steam Play->licensed Madeira game->reliable return/repeat evidence. No successsentinel/LaunchAgent changes.",
+      "next": "Publish scoped checkpoint, then mark thread goal blocked on this user-only boundary rather than run more status-only continuations; preserve scheduler and all app data. Resume only with actual specific choice or authoritative session change, revalidate identity/profile/device state before acting."
+    },
+    "limitations": [
+      "Host uses recorded interpreter935ea1c9; not equivalence of every copied/patched iOS archive or physical ARM64 syscall/thread behavior.",
+      "30.008s is host guest-sample interval,36.465s is whole synthetic control duration; not Steam responsiveness/startup/FPS/performance benefit.",
+      "Own synthetic child signal15/reap is expected control outcome, not CEF/app crash and not all Linux/Wine workers/native graphics/storage quiescence.",
+      "No Steam/auth/game action; bridge125 still diagnostic, complete product objective unchanged."
+    ],
+    "updated_UTC": "2026-11-14T21:38:35.809834+00:00"
   }
 }

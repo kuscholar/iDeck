@@ -1,3 +1,40 @@
+# LIVE Run54: exact watch ELF hostPASS; current60 live, specific61 choice needed
+
+Read latest MD/EVIDENCE.run54 FIRST. Parent8233c3e branch/origin/remotes/main
+2ac39be/worktrees/volumeUUID verified. No unrelated/FEX/Valve/vendor/app/auth/
+game/save/security/lock changes. CLIonly. Fresh Air60/19384 installationUUID
+B55DD703-F281-4556-9A49-09550951953B stillpresent; no input/stop/install. Last
+physicalwhite isRun53, no fresh screenshot thisrun. Do NOT infer crash/end.
+
+NEW real HOST control executes EXACT signed61 watch ELF SHA9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60.
+Newunauthedroot only, no Steam/VNC/device. 2rows30008msapart/36.465s hostwall:
+ownwindowa hide/focusb accurately observed. Own guestchild24 intentionally
+SIGTERM0 thenreaped1/status15; hostobserver56818terminal0/PID26723ended.
+Expected synthetic control outcome, NOTCEFcrash orfullruntime/device teardown.
+Default ownfixture optimizedARM64IR exactlyequivalent toHEAD(exceptfilename
+metadata). Optional runner watch mode only; app/observer sourceunchanged.
+Analyzer realstreamnewrow+time advance true, allsession/UI/game qualifiersfalse.
+Private run54, signed61main+watchhashesstillunchanged, no rebuild/resign/install.
+
+BOUNDARY AUDIT: same specific61 choice pending3goalturns (Run52asked after
+signedartifactready; Run53/54noactualanswer). Latestrepeatgoal forbidsactive
+restart, NOTconsent; original60upgradealreadydone. Independentpreparation now
+complete atcomponent scopes. NextdecisiveAirtest needs current60end/61install;
+more hostcontrols cannot substitute. Aftercheckpoint markthreadgoalblocked on
+thisuser-onlyboundary. Never markcomplete/writeSTABLE_SUCCESS/unloadLaunchAgent
+or change research cadence. Preserve app/root/artifacts; no repeatedquestions.
+
+NEXT after actual specificupgradechoice orauthoritative sessionstate change:
+revalidate exactcurrentPID/URI/profile/device, normal authorizedLab-onlysameID
+upgrade/no uninstall/authtransfer. Collectfresh61 own complete state rows with
+independentnative identity + physicalgoodLibrary/BPMvsblank, discriminate
+mapping/focus/render. Then actualSteamPlay->licensedMadeira game->qualified
+Linux/Wine/display/storage teardown->reliableSteamreturn/repeatedstability.
+Bridge125NOTgame. Goalunchanged; no Mac-unlock/password/Guard/trust automation.
+Pushsignedoffsource/redactedevidenceonlyexperimentallowedhours.
+
+--- HISTORICAL; header supersedes earlier current-state claims ---
+
 # LIVE Run53: Air60 stillwhite, signed61 unchanged; pending specific upgrade choice
 
 Read latest MD/EVIDENCE.run53 FIRST. Parent4e7b105, branch/origin/remote/main
