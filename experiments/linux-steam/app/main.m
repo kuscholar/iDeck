@@ -53,6 +53,9 @@ extern const char ideck_casp_order_marker[];
 #endif
 #if IDECK_LAB_NATIVE_LOG
 @property(nonatomic, strong) NSTimer *nativeResourceTimer;
+#if IDECK_LAB_WINE_INITIAL_JOIN
+@property(nonatomic, strong) NSURL *wineInitialReceiptURL;
+#endif
 - (void)writeNativeHealth;
 #endif
 - (void)connectWindowScene:(UIWindowScene *)scene;
@@ -75,10 +78,15 @@ extern const char ideck_casp_order_marker[];
     int result=ready?ideck_native_log_start(logs.fileSystemRepresentation):-1;
     if(result||!ideck_native_log_name())self.nativeLogError=@"Private diagnostics unavailable. No Linux session started.";
     else {
-        NSDictionary *receipt=@{@"file":[NSString stringWithUTF8String:ideck_native_log_name()],@"schema":@1,
+        NSMutableDictionary *receipt=[@{@"file":[NSString stringWithUTF8String:ideck_native_log_name()],@"schema":@1,
             @"health_file":[NSString stringWithUTF8String:ideck_native_health_name()],
             @"byte_limit":@(IDECK_NATIVE_LOG_LIMIT),@"pid":@(getpid()),@"physical_memory_bytes":@(NSProcessInfo.processInfo.physicalMemory),
-            @"build":[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"]?:@"unknown"};
+            @"build":[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"]?:@"unknown"} mutableCopy];
+#if IDECK_LAB_WINE_INITIAL_JOIN
+        NSString *wineFile=[NSString stringWithFormat:@"wine-initial-%s.json",ideck_native_log_name()];
+        receipt[@"wine_initial_file"]=wineFile;
+        self.wineInitialReceiptURL=[logs URLByAppendingPathComponent:wineFile];
+#endif
         NSData *data=[NSJSONSerialization dataWithJSONObject:receipt options:NSJSONWritingPrettyPrinted error:nil];
         if(![data writeToURL:[lab URLByAppendingPathComponent:@"last-native-log.json"] options:NSDataWritingAtomic error:&error])
             self.nativeLogError=@"Private diagnostics receipt unavailable. No Linux session started.";
@@ -118,14 +126,28 @@ extern const char ideck_casp_order_marker[];
     if(!ideck_retained_frontend_snapshot(&retained)){
         char line[200];snprintf(line,sizeof line,"RETAINED_BACKEND_STATE wave=%u phase=%d native_error=%d guest_status=%d",retained.wave,retained.phase,retained.error,retained.guest_status);
         ideck_native_log_line(line);
+
     }
 #endif
  #if IDECK_LAB_WINE_INITIAL_JOIN
     struct ideck_wine_initial_snapshot wine;
     int joinError=ideck_lab_wine_initial_snapshot(&wine);
     if(!joinError){
-        char line[240];snprintf(line,sizeof line,"WINE_INITIAL_JOIN_STATE_V1 generation=%llu phase=%u created=%u initial_joined=%u create_error=%d observer_error=%d all_Wine_workers_qualified=0",(unsigned long long)wine.generation,wine.phase,wine.initial_created,wine.initial_joined,wine.create_error,wine.observer_error);
+        char line[320];snprintf(line,sizeof line,"WINE_INITIAL_JOIN_STATE_V1 generation=%llu phase=%u created=%u initial_joined=%u create_error=%d observer_error=%d body_result_source=%u body_exit_code=%u all_Wine_workers_qualified=0",(unsigned long long)wine.generation,wine.phase,wine.initial_created,wine.initial_joined,wine.create_error,wine.observer_error,wine.body_result_source,wine.body_exit_code);
         ideck_native_log_line(line);
+        // One bounded session-specific receipt survives the kernel append cap.
+        // An observed initial-body exit code is not a child-game completion or
+        // proof that Wine workers, signals, storage or rendering are drained.
+        NSDictionary *body=@{@"schema":@1,@"pid":@(getpid()),@"build":@(build),
+            @"native_log":[NSString stringWithUTF8String:ideck_native_log_name()],
+            @"generation":@(wine.generation),@"phase":@(wine.phase),
+            @"initial_created":@(wine.initial_created),@"initial_joined":@(wine.initial_joined),
+            @"create_error":@(wine.create_error),@"observer_error":@(wine.observer_error),
+            @"body_result_source":@(wine.body_result_source),@"body_exit_code":@(wine.body_exit_code),
+            @"all_Wine_workers_qualified":@NO,@"game_exit_qualified":@NO};
+        NSData *data=[NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
+        if(!self.wineInitialReceiptURL||!data||![data writeToURL:self.wineInitialReceiptURL options:NSDataWritingAtomic error:nil])
+            ideck_native_log_line("WINE_INITIAL_RECEIPT_WRITE failed=1");
     }
  #endif
     if(ideck_native_health(build,ideck_linux_lab_stage(),ideck_linux_lab_live_guest_threads(),ideck_linux_lab_native_worker_entries()))

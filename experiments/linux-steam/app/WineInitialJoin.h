@@ -8,10 +8,17 @@ enum ideck_wine_initial_phase {
     IDECK_WINE_INITIAL_JOINED, IDECK_WINE_INITIAL_START_FAILED,
     IDECK_WINE_INITIAL_OBSERVER_FAILED
 };
+enum ideck_wine_body_result_source {
+    IDECK_WINE_BODY_RESULT_UNKNOWN,
+    IDECK_WINE_BODY_NORMAL_RETURN,
+    IDECK_WINE_BODY_LONGJMP
+};
 struct ideck_wine_initial_snapshot {
     uint64_t generation;
     unsigned phase,initial_created,initial_joined;
     int create_error,observer_error;
+    unsigned body_result_source;
+    uint32_t body_exit_code;
 };
 /* Private Lab replacement for ONE initial-thread create+detach pair only.
  * The original entry/attributes are retained. An owned observer joins that
@@ -21,6 +28,10 @@ struct ideck_wine_initial_snapshot {
  */
 int ideck_lab_wine_initial_create(pthread_t *,const pthread_attr_t *,void *(*)(void *),void *);
 int ideck_lab_wine_initial_snapshot(struct ideck_wine_initial_snapshot *);
+/* Only the actual initial pthread may report once, before its body returns.
+ * UNKNOWN remains distinct from zero. This is the initial Wine body result,
+ * NOT proof of child-game exit, licensing, all-worker teardown or safe return. */
+int ideck_lab_wine_initial_report_result(unsigned source,uint32_t code);
 /* Early refusal before Wine mutates prefix/socket state. Zero means only that
  * this initial-thread observer is idle, never full Wine/runtime readiness. */
 int ideck_lab_wine_initial_ready(void);

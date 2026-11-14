@@ -5,6 +5,7 @@
 #include <unistd.h>
 static pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;
 static pid_t owner;
+static pthread_t initial_thread;
 static struct ideck_wine_initial_snapshot state;
 struct watch { pthread_t thread; uint64_t generation; };
 static void *observe(void *opaque) {
@@ -34,6 +35,7 @@ int ideck_lab_wine_initial_create(pthread_t *thread,const pthread_attr_t *attrib
     int error=pthread_create(thread,attributes,entry,argument);
     if(error){state.phase=IDECK_WINE_INITIAL_START_FAILED;state.create_error=error;pthread_mutex_unlock(&lock);free(watch);return error;}
     state.phase=IDECK_WINE_INITIAL_ACTIVE;state.initial_created=1;
+    initial_thread=*thread;
     watch->thread=*thread;watch->generation=state.generation;
     pthread_t observer;error=pthread_create(&observer,NULL,observe,watch);
     if(error){
@@ -51,6 +53,16 @@ int ideck_lab_wine_initial_snapshot(struct ideck_wine_initial_snapshot *out) {
     if(!out)return EINVAL;
     pthread_mutex_lock(&lock);int error=owner&&owner!=getpid()?EXDEV:0;
     if(!error)*out=state;
+    pthread_mutex_unlock(&lock);return error;
+}
+int ideck_lab_wine_initial_report_result(unsigned source,uint32_t code) {
+    if((source!=IDECK_WINE_BODY_NORMAL_RETURN&&source!=IDECK_WINE_BODY_LONGJMP)||
+       (source==IDECK_WINE_BODY_NORMAL_RETURN&&code))return EINVAL;
+    pthread_mutex_lock(&lock);
+    int error=!owner||!state.initial_created?ENODEV:owner!=getpid()?EXDEV:
+        !pthread_equal(initial_thread,pthread_self())?EPERM:
+        state.body_result_source?EALREADY:state.initial_joined?ESTALE:0;
+    if(!error){state.body_result_source=source;state.body_exit_code=code;}
     pthread_mutex_unlock(&lock);return error;
 }
 int ideck_lab_wine_initial_ready(void) {

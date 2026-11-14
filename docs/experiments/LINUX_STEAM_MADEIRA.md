@@ -1,13 +1,12 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run48 LIVE59/19056): actual Air4 now renders genuine authenticated Linux
-Steam Library and Big Picture. Fixed directional input changes the selected game;
-Enter opens genuine details. Owned-game installation is paused at Ratatan EULA,
-then later artwork changed without agent input; possible user test preserved.
-No Steam Play bridge/game/return or repeated
-stability proof. Current session/container is preserved; source checkpoint1db7fcb
-published only to the experimental branch. New post-cap numeric input-health
-patch passes host/iOS compilation but is NOT deployed. Full goal remains ACTIVE.
+Status (run49): same actual59/19056 remains active on Air; genuine Steam logs
+identify the changing artwork as Screensaver, not game execution. No installation
+or Play/bridge result. One Escape input was refused by automatic review; specific
+user approval is pending, no alternate input attempted. Preserve live59. Private
+unsigned60 now adds actual initial-Wine-body result provenance and bounded
+numeric receipt; host/iOS/full build/final call sites pass, NOT deployed. Real
+Library/BPM/input proof remains48; full game/return/repeated stability ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -4786,3 +4785,55 @@ receipt is still59/19056; health163 has140guest entries/1602148728bytes and zero
 bridge submissions. Actual gameprocess log records UI7->4 at11:34:09, no current
 game start. This supersedes the earlier claim that EULA is still the current
 screen. Native-health combination with actual file-policy JSON also passed.
+
+
+## Run49: identify genuine screensaver; prepare honest native exit reporting
+
+Volume UUID/migration, branch/origin/worktrees/clean source3c839d0 and both remote
+refs verified. Exact CoreDevice URI+native receipt identify installed59/19056;
+no stale PID targeting. Read-only screen/health/Steam diagnostics succeed.
+Genuine webhelper identifies Screensaver_uid2 created11:39:11, visible1280x800
+11:39:14. Later changing game art is NOT game execution. Latesthealth1577 has143
+Linux entries/1620482496byte footprint,zero bridge submissions. Relative to
+health163, elapsed monotonic14140129ms with32268392992us nativeCPU:2.2820core
+equivalents averaged over that long interval, including idle/screensaver. This
+is not interactive stability, peak memory, FPS or a Windows-client comparison.
+
+One requested Escape was refused by automatic approval review: could dismiss
+pending EULA/modal or interrupt possible user test; no specific approval. It
+was NOT executed. Safe separate log reads passed; no workaround/alternate input,
+restart, upgrade, lock/security or auth changes. Specific one-Escape permission
+is asynchronously pending; original personal Ratatan EULA choice also unanswered.
+No installation/Steam Play/game result or consent is inferred from elapsed time.
+
+Independent required exit-reporting implementation: prior initial pthread join
+could not distinguish unknown result from known normal body return. Own Lab
+observer now captures UNKNOWN, normal-return or Wine-longjmp origin and full
+uint32code once from the actual initial pthread. Invalid/unstarted/foreign-thread
+and duplicate reports are refused; each actual generation resets the result.
+Only the private generated bridge copy gains two exact guarded call sites.
+Ordinary app/Wine/FEX/Valve sources remain untouched. A session-specific numeric
+atomic receipt survives the append cap, with explicit game_exit_qualified=false
+and all_Wine_workers_qualified=false. No return permission or runtime reset added.
+
+HOST ASan/UBSan real pthread/TLS test holds a destructor after abnormal result:
+code0xc0000005 known while actual join remains pending. Next joined/unreported
+thread stays UNKNOWN; another generation normal0 is distinct. Creation/observer
+EAGAIN, wrong-owner/invalid/duplicate controls pass. Main gates0/1 and component
+iOS Werror compile pass.22 Linux frontend units rebuilt into new private60 from
+pinned components, including48 post-cap navigation. Full unsigned60 first failed
+in the default sandbox build service/filesystem (65); ordinary escalation for
+this independent build passed0. No input-rejection workaround was used.
+
+Final Mach-O SHA773445334c3fe7c4fd1340bb1879a5c48973e4892a2c909c7bd4b50f6ca4d0e1.
+Actual disassembly has both body-result calls, original __wine_main call,
+owner/thread guards, delegate snapshot and atomic write. Final scene/rootfs/
+compatibility ELF/callback package checks pass. NOT signed, installed or actual
+Wine/game-result validation. It does not overwrite current59. Raw payloads,
+logs/screens/profiles stay private run49; redacted hashes EVIDENCE.run49.
+
+Next after the explicit input choice: inspect actual Steam installation/tool
+selection/Play capture, then qualified Linux shutdown and native legitimate
+Dock auth/JIT/game. One initial Wine body/join is still insufficient for all
+workers/signals/storage/render quiescence or reliable return. No stable-success
+marker, scheduler unload, main merge or binary publication.

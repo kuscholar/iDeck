@@ -548,3 +548,21 @@ python3 experiments/linux-steam/tools/test-navigation-health.py \
 This host test also checks that disabling the feature omits its fields and that
 the file-policy and navigation objects coexist in valid JSON. It does not test
 iPad notification delivery, physical input or Steam functionality.
+
+Initial Wine result reporting (Run49) remains part of the explicit
+`--observe-wine-initial-join` private build. Its actual initial pthread reports
+UNKNOWN, normal return or Wine longjmp plus a uint32 status. A joined thread with
+no report stays UNKNOWN. The session-specific atomic receipt named by
+`wine_initial_file` in `last-native-log.json` remains available after the append
+log cap; it explicitly does not qualify child-game exit or all-worker cleanup.
+
+```sh
+python3 experiments/linux-steam/tools/test-wine-initial-join.py \
+  "$LINUX_LAB_ARTIFACTS/NEW-private-wine-result-control"
+```
+
+This uses real host pthreads and a held TLS destructor to distinguish reported
+body exit from actual join, including unknown/normal/abnormal results and failure
+paths. Private unsigned Build 60 links the two exact original-body call sites;
+actual Wine/game/return validation is still required. Preserve the running Lab
+when any device or personal terms decision is pending.

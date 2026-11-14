@@ -29,13 +29,23 @@ static void destroy(void *value){
     pthread_mutex_unlock(&gate);
 }
 static void *guest(void *argument){
-    (void)argument;assert(!pthread_setspecific(key,(void *)1));atomic_store(&body_returned,1);return NULL;
+    (void)argument;
+    assert(ideck_lab_wine_initial_report_result(0,0)==EINVAL);
+    assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,1)==EINVAL);
+    assert(!ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP,0xc0000005u));
+    assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0)==EALREADY);
+    assert(!pthread_setspecific(key,(void *)1));atomic_store(&body_returned,1);return NULL;
 }
 static void *empty(void *argument){return argument;}
+static void *normal(void *argument){
+    assert(!ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0));return argument;
+}
 int main(int argc,char **argv){
     assert(argc==2);fail_call=atoi(argv[1]);assert(!pthread_key_create(&key,destroy));
     struct ideck_wine_initial_snapshot value;assert(!ideck_lab_wine_initial_snapshot(&value));
     assert(!value.generation&&!ideck_lab_wine_initial_ready());
+    assert(!value.body_result_source);
+    assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0)==ENODEV);
     pthread_attr_t attr;assert(!pthread_attr_init(&attr));assert(!pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED));
     pthread_t thread;assert(ideck_lab_wine_initial_create(&thread,&attr,guest,NULL)==EINVAL);
     assert(!ideck_lab_wine_initial_snapshot(&value)&&!value.generation);pthread_attr_destroy(&attr);
@@ -48,6 +58,8 @@ int main(int argc,char **argv){
     pthread_mutex_lock(&gate);while(!inside_destructor)pthread_cond_wait(&condition,&gate);pthread_mutex_unlock(&gate);
     assert(atomic_load(&body_returned));
     assert(!ideck_lab_wine_initial_snapshot(&value)&&value.initial_created&&!value.initial_joined);
+    assert(value.body_result_source==IDECK_WINE_BODY_LONGJMP&&value.body_exit_code==0xc0000005u);
+    assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP,0)==EPERM);
     assert(ideck_lab_wine_initial_ready()==EBUSY);
     pthread_t another;assert(ideck_lab_wine_initial_create(&another,NULL,empty,NULL)==EBUSY);
     if(fail_call==2)assert(value.phase==IDECK_WINE_INITIAL_OBSERVER_FAILED&&value.observer_error==EAGAIN);
@@ -65,6 +77,11 @@ int main(int argc,char **argv){
         assert(!ideck_lab_wine_initial_create(&another,NULL,empty,NULL));
         for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
         assert(value.initial_joined&&value.generation==previous+1);
+        assert(!value.body_result_source&&!value.body_exit_code); /* Unknown is not successful exit0. */
+        assert(!ideck_lab_wine_initial_create(&another,NULL,normal,NULL));
+        for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
+        assert(value.initial_joined&&value.generation==previous+2);
+        assert(value.body_result_source==IDECK_WINE_BODY_NORMAL_RETURN&&!value.body_exit_code);
     }
     assert(!pthread_key_delete(key));puts("HOST real initial pthread/TLS join and failure controls PASS; no Wine/Steam/game/return proof");return 0;
 }
@@ -79,7 +96,9 @@ spec=importlib.util.spec_from_file_location('join_patch',repo/'experiments/linux
 original=(repo/'app/Madeira/WineProcessBridge.m').read_text();adapted=module.patched(original)
 assert adapted.index('ideck_lab_wine_initial_ready()')<adapted.index('    if (g_prefix_path) free(g_prefix_path);',adapted.index('int wine_process_start('))
 assert 'pthread_detach(g_wine_thread)' not in adapted
+assert adapted.count('ideck_lab_wine_initial_report_result(')==2
+assert adapted.index('ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP')<adapted.index('        g_wine_running = 0;',adapted.index('        if (setjmp('))
 (out/'WineProcessBridge-private.m').write_text(adapted)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-(out/'evidence.json').write_text(json.dumps({'scope':'HOST actual initial pthread+held TLS destructor, injected create/observer failures and private exact bridge hook; NOT Wine workers/device/game/return proof','commands':commands,'modes':[0,1,2],'exit':0,'join_source_sha256':sha(source/'WineInitialJoin.c'),'bridge_original_sha256':sha(repo/'app/Madeira/WineProcessBridge.m'),'bridge_private_sha256':sha(out/'WineProcessBridge-private.m'),'fixture_sha256':sha(out/'control.c'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'scope':'HOST actual initial pthread+held TLS destructor, body-result owner/duplicate/invalid refusals, uint32 abnormal vs known-normal vs unknown, generation reset, injected create/observer failures and private exact bridge hook; NOT actual Wine workers/device/game/return proof','commands':commands,'modes':[0,1,2],'exit':0,'join_source_sha256':sha(source/'WineInitialJoin.c'),'bridge_original_sha256':sha(repo/'app/Madeira/WineProcessBridge.m'),'bridge_private_sha256':sha(out/'WineProcessBridge-private.m'),'fixture_sha256':sha(out/'control.c'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
 print((out/'control.log').read_text())

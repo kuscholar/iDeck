@@ -12910,5 +12910,188 @@
       "experiments/linux-steam/tools/test-navigation-health.py": "c3513f4fb57b5cc6c34cbf589a72e50d0716fa0e71f6c1078d71c0be390a70a7",
       "experiments/linux-steam/tools/test-cli-navigation.py": "4eb75f0b53ecf82e37b66e5f3c5ecdd306234e38e96a69bb4609347e59dac472"
     }
+  },
+  "run49": {
+    "source_parent": "3c839d0b151ee76bb60cb79c9d9a5644419c22ad",
+    "phase": "Preserve actual59 active Steam Screensaver; implement initial Wine body-result provenance for future game exit reporting",
+    "observation_UTC": "2026-11-14T15:52:01.709851+00:00",
+    "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+    "device": "Air4/iPad13,1 iPadOS27.2/24B119",
+    "live_session": {
+      "build": 59,
+      "PID": 19056,
+      "installed_UUID": "CED6F4B3-5948-4663-A9BE-FFE0ED4677D9",
+      "exact_CoreDevice_executable_matches": true,
+      "native_receipt_matches": true,
+      "health": {
+        "schema": 1,
+        "pid": 19056,
+        "build": 59,
+        "native_log": "kernel-19056-809681-609389000.log",
+        "sequence": 1577,
+        "mono_ms": 825441742,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 143,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 1620482496,
+        "cpu_valid": 1,
+        "cpu_user_us": 33306169575,
+        "cpu_system_us": 2312258750,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        }
+      },
+      "screenshot": "Full-screen changing game artwork; NOT actual game execution. Genuine webhelper log identifies Screensaver_uid2 created11:39:11 and visible1280x80011:39:14.",
+      "new_bridge_requests": 0,
+      "new_game_or_install_evidence": false,
+      "no_device_input_restart_upgrade_or_debugger": true
+    },
+    "measured_health_delta": {
+      "from_sequence": 163,
+      "to_sequence": 1577,
+      "elapsed_monotonic_ms": 14140129,
+      "native_cpu_total_us": 32268392992,
+      "average_native_CPU_core_equivalents": 2.282043748822942,
+      "scope": "Same-session two-point long-interval nativeCPU average incl idle/screensaver; NOT true peak, FPS, UI response/stability or comparison to Windows Steam"
+    },
+    "approval_boundary": {
+      "requested_action": "One Escape event to leave full-screen artwork/return one level",
+      "executed": false,
+      "review_rejection": "Bundled input might dismiss pending EULA/modal or interrupt possible live user test; no specific approval covers it.",
+      "safer_work_completed": "Separate read-only health/Steam diagnostic collection passed; no alternate/indirect input attempt.",
+      "user_question": "Specific one-Escape approval requested asynchronously; no reply. Prior Ratatan EULA personal-choice question also has no reply.",
+      "Steam_evidence": "Real log now establishes Screensaver; cannot infer personal EULA acceptance or interrupt permission."
+    },
+    "observed_implementation_gap": "Initial Wine pthread may be joined without any captured body exit result; unknown was not distinguishable from known normal return. Exit of this body does not qualify the actual child game or all-runtime teardown.",
+    "minimal_patch": {
+      "scope": "Own default-off initial-join Lab adapter and private generated WineProcessBridge copy only; ordinary app, vendor Wine/FEX/Valve untouched",
+      "result": "Actual initial pthread reports once: UNKNOWN/normal return/longjmp plus uint32code; rejects invalid/unstarted/foreign-thread/duplicate reports; resets per generation. No body result inferred from pthread_join.",
+      "receipt": "Existing delegate writes one small session-specific atomic numeric wine-initial receipt every health interval, outside 4MiB append cap. Contains build/PID/native-log/generation/result/join fields and explicit all_Wine_workers_qualified=false, game_exit_qualified=false.",
+      "no_return_permission_added": true
+    },
+    "verification": {
+      "host": "ASan/UBSan real pthread+heldTLS: full uint32 abnormal result while unjoined; owner/invalid/duplicate refusals; next unreported joined thread remains UNKNOWN; subsequent normal0 distinct; create and observer EAGAIN cases PASS",
+      "iOS_compile": "Actual main gates0/1 plus WineInitialJoin unit Werror PASS",
+      "runtime60": "22 actual Linux frontend units built with current post-cap navigation source; pinned archives/payloads copied read-only",
+      "full_Xcode": "First default sandbox attempt65 due build-service/filesystem permissions; normal escalated independent unsigned build succeeded0. No device input or security workaround.",
+      "final": {
+        "scope": "Final unsigned60 actual Wine body call sites, owner/thread guards and delegate receipt write verified; NOT actual Wine/game/return or device validation",
+        "checks": {
+          "actual_wine_body_result_calls": 2,
+          "original_Wine_main_call_retained": true,
+          "actual_owner_and_lock_calls": true,
+          "actual_delegate_snapshot_call": true,
+          "actual_atomic_receipt_write": true,
+          "new_numeric_receipt_marker_in_final": true
+        },
+        "full_build_exit": 0,
+        "signed": false,
+        "installed": false,
+        "executable_sha256": "773445334c3fe7c4fd1340bb1879a5c48973e4892a2c909c7bd4b50f6ca4d0e1",
+        "disassemblies": [
+          {
+            "symbol": "_wine_process_thread",
+            "command": [
+              "xcrun",
+              "llvm-objdump",
+              "--macho",
+              "--disassemble",
+              "--no-show-raw-insn",
+              "--dis-symname",
+              "_wine_process_thread",
+              "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run49/hybrid60/xcode/Build/Products/Debug-iphoneos/Madeira.app/Madeira"
+            ],
+            "sha256": "4797820c0e4dbeb0be9a659e360ad63692abc4841af996a3eb05146c10ceedb7"
+          },
+          {
+            "symbol": "_ideck_lab_wine_initial_report_result",
+            "command": [
+              "xcrun",
+              "llvm-objdump",
+              "--macho",
+              "--disassemble",
+              "--no-show-raw-insn",
+              "--dis-symname",
+              "_ideck_lab_wine_initial_report_result",
+              "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run49/hybrid60/xcode/Build/Products/Debug-iphoneos/Madeira.app/Madeira"
+            ],
+            "sha256": "93ff1d48ced862f5bede7d23abbb6eee1d9f16235a3bee421750ec736afca119"
+          },
+          {
+            "symbol": "-[LinuxLabDelegate writeNativeHealth]",
+            "command": [
+              "xcrun",
+              "llvm-objdump",
+              "--macho",
+              "--disassemble",
+              "--no-show-raw-insn",
+              "--dis-symname",
+              "-[LinuxLabDelegate writeNativeHealth]",
+              "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run49/hybrid60/xcode/Build/Products/Debug-iphoneos/Madeira.app/Madeira"
+            ],
+            "sha256": "268792502a78d925e72ad710056ce930f5de0249c6b411e9132399cb335ab58b"
+          },
+          {
+            "symbol": "_ideck_native_note_navigation",
+            "command": [
+              "xcrun",
+              "llvm-objdump",
+              "--macho",
+              "--disassemble",
+              "--no-show-raw-insn",
+              "--dis-symname",
+              "_ideck_native_note_navigation",
+              "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run49/hybrid60/xcode/Build/Products/Debug-iphoneos/Madeira.app/Madeira"
+            ],
+            "sha256": "3351539e1077de5eb2080223caa6839876eec9561026a5a1f277fce26ec91c1e"
+          }
+        ]
+      },
+      "signed": false,
+      "installed": false,
+      "new_patch_device_test": false
+    },
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run49",
+    "artifacts_sha256": {
+      "receipt-private.json": "35e2d15542b706053c8605283a39e8505b2082dda561662e47d8353df985ff18",
+      "health-private.txt": "4705944e8a0e4dc10a8ea6241187ff9a0bc09b0168c4ccd9b940fe1fad9d27c8",
+      "screen-private.png": "8566fc29951351277f59a6a4b73f1c3638c967453d2178ae6ae8c1563a1fe502",
+      "gameprocess-private.txt": "a96b542544b4030cf132269e1b6485737e69e5ad4645e9c6e57f5990de067c55",
+      "content-private.txt": "7503b3cebc83e2ac1b9ea8b097b9fc6a502935666e8442b44283e31eeb7c742b",
+      "webhelper-private.txt": "6e76194addf2e48bc4c01a02d84fcc91909c442319fe2a3c7aa744497b816003",
+      "wine-body-result-host/evidence.json": "4bec98620cc655aafcac1b92bf458b60e5a7c0684ad3c673d364ab3a6956be29",
+      "main-wine-result-ios/evidence.json": "b1054b5b93c0c1bdbce4372049f27e8e1f9b8e33ea7b0b69ac553acd22ba8e34",
+      "runtime60/evidence.json": "1eb0980b705d0780b7c646263f69673d55b5e70cd7a44c120b1f73c73a95e008",
+      "hybrid60/build-normal-review-result.json": "e322e80cb6ecc20df2b719ba56321f15fedde0cccd875e82d821867f52bf8d81",
+      "hybrid60/package-validation.json": "7b8bf16210d577eb2ae276dac6c2f1dd52d133683b29cae5a6cc32cfa8715e84",
+      "hybrid60/final-result-evidence.json": "cc6abbec62a62f0fef1bdf5a7b4bd7e25aed55ecfc38a37604ec6e1214af0565"
+    },
+    "sources_sha256": {
+      "experiments/linux-steam/app/WineInitialJoin.c": "38105ccda9e82ffcd1c0126a4aa4e49cdbfbb487575c013a485ab3a81f8492c9",
+      "experiments/linux-steam/app/WineInitialJoin.h": "a4d0aada12a9727ef4e7dacc428d45d3194ddec3d44a4505a139040a2959a857",
+      "experiments/linux-steam/app/main.m": "45d13d98b17a0cb7acfe19536a62f7af89878ae08388b7dc06cd42f18dd5ec06",
+      "experiments/linux-steam/tools/wine-initial-join.py": "2232a3585482b9353d45e0159a146b1b65a421925112ebc518f8e7a0aaa8000e",
+      "experiments/linux-steam/tools/test-wine-initial-join.py": "de5a9011e986ddb969d667f70f2715ea0e47c464a53f5b7fad899193457c7bb4"
+    },
+    "limits": [
+      "Actual59 stays alive for hours but this is not repeated interactive Library/BPM/game/return stability",
+      "No installed game, Steam Play bridge request, licensed Madeira game or return proof",
+      "One initial body result/join does not qualify Wine worker/signal/storage/render teardown; all-game result may remain unknown",
+      "No combined binary distribution license clearance; new60 is unsigned private only",
+      "Specific input approval and personal terms choice remain pending; no automatic acceptance or forced restart"
+    ],
+    "next": "After explicit input approval inspect awakened real UI, personally resolved EULA or alternate owned game installation, genuine compatibility-tool selection and Play capture. Preserve59 if user test active. Future60 upgrade only after exact identity/current test recheck; actual native auth/JIT/game and full cleanup/return still required."
   }
 }

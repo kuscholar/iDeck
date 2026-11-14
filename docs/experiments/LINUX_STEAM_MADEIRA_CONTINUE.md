@@ -1,3 +1,44 @@
+# LIVE Run49: actual59 Screensaver preserved; Escape approval pending; unsigned60 ready
+
+Read MD/EVIDENCE.run49 FIRST. Parent3c839d0 branch/origin/worktrees/remotes verified;
+main2ac39be unchanged. VolumeUUID580CADCD-33F5-4D78-9530-2287615873CA mounted.
+Exact live59PID19056 URI UUIDCED6F4B3-5948-4663-A9BE-FFE0ED4677D9+receipt match.
+No install/restart/debugger/deviceinput thisrun. CLIonly,noMacunlock/security/
+auth/Guard/trust changes. Preserve account/games/saves/workingapps/allworktrees.
+
+Realwebhelper proves Screensaver_uid2 created11:39:11/visible11:39:14. Changing
+full-screen gameart is NOTgame. Health1577/143guests/1620482496bytes/bridge0;
+legacyphase8 NOTstop. Longintervalhealth CPUavg2.282cores incl idle, not UI/
+interaction/stability/game proof. ActualLibrary/BPM/navigation remainsRun48.
+
+ONE Escape request rejected by auto-review (possiblependingEULA/manualtest).
+NOTexecuted; no workaround/retry/alternateinput. Separate read-onlylogs passed.
+Async specificapproval questionpending, prior RatatanEULA personalchoicealso
+no reply. DO NOT acceptterms or sendEscape untilactualrequiredanswer. Continue
+independentcode; preservepossibleuserlive59. No repeatedlock/unlock requests.
+
+New ownLab Winebodyresult provenance: UNKNOWN vs normal-return vs longjmp,
+fulluint32code, actualinitialpthreadonly/once/pergeneration, invalid/foreign/
+duplicate refused. PrivatecopiedWineProcessBridgeonly; noordinary/FEX/vendor/
+Valvechange. One small atomicnumericreceipt surviveslogcap with explicitfalse
+allWineworkers/gameexit qualification. Initialjoin/result NOT fullteardown.
+HOSTrealpthread/heldTLS/abnormal0xc0000005/knownnormal0/unknown/generation/
+create+observerEAGAIN ASanUBSanPASS;3actualiOSunitsWerrorPASS;22runtimeunitsPASS.
+Fullunsigned60 normalreviewbuild37034 TERMINAL0 afterdefault-sandbox65failure.
+Finalactual2bodycalls+originalmain+guards+delegatewrite+packageverified; SHA
+773445334c3fe7c4fd1340bb1879a5c48973e4892a2c909c7bd4b50f6ca4d0e1.
+PRIVATE run49/hybrid60 andruntime60; NOT signed/installed/devicevalidated.
+Do NOT upgrade current59 whileuser/inputchoicepending. Preserve currentapp.
+
+Next permitteddeviceaction: awakenverifiedUI afterexplicitinputapproval, inspect
+install/Windowsmanifest/PE and genuine customtoolselection/Playcapture, then
+qualifiedLinuxshutdown/nativelegitimateauth/JIT/game. Bridge125 notgame; no
+repeatedgame/return/fullstability. FullgoalACTIVE,noSTABLE_SUCCESS/unload.
+Combinedbinarylicensegateunresolved; scopedsource/redactedevidencecommit/push
+onlyexperimentduringallowedhours. Keeprawlogs/screens/binaries/profilesprivate.
+
+--- HISTORICAL states below; header supersedes currentstateclaims ---
+
 # LIVE Run48: actual Air Library/BPM/input; unexpected UI change, preserve user test
 
 Read latest MD/EVIDENCE.run48 FIRST. Source checkpoint1db7fcb signed-off/pushed
