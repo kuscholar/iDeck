@@ -139,6 +139,7 @@ static void window_json(const struct window_state *w){
 }
 static int report(int status){
     text("{\"schema\":1,\"status\":");number(status!=0);field("error",state.error);field("requests",state.sequence);
+    field("begin_mono_ms",state.begin_ms>=0?(u64)state.begin_ms:0);
     field("root",state.root);field("root_width",state.width);field("root_height",state.height);field("focus",state.focus);field("revert_to",state.revert);
     field("children_total",state.children);field("children_recorded",state.recorded);field("focus_extra",state.focus_extra);
     field("elapsed_ms",state.end_ms>=state.begin_ms?(u64)(state.end_ms-state.begin_ms):0);
@@ -150,6 +151,23 @@ static int report(int status){
     unsigned done=0;while(done<used){long r=call(64,1,(long)(output+done),used-done,0,0,0);if(r==-4)continue;if(r<=0||(u64)r>used-done)return 91;done+=(unsigned)r;}
     return status?1:0;
 }
+static int monitor(void){
+    int result=0;
+#if IDECK_X11_STATE_WATCH
+    /* One guest, <=120 records/2MiB at 30s intervals. Dedicated private stdout
+     * survives native log cap. A failed snapshot stops; no retry or input. */
+    for(unsigned sample=0;sample<120;sample++){
+        result=report(snapshot());if(result||sample==119)break;
+        struct {long sec,nsec;} delay={30,0},remaining;
+        if(call(101,(long)&delay,(long)&remaining,0,0,0,0)<0){result=1;break;}
+        u8 *bytes=(u8 *)&state;for(unsigned i=0;i<sizeof state;i++)bytes[i]=0;
+        used=overflow=0;
+    }
+#else
+    result=report(snapshot());
+#endif
+    return result;
+}
 #ifndef IDECK_X11_STATE_CONTROL
-void _start(void){int result=report(snapshot());call(94,result,0,0,0,0,0);__builtin_unreachable();}
+void _start(void){call(94,monitor(),0,0,0,0,0);__builtin_unreachable();}
 #endif

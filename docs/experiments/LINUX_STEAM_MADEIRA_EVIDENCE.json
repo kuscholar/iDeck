@@ -13799,5 +13799,620 @@
       },
       "interpretation": "All4 unresponsive kills are historical Nov9/10/12, none current60. Actual Screensaver show/hide lifecycle continues through20:41UTC while physical frame blank. This is not proof of full browser/renderer health or input/UI success."
     }
+  },
+  "run52": {
+    "phase": "Explicitly gated window observer built, final-linked and disposable signed61 verified; active60 preserved, specific61 upgrade choice pending",
+    "source_parent": "5720f819895aaf24a044aabb755c3939b11f3e8a",
+    "source_parent_verified": true,
+    "hypothesis": "Compare actual good Library vs blank top-level viewability/geometry/input-focus before a causal WM/render patch; no generic WM blame",
+    "runtime_patch": "New --x11-window-state flag, immutable signed-bundle ARM64 resource; copy-once native configuration, PID1-only VFS no-overwrite installation. One guest observer with max120 JSONL records,30s delays,20s transaction deadline; stops on error. Separate private /tmp/ideck-x11-state.jsonl survives kernel log cap. Own child cleanup, no WM/title/property/pixel/input/auth or FEX/Valve change. Default off.",
+    "host_protocol": {
+      "scope": "HOST mocked read-only X11 protocol controls and actual static ARM64 Linux ELF build; NOT LinuxRunner execution or Steam/Air/UI validation",
+      "cases": 21,
+      "commands": [
+        [
+          "xcrun",
+          "clang",
+          "-O1",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-fsanitize=address,undefined",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/tools/x11-state-control.c",
+          "-o",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run52/x11-state/control"
+        ],
+        [
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run52/x11-state/control"
+        ],
+        [
+          "xcrun",
+          "clang",
+          "--target=aarch64-linux-gnu",
+          "--ld-path=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/tool-bin/ld.lld",
+          "-nostdlib",
+          "-static",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-stack-protector",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "/Volumes/easystore/GitHub/FunProjects/iDeck-linux-steam-ipad/experiments/linux-steam/guest/x11-window-state.c",
+          "-Wl,-e,_start",
+          "-o",
+          "/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run52/x11-state/x11-window-state.elf"
+        ]
+      ],
+      "artifacts": {
+        "control": "246c2695b3966e6d651824c46e7cb30e3531fb081c1781c384780cfa9267871d",
+        "x11-window-state.elf": "d9f7454131ef12439a87a67ea21defb475241e015db6a5f3489ffa3aa4ff827e",
+        "1.log": "14866a93b9cf76c9004a310c168f6bf2992188b2e3e7ef0667e29762757eaa67"
+      },
+      "sources": {
+        "guest/x11-window-state.c": "0a2f1cdaf8fd9d525c1f48bbcad5c24303d6513d9feaf11ae5ccc861b6abc864",
+        "tools/x11-state-control.c": "8d789189c4d5522fc5d1a009a0516d3b7b027e19564841432db7980039aad2c0",
+        "tools/test-x11-state.py": "e9dd5bb8103e5b720c382dec83b059e3dde3d43a8b9a354346f23dd4d88807d7"
+      }
+    },
+    "host_installer": {
+      "scope": "HOST actual pinned fakefs/VFS own state installer ASan/UBSan, NOT guest observer/Air/UI/game success",
+      "tests": [
+        {
+          "mode": "positive",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "owned-copy-install=PASS",
+            "published-exact=PASS",
+            "published-regular-executable=PASS",
+            "owned-stage-gone=PASS",
+            "same-lifetime-consumed=PASS"
+          ],
+          "log_sha256": "2c820a69f0230a2215ae7bd3bda2a42a55408b2ad13826f28dd3064fad0d4de1"
+        },
+        {
+          "mode": "identical",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "matching-published-reused=PASS",
+            "existing-bytes-preserved=PASS"
+          ],
+          "log_sha256": "12c9ce012832a5644f6a86ee10a10d966abedd693b07ada700a24c6fdbcec5b5"
+        },
+        {
+          "mode": "conflict",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "foreign-target-refused=PASS",
+            "foreign-preserved=PASS",
+            "note-preserved=PASS"
+          ],
+          "log_sha256": "a274884de934812b76a2d2c4e4b2f6607ff4cd3bf9657f044b618522ddf2df90"
+        },
+        {
+          "mode": "base-link",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "base-symlink-refused=PASS",
+            "referent-preserved=PASS"
+          ],
+          "log_sha256": "f699f2524ef1fa3051da0567e974317e38fa987725d5bc376018ad710e189b77"
+        },
+        {
+          "mode": "target-link",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "target-symlink-refused=PASS",
+            "referent-preserved=PASS"
+          ],
+          "log_sha256": "e005ae3b562b627947d79214cb5342e7b9ba4db1d0a66183672b1714c133a699"
+        },
+        {
+          "mode": "stale",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "stale-refused=PASS",
+            "stale-preserved=PASS",
+            "no-target=PASS"
+          ],
+          "log_sha256": "de820573c650bc0e03b5db4229ec6f99ce9ca8272eea3a55912b0dd3c0822592"
+        },
+        {
+          "mode": "noninit",
+          "status": 0,
+          "checks": [
+            "immutable-payload-copied=PASS",
+            "second-configure-refused=PASS",
+            "guest-install-refused=PASS",
+            "no-directory-change=PASS"
+          ],
+          "log_sha256": "abc4c7d4153f3b07943e1bcb663548716bc6216bcfea07201b4a7c39b94de672"
+        },
+        {
+          "mode": "invalid",
+          "status": 0,
+          "checks": [
+            "null-refused=PASS",
+            "short-refused=PASS",
+            "large-refused=PASS",
+            "wrong-machine-refused=PASS",
+            "shared-object-refused=PASS",
+            "unprepared-refused=PASS",
+            "no-directory-change=PASS"
+          ],
+          "log_sha256": "fae59efd328428a87f66ddce4d6bbed72f168ef8ed62e26920a500bab4747d64"
+        }
+      ],
+      "elf_sha256": "d9f7454131ef12439a87a67ea21defb475241e015db6a5f3489ffa3aa4ff827e"
+    },
+    "host_gates": {
+      "scope": "HOST actual compile-gated Lab command bytes only; no shell/runtime/device execution",
+      "tests": [
+        {
+          "label": "off",
+          "compile_exit": 0,
+          "valid": true
+        },
+        {
+          "label": "on",
+          "compile_exit": 0,
+          "valid": true
+        },
+        {
+          "label": "no-frontend",
+          "compile_exit": 1,
+          "valid": false
+        },
+        {
+          "label": "no-log",
+          "compile_exit": 1,
+          "valid": false
+        },
+        {
+          "label": "no-tool",
+          "compile_exit": 1,
+          "valid": false
+        }
+      ],
+      "source_sha256": "fa411c201cfb9689cf8e38244a0be91bf9dadb74b3ccf3b85ddfcb7708f3f574"
+    },
+    "navigation_regression": "Actual existing admission method17 negatives/9 paired events/throttle PASS, count-only UI/RFB stubs; not physical input proof",
+    "iOS_runtime": "23 native units including real immutable installer/frontend compiled; namespace and immutable input archive checks pass. Not final app/device proof.",
+    "Xcode_build": {
+      "observer_session": 72673,
+      "state": "terminal0 full unsigned build",
+      "output": ".madeira-install/linux-steam-ipad/run52/hybrid61",
+      "signed": true,
+      "installed": false,
+      "exit_code": 0,
+      "completed_UTC": "2026-11-14T20:57:49.394144+00:00"
+    },
+    "device_state": "Latest exact Air60/19384 installationUUIDB55DD703-F281-4556-9A49-09550951953B still white; untouched during source/host/build work. User authorized Build60 upgrade, which is completed; no new upgrade permission inferred.",
+    "limitations": [
+      "JSONL last line can be partial; records are non-atomic, bounded/possibly stale, no health/success inference from absence.",
+      "No new on-Air observer execution or cause/fix validation. Steam Play bridge remains diagnostic125, no game/return/repeated stability.",
+      "Private developer build only; combined-binary licensing distribution gate unresolved."
+    ],
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run52",
+    "next": "After actual upgrade choice, revalidate exact current60 identity, normally terminate only that Lab if authorized, same isolated-ID61 upgrade/no uninstall or auth transfer, normal retained frontend launch. Collect own /data/tmp/ideck-x11-state.jsonl: require complete fresh sample rows and compare physically good Library/BPM vs blank windows/focus. No WM or renderer fix claim. Continue genuine Play->licensed Madeira game->qualified teardown/return.",
+    "updated_UTC": "2026-11-14T21:09:56.185485+00:00",
+    "final_linked": {
+      "window-install": {
+        "symbol": "_ideck_x11_state_install_prepared",
+        "expected_calls": [],
+        "artifact_sha256": "b91ba1c84d7b4cf9204a515bece78e2e22c9ac8a52bde0a13bc23013c1f14e8f"
+      },
+      "window-configure": {
+        "symbol": "_ideck_x11_state_configure",
+        "expected_calls": [
+          "_malloc",
+          "_memcpy"
+        ],
+        "artifact_sha256": "8e95ad210d34dc2c7112c3581d0c3ba2bb43697093255f7ee5d859eed6f35c6c"
+      },
+      "initial-runtime": {
+        "symbol": "_run",
+        "expected_calls": [
+          "_ideck_x11_state_install_prepared"
+        ],
+        "artifact_sha256": "e5687b30cd636f3e44831cfda6279c532da40c2568850f4fbdd2d2c0c73ae4a6"
+      },
+      "frontend-prepare-parent": {
+        "symbol": "-[LinuxSteamViewController startFrontend]",
+        "expected_calls": [
+          "_ideck_x11_state_configure"
+        ],
+        "artifact_sha256": "267f158100ff9f115344232522ae6eb9bb0066b16fa469c36317e7e969649368"
+      },
+      "scope": "Actual FINAL unsigned Mach-O configure/native-init install call sites and own static ARM64 watch resource; NOT device execution or WM/render fix",
+      "unsigned_executable_sha256": "169684e570d721d4cdd8b8ef167831d85c94b6ba10a12ed70baa8860ce11c58c",
+      "watch_ELF_sha256": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60",
+      "watch_ELF_bytes": 8928,
+      "installed": false,
+      "actual_watch_command_present": true
+    },
+    "actual_final_package": {
+      "scope": "Actual FINAL app scene/pin/own resources/ARM64 ELF/callback metadata only, NOT runtime/device/Steam/game proof",
+      "scene_delegate": "LinuxLabSceneDelegate",
+      "rootfs_pin": "8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a",
+      "resources_sha256": {
+        "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+        "x11-window-state": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60",
+        "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+        "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+      },
+      "ARM64_ELF": true,
+      "cold_callback_scheme": "ideck-linux-lab",
+      "build": "61"
+    },
+    "actual_host_current_ELF_execution": {
+      "scope": "HOST real ARM64 LinuxRunner/Xvfb/Xlib own-window state transitions, NOT Air/Steam/CEF/game qualification",
+      "exit": 0,
+      "elapsed_seconds": 46.695,
+      "cases": 4,
+      "ids": {
+        "root": 543,
+        "a": 2097153,
+        "b": 2097154,
+        "c": 2097155
+      },
+      "reports": [
+        {
+          "schema": 1,
+          "status": 0,
+          "error": 0,
+          "requests": 10,
+          "begin_mono_ms": 3471102926,
+          "root": 543,
+          "root_width": 640,
+          "root_height": 480,
+          "focus": 2097153,
+          "revert_to": 1,
+          "children_total": 3,
+          "children_recorded": 3,
+          "focus_extra": 0,
+          "elapsed_ms": 1,
+          "atomic_snapshot": false,
+          "Steam_UI_qualified": false,
+          "root_attributes": {
+            "id": 543,
+            "x_error": 0,
+            "attributes_valid": 1,
+            "geometry_valid": 1,
+            "map_state": 2,
+            "override_redirect": 0,
+            "class": 1,
+            "event_mask": 0,
+            "x": 0,
+            "y": 0,
+            "width": 640,
+            "height": 480
+          },
+          "windows_bottom_to_top_then_extra_focus": [
+            {
+              "id": 2097153,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 19,
+              "y": 23,
+              "width": 64,
+              "height": 32
+            },
+            {
+              "id": 2097154,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 119,
+              "y": 123,
+              "width": 160,
+              "height": 90
+            },
+            {
+              "id": 2097155,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": -9,
+              "y": 8,
+              "width": 45,
+              "height": 27
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "status": 0,
+          "error": 0,
+          "requests": 10,
+          "begin_mono_ms": 3471102952,
+          "root": 543,
+          "root_width": 640,
+          "root_height": 480,
+          "focus": 2097154,
+          "revert_to": 1,
+          "children_total": 3,
+          "children_recorded": 3,
+          "focus_extra": 0,
+          "elapsed_ms": 0,
+          "atomic_snapshot": false,
+          "Steam_UI_qualified": false,
+          "root_attributes": {
+            "id": 543,
+            "x_error": 0,
+            "attributes_valid": 1,
+            "geometry_valid": 1,
+            "map_state": 2,
+            "override_redirect": 0,
+            "class": 1,
+            "event_mask": 0,
+            "x": 0,
+            "y": 0,
+            "width": 640,
+            "height": 480
+          },
+          "windows_bottom_to_top_then_extra_focus": [
+            {
+              "id": 2097153,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 19,
+              "y": 23,
+              "width": 64,
+              "height": 32
+            },
+            {
+              "id": 2097154,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 119,
+              "y": 123,
+              "width": 160,
+              "height": 90
+            },
+            {
+              "id": 2097155,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": -9,
+              "y": 8,
+              "width": 45,
+              "height": 27
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "status": 0,
+          "error": 0,
+          "requests": 10,
+          "begin_mono_ms": 3471102953,
+          "root": 543,
+          "root_width": 640,
+          "root_height": 480,
+          "focus": 2097153,
+          "revert_to": 1,
+          "children_total": 3,
+          "children_recorded": 3,
+          "focus_extra": 0,
+          "elapsed_ms": 1,
+          "atomic_snapshot": false,
+          "Steam_UI_qualified": false,
+          "root_attributes": {
+            "id": 543,
+            "x_error": 0,
+            "attributes_valid": 1,
+            "geometry_valid": 1,
+            "map_state": 2,
+            "override_redirect": 0,
+            "class": 1,
+            "event_mask": 0,
+            "x": 0,
+            "y": 0,
+            "width": 640,
+            "height": 480
+          },
+          "windows_bottom_to_top_then_extra_focus": [
+            {
+              "id": 2097153,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 19,
+              "y": 23,
+              "width": 64,
+              "height": 32
+            },
+            {
+              "id": 2097154,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 119,
+              "y": 123,
+              "width": 160,
+              "height": 90
+            },
+            {
+              "id": 2097155,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": -9,
+              "y": 8,
+              "width": 45,
+              "height": 27
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "status": 0,
+          "error": 0,
+          "requests": 8,
+          "begin_mono_ms": 3471102955,
+          "root": 543,
+          "root_width": 640,
+          "root_height": 480,
+          "focus": 2097153,
+          "revert_to": 1,
+          "children_total": 2,
+          "children_recorded": 2,
+          "focus_extra": 0,
+          "elapsed_ms": 1,
+          "atomic_snapshot": false,
+          "Steam_UI_qualified": false,
+          "root_attributes": {
+            "id": 543,
+            "x_error": 0,
+            "attributes_valid": 1,
+            "geometry_valid": 1,
+            "map_state": 2,
+            "override_redirect": 0,
+            "class": 1,
+            "event_mask": 0,
+            "x": 0,
+            "y": 0,
+            "width": 640,
+            "height": 480
+          },
+          "windows_bottom_to_top_then_extra_focus": [
+            {
+              "id": 2097153,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 2,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": 19,
+              "y": 23,
+              "width": 64,
+              "height": 32
+            },
+            {
+              "id": 2097155,
+              "x_error": 0,
+              "attributes_valid": 1,
+              "geometry_valid": 1,
+              "map_state": 0,
+              "override_redirect": 0,
+              "class": 1,
+              "event_mask": 0,
+              "x": -9,
+              "y": 8,
+              "width": 45,
+              "height": 27
+            }
+          ]
+        }
+      ],
+      "dependencies": {
+        "usr/lib/aarch64-linux-gnu/libX11.so.6.4.0": "94938979e2e2030f3471823a186eec66f994b128125ea2f4b4c18b502444b0a0",
+        "usr/lib/aarch64-linux-gnu/libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13"
+      },
+      "artifacts": {
+        "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+        "x11-window-state.elf": "d9f7454131ef12439a87a67ea21defb475241e015db6a5f3489ffa3aa4ff827e",
+        "fixture.elf": "3fd49a3dad559f7514200321eaa398921f32902d1491f9494f41a02c7c34c798",
+        "runtime.log": "8a4ed9172c6bf883a0d053532d650d970b658bcd7f2172d2d616487d3966fa30"
+      },
+      "performance_limit": "46.695s whole host fixture while full build/I/O activity; not comparable to earlier controls or device/Steam performance, per-request timing is not end-to-end UI latency."
+    },
+    "signature_preflight": {
+      "existing_profiles_and_certificate_match": true,
+      "Air_main_helper_IDs_match": true,
+      "profile_expiry_main_UTC": "2026-11-20T04:42:36Z",
+      "profile_expiry_helper_UTC": "2026-11-20T04:42:34Z",
+      "accounts_or_new_profiles_or_keychain_settings_changed": false
+    },
+    "inspection_correction": "Initial final-call check selected a startFrontend block without configure call. Correct actual parent startFrontend method contains configure call; native run contains preboot installer call. Not a missing-link/runtime failure.",
+    "signed61": {
+      "scope": "Disposable signed61 final main/helper ID/entitlements/existing matching profiles/deep strict+actual instruction identity/resource checks; NOT install/device execution",
+      "signature_valid": true,
+      "main_helper_match": true,
+      "profiles_unchanged": true,
+      "unsigned_signed_text_equal": true,
+      "text_sha256": "81446f26cc7af400a5357b4442ce1c1a7b59be0c28a637fe7f5dc3a93718af0e",
+      "signed_executable_sha256": "b96aa2ae2a9e2d6713f809ee9ea2178094d0c3b1379264c6879bbbf2277e8a90",
+      "unsigned_executable_unchanged": true,
+      "watch_ELF_sha256": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60",
+      "installed": false,
+      "completed_UTC": "2026-11-14T21:07:58.367572+00:00"
+    },
+    "artifact_sha256": {
+      "runtime61/evidence.json": "7ec9e4e155d3a95ff4fd25db289de04e16f84b9bfd648d654aeb7ec5cf733bd3",
+      "hybrid61/build-result.json": "91c679e99a3cf06c72b68977558aec1506526f7500b6e1884bb307b097ed37d5",
+      "hybrid61/final-linked-evidence.json": "f2ea9eb0ec6c78c779629742a9c4b2b95cd37a405878c52485f8d0cc81b28214",
+      "hybrid61/package-validation-final.json": "6dc81e924383af59917137ba55c64a11ae665a941df23b65d258ce95030e159b",
+      "signed61/validation.json": "cee1c9c09593478b578f31708f1f865e544beac6ea28a92f60003b1a7889b3c2",
+      "x11-state/evidence.json": "78f400bdf6e6c0af92c6a887e66cc1addd6058c5261da21c2574002750c922ac",
+      "state-install/evidence.json": "f426c1f39629c37ea7f286eccdecf13859b4ac5c2eba1f5190fb65c8ba3291d4",
+      "state-gates/evidence.json": "8cbe4109769d469cfcebf0287846e4ff06110056b0dfc05e010db2f06f2d556a",
+      "x11-state-real/evidence.json": "863b642b4badb44d8a2900033210e7374265e9264fc164162ebf92c810e31936"
+    },
+    "fresh_current60_identity": {
+      "PID": 19384,
+      "installation_UUID": "B55DD703-F281-4556-9A49-09550951953B",
+      "present_in_actual_Air_processes": true,
+      "terminated": false,
+      "new_install_performed": false
+    },
+    "user_boundary": "Specific async question pending: permit ending CURRENT60 and upgrading prepared/signed61, or preserve session. Needed because user requires no restart of active sessions. Earlier60 approval already completed; no61 consent inferred."
   }
 }

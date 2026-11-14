@@ -33,6 +33,6 @@ for i,cmd in enumerate(commands):
 elf=(out/'x11-window-state.elf').read_bytes()
 assert elf[:6]==b'\x7fELF\x02\x01' and elf[16:20]==b'\x02\0\xb7\0'
 evidence=dict(scope='HOST mocked read-only X11 protocol controls and actual static ARM64 Linux ELF build; NOT LinuxRunner execution or Steam/Air/UI validation',
-              cases=19,commands=commands,artifacts={name:hashlib.sha256((out/name).read_bytes()).hexdigest() for name in ('control','x11-window-state.elf','1.log')},
+              cases=21,commands=commands,artifacts={name:hashlib.sha256((out/name).read_bytes()).hexdigest() for name in ('control','x11-window-state.elf','1.log')},
               sources={name:hashlib.sha256((lab/name).read_bytes()).hexdigest() for name in ('guest/x11-window-state.c','tools/x11-state-control.c','tools/test-x11-state.py')})
 (out/'evidence.json').write_text(json.dumps(evidence,indent=2)+'\n');print(json.dumps(evidence))

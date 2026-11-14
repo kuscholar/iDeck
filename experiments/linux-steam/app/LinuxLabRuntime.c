@@ -23,6 +23,9 @@
 #include "LinuxSteamSession.h"
 #include "ToolInstall.h"
 #include "X11TraceInstall.h"
+#if IDECK_LAB_X11_STATE
+#include "X11StateInstall.h"
+#endif
 #if IDECK_LAB_SHARED_LIBRARY
 #include "SharedSteamLibrary.h"
 #endif
@@ -220,6 +223,9 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
     if(tool) { int created=0; if((err=ideck_tool_install(tool,&created))<0)return err; }
 #else
     if(tool)return -95;
+#endif
+#if IDECK_LAB_X11_STATE
+    if(frontend&&(err=ideck_x11_state_install_prepared())<0)return err;
 #endif
 #if IDECK_LAB_REGISTER_SHARED_LIBRARY
     if(frontend) {

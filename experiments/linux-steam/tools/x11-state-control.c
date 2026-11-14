@@ -6,12 +6,13 @@
 #include <stdio.h>
 #include <string.h>
 #define IDECK_X11_STATE_CONTROL 1
+#define IDECK_X11_STATE_WATCH 1
 #include "../guest/x11-window-state.c"
 static u8 pending[WIRE_LIMIT],request_bytes[12];
-static unsigned pending_size,pending_read,request_size,requests,closes;
+static unsigned pending_size,pending_read,request_size,requests,closes,completed_requests,sleeps;
 static unsigned mode,tree_count,connect_wait;
 static long clock_ms;
-static char emitted[sizeof output];static unsigned emitted_size;
+static char emitted[2097152];static unsigned emitted_size;
 enum {NORMAL,FOCUS_NONE,FOCUS_EXTRA,MANY,DISAPPEARED,DRAWABLE_GONE,WRONG_SEQUENCE,
       HUGE_REPLY,TREE_MISMATCH,EOF_REPLY,TIMEOUT_REPLY,BAD_SETUP,WRONG_PACKET,
       CONNECT_FAILURE,CONNECT_ASYNC_FAILURE,ROOT_REDIRECT,SHORT_WRITES,ROOT_GONE,WRONG_ERROR};
@@ -60,7 +61,8 @@ long ideck_x11_call(long n,long a,long b,long c,long d,long e,long f){
     if(n==203){assert(a==10&&c==21);assert(!strcmp((const char *)b+2,"/tmp/.X11-unix/X99"));if(mode==CONNECT_FAILURE)return -111;connect_wait=1;return -115;}
     if(n==209){assert(a==10&&b==1&&c==4);*(int *)d=mode==CONNECT_ASYNC_FAILURE?111:0;*(unsigned *)e=4;return 0;}
     if(n==73){if(connect_wait){connect_wait=0;return 1;}return mode==TIMEOUT_REPLY?0:1;}
-    if(n==57){assert(a==10);closes++;return 0;}
+    if(n==57){assert(a==10);closes++;completed_requests+=requests;requests=0;return 0;}
+    if(n==101){struct time_value{long sec,nsec;} *t=(void *)a;assert(t->sec==30&&t->nsec==0);clock_ms+=30000;sleeps++;return 0;}
     if(n==63){
         assert(a==10);if(mode==EOF_REPLY)return 0;
         assert(pending_read<pending_size);unsigned size=pending_size-pending_read;if(size>(unsigned)c)size=(unsigned)c;if(size>3)size=3;
@@ -79,9 +81,9 @@ long ideck_x11_call(long n,long a,long b,long c,long d,long e,long f){
 }
 static void run(unsigned test,int success){
     memset(&state,0,sizeof state);memset(output,0,sizeof output);memset(emitted,0,sizeof emitted);
-    used=overflow=pending_size=pending_read=request_size=requests=closes=emitted_size=connect_wait=0;
+    used=overflow=pending_size=pending_read=request_size=requests=closes=emitted_size=connect_wait=completed_requests=sleeps=0;
     mode=test;clock_ms=1000;tree_count=test==MANY?40:2;
-    int result=snapshot();assert((result==0)==success);assert(closes==1);assert(requests<=72);assert(clock_ms-state.begin_ms<=20600);
+    int result=snapshot();assert((result==0)==success);assert(closes==1);assert(completed_requests<=72);assert(clock_ms-state.begin_ms<=20600);
     assert(report(result)==(success?0:1));assert(strstr(emitted,"\"atomic_snapshot\":false"));assert(strstr(emitted,"\"Steam_UI_qualified\":false"));
     if(success){
         assert(!state.error&&state.root==0x100&&state.width==1280&&state.height==800);
@@ -97,5 +99,13 @@ static void run(unsigned test,int success){
 }
 int main(void){
     for(unsigned i=0;i<=WRONG_ERROR;i++)run(i,i<=DRAWABLE_GONE||i==ROOT_REDIRECT||i==SHORT_WRITES);
+    for(unsigned failure=0;failure<2;failure++){
+        memset(&state,0,sizeof state);memset(emitted,0,sizeof emitted);
+        used=overflow=pending_size=pending_read=request_size=requests=closes=emitted_size=connect_wait=completed_requests=sleeps=0;
+        mode=failure?EOF_REPLY:NORMAL;clock_ms=1000;tree_count=2;
+        int result=monitor();assert(result==(int)failure);assert(closes==(failure?1:120)&&sleeps==(failure?0:119));
+        unsigned lines=0;for(unsigned i=0;i<emitted_size;i++)if(emitted[i]=='\n')lines++;
+        assert(lines==(failure?1:120)&&emitted_size<2097152);
+    }
     puts("PASS actual one-shot X11 protocol: fragmentation/EINTR/focus/map/race/cap/malformed/deadline/read-only whitelist; HOST fixture, not Air/Steam");return 0;
 }

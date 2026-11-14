@@ -1,11 +1,12 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run51): user explicitly approved ending current59 and upgrading60.
-Same-ID install/launch succeeded. Actual Air60 showed authenticated desktop
-Library, real BPM home/menu and BPM Library (40 titles, installed0). After idle
-screensaver, one pointer wake hid it but content stayed black, later white.
-Fresh shared RFB and a later physical screen were both blank; not a proven
-native-only Metal fault. Current60/19384 preserved, no game/return/stability.
+Status (run52): Air60 upgrade/UI observations completed, current60 session
+preserved after white-screen regression. Bounded read-only window/focus observer
+integrated behind explicit Lab-only opt-in; HOST21 protocol/watch + real fakefs
+installer/gates/navigation + current ARM64 Linux/Xvfb controls pass. Full61 Xcode,
+final Mach-O calls/resource and disposable signing/deep strict/code identity
+pass. Signed61 NOT installed; specific active60 upgrade choice pending. Actual
+Air observer/UI/game/return/repeated stability remain unverified; goal ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5004,3 +5005,81 @@ frame remains white. Do not mistake cumulative historical errors or blank
 content for browser death; neither advancing lifecycle nor app presence proves
 interactive rendering. Preserve this session; next read-only window/focus
 discriminator remains justified, no broad WM/render retry patch.
+
+## Run52 — explicitly gated state observer in the actual Lab frontend
+
+Source parent5720f81 (Run51 source/evidence signed-off and actually pushed).
+Current60/19384 preserved; no device input/restart/upgrade in this phase.
+Read-only recent current60 health and blank physical state are in Run51.
+
+New --x11-window-state opt-in adds only the own numeric observer: immutable
+ARM64 ELF from signed bundle, native copy-once configuration and native PID1
+preboot VFS install. Existing matching executable/mode is reused, conflicting
+file/stage/symlink remains untouched, publication is no-overwrite. It never
+accepts guest command/path/auth input. Ordinary app/flag-off unchanged.
+A single guest observer runs at most120 records,30s after each successful
+snapshot,20s per transaction. First failure stops without retry. Dedicated
+private JSONL survives4MiB native log cap. Session cleanup owns its child PID.
+No additional repeated shell forks, WM, pixel/text/property reads, event/focus
+changes, assertions, FEX/Valve/security/auth/Guard/OS changes. Records are
+non-atomic; final line may be partial and bounded/stopped records stale.
+
+HOST21 ASan/UBSan cases cover actual protocol plus full120-record watcher and
+stop-after-first-error. Actual pinned fakefs installer8 processes pass copy
+ownership/immutable bytes/executable mode/matching reuse/conflict preservation/
+stale stage/native-init/invalid payload controls. Actual compiled shell gates
+defaultoff/expliciton plus missingfrontend/log/tool errors pass5 cases; no shell
+execution in these gate tests. Existing actual CLI admission17 negative cases/
+9paired events/throttle passes, with count-only UI/RFB stubs. Native23 iOS
+adapters compiled with symbol namespace checks and unchanged base archive input
+verification. No physical UI success follows from these controls.
+
+Full unsigned61 currently being built in new private run52/hybrid61, observer
+72673, separate derived data/no install. First preparation pointed to absent
+primary toolchain and failed BEFORE output creation. Inspected existing private
+toolchains location, then prepared using correct authorized llvm-mingw path.
+No re-download, profile creation or primary source edit. Existing60 unsigned/
+signed artifact and live root untouched. Next verify final app call sites and
+resource hashes, then matching-profile disposable signing; preserve current60
+until specific upgrade authorization or safely concluded test. No new user
+approval inferred from old60 reply. No game/return or stable success claim.
+
+### Run52 final build/link/sign evidence and precise human boundary
+
+Full Xcode61 observer72673 terminal0. Finalpackage pin/scene/callback/main+
+helperID/four own resources pass, observer verified static ARM64 ET_EXEC and
+bounded size. Final Mach-O actual startFrontend parent calls configuration;
+actual native run calls preboot installer. Initially inspected a startFrontend
+block without that call, then corrected to actual parent; not link/runtime
+failure. Linked fixed watch command and marker present. Actual watch ELF has
+120record loop/119compare and nanosleep101, SHA
+9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60,8928bytes.
+Unsigned executable SHA169684e570d721d4cdd8b8ef167831d85c94b6ba10a12ed70baa8860ce11c58c.
+All23 current adapter source hashes still equal recorded built inputs.
+
+Current-source one-shot real LinuxRunner/Xvfb/Xlib control4cases terminal0
+(observer32999). Whole-host fixture46.695s while full build/I/O activity; not a
+valid comparison to earlier2.859s or device/Steam latency. Own-window map/unmap/
+remap/focus/destroy and geometry are correctly reported. No new Steam/Air
+execution follows from host results.
+
+Manual signing used only existing main/helper embedded60 profiles, exactAir/
+app/certificate verified/unexpired through Nov20. No new account, keychain
+setting or profile. Disposable61 sign observer20551 terminal0 and independent
+validation95643 terminal0. Deep strict, exact embedded profiles/entitlements,
+main/helper IDs and finalresources pass. Actual __TEXT,__text SHA
+81446f26cc7af400a5357b4442ce1c1a7b59be0c28a637fe7f5dc3a93718af0e
+identical unsigned/signed; unsigned source artifact unchanged. Signedexe SHA
+b96aa2ae2a9e2d6713f809ee9ea2178094d0c3b1379264c6879bbbf2277e8a90.
+Private signedapp run52/signed61/Madeira.app, NOT installed/devicevalidated.
+No combined-binary distribution clearance.
+
+Fresh official process check confirms SAME current60/19384/installationUUID.
+No termination/input/install. User's no-active-session-restart rule requires a
+new specific upgrade choice; asked only AFTER complete reviewable signed61 was
+ready. Pending: allow endCURRENT60+upgrade61 or keep session. Do not infer from
+elapsed time/old60 answer. After actual approval revalidate identity, normal
+Lab-only termination/sameID upgrade, preserve auth/games/saves. Collect complete
+fresh numeric JSONL rows and physical Library/BPM vs blank, then discriminate
+focus/mapping vs rendering. No blind WM/assertion/retry patch. Goal ACTIVE;
+Play bridge125 diagnostic, no real Windows-game/return/repeat stability yet.

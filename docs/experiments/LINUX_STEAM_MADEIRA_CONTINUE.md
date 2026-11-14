@@ -1,3 +1,43 @@
+# LIVE Run52: signed61 ready, active60 preserved; specific upgrade choice pending
+
+Read latest MD/EVIDENCE.run52 FIRST. Sourceparent5720f81 Run51 pushed. Same
+experiment branch/origin/main2ac39be preserved. Private artifacts run52.
+Fresh exactAir current60/19384 UUIDB55DD703-F281-4556-9A49-09550951953B
+STILLPRESENT. No input/stop/install. Last physicalwhite, metadataScreensaver
+continues; no current browser-unresponsive message, old4events historical.
+CLIonly,noMacunlock/auth/Guard/trust/security/Valve/FEX changes.
+
+New --x11-window-state defaultOFF, signedbundle-copy/PID1-VFS/nooverwrite.
+Oneguest <=120numericJSONLrecords/30sdelays/20sdeadline/stopfirsterror. Dedicated
+/data/tmp/ideck-x11-state.jsonl survivesnativecap. Lastpartial/staleness and
+non-atomic nature explicit; no title/property/pixel/input/WM/clientmutation.
+HOST21 ASanUBSan protocol+watch,8realVFSinstaller modes,5actualcompilegates,
+17negative+9eventnavigation regressionPASS. CurrentARM64LinuxRunner/Xvfb/Xlib
+own-window4cases0/46.695shostwall underbuildIO, NOTdevice/performanceproof.
+23iOSunits/currenthashes match. FULL61 Xcode72673terminal0, actualfinalparent
+configure+nativeinitinstallcalls/linkedwatchcommand/ARM64ELFresources verified.
+
+DISPOSABLESIGNED61: run52/signed61/Madeira.app. Sign20551terminal0,
+validation95643terminal0; deepstrict/existingAir+IDs+cert+profiles/entitlements/
+unchangedcode+resourcesPASS. ProfileexpiriesNov20. No profile/account/keychain
+setting changed. Unsigned61original+live60/root untouched. WatchELFSHA
+9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60.
+SignedexeSHAb96aa2ae2a9e2d6713f809ee9ea2178094d0c3b1379264c6879bbbf2277e8a90.
+TextSHA81446f26cc7af400a5357b4442ce1c1a7b59be0c28a637fe7f5dc3a93718af0e.
+NOTinstalled/Air-tested. No binarydistributionlicenseclearance.
+
+USERQUESTIONPENDING after concrete signed61 ready: allow endCURRENT60+upgrade61
+or preserve. Origin: user no-active-session-restart rule. Old60 upgrade consent
+alreadycompleted, not61 approval. No elapsed-time consent. Revalidate reply/
+actualidentity BEFORE normal Lab-only stop/install. SameID preserveauth/games/
+saves, no uninstall/accounttransfer. Ordinary retainedlaunch, interpreter noJIT
+required. Need fresh complete JSONLsamples + physicalgoodLibrary/BPMvsblank
+viewability/focus before causalpatch, then actual licensedWindowsPlay/game/
+fullteardown/reliableSteamreturn. Bridge125 NOTgame, noSTABLE_SUCCESS/unload.
+Commit-s/pushonlyexperimentallowedhours; never main/forcepush/upstreammessages.
+
+--- HISTORICAL; header supersedes old current-build claims ---
+
 # LIVE Run51: Build60 actual Library/BPM/input, blank after screensaver; preserve
 
 Read latest MD/EVIDENCE.run51 FIRST. Parentbb3ac02, UUID/origin/worktrees/main

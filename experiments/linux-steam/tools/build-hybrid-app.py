@@ -101,6 +101,11 @@ info.write_bytes(plistlib.dumps(metadata))
 compat=native/'LabCompatibility';compat.mkdir()
 resource_cmd=['xcrun','clang','--target=aarch64-linux-gnu','--ld-path='+str(ld_lld),'-nostdlib','-static','-ffreestanding','-fno-builtin','-fno-stack-protector','-O2','-Wall','-Wextra','-Werror',str(lab/'guest/compatibility.c'),str(lab/'guest/compat-start.S'),'-Wl,-e,_start','-o',str(compat/'ideck-madeira')]
 subprocess.run(resource_cmd,check=True)
+state_cmd=None
+if e.get('x11_window_state_enabled'):
+    state_cmd=resource_cmd[:resource_cmd.index(str(lab/'guest/compatibility.c'))]+[
+        '-DIDECK_X11_STATE_WATCH=1',str(lab/'guest/x11-window-state.c'),'-Wl,-e,_start','-o',str(compat/'x11-window-state')]
+    subprocess.run(state_cmd,check=True)
 for name in ('compatibilitytool.vdf','toolmanifest.vdf'):shutil.copy2(lab/name,compat/name)
 resource_hashes={x.name:hashof(x) for x in compat.iterdir()}
 project=stage/'app/Madeira.xcodeproj/project.pbxproj';text=project.read_text()
@@ -202,7 +207,7 @@ record={'scope':'Private isolated FULL source app + Linux frontend build inputs;
  'dirty_experiment_source_inputs':copied,'prepared_payloads':payload,'linux_input_evidence_sha256':hashof(linux/'evidence.json'),
  'Linux_entry_source_sha256':hashof(lab/'app/main.m'),'private_project_sha256':hashof(project),
  'read_only_dependency_root':str(deps),'Wine_FEX_sources_modified':False,'provisioning_installation_or_auth_action':False,
- 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'scene_manifest':scene_manifest,'scene_contract_source_sha256':hashof(lab/'app/Info.plist'),'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'wine_initial_join_observer_enabled':a.observe_wine_initial_join,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
+ 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'scene_manifest':scene_manifest,'scene_contract_source_sha256':hashof(lab/'app/Info.plist'),'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'wine_initial_join_observer_enabled':a.observe_wine_initial_join,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'x11_window_state_enabled':e.get('x11_window_state_enabled',False),'own_state_resource_command':state_cmd,'binary_distribution_allowed':False,'build_command':cmd}
 (out/'prepare-evidence.json').write_text(json.dumps(record,indent=2)+'\n')
 if a.build:
     env=dict(os.environ,LLVM_MINGW=str(a.llvm_mingw.resolve()))

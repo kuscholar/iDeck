@@ -15,6 +15,9 @@
 #import "LabSocketPrefix.h"
 #import "LinuxLabRuntime.h"
 #import "ToolInstall.h"
+#if IDECK_LAB_X11_STATE
+#include "X11StateInstall.h"
+#endif
 #if IDECK_LAB_X11_TRACE
 #import "X11TraceInstall.h"
 #endif
@@ -566,6 +569,12 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
             if(x11Trace.length<64||x11Trace.length>262144){[self showStatus:@"Bundled window diagnostic is unavailable; no guest started."];return;}
             ideck_native_log_line("IDECK_X11_TRACE_V3 requested=1 guest_activation=unverified");
         }
+#endif
+#if IDECK_LAB_X11_STATE
+        NSData *stateBinary=[NSData dataWithContentsOfURL:[resource URLByAppendingPathComponent:@"x11-window-state"]];
+        int statePrepared=ideck_x11_state_configure(stateBinary.bytes,stateBinary.length);
+        if(statePrepared){[self showStatus:@"Window state diagnostic could not prepare; no guest started."];return;}
+        ideck_native_log_line("IDECK_X11_STATE_V1 prepared=1 read_only=1 guest_execution_unverified=1");
 #endif
         [self showStatus:@"Starting genuine ARM64 Linux Steam; waiting for its display."];
 #if IDECK_LAB_RETAINED_FRONTEND

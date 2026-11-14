@@ -18,9 +18,14 @@ callback=e.get('cold_setup_callback_scheme')
 if callback:
  schemes=[s for t in info.get('CFBundleURLTypes',[]) for s in t.get('CFBundleURLSchemes',[])]
  assert schemes==[callback],'Final cold Lab callback must not route to the working app'
-expected=e['own_guest_resource_hashes'];assert set(expected)=={'ideck-madeira','compatibilitytool.vdf','toolmanifest.vdf'}
+expected=e['own_guest_resource_hashes'];names={'ideck-madeira','compatibilitytool.vdf','toolmanifest.vdf'}
+if e.get('x11_window_state_enabled'):names.add('x11-window-state')
+assert set(expected)==names
 for name,sha in expected.items():
  f=a.app/'LabCompatibility'/name;assert f.is_file() and not f.is_symlink(),name
  assert hashlib.sha256(f.read_bytes()).hexdigest()==sha,'Final resource mismatch: '+name
 elf=(a.app/'LabCompatibility/ideck-madeira').read_bytes();assert len(elf)>=64 and elf[:6]==b'\x7fELF\x02\x01' and int.from_bytes(elf[18:20],'little')==183
+if e.get('x11_window_state_enabled'):
+ observer=(a.app/'LabCompatibility/x11-window-state').read_bytes()
+ assert 64<=len(observer)<=262144 and observer[:6]==b'\x7fELF\x02\x01' and observer[16:20]==b'\x02\0\xb7\0','Final window observer is not the bounded ARM64 Linux executable'
 print(json.dumps({'scope':'Actual FINAL app scene/pin/own resources/ARM64 ELF/callback metadata only, NOT runtime/device/Steam/game proof','scene_delegate':'LinuxLabSceneDelegate','rootfs_pin':pin,'resources_sha256':expected,'ARM64_ELF':True,'cold_callback_scheme':callback,'build':info.get('CFBundleVersion')}))
