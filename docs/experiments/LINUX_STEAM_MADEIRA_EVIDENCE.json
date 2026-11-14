@@ -14414,5 +14414,109 @@
       "new_install_performed": false
     },
     "user_boundary": "Specific async question pending: permit ending CURRENT60 and upgrading prepared/signed61, or preserve session. Needed because user requires no restart of active sessions. Earlier60 approval already completed; no61 consent inferred."
+  },
+  "run53": {
+    "phase": "Continue same window/focus discriminator while preserving active60 and pending specific61 upgrade choice; implement bounded interpretation of observer artifacts",
+    "source_parent": "4e7b105d98dfad90d19bac0f7931becd03f05c41",
+    "previous_goal_turn": "PROGRESS: actual full signed61 with final linked call sites and real Linux control evidence, not game/return success.",
+    "state_verified": {
+      "volume_UUID": "580CADCD-33F5-4D78-9530-2287615873CA",
+      "migration_stage": "migration_complete_external_rollback_retained",
+      "origin": "https://github.com/kuscholar/iDeck.git",
+      "branch": "experiment/linux-steam-madeira-ipad",
+      "remote_experiment": "4e7b105d98dfad90d19bac0f7931becd03f05c41",
+      "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+      "worktree_initially_clean": true,
+      "other_worktrees_untouched": true
+    },
+    "observed_device": {
+      "model": "Air4/iPad13,1",
+      "existing_build": 60,
+      "PID": 19384,
+      "installation_UUID": "B55DD703-F281-4556-9A49-09550951953B",
+      "exact_actual_process_identity_present": true,
+      "physical_screenshot_exit": 0,
+      "actual_screen": "2026-11-14 16:21EST physical capture still white with cursor and native controls; not recovered or interactive Steam proof",
+      "actions": "Read-only process/screen checks. No input/restart/install/debugger/profile/account/security action."
+    },
+    "user_boundary": "Specific Build61 upgrade choice from Run52 is still pending. Current repeated goal says do not restart active sessions; it is NOT the specific approval. No repeated question/elapsed-time consent; preserve current60.",
+    "hypothesis": "For the existing window/focus discriminator, interpret actual numeric metadata without treating old/truncated/replaced/duplicated/error rows, unknown nested-focus coordinates or rectangle geometry as fresh rendering/UI evidence. This is a component evidence-quality discriminator, not a Steam root-cause claim.",
+    "minimal_patch": [
+      "experiments/linux-steam/tools/analyze-x11-state.py",
+      "experiments/linux-steam/tools/test-x11-state-analysis.py"
+    ],
+    "host_results": {
+      "scope": "HOST private artifact parser/interpretation controls, including existing real Linux Xvfb fixture receipts if provided; NOT new runtime/Air/Steam/UI validation",
+      "passed": 32,
+      "real_Xvfb_receipts": 4,
+      "checks": [
+        "append-map-and-focus",
+        "unchanged-is-not-fresh",
+        "duplicate-is-not-fresh",
+        "replacement-is-not-append",
+        "partial-is-not-a-sample",
+        "partial-line-completed",
+        "empty-no-ui-inference",
+        "clock-regression-not-fresh",
+        "nested-focus-not-root-coverage",
+        "lost-window-not-known-unmapped",
+        "offscreen-rectangle",
+        "input-only-not-render-surface",
+        "focus-none",
+        "focus-pointer-root",
+        "focus-root",
+        "probe-error-not-browser-death",
+        "unsupported-qualification",
+        "bool-not-integer",
+        "wrong-count",
+        "duplicate-id",
+        "unbounded-windows",
+        "invalid-geometry",
+        "missing-schema",
+        "unrecognized-fields",
+        "partial-row-cap",
+        "byte-cap",
+        "record-cap",
+        "malformed-complete-row",
+        "real-Xvfb-0",
+        "real-Xvfb-1",
+        "real-Xvfb-2",
+        "real-Xvfb-3"
+      ],
+      "real_data_source": "Existing run52/x11-state-real own ARM64 LinuxRunner/Xvfb/Xlib control receipts; no new runtime execution this run",
+      "CLI_comparison": {
+        "new_complete_rows": 1,
+        "new_record_time_advanced": true,
+        "new_sample_in_supplied_stream": true,
+        "native_session_bound": false,
+        "Steam_UI_qualified": false,
+        "cause_proven": false,
+        "game_return_qualified": false
+      }
+    },
+    "regression_boundaries": "Both prepared signed61 executable and observer ELF hashes re-read and match Run52; no iOS runtime/source change or new app build/sign/install, no FEX/Valve/vendor edits. Main/working apps/auth/games/saves untouched.",
+    "signed61_unchanged": {
+      "executable_sha256": "b96aa2ae2a9e2d6713f809ee9ea2178094d0c3b1379264c6879bbbf2277e8a90",
+      "watch_ELF_sha256": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60"
+    },
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run53",
+    "artifact_sha256": {
+      "processes-private.json": "00ac88e22d34c467ccd1a076c4104bcdf8dc3e13647b0ca0639fbce043f8237d",
+      "current60-screen-private.png": "1d9f97c9081571345fc9c2956180125dd0c347e10b9b807deb116566569b946d",
+      "analysis-control-final/evidence.json": "0fc409904502e395f501dca5b825f9e6ae5bab92e791cc2f605a710f26891217",
+      "analysis-cli-final-private.json": "c50f7382c45fa181aae37e79f575a472ea10b84840f5039e00cc7f2b4357da36"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/tools/analyze-x11-state.py": "e7b8c1d8f2e88fe7c2f71853b1c067d74f0b3ae3aafb90e844521325af944fb8",
+      "experiments/linux-steam/tools/test-x11-state-analysis.py": "c920e48f5c3543ad6ecbb399dffa4b06d7620abf0c8b2a8f3afa1bbc5fa50599"
+    },
+    "limits": [
+      "No Build61 on-Air window samples yet; schema cannot alone bind samples to a native PID/build. Operator must corroborate exact current app/session/physical UI.",
+      "Root-child rectangle intersection is not pixels, opacity, input consumption or renderer health. Extra focused descendant has unknown coordinate parent. SubstructureRedirect bit is not working-WM proof.",
+      "Status1 means observer failure, not browser crash. Non-atomic queries can race mapping/destruction. Only complete bounded schema rows used; partial final bytes retained/reported.",
+      "No real Steam Play->Madeira game or return/repeated stability result, no successful sentinel or scheduler unload."
+    ],
+    "next": "After actual61 upgrade choice, revalidate exact current60 before authorized normal Lab-only stop/same-ID upgrade; preserve auth/games/saves. Capture two own observer streams and physical goodLibrary/BPM vs blank, analyze complete fresh records with independently established session identity, then discriminate mapping/focus vs rendering. Continue genuine licensed game/return goal.",
+    "updated_UTC": "2026-11-14T21:23:27.995390+00:00"
   }
 }

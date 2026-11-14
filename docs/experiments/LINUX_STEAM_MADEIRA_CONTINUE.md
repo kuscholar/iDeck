@@ -1,3 +1,39 @@
+# LIVE Run53: Air60 stillwhite, signed61 unchanged; pending specific upgrade choice
+
+Read latest MD/EVIDENCE.run53 FIRST. Parent4e7b105, branch/origin/remote/main
+2ac39be/worktrees/volumeUUID verified; initiallyclean. No unrelated/vendor/
+FEX/Valve/runtime/app/account/game/save/security/lock changes. CLIonly.
+Fresh exactAir60/19384 installationUUIDB55DD703-F281-4556-9A49-09550951953B
+process present; physical16:21EST screenwhite. No input/stop/restart/install.
+Specific61 choice fromRun52 STILLpending. Repeatedgoal/no-restartinstruction
+is NOT that approval. Do not ask repeatedquestions or infer elapsed consent.
+
+Independent HOST artifact analyzer analyze-x11-state.py + testscript:32controls
+PASS including4 existing realLinux/Xvfb receiptcases fromRun52. No newruntime
+execution. Boundedcomplete numeric rows only, exactappendprefix/partialbyte/
+cap/time advancement/error flags. Duplicates/clockstalls/failed samples notfresh.
+Root-child rectangle/stack/focus metadata only; extra focuseddescendant has
+UNKNOWN coordinateparent. Lost attrdefault0 notknownunmapped. No pixels/WM/
+render/Steam qualification. Native-session-bound,cause,UI,game_return always
+FALSE; must independently bind nativePID/build and physicalUI. Private run53.
+
+SIGNED61 run52/signed61/Madeira.app stillUNCHANGED main+watchSHAverified.
+No newbuild/sign/install. Prior full61 Xcode/finalMachO/resource/deepstrict/
+matchingAir/app/cert/profiles valid; profileexpiryNov20. Do NOT overwrite or
+resign while pending; interpreter needsnoJIT. Details and exacthashes Run52.
+
+NEXT only after actual61 upgradechoice: revalidate current60 identity, normal
+Lab-only stop/sameID upgrade preservingauth/games/saves, no uninstall/transfer.
+Capturecompletefresh own /data/tmp/ideck-x11-state.jsonl before/after with exact
+native-session and physical goodLibrary/BPMvsblank evidence. Useanalyzerwithout
+claiming fromstale/unboundmetadata. Then narrow mapping/focus vs renderingfix,
+realSteamPlay->licensedMadeiraGame->fullteardown/reliableSteamreturn. Bridge125
+NOTgame; noSTABLE_SUCCESS/unload/complete. Commit-s/pushonlyexperiment during
+allowedhours. Never main/forcepush/upstream messages. User-onlygate recorded;
+continue independent useful work wherefeasible, not repeatedstatus-onlyturns.
+
+--- HISTORICAL; header supersedes current-state claims below ---
+
 # LIVE Run52: signed61 ready, active60 preserved; specific upgrade choice pending
 
 Read latest MD/EVIDENCE.run52 FIRST. Sourceparent5720f81 Run51 pushed. Same

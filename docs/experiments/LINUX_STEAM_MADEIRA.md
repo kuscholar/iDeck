@@ -1,12 +1,11 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run52): Air60 upgrade/UI observations completed, current60 session
-preserved after white-screen regression. Bounded read-only window/focus observer
-integrated behind explicit Lab-only opt-in; HOST21 protocol/watch + real fakefs
-installer/gates/navigation + current ARM64 Linux/Xvfb controls pass. Full61 Xcode,
-final Mach-O calls/resource and disposable signing/deep strict/code identity
-pass. Signed61 NOT installed; specific active60 upgrade choice pending. Actual
-Air observer/UI/game/return/repeated stability remain unverified; goal ACTIVE.
+Status (run53): same Air60 identity reverified; fresh physical screen still
+white. Preserve active session; specific signed61 upgrade choice remains pending.
+Independent bounded numeric window-stream analyzer implemented:32 controls pass,
+including4 existing real Linux/Xvfb receipts. No new runtime/device-input/build/
+install; signed61 executable/resource hashes unchanged. No fresh on-Air observer
+or Steam Play/game/return/stability proof. Full goal remains ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5083,3 +5082,61 @@ Lab-only termination/sameID upgrade, preserve auth/games/saves. Collect complete
 fresh numeric JSONL rows and physical Library/BPM vs blank, then discriminate
 focus/mapping vs rendering. No blind WM/assertion/retry patch. Goal ACTIVE;
 Play bridge125 diagnostic, no real Windows-game/return/repeat stability yet.
+
+## Run53 — preserve current Air, prepare trustworthy window-stream interpretation
+
+Source parent4e7b105, origin/experiment ref/main2ac39be/worktrees and real volume
+UUID verified; initial worktree clean, no vendor/ordinary/runtime edits. Latest
+user repeated full goal and no-active-session-restart rule, without answering
+the specific61 upgrade choice. Preserve current60, no repeated question or old/
+elapsed-time approval. Exact19384/installationUUIDB55DD703-F281-4556-9A49-
+09550951953B is still present in fresh actual Air process listing. Physical
+screenshot16:21EST remains white with cursor/native controls. No input, stop,
+restart, install, account, trust, Mac-lock or security change. This is current
+negative UI evidence, not a crash or completed session.
+
+Small own host-only analyze-x11-state.py validates bounded numeric observer
+schema and compares two captures of the SAME append-only file. It explicitly
+reports prefix replacement, partial final bytes, row/byte caps, errors and
+stalled/regressed time. A complete new row with failed observer status is not
+a fresh successful metadata sample. Status1 is observer failure, not CEF death.
+Every output retains native_session_bound/UI/cause/game_return qualification
+FALSE: this guest schema alone does not identify current native PID/build.
+No arbitrary raw input/unknown payload is forwarded into reports.
+
+Root-level InputOutput/viewable rectangles are clipped to root dimensions,
+reported in queried stacking order. InputOnly/offscreen/unknown attributes are
+not render surfaces. Extra-focus descendant coordinates have UNKNOWN parent and
+are excluded from root coverage; lost window with default map_state0 is not
+known-unmapped. Rectangles say nothing about alpha, shape, pixels or opaque
+occlusion. SubstructureRedirect selection is not working-WM evidence.
+
+Functional32 controls pass: map/focus append; unchanged/replacement/duplicate/
+clock-regression/partial/completion/error handling; None/PointerRoot/root focus;
+unknown nested coordinates, disappeared/offscreen/InputOnly windows; bounded
+schema and invalid field/row cases. Four are existing REAL ARM64 LinuxRunner/
+Xvfb/Xlib Run52 receipts, correctly identifying map/unmap/remap/focus/destroy.
+Those are existing host artifacts, NOT new runtime/Air/Steam execution. Actual
+CLI comparison also passes with all qualification flags FALSE. An initial
+review found duplicate records could look new despite stalled time; require
+strictly advancing new-row time and successful status. No installed app changed.
+
+Reproduce using NEW private output and previous own Xvfb fixture receipts:
+
+```sh
+python3 experiments/linux-steam/tools/test-x11-state-analysis.py \
+  "$NEW_PRIVATE_OUTPUT" --real-fixture "$PRIVATE_LAB/run52/x11-state-real"
+python3 experiments/linux-steam/tools/analyze-x11-state.py \
+  "$PRIVATE_BEFORE_JSONL" "$PRIVATE_AFTER_JSONL"
+```
+
+Prepared signed61 main/observer hashes re-read equal Run52. No new Xcode/signing
+or installation; no change to its source/flags/resources or active60 root. Raw
+process/screen/artifact outputs remain private run53; exact hashes/tests in
+EVIDENCE.run53. Next after actual61 choice: fresh identity check, authorized
+normal isolated Lab-only stop/upgrade, no uninstall/auth transfer, collect own
+complete before/after rows with independently bound native session and actual
+physical Library/BPM vs blank. Only then a targeted mapping/focus/render fix.
+Bridge125 still diagnostic; real licensed Madeira game/return/repeated stability
+not achieved. No STABLE_SUCCESS or scheduler unload. Scoped signed-off source/
+redacted evidence only on experiment branch in allowed hours.
