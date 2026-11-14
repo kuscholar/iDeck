@@ -1,5 +1,15 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception */
 #import "LinuxSteamViewController.h"
+#include <math.h>
+#if IDECK_LAB_CLI_INPUT
+#include <notify.h>
+#if !IDECK_LAB_RFB_LIFETIME || !IDECK_LAB_NATIVE_LOG
+#error Lab CLI navigation requires real RFB lifetime and native diagnostics
+#endif
+#endif
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION && !IDECK_LAB_STAGE_DOCK_REQUEST
+#error Native setup transition requires the explicit request-staging experiment
+#endif
 #if IDECK_LAB_STEAM_FRONTEND
 #import "LabRootFS.h"
 #import "LabSocketPrefix.h"
@@ -17,6 +27,12 @@
 #error Retained frontend requires viewer completion, native logs and tool payload
 #endif
 #include "RetainedFrontend.h"
+#endif
+#if IDECK_LAB_STAGE_DOCK_REQUEST
+#if !IDECK_LAB_DOCK_STORAGE || !IDECK_LAB_CAPTURE_LAUNCH || !IDECK_LAB_METAL_DRAIN
+#error Native request staging requires captured request, Dock storage and real display drain
+#endif
+#include "LabDockRequestBridge.h"
 #endif
 #import "MetalFramebufferView.h"
 #if IDECK_LAB_METAL_DRAIN
@@ -79,10 +95,11 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 }
 - (void)deleteBackward {[self.client key:0xff08 down:YES];[self.client key:0xff08 down:NO];}
 - (CGRect)guestRect {
-    if(self.pixels.width<=0||self.pixels.height<=0)return CGRectZero;
-    CGFloat scale=MIN(self.bounds.size.width/self.pixels.width,self.bounds.size.height/self.pixels.height);
-    CGSize size=CGSizeMake(self.pixels.width*scale,self.pixels.height*scale);
-    return CGRectMake((self.bounds.size.width-size.width)/2,(self.bounds.size.height-size.height)/2,size.width,size.height);
+    if(!isfinite(self.pixels.width)||!isfinite(self.pixels.height)||self.pixels.width<=0||self.pixels.height<=0)return CGRectZero;
+    // LRFramebufferPipeline covers the full drawable, with top-left UV(0,0).
+    // Match that drawn rectangle; an aspect-fit input rectangle offsets taps
+    // on an iPad even though the image itself is stretched to these bounds.
+    return self.bounds;
 }
 - (void)sendTouch:(UITouch *)touch buttons:(uint8_t)buttons {
     CGRect image=[self guestRect];if(CGRectIsEmpty(image))return;
@@ -116,6 +133,10 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(nonatomic) CGSize latestSize;
 @property(nonatomic) BOOL deliveryQueued;
 @property(atomic) BOOL guestEnded;
+#if IDECK_LAB_CLI_INPUT
+@property(nonatomic,strong) NSMutableArray<NSNumber *> *cliInputTokens;
+@property(nonatomic) NSTimeInterval cliInputLastEvent;
+#endif
 #if IDECK_LAB_RETAINED_FRONTEND
 @property(nonatomic,strong) NSThread *frontendOwner;
 @property(nonatomic,strong) NSCondition *frontendCommands;
@@ -126,6 +147,11 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(nonatomic,strong) NSURL *retainedRoot;
 @property(nonatomic,strong) UIButton *restartSteamButton;
 @property(nonatomic) unsigned automaticUpdateRestarts;
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+@property(nonatomic,strong) UIButton *nativeSetupButton;
+@property(nonatomic) uint64_t nativeRequestSequence;
+@property(nonatomic) BOOL nativeSetupTransferred;
+#endif
 #endif
 #if IDECK_LAB_RFB_LIFETIME
 @property(atomic) BOOL acceptsFrames;
@@ -136,6 +162,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 #endif
 @implementation LinuxSteamViewController
 - (void)viewDidLoad {
+#if IDECK_LAB_NATIVE_LOG
+    ideck_native_log_line("IDECK_LAB_FRONTEND_ENTRY_V1 step=view_did_load");
+#endif
     [super viewDidLoad];self.view.backgroundColor=UIColor.blackColor;self.frameLock=[NSLock new];
 #if IDECK_LAB_RFB_LIFETIME
     self.acceptsFrames=YES;
@@ -143,6 +172,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     self.input=[[LabSteamInput alloc]initWithFrame:self.view.bounds];self.input.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;self.input.secureTextEntry=YES;
     __weak typeof(self) weakSelf=self;
     self.display=[[LRMetalFramebufferView alloc]initWithFailure:^(NSString *reason){[weakSelf showStatus:reason];}];
+#if IDECK_LAB_NATIVE_LOG
+    ideck_native_log_line(self.display?"IDECK_LAB_FRONTEND_ENTRY_V1 step=metal_ready":"IDECK_LAB_FRONTEND_ENTRY_V1 step=metal_unavailable");
+#endif
     self.display.frame=self.input.bounds;self.display.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     if(self.display)[self.input addSubview:self.display];[self.view addSubview:self.input];
     self.status=[[UILabel alloc]init];self.status.textColor=UIColor.whiteColor;self.status.backgroundColor=[UIColor colorWithWhite:0 alpha:.7];self.status.numberOfLines=0;self.status.translatesAutoresizingMaskIntoConstraints=NO;
@@ -156,6 +188,17 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         self.restartSteamButton.translatesAutoresizingMaskIntoConstraints=NO;
         [self.restartSteamButton addTarget:self action:@selector(restartRetainedSteam) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.restartSteamButton];
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+        self.nativeSetupButton=[UIButton buttonWithType:UIButtonTypeSystem];
+        [self.nativeSetupButton setTitle:@"Open Madeira game setup" forState:UIControlStateNormal];
+        self.nativeSetupButton.hidden=YES;self.nativeSetupButton.enabled=NO;
+        self.nativeSetupButton.backgroundColor=UIColor.secondarySystemBackgroundColor;
+        self.nativeSetupButton.translatesAutoresizingMaskIntoConstraints=NO;
+        [self.nativeSetupButton addTarget:self action:@selector(openNativeMadeiraSetup) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.nativeSetupButton];
+        [NSLayoutConstraint activateConstraints:@[[self.nativeSetupButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-8],
+            [self.nativeSetupButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-8]]];
+#endif
         [NSLayoutConstraint activateConstraints:@[[self.restartSteamButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:8],
             [self.restartSteamButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-8]]];
     }
@@ -169,10 +212,63 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         [self.status.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:8]]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(releaseInput) name:UIApplicationWillResignActiveNotification object:nil];
     if(!self.display){[self showStatus:@"Metal framebuffer unavailable; no Linux session started."];return;}
+#if IDECK_LAB_CLI_INPUT
+    ideck_native_log_line("IDECK_LAB_FRONTEND_ENTRY_V1 step=register_cli_navigation");
+    [self registerCLINavigation];
+#endif
     [self showStatus:@"iDeck Linux Lab — preparing verified install image (interpreter)."];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{[weakSelf startFrontend];});
 }
-- (void)dealloc {[[NSNotificationCenter defaultCenter]removeObserver:self];[self.client stop];}
+- (void)dealloc {
+#if IDECK_LAB_CLI_INPUT
+    for(NSNumber *token in self.cliInputTokens)notify_cancel(token.intValue);
+#endif
+    [[NSNotificationCenter defaultCenter]removeObserver:self];[self.client stop];
+}
+#if IDECK_LAB_CLI_INPUT
+- (void)registerCLINavigation {
+    // Explicit development-build opt-in. No text, request data, shell command,
+    // credentials or native game-launch API is accepted by these notifications.
+    NSArray<NSString *> *names=@[@"library",@"big-picture",@"left",@"right",@"up",@"down",@"activate",@"back",@"page-down"];
+    self.cliInputTokens=[NSMutableArray new];__weak typeof(self) weakSelf=self;
+    for(NSUInteger i=0;i<names.count;i++){
+        int token=-1;NSString *name=[@"com.kuschqin.ideck.linuxlab.test-input." stringByAppendingString:names[i]];
+        uint32_t error=notify_register_dispatch(name.UTF8String,&token,dispatch_get_main_queue(),^(int received){
+            (void)received;[weakSelf dispatchCLINavigation:i];
+        });
+        if(error){
+            for(NSNumber *registered in self.cliInputTokens)notify_cancel(registered.intValue);
+            [self.cliInputTokens removeAllObjects];
+            ideck_native_log_line("IDECK_LAB_CLI_INPUT_V1 registration_failed=1 navigation_disabled=1");return;
+        }
+        [self.cliInputTokens addObject:@(token)];
+    }
+    ideck_native_log_line("IDECK_LAB_CLI_INPUT_V1 registered=1 dispatch_is_not_UI_success=1");
+}
+- (void)dispatchCLINavigation:(NSUInteger)action {
+    NSAssert(NSThread.isMainThread,@"Lab navigation belongs to main");
+    if(action>8||!self.view.window||UIApplication.sharedApplication.applicationState!=UIApplicationStateActive||
+       self.guestEnded||!self.acceptsFrames||!self.client||self.input.activeTouch||self.input.isFirstResponder)return;
+    CGSize pixels=self.input.pixels;
+    if(!isfinite(pixels.width)||!isfinite(pixels.height)||pixels.width<1||pixels.height<1||pixels.width>65535||pixels.height>65535)return;
+    NSTimeInterval now=NSProcessInfo.processInfo.systemUptime;
+    if(now-self.cliInputLastEvent<0.35)return;self.cliInputLastEvent=now;
+    if(action<2){
+        // Two known desktop Steam chrome controls, in guest framebuffer space.
+        // Verify the actual screen before use; never use on an authentication UI.
+        CGFloat x=(action==0?0.145:0.905)*(pixels.width-1);
+        CGFloat y=(action==0?0.058:0.024)*(pixels.height-1);
+        self.input.lastPixel=CGPointMake(x,y);
+        [self.client pointerX:(uint16_t)x y:(uint16_t)y buttons:1];
+        [self.client pointerX:(uint16_t)x y:(uint16_t)y buttons:0];
+    }else{
+        const uint32_t keys[]={0xff51,0xff53,0xff52,0xff54,0xff0d,0xff1b,0xff56};
+        uint32_t key=keys[action-2];[self.client key:key down:YES];[self.client key:key down:NO];
+    }
+    char line[128];snprintf(line,sizeof line,"IDECK_LAB_CLI_INPUT_V1 action=%u dispatch_only=1 physical_touch_test=0",(unsigned)action);
+    ideck_native_log_line(line);
+}
+#endif
 - (void)showStatus:(NSString *)value {dispatch_async(dispatch_get_main_queue(),^{self.status.text=value;self.status.hidden=NO;});}
 - (void)toggleKeyboard {if(self.input.isFirstResponder)[self.input resignFirstResponder];else[self.input becomeFirstResponder];}
 - (void)releaseInput {[self.input releaseInput];}
@@ -264,6 +360,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 }
 - (void)restartRetainedSteam {
     NSAssert(NSThread.isMainThread,@"Retained UI admission belongs to main");
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+    if(self.nativeSetupTransferred)return; // No Linux revival over a native session.
+#endif
     if(!self.restartSteamButton.enabled||!self.retainedBackendReady||!self.guestEnded||self.client)return;
 #if IDECK_LAB_METAL_DRAIN
     if(![self.display ideckReopenMetal]){[self showStatus:@"Display cleanup is incomplete or the GPU reported a failure. Session preserved."];return;}
@@ -274,6 +373,27 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     [self showStatus:@"Restarting Steam in the retained Linux environment."];
     [self connectRetainedDisplay:self.retainedRoot wave:self.retainedNextWave];
 }
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+- (void)openNativeMadeiraSetup {
+    NSAssert(NSThread.isMainThread,@"Native setup presentation belongs to main");
+    struct ideck_frontend_result state;
+    if(self.nativeSetupTransferred||!self.nativeSetupButton.enabled||self.presentedViewController||!self.view.window||
+       !self.retainedDisplayDrained||!self.guestEnded||self.client||self.acceptsFrames||
+       ideck_retained_frontend_snapshot(&state)||state.error||state.guest_status||state.phase!=IDECK_FRONTEND_DORMANT||
+       ideck_linux_lab_live_guest_threads()!=0||ideck_linux_lab_native_worker_entries()!=0||
+       !self.nativeRequestSequence||ideck_lab_pending_dock_sequence()!=self.nativeRequestSequence)return;
+    self.nativeSetupTransferred=YES;self.nativeSetupButton.enabled=NO;self.restartSteamButton.enabled=NO;
+    [self releaseInput];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"IDeckLinuxMadeiraSetupWillPresent" object:nil];
+    UIViewController *controller=(__bridge_transfer UIViewController *)ideck_lab_madeira_setup_controller();
+    controller.modalPresentationStyle=UIModalPresentationFullScreen;
+    controller.modalInPresentation=YES;
+    [self presentViewController:controller animated:YES completion:nil];
+    ideck_native_log_line("IDECK_NATIVE_SETUP_PRESENT_REQUEST_V1 captured_request=1 linux_restarts_disabled=1 game_started=0");
+    // Native user signs in/enables JIT/chooses Play normally. Do not resume
+    // Linux merely because this UI disappears or the initial Wine game exits.
+}
+#endif
 - (void)startRetainedOwnerRoot:(NSURL *)root lab:(NSURL *)lab binary:(NSData *)binary discovery:(NSData *)discovery manifest:(NSData *)manifest {
     /* One process-lifetime owner thread. Do not cancel it or recreate the Linux
      * kernel on scene changes. Its loop waits only while backend is dormant. */
@@ -310,6 +430,13 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                         fields[@"windows_prefix_error"]=@(bound?0:bindingError.code);fields[@"mapped_argc"]=@(mapped.argc);
                     }
                     // Metadata preparation only: no Wine startup, auth or writer permission.
+#if IDECK_LAB_STAGE_DOCK_REQUEST
+                    if(!mapping&&[fields[@"windows_prefix_bound"] boolValue]){
+                        int staged=ideck_lab_receive_dock_request(&capturedRequest,sizeof capturedRequest,capturedSequence);
+                        fields[@"native_request_stage_error"]=@(staged);
+                        if(!staged)fields[@"native_request_stage_sequence"]=@(capturedSequence);
+                    }
+#endif
                 }
 #endif
                 // No raw argument/frame serialization. This does not grant Wine or licensing permission.
@@ -320,6 +447,14 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                     self.guestEnded=YES;self.retainedBackendReady=!error&&ideck_frontend_restart_ready(&result);
                     if(self.retainedDisplayDrained){
                         self.restartSteamButton.enabled=self.retainedBackendReady;
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+                        if(self.retainedBackendReady&&!result.guest_status&&capturedRequestReady&&
+                           [fields[@"native_request_stage_sequence"] unsignedLongLongValue]){
+                            self.nativeRequestSequence=[fields[@"native_request_stage_sequence"] unsignedLongLongValue];
+                            self.nativeSetupButton.hidden=NO;self.nativeSetupButton.enabled=YES;
+                            self.restartSteamButton.enabled=NO; // Captured request owns this experimental transition.
+                        }
+#endif
                         BOOL update=ideck_frontend_update_exit(result.guest_status);
                         NSString *message=self.retainedBackendReady?(update?@"Steam update completed. Ready to restart.":(capturedRequestReady?@"Steam closed. Play request captured; Windows has not started.":@"Steam closed. Ready to restart in the retained environment.")):
                             (error?@"Backend cleanup failed. Existing state was preserved.":@"Steam exited unexpectedly. Existing state was preserved; no automatic retry.");

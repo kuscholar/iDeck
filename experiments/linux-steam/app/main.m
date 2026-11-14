@@ -2,6 +2,9 @@
 #import <UIKit/UIKit.h>
 #import "LinuxLabRuntime.h"
 #import "LinuxSteamViewController.h"
+#ifndef IDECK_LAB_NATIVE_SETUP_TRANSITION
+#define IDECK_LAB_NATIVE_SETUP_TRANSITION 0
+#endif
 #if IDECK_LAB_MADEIRA_SETUP
 #import "LabRootFS.h"
 #import "LabWindowsLibrary.h"
@@ -31,6 +34,9 @@ extern const char ideck_casp_order_marker[];
 #import "NativeKernelLog.h"
 #include <unistd.h>
 #endif
+#if IDECK_LAB_WINE_INITIAL_JOIN
+#include "WineInitialJoin.h"
+#endif
 
 @interface LinuxLabDelegate : UIResponder <UIApplicationDelegate>
 @property(nonatomic, strong) UIWindow *window;
@@ -42,6 +48,7 @@ extern const char ideck_casp_order_marker[];
 @property(nonatomic,strong) NSMutableArray<NSURL *> *pendingSetupURLs;
 - (void)routeSetupURL:(NSURL *)url;
 - (void)coldSetupDidAppear:(NSNotification *)note;
+- (void)nativeSetupWillPresent:(NSNotification *)note;
 - (void)startColdMadeiraSetup;
 #endif
 #if IDECK_LAB_NATIVE_LOG
@@ -53,7 +60,10 @@ extern const char ideck_casp_order_marker[];
 @implementation LinuxLabDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)options {
 #if IDECK_LAB_MADEIRA_SETUP
-    if(startupMode>0){self.pendingSetupURLs=[NSMutableArray new];[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(coldSetupDidAppear:) name:@"IDeckLinuxMadeiraSetupReady" object:nil];}
+    if(startupMode>0 || IDECK_LAB_NATIVE_SETUP_TRANSITION){self.pendingSetupURLs=[NSMutableArray new];[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(coldSetupDidAppear:) name:@"IDeckLinuxMadeiraSetupReady" object:nil];}
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nativeSetupWillPresent:) name:@"IDeckLinuxMadeiraSetupWillPresent" object:nil];
+#endif
 #endif
 #if IDECK_LAB_NATIVE_LOG
     NSFileManager *fm=NSFileManager.defaultManager;
@@ -79,6 +89,12 @@ extern const char ideck_casp_order_marker[];
             else ideck_native_log_line(ideck_casp_order_marker);
 #endif
             ideck_native_log_resources();
+            int coldChoice=0;
+#if IDECK_LAB_MADEIRA_SETUP
+            coldChoice=startupMode;
+#endif
+            char selection[160];snprintf(selection,sizeof selection,"IDECK_LAB_STARTUP_V1 retained_argument=%u cold_selection=%d",[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-retained-frontend"]?1u:0u,coldChoice);
+            ideck_native_log_line(selection);
             [self writeNativeHealth];
             self.nativeResourceTimer=[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(sampleNativeResources) userInfo:nil repeats:YES];
             [NSRunLoop.mainRunLoop addTimer:self.nativeResourceTimer forMode:NSRunLoopCommonModes];
@@ -104,6 +120,14 @@ extern const char ideck_casp_order_marker[];
         ideck_native_log_line(line);
     }
 #endif
+ #if IDECK_LAB_WINE_INITIAL_JOIN
+    struct ideck_wine_initial_snapshot wine;
+    int joinError=ideck_lab_wine_initial_snapshot(&wine);
+    if(!joinError){
+        char line[240];snprintf(line,sizeof line,"WINE_INITIAL_JOIN_STATE_V1 generation=%llu phase=%u created=%u initial_joined=%u create_error=%d observer_error=%d all_Wine_workers_qualified=0",(unsigned long long)wine.generation,wine.phase,wine.initial_created,wine.initial_joined,wine.create_error,wine.observer_error);
+        ideck_native_log_line(line);
+    }
+ #endif
     if(ideck_native_health(build,ideck_linux_lab_stage(),ideck_linux_lab_live_guest_threads(),ideck_linux_lab_native_worker_entries()))
         ideck_native_log_line("NATIVE_HEALTH_WRITE failed=1");
 }
@@ -116,9 +140,13 @@ extern const char ideck_casp_order_marker[];
 #endif
 #if IDECK_LAB_MADEIRA_SETUP
 - (void)routeSetupURL:(NSURL *)url {
-    if(startupMode<=0)return;
+    if(startupMode<=0&&!self.nativeSetupPresented)return;
     if(self.nativeSetupReady)ideck_lab_madeira_setup_open_url(url.absoluteString.UTF8String);
     else if(self.pendingSetupURLs.count<16)[self.pendingSetupURLs addObject:url];
+}
+- (void)nativeSetupWillPresent:(NSNotification *)note {
+    (void)note;NSAssert(NSThread.isMainThread,@"Native setup callbacks belong to main");
+    self.nativeSetupPresented=YES;self.nativeSetupReady=NO;
 }
 - (void)coldSetupDidAppear:(NSNotification *)note {
     (void)note;if(!self.nativeSetupPresented)return;self.nativeSetupReady=YES;
@@ -152,17 +180,31 @@ extern const char ideck_casp_order_marker[];
 }
 #endif
 - (void)connectWindowScene:(UIWindowScene *)scene {
+#if IDECK_LAB_NATIVE_LOG
+    ideck_native_log_line("IDECK_LAB_STARTUP_V1 route=scene_connect");
+#endif
     /* Keep the one Linux runtime/controller across scene reconnects. */
     UIViewController *existing = self.window.rootViewController;
     self.window = [[UIWindow alloc] initWithWindowScene:scene];
-    if (existing) { self.window.rootViewController=existing; [self.window makeKeyAndVisible]; return; }
+    if (existing) {
+#if IDECK_LAB_NATIVE_LOG
+        ideck_native_log_line("IDECK_LAB_STARTUP_V1 route=existing_root");
+#endif
+        self.window.rootViewController=existing; [self.window makeKeyAndVisible]; return;
+    }
     if(self.nativeLogError){
+#if IDECK_LAB_NATIVE_LOG
+        ideck_native_log_line("IDECK_LAB_STARTUP_V1 route=native_log_refusal");
+#endif
         UIViewController *controller=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
         label.text=self.nativeLogError;label.numberOfLines=0;controller.view=label;self.window.rootViewController=controller;
         [self.window makeKeyAndVisible];return;
     }
 #if IDECK_LAB_MADEIRA_SETUP
     if(startupMode){
+#if IDECK_LAB_NATIVE_LOG
+        ideck_native_log_line("IDECK_LAB_STARTUP_V1 route=cold_or_conflicting_selection");
+#endif
         if(startupMode>0)[self startColdMadeiraSetup];
         else {UIViewController *c=[UIViewController new];UILabel *l=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];l.text=@"Select one isolated startup mode. No runtime started.";l.numberOfLines=0;c.view=l;self.window.rootViewController=c;}
         [self.window makeKeyAndVisible];return;
@@ -173,8 +215,12 @@ extern const char ideck_casp_order_marker[];
     /* Joined-provider configuration is a separate explicit experiment. Other
      * modes must not enter its archives without their owning registries. */
     if(![NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-retained-frontend"]){
+#if IDECK_LAB_NATIVE_LOG
+        ideck_native_log_line("IDECK_LAB_STARTUP_V1 route=missing_retained_argument");
+#endif
         UIViewController *error=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
         label.text=@"This experimental build requires linux-steam-retained-frontend. No Linux session started.";
+        label.textColor=UIColor.labelColor;label.backgroundColor=UIColor.systemBackgroundColor;
         label.numberOfLines=0;error.view=label;self.window.rootViewController=error;[self.window makeKeyAndVisible];return;
     }
 #endif
@@ -187,7 +233,12 @@ extern const char ideck_casp_order_marker[];
         if(conflict) {
             UIViewController *error=[UIViewController new];UILabel *label=[[UILabel alloc]initWithFrame:UIScreen.mainScreen.bounds];
             label.text=@"Select exactly one Linux Lab mode; no guest started.";label.numberOfLines=0;error.view=label;self.window.rootViewController=error;
-        } else self.window.rootViewController=[LinuxSteamViewController new];
+        } else {
+#if IDECK_LAB_NATIVE_LOG
+            ideck_native_log_line("IDECK_LAB_STARTUP_V1 route=linux_frontend_selected");
+#endif
+            self.window.rootViewController=[LinuxSteamViewController new];
+        }
         [self.window makeKeyAndVisible];return;
     }
     UIViewController *controller = [UIViewController new];

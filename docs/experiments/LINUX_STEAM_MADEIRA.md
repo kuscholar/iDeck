@@ -1,14 +1,14 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run41): genuine authenticated ARM64 Linux Steam Library/BPM was seen
-on Air in runs16–17, but stable browsing and a licensed Madeira game/return loop
-remain unqualified. Current50 rendered genuine Store, then actual native crash
-proved an unchecked fork page-table allocation (pt_copy_on_write+232). Minimal
-fork failure handling passes25 actual HOST kernel controls plus existing16ELF
-regressions; full52/final Mach-O/deep signing pass, device upgrade in progress.
-No on-Air52 result yet. Account/root/games/saves and production/main preserved.
-The compatibility bridge remains diagnostic125; no claim of actual game handoff.
-Read latest Run41 continuation/EVIDENCE/CONTINUE for current process and artifacts.
+Status (run47 LIVE59/19056):59 now actually selects retained Linux mode, creates
+Metal and registers the bounded CLI controls on Air, without debugger. Initial
+screen is X11 root/cursor; genuine59 Steam UI/Library/BPM/input response remains
+to be observed.58 had native-only startup with unknown cause; diagnostic-only59
+success does not establish a causal fix or repeated stability. Older53 restored
+saved login and rendered genuine Store/Friends. No licensed Madeira game/return
+or complete stability proof. Same isolated app/container preserved, allworking
+apps/accounts/games/saves/main untouched. Source43..47 still uncommitted; scoped
+checkpoint due in permittedSaturday hours. Full objective remains ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -4321,3 +4321,411 @@ Signed source checkpoint c24ac82 pushed/readback; follow-up runner/evidence
 committed separately in allowed window. Full objective active, bridge125 and
 licensed native game/return still incomplete. Keep installed53/auth unchanged
 at user-only OS gate; no STABLE_SUCCESS/scheduler unload/goal completion.
+
+
+## Run43: match captured game requests to real Dock install records
+
+User-only53 OS prompt remains pending; no new install/launch/trust/lock or
+credential action. Main/worktrees/apps/accounts/games/saves remain untouched.
+Continue independent bridge implementation while preserving installed53 for
+its first actual CoW-group device comparison, not replacing it with54.
+
+Observed gap: capture currently maps Windows paths and prepares the shared
+prefix, but does not resolve the request to a real DockGame. Source review
+ContentView.startDock confirms the real path requires native Steam sign-in,
+normal JIT/session/installer checks and Valve's Windows client LaunchApp. Do
+NOT execute the requested Windows EXE directly or infer Linux auth authorizes
+Windows Dock. Full runtime and exclusive-writer handoff remains unqualified.
+
+Added LabDockSelection.swift: immutable selection from exactly one actual
+installed-game record by AppID and shared install path, carrying executable,
+working directory and complete argument vector. No flattening to MADEIRA_ARGS,
+discarding options, token inspection, writes, launch or permission decision.
+Included only in future explicit private cold Lab source packages via existing
+--madeira-setup; production source and installed53 bytes unchanged.
+
+Discriminating HOST test compiles exact production DockGame, game(manifest),
+folder/AppID validators and real SteamKeyValues parser with this adapter.
+Successful selection preserves the actual customExecutables marker and empty/
+spaced/Unicode/quoted arguments.15 contradictory requests rejected: missing/
+duplicate/incomplete/wrong AppID/library/install, unexpected executable/root/
+working/argv, oversize/NUL. iOS ARM64 object compiles; real resolve symbol
+inspected. Initial one-line extraction accidentally duplicated the next method;
+own harness fixed, private failed output retained. No game/auth/device proof.
+
+No actual dispatch or C ABI is wired yet. Remaining coordinator work includes
+authoritative Valve launch-option matching (extra argv must not be silently
+ignored), normal Madeira sign-in boundary, file/writer/runtime ownership,
+existing Wine launch, actual game exit and Linux Steam restore. Original
+bridge still diagnostic125. Read EVIDENCE.run43 hashes/private run43 fixture
+commands; test-dock-selection.py NEW_PRIVATE_OUTPUT reproduces host checks.
+Goal remains full repeated Air Library/BPM -> licensed game -> return, ACTIVE.
+
+
+### Run43 continuation: authoritative launch-option matching
+
+Fresh read of mounted UUID/remote experiment be0de64 and main2ac39be confirms
+no external branch change. Pending Air53 manual-open/system-prompt response
+unchanged; no install/relaunch/lock/trust or account action. Current Friday
+18:15+ local is OUTSIDE22-08 commit window: preserve all Run43 edits uncommitted
+and unpushed until an allowed run; do not schedule a wait just for Git.
+
+LabDockSelection now also matches the preserved request to actual native
+SteamLaunchOption values fetched for the SAME AppID. Exactly one matching
+config.launch key is required, including executable, working folder and full
+Windows-style argument tail. No array-position/default0 fallback, guest index
+acceptance, direct-EXE route or silent loss of user parameters. Missing/duplicate/
+beta/DLC-required/non-Windows/mismatched configurations return no valid match.
+Authentication, installed-file snapshot/lease, JIT, existing session rules,
+Valve client LaunchApp licensing and actual lifecycle still remain necessary.
+
+HOST compiles exact real SteamLaunchOption.parse/model from production source
+and actual Dock manifest/model/parser with the new adapter. Sparse keys7/19
+select7 correctly;7 contradictory option sets are rejected.49 roundtrip argument
+combinations preserve empty/space/tab/Unicode/quotes/trailing-backslashes.
+Existing15 install-record contradictions still pass. Initial test put throwing
+call inside Swift precondition autoclosure and failed compilation; fixed own
+harness by evaluating before assertion. iOSARM64 object compiles and actual
+launchOption symbol verified. Private run43/dock-option-v3 contains commands/
+hashes, redacted receipt in EVIDENCE. Not full app link or runtime/device proof.
+
+This is a launch-contract component for the full licensed-game path, not an
+end-state substitute. No actual C/native dispatch, game launch or Steam return
+is wired or claimed. Installed53 remains untouched pending the OS prompt.
+
+
+### Run43 continuation: typed C request to native Dock data contract
+
+Pending user53 OS prompt unchanged; no actual device mutation/retry or implied
+trust approval. Remote/HEAD be0de64/main2ac39be/mount UUID freshly verified.
+Friday18:19+ remains outside allowed commit/push window; all Run43 edits kept.
+
+LabDockRequest.swift now accepts the complete actual8216byte IPC frame, copies
+it into aligned owned ideck_launch_request, invokes the existing real C
+ideck_windows_launch_map and decodes its mapped tuples to immutable Swift
+strings/argv. Snapshot does not retain any pointer to guest memory and is never
+serialized/logged. This directly feeds LabDockSelection.select(installedGames:),
+not a synthetic replacement for the real request/model contract.
+
+HOST test links real LaunchProtocol.c/WindowsLaunchMap.c with Swift (undefined
+sanitizer enabled): actual valid C frame retains spaced/empty args, converts
+paths and matches real Dock manifest. Modifying original Data cannot change
+snapshot. ZeroAppID/truncated/extra bytes rejected, existing15install-record/
+7option mismatches and49argument quoting roundtrips remain green. C mapping
+policy still restricts current IPC ASCII subset; standalone Swift Unicode
+argument tests do not claim guest IPC Unicode support.
+
+Actual iOSARM64 Swift request adapter links with REAL iOS C mapper/protocol
+objects into private test dylib, no unresolved mapper reference. First link
+used inherited macOS sysroot despite explicit target; corrected xcrun iphoneos,
+SDKROOT and syslibroot, then vtool confirms platformIOS/min17/sdk27. Source,
+commands and hashes in run43/dock-request-v1/ios-link-evidence.json; host
+reproducible fixture in dock-request-reproducible/evidence.json. Not full app
+link/device runtime proof. Private future --madeira-setup source generator
+adds the two headers to its own bridging header and compiles this Swift file;
+ordinary app source/header and installed53 bytes are unchanged.
+
+Remaining work stays actual coordinator dispatch, native legitimate sign-in/
+JIT/Valve LaunchApp, measured exclusive runtime/storage handoff, game exit and
+Steam restoration. Typed metadata alone authorizes NONE of these. Bridge125
+remains diagnostic and no full game cycle/stability/goal success is claimed.
+
+
+### Run43 continuation: real captured request into native Swift slot
+
+Fresh mount/status/remote/main/prior-reply audit remains unchanged. User53
+OS prompt pending, no device action. Friday18:23+ outside commit/push window;
+all Run43 source retained dirty. New --stage-dock-request defaultOFF requires
+captured Dock storage and real Metal/viewer drain configuration; private full
+app generator additionally requires --madeira-setup (receiver source available).
+
+Actual LinuxSteamViewController after normal retained backend status0/DORMANT,
+Windows conversion and prefix binding calls public C ABI
+ideck_lab_receive_dock_request. It copies synchronously into an immutable
+LabDockRequest in one native LabDockPending slot, preserving sequence.
+Duplicate/stale/busy refused; discard requires exact sequence. No raw frames/
+arguments are persisted or logged; only numeric stage status. Slot ownership
+is separate from GameFilePolicy pending state, which is NOT consumed. No
+slot event is called a game exit or authority to start Wine.
+
+HOST actual C helper (not direct Swift-only invocation) calls Swift cdecl.
+Invalid frames/sequences, duplicate/stale/busy/discard plus eight simultaneous
+writers accept exactly one owned snapshot. Existing15install/7option/49argument
+controls still pass. C/Swift undefined sanitizer enabled; no engine/device test.
+All22 iOS units compile with actual stage opt-in. The REAL UIKit controller
+object references the C ABI; Swift+C mapper independently linked into iOS
+dylib. First linkage correctly exposed an internal Swift cdecl dead-stripped
+from the export table. Public entry now exports the actual symbol, matching
+controller reference; vtool confirms IOS. Private receipts in stage-ios,
+dock-staging-public and dock-staging-v2/ios-stage-evidence.json.
+
+No new full54 build/link/install or app replacement. Native Dock game dispatch,
+normal auth/JIT/Valve LaunchApp, exclusive storage/runtime handoff and actual
+game exit/Steam restoration still incomplete. Bridge response125 remains
+honest. Next coordinator must use this staged immutable request with real
+manifest/launch-option resolution and existing user-facing native workflow;
+no direct EXE or permission inferred from a staged slot or mere backend drain.
+
+
+### Run43 continuation: captured option enters existing native Dock selection
+
+New LabDockPending.launchOption adapter is called by an exact generated private
+ContentView.startDock option block. With no captured request, original chosen/
+default remains unchanged and shared-library files are not consulted. With a
+capture, actual installedGame must match and real native product-info options
+must identify exactly the captured executable/cwd/argv. Missing/contradictory
+metadata fails before prepareDock closes the native CM or writeHandoff creates
+a sign-in transfer. Snapshot is NOT claimed/discarded on this selection.
+
+Original source outside the ONE selection block is byte-for-byte preserved.
+Existing native JIT/cloud/session/manifest/sign-in gates precede it; normal
+prepareDock, state/credential rechecks, real Valve LaunchApp, installers and
+Wine start remain downstream. No direct EXE launcher, login-cache transfer or
+auth bypass. Private generator --madeira-setup only; production unchanged.
+
+HOST actual production model+option parser and C->Swift ABI controls pass;
+new dispatcher cases preserve ordinary fallback19, choose captured actual key11
+instead of fallback19 and reject missing/wrong options/install records before
+auth transfer, retaining pending sequence. Exact adapted FULL ContentView is
+parsed for iOS and replacement/order checked; this is NOT full typecheck.
+Actual new Swift dispatch method links with real C mapper into iOS dylib and
+receiver C export remains present. No new full App54/link/install/device or
+automatic native UI transition; owner currently only stages. Actual native
+runtime handoff/game exit/Steam return still incomplete; bridge125 retained.
+
+One read-only Air check succeeds: current LabPID18113 has installed53 UUID
+AEE12339-C654-431C-AAFE-1863B8240CB6, but existing native receipt is still
+old52PID17126. Do NOT infer successful53 launch, crash, trust or lock state from
+this mismatch. No launch/terminate/install/security action taken, pending
+manual-open/system-prompt question unchanged. Keep this instance untouched.
+
+Private run43/dock-dispatch-v1 receipts carry host commands/iOS bytes/private
+hook hashes; air-readonly-dispatch stores private query/identity artifacts.
+Friday18:29+ is outside commit/push window; all scoped Run43 source uncommitted
+and unpushed. Full goal active, no stable marker/unload/completion.
+
+
+### Run43 continuation: full54 integration qualification (compile only)
+
+Started ONE new private full unsigned54 build with the already compiled22unit
+stage-ios frontend, current source including real Swift request slot and
+private ContentView Dock option hook. This is independent compilation while
+user53 OS prompt is pending; it does NOT replace installed53 or restart its
+unknown instance. Earlier instruction to preserve installed53 remains in force;
+new54 is local compile evidence only, not a substitute for53 device test.
+
+Source preparation complete, hashes recorded in run43/hybrid54/prepare-evidence
+and EVIDENCE.run43.full54. Actual selected private sources include LabDockRequest,
+LabDockSelection, copied bridging header and ContentView; source+payload pins
+checked by builder. Xcode job51811 currently live (resource packaging), zero
+errors observed so far. Do not repeat build or call timeout failure. Finish
+same job, then inspect FINAL linked bytes/call sites and package resources.
+No signing/install/deviceUI/game/return success claimed.
+
+Separate read-only return-path source check: initial Wine native thread is
+detached (WineProcessBridge.m), wineserver_stop joins its server thread. Initial
+game exit/running flag and server join alone do not establish all Wine workers,
+loader/global state or signal ownership reclaimed. No Wine teardown/reset patch
+and no automatic Linux restoration from those weak observations. Actual
+licensed game->return remains a required milestone.
+
+
+### Run43 full54 final integration result
+
+Original job51811 completed Xcode exit0. Actual full unsigned54 combines
+qualified stage-ios real UIKit frontend and Swift C receiver/slot/native
+ContentView option selection, production Wine/FEX/DXMT payloads unchanged.
+Full SwiftUI source now TYPECHECKED and LINKED, superseding earlier parse-only
+qualification. Final package scene/rootfs/own ARM64 guest resources pass.
+Final Mach-O SHA256
+1d1edc7428e3e33e0116bfb372438ddbafe0f3656f396a1bc3ace719316d72bc.
+
+Final actual binary has public receiver T symbol, stage/native option method
+symbols and CoW marker, no host-failure-injection marker. Bounded disassembly
+verifies ONE real LinuxSteamViewController owner block -> Swift C receiver
+call and ONE actual native ContentView.startDock -> pending option matcher
+call. Initial symbol list included Swift async data labels; restricting to
+T/t code gives warning-free native call disassembly. Actual platformIOS
+confirmed. Exact hashes/commands/receipts in EVIDENCE.full54 and private
+run43/hybrid54/final-integration-evidence.json.
+
+This is final linked-artifact proof, NOT execution.54 remains unsigned, not
+installed;53 existing state/OS prompt/current unknown18113 untouched. No
+new signing/install/launch/trust/lock/credential/FEX/Valve operation. Actual
+native setup UI transition, runtime/storage ownership, licensed Wine game
+start+exit and Linux frontend restoration still require implementation and
+physical evidence. Existing bridge125 remains honest. Full goal ACTIVE.
+
+Next independent implementation should add the explicit native setup transition
+and JIT callback routing after a measured handoff, without treating metadata
+or game-exit flags as permission to reuse runtime state. First actual device
+regression is still already-installed53 Library/input/CoW memory, once the
+user resolves official OS startup gate. No stable marker or scheduler unload.
+
+
+### Run43 full55: explicit native setup entry and callback routing
+
+Observed gap: the full54 captured request and native option matcher were linked,
+but no user entry connected the drained Linux screen to native Madeira setup.
+A second real source discriminator found native `shouldAutoStart` excluded only
+`madeira-` diagnostic arguments. The Linux frontend argument could therefore
+trigger a Windows Steam start when that setup appeared. The disposable Lab copy
+now also excludes `linux-`; ordinary product source and arguments are unchanged.
+
+The default-OFF `--native-setup-transition` requires request capture, Dock storage,
+actual viewer/Metal drain, staging and full private `--madeira-setup`. After a
+normal0/DORMANT result and successful staging it shows **Open Madeira game setup**.
+On tap the actual method rechecks backend state, zero live guest/native workers,
+viewer drain, absent client/frames/modal, a current window and the same pending
+request sequence. It latches a one-way transition, disables Linux restart and
+presents the existing native Swift setup controller fullscreen. The user still
+uses its normal login/JIT/game selection/Play flow. The native Dock matcher
+requires actual installed-game and Valve launch-option metadata before original
+prepareDock/handoff/LaunchApp; no direct EXE path or authentication conversion.
+
+The main delegate now admits existing setup callbacks only after presentation;
+its existing bounded16 pending queue is flushed after actual setup readiness.
+The marker `IDECK_NATIVE_SETUP_PRESENT_REQUEST_V1` records a presentation REQUEST,
+not visible UI or a game start. No automatic Linux restore is attempted: detached
+initial Wine pthread and a wineserver join do not prove full Wine cleanup.
+
+Regression evidence: exact production/private auto-start rule controls pass;
+real UIKit delegate compiles with feature OFF and ON. Exact entry method passes
+18 refusal cases, one presentation request and duplicate rejection under host
+ASan/UBSan. Exact delegate callback methods pass pre-presentation ignore,
+bounded queue/readiness flush and original cold routing. Host UI/runtime/JIT
+handlers in these controls are count-only stubs, not physical evidence. Actual
+C->Swift request/sequence/model/option controls remain green. All22 iOS frontend
+units compile in the final `native-setup-ios-v3` source snapshot.
+
+Original full55 job80444 completed exit0. Final iOS executable SHA256:
+`ed5700c94f946bff145e72ed7f0c95c1dc460c8b499469e5ed237fd5d17ea6f5`.
+Bounded final disassembly contains the actual controller factory, pending-sequence
+and setup URL callback calls; final scene/rootfs/ARM64 tool resources and CoW
+marker pass, host-injection marker absent. This is complete source typecheck/link
+and artifact proof.55 remains unsigned and uninstalled. Private receipts/hashes
+are in `run43/hybrid55`, `native-setup-ios-v3`, `native-setup-controls`,
+`native-callback-reproducible`, `native-entry-controls` and
+`native-setup-request-controls`; redacted references are in EVIDENCE.run43.
+
+No new device action occurred; installed53/current unqualified18113 and its data
+remain intact. First actual device discriminator remains53 Library/input/CoW
+memory after the user resolves/reports the official OS startup prompt. Actual
+native UI/JIT, licensed game launch, clean game exit, Linux return and repeated
+stability remain unverified. Friday local time is outside the commit/push window;
+all scoped Run43 source/tests/docs remain uncommitted and unpushed. Full goal
+ACTIVE; no success marker or scheduler unload.
+
+
+## Run44: actual initial Wine pthread completion, not a return shortcut
+
+Fresh CLI-only read: exact Air still runs installed53 path/PID18113. Its bounded
+last-native-log receipt remains build52/PID17126. This proves neither53 Linux
+startup nor a crash, trust or lock state. No launch, termination, installation,
+credential or security action. The earlier user system-prompt reply remains
+pending; no repetitive request. Private `run44/processes-*` and `native-*` hold
+raw metadata, with only categorical/hash evidence published.
+
+Observed source gap: WineProcessBridge sets g_wine_running=0 before stopping
+wineserver and before its initial pthread returns/TLS destructors complete.
+It detaches that initial pthread. Current ContentView does contain subsequent
+start support, with runtime/server/library checks and an optional
+MADEIRA_ONE_SESSION_PER_RUN configuration guard. This corrects the old blanket
+single-session assumption without claiming safe hybrid reuse is established.
+
+Hypothesis: an actual join of exactly the initial Wine thread can establish a
+stronger completion boundary. The default-OFF private full-app option
+`--observe-wine-initial-join` requires `--madeira-setup`. It adapts only the
+new disposable WineProcessBridge source copy; original app/Wine/FEX/vendor code
+remains unchanged. Original entry/attributes are preserved; an owned observer
+joins the initial pthread, including TLS cleanup. Only the observer is detached.
+Early admission refuses an unreaped prior initial thread before prefix/socket
+mutation. Failed actual creation propagates its error. Failed observer creation
+does not misreport an actually started game as failed: it records an ambiguous
+observer state, preserves the joinable thread and refuses fake completion/reuse.
+
+Discriminating real HOST test: original body returns while a pthread TLS
+destructor deliberately waits. The module remains unjoined and refuses another
+start until that destructor is released and actual pthread_join completes.
+Another generation then joins. Separately injected initial-create and
+observer-create EAGAIN paths pass under ASan/UBSan. The latter remains unjoined
+in module evidence even after the host harness explicitly reaps its own thread.
+No synthetic Wine game or fake Steam UI was executed. Receipt:
+`run44/wine-initial-join/evidence.json`.
+
+Full unsigned56 job34110 completed exit0; actual final app scene/rootfs/ARM64
+tool packaging passes. Final executable SHA256:
+`2a24d1dbaf8fe31491756e5a0c53a7fa1343ac7088c6fd85677cd35b617938a4`.
+Bounded final disassembly proves actual wine_process_start calls early-ready and
+observer-create functions, has no original initial detach, and observer-create
+contains real pthread_create/detach calls. Actual delegate calls snapshot, and
+prior native setup factory remains linked. Health logs only numeric fields and
+explicit `all_Wine_workers_qualified=0`. PlatformIOS/host-injection absence pass.
+Apple llvm-objdump initially rejected the equals-form dis-symname option; fixed
+separate argument and final evidence succeeded. This was a tooling error.
+
+No56 signing/install/runtime/UI/JIT proof. Joining this ONE thread does not
+qualify child/native Wine workers, loader mappings, signals, shared storage or
+return. No automatic Linux restart was added. First physical discriminator still
+requires a fresh user OS-prompt result and real53 Library/input/CoW memory;
+subsequent hybrid testing needs legitimate native Dock auth/JIT/game launch and
+measured remaining teardown. Bridge125 and full objective remain active. Source
+and evidence are uncommitted/unpushed outside Friday22-08, no main merge or
+stable marker/scheduler unload. Private combined binary is not distributable.
+
+
+## Runs45–47: physical startup and isolated navigation checkpoint
+
+Actual53 PID18355 on Air completed Valve's stable ARM64 update1792618285,
+restored its own saved login and rendered genuine Store/Friends through Linux
+Steam/X11/RFB/Metal. No credentials were entered by the agent. A private disk
+snapshot proves the updated Steam executable is ELF64 AArch64, SHA256
+7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d.
+This is not proof every mapped module is identical. The five40s health samples
+averaged1.75 nativeCPU-core equivalents; later capped native log contains1127
+resource samples, maximum2293.65MiB and4memory warnings. Atomic final health142
+still had144Linux entries/2.245GB; subsequent end reason is unknown. These are
+sampled measurements, not true peak, thermal/FPS or stable browsing claims.
+
+Lab-only CLI navigation now has nine fixed notification names, no text/payload,
+foreground/lifetime/keyboard/touch/dimension guards and350ms throttle. Actual
+host handler tests17negative cases and9paired events under ASan/UBSan. Transport
+or dispatch is not proof of a Steam response and is not physical-touch/controller
+validation. Separate baseline/current methods reproduce Air's touch Y6 versus
+full-drawable expected46; own Lab mapping now uses actual bounds.243points over
+three aspect ratios and nonfinite refusals pass; pinned Metal renderer source
+was inspected and is unchanged. Default build flags keep new controls off.
+
+Full58/final call sites/main+helperIDs/signatures/code equality passed; installed
+only the existing isolated freshtest Lab. A review-service usage error prevented
+its first launch from executing; normal review was resumed only after the reset,
+without bypass. Actual58 native mode stayed at phase0 with no navigation marker.
+Fresh-process test did not prove the suspected missing-argument cause. Debugger
+commands did not obtain stopped startup values and may perturb lifetime; no
+cause is assigned to Linux, trust, clock or assertions. All debugger sessions
+were closed and excluded from the next observation.
+
+Smallest next change59 adds fixed startup selection/scene-route and frontend
+Metal/registration boundaries, never raw arguments/account data; missing-mode
+message becomes readable. All runtime checks remain. Actual iOS UIKit main
+cold0/1 Werror and22frontend units pass; full59 and final linked log calls pass.
+Disposable deep-strict signing with existing Air main/helper profiles succeeds;
+unsigned/signed code-section hashes match. Signed final Mach-O SHA256
+533647a310420f5dbfb7d2cc18f32d5f910be511a80d1d4efbcc9f9b8d6cb7a7.
+
+After a conservative same-name PID check aborted an initial upgrade, exact URI
+identified pre-runtime Lab58/19052, not MacAllocator. ScreenHOME and no matching
+new receipt; prior native state remainedphase0/guest0/Winegeneration0. Only that
+exact Lab was normally ended under the user's earlier permission. Same-ID59
+upgrade and normal launch succeeded, preserving container/accounts/game data.
+Fresh59/19056 logs show retained_argument1/cold0, Linux frontend selected, Metal
+ready and CLI registered. Initial physical screen only X11 cursor; do not call
+it Steam UI success. Preserve this current session and observe actual screen
+response before any further installation or runtime hypothesis. All raw artifacts
+are private run45..47; EVIDENCE contains categorical/hash references only.
+
+Next: actual Library navigation/BPM plus repeated real input, Steam Play into
+legitimate native Dock game and measured full teardown/return. The wrapper still
+returns diagnostic125, and joining one native Wine thread does not grant Linux
+restoration permission. None of these missing milestones is inferred from this
+checkpoint. No main merge, binary publication or stable-success marker.

@@ -1,3 +1,381 @@
+# LIVE Run47: actual59/19056 Linux startup+CLI registration; preserve session
+
+Read latest MD/EVIDENCE.run47 FIRST. Parent/remoteexperimentbe0de64, main2ac39be
+unchanged. Source43..47 DIRTY; permittedSaturday hours, scoped checkpoint due.
+Verifiedvolume580CADCD-33F5-4D78-9530-2287615873CA. Allmain/worktrees/working
+apps/accounts/games/saves preserved; CLIonly noMacunlock/auth/trust automation.
+
+Original59 build62216 andsign5008 TERMINAL0. Startup markers actuallylinked,
+deepstrict/profile/codeequality pass. Signed59SHA
+533647a310420f5dbfb7d2cc18f32d5f910be511a80d1d4efbcc9f9b8d6cb7a7.
+Same-ID install+normal-launch81782 TERMINAL0, actual59PID19056 new installedUUID
+CED6F4B3-5948-4663-A9BE-FFE0ED4677D9. Do NOT reuse58/19052/19041/18911.
+
+First actual59 native receipts kernel-19056-809681-609389000.log, healthseq21
+phase8/92guests/~734MB. Legacyphase8 does NOT mean noLinux; retainedworldlive.
+Withoutdebugger actual logs retained_argument1/cold0, scene_connect, frontend
+selected, viewDidLoad, Metalready, CLIregister step andregistered1. Initial
+physicalscreen X11root/cursor NOT SteamUI/login/Library/BPM. Observer20530
+TERMINAL0. Preserve live59, no restart/reinstall/newbinary whiletestactive.
+Next observe realauthenticated SteamUI; only then ONE bounded event + actual
+ack + physicalscreenresponse. NoCLIevent posted yet. Physicaltouch/controller
+still unqualified, host243coordinatepoints notdeviceproof.
+
+58 nativeforeground stayedphase0/noregistration. Combinedterminate/start10004
+notLinuxcrashproof. Ordinary19041 stillphase0; debugger didnotreturnstopped
+startupvalues, later noSuchProcess, mightperturblifetime. AllLLDBsessionsclosed;
+NO debuggerattach on59. Do notclaimmissingarguments/causalfix. New59 onlyfixed
+route markers/readablemodeguard; modechecksunchanged. Unexpected19052guard
+abortedfirstinstall, identitycheckedLab58; no matching newstartupreceipt and
+screenHOME/oldNativeidle. Only exactpre-runtime19052 normallyterminated under
+userpriorauthorization, then same-ID59install preservedcontainer. MacAllocator
+untouched. Approvalusagefailedinitial46launchNOTexecuted, laternormalreview
+resumedafterreset; no bypass.
+
+Prior53actualsaved-loginStore/Friends observed, finalhealth142/144guests/2.245GB
+andcappedlog, endreasonunknown. NOT repeatedLibrary/BPM/input/game/return proof.
+OneWineinitialpthreadjoin observer NOT allWineworker/signal/storagequiescence;
+no autoLinuxrestore, bridge125 notgame execution. Full goalACTIVE, no STABLE_
+SUCCESS/unload/completion. Keep rawscreens/logs/Valve/profiles/privatepayloads
+outsideGit; unresolvedcombinedbinarydistributiongate. Source-only/redacted
+scoped signed-off checkpoint + push only thisexperiment, no mainmerge/forcepush.
+
+--- HISTORICAL states below; currentheader supersedes live PID/build claims ---
+
+# CURRENT Run47: signed59 startup trace; install/launch81782 NOT YET COLLECTED
+
+Read latest MD/EVIDENCE.run47 FIRST. Parent/remoteexperimentbe0de64, main2ac39be
+unchanged; volume580CADCD-33F5-4D78-9530-2287615873CA verified. Source43..47DIRTY,
+Saturday local allows scoped signed-off checkpoint/push; review/check stilldue.
+
+COMPLETED46 full58/59681, finalcallsite+signature+unchangedtext verified, same-ID
+install58exit0. SignedSHA8d21ad7aa4a59b5e0970bad4f942ff1247cbf4ca8a78238fddf5af79af574b67.
+Initial launch was NOT executed: automatic review usage limit, not unsafe verdict.
+No bypass. After suggestedreset passed, normalreview resumed05:34EST.
+
+Actual58/18911 native receipt, foregroundscene+timer but phase0/guest0/no CLI
+registration/Winegeneration0. Blacknativeview, NOT Linuxfailure/UI proof.
+Fresh-mode combinedcommand10004 terminated prior instance with no newreceipt;
+ordinary afterverifiedabsence launched19041, stillphase0/noregistration.
+Debugger never suppliedstopped startupvalues, later noSuchProcess; mightperturb
+lifetime. NO debugger on next test. All LLDBsessions CLOSED; no password/rawargv
+read. Do notattribute cause toprewarming/trust/Linux/assertions.
+
+Unexpected same-name19052 aborted planned install, exactURI verified Lab58
+6A88B111-AF15-4A48-93CD-1287040B1F1F (MacAllocator untouched). ScreenHOME,
+no matching newreceipt (old19041phase0/guest0/Wine0); only exactpre-runtimeLab
+19052 normallyterminated afteridentitycheck underexistinguserauthorization.
+
+New59 only fixed stage markers+readable missing-mode label, NO guard relaxation.
+Main retained_argument bool/cold_selection; scene route; frontend entry/Metal
+beforeafter/CLIregistration. No rawargv/account/authlogs. Actual mainiOScold0/1
+Werror+22frontendunits pass. Full59/62216 TERMINAL0; final actualstartupcalls
+verified. Disposable signing5008 TERMINAL0/deepstrict/profiles/codeequalityPASS.
+Signed59SHA533647a310420f5dbfb7d2cc18f32d5f910be511a80d1d4efbcc9f9b8d6cb7a7.
+Private run47/hybrid59+signed59; existingAirprofilesexpireNov20, no newprofile/
+security/account/keychain changes. Samecom.kuschqin.ideck.freshtest, no datareset.
+
+CURRENT install+normal-launch observer81782: endedknownidle19052, installation
+started; result NOT YET COLLECTED. Poll SAME81782/read install59-final-observer/
+launch59-final-observer. NO reinstall/restart or duplicate experiment. Once OS
+launch succeeds verify actualfresh59PID/receipt/stage markers+screen, no debugger.
+If unexpected liveuser session preserveit. Identity ALWAYS path+PID, sameMadeira
+name is insufficient. No Macunlock request or credential/Guard/trust automation.
+
+53 historical genuineStore/Friends/savedlogin valid, not repeatedLibrary/BPM/
+input/game/return/stability proof. NoCLI events ever posted to58 because listener
+notregistered. InitialWinejoin notfullworker/signal/storage teardown, bridge125.
+Full goalACTIVE, no STABLE_SUCCESS/unload/complete. Publishonlysource/redacted
+receipts, allrawimages/logs/Valve/profiles/private payloads outsideGit. Keepmain/
+allotherworktrees/apps/accounts/games/saves; no FEX/Valve edits or upstreammsgs.
+
+--- HISTORICAL states below; currentheader supersedes livebuild/PID claims ---
+
+# CURRENT Run46: idle newer53/18539;58 BUILD ACTIVE59681; real Store seen45
+
+Read latest MD/EVIDENCE.run46 FIRST. Parent/remote experimentbe0de64, main2ac39be
+unchanged; volume580CADCD-33F5-4D78-9530-2287615873CA verified. Source changes
+43..46 DIRTY, now Saturday local allows commit/push after actual scoped review.
+
+DO NOT reuse old18355. It genuinely rendered saved-login Store+Friends on Air,
+not Library/BPM/input/game success. Final health142 still144guests/~2.245GB;
+append log capped4MiB, no end reason. Logged max~2293.65MiB/1127samples;4memory
+warnings. Current actual debugger list contains NEW53PID18539 same installed
+UUID AEE12339-C654-431C-AAFE-1863B8240CB6. ScreenHOME, nativehealthphase0/guest0/
+sequence1/~5MB. New process cause unknown. Preserve/revalidate before actions.
+No new install/restart this run yet. Old manual Library question no reply; no
+input success assumed. Account preserved, no credential/Guard automation.
+
+Source adds OFF-by-default --cli-input-controls (9 fixed notifications, existing
+RFB, no text) and tools/post-lab-navigation.py. Host actual handler17negative/
+9paired/throttle ASan/UBSan pass,22iOS units compile. No53listener, do NOT send
+notifications to53 or call transport success inputproof. Pinned Metal fullquad
+fillsdrawable but old touch usedaspectfit: actual baselinehostAirLibraryY6
+expected46. Own guestRect nowbounds+finitecheck; exact methods243points+negative
+ASan/UBSan pass. No vendor/production change. Physical touch still unqualified.
+
+Full57 original34128 TERMINAL0/package app+helperIDs pass, UNSIGNED/UNINSTALLED,
+SUPERSEDED by newly reproduced touch offset. Never deploy57. New current full58
+59681 ACTIVE (snapshot copies may precede prepare receipt); runtime private
+run46/cli-input-touch-ios22units pass. Poll SAME59681/read build-result/log,
+never rebuild on observer timeout. Once terminal success verify final linked
+notifyregistration, sender, touchbounds and package identities before signing.
+56/55/54 also completed private only;53 currently installed.
+
+Existing Air main/helperfreshtest profiles expireNov20 match samecertificate;
+common identity verified available in existing login keychain. No new profiles/
+account/security/entitlement operation. Follow manual-resign skill disposable
+copy; source --lab-bundle-identifier accepts only .linuxlab or knownfreshtest,
+final app+helperexpectedIDs checked. Revalidate nativecurrentidle before user-
+authorized oldLab-only terminate/upgrade; preserveallaccounts/games/saves.
+No phone/main/MacAllocator edits. CLIonly NEVER askMacunlock or autoauth/trust.
+
+Next actual Library/BPM/control on58, captured SteamPlay->native authorizedDock
+game->proper full cleanup/return/repeatedstability. One Wineinitialpthreadjoin
+observer NOT allWineworker/signal/storage readiness, no autoLinuxrestore.
+Bridge125, goal ACTIVE, no STABLE_SUCCESS/unload/completion. Raw images/logs/
+ValveELF/profiles/private roots NEVER Git, unresolved binarylicensing gate.
+
+--- HISTORICAL headers below; current header supersedes live PID/build claims ---
+
+# LIVE Run45: actual53 Steam update on Air18355; old trust gate superseded
+
+Read latest MD/EVIDENCE.run45 FIRST. Preserve CURRENT actual53PID18355,
+installedUUID AEE12339-C654-431C-AAFE-1863B8240CB6; revalidate before actions.
+New actual native receipt53/18355 kernel-18355-770279-621974000.log. DO NOT
+restart/reinstall/upgrade56 or alter active prefix while this test runs.
+
+Previous18113 CoreDevice record contradicted Instruments/actual LLDB process
+lookup. CLI screen read showed home, then normal foreground black launch shell;
+no current OS prompt. Persistent official debugger reported no such process and
+real list noLab; closed own debugger. User already authorized ending oldLab.
+ONE terminate-existing Lab-only restart succeeded new18355, same53/container.
+No install/trust/profile/credentials/Guard/security/lock/FEX/Valve action. CLIonly.
+Old pending trust/system-prompt assumption superseded by actual successful start.
+
+Fresh physical screen genuine Steam extracting; new actual bootstrap log
+stable_linuxarm64 manifest1792618285 update00:21:36, complete00:24:41UTC,
+verify00:24:42; steamrtarm64/steam -nobigpicture -cef-disable-gpu. LaterX11cursor
+NOT Library/login/BPMsuccess. Five40s actual numeric samples sequence14..18,
+footprint324..939MiB, ~1.75nativeCPUcores; not true peak or stability proof.
+Bounded observer56011 TERMINAL0. Current post-update health/native/screen
+observer90435 was launched; re-poll same handle/read actual artifacts. No new
+experiment until current actual status read. Private run45 holds raw screenshots/
+logs, NEVER Git. Next user credentials/Guard only if genuine login visible.
+
+Prior unsigned56 actual full/final link PASS (34110 terminal0) and55/54 completed
+local only, do not rebuild. Source parentbe0de64; remoteexperimentbe0de64/main
+2ac39be last verified. Run43+44 code+45evidence DIRTY outsideFriday22-08, preserve.
+Native request/entry and initial pthread join observer implemented but no actual
+licensed game handoff/return. One initial join NEVER all Wine workers/signals/
+storage readiness; no automatic Linux restore or fake bridge result125success.
+Full genuine Library/BPM/input + licensed game/return repeatedly stable goal
+ACTIVE, no STABLE_SUCCESS/unload/complete. Main/allotherworktrees/apps/accounts/
+games/saves preserved; no Macunlock request or auth/trust automation.
+
+--- HISTORICAL states below; current header supersedes old gate/live PID claims ---
+
+# CURRENT Run44: full56 initial Wine pthread observation; NO device/game success
+
+Read latest MD/EVIDENCE.run44 FIRST. Isolated experiment HEAD/remotebe0de64,
+main2ac39be unchanged; volume580CADCD-33F5-4D78-9530-2287615873CA verified.
+All Run43+44 code/tests/docs DIRTY UNCOMMITTED/UNPUSHED outsideFriday22-08.
+Preserve all source and main/worktrees/installations/accounts/games/saves.
+
+Exact Air read-only current53PID18113 pathUUID AEE12339-C654-431C-AAFE-1863B8240CB6;
+last-native receipt STILL52PID17126. No new53start/Steam/crash/trust/lock proof.
+User OS-prompt reply PENDING. No launch/kill/install/sign/credential/security
+operation this turn; don't repeat gate request or retry refusal. NEVER ask
+Mac unlock. Revalidate identity/session before any future mutation.
+
+Original full56 observer34110 TERMINAL0, no wait/rebuild. FinalSHA
+2a24d1dbaf8fe31491756e5a0c53a7fa1343ac7088c6fd85677cd35b617938a4.
+Private run44/hybrid56 final-initial-join-evidence + bounded disassembly:
+actual Wine start calls early-idle+join-observer create; no initial detach;
+actual health snapshot and native setup factory calls. Package/platform pass.
+56 UNSIGNED/UNINSTALLED;55/54 also completed local only,53 installed unchanged.
+Earlier file-name search20616 and remote/check93277 also completed, no live jobs.
+
+DefaultOFF --observe-wine-initial-join requires --madeira-setup. Only disposable
+WineProcessBridge initial create/detach adapted; original entry/attributes same.
+Observer joins actual initial pthread including TLS; early refusal before prefix/
+socket mutation. Failed observer creation preserves real started thread and
+records ambiguity. Numeric health all_Wine_workers_qualified=0. Actual host held
+TLS-destructor + create/observer EAGAIN + nextgeneration controls ASan/UBSan pass.
+Current native source supports further starts subject to checks/optional once
+flag; old unconditional single-session characterization superseded. Still NO
+full Wine child/worker/signal/global/storage cleanup proof, no automatic Linux
+restore. Initial join NEVER game-return permission.
+
+Next physical experiment remains already installed53 Library/input/CoW memory
+once user gives fresh official OS-prompt result. Next actual hybrid launch uses
+normal native user sign-in/JIT/Valve Dock authorization; no credential transfer
+or directEXE. Need measured remaining Wine shutdown and real game->return loop.
+Bridge diagnostic125, stable goal ACTIVE; no STABLE_SUCCESS/unload/complete.
+Continue meaningful independent work at user-only boundary, preserve earlier
+request/option/native entry/Metal/backend drain safeguards. No FEX/Valve edits.
+
+--- HISTORICAL earlier results; current header supersedes state/phase claims ---
+
+# CURRENT Run43: full55 complete; native setup entry HOST/link qualified only
+
+READ current MD/EVIDENCE.run43 FIRST. HEAD+remote experiment be0de64e1e3ce9a2db41b9150418c675000f07e0;
+main remote2ac39be unchanged. Volume580CADCD-33F5-4D78-9530-2287615873CA verified.
+All Run43 source/tests/docs DIRTY UNCOMMITTED/UNPUSHED outside Friday22-08.
+Do not reset, restart builds, re-wait completed handles or overwrite source.
+
+Completed full54 original51811 AND full55 original80444 terminal0. No active
+build observer. Final55SHA ed5700c94f946bff145e72ed7f0c95c1dc460c8b499469e5ed237fd5d17ea6f5.
+Full Swift/UI source typecheck+link/package/platformIOS pass; final disassembly
+verifies native factory/pending-sequence/callback calls.55 unsigned/uninstalled.
+
+DefaultOFF --native-setup-transition requires stage/capture/Dockstorage/Metal
+drain and private full --madeira-setup. Actual normal0/DORMANT captured request
+stages one native slot; explicit button checks current state/counts0/drain/
+window/sequence, disables Linux restart and presents existing native setup.
+Native user login/JIT/Play unchanged. Private Linux-arg auto-start excluded;
+ordinary source untouched. Delegate bounded16/readiness callback route wired.
+Exact method18negative/single/duplicate HOST controls + callbacks ASan/UBSan,
+actual C->Swift model/option/sequence regression and22iOS units pass. Host UI/
+runtime services stubbed; no real UI/auth/JIT/game/return proof. Receipts private
+run43/native-setup-ios-v3,hybrid55,native-entry-controls,native-callback-reproducible.
+
+Installed53UUID AEE12339-C654-431C-AAFE-1863B8240CB6 untouched; last read-only
+currentPID18113, native receipt STILL52PID17126 (do NOT reuse PIDs blindly).
+Pre-Linux system refusal not a Linux crash. User manual-open/system-prompt reply
+PENDING; no new install/launch/kill/trust/security/lock/auth action or repeated
+request. CLIonly, NEVER request Mac unlock. First actual device discriminator
+remains53 genuine Library/input/CoW memory once OS permits. Check fresh reply/
+identity before any action; don't interrupt unknown active user session.
+
+Next actual hybrid handoff must qualify measured Linux/backend/viewer/storage
+ownership and native supported licensed Dock launch. No directEXE or token
+conversion. Initial Wine pthread detached, wineserverstop joins server only;
+DO NOT auto-restore Linux from game-exit/running flags. Clean return remains
+unimplemented/unverified; bridge diagnostic125, repeated stability incomplete.
+No STABLE_SUCCESS/unload/goalcomplete. Preserve full goal, all installations/
+accounts/games/saves/main/vendor source. Private combined binary not distributable.
+
+--- HISTORICAL notes below; current header supersedes completed/live/phase claims ---
+
+# LIVE full54 integration build51811; do NOT repeat or install at pending53gate
+
+One private unsigned54 local compile job ACTIVE, source snapshot complete.
+run43/hybrid54/prepare-evidence includes real Swiftrequest/slot, C headers and
+actual private native ContentView option hook.22stage-ios units already PASS.
+Xcode resource packaging, no errors observed yet. Poll SAME51811/read actual
+build-result+xcode.log; timeout not terminal. If passes verify final exported
+receiver/realcontroller call and native launchOption method/package. No signed/
+installed54 or actual UI/game proof. Installed53/userOSprompt remains untouched.
+
+Return path source recheck initial Wine pthread detached, server stop joins
+server only; not all Wine worker/global teardown proof. No automatic Linux
+restore from game-exit flags. Full goal ACTIVE, game/return/stability incomplete.
+Source Run43 DIRTY UNCOMMITTED/UNPUSHED outside Friday22-08; preserve changes.
+No main/FEX/Valve/account/trust/lock/security edits. Next actual53device test
+requires user officialOSprompt resolution; don't retry system refusal.
+
+# UPDATE Run43: private native Dock option hook implemented, actual game NOT run
+
+All Run43 edits UNCOMMITTED/UNPUSHED outside weekday22-08 (Friday18:29+).
+HEAD/remote be0de64 main2ac39be unchanged. Preserve dirty source. New exact
+private ContentView.startDock option block calls LabDockPending.launchOption:
+no capture keeps ordinarychosen/default untouched; captured request requires
+real manifest/model+native product options, errors BEFORE prepareDock/authfile.
+All original login/JIT/cloud/session/installers/ValveLaunchApp downstream source
+preserved; no directEXE route. HOST dispatch fallback19/realindex11/3negative
+cases and existing CABI/concurrency15/7/49 pass. Actual adaptedFULLContentView
+parsed only (not typechecked); new Swift method+Cmapper iOSdylib linked, export
+verified. No54fullbuild/install or automatic native UI transition yet.
+
+Read-only Air current18113 installed53UUID AEE12339-C654-431C-AAFE-1863B8240CB6;
+last-native-log STILL52PID17126. No fresh53start/Steam proof; no crash/lock/trust
+inference. No start/stop/install/security action. User OS prompt still pending,
+preserve current instance. Once permitted qualify installed53 Library/input/
+memory first. Next native UI/game handoff+runtime/storage ownership and Wine
+exit/Steamrestore still need implementation+deviceproof. Bridge125, no stable
+marker/unload/goalcomplete. See latestMD/EVIDENCE.run43 for receipts/hashes.
+
+# UPDATE Run43: real capturedRequest->Swift metadata slot wired, defaultOFF
+
+ALL Run43source UNCOMMITTED/UNPUSHED, Friday18:23+ outside22-08; HEADbe0de64/
+main2ac39be. Preserve11scoped dirtyfiles. No53device retry/prompt reply yet.
+New --stage-dock-request needs capture/Dockstorage/Metaldrain and private
+full --madeira-setup. Actual UIKit owner after normal0/DORMANT+prefixbound
+calls public CABI receiver, stages owned request in one native Swift slot.
+No Wine or original pending-capture consumption. Duplicate/stale/busy/discard
+and8writers accept1 HOST via actual C->Swift ABI, prior15/7/49 controls pass.
+22iOS units compile; actualcontrollerreference and independent iOS linked
+publicexport verified. First INTERNAL cdecl stripped, made PUBLIC+reverified.
+No new full54 final app link/deploy, licensed game/return still unimplemented.
+
+Next user53officialOSprompt -> installed53 actualLibrary/input/memory.
+Independent nextcoordinator uses stagedrequest realmanifest+Valveoption then
+normal native sign-in/JIT/Dock LaunchApp, after measured storage/runtime
+ownership. No directEXE or metadata-as-license. Bridge125; no STABLE_SUCCESS/
+unload/goalcomplete. CLIonly, no Macunlock/security/auth/Guard/FEX/Valve edits.
+
+# UPDATE Run43: real8216byteIPC->Cmapper->ownedSwiftrequest->Dock model verified
+
+Run43 ALL edits still UNCOMMITTED/UNPUSHED outside weekday22-08 (Friday18:19+);
+HEAD/remote be0de64/main2ac39be unchanged. Preserve7scoped dirty files.
+New LabDockRequest uses actual C validator/map, aligned immutable request copy
+then Swift strings/argv; no borrowed guest pointers/raw logs. HOST valid frame
+plus3malformed/mutation isolation+prior15/7/49controls PASS. C/Swift UBSan.
+Actual iOS Swift+C mapper dylib links, unresolvedmapper absent; corrected
+inheritedmacOSsysroot warning with explicit iphoneos/SDKROOT/syslibroot, vtool
+IOS/min17/sdk27 checked. No full new app/device runtime test. Future PRIVATE
+--madeira-setup includes adapter and C headers in copied bridging header ONLY.
+Installed53 untouched; userOSprompt still PENDING, no install/launch/trust retry.
+
+NEXT once user resolves official Air gate test53 actualLibrary/input/memory.
+Independent next coordinator dispatch must retain existing Dock sign-in/JIT/
+ValveLaunchApp and true Linux/Wine storage/runtime handoff; no directEXE or
+metadata-as-license. Bridge125 remains; game/return/stability incomplete.
+No STABLE_SUCCESS/unload/completion. Read latest MD/EVIDENCE.run43 first.
+
+# UPDATE Run43: install+Valve launch-option matcher qualified, source UNCOMMITTED
+
+Run43 dirty source NOT pushed: Friday18:15+ outside22-08. Remote/HEADbe0de64,
+main2ac39be verified. Preserve all6 scoped files/edits, no reset or mainmerge.
+LabDockSelection now resolves exactly one real config.launch key with same
+AppID/path/cwd/Windows-style argv. Actual production option parse tested: sparse
+index7 selected,7 contradictory sets rejected,49 argument quoting roundtrips
+pass; existing15install-record negatives pass. iOSARM64 symbol/object PASS.
+No fallback0/arrayoffset/directEXE, license inference or actual dispatch.
+Initial own Swift precondition-throw test error fixed; no product regression.
+
+Air53 system-prompt question STILL PENDING, no new device action. Keep53
+installed and its saved state; no rebuild54/launch retry/trust/lock/credential
+automation. Once user resolves official OS gate, test53 actual Library/input/
+memory. Independently next integrate typed capture to real Dock coordinator
+with legitimate native sign-in/Valve LaunchApp and measured Linux/Wine writer/
+lifecycle handoff. Full game/return/stability incomplete; bridge125 remains.
+No STABLE_SUCCESS/unload/goal complete. Read EVIDENCE.run43/latestMD first.
+
+# CURRENT Run43:53OS prompt pending; native Dock selection component qualified
+
+Source parent be0de64 pushed/readback, isolated branch. User question about
+Air53 manual-open/system prompt still PENDING, no approval inferred. No new
+device launch/install/security/trust/lock/account action. Keep installed53
+unchanged; future CoW-device result still unverified.
+
+Independent source LabDockSelection.swift matches captured AppID/install to
+exactly one real installed shared-library DockGame and preserves argv/working/
+exe/customExecutables. HOST actual production parser/model+15 contradictions
+PASS; iOSARM64 object/symbol PASS, full app link not done. Own harness duplicate
+method extraction fixed. Only future explicit private cold Lab source package
+includes it; production unchanged. No actual dispatch/game/auth/runtime/lease
+permission; bridge125. Extra argv still needs real Valve launch-option matching.
+
+NEXT read fresh Air OS prompt; once allowed test already installed53 Library/
+input/memory. Future coordinator MUST use ContentView.startDock normal native
+sign-in/Valve LaunchApp rather than direct EXE, and qualify Linux/Wine ownership
+and return. No new54 build/install until53 device outcome. Current changes
+pending signed-off allowed-window checkpoint. No stable marker/unload/complete.
+
+--- Earlier history; above supersedes outdated source/phase notes ---
+
 # CURRENT Run42:53 installed; OS launch refused pre-Linux; user prompt pending
 
 Original sign70342 terminal0, full/deep/mainhelper/package pass. SignedSHA

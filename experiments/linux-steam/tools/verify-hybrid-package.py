@@ -6,6 +6,11 @@ from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('app',type=Path);p.add_argument('prepared_evidence',type=Path);a=p.parse_args()
 e=json.loads(a.prepared_evidence.read_text());pin=e['compiled_rootfs_pin'];assert re.fullmatch('[0-9a-f]{64}',pin)
 info=plistlib.loads((a.app/'Info.plist').read_bytes());assert info.get('LinuxLabRootFSSHA256')==pin,'Final app is missing the actual compiled RootFS pin'
+if e.get('lab_bundle_identifier'):
+ assert info.get('CFBundleIdentifier')==e['lab_bundle_identifier'],'Final Lab identity differs from explicit isolated build target'
+ helpers=list((a.app/'PlugIns').glob('*.appex'));assert len(helpers)==1,'Expected exactly one development JIT helper'
+ helper=plistlib.loads((helpers[0]/'Info.plist').read_bytes())
+ assert helper.get('CFBundleIdentifier')==e['lab_bundle_identifier']+'.JITHelper','Final helper identity mismatch'
 scene=plistlib.loads((Path(__file__).resolve().parents[1]/'app/Info.plist').read_bytes())['UIApplicationSceneManifest']
 assert info.get('UIApplicationSceneManifest')==scene,'Final UIKit Lab is missing its explicit scene lifecycle contract'
 if 'scene_manifest' in e:assert e['scene_manifest']==scene,'Prepared scene contract differs from standalone Lab'

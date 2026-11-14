@@ -2,11 +2,92 @@
 
 Private-development experiment, not an alternative product release. See
 [investigation/status](../../docs/experiments/LINUX_STEAM_MADEIRA.md).
-The ordinary Madeira target is untouched. This separate UIKit target links the
-pinned LinuxRunner interpreter, a minimal native embedding adapter and a bounded
-diagnostic compatibility bridge. An explicit experimental desktop frontend links the pinned RFB/Metal display,
-root importer and input adapter. Physical Air TCP execution is verified; interactive
-Steam login/Library is not yet verified. It **does not link or start Madeira**.
+The ordinary Madeira target is untouched. The initial separate UIKit target links
+the pinned LinuxRunner interpreter and a bounded diagnostic compatibility bridge.
+The experimental frontend adds RFB/Metal display, rootfs and input. Genuine Linux
+Steam login/Library/BPM has been observed on Air, but repeated stability and a
+licensed Madeira game/return cycle remain unverified. The later private hybrid
+builder links Madeira as well; compilation alone does not qualify runtime handoff.
+
+## Experimental native setup transition
+
+The private runtime builder's `--native-setup-transition` is OFF by default. It
+requires `--stage-dock-request`, capture, Dock storage and actual Metal/viewer
+drain; package it only through `build-hybrid-app.py --madeira-setup`. After a
+successful captured request and normal Linux shutdown, an explicit **Open Madeira
+game setup** button enters the existing native setup. The user handles its normal
+Steam sign-in, JIT and Play workflow. Captured game metadata must match a real
+installed game and Valve launch option; it is not proof of ownership or a license.
+
+Linux restart is disabled after this one-way entry. Returning from a game to Linux
+Steam is not yet implemented or qualified; neither a game-exit flag nor stopping
+wineserver proves complete Wine teardown. Full unsigned55 typechecks/links this
+entry and callback path; it is not signed, installed or device-validated. The
+compatibility wrapper still returns diagnostic125, not successful game execution.
+
+These controls execute actual adapter methods with explicitly stubbed downstream
+UI/runtime services, plus the real request parser/mapper and native models. They
+do not start Steam, authenticate or enable JIT. Use fresh private output directories:
+
+```sh
+export LINUX_LAB_ARTIFACTS=/Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad
+python3 experiments/linux-steam/tools/test-dock-selection.py --help
+python3 experiments/linux-steam/tools/test-native-callbacks.py "$LINUX_LAB_ARTIFACTS/callback-control-new"
+python3 experiments/linux-steam/tools/test-native-setup-entry.py "$LINUX_LAB_ARTIFACTS/setup-entry-control-new"
+```
+
+The additional private full-app option `--observe-wine-initial-join` (OFF by
+default, requires `--madeira-setup`) replaces only the initial Wine thread's
+create/detach pair in the disposable app source. An observer actually joins that
+thread, including TLS destructors. Its numeric health record explicitly leaves
+all Wine workers unqualified; this never triggers a Linux return. Full unsigned56
+links the observer but has no installation or device result. The discriminating
+host control holds a real TLS destructor after the thread body returns, and
+separately tests actual-thread versus observer creation failure:
+
+```sh
+python3 experiments/linux-steam/tools/test-wine-initial-join.py "$LINUX_LAB_ARTIFACTS/wine-initial-control-new"
+```
+
+## CLI observation and navigation
+
+`build-hybrid-linux-runtime.py --cli-input-controls` is an explicit development
+opt-in. It registers nine fixed Darwin notifications and sends existing RFB
+pointer/key events. It accepts no text or launch payload. It refuses background,
+ended/draining, keyboard-focused, actively touched or invalid-frame states and
+throttles events. The native `IDECK_LAB_CLI_INPUT_V1` line acknowledges dispatch;
+notification transport or dispatch alone is not proof Steam responded.
+
+Inspect the actual authenticated Steam screen before any event. Do not automate
+login, credentials, Steam Guard or system trust. Use the exact paired device ID
+from private run configuration and a fresh private output directory:
+
+```sh
+python3 experiments/linux-steam/tools/post-lab-navigation.py \
+  --device "$LAB_DEVICE" --output "$LINUX_LAB_ARTIFACTS/navigation-library-new" library
+```
+
+Actions are `library`, `big-picture`, `left`, `right`, `up`, `down`, `activate`,
+`back` and `page-down`. Verify native acknowledgement and a physical screenshot
+after each action. This is injected RFB navigation, **not physical touch or
+Bluetooth controller validation**. The Lab's direct-touch mapping now matches
+the actual Metal full-drawable quad; host regression reproduces the old Air
+offset and checks 243 mapped points. Physical touch still needs device testing.
+
+Current Xcode CLI can capture the paired physical screen without GUI access:
+
+```sh
+xcrun devicectl device capture screenshot --device "$LAB_DEVICE" \
+  --timeout 25 --destination "$LINUX_LAB_ARTIFACTS/screen-new-private.png"
+```
+
+Keep screenshots private; authenticated frames may contain account information.
+An OS process listing or black launch shell is not Linux execution evidence.
+The Lab records fixed `IDECK_LAB_STARTUP_V1` and `IDECK_LAB_FRONTEND_ENTRY_V1`
+selection/scene/Metal boundaries without dumping arguments or account fields.
+Read them before changing runtime behavior or retrying startup. See the current
+experiment continuation for the installed build and live process; old build
+numbers and PIDs in historical sections are not deployment instructions.
 
 ## Build and controls
 

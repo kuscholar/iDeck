@@ -26,9 +26,14 @@ p.add_argument('--dependency-root',type=Path,help='Pinned read-only Wine/FEX hea
 p.add_argument('--build',action='store_true')
 p.add_argument('--build-number',type=int,default=35)
 p.add_argument('--madeira-setup',action='store_true',help='Explicit cold native setup mode, mutually exclusive with Linux experiments')
+p.add_argument('--observe-wine-initial-join',action='store_true',help='Private Lab only: observe actual initial Wine pthread join; not full shutdown or return permission')
+p.add_argument('--lab-bundle-identifier',default='com.kuschqin.ideck.linuxlab',help='Separate development ID ending .linuxlab, or the existing Air-authorized com.kuschqin.ideck.freshtest Lab')
 a=p.parse_args();prepared,linux,base,out=(getattr(a,n).resolve() for n in ('prepared','linux_runtime','artifacts','output'))
 assert all(str(x).startswith('/Volumes/easystore/') for x in (prepared,linux,base,out)) and not out.exists()
 assert 1 <= a.build_number <= 2147483647
+assert not a.observe_wine_initial_join or a.madeira_setup,'Wine initial join observer requires explicit native setup'
+assert re.fullmatch(r'[A-Za-z][A-Za-z0-9-]*(?:\.[A-Za-z0-9-]+)+',a.lab_bundle_identifier)
+assert a.lab_bundle_identifier.lower().endswith('.linuxlab') or a.lab_bundle_identifier=='com.kuschqin.ideck.freshtest','Never target the working app identity'
 repo=Path(__file__).resolve().parents[3];lab=repo/'experiments/linux-steam';hashof=lambda f:hashlib.sha256(f.read_bytes()).hexdigest()
 deps=(a.dependency_root or prepared).resolve();assert str(deps).startswith('/Volumes/easystore/')
 assert (deps/'FEX/.git').exists() and (deps/'wine/.git').exists(),'Dependency checkout must be initialized; do not mistake parent Git HEAD for submodule'
@@ -36,6 +41,8 @@ assert subprocess.check_output(['git','-C',str(deps/'FEX'),'rev-parse','HEAD'],t
 assert subprocess.check_output(['git','-C',str(deps/'wine'),'rev-parse','HEAD'],text=True).strip()=='9129e9684daaeae70da9435e7c6060e59392634e'
 runtime=linux/'runtime';e=json.loads((linux/'evidence.json').read_text())
 assert not a.madeira_setup or e.get('physical_Dock_storage_enabled') is True,'Cold setup requires qualified physical Dock storage'
+assert not e.get('native_dock_request_staging_enabled') or a.madeira_setup,'Staged frontend requires explicit native Swift Lab adapters'
+assert not e.get('native_setup_transition_enabled') or a.madeira_setup,'Native setup transition requires explicit Swift setup controller'
 for name,h in e['archives_sha256'].items():assert hashof(runtime/name)==h,name
 compiler=a.llvm_mingw.resolve()/'bin/x86_64-w64-mingw32-clang';assert compiler.is_file()
 root_pins={x.split('=',1)[1].strip('"') for command in e.get('commands',[]) for x in command if x.startswith('-DIDECK_LAB_ROOTFS_SHA256=')}
@@ -106,6 +113,8 @@ flags=['-I'+str(lab/'app'),
  '-DIDECK_LAB_COMPAT_TOOL=1','-DIDECK_LAB_GUEST_LIFETIME=1','-DIDECK_LAB_NATIVE_WORKERS=1','-DIDECK_LAB_NATIVE_LOG=1',
  '-DIDECK_LAB_LAZY_PAGES=1','-DIDECK_LAB_MADVISE_STATS=1']
 if a.madeira_setup:flags+=['-DIDECK_LAB_MADEIRA_SETUP=1']
+if a.observe_wine_initial_join:flags+=['-DIDECK_LAB_WINE_INITIAL_JOIN=1']
+if e.get('native_setup_transition_enabled'):flags+=['-DIDECK_LAB_NATIVE_SETUP_TRANSITION=1']
 assert 'C0E100000000000000000001' not in text
 text=text.replace('/* End PBXBuildFile section */','\t\tC0E100000000000000000001 /* HybridLinuxMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E100000000000000000002; settings = {COMPILER_FLAGS = '+json.dumps(' '.join(flags))+'; }; };\n/* End PBXBuildFile section */')
 text=text.replace('/* End PBXFileReference section */','\t\tC0E100000000000000000002 /* HybridLinuxMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = '+json.dumps(str(entry))+'; sourceTree = "<absolute>"; };\n/* End PBXFileReference section */')
@@ -116,15 +125,50 @@ if a.madeira_setup:
     for stem,kind,extension,build_id,ref_id in [
         ('LabStartupMode','sourcecode.c.c','.c','C0E100000000000000000007','C0E100000000000000000008'),
         ('LabMadeiraSetup','sourcecode.swift','.swift','C0E100000000000000000009','C0E10000000000000000000A'),
-        ('LabMadeiraPrefix','sourcecode.swift','.swift','C0E10000000000000000000B','C0E10000000000000000000C')]:
+        ('LabMadeiraPrefix','sourcecode.swift','.swift','C0E10000000000000000000B','C0E10000000000000000000C'),
+        ('LabDockSelection','sourcecode.swift','.swift','C0E10000000000000000000D','C0E10000000000000000000E'),
+        ('LabDockRequest','sourcecode.swift','.swift','C0E10000000000000000000F','C0E100000000000000000010')]:
         target=native/(stem+extension);target.write_bytes((lab/'app'/(stem+extension)).read_bytes())
         cold_sources['experiments/linux-steam/app/'+target.name]=hashof(target)
         text=text.replace('/* End PBXBuildFile section */','\t\t'+build_id+' = {isa = PBXBuildFile; fileRef = '+ref_id+'; };\n/* End PBXBuildFile section */')
         text=text.replace('/* End PBXFileReference section */','\t\t'+ref_id+' = {isa = PBXFileReference; lastKnownFileType = '+kind+'; path = '+json.dumps(str(target))+'; sourceTree = "<absolute>"; };\n/* End PBXFileReference section */')
         text=text.replace(anchor,anchor+'\n\t\t\t\t'+build_id+' /* cold setup source */,')
+    # Only the private Lab's Swift importer sees the fixed request/map ABI.
+    # Implementations already live in the qualified frontend archive.
+    for name in ('LaunchProtocol.h','WindowsLaunchMap.h'):
+        target=native/name;assert not target.exists();target.write_bytes((lab/'app'/name).read_bytes())
+        cold_sources['experiments/linux-steam/app/'+name]=hashof(target)
+    bridging=native/'Madeira-Bridging-Header.h';bridging.write_text(bridging.read_text()+'\n#include "WindowsLaunchMap.h"\n')
+    cold_sources['private-adapted/Madeira-Bridging-Header.h']=hashof(bridging)
+    # The pending request chooses Valve's actual option in the SAME normal
+    # Dock launch path, never a separate EXE launcher or auth/session shortcut.
+    import importlib.util
+    spec=importlib.util.spec_from_file_location('dock_option_hook',lab/'tools/dock-launch-selection.py')
+    hook=importlib.util.module_from_spec(spec);spec.loader.exec_module(hook)
+    content=native/'ContentView.swift';content.write_text(hook.patched(content.read_text()))
+    cold_sources['private-adapted/ContentView.swift']=hashof(content)
+    spec=importlib.util.spec_from_file_location('native_setup_rules',lab/'tools/native-setup-adaptation.py')
+    setup_rules=importlib.util.module_from_spec(spec);spec.loader.exec_module(setup_rules)
+    startup=native/'SteamUIExperiment.swift';startup.write_text(setup_rules.patched(startup.read_text()))
     # Plain C startup policy includes its own header, no Linux/Wine header flags.
     (native/'LabStartupMode.h').write_bytes((lab/'app/LabStartupMode.h').read_bytes())
     cold_sources['experiments/linux-steam/app/LabStartupMode.h']=hashof(native/'LabStartupMode.h')
+    if a.observe_wine_initial_join:
+        # Change only this disposable app bridge, never Wine/FEX source or the
+        # working application. The observer owns exactly the original initial
+        # pthread; no other Wine worker or signal policy is changed.
+        for name in ('WineInitialJoin.c','WineInitialJoin.h'):
+            target=native/name;assert not target.exists();target.write_bytes((lab/'app'/name).read_bytes())
+            cold_sources['experiments/linux-steam/app/'+name]=hashof(target)
+        spec=importlib.util.spec_from_file_location('wine_initial_join',lab/'tools/wine-initial-join.py')
+        join_hook=importlib.util.module_from_spec(spec);spec.loader.exec_module(join_hook)
+        bridge=native/'WineProcessBridge.m';bridge.write_text(join_hook.patched(bridge.read_text()))
+        cold_sources['private-adapted/WineProcessBridge.m']=hashof(bridge)
+        build_id='C0E100000000000000000013';ref_id='C0E100000000000000000014'
+        assert build_id not in text and ref_id not in text
+        text=text.replace('/* End PBXBuildFile section */','\t\t'+build_id+' = {isa = PBXBuildFile; fileRef = '+ref_id+'; };\n/* End PBXBuildFile section */')
+        text=text.replace('/* End PBXFileReference section */','\t\t'+ref_id+' = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = '+json.dumps(str(native/'WineInitialJoin.c'))+'; sourceTree = "<absolute>"; };\n/* End PBXFileReference section */')
+        text=text.replace(anchor,anchor+'\n\t\t\t\t'+build_id+' /* initial Wine pthread observer */,')
     # Adapt only this Lab's known prefix binding at its two native entry roots.
     # Keep all production installer/PE/path checks intact, and ordinary source
     # untouched. Fail preparation if either exact source contract has changed.
@@ -151,14 +195,14 @@ text=text.replace(resource_anchor,resource_anchor+'\n\t\t\t\tC0E1000000000000000
 project.write_text(text)
 cmd=['xcodebuild','-project',str(project.parent),'-scheme','Madeira','-configuration','Debug','-destination','generic/platform=iOS',
  '-derivedDataPath',str(out/'xcode'),'CODE_SIGNING_ALLOWED=NO','ENABLE_DEBUG_DYLIB=NO',
- 'MADEIRA_BUNDLE_IDENTIFIER=com.kuschqin.ideck.linuxlab','CURRENT_PROJECT_VERSION='+str(a.build_number),
+ 'MADEIRA_BUNDLE_IDENTIFIER='+a.lab_bundle_identifier,'CURRENT_PROJECT_VERSION='+str(a.build_number),
  'INFOPLIST_KEY_CFBundleDisplayName=iDeck Linux Lab','build']
 record={'scope':'Private isolated FULL source app + Linux frontend build inputs; NOT runtime admission/device/game proof',
- 'source_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),
+ 'source_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),'lab_bundle_identifier':a.lab_bundle_identifier,
  'dirty_experiment_source_inputs':copied,'prepared_payloads':payload,'linux_input_evidence_sha256':hashof(linux/'evidence.json'),
  'Linux_entry_source_sha256':hashof(lab/'app/main.m'),'private_project_sha256':hashof(project),
  'read_only_dependency_root':str(deps),'Wine_FEX_sources_modified':False,'provisioning_installation_or_auth_action':False,
- 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'scene_manifest':scene_manifest,'scene_contract_source_sha256':hashof(lab/'app/Info.plist'),'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
+ 'compiled_payload_source_provenance_not_rebuilt_this_run':True,'compiled_rootfs_pin':root_pin,'scene_manifest':scene_manifest,'scene_contract_source_sha256':hashof(lab/'app/Info.plist'),'cold_madeira_setup_enabled':a.madeira_setup,'cold_setup_callback_scheme':cold_callback,'cold_setup_source_hashes':cold_sources,'wine_initial_join_observer_enabled':a.observe_wine_initial_join,'own_guest_resource_command':resource_cmd,'own_guest_resource_hashes':resource_hashes,'binary_distribution_allowed':False,'build_command':cmd}
 (out/'prepare-evidence.json').write_text(json.dumps(record,indent=2)+'\n')
 if a.build:
     env=dict(os.environ,LLVM_MINGW=str(a.llvm_mingw.resolve()))
