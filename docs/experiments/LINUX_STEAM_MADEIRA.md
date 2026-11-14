@@ -1,14 +1,13 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run47 LIVE59/19056):59 now actually selects retained Linux mode, creates
-Metal and registers the bounded CLI controls on Air, without debugger. Initial
-screen is X11 root/cursor; genuine59 Steam UI/Library/BPM/input response remains
-to be observed.58 had native-only startup with unknown cause; diagnostic-only59
-success does not establish a causal fix or repeated stability. Older53 restored
-saved login and rendered genuine Store/Friends. No licensed Madeira game/return
-or complete stability proof. Same isolated app/container preserved, allworking
-apps/accounts/games/saves/main untouched. Source43..47 still uncommitted; scoped
-checkpoint due in permittedSaturday hours. Full objective remains ACTIVE.
+Status (run48 LIVE59/19056): actual Air4 now renders genuine authenticated Linux
+Steam Library and Big Picture. Fixed directional input changes the selected game;
+Enter opens genuine details. Owned-game installation is paused at Ratatan EULA,
+then later artwork changed without agent input; possible user test preserved.
+No Steam Play bridge/game/return or repeated
+stability proof. Current session/container is preserved; source checkpoint1db7fcb
+published only to the experimental branch. New post-cap numeric input-health
+patch passes host/iOS compilation but is NOT deployed. Full goal remains ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -4729,3 +4728,61 @@ legitimate native Dock game and measured full teardown/return. The wrapper still
 returns diagnostic125, and joining one native Wine thread does not grant Linux
 restoration permission. None of these missing milestones is inferred from this
 checkpoint. No main merge, binary publication or stable-success marker.
+
+
+## Run48: real Library, Big Picture and input on Air; game EULA boundary
+
+Verified volume UUID, migration completion, exact branch/origin/worktrees and
+prior active59 receipts before changes. Signed-off checkpoint1db7fcb was pushed
+in permitted Saturday hours; remote readback matches and main2ac39be is unchanged.
+No install/restart/debugger/credential action occurred in this continuation.
+
+One fixed Library event changed the physical Steam window from Store to Library.
+The initial placeholders subsequently populated with actual owned-game lists,
+news and cover images. One fixed Big Picture event initiated a black transition;
+a later physical screenshot rendered genuine gamepad home. Therefore the initial
+black frame is not a permanent-hang diagnosis. Valve's own webhelper log shows a
+restart near the transition; exact cause and measured transition latency remain
+unestablished. No runtime/security/Valve change was made to obtain this result.
+
+One right-arrow changed the selected game from Tomb Raider to Ratatan; one Enter
+opened Ratatan's actual details (Install,1.68GB). These are real UI responses,
+not dispatch-only inference. They do not prove physical touch/Bluetooth or
+repeated browsing stability. Fresh genuine compat_log registers ideck-madeira-lab
+and loads its manifest/command prefix; tool discovery is not Steam Play execution.
+
+Official Steam installation dialog selects /mnt/ideck/SteamLibrary and reports
+4.46GB free. Confirming the location displayed Ratatan's online-service EULA.
+Agent has NOT accepted it. User was asked to personally read/choose; preserve
+this exact session and do not send Enter/Accept at that boundary. No installed
+manifest/download completion/real bridge request or game is claimed.
+
+Native snapshot contains1029 resource samples, sampled maximum2425035272bytes
+and11 APP_MEMORY_WARNING events; not a true peak or crash cause. Latest atomic
+health145 identifies59/19056 with141guest entries and1607801160byte footprint.
+Legacyphase8 still does not mean Linux stopped. Main append log reached4MiB,
+so later action acks can be lost while atomic health continues. Small own-Lab
+patch adds ONLY numeric sequence/action to that existing health after dispatch,
+under default-off CLI gate. No raw key/text/coordinates/account logging and no
+new per-key file writes; cap is retained. ASan/UBSan actual host writer gates0/1,
+8 concurrent writers/4001 events, unstarted/invalid/foreignPID refusals and
+post-cap persistence pass. Exact navigation handler17negative/9paired/throttle
+passes with UI/RFB stubs;4actual iOS units gates0/1 compile Werror. This new patch
+has NOT been fully linked/deployed and does not change the tested59 binary.
+
+Private run47 artifacts/hashes and exact limits are in EVIDENCE.run48. Next:
+after the user's actual EULA choice, observe official download/Windows depot
+and real custom-tool selection/Play request; then qualified Linux shutdown and
+native legitimate Dock authentication/JIT/game. Diagnostic125 is still not game
+execution, and initial Wine-thread join is not all-worker/signal/storage cleanup
+or permission to restore Linux. Preserve accounts/games/saves/main; no stable
+marker or scheduler unload. Combined-binary distribution remains unresolved.
+
+Run48 later observation06:44: physical screen changed from EULA to different
+game artwork while agent sent no further input. User has not text-replied to the
+EULA question. Cause/current manual activity unknown; preserve possible live user
+test and do not assume acceptance, successful install or game execution. Fresh
+receipt is still59/19056; health163 has140guest entries/1602148728bytes and zero
+bridge submissions. Actual gameprocess log records UI7->4 at11:34:09, no current
+game start. This supersedes the earlier claim that EULA is still the current
+screen. Native-health combination with actual file-policy JSON also passed.

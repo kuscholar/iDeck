@@ -265,6 +265,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         const uint32_t keys[]={0xff51,0xff53,0xff52,0xff54,0xff0d,0xff1b,0xff56};
         uint32_t key=keys[action-2];[self.client key:key down:YES];[self.client key:key down:NO];
     }
+    (void)ideck_native_note_navigation((unsigned)action);
     char line[128];snprintf(line,sizeof line,"IDECK_LAB_CLI_INPUT_V1 action=%u dispatch_only=1 physical_touch_test=0",(unsigned)action);
     ideck_native_log_line(line);
 }

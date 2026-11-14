@@ -526,3 +526,25 @@ Ten actual kernel cases cover granularity, both-side writes/partial unmap,
 boundaries and allocation rollback. Host injection is explicitly prohibited
 in iOS builds. Native-rounded mapping bytes are not physical RSS or an exact
 VM-region count. Read device evidence before claiming Steam improvement.
+
+Lab navigation evidence (Run48): `--cli-input-controls` stays off by default.
+In an explicitly enabled Lab, `post-lab-navigation.py --device EXACT_AIR_ID
+--output NEW_PRIVATE_DIRECTORY library` sends one fixed event. Inspect the
+physical screen before every event; never send it to login, Steam Guard or a
+terms dialog. Transport acceptance and numeric dispatch receipts are not UI
+success. Current Air evidence includes genuine Library, Big Picture and game
+details; Windows game/return and repeated stability remain unverified.
+
+The latest source keeps numeric dispatch sequence/action in the existing
+atomic health receipt after the 4 MiB append-log cap. No text, coordinates or
+credentials are recorded. Reproduce the real writer's concurrency/refusal and
+post-cap controls with:
+
+```sh
+python3 experiments/linux-steam/tools/test-navigation-health.py \
+  "$LINUX_LAB_ARTIFACTS/NEW-private-navigation-health-control"
+```
+
+This host test also checks that disabling the feature omits its fields and that
+the file-policy and navigation objects coexist in valid JSON. It does not test
+iPad notification delivery, physical input or Steam functionality.

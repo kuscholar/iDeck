@@ -40,6 +40,18 @@ static char healthname[120];
 static int health_directory=-1,health_written;
 static pid_t owner_pid;
 static uint64_t health_sequence;
+#if IDECK_LAB_CLI_INPUT
+static uint64_t navigation_sequence;
+static unsigned navigation_action=9; /* No dispatch yet; outside the 0..8 set. */
+int ideck_native_note_navigation(unsigned action){
+    if(action>8)return -EINVAL;
+    pthread_mutex_lock(&lock);
+    int error=health_directory<0?-ENODEV:owner_pid!=getpid()?-EXDEV:
+        navigation_sequence==UINT64_MAX?-EOVERFLOW:0;
+    if(!error){navigation_action=action;navigation_sequence++;}
+    pthread_mutex_unlock(&lock);return error;
+}
+#endif
 static int write_all(const char *body,size_t length){
     size_t offset=0;
     while(offset<length){ssize_t n=write(fd,body+offset,length-offset);
@@ -110,6 +122,14 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
         int added=snprintf(body+used,sizeof body-used,",\"file_policy\":{\"query_status\":%d,\"submitted\":%llu,\"completed_sequence\":%llu,\"appid\":%u,\"status\":%d,\"library\":%d,\"machine\":%u,\"diagnostic_only\":true,\"game_launched\":false}}\n",
             policy,(unsigned long long)observed.submitted,(unsigned long long)observed.completed_sequence,
             observed.appid,observed.status,observed.library,observed.machine);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_CLI_INPUT
+    if(length>1&&(size_t)length<sizeof body){
+        size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"cli_navigation\":{\"sequence\":%llu,\"last_action\":%u,\"dispatch_only\":true,\"physical_touch_test\":false}}\n",
+            (unsigned long long)navigation_sequence,navigation_action);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif

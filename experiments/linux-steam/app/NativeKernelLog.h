@@ -17,6 +17,12 @@ void ideck_native_log_resources(void);
  * native quiescence certificate or permission to launch Wine/restart Linux. */
 const char *ideck_native_health_name(void);
 int ideck_native_health(unsigned build,const char *stage,int guests,int workers);
+#if IDECK_LAB_CLI_INPUT
+/* Fixed Lab action index only, recorded AFTER dispatch. No text, coordinates,
+ * keys, credentials or UI success claim. Survives the append-log cap through
+ * the existing atomic health receipt; does not write a new file on each key. */
+int ideck_native_note_navigation(unsigned action);
+#endif
 /* Defined ONLY by the opted-in copied kernel/log.c object. */
 const char *ideck_native_log_bridge_marker(void);
 #endif

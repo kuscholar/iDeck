@@ -1,3 +1,38 @@
+# LIVE Run48: actual Air Library/BPM/input; unexpected UI change, preserve user test
+
+Read latest MD/EVIDENCE.run48 FIRST. Source checkpoint1db7fcb signed-off/pushed
+experiment only, remote verified; main2ac39be unchanged. Current59PID19056 same
+UUIDCED6F4B3-5948-4663-A9BE-FFE0ED4677D9; revalidate before mutation. NO new
+install/restart/debugger this continuation. Preserve session/prefix/auth/games.
+
+ACTUAL screenshots: Store ->Library list/artwork ->BigPicture home ->right
+changes selected game ->Enter opens Ratatan details. Genuine LinuxSteam, no
+fakeUI/credentials. Fresh compat_log registers ideck-madeira-lab+manifest+prefix.
+Not physicaltouch/Bluetooth/repeatedstability/SteamPlay/game/return success.
+BPM initialblack eventuallyrendered; no permanentfreeze/causalfix claim.
+
+Official install dialog1.68GB/free4.46GB, shared /mnt/ideck/SteamLibrary chosen.
+Ratatan online-service EULA was observed06:39; agent didNOT accept.06:44screen
+changed to othergameartwork withNOagentinput. Usertextreplystillpending; cause/
+manualactivityunknown. PRESERVE possibleliveusertest; no input/restart/upgrade
+or assumedacceptance/gameproof. After freshuserchoice/state inspectrealWindows
+manifest; choose realregisteredtool ifneeded and testactualPlaycapture. Bridge
+still125, nativeDock/JIT/auth/worker/signal/storage/return gatesnotqualified.
+
+Latesthealth163:59/19056,140guests,1602148728bytes, logcap4MiBreached. Retainedphase8
+NOTstop.1029samples,maxsample2425035272bytes,11memorywarnings; nottruepeak/cause.
+Private run47/screen59-* and logs; hashes EVIDENCE48, no rawpayloads inGit.
+
+New ownLab numeric CLIack sequence/action inatomic health afterdispatch;cap
+retained,no text/coordinates/accountdata/perkeyfilewrite. ActualhostASan/UBSan
+8writers4001events/gates0/1/refusals/postcap and4iOSunitsWerrorpass. NOT full
+linked/deployed, running59unchanged. Exact17negative/9pairedhandler regression
+passeswithUI/RFBstubs. Keepcurrent usertest alive; noinstalljustforthispatch.
+CLIonly,noMacunlock/lock/security/auth/trustautomation. FullgoalACTIVE,noSTABLE_
+SUCCESS/unload/complete. Combinedbinarylicensegateunresolved,sourceonlypublish.
+
+--- HISTORICAL states below; currentheader supersedes liveclaims ---
+
 # LIVE Run47: actual59/19056 Linux startup+CLI registration; preserve session
 
 Read latest MD/EVIDENCE.run47 FIRST. Parent/remoteexperimentbe0de64, main2ac39be

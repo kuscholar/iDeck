@@ -41,6 +41,7 @@ static unsigned pointerEvents,keyEvents,downs,logs;
 - (void)key:(uint32_t)key down:(BOOL)down {assert(key>=0xff00&&key<=0xffff);keyEvents++;downs+=down;}
 @end
 static void ideck_native_log_line(const char *line){assert(strstr(line,"physical_touch_test=0"));logs++;}
+static int ideck_native_note_navigation(unsigned action){assert(action<9);return 0;}
 @interface Control:NSObject
 @property(strong) FakeView *view;
 @property(strong) Input *input;
