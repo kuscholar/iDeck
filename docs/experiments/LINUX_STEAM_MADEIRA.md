@@ -5779,3 +5779,48 @@ Physicalscreen genuine Steam updater extracting; NOT interactive frontend proof.
 No relaunch/install retry; let ordinary updater autorestart. Existing account
 secrets never copied/exported/entered. Next compare actual full-load mapping
 failures andLibrary/BPM/input, not only startup counters.
+
+### Run60 actual full-load result — fewer mappings, frontend still blocked
+
+Source checkpoint `d12799dc91c2582cfa6ce12d51b80c4832c24a27` pushed/readback;
+main2ac39 unchanged. Same66 ordinary updater42/drain/restart entered genuine
+saved-auth desktop chrome. Library clickACK1 andBPMclickACK2 did NOT establish
+Library or BPM. Actual13:13UTC screenshot laterStore emptydata-page/blackcontent.
+Health75 mono903002369 native22068 still active, footprint2000378136, guest147,
+11,692alloc/6,661release/5,031liveslots in40chunks/80MiBreserved,44native map
+attempts/4unmaps, all brokerfailure/ownership/overlap/cap/adviceerrors0. These
+counts establish the allocator is linked AND active, not physicalreclaim orUI.
+Capped4,194,282B native snapshot SHA6b6536185ac18845f6eed25f852413d382b35b960c55a8315757c85f8e765e2c
+contains2reports ofsameguest273/group268SIGTRAP, and ZERO recorded nativeENOMEM/
+MMAP_FAILURE/proberows in that window; not universalabsence/capacityfix proof.
+
+Exact on-Air officialCEF remains218132264B/SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb.
+Unique36B instruction match verifies trapPCe83d1504→disk6271504/ELFVA6281504,
+candidateELFbias e2150000. This trap also has an explicit equal-container-ends
+branch toBRK; do NOT infer stack-canary failure from adjacent__stack_chk_fail,
+or identify it as cef_get_xdisplay from a nearest exported symbol. Programmatic
+hex conversion puts savedcaller eBAF6800 atELFVA99a6800; precedingBL99a67fc
+callsfatalhelper6281514. Exact public rodata references identify
+`../../content/child/child_thread_impl.cc`, line351, `Crashing because hung`.
+Fetched/inspected exact Chromium126.0.6478.183 confirms **CrashHungProcess**,
+matching historicalRun49 diagnosis; no new watchdog or check suppression.
+Earlier private manual caller-range arithmetic was off0x10000; negative
+inspection retained and corrected before source/caller attribution.
+
+Before this trap main268 was blocked in futex393/privateWAIT_BITSET|REALTIME,
+expected0/allbitset/no timeout atffff38d0, libcPCe134f22c/LRe13428b8; cycle
+1559325936 unchanged across adjacentsamples. It does not establish a lost wake,
+Linux syscall bug or why its producer failed. A separate CURRENT CEF log entry
+1115/130953.928155 fromprocess372 bad_message.cc29 killsrenderer forreason213.
+Fetched exact bad_message.h maps213 toINVALID_INITIATOR_ORIGIN; ipc_utils.cc
+VerifyInitiatorOrigin checks policy->HostsOrigin. This later refusal is NOT
+proven to cause the earlier hung273 trap. No origin policy, Steam/Valve binary,
+authentication, DRM, watchdog, assertions or security setting is changed.
+Sources/provenance in private run60/chromium126-* and redacted EVIDENCE.run60.
+
+NEXT one discriminator: main-renderer wait caller metadata before watchdog,
+default-off, nonblocking and bounded, using only existing main-stack ABI frame
+links and readable executable code words; no arbitrary guest buffers/strings,
+no page materialization or synchronization change. Preserve running66 pending
+qualified successor. Broker helps selected map count but is NOT stable success.
+No SteamPlay request/filepolicy0, game, return or repeated stability proof.

@@ -1,3 +1,33 @@
+# LIVE66 Run60 failure checkpoint; next bounded waiter-callers discriminator
+
+Source d12799d PUSHED; main2ac39 untouched. Actual66PID22068/installD03CEFF5-
+7E05-4963-B71A-60595C51EEF5 preserved, revalidate. Newbroker actuallyworks for
+selectedCoW mappingcounts but NOTUI: savedauthdesktopchrome; LibraryACK1 and
+BPMACK2 stillblackcontent, lateremptyStoredata-page. Health75 guest147/
+foot2000378136,5031slots/40chunks/80MiBreserved; brokerallerrors0. Capped4,194,282B
+native66checkpoint hasZEROrecordedENOMEM/MMAP_FAILURE/probe, TWO same273SIGTRAP
+reports only; absencelimitedtowindow, no capacity/stabilityclaim.
+
+ExactonAirCEF SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb,
+unique36B→PCe83d1504/file6271504/ELFVA6281504/biasE2150000. Programmatically
+correctsavedcallerELFVA99a6800/BL99a67fc→fatalhelper; rodata+EXACTfetchedChromium
+126source proves child_thread_impl.cc351 CrashHungProcess/Crashingbecausehung.
+Earliermanualhexcaller-rangeoff10000 correctedprivate; no falsefunc/canaryclaim.
+Main268 priorfutex393 expected0/allbits/untimed ffff38d0 libcPCe134f22c/LR
+e13428b8 cycles1559325936 unchanged, underlyingcauseUNKNOWN. LATERfreshprocess372
+13:09:53 badIPC213==INVALID_INITIATOR_ORIGIN perexact126source; don'tattribute
+thislaterrefusalas firsttrapcause. No policy/watchdog/Valve/assertion suppression.
+
+NEXT Run61 defaultOFF nonblocking bounded existingmainstack ABI/code-only
+waitcallers metadata toidentifyhigherwaitercaller; HOSTtests first. No new67
+source/buildyet. DoNOT restart66 forguessing; usequalifiedconcretesuccessor under
+all-safeauthorization. CLIonly/neverMacunlock/credentials/Guard/trust/security/
+lockchanges. No FEX/vendor/Valve/main/otherworktree/appdata edits. Fulllicensed
+SteamPlay->Madeiragame/return/repeats ACTIVE; bridge125NOTgame. NeverSTABLE_SUCCESS/
+unload/goalcomplete. Private run60 allrawdiagnostics/source/artifacts outsideGit.
+
+--- Earlier Run60 ---
+
 # LIVE66 Run60: preserve new Air session, broker ACTUALLY active
 
 Actual66 installed/launched, PID22068/installD03CEFF5-7E05-4963-B71A-60595C51EEF5;

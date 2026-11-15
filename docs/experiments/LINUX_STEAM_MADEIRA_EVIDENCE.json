@@ -16187,10 +16187,157 @@
           "physical_reclaim_measured": false
         }
       },
-      "visible": "Steam updater extracting; NOT Library/BPM proof",
+      "visible": "authenticated native desktop chrome; black content; later Store empty data-page; no Library or BPM proof",
       "saved_prefix_preserved": true,
       "game_launched": false,
-      "stable": false
-    }
+      "stable": false,
+      "checkpoint_health": {
+        "schema": 1,
+        "pid": 22068,
+        "build": 66,
+        "native_log": "kernel-22068-902262-337296000.log",
+        "sequence": 75,
+        "mono_ms": 903002369,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 147,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2000378136,
+        "cpu_valid": 1,
+        "cpu_user_us": 1153321627,
+        "cpu_system_us": 122136933,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 2,
+          "last_action": 1,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        },
+        "cow_broker": {
+          "alloc": 11692,
+          "release": 6661,
+          "map_attempts": 44,
+          "map_failures": 0,
+          "unmaps": 4,
+          "live_slots": 5031,
+          "live_chunks": 40,
+          "logical_bytes": 79687680,
+          "reserved_native_bytes": 83886080,
+          "ownership_errors": 0,
+          "unmap_failures": 0,
+          "overlap_rejections": 0,
+          "capacity_refusals": 0,
+          "advice_calls": 6657,
+          "advice_failures": 0,
+          "physical_reclaim_measured": false
+        }
+      },
+      "primary_observed_guest_trap": {
+        "tid": 273,
+        "tgid": 268,
+        "PC": "0xe83d1504",
+        "signal": 5,
+        "instruction": "0xd4200000",
+        "byte_verified_file_offset": "0x6271504",
+        "byte_verified_ELFVA": "0x6281504",
+        "candidate_ELF_load_bias": "0xe2150000",
+        "verified_caller_ELFVA": "0x99a67fc",
+        "source": "content/child/child_thread_impl.cc:351",
+        "operation": "CrashHungProcess",
+        "literal": "Crashing because hung",
+        "why_main_thread_unresponsive": "UNKNOWN",
+        "no_stack_canary_or_nearest_export_attribution": true
+      },
+      "later_renderer_refusal": {
+        "stamp": "1115/130953.928155",
+        "process": 372,
+        "source": "bad_message.cc:29",
+        "reason": 213,
+        "exact_Chromium126_enum": "INVALID_INITIATOR_ORIGIN",
+        "earlier_hung_trap_same_cause_proven": false
+      },
+      "pretrap_main_wait": {
+        "tid": 268,
+        "op": 393,
+        "expected": 0,
+        "bitset": 4294967295,
+        "timed": false,
+        "address": "0xffff38d0",
+        "PC": "0xe134f22c",
+        "LR": "0xe13428b8",
+        "two_samples_cycles_unchanged": 1559325936,
+        "waker_or_higher_caller_known": false
+      },
+      "capped_snapshot": {
+        "bytes": 4194282,
+        "sha256": "6b6536185ac18845f6eed25f852413d382b35b960c55a8315757c85f8e765e2c",
+        "reported_guest_fault_lines": 2,
+        "recorded_native_ENOMEM_or_mmap_failure_lines": 0,
+        "absence_limited_to_snapshot": true
+      },
+      "official_CEF_SHA256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb"
+    },
+    "source_checkpoint": "d12799dc91c2582cfa6ce12d51b80c4832c24a27",
+    "trial_result": "Broker active with reduced native map count; interactive Library/BPM NOT achieved; hung renderer and later origin refusal",
+    "inspected_Chromium126_sources": [
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/bad_message.h?format=TEXT",
+        "sha256": "01bed1221dcab8da47ad68641f2870384f15dbb8a579af7cd60eb127a82a7868",
+        "path": "chromium126-bad_message.h"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/bad_message.cc?format=TEXT",
+        "sha256": "adaefad9ef4f2f11f3fea9f749ca55b73898f24297d40e07d4e729c811ea4043",
+        "path": "chromium126-bad_message.cc"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/renderer_host/render_frame_host_impl.cc?format=TEXT",
+        "path": "chromium126-render_frame_host_impl.cc",
+        "sha256": "7a205b2ea12eb73826a2337ca2ca17620b8cd444b2e6b9f5b1700338d75cbd91"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/renderer_host/navigation_request.cc?format=TEXT",
+        "path": "chromium126-navigation_request.cc",
+        "sha256": "118986e731a09be469548adaeccc5a2436803a1dd2177e608edc546495562d3a"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/renderer_host/navigator.cc?format=TEXT",
+        "path": "chromium126-navigator.cc",
+        "sha256": "c4e76217acc72733e591349bdb0f02e38ec883c2cfd0ba3b470c287a9da73159"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/child_process_security_policy_impl.cc?format=TEXT",
+        "path": "chromium126-child_process_security_policy_impl.cc",
+        "sha256": "068f83fb83553359ce156a9942c06efb18fdedc0bfc702b385d9c2477cdd8d9d"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/renderer_host/ipc_utils.cc?format=TEXT",
+        "path": "chromium126-ipc_utils.cc",
+        "sha256": "c6ec4c8c63b95cee0fb71a494cdc8b7d472046d352339985aece7ca45593cc25"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/browser/renderer_host/render_frame_proxy_host.cc?format=TEXT",
+        "path": "chromium126-render_frame_proxy_host.cc",
+        "sha256": "ce176c16cd9648fad3f7310e5db7fe3c756398f238647ef352c46b701ddaa924"
+      },
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/content/child/child_thread_impl.cc?format=TEXT",
+        "sha256": "5ffbe8abb7ec056cb597cc3231b87e30ee6af94fcbef68f2bc56f5f557df0518"
+      }
+    ],
+    "next": "Default-off nonblocking bounded main-thread ABI/code-only waiter caller snapshot; no input/watchdog/origin suppression"
   }
 }
