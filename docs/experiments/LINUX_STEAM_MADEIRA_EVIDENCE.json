@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 58,
+  "latest_run": 59,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -15800,5 +15800,266 @@
       "experiments/linux-steam/guest/cow-adjacent-probe.c": "a79baffdb320288f67a0e4eeb6d2d957847308f86b4679a6ad8c937516614182",
       "experiments/linux-steam/tools/test-cow-adjacent.py": "8b034b5431ed690ab53bb26137cc9eade7d2d937567024a2a416af34b7a03de3"
     }
+  },
+  "run59": {
+    "source_parent": "47357001050affd1bde36c74232c9de8d6569728",
+    "phase": "PARTIAL on-Air effect, NOT capacity/stability fix: real discard counts, desktop Library and BPM home/menu; later4.55MiB native allocation failure persists, BPM Library activation unproven/Away wakes by pointer.",
+    "observed_failure": "Controls63/64 native RFB NSData-copy allocation SIGABRT;64 actual2MiB native shared/private/anonymous ENOMEM while16KiB works. Exact native capacity class unknown.",
+    "hypothesis": "Pinned DONTNEED in-place zeroing retains backing; prior host-only conservative whole/exclusive private backing replacement may lower retained committed memory before pressure. Actual Steam eligibility/effect not proven.",
+    "minimal_patch": "New --exclusive-private-discard hybrid builder flag, requires checkedfork + defaultspan1 CoW; passes existing --experimental-private-discard only to copied mmap unit and categorical observers. Default source byte-identical64. Historical PrivateDiscard.inc unchanged.",
+    "boundaries": "At most64MiB request; wholebackings, exactownership/noadditionalrefs, nofile/memfd/shared/CoW/exec, writable only, trywrite lock; prepare all replacements then invalidate/swap/release, preserveguestflags/accounting. Unsupported/allocationfailure original fallback. No cap/mprotect/MAP_FIXED/FEX/Valve/security/lock changes.",
+    "host_evidence": {
+      "scope": "HOST current composed memory/mmap/fork/discard/CoW units and own wrappers ASanUBSan; remaining engine/dependencies not fully sanitized. No iPad/Steam/physical reclamation proof",
+      "normal_and_second_allocation_failure": [
+        {
+          "mode": "normal",
+          "checks": [
+            "whole-private-discard-zero=PASS",
+            "whole-private-backing-replaced=PASS",
+            "logical-accounting-and-flags-preserved=PASS",
+            "generation-invalidated=PASS",
+            "replacement-writable=PASS",
+            "partial-original-fallback=PASS",
+            "retained-backing-original-fallback=PASS",
+            "busy-writer-lock-original-fallback=PASS",
+            "readonly-original-fallback=PASS",
+            "executable-original-fallback=PASS",
+            "shared-original-fallback=PASS",
+            "file-identity-original-fallback=PASS",
+            "unmapped-range-enomem=PASS",
+            "madv-free-original-contents=PASS",
+            "cow-child-discard-zero=PASS",
+            "cow-parent-retains-data=PASS",
+            "lazy-reservation-preserved=PASS",
+            "multi-backing-zero=PASS",
+            "multi-backing-replaced=PASS",
+            "multi-backing-accounting-preserved=PASS",
+            "concurrent-reader-no-stale-or-invalid-backing=PASS",
+            "all-test-mappings-released=PASS"
+          ],
+          "log_sha256": "ab78aaedfad47ee49315a6da103f68b92ff23f1cf98aecbf7b1a8cf7c4757298"
+        },
+        {
+          "mode": "fail-second",
+          "checks": [
+            "whole-private-discard-zero=PASS",
+            "whole-private-backing-replaced=PASS",
+            "logical-accounting-and-flags-preserved=PASS",
+            "generation-invalidated=PASS",
+            "replacement-writable=PASS",
+            "partial-original-fallback=PASS",
+            "retained-backing-original-fallback=PASS",
+            "busy-writer-lock-original-fallback=PASS",
+            "readonly-original-fallback=PASS",
+            "executable-original-fallback=PASS",
+            "shared-original-fallback=PASS",
+            "file-identity-original-fallback=PASS",
+            "unmapped-range-enomem=PASS",
+            "madv-free-original-contents=PASS",
+            "cow-child-discard-zero=PASS",
+            "cow-parent-retains-data=PASS",
+            "lazy-reservation-preserved=PASS",
+            "multi-backing-zero=PASS",
+            "allocation-failure-no-partial-commit=PASS",
+            "multi-backing-accounting-preserved=PASS",
+            "concurrent-reader-no-stale-or-invalid-backing=PASS",
+            "all-test-mappings-released=PASS"
+          ],
+          "log_sha256": "ec245183625d4732aef5f6e5749d121b1765cf80a45f9ae4903731e6f22c29ab"
+        }
+      ],
+      "ARM64_ELF_checks": 28,
+      "total_checks": 72,
+      "actual_ARM64_SVC_replacement_calls": 1,
+      "actual_ARM64_SVC_replaced_guest_bytes": 65536,
+      "SVC_log_sha256": "14f798a719c6a166bf9c016d08ee62037f8654d5a06e7d6ea22edbb87cd8dedf",
+      "normal_archive_sha256": "ec91fb7a48fcdfa4a5ea01ee71bc12660e17ac921386f0b640e9b656f3fe57ff",
+      "commands": "Private commands retained outside Git",
+      "private_discard_source_sha256": "77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209"
+    },
+    "host_harness_failures_retained": [
+      {
+        "artifact": "host-discard",
+        "failure": "Second allocation injection compiler define not inherited by subsequent recompiler; rollback expectation failed before actual injection. Test-only new copied mmap source now pins host define; iOS guard still rejects injection."
+      },
+      {
+        "artifact": "host-discard-v2",
+        "failure": "Guest harness link missing lifecycle/log bridge from uninstrumented base; no guest run."
+      },
+      {
+        "artifact": "host-discard-v3",
+        "failure": "Real lifecycle archive control link missing NativeKernelLog sink; no control run."
+      }
+    ],
+    "default_generation": {
+      "default_madvise_source_byte_identical_to_actual64": true,
+      "no_discard_feature_on_default_path": true
+    },
+    "runtime65_native_units": 23,
+    "device65_installed": true,
+    "new_UI_success": false,
+    "game": false,
+    "return": false,
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run59",
+    "updated_utc": "2026-11-15T12:31:25.911725+00:00",
+    "artifact_sha256": {
+      "host-discard-v4/evidence.json": "ccb6e2f01181928cd05b4b5c87d1a5a9e57444a49916dfca0125eadc38c12b2c",
+      "default-source-evidence.json": "45bf68e49aed809cf7594be07c1abfc8874c6ef3590ab486943bd573a0e2e873",
+      "runtime65/evidence.json": "ca2784b857abfc19f5654fbda6f391f6201d2c1dab29023bd9b9212b5146dfe0",
+      "runtime65-command-private.json": "87b0117eaf43e8276120a585eb4d83674945a54138d4288dd6cd2b8ecc164d65",
+      "host-discard-v5/evidence.json": "8e72a8a8bef0bfd04aa3859f446c9ecc47ead7192622ed89b4a7943b0cc7e058",
+      "host-discard-v5/svc-discard4/control.log": "14f798a719c6a166bf9c016d08ee62037f8654d5a06e7d6ea22edbb87cd8dedf",
+      "final65-link-evidence-private.json": "8e7ee5a2b9592c2f534a7a790b5299c504ba4264d14a8a6a6828a5c70224643e",
+      "sign65-evidence-private.json": "cfa04bcb327f61cfe605d6db776d48110ac33032ca4e0e4c257ba4aa9a7b37f6",
+      "native65-updater-private.log": "b25461c7ce7c93967adbaae43991307b185abc0b20a94348aa682e24d2f55b62",
+      "native65-client-private.log": "8c33a0dce80f189d6c6d07a0d10fc053a31851fa67b36ab86da76f805bb67276",
+      "screen-first-private.png": "36de81c6833159102ea45b6714d2a3d0960eeefe0fcad66b141cb5cbc2b6af18",
+      "screen-library-private.png": "6d88302c21682baab3eb7842496e96636b4cbb9f131cda19a4849fa149f5fd12",
+      "health-library-data-private.json": "5ab65603738e9aa142d0401d69b78dc8ec8fa4426716d5e03eae8ec57339701a",
+      "launch65-private.json": "e2abe25e8fa46e6e7572b86ac83361be3f5d4eb6af74982aeb3ea7724fce6658",
+      "install65-private.json": "f4e004200a14c304f5ebd14583d97eef44c070624c7d47bb3e401461618f2f9d",
+      "native65-checkpoint-private.log": "be78cfb45b3129723bffb7441b3b97246c89dd0a8c9265fd5a538a2c590d4d25",
+      "native65-checkpoint-summary-private.json": "50edf54c608fccc0c727fd813072bb0784a2b7024c175589deea9d7fae8f6c45",
+      "screen-bpm-private.png": "0cbe873641c8b32421bb7a725cd3e78bfd089be7ca48d8202475c3bf1324dcdf",
+      "screen-backmenu-private.png": "7cec83ab3e843893f68b3c357dfafad62572903976e40f916313e75f8a94cf77",
+      "screen-menulibrary-private.png": "77a404cd56ce8ff7fe329cf931f24f7e9658b3e4885ada817f71584adbfd3412",
+      "screen-bpmlibrary-private.png": "6519ea9340a6dd04135b5887967f49633c04abce66db867ff440f7bfaa2a7aa9",
+      "screen-librarysettled-private.png": "2734157fba37e565f6b05ca5ae7c4beeb95f4e923d7904c8e9becba42d827eb5",
+      "screen-wakepointer-private.png": "fc4576718b364ce0ed30ef22fd6cc4b95baf38cfab416078baa2d25c48c62832",
+      "health-wakepointer-data-private.json": "8f2e59b84b5bdb26b423db4af902db320cf0f445b0225c74f4df13b9dbe06bac"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/app/PrivateDiscard.inc": "77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "dc38dbc6113748f4d5d69a8a16f9a964ce85e4aac94206cc0f4206aacfcf671d",
+      "experiments/linux-steam/tools/test-hybrid-private-discard.py": "99802e6cb6ac1047fdc52c551923b4aa89e4fd88001391f69f70d16e20ec17d9",
+      "experiments/linux-steam/guest/private-discard-probe.c": "a9437662174924389d83a534b2b68d3df068c49bd38a7088eb2cde3d23171a11",
+      "experiments/linux-steam/tools/private-discard-guest-control.c": "ef1720979a1c4a67f9719578181d6ae3d728ab21f31922735512be9f91826153"
+    },
+    "host_actual_SVC": "Real ARM64 SVC233 executed exclusive replacement once/65536guestbytes; native assertion and guest zero/unmap4checks pass. Not physicalreclaimedmemory.",
+    "full_Xcode_pass": true,
+    "final_linked": {
+      "sys_madvise_to_exclusive_discard_call": true,
+      "scope": "Final unsigned linked iOS MachO; not runtime effect",
+      "callsite": "100a48200",
+      "discard_target": "0x100a48240",
+      "host_cow_or_fork_injection_symbols_absent": true,
+      "disassembly_SHA256": "4139b233f782889c4f687db68d3576d0a38d9c0cdfcb3a472142eed4ac5f1d40"
+    },
+    "signature_verifier_correction": "Only verifier nsects offset fixed64; SAME signed artifact read-only deepstrict/profile/text check nowPASS. No rebuild or re-sign.",
+    "signature": {
+      "build": 65,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span2_marker_absent": true,
+      "exclusive_discard_marker_and_counter": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "d03ce8d570054f225999728a70e9d7a74d689e2c0a2b3d05effcb2a129960f73",
+      "signed_sha256": "7eec54c15831d81fd8ee74b25d87a0465111cef93d16c40f1d5698b6e1752ba1",
+      "text_SHA256": "2697109a0bd13affff88437b3fb1c8ef3115ed22c26319d719a86c90aba3dd53",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "actual65": {
+      "PID": 21759,
+      "installation_UUID": "F0183973-5915-427B-A6E7-8646A52B46F1",
+      "native_log": "kernel-21759-898761-18690000.log",
+      "updater_visible": true,
+      "retained_normal_updater_restart": true,
+      "saved_auth_desktop": true,
+      "Library_visually_verified": true,
+      "Library_ACK": 1,
+      "observed_replacement_calls": 3749,
+      "observed_replaced_guest_bytes": 461864960,
+      "replacement_bytes_are_NOT_physical_reclaimed_bytes": true,
+      "last_health": {
+        "schema": 1,
+        "pid": 21759,
+        "build": 65,
+        "native_log": "kernel-21759-898761-18690000.log",
+        "sequence": 99,
+        "mono_ms": 899741026,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 140,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2254051848,
+        "cpu_valid": 1,
+        "cpu_user_us": 1638726945,
+        "cpu_system_us": 187906107,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 6,
+          "last_action": 0,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      },
+      "credentials_or_auth_data_transferred": false,
+      "BPM_home_visually_verified": true,
+      "BPM_ACK": 2,
+      "Back_menu_visually_verified": true,
+      "Down_Library_highlight_visually_verified": true,
+      "Enter_Library_action_ACK": 5,
+      "BPM_Library_or_game_details_verified": false,
+      "Away_artwork_cycles": true,
+      "pointer_click_wakes_Away_to_Home_menu": true,
+      "pointer_wake_ACK": 6,
+      "native_log_capped": true,
+      "current_session_must_be_preserved": true
+    },
+    "observed_later_failure": {
+      "tid": 270,
+      "tgid": 267,
+      "length": 4767744,
+      "file_bytes": 4767744,
+      "offset": 0,
+      "native_errno": 12,
+      "linux_result": -12,
+      "stage": "host_file_mmap",
+      "probe": {
+        "one_native_page_shared_RW": "success/released",
+        "full_shared_RO": "ENOMEM12",
+        "full_private_RW": "ENOMEM12",
+        "full_anonymous_RW": "ENOMEM12",
+        "attempts": 4,
+        "all_controls_released": true,
+        "original_error_preserved": true
+      },
+      "adjacent_periodic_not_atomic": {
+        "mono_ms": 899648022,
+        "footprint_bytes": 2239289864,
+        "available_bytes": 766977528,
+        "region_count": 56857,
+        "virtual_bytes": 482998272000
+      },
+      "complete_capped_log_guest_fault_rows": 0,
+      "native_RFB_abort_not_observed_in_this_window": true
+    },
+    "limit": "Single actual run, responsive home/menu/Away wake and some eligible replacement, but no usable BPM Library/game/SteamPlay/return/repeated stability proof. No sole cause or physical reclamation claim. No guest faults in capped window is not universal absence.",
+    "next": "Preserve active65 until concrete qualified successor. One new hypothesis: reduce native small private backing map count via a bounded genuinely owned dynamic slab broker, default-off, no shared/file mappings/fixed addresses/soft grants/caps/FEX. First inventory exact allocation/release contracts and isolated ownership/rollback/coherence/dense-sparse controls; actual Air comparison only after full gates. Input Enter-vs-Away activation remains unproven; do not mislabel as permanent CEF deadlock."
   }
 }

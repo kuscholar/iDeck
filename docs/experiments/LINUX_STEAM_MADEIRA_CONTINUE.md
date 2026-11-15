@@ -1,3 +1,129 @@
+# LIVE65 Run59 checkpoint: preserve actual session, partial effect not stable
+
+Actual65PID21759/installF0183973-5915-427B-A6E7-8646A52B46F1, private run59/
+air65-run-config-private.json, nativekernel-21759-898761-18690000.log. Revalidate
+beforeactions. No observer/debuggeractive. Genuine savedauthdesktopLibrary and
+BPMHOME/menu/DownLibraryhighlight worked. EnterACK5 didn'testablishLibrary;
+coverartLittleNightmares->Ori/avatarAway =realSteam screensaver, NOTgame/hang
+proof. ONEpointerclick allowedLibraryactiononblankAway ACK6 wokeHome menu.
+Current65functionalpartial; don'trestartuntil concretequalifiedsuccessor.
+
+Actualdiscard3749calls/461864960guestbytes; NOTRAMreclaimed. Complete capped
+4,194,242B log includesONE native4.55MiB sharedfileENOMEM12->-12 tid270/group267.
+Boundedprobe16KiBsharedRWsuccess/released,fullsharedRO/privateRW/anonRW allENOMEM12,
+allreleased/originalpreserved. Adjacentfoot2239289864/avail766977528/regions56857
+NOTatomic/exactcap. ZeroGUEST_FAULT in cappedwindow; no nativeRFBabortobserved
+inthiswindow, notuniversalabsence. Health99 guest140/CLI6/filepolicy0/gamefalse.
+BPM Library/game/bridge/return/repeatedstability unproven. NeverSTABLE_SUCCESS.
+
+Sourceparent4735700 pushed, own59flag/72checks/docs dirty; qualifiedfull65/
+finalcalls/Airprofiles/deepstrict/signedtextPASS, signedmainSHA
+7eec54c15831d81fd8ee74b25d87a0465111cef93d16c40f1d5698b6e1752ba1.
+Review/commit-s/pushonlyexperimentperhours; preserveallmain/worktrees/apps/data.
+Latestall-safeauthorization persists, no oldpendingpermissionquestions. CLIonly/
+neverMacunlock/credentialsGuardtrustlockbypass. NoFEX/Valve/vendor/securityedit.
+
+NEXT ONEhypothesis: bounded genuinelyowned DYNAMIC smallprivatebacking broker
+can reduce native mmapcount WITHOUTcoarserCoWmaterialization. Inventory actual
+pt_map_nothing/CoW/data_release andPrivateDiscardrollback contracts FIRST, then
+isolated dense/sparse/ownership/refcount/concurrency/failure/cleanup/coherence
+tests, defaultOFF. No nativefixedaddresses/softgrants/sharedfile/caps/mprotect/
+assertionsuppression. No66sourceorbuildyet. InputheldEnter/Screensaver remains
+unproven; don'tmixnewinputpatchwithmemoryexperiment. DeviceHubtoolunavailable,
+no pymobiledevice3; no other tool/password/privateRFBsecret extraction attempted.
+FulllicensedSteamPlay->existingMadeiragame/return/repeats stillobjective,
+bridge125NOTgame. Keepcurrent65 whileindependentwork; newcandidateonlyaftermilestone
+gates. NoSTABLE_SUCCESS/unload/goalcomplete.
+
+--- Run59 earlier chronology ---
+
+# LIVE65 Run59:actual Library visible; oneBPM event justsent, preserve session
+
+Actual65PID21759/installF0183973-5915-427B-A6E7-8646A52B46F1, NativeDiagnostics/
+kernel-21759-898761-18690000.log. REVALIDATEbeforeactions. Private run59/air65-run-
+config-private.json andobserve65-private.py. No activeobserver/debugger now.
+Genuineupdater/normalretainedautorestart/savedauthdesktop/Library visible07:09EST,
+LibraryACK1. OneBPM fixedevent sent input65-big-picture; resultPENDING, don't
+repeat/restart. ActualSteamdiscard1717calls/38649856guestbytes observed, NOT
+physicalRAMreclaimed. Health40 footprint2168199592/guest146/filepolicy0/gamefalse.
+No stableBPM/game/return success. Neverclaimfromprocess/splash/counteronly.
+
+HOSTv5 now72checks inclrealSVC233 reachesreplacement1/65536; full65Xcode23units/
+finalcall/marker/counters/nohostinjection/span2absence/deepstrict/exactAirprofile
+cert/textpreservationPASS. Signedmain7eec54c15831d81fd8ee74b25d87a0465111cef93d16c40f1d5698b6e1752ba1.
+Verifieroffset65mistakecorrected64 onSAME signedapp READONLY, norebuild/resign.
+Parent4735700 pushed/main2ac39unchanged, own59flag/tests/docsdirty. Latestuser
+heartbeatcontinues currentwriter; no parallelresearcher. Allsafeauthorization
+persists; workingapps/main/worktrees/accounts/games/saves untouched. CLIonly/
+neverMacunlock/credentialsGuardtrustlockbypass. No66prepared.
+
+NEXT observeBPMactualscreen andboundedfreshfailure/resources/replacementcounts,
+thenifusable sameone-step Library/game-details flow. Don'tequate replacements
+withphysicalreclamation or singlevisibilitywithstability. Ifsamecapacityfailure
+recurs, classifyoriginalguest vsnativeRFBallocation independently, preserve
+negative; no blindretry/cap/assertion/mprotect/FEX/Valve patch. Fulllicensed
+SteamPlay->Madeiragame/return/repeats stillgoal, bridge125NOTgame. NoSTABLE_SUCCESS/
+unload/goalcomplete. Commit-s/pushonlyexperimentperhours.
+
+--- Run59 earlier chronology ---
+
+# LIVE Run59:65 qualified; safe isolated install/launch observer7470
+
+Sameactive writer, no new researcher. Userheartbeat preservesall-safeauthorization.
+ReverifiedvolumeUUID/origin/branch/main2ac39/experiment4735700/worktrees. Own59
+flag/tests/docs dirty, keep. HOSTv5 72PASS including REALARM64 SVC233 reaches
+exclusive replacement1call/65536guestbytes, notphysicalreclaimedmemory. Full65
+Xcode23units/finalsys_madvise->discardcall/marker/counters/nohostinjection/span2
+pass. Deepstrict/exactAirprofilecert/signedtext PASS on SAME signed65; verifier
+initialnsects65 errorcorrected64 READONLY, noresign/rebuild. SignedmainSHA
+7eec54c15831d81fd8ee74b25d87a0465111cef93d16c40f1d5698b6e1752ba1.
+
+Fresh Air64 original21278 alreadydead; inertpostexit21469 exactoldLabURI/
+receiptstill21278/no newLinux main, normallyended perapproval. ONLYLabupgrade
+65currentlyexec7470, harvestreceiptbeforeclaim/repeating. No workingapps/data
+changed. Private run59/sign65-evidence-private.json andruntime65/app65commands.
+No newauthentication/credentials/Guard/trust/JIT/lock action.
+
+NEXT harvestactual65PID/installUUID andnewreceipt, observegenuineupdaternormal
+autorestart->savedauthLibrary/BPM/input. ActualLINUX_PRIVATE_DISCARD counters
+mustadvance; noteeligibility/busy/fallback mayyield0. Replaced/requestbytesNOT
+RAMreclaimed. Captureboundednativefailures/resources+physicalscreen, don't
+claimstabilityfromhost/build/process/splash. NativeRFBcopyfailure remains
+unchanged forsinglehypothesis comparison. No66prepared. CLIonly/neverMacunlock.
+FulllicensedSteamPlay->Madeiragame/return/repeats goalACTIVE, bridge125NOTgame.
+NoSTABLE_SUCCESS/unload/complete. Commit-s/pushonlyexperimentperAGENTShours.
+
+--- Run59 earlier chronology ---
+
+# LIVE Run59: discard65 fullApp building; not installed yet
+
+Parent4735700 pushed/readback, main2ac39 unchanged. New defaultOFF hybrid
+--exclusive-private-discard uses unchanged historicalPrivateDiscard.inc only
+on copiedmmap + observers, requirescheckedfork/defaultspan1CoW. HOSTcurrent
+composition normal22/failsecond22 + realARM64ELF20 + adjacent4 =68PASS v4.
+Earlier3 harness failurenegatives preserved/private; readMD/EVIDENCE, notruntime
+faults. Defaultgeneratedsource equalsactual64.23nativeunits65compilePASS.
+FullXcode65 runningexec26560, doNOTspawnanother. Private run59/hybrid65/source,
+app65-command-private.json/runtime65-command-private.json. No65signed/installed
+yet. No sourcePrivateDiscard/FEX/Valve/vendor/security/lock changes.
+
+64alreadyactualnativeSIGABRT sameRFBallocationslot,21278gone. No new65session
+started; revalidatefreshdevice/currentLabidentitybeforeupgrade, keepdata.
+Userall-safeauthorization persists/no repeatedpermissionquestions. CLIonly/
+neverMacunlock/credentialsGuardtrustlockbypass. ExistingAirprofilesexpireNov20,
+useexactmatch/cert checks and disposablecopy. Final65 sys_madvise->discard
+callsite/marker/counts linked andnohostinjection/spantwo, signedtextsame required.
+
+NEXT finishbuild/sign65 thenactualAir single experiment: eligible replacement
+countermustactuallyadvance; replacement/requestbytes NOTphysicalreclaimedRAM.
+Compare genuineLibrary/BPM/input andsame nativeallocation failures. Prototype
+canfallbackunsupported/busy/allocationfailure; no effect is validnegative.
+DoNOTclaimfix fromhost/build/processpresence. NativeRFBgracefulfailure separate
+futurehypothesis; don'tmixwith65. FulllicensedSteamPlay->Madeiragame/return/
+repeats stillgoal, bridge125NOTgame. NoSTABLE_SUCCESS/unload/goalcomplete.
+
+--- Run58 and earlier ---
+
 # CURRENT Run58 FINAL:64 default-span ALSO native RFB allocation SIGABRT
 
 ReadRun58 MD/EVIDENCE FIRST.64originalspan1 actuallyrendered savedauthdesktop,

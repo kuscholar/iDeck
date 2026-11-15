@@ -1,10 +1,10 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run58): original-span control64 reproduces native RFB snapshot-allocation
-SIGABRT and size-sensitive processwide mmap failure; coarse span is not required
-for this native failure. Authenticated desktop rendered; Library action did not
-complete before exit. No stable BPM/game/return. Goal ACTIVE; targeted reclamation
-prototype audit next, never infer success from compilation or initial rendering.
+Status (run59 checkpoint): actual65 private replacement effective for some
+requests, genuine saved-auth desktop Library/BPM home/menu and pointer Away-wake
+verified. Large native mappings still fail; BPM Library/game/return/stability
+unproven. Keep active65. Goal ACTIVE; next owned-small-backing broker hypothesis
+requires isolated ownership tests before any runtime/deployment change.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5606,3 +5606,103 @@ Measure ACTUAL eligible replacement count and real AirUI/memory; requested or
 replaced bytes are NOT physicalreclamation. Preserve defaultspan1 and failed
 optionalspan2 research; no blind softgrants, cap/assertion/mprotect/FEX changes.
 Full licensedMadeiragame/return/repeatedstability objective remains incomplete.
+
+## Run59 — qualify whole/exclusive private DONTNEED replacement
+
+Sourceparent47357001050affd1bde36c74232c9de8d6569728, branchisolated/main/production
+apps/data preserved. Userall-safeauthorization persists.64nativeprocess already
+OS-aborted; no65install/restart done yet. Do not confuse defaultspan1 comparison
+with a workingUI. Original exactcapacity rootcause remains unknown.
+
+**Hypothesis:** current pinned DONTNEED zeros private anonymous data in place.
+HistoricalRun18 host-only replacement prototype can release whole exclusively
+owned backing before pressure. Actual Steam requests may not qualify; counts
+and replacedguestbytes are NOT physicalRAM reclamation or stability evidence.
+No new discard algorithm written here: unchanged PrivateDiscard.inc SHA
+77a7acf0de0b98e2b32c9b3e27ae0ee12f699c6c5ba0fed80dd5705eac680209.
+
+**Minimal integration:** defaultOFF `--exclusive-private-discard` in hybridbuilder
+requires checkedfork/originalspan1CoW. Only copied madvise source receives the
+existing opt-in prototype, adapters enable its exact-marker check/numericcounts.
+Default generated syscall source is byte-identical to actual64. Bounded64MiB/
+wholebackings, nofile/shared/memfd/CoW/exec/retainedreference/protection changes.
+Trywrite lock refuses contention; allocate all before commit, invalidate/swap/
+release, preserveguestflags/logicalaccounting, originalfallback on unsupported
+or failedallocation. No softbacking, cap/assertion/mprotect/FEX/Valve/security edits.
+
+**Current composition qualification:** new `test-hybrid-private-discard.py` uses
+verified host lifecycle/logbridge archive, then actual discard+lazy+checkedfork+
+originalspanCoW units. Normal22 + forcedsecond-allocation22 ownership/isolation/
+rollback/busyreader/partial/shared/file/retainedref/accounting checks pass. Real
+ARM64ELF20 lazy/fork/protection plus adjacentreader4 also pass.68total. Changed
+units/wrappers ASanUBSan/Werror; remaining engine/dependencies not fully sanitized.
+No device/physicalreclamation claim.
+
+Retained harness failures: v1secondallocation define was lost when nextbuilder
+recompiled, so injection neverhappened; fixed only test's NEW hostsource prefix
+with existing iOSprohibition. v2uninstrumented archive lacked guest lifecycle/log
+bridge (linkfailed, noguest). v3realarchive control lacked native log sink (link
+failed). v4correctfullycomposed68PASS. No prototype/runtime bug attributed to
+these harness mistakes; originalfailed artifacts remainprivate.
+
+Reproduce `python3 experiments/linux-steam/tools/test-hybrid-private-discard.py
+<privatebase> <verified-host-lifecycle-archive> <NEW-output>`. Exact commands/hashes
+in private run59/host-discard-v4/evidence.json and publicredacted JSON. Native65
+23adapters compiled; fullXcode build currentlypending. Next finalcallsite/sign/
+profile checks then sameLab65 Air comparison: ACTUAL eligible counts, resources,
+realLibrary/BPM/game controls. No game/return success or STABLE_SUCCESS.
+
+Run59 qualification strengthened: existing20+4guest controls did not themselves
+prove entry into the new SVCdiscard path. Added real ARM64 rawSVC233 fixture
+`private-discard-probe.c` plus native `private-discard-guest-control.c`: exact
+1replacement/65536guestbytes asserted AFTER genuine guestexecution, zeroedge
+verification andunmap4PASS. Combinedv5 now72checks plus exact nativecounter
+assertion; not physicalreclamation or AirSteam success. Native65 final linked
+sys_madvise call at100a48200 ->ideck_try_private_discard100a48240 andcounter
+symbols/marker verified, nohostfaultinject/coarsespan marker. FullXcode65exit0.
+Signing/deepverify completed; final parser then failed because a script's global
+64->65name replacement also changed sectionheader nsects offset64 to65. Corrected
+to64, now rerunning READONLY verification on same signedartifact, never rebuilt
+or re-signed it. Initialnegative script retainedprivate. Device65notinstalledyet.
+
+Run59 actual65 safeLab upgrade/launch succeeded, PID21759/installF0183973-5915-427B-A6E7-8646A52B46F1,
+nativekernel-21759-898761-18690000.log. Sameprivatecontainer/auth retained, old64
+originalPIDdead; verifiedinertpostexit21469/no newreceiptnormallystopped. No
+otherapp/phone/profile/security/lock/credential action.65actualgenuineupdater
+andnormalretainedrestart, savedauthdesktop, realLibrary visible07:09EST after
+singleLibraryACK1. Observed1717exclusive replacements/38649856guestbytes in bounded
+client log, no physicalreclamation claim. Initialupdatercounts0; nowrealSteam
+actuallyqualifies. Health40 footprint2168199592/guest146/filepolicy0/gamefalse.
+OneBPM event sent; outcome stillpending, don'trepeat orrestart. Raw screenshots
+includeaccount/friends andstayprivate; hashes inJSON. No stableUI/game/returnproof.
+
+### Run59 checkpoint — partial effect, capacity and end-to-end goal incomplete
+
+Actual65 genuine Big PictureHOME, Back opens realmenu, Down highlightsLibrary
+(ACK4), Enter actionACK5 did NOT establish usableLibrary/game controls. Artwork
+subsequently changed LittleNightmares->Ori with avatarAway: active Steam screen
+saver, NOT proof of a permanentCEF deadlock or actual game execution. One fixed
+upperleft pointerclick (same allowedLibrary action on blankAway area) ACK6 woke
+it to realHome menu. Session21759 remains active; do not blindrestart. No user
+credentials, profile/security/lock changes or otherapp/data changes.
+
+Capped4,194,242B native log copiedsuccessfully, last actual observed exclusive
+replacements3749 /461864960guestbytes; not physicalreclaimedRAM. BUT original
+sharedfile mmap4,767,744B still failednative12/guest-12 at tid270/group267.
+Samefile16KiB sharedRW succeeds/released;fullsharedRO/privateRW/anonymousRW all
+ENOMEM12, allcontrolsreleased/originalerror preserved. Adjacent periodic
+mono899648022 footprint2239289864/available766977528/region56857/virtual482998272000
+notatomic/exactcapacity proof. No guestfault line in completed cappedwindow;
+no nativeRFBallocationabort observed in this window, not universalabsence.
+Currenthealth99/native21759/guest140/CLI6/filepolicy0/gamefalse. NoSteamPlay, game,
+Bluetooth/physicaltouch, return or repeatedstableUI validation.
+
+This is a partial, actual on-Air eligibility/effect result; it does not solve
+capacity. Next one hypothesis: genuinely owned dynamic small-private-backing
+slabs can reduce native mapping count without extraCoW materialization. First
+inspect exact alloc/release ownership and test dense/sparse/refcounts/concurrency/
+failures/cleanup on isolated copied kernel. DefaultOFF, no shared/file/native
+MAP_FIXED/soft grants/cap increase/mprotect/FEX/Valve edits. Preserve active65
+until concretequalifiedcandidate; safe isolated upgrades remain explicitly
+authorized, but never replace a newly active user test. KeyboardEnter activity
+and Away are separate unproven UI concerns, not asserted solecause.
