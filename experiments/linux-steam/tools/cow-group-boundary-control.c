@@ -9,6 +9,12 @@
 #include "kernel/mm.h"
 #include "fs/real.h"
 #include "fs/fd.h"
+#if IDECK_LAB_COW_BROKER
+#include "CowBackingBroker.h"
+static void broker_empty(void){struct ideck_cow_broker_stats s;ideck_cow_broker_read_stats(&s);assert(!s.live_slots&&!s.live_chunks&&!s.live_guest_bytes&&!s.reserved_native_bytes);}
+#else
+static void broker_empty(void){}
+#endif
 #ifndef IDECK_COW_NATIVE_PAGES
 #define IDECK_COW_NATIVE_PAGES 1
 #endif
@@ -58,7 +64,7 @@ int main(int argc,char **argv) {
         }
         assert(atomic_load(&anon_page_count)==charged);mem_destroy(&child);
         assert(!pt_unmap_always(current->mem,first,count) && !atomic_load(&anon_page_count));
-        puts("HOST concurrent writers retain all bytes in one private group; child unchanged PASS");return 0;
+        broker_empty();puts("HOST concurrent writers retain all bytes in one private group; child unchanged PASS");return 0;
     }
     if(!strcmp(mode,"mmap-fail"))ideck_cow_inject_failure=1;
     if(!strcmp(mode,"data-fail"))ideck_cow_inject_failure=2;
@@ -100,5 +106,5 @@ int main(int argc,char **argv) {
     }
     assert(atomic_load(&anon_page_count)==charged);
     mem_destroy(&child);assert(!pt_unmap_always(current->mem,first,count));assert(!atomic_load(&anon_page_count));
-    printf("HOST COW group boundary %s PASS\n",mode);return 0;
+    broker_empty();printf("HOST COW group boundary %s PASS\n",mode);return 0;
 }

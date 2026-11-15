@@ -23,6 +23,10 @@ fixture = r'''
 #include <stdint.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#if IDECK_LAB_COW_BROKER
+#include "CowBackingBroker.h"
+#include <sys/mman.h>
+#endif
 #if IDECK_LAB_CLI_INPUT
 static void *writer(void *unused){
     (void)unused;
@@ -56,22 +60,32 @@ int main(int argc,char **argv){
 #endif
     assert(!ideck_native_health(60,"guest-running",7,0));
     assert(ideck_native_log_bytes()==capped);
+#if IDECK_LAB_COW_BROKER
+    void *a=ideck_cow_broker_allocate(4096),*b=ideck_cow_broker_allocate(8192);
+    assert(a!=MAP_FAILED&&b!=MAP_FAILED);
+    assert(ideck_cow_broker_release_owned(a,4096)==1);
+    assert(!ideck_native_health(60,"guest-running",7,0));
+    assert(ideck_cow_broker_release_owned(b,8192)==1);
+    assert(!ideck_native_health(60,"guest-running",7,0));
+#endif
     puts(ideck_native_health_name());return 0;
 }
 '''
 (out/'control.c').write_text(fixture)
 tests = []
-for enabled, policy in ((0, 0), (1, 0), (1, 1)):
-    private = out/f'gate{enabled}-policy{policy}'
+for enabled, policy, broker in ((0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 1, 1)):
+    private = out/f'gate{enabled}-policy{policy}-broker{broker}'
     private.mkdir(mode=0o700)
-    binary = out/f'control{enabled}-policy{policy}'
+    binary = out/f'control{enabled}-policy{policy}-broker{broker}'
     command = ['xcrun', 'clang', '-Wall', '-Wextra', '-Werror',
                '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                f'-DIDECK_LAB_CLI_INPUT={enabled}', f'-DIDECK_LAB_GAME_FILE_POLICY={policy}',
+               f'-DIDECK_LAB_COW_BROKER={broker}',
                '-I'+str(lab/'app'), str(out/'control.c'), str(lab/'app/NativeKernelLog.c')]
     if policy:
         command += [str(lab/'app'/name) for name in
                     ('GameFilePolicy.c', 'GameFiles.c', 'LaunchProtocol.c')]
+    if broker:command += [str(lab/'app/CowBackingBroker.c')]
     command += ['-o', str(binary)]
     subprocess.run(command, check=True)
     result = subprocess.run([binary, private], check=True, capture_output=True, text=True, timeout=25)
@@ -88,7 +102,14 @@ for enabled, policy in ((0, 0), (1, 0), (1, 1)):
         assert not receipt['file_policy']['game_launched']
     else:
         assert 'file_policy' not in receipt
-    tests.append({'gate': enabled, 'file_policy_gate': policy, 'command': command, 'exit': result.returncode,
+    if broker:
+        s=receipt['cow_broker']
+        assert s['alloc']==s['release']==2 and s['map_attempts']==s['unmaps']==1
+        assert s['live_slots']==s['live_chunks']==s['logical_bytes']==s['reserved_native_bytes']==0
+        assert s['advice_calls']==1 and not s['advice_failures'] and not s['ownership_errors']
+        assert not s['physical_reclaim_measured']
+    else:assert 'cow_broker' not in receipt
+    tests.append({'gate': enabled, 'file_policy_gate': policy, 'broker_gate':broker,'command': command, 'exit': result.returncode,
                   'receipt': receipt})
 sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
 (out/'evidence.json').write_text(json.dumps({

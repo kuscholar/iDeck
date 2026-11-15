@@ -11,6 +11,9 @@
 #include <sys/resource.h>
 #include <stdatomic.h>
 #include <stdint.h>
+#if IDECK_LAB_COW_BROKER
+#include "CowBackingBroker.h"
+#endif
 #if IDECK_LAB_GAME_FILE_POLICY
 #include "GameFilePolicy.h"
 #endif
@@ -107,7 +110,12 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
     valid=task_info(mach_task_self(),TASK_VM_INFO,(task_info_t)&info,&count)==KERN_SUCCESS&&count>=TASK_VM_INFO_REV1_COUNT;
     if(valid)footprint=info.phys_footprint;
 #endif
-    char body[1536],temporary[160];uint64_t sequence=++health_sequence;
+#if IDECK_LAB_COW_BROKER
+    char body[3072],temporary[160];
+#else
+    char body[1536],temporary[160];
+#endif
+    uint64_t sequence=++health_sequence;
     int length=snprintf(body,sizeof body,"{\"schema\":1,\"pid\":%ld,\"build\":%u,\"native_log\":\"%s\",\"sequence\":%llu,\"mono_ms\":%llu,\"phase\":%u,\"initial_call_returned\":%s,\"tracked_guest_entries\":%d,\"tracked_linux_workers\":%d,\"footprint_valid\":%d,\"footprint_bytes\":%llu,\"cpu_valid\":%d,\"cpu_user_us\":%llu,\"cpu_system_us\":%llu,\"append_log_capped\":%s,\"append_log_stopped\":%s}\n",
         (long)owner_pid,build,filename,(unsigned long long)sequence,mono,phase,phase==8?"true":"false",guests,workers,valid,(unsigned long long)footprint,cpu_valid,
         cpu_valid?(unsigned long long)cpu.ru_utime.tv_sec*1000000+cpu.ru_utime.tv_usec:0,
@@ -130,6 +138,20 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
         size_t used=(size_t)length-2;
         int added=snprintf(body+used,sizeof body-used,",\"cli_navigation\":{\"sequence\":%llu,\"last_action\":%u,\"dispatch_only\":true,\"physical_touch_test\":false}}\n",
             (unsigned long long)navigation_sequence,navigation_action);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_COW_BROKER
+    if(length>1&&(size_t)length<sizeof body){
+        struct ideck_cow_broker_stats s;ideck_cow_broker_read_stats(&s);
+        size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"cow_broker\":{\"alloc\":%llu,\"release\":%llu,\"map_attempts\":%llu,\"map_failures\":%llu,\"unmaps\":%llu,\"live_slots\":%llu,\"live_chunks\":%llu,\"logical_bytes\":%llu,\"reserved_native_bytes\":%llu,\"ownership_errors\":%llu,\"unmap_failures\":%llu,\"overlap_rejections\":%llu,\"capacity_refusals\":%llu,\"advice_calls\":%llu,\"advice_failures\":%llu,\"physical_reclaim_measured\":false}}\n",
+            (unsigned long long)s.allocation_calls,(unsigned long long)s.release_calls,
+            (unsigned long long)s.map_attempts,(unsigned long long)s.map_failures,(unsigned long long)s.unmap_calls,
+            (unsigned long long)s.live_slots,(unsigned long long)s.live_chunks,(unsigned long long)s.live_guest_bytes,
+            (unsigned long long)s.reserved_native_bytes,(unsigned long long)s.ownership_errors,
+            (unsigned long long)s.native_unmap_failures,(unsigned long long)s.overlap_rejections,
+            (unsigned long long)s.capacity_refusals,(unsigned long long)s.advice_calls,(unsigned long long)s.advice_failures);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif
@@ -220,6 +242,18 @@ void ideck_native_log_resources(void){
     extern uint64_t ideck_private_discard_count(void),ideck_private_discard_replaced_bytes(void);
     snprintf(row,sizeof row,"LINUX_PRIVATE_DISCARD replaced_calls=%llu replaced_guest_bytes=%llu",
         (unsigned long long)ideck_private_discard_count(),(unsigned long long)ideck_private_discard_replaced_bytes());
+    ideck_native_log_line(row);
+#endif
+#if IDECK_LAB_COW_BROKER
+    struct ideck_cow_broker_stats broker;ideck_cow_broker_read_stats(&broker);
+    snprintf(row,sizeof row,"LINUX_COW_BROKER alloc=%llu release=%llu native_map_attempts=%llu native_map_failures=%llu live_slots=%llu live_chunks=%llu logical_bytes=%llu reserved_native_bytes=%llu advice_calls=%llu advice_failures=%llu ownership_errors=%llu overlap_rejections=%llu capacity_refusals=%llu",
+        (unsigned long long)broker.allocation_calls,(unsigned long long)broker.release_calls,
+        (unsigned long long)broker.map_attempts,(unsigned long long)broker.map_failures,
+        (unsigned long long)broker.live_slots,(unsigned long long)broker.live_chunks,
+        (unsigned long long)broker.live_guest_bytes,(unsigned long long)broker.reserved_native_bytes,
+        (unsigned long long)broker.advice_calls,(unsigned long long)broker.advice_failures,
+        (unsigned long long)broker.ownership_errors,(unsigned long long)broker.overlap_rejections,
+        (unsigned long long)broker.capacity_refusals);
     ideck_native_log_line(row);
 #endif
 #else

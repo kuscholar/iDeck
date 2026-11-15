@@ -135,6 +135,10 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
 #endif
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
+#if IDECK_LAB_COW_BROKER
+    extern const char *ideck_cow_broker_marker(void);
+    if(strcmp(ideck_cow_broker_marker(),"IDECK_OWNED_COW_BACKING_BROKER_V1"))return -5;
+#endif
 #if IDECK_LAB_MADVISE_STATS
     if(strcmp(ideck_madvise_stats_marker(),"IDECK_MADVISE_STATS_V1"))return -5;
 #endif

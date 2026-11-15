@@ -9,6 +9,7 @@ import argparse,hashlib,json,os,subprocess,sys
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
 for n in ('artifacts','archive','output'):p.add_argument(n,type=Path)
+p.add_argument('--backing-broker',action='store_true')
 a=p.parse_args();base=a.artifacts.resolve();archive=a.archive.resolve();out=a.output.resolve();repo=Path(__file__).resolve().parents[3];tools=Path(__file__).parent
 src=repo/'vendor/LinuxRunner';host=base/'host'
 assert str(out).startswith('/Volumes/easystore/') and not out.exists() and archive.is_file()
@@ -33,7 +34,7 @@ for mode in ('normal','fail-second'):
         mmap_source=o/'advice/mmap-host-inject.c'
         mmap_source.write_text('#define IDECK_DISCARD_HOST_FAIL_SECOND 1\n'+(o/'advice/mmap.c').read_text())
     build('build-fork-map-failure.py',src,host,o/'lazy/libish.a',o/'fork','--memory-source',o/'lazy/memory.c','--mmap-source',mmap_source,'--sanitize',log=o/'fork-build.log')
-    build('build-cow-native-group.py',src,host,o/'fork/libish.a',o/'fork/memory.c',o/'cow','--sanitize',log=o/'cow-build.log')
+    build('build-cow-native-group.py',src,host,o/'fork/libish.a',o/'fork/memory.c',o/'cow','--sanitize',*(['--backing-broker'] if a.backing_broker else []),log=o/'cow-build.log')
     flags=['-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DISH_INTERNAL=1','-DLOG_HANDLER_DPRINTF=1','-DIDECK_LAB_NATIVE_LOG=1','-I'+str(src),'-I'+str(host),'-I'+str(repo/'experiments/linux-steam/app'),'-fsanitize=address,undefined','-fno-sanitize-recover=all','-Wall','-Wextra','-Werror']
     run('xcrun','clang',*flags,tools/'private-discard-control.c',repo/'experiments/linux-steam/app/NativeKernelLog.c',o/'cow/libish.a','-L'+str(host),'-lish_emu','-lfakefs','-lsqlite3','-o',o/'control',log=o/'control-build.log')
     run(o/'control',mode,log=o/'control.log')
@@ -52,5 +53,5 @@ run(svc/'control',root,logs,log=svc/'control.log')
 checks=(root/'private-discard-results.txt').read_text().splitlines()
 assert len(checks)==4 and all(x.endswith('=PASS') for x in checks),checks
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-(out/'evidence.json').write_text(json.dumps({'scope':'HOST current composed memory/mmap/fork/discard/CoW units and own wrappers ASanUBSan; remaining engine/dependencies not fully sanitized. No iPad/Steam/physical reclamation proof','normal_and_second_allocation_failure':rows,'ARM64_ELF_checks':28,'total_checks':72,'actual_ARM64_SVC_replacement_calls':1,'actual_ARM64_SVC_replaced_guest_bytes':65536,'SVC_log_sha256':sha(svc/'control.log'),'normal_archive_sha256':sha(out/'normal/cow/libish.a'),'commands':commands,'private_discard_source_sha256':sha(repo/'experiments/linux-steam/app/PrivateDiscard.inc')},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'scope':'HOST current composed memory/mmap/fork/discard/CoW units and own wrappers ASanUBSan; remaining engine/dependencies not fully sanitized. No iPad/Steam/physical reclamation proof','backing_broker':a.backing_broker,'normal_and_second_allocation_failure':rows,'ARM64_ELF_checks':28,'total_checks':72,'actual_ARM64_SVC_replacement_calls':1,'actual_ARM64_SVC_replaced_guest_bytes':65536,'SVC_log_sha256':sha(svc/'control.log'),'normal_archive_sha256':sha(out/'normal/cow/libish.a'),'commands':commands,'private_discard_source_sha256':sha(repo/'experiments/linux-steam/app/PrivateDiscard.inc')},indent=2)+'\n')
 print('HOST composed exclusive discard: 44 ownership/rollback + 28 actual ARM64 ELF checks PASS; real SVC replacement count verified')

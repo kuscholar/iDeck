@@ -1,3 +1,73 @@
+# LIVE66 Run60: preserve new Air session, broker ACTUALLY active
+
+Actual66 installed/launched, PID22068/installD03CEFF5-7E05-4963-B71A-60595C51EEF5;
+receiptkernel-22068-902262-337296000.log. Revalidatebeforeactions. Private
+run60/observe66-private.py <NEWtag>. No activeobserver/debugger now. ONEactual
+startuphealthseq2 mono902272344 footprint461228520: brokeralloc290/release149,
+live141slots/2chunks/4MiBreserved/2183168logical, mapattempts2/failures0/all
+ownership/unmap/overlap/cap/adviceerrors0. Actualscreenshot Steamupdaterextracting,
+NOTLibrary/BPMsuccess. Keepnormalupdaterautorestart/session; norelaunch/reinstall.
+Signedmain865b8909d60790eacf6ab3c345fc12fc34fb881f07fb10402fb372a916f538a3,
+text101aff116539910a564109cae993f8d742a504c0f498c8c0712a3b44bcfdeae4.
+
+65wasfreshidentityverified thennormalended underall-safeauthorization; sameLab
+upgradepreservedprivateprefix/auth/games/saves. No workingapp/main/phone changes.
+NEXT boundedhealth/screenshot andnativeoriginalfailure/counterreadout. Never
+inferUIfromupdater/process/counters. Goallicensedgame/return/repeats ACTIVE,
+bridge125NOTgame. DoNOTSTABLE_SUCCESS/unload/complete. CLIonlyneverMacunlock/
+credentialsGuardtrust/security/lockbypass. NoFEX/Valve/vendor edits.
+
+--- Qualification chronology ---
+
+# Run60 deployment66 in progress — harvest before touching device again
+
+Actual finalMachO CoW->ownedallocate/data_release->ownedrelease/sys_madvise->
+existingdiscard calls verified, hostinjection absent/defaultsource identical65.
+Deepstrict/exactAirappdevicecertprofile and signed__TEXT preservation PASS.
+Private run60/sign66-evidence-private.json, signed66/Madeira.app immutable.
+Own deployment observer82652 nowends ONLY freshlyidentitymatched65/21759,
+installsameisolatedLabID preserving data, launchesretainedfrontend. HARVEST
+before repeating launch/install. No66runtime/UIproofyet. No overlappingtests.
+All safeauthorization persists; no workingapp/main/FEX/Valve/securitychanges.
+
+# Run60: owned CoW broker qualification; preserve65 until candidate ready
+
+Active writer unchanged. HEAD14432ce pushed; own Run60 source/tests now dirty.
+Volume/remote/worktrees verified. Actual65 receipt still21759/installF0183973-
+5915-427B-A6E7-8646A52B46F1; latest health295 mono901701034 footprint2106677648,
+guest139 CLI6/filepolicy0 diagnostic125/gamefalse. Actual07:52EST physicalscreen
+WHITE nativeLab content, keyboard/restart-disabled/spinner visible; this is NOT
+current interactive Home proof. EarlierHome/screensaver-wake remainshistorical.
+Don't infer native death from blankguest; no stop/install/auth/security changeyet.
+
+New DEFAULT-OFF --cow-backing-broker routes ONLY compatible private anonymous
+CoW groups(originalspan1) into genuinelyowned dynamic128nativepagechunks.
+Exactlast-dataref releases slots; finalchunkrelease realmunmap; partialfreedslot
+publicMADV_FREE advisory only, zero before reuse. Nativealignment isolates slot
+protection. No fixedaddress/softgrant/coarsercopies/file/shared/FEX/Valve/vendor
+change/capraise/assertionsuppression.128slots*4096chunks bounded; sparseobjects
+can retain MUCH more virtualcapacity. No claimphysicalRAMreclaimed/capacityfix.
+
+Hoststandalone13 ASanUBSan/Werrorcontrols PASS run60/broker-host-v2 (v1tenwithout
+advice retained). Real memory-unit12 boundary/rollback/concurrency/dense/sparse
+controls PASS cow-broker-integration-v2: dense64logicalbackings->1native2MiBmap,
+sparse32->1native2MiBvsoriginal512KiBrounded; unchangedguestbytes/refcounts.
+Composedcurrentlazy/checkedfork/discard/broker72checks PASS composed-broker-v1
+includingrealARM64ELF/SVC. Healthgate0/1/postcapstats4configurationsPASS.
+Runtime66 23iOSunitscompiled. Fullapp66 nowXcodePASS withcorrectCLI/toolchain; finalcalls/defaultsourcePASS; signinginprogress, private
+run60/app66-command-private.json/app66-build-private.log; harvestbeforeanysign.
+No66install/UI/Steam/bridge/game/returnproofyet. Native65 staysunchanged.
+
+NEXT qualifyfinalMachO calls+defaultgeneratedsource unchanged, exactAirprofiles/
+cert/text/deepstrict, then freshidentity andnormal isolatedLabupgrade perexisting
+all-safeauthorization. One hypothesis only: nativeCoWmappingcount reduction,
+measure actualbroker stats+originalENOMEM/UI/input. DoNOTmixinputdurationfix.
+Preserveauth/games/saves/allworkingapps/main. CLIonly/neverMacunlock/credentials/
+Guard/trust/lockbypass. Fulllicensedgame/return/repeatedstability goalACTIVE,
+bridge125NOTgame; neverSTABLE_SUCCESS/unload/goalcomplete frombuild/UIalone.
+
+--- Prior Run59 ---
+
 # LIVE65 Run59 checkpoint: preserve actual session, partial effect not stable
 
 Actual65PID21759/installF0183973-5915-427B-A6E7-8646A52B46F1, private run59/

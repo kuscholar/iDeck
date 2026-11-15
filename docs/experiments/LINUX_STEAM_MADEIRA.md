@@ -1,6 +1,6 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run59 checkpoint): actual65 private replacement effective for some
+Status (run60 in progress; see latest section): actual65 private replacement effective for some
 requests, genuine saved-auth desktop Library/BPM home/menu and pointer Away-wake
 verified. Large native mappings still fail; BPM Library/game/return/stability
 unproven. Keep active65. Goal ACTIVE; next owned-small-backing broker hypothesis
@@ -5706,3 +5706,76 @@ MAP_FIXED/soft grants/cap increase/mprotect/FEX/Valve edits. Preserve active65
 until concretequalifiedcandidate; safe isolated upgrades remain explicitly
 authorized, but never replace a newly active user test. KeyboardEnter activity
 and Away are separate unproven UI concerns, not asserted solecause.
+
+
+## Run60 — owned CoW native backing broker, single hypothesis
+
+Parent/source baseline `14432ce8d4087ccea3439f6eff2531e66bbbc4e6`.
+Read-first state/mount/origin/worktrees/main checked; existing Air65 preserved.
+At 07:52 EST Nov15 actual receipt/health still PID21759/build65, sequence295,
+monotonic901701034, footprint2106677648, guest139/CLI6/filepolicy0. Physical
+screenshot now shows WHITE Lab content with keyboard/spinner and disabled
+restart, not an interactive Steam Home. Native timer activity is not guest UI
+success. Earlier saved-auth Library/Home evidence remains historical.
+
+Hypothesis: reduce eligible private anonymous CoW native mmap count using owned
+kernel-chosen chunks, while preserving the one-native-page CoW copy boundary.
+New explicit `--cow-backing-broker` is default off and rejects coarser spans.
+128 separately aligned native-page slots/chunk, bounded4096chunks. Native mmap
+is real RW private anonymous at NULL hint; no fixed/soft/overlapping grants,
+no shared/file mapping or ordinary startup change. Exact data_release last-ref
+ownership check returns foreign pointers to original munmap; broken owned
+contract still aborts. Last-slot native munmap failure preserves ownership/data.
+Partial-free slots receive public MADV_FREE only after last guest reference;
+advisory failure permits logical free; reuse zeroes before publication. This
+neither measures nor promises physical reclamation. Pinned vendor/FEX/Valve
+remain unchanged. Existing exclusive-discard fresh allocations remain original
+standalone native mappings; only their old data_release may now free a slot.
+
+HOST13 standalone ASan/UBSan/Werror controls passed: dense/sparse baseline,
+stranded sparse, ownership/reuse, first/second mmap failure, overlap rejection,
+capacity, munmap/advice failures and8thread/2048allocation concurrency. Broken
+backend duplicate grant is rejected without unmapping a live grant. Real memory
+unit12 boundary/rollback/concurrency controls pass and return broker slots/
+chunks/accounting to0. Dense64 logicalCoW objects require1real2MiBchunk instead
+of64native maps; sparse32 objects likewise1chunk but reserves2MiB versus512KiB
+original rounded capacity. Stranded2objects can retain4MiB;254MADV_FREE calls
+are not physical reclaim proof. Composed current lazy/checkedfork/discard/CoW
+stack72checks pass, including genuine ARM64 ELF20+adjacent4+SVCdiscard4; changed
+units/wrappers sanitized, remaining engine/dependencies not fully sanitized.
+Numeric broker counters continue in atomic health even after append-log cap;
+real health writer gates/defaults/concurrency/postcap4configurations pass.
+
+Private artifacts run60/{broker-host-v1,broker-host-v2,cow-broker-integration-v1,
+cow-broker-integration-v2,composed-broker-v1,health-broker-v1}; first10controls
+retained before adding advisory release/13controls. Runtime66 23native units
+compiled; fullapp66 build running. Not yet final-linked/signed/installed or
+on-Air broker validated. Next qualify actual finalcalls/defaultsource/profile/
+signedtext before safe isolated upgrade; compare broker counters, original
+large nativeENOMEM, genuineLibrary/BPM/input. No game/return/stability success,
+no STABLE_SUCCESS/unload. Full product objective remains active.
+
+Run60 full66 Xcode PASSED in normal CLI context with explicit existing
+LLVM_MINGW environment. Preserve both failed-context logs: first restricted
+workspace/XPC failure, then direct CLI invocation omitted helper toolchain and
+failed BundleWineMono; neither was Linux/device failure. Correct build reuses
+same prepared isolated source, no tested installed binary overwritten. Actual
+final MachO privateCoW->broker_allocate, data_release->broker_release_owned and
+sys_madvise->existingdiscard calls verified, not only markers. Host-injection
+symbols/coarse-span2 marker absent. Default generated memory.c is byte-identical
+to65 SHA0845646df27cea92895a60ba60cdb15a1934b687c6680d0f5d746bd323c31168.
+Signing existing authorized Air profiles now; no66device result yet.
+
+Actual66 signed SHA865b8909d60790eacf6ab3c345fc12fc34fb881f07fb10402fb372a916f538a3;
+unsignede71c5653341540fb30dc7c654fa7cc7d397e799ec115742d456c9bcab96c7099;
+text101aff116539910a564109cae993f8d742a504c0f498c8c0712a3b44bcfdeae4.
+Exact Air/device/app/cert/profile and deepstrict/signing-text checks passed.
+Freshmatched65PID21759 was normally ended; same isolated Lab upgraded preserving
+container, no working app/phone/main changes. Actual66 nativePID22068/install
+D03CEFF5-7E05-4963-B71A-60595C51EEF5. Startuphealthseq2 mono902272344 footprint
+461228520: broker290alloc/149release,141liveslots/2chunks/4MiBreserved versus
+2183168logicalbytes, mapattempts2, allfailure/ownership/overlap/cap/adviceerrors0.
+Physicalscreen genuine Steam updater extracting; NOT interactive frontend proof.
+No relaunch/install retry; let ordinary updater autorestart. Existing account
+secrets never copied/exported/entered. Next compare actual full-load mapping
+failures andLibrary/BPM/input, not only startup counters.

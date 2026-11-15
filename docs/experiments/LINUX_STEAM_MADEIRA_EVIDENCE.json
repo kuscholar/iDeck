@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 59,
+  "latest_run": 60,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -16061,5 +16061,136 @@
     },
     "limit": "Single actual run, responsive home/menu/Away wake and some eligible replacement, but no usable BPM Library/game/SteamPlay/return/repeated stability proof. No sole cause or physical reclamation claim. No guest faults in capped window is not universal absence.",
     "next": "Preserve active65 until concrete qualified successor. One new hypothesis: reduce native small private backing map count via a bounded genuinely owned dynamic slab broker, default-off, no shared/file mappings/fixed addresses/soft grants/caps/FEX. First inventory exact allocation/release contracts and isolated ownership/rollback/coherence/dense-sparse controls; actual Air comparison only after full gates. Input Enter-vs-Away activation remains unproven; do not mislabel as permanent CEF deadlock."
+  },
+  "run60": {
+    "source_parent": "14432ce8d4087ccea3439f6eff2531e66bbbc4e6",
+    "hypothesis": "Owned dynamic chunks reduce private CoW native mmap calls without coarser copy groups",
+    "default_off": true,
+    "scope": "CoW eligible private anonymous only; original data refs/guest accounting; foreign original munmap",
+    "standalone_host_controls": 13,
+    "memory_unit_controls": 12,
+    "composed_host_checks": 72,
+    "native_runtime_units_compiled": 23,
+    "full_app_build": "PASS correct CLI context and existing LLVM_MINGW environment",
+    "device_broker_tested": true,
+    "latest_65_screen": "07:52 EST white guest content; native health295 still active; not UI success",
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run60",
+    "physical_reclamation_measured": false,
+    "sparse_retention_risk": "2liveobjects can retain4MiB; advisory MADV_FREE not proof of reclaimedRAM",
+    "game_return_stable": false,
+    "artifacts": {
+      "broker-host-v1": {
+        "path": ".madeira-install/linux-steam-ipad/run60/broker-host-v1/evidence.json",
+        "sha256": "e9163d6f9823d1f00faee75cb99265d7f66ed40dd73ca1589de183c88494f835"
+      },
+      "broker-host-v2": {
+        "path": ".madeira-install/linux-steam-ipad/run60/broker-host-v2/evidence.json",
+        "sha256": "149d8ddfdc2d84ceb434a32681854d31d9a1d6c7bbf7584dc4208007df4cba8d"
+      },
+      "cow-broker-integration-v2": {
+        "path": ".madeira-install/linux-steam-ipad/run60/cow-broker-integration-v2/evidence.json",
+        "sha256": "dcc62fc77dce3d953b923868a34bba6e6643d574a78ef6ff38b6705b03709e04"
+      },
+      "composed-broker-v1": {
+        "path": ".madeira-install/linux-steam-ipad/run60/composed-broker-v1/evidence.json",
+        "sha256": "39c709e9917d898be2f32cf405b7e70ad55ed5218333d37c80868425fc0e2340"
+      },
+      "health-broker-v1": {
+        "path": ".madeira-install/linux-steam-ipad/run60/health-broker-v1/evidence.json",
+        "sha256": "10d1d84eb21b44da30fee63a79fa06e228efee1e1c5d2a66f1f37019030f8d23"
+      },
+      "runtime66": {
+        "path": ".madeira-install/linux-steam-ipad/run60/runtime66/evidence.json",
+        "sha256": "b21efea39e98320e8c5d05fbc2b762a4d1a6e403004ba9efcb09c96187556e0e"
+      }
+    },
+    "failed_build_contexts": [
+      "restricted workspace/XPC",
+      "CLI invocation missing LLVM_MINGW helper environment"
+    ],
+    "default_generated_memory_sha256": "0845646df27cea92895a60ba60cdb15a1934b687c6680d0f5d746bd323c31168",
+    "final_calls_verified": [
+      "privateCoW->broker_allocate",
+      "data_release->broker_release_owned",
+      "sys_madvise->existingexclusive_discard"
+    ],
+    "source_sha256": {
+      "experiments/linux-steam/app/CowBackingBroker.c": "0c569d7d797e3d12f296433edbb0de1d5dd913fd05d98524e76e49703551ae92",
+      "experiments/linux-steam/app/CowBackingBroker.h": "d83214017c294e76728570c0c57b99f6419362604f4585ac664bd6697f941561",
+      "experiments/linux-steam/tools/build-cow-native-group.py": "0ed79192d118d9f227950a613af742302b487fdbf8aed012a6d110968110970d"
+    },
+    "build66": {
+      "build": 66,
+      "deep_strict_pass": true,
+      "unsigned_sha256": "e71c5653341540fb30dc7c654fa7cc7d397e799ec115742d456c9bcab96c7099",
+      "signed_sha256": "865b8909d60790eacf6ab3c345fc12fc34fb881f07fb10402fb372a916f538a3",
+      "text_SHA256": "101aff116539910a564109cae993f8d742a504c0f498c8c0712a3b44bcfdeae4",
+      "text_unchanged_by_signing": true,
+      "link_evidence_sha256": "f0e0b0189a16cb0737656fd84a7193756a2277780b43fc1bae2eb374b6344347"
+    },
+    "recorded_at_utc": "2026-11-15T13:02:19.233833+00:00",
+    "actual66": {
+      "pid": 22068,
+      "install_uuid": "D03CEFF5-7E05-4963-B71A-60595C51EEF5",
+      "native_log": "kernel-22068-902262-337296000.log",
+      "health": {
+        "schema": 1,
+        "pid": 22068,
+        "build": 66,
+        "native_log": "kernel-22068-902262-337296000.log",
+        "sequence": 2,
+        "mono_ms": 902272344,
+        "phase": 7,
+        "initial_call_returned": false,
+        "tracked_guest_entries": 21,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 461228520,
+        "cpu_valid": 1,
+        "cpu_user_us": 22061911,
+        "cpu_system_us": 1333459,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        },
+        "cow_broker": {
+          "alloc": 290,
+          "release": 149,
+          "map_attempts": 2,
+          "map_failures": 0,
+          "unmaps": 0,
+          "live_slots": 141,
+          "live_chunks": 2,
+          "logical_bytes": 2183168,
+          "reserved_native_bytes": 4194304,
+          "ownership_errors": 0,
+          "unmap_failures": 0,
+          "overlap_rejections": 0,
+          "capacity_refusals": 0,
+          "advice_calls": 149,
+          "advice_failures": 0,
+          "physical_reclaim_measured": false
+        }
+      },
+      "visible": "Steam updater extracting; NOT Library/BPM proof",
+      "saved_prefix_preserved": true,
+      "game_launched": false,
+      "stable": false
+    }
   }
 }
