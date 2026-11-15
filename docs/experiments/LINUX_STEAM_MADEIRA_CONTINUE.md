@@ -1,3 +1,79 @@
+# LIVE67 Run61: updater running; preserve actual session
+
+Actual67installed/launched PID22266/install2468CC7D-AA69-4C11-B21E-16F80228C6DB,
+nativekernel-22266-904309-209912000.log. Revalidatebeforeactions. Private
+run61/air67-run-config-private.json and observe67-private.py <NEWtag>. Noobserver/
+debuggercurrentlyactive. Warmhealth15 mono904449217/phase7 footprint894028648,
+23guestentries,141broker slots/2chunks/errors0. Actualscreenshotupdaterextracting;
+NOTLibrary/BPM/waiterdiagproof. Keepnormalupdater42/restart/session, norelaunch.
+
+24nativeunits/fullXcode67/finalsampler->helpercall+markers/identical66broker
+memorysource/exactAirprofilescert/deepstrict/signtext allPASS. Newexplicit
+--blocked-wait-callers defaultOFF; HOST14PTE/busy/bounds/permission controls +
+REALARM64ELF2validatedcallers/normalwake/exit0 anddefaultELFcontrolPASS. Own67
+source/tests/docsdirty from7a8acc8pushed. Scopedcommit-s/pushonlyexperimentperhours.
+
+NEXT afternormalupdater: boundednewnative log plusphysicalscreen. Inspect
+LINUX_WAIT_CALLERS status/count and LINUX_WAIT_CALLER9codewords; onlyeligible
+mainCrRendererMain untimedwait, existingGROWSDOWN ABIlinks/filebackedexecwords,
+nonblockingmemorylock/statechecks. Noarbitrarygueststrings/buffers, nomapping/
+sync/timeout/watchdog/origin/auth modifications. Byteverifyagainstexactcurrent
+CEF andglibc; no nearest-export or manualhexguess. Prior66hungcaller351was
+provenCrashHungProcess; LATERbadIPC213distinct, notcauseestablished. Needhigher
+mainwaitcallertodiscriminate, notspeculativesemanticpatch. Goalrealinteractive
+Library/BPM/Play->licensedMadeiragame/return/repeatsACTIVE, bridge125NOTgame.
+NeverSTABLE_SUCCESS/unload/goalcomplete. Userall-safeauthorization persists,
+CLIonly/neverMacunlock/credentialsGuardtrustlock/securitychanges. Preserveall
+main/worktrees/otherapps/auth/games/saves. NoFEX/Valve/vendor changes.
+
+--- Run61 qualification ---
+
+# Run61 qualified67 deployment in progress; harvest3696 before more actions
+
+FullXcode67/finalreal sampler->helper call/markers PASS. Broker/kernelmemory
+sourcebyteidentical66. ExistingexactAirprofileappdevicecert/deepstrict andsigned
+textpreservationPASS. Private run61/signed67/Madeira.app immutable/sign67evidence.
+Fresh66receipt22068/health202/CLI2 andphysicalscreenstillblackStore verified,
+no newusertest. Ownboundeddeployment3696 now normallyends ONLYfreshmatched66,
+upgrade SAMEisolatedLabID andretainedlaunch perstandingall-safeauthorization.
+No67devicecallerproofyet. Harvestlaunchreceipt beforeanyretry; norepeated
+permission/unlock/credentials/trust/Guard/security actions. Keepallappdata/main.
+
+# Run61 waiter-callers qualification — full67 building, preserve66
+
+HEAD/pushed7a8acc8; newownRun61source dirty. CurrentAir66PID22068/install
+D03CEFF5-7E05-4963-B71A-60595C51EEF5 preserved, revalidatebeforeactions. Native
+66capped log confirms selectedmapreduction butnotUI. ReadRun60actual failure:
+CrashHungProcess exactcallee/rodata351; laterorigin213 distinct. No solecause.
+
+New defaultOFF --blocked-wait-callers, onlyblocked UNTImED mainCrRendererMain
+futex0/9. Holds existinggeneral_lock mm lifetime; nonblocking tryreadmem, atmost4
+frames, existing readable writable anonGROWSDOWN nonexecmainstack ABIlinksONLY;
+file-backed readableEXEC code9words each, BL/BLR returncheck. No arbitrary
+buffers/strings, nofaultmaterialization/PTEgeneration/accounting/sync/timeout/
+watchdog change. RevalidatePC/cycles/FP/blocking; stale discards status5. Status
+busy/unavailable/badchain explicit; BESTEFFORT, no rootcauseclaimfromabsence.
+NoFEX/Valve/vendor/security/auth/main modifications.
+
+HOST14actualPTE helperASanUBSan/Werror PASS wait-callers-host-v2; firstv1missing
+realnative-loglinker symbol retained, correctedharness only. REALARM64ELF test
+wait-callers-ELF-v2 exports2validatedcallerframes thennormalwake/exit0; firstv1
+signedcyclecompareWerror fixedexplicitcast, notruntimefailure. DefaultELF-v2
+passes, firstdefaultshell Bash3.2emptyarraynounset negative retained/corrected.
+Allsource/test raw artifacts private run61. Runtime67 24nativeunits PASS;
+fullApp67 BUILD runningobserver63151, app67-build-private.log, don'tduplicate.
+No67sign/install/devicecallerproofyet. No reauthentication/Guard/JIT needed.
+
+NEXT harvestfull67; finalactual sampler->helper call+marker; exactexistingAir
+profile/device/cert/deepstrict/signtext gates. ONLYthen freshidentity/screensame
+boundedowned66test andsafeisolatedLabupgrade67 underpersistentall-safepermission.
+No repeatedapproval/unlockrequests. Observebeforewatchdog actualcallerrows,
+byteverify againstexactonAirCEF SHA891d85f... andactualglibc, don'tnearest-export
+label. Onehypothesisdiagnostic only, notfutexsemanticfix. FulllicensedPlay->
+Madeiragame/return/repeats ACTIVE, bridge125NOTgame. NeverSTABLE_SUCCESS/unload.
+
+--- Run60 ---
+
 # LIVE66 Run60 failure checkpoint; next bounded waiter-callers discriminator
 
 Source d12799d PUSHED; main2ac39 untouched. Actual66PID22068/installD03CEFF5-

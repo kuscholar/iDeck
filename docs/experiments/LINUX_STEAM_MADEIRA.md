@@ -1,6 +1,6 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run60 in progress; see latest section): actual65 private replacement effective for some
+Status (run61 installed67; see latest section): actual65 private replacement effective for some
 requests, genuine saved-auth desktop Library/BPM home/menu and pointer Away-wake
 verified. Large native mappings still fail; BPM Library/game/return/stability
 unproven. Keep active65. Goal ACTIVE; next owned-small-backing broker hypothesis
@@ -5824,3 +5824,45 @@ links and readable executable code words; no arbitrary guest buffers/strings,
 no page materialization or synchronization change. Preserve running66 pending
 qualified successor. Broker helps selected map count but is NOT stable success.
 No SteamPlay request/filepolicy0, game, return or repeated stability proof.
+
+
+## Run61 — identify blocked renderer callers before watchdog
+
+Parent7a8acc8 (pushed), actual66 remains installed/alive pending qualified67.
+Default-off `--blocked-wait-callers` adds no syscall/wake/watchdog behavior.
+Only main-thread CrRendererMain, confirmed blocked in untimed futexWAIT or
+WAIT_BITSET, is eligible. Existing general_lock owns mm lifetime; memory read
+lock is try-only. At most4fixed ABI next-FP/LR pairs are read from existing
+readable/writable anonymous GROWSDOWN nonexec main-stack PTEs. Only
+existing file-backed readable executable pages may supply9instructionwords per
+return; savedreturn must follow BL/BLR. Canonicality/alignment/bounds/monotonic
+chain/1MiBspan are checked; no lazy materialization, guest-generation/accounting
+change, arbitrary payload/string/heap/register dump. Recheck blockedPC/FP/cycles
+before publishing; stale=5/no frames, busy/unavailable explicit. Logs are bounded
+numeric code/call metadata, not user data. This observer cannot establish a
+futex implementation bug or causal deadlock on its own; some valid frames may
+be omitted, including cross-page code windows or noncanonical return tags.
+
+HOST14 actual PTE/helper cases ASanUBSan/Werror passed: valid/terminal, alignment,
+unmapped/nonstack/no-read/no-exec/no-file/bad-data-bounds/noncall/cycle/distant/
+code-page-cross/held-writer lock; memory generation and anonymous accounting
+unchanged. Real ARM64 ELF named CrRendererMain blocks in actual futex393, yields
+2validated code/caller rows through the production sampler, then normalwake and
+exit0. Default-gate old ARM64 futex128 fixture likewise passes. First harness
+link lacked the real native-log wrapper, fixed without fake symbols; first
+sampler build caught signedcycle comparison, fixed explicituint64 cast; Bash3.2
+empty-array nounset default harness corrected with explicit gate0flags. All
+negative artifacts retained; no device failure attributed to these host errors.
+Runtime67 24nativeunits compiled, fullXcode67 ongoing. No67install/UI/callers
+proof yet; preserve66. Samecapped66 no game/return; diagnostic125 unchanged.
+
+Run61 fullXcode67, finalsampler->helpercall andmarkers, unchanged66broker kernel
+memory source, exactAirappdevicecertprofile/deepstrict/signedtext verification
+allPASS. Only freshlymatched stalled66/22068 was normallyended; sameLab67
+installed/launched retainingcontainer. Actual67PID22266/install2468CC7D-AA69-
+4C11-B21E-16F80228C6DB, kernel-22266-904309-209912000.log. Warmhealth15/mono
+904449217/phase7/footprint894028648;141brokerliveslots/2chunks, noerrors. Physical
+screen still genuine updater extracting. No67waitercallers/UI/game/return
+validationyet. Signedhash/text in EVIDENCE.run61.signing. Leavecurrent67alive,
+letordinary updater42/restart finish; nextbounded native snapshot of sampler
+counts/status/callwords, compareactual visible frontend. No success sentinel.

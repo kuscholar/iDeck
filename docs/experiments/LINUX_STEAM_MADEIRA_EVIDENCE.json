@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 60,
+  "latest_run": 61,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -16339,5 +16339,103 @@
       }
     ],
     "next": "Default-off nonblocking bounded main-thread ABI/code-only waiter caller snapshot; no input/watchdog/origin suppression"
+  },
+  "run61": {
+    "source_parent": "7a8acc8",
+    "recorded_at_utc": "2026-11-15T13:38:57.936807+00:00",
+    "hypothesis": "Bounded existing ABI/code-only callers identify higher-level blocked renderer wait before CrashHungProcess",
+    "default_off": true,
+    "no_synchronization_or_timeout_changes": true,
+    "host_helper_cases": 14,
+    "host_real_ARM64_ELF": "2validatedcallerrows + normal wake/exit0; default old fixture pass",
+    "native_units_compiled": 24,
+    "full_app_build": "PASS",
+    "device_new_probe_validated": false,
+    "prior66_preserved": true,
+    "game_return_stable": false,
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run61",
+    "evidence_sha256": {
+      "wait-callers-host-v2": "75607f477e830ae579d988dffcd886d3ed06ef69bf2bbc8c1c8ce6e83c44ce73",
+      "wait-callers-ELF-v2": "0e90de654d50b61b411c5e94f8970d7f54c8e4df338d7fdc95c0a9ee3b6926fc",
+      "wait-callers-default-ELF-v2": "1d275be15292e713f7cd939103702229e78a07338bdac56d5b7cc99349854027",
+      "runtime67": "8ca594175d0384d4f2323f919c7c6a20ef37cb0ed8a93dbe39e6b1fec4f03e7e"
+    },
+    "final_sampler_calls_helper": true,
+    "broker_memory_source_identical66": true,
+    "signing": {
+      "build": 67,
+      "deep_strict_pass": true,
+      "unsigned_sha256": "21a352abef5661432d6acd178a3764facc6bbba4ad512eadafdf7383235d0836",
+      "signed_sha256": "e65f210a731160d7d029598c41f79c9a699b43071f9390ac7c41818232f53766",
+      "text_SHA256": "9c05b3e335e3498b6c6f5529b55e5b9181ec6676762c7965ee968f5ceacf3a3c",
+      "text_unchanged_by_signing": true
+    },
+    "source_sha256": {
+      "experiments/linux-steam/app/BlockedWaitCallers.c": "3b13ad7379b7e1a439966d406b05d9065fca825bfacb33285bf6b3a04b7682a4",
+      "experiments/linux-steam/app/BlockedWaitCallers.h": "246da7cd79e791f718625a07813991759f014c8c4036b9f46d7b207f85d4ba35",
+      "experiments/linux-steam/app/LinuxLabRuntime.c": "be96a8eb80609959e53f195d523fb60d7fcb1867c178ed1f6b7356bd5603e537"
+    },
+    "device_install_launch": true,
+    "actual67": {
+      "pid": 22266,
+      "install_uuid": "2468CC7D-AA69-4C11-B21E-16F80228C6DB",
+      "native_log": "kernel-22266-904309-209912000.log",
+      "latest_health": {
+        "schema": 1,
+        "pid": 22266,
+        "build": 67,
+        "native_log": "kernel-22266-904309-209912000.log",
+        "sequence": 15,
+        "mono_ms": 904449217,
+        "phase": 7,
+        "initial_call_returned": false,
+        "tracked_guest_entries": 23,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 894028648,
+        "cpu_valid": 1,
+        "cpu_user_us": 247105770,
+        "cpu_system_us": 10877087,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        },
+        "cow_broker": {
+          "alloc": 291,
+          "release": 150,
+          "map_attempts": 2,
+          "map_failures": 0,
+          "unmaps": 0,
+          "live_slots": 141,
+          "live_chunks": 2,
+          "logical_bytes": 2183168,
+          "reserved_native_bytes": 4194304,
+          "ownership_errors": 0,
+          "unmap_failures": 0,
+          "overlap_rejections": 0,
+          "capacity_refusals": 0,
+          "advice_calls": 150,
+          "advice_failures": 0,
+          "physical_reclaim_measured": false
+        }
+      },
+      "visible": "genuine Steam updater extracting; no Library/BPM proof yet",
+      "game_return": false
+    }
   }
 }

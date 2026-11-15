@@ -13,11 +13,18 @@ mkdir -m700 "$out"
 src="$repo/vendor/LinuxRunner";host="$LINUX_LAB_ARTIFACTS/host";lab="$repo/experiments/linux-steam"
 [[ $(git -C "$src" rev-parse HEAD) == d1419782da2e299fe22f1ddb85c70ae3d1e276b1 ]] || exit 2
 [[ -z $(git -C "$src" status --porcelain --untracked-files=no) ]] || exit 2
+guest_extra=(-DIDECK_TEST_WAIT_CALLERS=0);host_extra=(-DIDECK_LAB_BLOCKED_WAIT_CALLERS=0)
+case "${LINUX_LAB_WAIT_CALLERS_TEST:-0}" in
+ 0) ;;
+ 1) guest_extra=(-DIDECK_TEST_WAIT_CALLERS=1 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fno-optimize-sibling-calls)
+    host_extra=(-DIDECK_LAB_BLOCKED_WAIT_CALLERS=1 "$lab/app/BlockedWaitCallers.c") ;;
+ *) exit 2 ;;
+esac
 xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
- "$lab/guest/futex-snapshot-probe.c" "$lab/guest/clone.S" -Wl,-e,_start -o "$out/probe.elf"
+ "${guest_extra[@]}" "$lab/guest/futex-snapshot-probe.c" "$lab/guest/clone.S" -Wl,-e,_start -o "$out/probe.elf"
 xcrun clang -DIDECK_LAB_GUEST_LIFETIME=1 -DIDECK_LAB_NATIVE_LOG=1 -fsanitize=address,undefined -DGUEST_ARM64=1 -DENGINE_ASBESTOS=1 -DLOG_HANDLER_DPRINTF=1 -DISH_INTERNAL=1 \
  -I "$src" -I "$host" -I "$lab/app" -Wall -Wextra -Werror -Wno-unused-parameter \
- "$lab/app/LinuxLabRuntime.c" "$lab/app/LabDeviceFS.c" "$lab/app/LabBridge.c" "$lab/app/LaunchProtocol.c" "$lab/app/NativeKernelLog.c" "$lab/tools/futex-snapshot-control.c" \
+ "${host_extra[@]}" "$lab/app/LinuxLabRuntime.c" "$lab/app/LabDeviceFS.c" "$lab/app/LabBridge.c" "$lab/app/LaunchProtocol.c" "$lab/app/NativeKernelLog.c" "$lab/tools/futex-snapshot-control.c" \
  "$LINUX_LAB_LOG_ARCHIVE" -L "$host" -lish_emu -lfakefs -lsqlite3 -o "$out/control"
 python3 - "$out" "$LINUX_LAB_LOG_ARCHIVE" <<'PY'
 from pathlib import Path

@@ -1,5 +1,11 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception */
 #include "LinuxLabRuntime.h"
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+#include "BlockedWaitCallers.h"
+#if !IDECK_LAB_NATIVE_LOG || !defined(GUEST_ARM64)
+#error Wait caller diagnostics require the ARM64 native-log Lab
+#endif
+#endif
 #if IDECK_LAB_REGISTER_SHARED_LIBRARY
 #if !IDECK_LAB_SHARED_LIBRARY || !IDECK_LAB_DOCK_STORAGE
 #error Library registration requires the explicit physical shared library layout
@@ -60,7 +66,11 @@ void ideck_linux_lab_log_tasks(void) {
     if(atomic_load(&phase)<7){ideck_native_log_line("LINUX_TASK_SAMPLE unavailable=runtime_not_started");return;}
     if(trylock(&pids_lock)){ideck_native_log_line("LINUX_TASK_SAMPLE unavailable=pid_lock_busy");return;}
     struct row {int tid,tgid,waiting,zombie;unsigned syscall,stage;uint64_t cycles,faults,resolved,wait_ns;
-        int futex,timed;unsigned op,value,bitset;uint64_t address,pc,lr;} rows[128];
+        int futex,timed;unsigned op,value,bitset;uint64_t address,pc,lr;
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+        int callers_attempted;struct ideck_wait_callers callers;
+#endif
+    } rows[128];
     unsigned count=0,skipped=0,last=task_last_pid_locked(),limit=last<1024?last:1024,scanned=0;
     for(unsigned pid=1;pid<=limit&&count<128;pid++) {
         scanned=pid;struct task *task=pid_get_task(pid);
@@ -89,6 +99,22 @@ void ideck_linux_lab_log_tasks(void) {
             if(command==9||command==10)r->bitset=(unsigned)__atomic_load_n(&task->cpu.regs[5],__ATOMIC_RELAXED);
             if(!task->blocking||__atomic_load_n(&task->syscall_restart_num,__ATOMIC_RELAXED)!=98||
                __atomic_load_n(&task->cpu.pc,__ATOMIC_RELAXED)!=r->pc)r->futex=0;
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+            if(r->futex&&r->tid==r->tgid&&!r->timed&&(command==0||command==9)&&
+               !strcmp(task->comm,"CrRendererMain")&&task->mm&&task->mem==&task->mm->mem){
+                /* general_lock retains this mm. The helper never waits for its
+                 * read lock and never materializes a guest page. Only fixed ABI
+                 * frame links + file-backed executable words, no buffer dump. */
+                uint64_t fp=__atomic_load_n(&task->cpu.regs[29],__ATOMIC_RELAXED);
+                r->callers_attempted=1;
+                ideck_blocked_wait_callers(task->mem,fp,&r->callers);
+                if(!task->blocking||__atomic_load_n(&task->cpu.pc,__ATOMIC_RELAXED)!=r->pc||
+                   (uint64_t)__atomic_load_n(&task->cpu.cycle,__ATOMIC_RELAXED)!=r->cycles||
+                   __atomic_load_n(&task->cpu.regs[29],__ATOMIC_RELAXED)!=fp){
+                    memset(&r->callers,0,sizeof r->callers);r->callers.status=5;
+                }
+            }
+#endif
         }
 #endif
         unlock(&task->general_lock);
@@ -104,6 +130,17 @@ void ideck_linux_lab_log_tasks(void) {
             snprintf(line,sizeof line,"LINUX_FUTEX_SAMPLE tid=%d tgid=%d op=%u expected=%u bitset=%u timed=%d address=%#llx caller_pc=%#llx caller_lr=%#llx best_effort=1 no_memory_read=1",r->tid,r->tgid,r->op,r->value,r->bitset,r->timed,(unsigned long long)r->address,(unsigned long long)r->pc,(unsigned long long)r->lr);
             ideck_native_log_line(line);
         }
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+        if(r->callers_attempted){
+            snprintf(line,sizeof line,"LINUX_WAIT_CALLERS tid=%d tgid=%d count=%u status=%u fixed_ABI_code_only=1 best_effort=1",r->tid,r->tgid,r->callers.count,r->callers.status);
+            ideck_native_log_line(line);
+            for(unsigned n=0;n<r->callers.count;n++){
+                const struct ideck_wait_caller *c=&r->callers.frames[n];
+                snprintf(line,sizeof line,"LINUX_WAIT_CALLER tid=%d frame=%u lr=%#llx code_start=%#llx words=%08x,%08x,%08x,%08x,%08x,%08x,%08x,%08x,%08x",r->tid,n,(unsigned long long)c->lr,(unsigned long long)(c->lr-16),c->code[0],c->code[1],c->code[2],c->code[3],c->code[4],c->code[5],c->code[6],c->code[7],c->code[8]);
+                ideck_native_log_line(line);
+            }
+        }
+#endif
     }
 #endif
 }
@@ -135,6 +172,9 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
 #endif
     if (atomic_exchange(&consumed, 1)) return -16;
     if (strcmp(ideck_linuxrunner_dirfd_guard(), "IDECK_LINUXRUNNER_DIRFD_GUARD_V3")) return -5;
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+    if(strcmp(ideck_blocked_wait_callers_marker(),"IDECK_BLOCKED_WAIT_CALLERS_V1"))return -5;
+#endif
 #if IDECK_LAB_COW_BROKER
     extern const char *ideck_cow_broker_marker(void);
     if(strcmp(ideck_cow_broker_marker(),"IDECK_OWNED_COW_BACKING_BROKER_V1"))return -5;

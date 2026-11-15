@@ -20,7 +20,12 @@ int main(int argc,char **argv){
     int observed=0;
     for(unsigned i=0;i<1000&&!observed;i++){
         ideck_linux_lab_log_tasks();FILE *f=fopen(logpath,"rb");assert(f);char body[131072];size_t n=fread(body,1,sizeof body-1,f);assert(!ferror(f)&&n<sizeof body-1);body[n]=0;fclose(f);
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+        char *line=strstr(body,"LINUX_FUTEX_SAMPLE tid=2 tgid=2 op=393 expected=0 bitset=4294967295 timed=0 ");
+        if(line&&!strstr(body,"LINUX_WAIT_CALLER tid=2 frame=1 "))line=NULL;
+#else
         char *line=strstr(body,"LINUX_FUTEX_SAMPLE tid=2 tgid=2 op=128 expected=0 bitset=0 timed=0 ");
+#endif
         if(line){assert(strstr(line,"caller_pc=0x")&&strstr(line,"caller_lr=0x")&&strstr(line,"no_memory_read=1"));observed=1;}
         else usleep(1000);
     }
