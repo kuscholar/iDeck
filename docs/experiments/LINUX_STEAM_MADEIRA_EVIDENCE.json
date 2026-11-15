@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 47,
-  "recorded_at_utc": "2026-11-14T11:28:57.757329+00:00",
+  "latest_run": 55,
+  "recorded_at_utc": "2026-11-15T02:34:00.920314+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "be0de64e1e3ce9a2db41b9150418c675000f07e0",
-  "source_parent": "be0de64e1e3ce9a2db41b9150418c675000f07e0",
+  "source_checkpoint": "e68a6689f861c22b6b34bf09eaa196b8af18ff73",
+  "source_parent": "e68a6689f861c22b6b34bf09eaa196b8af18ff73",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -13140,7 +13140,7 @@
       "no_restart_upgrade_debugger_or_terms_acceptance": true
     },
     "single_input": {
-      "user_reply": "允许",
+      "user_reply": "\u5141\u8bb8",
       "scope": "The previously requested one Escape",
       "executed_count": 1,
       "transport": {
@@ -13210,7 +13210,7 @@
   "run51": {
     "phase": "Actual same-Air Build60 authenticated desktop Library, BPM home and BPM Library; after screensaver hide content black then white; preserve live session, no game/return success",
     "source_parent": "bb3ac021dd19a28bc7c4adba3c7f2c0d8e366423",
-    "user_reply": "允许结束当前 Lab，升级 Build 60",
+    "user_reply": "\u5141\u8bb8\u7ed3\u675f\u5f53\u524d Lab\uff0c\u5347\u7ea7 Build 60",
     "selected_device": "Air4/iPad13,1; CoreDevice AB2C7829-AA96-580F-837A-C82244CFF022",
     "old_process": {
       "PID": 19056,
@@ -14772,5 +14772,356 @@
       "No Steam/auth/game action; bridge125 still diagnostic, complete product objective unchanged."
     ],
     "updated_UTC": "2026-11-14T21:38:35.809834+00:00"
-  }
+  },
+  "run55": {
+    "phase": "Actual Air60 native PC snapshotV3 completed/resumed. Follow-upV4 async debugger/SB query hung; cleanup requires explicit user approval after Ctrl-C auto-review rejection. Current V4 session remains open, no second capture/detach proof.",
+    "source_parent": "e68a6689f861c22b6b34bf09eaa196b8af18ff73",
+    "state_checks": {
+      "volume_UUID": "580CADCD-33F5-4D78-9530-2287615873CA",
+      "migration_stage": "migration_complete_external_rollback_retained",
+      "origin": "https://github.com/kuscholar/iDeck.git",
+      "branch": "experiment/linux-steam-madeira-ipad",
+      "remote_experiment": "e68a6689f861c22b6b34bf09eaa196b8af18ff73",
+      "remote_main": "2ac39beff91251d36f3ad6331d3f8402b3c10e18",
+      "initial_worktree_clean": true,
+      "worktrees_preserved": true,
+      "no_host_experiment_found": true
+    },
+    "observed_device": {
+      "model": "Air4/iPad13,1",
+      "build": 60,
+      "PID": 19384,
+      "installation_UUID": "B55DD703-F281-4556-9A49-09550951953B",
+      "fresh_actual_process_match": true,
+      "current_health": {
+        "schema": 1,
+        "pid": 19384,
+        "build": 60,
+        "native_log": "kernel-19384-828357-531478000.log",
+        "sequence": 3384,
+        "mono_ms": 862187973,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 142,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2136332760,
+        "cpu_valid": 1,
+        "cpu_user_us": 47854390678,
+        "cpu_system_us": 2658125669,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 12,
+          "last_action": 7,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      },
+      "last_retained_report": {
+        "steam_update_restart_requested": 1,
+        "native_log": "kernel-19384-828357-531478000.log",
+        "wave": 1,
+        "schema": 2,
+        "backend_phase": 4,
+        "capture_error": -35,
+        "captured_request_not_started": false,
+        "actual_game": false,
+        "guest_status": 10752,
+        "reaped": 1,
+        "pid": 19384,
+        "native_error": 0,
+        "build": "60"
+      },
+      "physical_UI": "Fresh actual screenshot white/blank with native overlay/pointer; no interactive Library/BPM recovery",
+      "post_detach_health_A": {
+        "schema": 1,
+        "pid": 19384,
+        "build": 60,
+        "native_log": "kernel-19384-828357-531478000.log",
+        "sequence": 3565,
+        "mono_ms": 864109998,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 142,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2103007800,
+        "cpu_valid": 1,
+        "cpu_user_us": 50179249199,
+        "cpu_system_us": 2742208405,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 12,
+          "last_action": 7,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      },
+      "post_detach_health_B": {
+        "schema": 1,
+        "pid": 19384,
+        "build": 60,
+        "native_log": "kernel-19384-828357-531478000.log",
+        "sequence": 3574,
+        "mono_ms": 864199998,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 142,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2103007800,
+        "cpu_valid": 1,
+        "cpu_user_us": 50290953204,
+        "cpu_system_us": 2746230767,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 12,
+          "last_action": 7,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      }
+    },
+    "observed_failure": "White guest display while native overlay,142 tracked guests and advancing health remain. Last-retained wave1 updater42/DORMANT is stale, not current Linux teardown.",
+    "hypothesis": "Native PC metadata may distinguish an entirely blocked/exited interpreter from continued guest execution without replacing the active app. A sampled arithmetic gadget alone cannot identify guest owner or the cause of blank rendering.",
+    "discriminating_test": "Read-only exact Air/PID/installed-URI preflight, existing authorized development profile and exact60 Mach-O UUID gate. Use official device LLDB attachment, wait for actual stopped5, collect16 uniform frame0 PCs of149 native threads, detach(resume), verify detached9 and samePID advancing health. No expressions,locals,credentials or app memory writes/restart.",
+    "actual_snapshot": {
+      "private_report": "pc-snapshot-v3-private.json",
+      "target_triple": "arm64-apple-ios-",
+      "exact_main_binary_UUID_matches": true,
+      "total_threads": 149,
+      "sampled_threads": 16,
+      "collection_ms": 150,
+      "collector_through_detach_ms": 158,
+      "host_command_state_wait_collection_window_ms": 16260,
+      "timing_limit": "158ms starts after stopped state established;16.260s outer window includes async attachment and is not an exact suspension duration or UI-performance metric.",
+      "detached": true,
+      "state_after_detach": 9,
+      "native_app_restarted": false,
+      "app_memory_written": false,
+      "locals_or_payload_requested": false,
+      "caller_unwinding_requested": false
+    },
+    "offline_symbols": {
+      "Madeira_offset_hex": "0xaf3f84",
+      "exact60_symbol": "gadget_scvtf_int_vec (math.S:6019)",
+      "kernel_offsets_hex": [
+        "0xcd4",
+        "0x70dc"
+      ],
+      "kernel_candidates": [
+        "mach_msg2_trap+8",
+        "__psynch_mutexwait+8"
+      ],
+      "counts": {
+        "mach_message": 1,
+        "kernel_mutexwait_candidate": 14,
+        "interpreter_arithmetic": 1
+      },
+      "system_symbol_scope": "Air model/OS-matched DeviceSupport cache; system module UUID was not captured, so system symbols are qualified candidates. Main app symbol uses exact source artifact hash and runtime UUID gate.",
+      "interpretation": "One instant,16 of149; no guestPC,callers,wait owner or root cause. Do not infer gadget bug,mutex deadlock,Steam responsiveness or visible rendering."
+    },
+    "post_detach_progress": {
+      "sequence_from": 3565,
+      "sequence_to": 3574,
+      "sample_interval_seconds": 90.0,
+      "process_CPU_seconds_delta": 115.726367,
+      "average_single_core_percent": 128.585,
+      "footprint_bytes": 2103007800,
+      "limit": "Process aggregate over this90s monotonic health interval only. Not startup latency,FPS,peak memory,thermal or performance advantage."
+    },
+    "debugger_setup_failures": [
+      {
+        "attempt": "1",
+        "result": "SBCommandInterpreter device-select returned Started5 asynchronously, not an actual attach failure/permission denial; no attachment or native pause."
+      },
+      {
+        "attempt": "2",
+        "result": "Top-level attach also asynchronous: early collector sawConnected2, executable metadata incomplete, detach error3. Premature report attached=true was not proof of stopped/ready. Kept debugger interactive, awaited actualSIGSTOP, explicitly process detach --keep-stopped false succeeded, actualstate9 and samePID health3518->3537 verified. First pause duration not measured; reported2ms is NOT pause duration."
+      },
+      {
+        "attempt": "3",
+        "result": "Explicit process identity and stopped5 state observed before collector import; native PC capture and Detach(False) succeeded. Debugger quit only after actualstate9."
+      }
+    ],
+    "minimal_patch": "New opt-in LLDB PC-metadata collector and11 fake-SB controls, experiment docs/evidence only. No shipping runtime,app,FEX,Valve,vendor,signing,account or game/save change. Final collector adds foreign-PID preservation and optional at-most2 native threads/3 caller PCs each; default algorithm matches successful device observation, but final revision/optional caller path is host-tested only.",
+    "tests": {
+      "fake_SB_API_controls": 11,
+      "scope": "Host Python fake API only; final fixture checks matching UUID/platform/PID,ready/running/connected state,foreignPID no read/detach,read error,detach failure/exception and optional callers. LLDB unwinder may read return-address slots only if optional callers requested; no locals,arguments or arbitrary payload API.",
+      "actual_device": "Air60 snapshotV3 plus confirmed native detach and advancing samePID health; final optionalcaller path NOT device-run.",
+      "regression": "git diff --check and existing source JSON validation; no shipping source changes so no new iOS build/install or claim of product regression success."
+    },
+    "followup": {
+      "hypothesis": "At most3 caller PCs for one waiter and the interpreter worker could distinguish lock layer without payload reads.",
+      "restricted_CLI_failure": "CoreDevice code1 initialization timeout occurred in restricted executor; NOT an actual connectivity verdict.",
+      "authorized_CLI_recheck": "Outside restricted service context, CoreDevice exact Air19384/B55DD703 installedURI matched successfully; no service/security/settings change.",
+      "attempted_attachment": true,
+      "collector_executed": false,
+      "actual_result": "Dedicated LLDB session38994 issued device attach, then external Python SB state queries produced only echoed input/no ready state. No actual native stop event, caller-PC capture or detach confirmation observed. Queued official process detach --keep-stopped false has not executed.",
+      "health_during_pending_attach": {
+        "A": {
+          "schema": 1,
+          "pid": 19384,
+          "build": 60,
+          "native_log": "kernel-19384-828357-531478000.log",
+          "sequence": 3638,
+          "mono_ms": 864840006,
+          "phase": 8,
+          "initial_call_returned": true,
+          "tracked_guest_entries": 142,
+          "tracked_linux_workers": 0,
+          "footprint_valid": 1,
+          "footprint_bytes": 2106235376,
+          "cpu_valid": 1,
+          "cpu_user_us": 51108124742,
+          "cpu_system_us": 2776053709,
+          "append_log_capped": true,
+          "append_log_stopped": true,
+          "file_policy": {
+            "query_status": 0,
+            "submitted": 0,
+            "completed_sequence": 0,
+            "appid": 0,
+            "status": -35,
+            "library": -1,
+            "machine": 0,
+            "diagnostic_only": true,
+            "game_launched": false
+          },
+          "cli_navigation": {
+            "sequence": 12,
+            "last_action": 7,
+            "dispatch_only": true,
+            "physical_touch_test": false
+          }
+        },
+        "B": {
+          "schema": 1,
+          "pid": 19384,
+          "build": 60,
+          "native_log": "kernel-19384-828357-531478000.log",
+          "sequence": 3638,
+          "mono_ms": 864840006,
+          "phase": 8,
+          "initial_call_returned": true,
+          "tracked_guest_entries": 142,
+          "tracked_linux_workers": 0,
+          "footprint_valid": 1,
+          "footprint_bytes": 2106235376,
+          "cpu_valid": 1,
+          "cpu_user_us": 51108124742,
+          "cpu_system_us": 2776053709,
+          "append_log_capped": true,
+          "append_log_stopped": true,
+          "file_policy": {
+            "query_status": 0,
+            "submitted": 0,
+            "completed_sequence": 0,
+            "appid": 0,
+            "status": -35,
+            "library": -1,
+            "machine": 0,
+            "diagnostic_only": true,
+            "game_launched": false
+          },
+          "cli_navigation": {
+            "sequence": 12,
+            "last_action": 7,
+            "dispatch_only": true,
+            "physical_touch_test": false
+          }
+        }
+      },
+      "health_interpretation": "Both copies sequence3638/mono864840006; native app may be paused. A stale health row does not identify precise debugger state or app crash.",
+      "Ctrl_C_auto_review": "One write_stdin Ctrl-C rejected: interrupting still-attaching LLDB could leave target suspended/attached without verified detach. No workaround/retry sent.",
+      "official_detach_queued": true,
+      "detach_verified": false,
+      "debugger_force_killed": false,
+      "user_boundary": "Explicit narrowly scoped permission requested: interrupt hung debugger query once, then officialdetach/resume and verify samePID health. Pending, do not infer from elapsed time. No Macunlock request/app restart.",
+      "next": "Wait for actual reply while preserving debugger. If authorized, one Ctrl-C to pending query then official process detach --keep-stopped false, confirm actualdetached state and advancing samePID health BEFORE debugger exit. Do not start another debugger or experiment."
+    },
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run55",
+    "artifact_sha256": {
+      "processes-private.json": "8721bea2ce391e2584b5edf88c7ca2f782242b8f697a90d08c4cc443f8bc8a10",
+      "receipt-private.json": "f6394c25e162ef14bfff12f7107b1f269bde2a4fb6e1834a9bcf628e64e11de6",
+      "health-private.json": "bf2e1169bc0e60c0261cd57b5de7702add2d2f12db61997394d9d6ffcd761fa4",
+      "retained-private.json": "d5db40ae0766e883af1e2bc47df89181e76e9710b6debbf3130904849806aef2",
+      "pre-attach-screen-private.png": "042d5973a3395efe8f30ecab818a4c211472e8fd94590adbcc97345c54422c72",
+      "pre-attach-processes-private.json": "3f8d119966e44f5bdd08f1534fe9c5276c78f02f92c931f1bbc9435c7eaa97c2",
+      "immediate-pre-attach-processes-private.json": "0dafe41e5ac312127dbfea11bdf6a02fe1598017f095848f47bb10983430026f",
+      "immediate-pre-attach-health-private.json": "c9491434a1390d5ca1fe164b3cd5953149876c7bdcfc5189ea220c1ccafb0e8d",
+      "post-first-detach-health-private.json": "ac7edc53886aecc39d90d0bc3671b54f9251b3a2c16cb1d9f6951ef6a1e4a5f5",
+      "pc-snapshot-private.json": "a2e019ac85e0f2f51d5d66ef6cc3f561b4c50ced9b6bcac694624a615f1d2424",
+      "pc-snapshot-v2-private.json": "63c39649db8fb474f68d5dbc97ecbeaa191d5b82a6c65594d0ae95478b8b3f8e",
+      "pc-snapshot-v3-private.json": "be12a8fb96e52fc8aa9e0a4a9efb599356546291c8e9be34531de79c1820ca29",
+      "lldb-v3-transcript-private.json": "a9d828a0cc6691d671c9bbb08738afd026e1edb511845c8a89f13b916844e89c",
+      "post-v3-health-a-private.json": "37bd5c382070b6c0b05f87d788a12629542fd3cc03dfd85a65ce899fa539d6af",
+      "post-v3-health-b-private.json": "5afe872a6cc7bdb3d5044a69e0610ccc5c7df1be9cb6f046866e30fe999d4977",
+      "symbol-138-private.txt": "f082856cc6f63cd8143ece07c85a746db2de5ca7fbc3a5771bf98e2796413afc",
+      "system-symbols-private.json": "3c24357ba3210c12b69b2f1d374879db37785d23bcbaa1dfeb8ffe26aca1ff93",
+      "pre-v4-processes-private.json": "ea51af53fb27fa84e0289a5b55aa43ce3107a0fa61dd6efcf8a54ce2823fbbe5",
+      "pre-v4-processes-cli-private.log": "52523d0a7c9a48fe5bbce3dcd92bc25e3e8bea86ed8bc0a96f6ad4298c4b0f30",
+      "lldb-control-v3/evidence.json": "5716ec45c6c975b6475562b3cbf9073c617543b91821acc73ad04087b412ce3b",
+      "lldb-control-final/evidence.json": "5386fee86d8dbf901b84d4056bb38c8f028ece22e6b9ad8ab5a57bceae7784b6",
+      "pre-v4-authorized-processes-private.json": "92953ebe01983493401ff4afbb1afd2933861e86254dc360fca5f427d8ae01cf",
+      "pre-v4-authorized-cli-private.log": "2c062dbda75cb281dc6ad7c8e3bccbea9b351ee85262bb0e1ee098153221c559",
+      "during-v4-health-private.json": "5e57b803b397fcd05d241b85cd2d5cfe8e5a1b9661b03aaddc5ad59fdfd3bf3f",
+      "during-v4-health-b-private.json": "5e57b803b397fcd05d241b85cd2d5cfe8e5a1b9661b03aaddc5ad59fdfd3bf3f",
+      "lldb-v4-partial-transcript-private.json": "c212e7b9d8876a7389beed00eff57cbfe266937ee84a617859eaa72a385e29a2"
+    },
+    "source_sha256": {
+      "experiments/linux-steam/tools/lldb_pc_snapshot.py": "38a0e15e839708ce2f45d821fdfd440830e7cab8f31f1a5d7bc32aee71cd654a",
+      "experiments/linux-steam/tools/test-lldb-pc-snapshot.py": "7a8644148064ab4e9692501f064bbf4dd280d9284e52f7d14a8173f0daafe388"
+    },
+    "active60_binary_sha256": "3f1603b74ad6c041763123c67366391e85224e7835f66c55b155bfd23fd75350",
+    "pinned_interpreter_source": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+    "source_inspection_limit": "gadgets.h _pc=x28 comment is not evidence of actual guest ELF PC: math.S loads gadget parameter stream via _pc then advances8. Guest-PC recovery requires exact ABI/block mapping proof; do not label x28 as guestPC or collect arbitrary registers/CPU objects.",
+    "boundary": "Specific61 upgrade remains pending; active60 must be preserved. Separate urgent V4 debugger recovery permission now pending after Ctrl-C auto-review rejection. Earlier V3 resumed proof applies only before V4; no current detached/healthy assertion.",
+    "next": "Resolve V4 debugger cleanup first after actual explicit user response; no new experiment/install or unconditional debugger exit. Then only actual UI/window discriminator and genuine Play/game/return stability can meet full objective.",
+    "limits": [
+      "No interactive UI recovery or new login,Play,game,return,Bluetooth or stability evidence.",
+      "No native worker/global mutex owner/guest process identification from a single sampled gadget.",
+      "No app restart/install/uninstall,data transfer,FEX/Valve edits,lock/trust/security changes,Macunlock request or credential/Guard automation.",
+      "Collector uses best-effort2s budget between SB calls, not a hard timeout for blocking debugger operations. Keep debugger interactive until actualdetach; never force-kill on observer timeout.",
+      "No STABLE_SUCCESS,LaunchAgent unload,cadence change or new researcher."
+    ],
+    "updated_UTC": "2026-11-15T02:42:28.616056+00:00"
+  },
+  "source_checkpoint_note": "Last published checkpoint before Run55; current scoped commit recorded by Git, not self-referential."
 }

@@ -1,3 +1,83 @@
+# URGENT Run55 V4: debugger cleanup pending, NOT currently verified detached
+
+Read latest Run55 MD/EVIDENCE before ANY action. V3 snapshot/resume below was
+successful, but later V4 LLDB session38994 is still open/hung on async attach/SB
+state query. Optional callercollector NEVERexecuted. Same Air60/PID19384/
+installationB55DD703-F281-4556-9A49-09550951953B was freshly verified beforeV4.
+Two duringV4 health copies bothsequence3638/mono864840006; apppossiblypaused.
+No actualstop event/ready state/capture/detach confirmation. Official process
+`detach --keep-stopped false` QUEUED, notexecuted/confirmed. No debuggerkill.
+
+Ctrl-C ONCE requested but AUTO-REVIEW REJECTED: may leave pendingattach/native
+pause unverified. No workaround/retry. Userquestion PENDING specifically allows
+oneCtrl-C hungquery interruption then officialdetach/resume + healthverification.
+Wait actualreply; no inferencefromelapsedtime/genericcontinue. No newdebugger/
+experiment/input/install/restart/quit/kill/security/lockchange. Keep currentTTY.
+Resolve cleanup FIRST; update evidence before saying sessionrecovered. NoMacunlock.
+
+Restricted-executor CoreDevice initialization timeout was CONTEXT-only: outside
+restrictedcontext exactAir19384 verified promptly. Do not call Air unavailable
+or infer Linuxcrash fromthaterror. Python SB statepoll during attach canblock;
+futureobservers should waitactualnative stopEVENT beforecollectorimport. Source
+warns, optionalcaller path remainshost-only. Preserve61permissionpending/auth/
+game/save/main/otherworktrees. No STABLE_SUCCESS/scheduler/APIstatuschanges.
+
+--- Earlier V3-only observations; NOT current detach status ---
+
+# LIVE Run55: actual Air PC snapshot/resume; white UI unresolved
+
+Read MD/EVIDENCE.run55 FIRST. Parente68a668; volumeUUID/origin/branch/remotes/
+main/worktrees verified, initiallyclean. No other researcher/hostruntime active.
+Actual Air60/PID19384/installationB55DD703-F281-4556-9A49-09550951953B still
+current on last successful preflight; REVALIDATE before any next attachment.
+Current142 guests; old wave1 updater42/DORMANT is NOT current shutdown.
+Fresh physical white screen/nativeoverlay observed; no usableLibrary recovery.
+
+NEW official Xcode LLDB device backend works despite older profiler21 failure.
+Exact60 Mach-O UUID/profile/device/PID/URI gate, frame0 nativePC only,16 of149;
+actualStop5 -> capture150ms -> Detach(False) success/state9. Collector-through-
+detach158ms AFTER stopped; outercommand/statewait16.260s NOT exactpause duration.
+No locals/arguments/objectpayload/expressions/targetwrites/restart. Actual60main
+SHA3f1603b74ad6c041763123c67366391e85224e7835f66c55b155bfd23fd75350.
+SamePID health3565->3574/90s afterdetach;142guests/footprint2103007800B. CPUdelta
+115.726367s/90s (aggregate128.585%singlecore), notUIresponsiveness/FPS.
+
+Offline app offset0xaf3f84 = gadget_scvtf_int_vec/math.S6019. Other14 PCs at
+kernel0x70dc candidate __psynch_mutexwait+8; mainthread0xcd4 mach_msg2_trap+8.
+Systemcache model/OS matches, but runtime systemUUID not captured. Singleinstant
+sparsePCs cannot name guestowner/lockowner/rootcause. _pc=x28 sourcecomment is
+NOT actualguestELFPC proof: gadget consumes translated parameterstream. No
+arbitraryregister/CPUobject dumps or gadget-fix assumptions.
+
+IMPORTANT async LLDB correction: device-select and attach canreturnStarted5 or
+Connected2 beforeactualstop. Earlier prematurecollector trieddetach/error3,
+keptdebuggeropen; afteractualSIGSTOP official processdetach --keep-stopped false
+succeeded/state9 and health3518->3537 advanced. Its2ms NOTpause duration. Third
+attempt waits5 beforeimport and9 beforequit; that V3 debugger fullyexited (V4 later pending above). NEVER
+unconditionallyquit/kill ontimeout or issueprocesskill. Toolfinally resumes/
+detaches onlymatchingPID; foreignPID preserved. Configpreflight remains external.
+
+Final opt-in PCcollector +11 fakeSB hostcontrols pass. Optional atmost2threads/
+3callerPC each is HOST-only (unwinder mayread return-address slots, no payload).
+Attempted next freshprocess preflight FAILED CoreDevice code1 serviceinitialize
+TIMEOUT. That was restricted CLI context; later authorizedCLI succeeded and V4 attempted
+attach but is now pending cleanup as above. No reset/restart/inferredappcrash.
+Private run55 has report/screen/health/transcript/hostcontrols; hashes inJSON.
+No app/runtime/vendor/FEX/Valve/profile/auth/game/save/security/lock changes.
+
+NEXT resolve V4 cleanup as above; no further optionalcaller test now. Keep current60 session; signed61 run52/signed61 unchanged,
+NOTinstalled, specific61 choice stillpending (old60approval used already).
+On explicit61 choice orauthoritative naturalend, revalidate andnormalLab-only
+sameIDupgrade, preserveauth/games/saves/no uninstall/transfer. CapturefreshX11
+windowstate+actualgoodLibrary/BPM/input, then targetedfix and genuineSteamPlay->
+licensedMadeira game->qualifiedallruntime/display/storageteardown/return/repeats.
+Bridge125NOTgame. Prior only-upgrade-can-add-evidence claim superseded byactual
+LLDBpath. ExistinggoalAPIblocked unchanged; noSTABLE_SUCCESS/unload/cadencechange.
+CLIonly; NEVERMacunlock/credential/Guard/trust automation. Pushsignedoffscoped
+checkpointonlyexperiment duringAGENTShours. Fullobjective remains incomplete.
+
+--- HISTORICAL; header supersedes older current-state claims ---
+
 # LIVE Run54: exact watch ELF hostPASS; current60 live, specific61 choice needed
 
 Read latest MD/EVIDENCE.run54 FIRST. Parent8233c3e branch/origin/remotes/main

@@ -1,12 +1,11 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run54): exact signed61 watch ELF executed under real host LinuxRunner:
-2 samples30.008s apart correctly capture own window hide/focus change; own
-synthetic child SIGTERM/reap succeeds. Default fixture code equivalent. Current
-Air60 identity still present and preserved; no new device UI/input/restart or
-upgrade. Specific61 choice remains pending across3 goal turns. Independent
-preparation complete; next decisive Air experiment awaits that user-only boundary.
-No stable Library/game/return qualification or success/scheduler change.
+Status (run55): first actual Air60 native PC snapshotV3 completed/resumed, but
+follow-upV4 debugger/SB state query is now hung. V4 collector never executed;
+o current detach proof. Health copies both3638, possibly paused. Official
+detach queued, Ctrl-C auto-review rejected; narrowly scoped user recovery
+permission requested and pending. Do not quit/kill debugger, start another
+experiment or upgrade active60. Genuine UI/game/return stability unachieved.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5205,3 +5204,136 @@ LaunchAgent unload. On actual specific choice revalidate native identity, profil
 and device, normal isolated sameID upgrade/no uninstall or account transfer,
 then actual interactive UI, genuine Play->licensed Madeira game/fullreturn/
 repeat stability. The original complete objective remains unchanged.
+
+## Run55 — actual Air native PC snapshot without restarting Steam
+
+Parent `e68a6689f861c22b6b34bf09eaa196b8af18ff73`; volume UUID, origin,
+experiment branch/remote/main/worktrees verified, initial tree clean. Interpreter
+source remains pinned to `d1419782da2e299fe22f1ddb85c70ae3d1e276b1`.
+Exact Air60/PID19384/installationB55DD703-F281-4556-9A49-09550951953B and
+current receipt matched. Health3384 still142 guest entries. Historical returned
+wave1/backendDORMANT/native0/status10752 is updater42<<8, not current shutdown.
+Fresh physical screenshot remains white with native overlay/pointer. Preserve
+this active session; prior consent to upgrade60 was already used,61 choice remains
+pending. Generic continuation does not answer that specific choice.
+
+**Discriminator.** The old TimeProfiler command already had correct hardware
+UDID/PID and failed21/cannot-find-pid; no repeat. An independent official Xcode
+LLDB device backend can inspect native execution without an app restart. Exact
+process/installed-URI preflight, read-only existing Air/app/development-profile
+verification and the actual60 Mach-O UUID gate were used. Main binary SHA256
+`3f1603b74ad6c041763123c67366391e85224e7835f66c55b155bfd23fd75350`.
+No device/target substitution, expressions, locals/arguments, arbitrary object
+payload, credentials or app memory writes. Attachment temporarily suspends the
+app; detach must resume it before the debugger can quit.
+
+**Observed device result.** Actual stopped state5 before collection;16 uniform
+frame0 native PCs out of149 threads. Collection150ms, collector-through-detach
+158ms; native detach succeeded/state9. These timings start after stopped state
+was established. Outer command/state-wait/collection window16.260s includes
+asynchronous attachment, not an exact target suspension duration or UI latency.
+Same nativePID health3565->3574 afterward,142 guest entries, footprint2103007800
+bytes at both samples. Over that90s monotonic health interval, aggregate process
+CPU advanced115.726367s (128.585% of one core), not a responsiveness/FPS metric.
+Fresh UI remains unqualified for recovery. Report/source hashes are in
+EVIDENCE.run55; private artifacts under `.madeira-install/linux-steam-ipad/run55`.
+
+Offline exact-app symbolication resolves module offset0xaf3f84 to
+`gadget_scvtf_int_vec` (`math.S:6019`), a LinuxRunner ARM64 signed-int/vector-FP
+conversion gadget. Model/OS-matched DeviceSupport resolves the other offsets to
+`mach_msg2_trap+8` (1) and `__psynch_mutexwait+8` (14); the system module UUID was
+not captured, so those system names remain qualified candidates. One sparse
+instant cannot identify the guest process, lock owner or cause of white rendering;
+it does not establish a bad arithmetic instruction or a deadlock. Inspection of
+pinned `gadgets.h`/`math.S` also shows `_pc=x28` consumes a translated gadget
+parameter stream. Its source comment alone does not establish an actual guest
+ELF PC; do not dump registers/CPU objects or label x28 as guestPC.
+
+**Debugger setup correction.** `SBCommandInterpreter` device-select initially
+returned asynchronous Started5, not a permission failure. Moving attach to a
+top-level command also returned before completion. An early collector saw
+Connected2, incomplete executable metadata, then detach error3. Its premature
+attached=true and2ms timing are not ready/stopped or pause-duration evidence.
+The debugger was kept open; after actualSIGSTOP, explicit
+`process detach --keep-stopped false` succeeded/state9; health3518->3537 advanced.
+That first pause duration was not measured. The successful third sequence waited
+for actual stopped5 before importing the collector, then verified actualdetach9
+before quit. At that point V3 was detached and its debugger exited. That does not describe
+the later V4 state below. No force-kill/service reset.
+
+**Minimal patch and tests.** New opt-in
+`experiments/linux-steam/tools/lldb_pc_snapshot.py` requires explicit attachment
+and private, freshly validated configuration. It reads16 frame0 PCs, records
+module/base/offset only, and attempts resume-detach in finally. Never detach a
+foreign PID; keep debugger open if attachment is pending or cleanup fails. Final
+revision optionally asks for at most3 caller PCs on at most2 selected native
+threads. LLDB unwinding may read return-address slots; it never requests locals,
+arguments, evaluated code or arbitrary object payloads. The2s budget is checked
+between SB API calls, not a hard bound on remote calls. Final11 fake-SB controls
+pass for PID/UUID/platform/state/read/cleanup and optional callers; this is host
+coverage, not another device run. Successful device snapshot used the earlier
+frame0-only version; final foreign-PID guard/optional-caller path is host-tested.
+No shipping runtime/app/vendor/FEX/Valve modification or rebuild/install.
+
+Reproduce the host scope with a new private output directory:
+
+```sh
+python3 experiments/linux-steam/tools/test-lldb-pc-snapshot.py \
+  /Volumes/easystore/GitHub/FunProjects/.madeira-install/linux-steam-ipad/run55/new-control
+```
+
+Device observation requires fresh exact CoreDevice PID/installed-URI, matching
+artifact UUID and authorized profile first. Copy the private config schema from
+run55, update identity/result path (must not exist), and keep device IDs private.
+Use a dedicated interactive `xcrun lldb --no-lldbinit` session. Select the exact
+hardware device with `device select`, attach only the freshly verified Lab PID,
+and poll `GetSelectedTarget().GetProcess().GetState()` until actualStopped5.
+Queue collector import immediately once5 is confirmed; do not spend a model or
+human roundtrip leaving the target paused. Set `IDECK_PC_SNAPSHOT_CONFIG` inside
+that debugger, then `command script import -r` the collector. Only quit after
+report detached=true AND actual state9. Pending2/3 is not a completed attach;
+keep the debugger available. If needed after actual attachment, use official
+`process detach --keep-stopped false`; never kill the debugger on a timeout.
+
+**Follow-upV4: pending debugger cleanup.** At most3 caller PCs for one waiter
+and the interpreter worker was the next discriminator. A restricted-executor
+CoreDevice process query timed out initializing the service. That was not an
+actual-device connectivity conclusion: the same authorized CLI outside that
+restricted service context immediately verified exact Air19384/installedURI.
+No service/security/lock state was changed.
+
+Dedicated interactive LLDB session38994 then selected the exact Air and issued
+attach. External Python SB state queries returned only echoed input, no ready
+state/event; the optional collector was never imported. A query may block before
+attachment's stop event and prevent queued commands from executing. No caller
+PCs were collected. Two own health copies both3638/mono864840006 indicate the
+app may be paused; stale health alone does not prove a crash or exact debugger
+state. Official `process detach --keep-stopped false` is queued but has not been
+confirmed executed. Debugger remains open. V3's earlier resume proof is not a
+claim that V4 is currently detached.
+
+One Ctrl-C request was rejected by automatic approval: interrupting a still-
+attaching debugger could leave the app suspended/attached without verified
+cleanup. No workaround or repeat interrupt was sent. A narrowly scoped explicit
+user question is pending: allow one Ctrl-C to interrupt the hung query, followed
+by official detach/resume and samePID health verification. Do not infer approval
+from generic continuation or elapsed time. Do not start another debugger, quit/
+force-kill the current one, restart/install the Lab or alter device/security
+settings. Preserve that session until the actual user response or authoritative
+successful cleanup. Update final evidence before claiming recovered.
+
+The source docstring now warns against Python SB polling during asynchronous
+connection; future collection must await the actual native stop event before
+import. Final collector caller option remains HOST-only. The prior assertion
+that only upgrading could add device evidence was superseded by V3, but its
+limited native-PC success did not fix the white UI. No new executable/Valve/FEX
+or shipping runtime change, login/credential/Guard action or game/return proof.
+
+After cleanup, on explicit61 choice or authoritative natural session end,
+revalidate app/profile/device and normal Lab-only sameID upgrade; collect actual
+window-state stream plus physical Library/BPM/input before a targeted patch.
+Full objective remains genuine SteamPlay->licensed Madeira game->qualified
+Linux/Wine/display/storage teardown->reliable Steam return/repeated stability.
+Bridge125 remains diagnostic. Existing goal API still reported blocked; no
+status/scheduler mutation, successsentinel/unload, Mac-unlock request or changes
+to account/games/saves/main/other worktrees/working apps.
