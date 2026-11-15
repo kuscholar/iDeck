@@ -1,11 +1,10 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run56): actual Air62 Library/BPM/menu input verified, but restored game
-detail background then white, no Install/Play reached. Bounded native mmap probe
-actually recorded16KiB shared success vs4.55MiB sharedRO/private/anonymousENOMEM;
-all successful controls released, original error preserved. Size-sensitive native
-allocation pressure supported; exact VM limit/root cause unknown.62PID20594 still
-live, native log capped/copied. Full licensed game/return/stability goal ACTIVE.
+Status (run57): actualAir63 genuine authenticated Library and fixed input worked;
+Big Picture failed. First CEF invalid-pointer load precedes separate reservation
+ENOMEM/BRK; native App subsequently SIGABRT in full-frame NSData copy allocation.
+Coarse anonymous CoW span is NOT a stability fix. Default remains1. Full licensed
+game/return/repeated-stability goal ACTIVE; baseline control next.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5462,3 +5461,91 @@ parameter after host proof, then actual Air UI/memory regression. Do not raise
 limits, suppress assertions, substitute anonymous backing for shared IPC or
 claim a fixed native VM cap. Complete SteamPlay->licensed Madeira game/full
 return/repeated stability remains the active goal; no successsentinel/unload.
+
+## Run57 — two-native-page anonymous CoW materialization, 2026-11-15
+
+Source parent `7ca5490eded1047a42a3a4f4f5f7699063da0502`. Storage UUID, branch,
+origin/remote refs and other worktrees verified. Latest explicit user authorization
+permits safe isolated upgrades without another approval; no production identity,
+account, game, save, security or lock changes. Fresh same Build62/PID20594/install
+590D1B80 identity verified before building; not restarted while build pending.
+
+**Observed failure:** Run56 original shared mapping ENOMEM12 and successful16KiB
+vs failing4.55MiB controls support size-sensitive native allocation/placement
+pressure. They do not prove an exact Darwin region/physical-memory limit.
+
+**Single hypothesis:** materializing compatible private-anonymous CoW groups over
+two native pages instead of one can reduce dense-write backing count enough to
+help genuine Steam UI under native allocation pressure. Sparse writes may instead
+use more memory. No retry/fallback, shared/file-backed grant or soft reservation.
+
+**Minimal patch:** explicit `--cow-native-pages-per-group 2` requires existing
+`--cow-native-group`. Default remains1. Copied memory source only, pinned vendor
+unchanged. Two-native-page aligned group, same backing/exactflags/contiguous source
+offsets; no file/shared/memfd/protection crossing. Existing16guestpage bound and
+real mmap backing retained. Allocation failure propagates unchanged. First actual
+success emits categorical `IDECK_COW_NATIVE_SPAN_V1`; no guest/account payload.
+
+**Discriminator/host results:** actual memory-unit ASan+UBSan, Werror fixture,
+24 cases across1/2native-page variants. Dense/sparse256guestpage controls check
+every byte in writer and sibling, flags, accounting0 after cleanup. Expanded
+boundary fixture covers two-native-page span (8guestpages on host), barrier at
+second-native-page start, distinct backing/offset/hole/shared/protection/file,
+mmap/malloc rollback, child writes, per-page unmap and8concurrent writers.
+Dense:64->32distinct backings, both1MiB rounded native mapping capacity. Sparse
+32writes at32KiB stride:32backings both,512KiB->1MiB capacity. Original ungrouped
+negative control256backings/4MiB capacity. These are backing/capacity measurements,
+NOT RSS/exact native region count/iPad performance. Runtime63 built23nativeunits.
+Full app build/sign/install/runtime comparisons pending.
+
+Private reproducible commands/evidence in `.madeira-install/linux-steam-ipad/run57/`
+`runtime63-command-private.json`, `app63-command-private.json`, `cow-span1/`,
+`cow-span2/`, `cow-baseline/`, `runtime63/evidence.json`. No Valve/profile/log data
+published. Next: full final artifact/link/sign gates, safe sameLab upgrade and
+actual Air Library/BPM/game-selection comparison plus mapping/resource evidence.
+No current game/return/stability success.
+
+### Run57 actual63 results — FAILED stability; no sole-cause claim
+
+FullXcode63/final signed mem_ptr->CoW call, doubled group instruction, existing
+realfs->failureprobe call, unchanged signed text, deepstrict/exact Air profiles
+and existing certificate all pass. Signed mainSHA
+`3d43820c0f37e9bd2bf39553eb4dd3e90fc31f41164323a5b0f7a58eb5f39084`.
+SameLab63 upgrade preserved all storage. Initial parser64 rejected beforelaunch;
+then invocation produced retained_argument0/noLinux session. Only that inert
+verifiedPID20883 normally stopped, previous proven CLI option order used, actual
+retained_argument1/updater confirmed. Do not mistake invocation errors forLinux
+faults. Actual63PID20893/install25570A03-E897-4B09-8225-286DC854001A.
+
+Actual new code executed: native span marker configured8guestpages/copied2/8192B,
+clipped by existing boundaries. Genuine official updater completed; normal
+retained auto-restart, saved-auth desktop and real Library visible after one
+fixed LibraryclickACK1. One BPMclickACK2 led black then desktop header/black
+content, no usable BPM/home/game details/Install/Play. No credentials or account
+secrets transferred/automated; raw screens with friends/account remain private.
+
+Earliest captured guest fault: tid/group269 SIGSEGV atPCe7fb2cf0, instruction
+`ldr w8,[x8,#0x18]`, unmapped address0x110005f007d. Exact36B sequence unique in
+ACTUAL Air63 official CEF SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb.
+Correct literalfileoffset5e52cf0/ELFVA5e62cf0; reported5e55cf0 again +3000biased.
+Do not use nearest cef_get_xdisplay exported-symbol label as real function.
+Later tid415 BRK atPCe733b270 (verifiedfile51db270/ELFVA51eb270), recent mmap
+8454144B/prot0/flags20022 result-12. This is NOT the same sharedfile failure as
+Run56, and failure-only sharedfile probe did not fire. No claim the first pointer
+fault was caused by CoW, allocation pressure, or this later reservation failure.
+
+At03:20:20EST actual nativePID20893 terminated: OSreport EXC_CRASH/SIGABRT, same
+process abort, frames NSAllocateMemoryPages -> NSData copying -> LRRFBClient
+update+2464, final appoffseta1c240/UUIDb6b5b9dc-a4ca-3269-b9be-1eb1cce22951.
+This proves native full-frame copy allocation failure; NOT jetsam/observertimeout.
+Finalhealth51 footprint2379405928/guest173/filepolicy0/gamefalse. Home screenshot
+and freshprocess inventory confirm20893 gone. A separate21122 sameinstallation
+was listed but no new receipt/Linux session observed; preserve/revalidate it.
+No game/bridge/return/Bluetooth/physicaltouch/stability success.
+
+Evidence hashes in EVIDENCE.run57; raw run57/crash63-20893-private.ips,
+native63-bpm-private.log, cef63-byte-verified-private.json and screens stayprivate.
+Next discriminator: same-flags baseline span1 actualAir control to distinguish
+new coarse span from existing/intermittent guest corruption/native capacity.
+Treat native RFB full-frame allocation and original CEF pointer fault separately.
+No new capacity cap, mprotect, FEX/Valve/assertion/security/lock change.

@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 56,
+  "latest_run": 57,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -15518,5 +15518,149 @@
       "native62-capped-observer-private.json": "47f84e69918475be18ccaf8b2ccdd85e28feeabe29ab945a15662aacd95271e6"
     },
     "official_CEF_file_sha256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb"
+  },
+  "run57": {
+    "source_parent": "7ca5490eded1047a42a3a4f4f5f7699063da0502",
+    "phase": "ActualAir63 genuine saved-auth Library/input passed; BPM failed, primary guest SIGSEGV then separate reservationENOMEM/BRK and native RFB allocation SIGABRT. Coarse span NOT stability fix.",
+    "hypothesis": "Coarser compatible private anonymous CoW may reduce native mapping pressure; sparse materialization cost measured",
+    "gates": "Explicit cow-native-group + cow-native-pages-per-group2, default1; no vendor/FEX/Valve edits",
+    "host_cases": 24,
+    "host_dense": {
+      "span1_backings": 64,
+      "span2_backings": 32,
+      "both_rounded_mapping_bytes": 1048576
+    },
+    "host_sparse": {
+      "both_backings": 32,
+      "span1_rounded_mapping_bytes": 524288,
+      "span2_rounded_mapping_bytes": 1048576
+    },
+    "native_units": 23,
+    "device_installed": true,
+    "actual_game": false,
+    "return": false,
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run57",
+    "updated_utc": "2026-11-15T08:27:11.702896+00:00",
+    "full_Xcode_pass": true,
+    "final_cow_call_and_double_span_instruction": true,
+    "signing": {
+      "build": 63,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span_marker": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "74554e157de6d3d2b35999ad0427654d4283039ccbbcf654f30fcaa8c089286d",
+      "signed_sha256": "3d43820c0f37e9bd2bf39553eb4dd3e90fc31f41164323a5b0f7a58eb5f39084",
+      "text_SHA256": "eb3a250a35155d5128eb2e520d12c240b77428bd7e6c1ddebc40f7eee3ec6497",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "native_PID": 20893,
+    "installation_UUID": "25570A03-E897-4B09-8225-286DC854001A",
+    "device_runtime_qualification": "Genuine updater only so far; Library/BPM/new span marker not yet confirmed",
+    "launch_negative_control": "Initial launch parser rejected64, then no-session UI/retained_argument0; inert Lab normally restarted with prior proven option order, actual updater now observed. No Linux crash inferred.",
+    "actual_cow_span_marker": "native_pages2/configured8/copied2/backing8192; boundary-clipped first success observed in actual63 log",
+    "actual_saved_auth_Library": true,
+    "actual_BPM": false,
+    "private_artifact_sha256": {
+      "cow-span1/evidence.json": "9f816867d07326f1020dc6d644a65d36e8c37a427cc57d8b0f84cd9cd386a58e",
+      "cow-span2/evidence.json": "fcdf61491c7a8a58f25e338dc934186221dca3a098c226f15ca9f9e6828812e6",
+      "cow-baseline/evidence.json": "57765cb072459a5ea6cec2f953c882bfe2b54bd44f7965b81491834ec59699e5",
+      "runtime63/evidence.json": "7d98860f4bc782d541ff026218430d682d904503fa1c65c44d9d40fba3c609b1",
+      "sign63-evidence-private.json": "4ac9ae0d76f797a7eb356b5febbb53adb5a1fc63a1d2da24c7ba8541a8b52c37",
+      "final63-cow-caller-private.txt": "a6b9cb4082508886cc8eac4651fd0cca6c5a491e55bad36feac117d550256894",
+      "final63-cow-disasm-private.txt": "33e99c96aeb48b4f0834dd096b65087a28d272d374e3d6116082af0f70ff114d",
+      "final63-file-disasm-private.txt": "37a59ad8e84694bfa10d5146a4836cfbb1a055ff46e4647e40cb73521cb9d807",
+      "native63-updater-private.log": "8aa78849f55faaa9fa1614a3e633620e55cfc5b4ad837ffdc70f8c3916b20b98",
+      "runtime63-command-private.json": "3e301b4d9a9eaaad32c155f99cf1d118bee57cc9d3fb7efce2b38f3f603aa574",
+      "app63-command-private.json": "2bde93963fb79e2e49e15740e94a6770db7afb9173de172fbb9bf670dc61c212",
+      "native63-client-private.log": "7896e2299eb76472dfb0c5d3bec2645d920be293dde19ae226b4966b64294ffc",
+      "native63-bpm-private.log": "87125951b8419c8bd74768bd936d58e0eee833741ce021b0a5261582ebdc2f68",
+      "cef63-byte-verified-private.json": "18ca238da90d90670ad0ea84f932fa4918c939316fb894732613da11542218fc",
+      "libcef63-official-private.so": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb",
+      "crash63-20893-private.ips": "60531df017384aa4ca17e1740f550fc444b512cda6500ff2a4186469508d318e",
+      "screen-librarysettled-private.png": "c67c1cd467da8c6f58547cc442c1dd73aa19317a3e0e9f28423124e2eecf0f06",
+      "screen-bpmsettled-private.png": "2e25159583f5e0f64a462aa169b5de6ac1dc882641bf2aaac54749d37809fd40",
+      "screen-finalbpm-private.png": "46c9355d6759ef134cd124cf402721d02b194665f81c8cb841ea97bd8b0bcc90",
+      "processes63-final-private.json": "b7e917d3459df25957b611b18747fa28abc3ff55a646cb9054471c6c7233640f",
+      "host-cow-stack2/evidence.json": "cdbd5a90009d0b157157d512cfb4d1e103c95f893bd9e8d219867bc16f46fb6b",
+      "guest-span2/evidence.json": "748c3d988b2dc0cf4cac9ae593a8807a105aa1e4b061a92fbd5db1270afc6596"
+    },
+    "actual_game_return": false,
+    "device_trial_status": "FAILED UI stability; not sole-root-cause proof",
+    "actual_ui": {
+      "Library_click_ACK": 1,
+      "BPM_click_ACK": 2,
+      "Library_visible": true,
+      "BPM_visible": false,
+      "Install_Play_reached": false,
+      "native_PID20893_exited": true,
+      "new_PID21122_same_installation": "Observed separately; no fresh receipt/Linux session proof, preserve/revalidate before action"
+    },
+    "first_guest_fault": {
+      "tid": 269,
+      "tgid": 269,
+      "signal": 11,
+      "PC": "0xe7fb2cf0",
+      "unmapped_address": "0x110005f007d",
+      "instruction": "0xb9401908",
+      "operation": "ldr w8,[x8,#0x18]",
+      "byte_verified_CEF_file_offset": "0x5e52cf0",
+      "byte_verified_CEF_ELF_VA": "0x5e62cf0",
+      "candidate_load_bias": "0xe2150000",
+      "no_symbol_or_root_cause_claim": true
+    },
+    "later_guest_fault": {
+      "tid": 415,
+      "signal": 5,
+      "PC": "0xe733b270",
+      "byte_verified_ELF_VA": "0x51eb270",
+      "recent_mmap": {
+        "length": 8454144,
+        "prot": 0,
+        "flags_hex": "0x20022",
+        "guest_result": -12
+      },
+      "shared_file_failure_probe_observed": false,
+      "not_same_failure_as61_62": true
+    },
+    "native_exit": {
+      "exact_PID": 20893,
+      "OS_time": "2026-11-15T03:20:20-05:00",
+      "exception": "EXC_CRASH SIGABRT",
+      "termination": "SIGNAL6 by same app",
+      "stack": [
+        "NSAllocateMemoryPages",
+        "_NSPlaceholderData initWithBytes:length:copy:deallocator:",
+        "NSData initWithBytes:length:copy:freeWhenDone:bytesAreVM:",
+        "LRRFBClient update+2464"
+      ],
+      "final_app_frame_offset": "0xa1c240",
+      "final_image_UUID": "b6b5b9dc-a4ca-3269-b9be-1eb1cce22951",
+      "limit": "Native full-frame copy allocation failure, NOT jetsam or just observer timeout. Guest primary pointer fault precedes this; no shared sole cause proven."
+    },
+    "actual_CEF_SHA256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb",
+    "next": "Baseline span1 actualAir control under otherwise same flags, exact fault-bytes/probe/native exit comparison; retain default-off span2 as failed research. Diagnose initial CEF pointer fault and native full-frame allocation separately; no assertion suppression/fallback.",
+    "source_sha256": {
+      "experiments/linux-steam/app/CowNativeGroup.inc": "b33b0fe6886992a9a4ca0bf2b0d637cbf448928c6f10b22d63d87cdd66256449",
+      "experiments/linux-steam/tools/build-cow-native-group.py": "f5ba56029db6a83fd004cac93f72454b3b1ee5ca76da8c35e00012af97d49aae",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "a48b3dd6a1eb01e52a89e4ee0ef39bf875a0c8039e7b5cb05514c8460093e33a",
+      "experiments/linux-steam/tools/cow-backing-control.c": "d9fa7a022c494e0c847ec9bba27ecaeaaeb220a9e12c663d1774d2f17fceeb96",
+      "experiments/linux-steam/tools/cow-group-boundary-control.c": "c7403a932498c59e1d044db979a236609001af0fdae942855b8e565d2a3fa3ab",
+      "experiments/linux-steam/tools/test-cow-backing.py": "f0d95d53538b780888facb05ddc5b7cb48dc60c90809eaf7d53dbc84c040a4e4",
+      "experiments/linux-steam/tools/test-cow-native-group.py": "c3e29839cd20b2377a9e23aeccca2327d576d55030949e21ca913a70b03d2fd1"
+    },
+    "host_combined_ARM64_ELF_checks": 20
   }
 }

@@ -1,9 +1,18 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
  * Private LinuxRunner overlay; caller owns mem write lock. Anonymous private
  * COW only. No file/memfd/shared/protection crossing; original path otherwise. */
+#ifndef IDECK_LAB_COW_NATIVE_PAGES
+#define IDECK_LAB_COW_NATIVE_PAGES 1
+#endif
+#if IDECK_LAB_COW_NATIVE_PAGES != 1 && IDECK_LAB_COW_NATIVE_PAGES != 2
+#error Lab CoW span must be one or two native pages
+#endif
 static int ideck_cow_native_group(struct mem *mem,page_t page,int type) {
     if(type!=MEM_WRITE)return 0;
     pages_t group=real_page_size/PAGE_SIZE;
+#if IDECK_LAB_COW_NATIVE_PAGES == 2
+    group*=2;
+#endif
     if(group<=1||group>16||(group&(group-1)))return 0;
     struct pt_entry *entry=mem_pt(mem,page);
     if(!entry||!(entry->flags&P_COW)||!(entry->flags&P_WRITE)||
@@ -44,6 +53,12 @@ static int ideck_cow_native_group(struct mem *mem,page_t page,int type) {
     }
     for(page_t p=first;p<end;p++)data_release(old);
     mem_changed(mem);
+#if IDECK_LAB_COW_NATIVE_PAGES == 2
+    static atomic_bool span_logged;
+    if(!atomic_exchange_explicit(&span_logged,1,memory_order_relaxed))
+        printk("IDECK_COW_NATIVE_SPAN_V1 native_pages=2 configured_guest_pages=%llu copied_guest_pages=%llu backing_bytes=%zu original_file_shared_boundaries_preserved=1\n",
+            (unsigned long long)group,(unsigned long long)(end-first),bytes);
+#endif
     return 1;
 }
 const char *ideck_cow_native_group_marker(void){return "IDECK_ANON_COW_NATIVE_GROUP_V1";}

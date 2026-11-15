@@ -27,6 +27,7 @@ p.add_argument('--file-map-cleanup',action='store_true',help='Release native fil
 p.add_argument('--file-mmap-failure-probe',action='store_true',help='Lab-only shared-file ENOMEM discriminator: at most four immediately unmapped controls, original result unchanged')
 p.add_argument('--fork-map-failure',action='store_true',help='Return ENOMEM on failed child page-table/reservation allocation; no capacity/retry changes')
 p.add_argument('--cow-native-group',action='store_true',help='Group compatible private anonymous CoW pages inside one native-page range; no file/shared/cap changes')
+p.add_argument('--cow-native-pages-per-group',type=int,choices=(1,2),default=1,help='Explicit CoW span experiment: two native pages may reduce backings at extra materialization cost')
 p.add_argument('--stage-dock-request',action='store_true',help='Copy a normally drained captured request into Swift metadata slot; NOT Wine/game execution')
 p.add_argument('--native-setup-transition',action='store_true',help='Explicit main-thread native setup button after normal drain/staging; disables Linux restart, no automatic game launch')
 p.add_argument('--cli-input-controls',action='store_true',help='Development only: nine fixed navigation events through existing RFB; no text or game-launch payload')
@@ -40,6 +41,7 @@ assert not a.retire_empty_probe or a.register_shared_library,'Empty-probe retire
 assert not a.stage_dock_request or a.dock_storage,'Native request staging requires explicit captured Dock storage integration'
 assert not a.native_setup_transition or a.stage_dock_request,'Native setup presentation requires explicit request staging'
 assert not a.file_mmap_failure_probe or a.file_map_cleanup,'File-mmap probe requires the copied qualified file-backend source'
+assert a.cow_native_pages_per_group==1 or a.cow_native_group,'Coarser CoW span requires explicit anonymous grouping'
 repo=Path(__file__).resolve().parents[3];lab=repo/'experiments/linux-steam';src=repo/'vendor/LinuxRunner';build=ns/'build'
 assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()=='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -69,7 +71,7 @@ if a.fork_map_failure:
     kernel=out/'fork-map-failure/libish.a'
 if a.cow_native_group:
     memory=out/'fork-map-failure/memory.c' if a.fork_map_failure else out/'lazy/memory.c'
-    run('build-cow-native-group.py',src,build,kernel,memory,out/'cow-native-group')
+    run('build-cow-native-group.py',src,build,kernel,memory,out/'cow-native-group',*(['--native-pages-per-group',str(a.cow_native_pages_per_group)] if a.cow_native_pages_per_group!=1 else []))
     kernel=out/'cow-native-group/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
 runtime=out/'runtime';runtime.mkdir()
@@ -133,5 +135,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'linuxrunner':original['linuxrunner'],'namespace_base_evidence_sha256':hashof(ns/'evidence.json'),
  'namespace_header_sha256':hashof(ns/'LinuxSymbolNamespace.h'),'base_archives_unchanged':True,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

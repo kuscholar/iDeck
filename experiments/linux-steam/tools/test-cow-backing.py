@@ -13,7 +13,7 @@ assert str(out).startswith('/Volumes/easystore/') and not out.exists() and (host
 out.mkdir(mode=0o700);binary=out/'control'
 cmd=['xcrun','clang','-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DISH_INTERNAL=1','-I'+str(src),'-I'+str(host),'-fsanitize=address,undefined','-Wall','-Wextra','-Werror',str(unit),str(host/'libish.a'),'-L'+str(host),'-lish_emu','-lfakefs','-lsqlite3','-o',str(binary)]
 subprocess.run(cmd,check=True)
-with (out/'control.log').open('x') as f:r=subprocess.run([binary],stdout=f,stderr=subprocess.STDOUT,timeout=20,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
+with (out/'control.log').open('x') as f:r=subprocess.run([binary,"dense"],stdout=f,stderr=subprocess.STDOUT,timeout=20,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
 assert not r.returncode
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 (out/'evidence.json').write_text(json.dumps({'scope':'HOST pinned CoW granularity, harness sanitized only; rounded mapping capacity is NOT physical RSS, exact VM region count, Darwin limit or device root-cause proof','exit':r.returncode,'command':cmd,'source_sha256':sha(unit),'log_sha256':sha(out/'control.log'),'archive_sha256':sha(host/'libish.a')},indent=2)+'\n')

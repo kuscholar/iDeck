@@ -6,12 +6,14 @@ from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
 for name in ('source','build','archive','memory_source','output'):p.add_argument(name,type=Path)
 p.add_argument('--sanitize',action='store_true');p.add_argument('--host-inject',action='store_true')
+p.add_argument('--native-pages-per-group',type=int,choices=(1,2),default=1,help='Explicit coarse private-anonymous CoW experiment; may materialize extra pages')
 a=p.parse_args();src,build,archive,prepared,out=[getattr(a,n).resolve() for n in ('source','build','archive','memory_source','output')]
 assert str(out).startswith('/Volumes/easystore/') and not out.exists() and archive.is_file() and prepared.is_file()
 assert subprocess.check_output(['git','-C',src,'rev-parse','HEAD'],text=True).strip()=='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert not subprocess.check_output(['git','-C',src,'status','--porcelain','--untracked-files=no'],text=True).strip()
 body=prepared.read_text();anchor='static void *mem_ptr_nofault(struct mem *mem, addr_t addr, int type) {';assert body.count(anchor)==1
 helper=Path(__file__).resolve().parents[1]/'app/CowNativeGroup.inc';text=helper.read_text()
+if a.native_pages_per_group!=1:text='#define IDECK_LAB_COW_NATIVE_PAGES '+str(a.native_pages_per_group)+'\n'+text
 if a.host_inject:
  text='extern int ideck_cow_inject_failure;\n'+text
  text=text.replace('void *copy=mmap(', 'void *copy=ideck_cow_inject_failure==1?MAP_FAILED:mmap(')
@@ -34,5 +36,5 @@ if a.sanitize:cmd+=['-fsanitize=address,undefined','-fno-omit-frame-pointer']
 subprocess.run(cmd,cwd=entry['directory'],check=True)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before=sha(archive);target=out/'libish.a';shutil.copy2(archive,target)
 subprocess.run(['xcrun','ar','r',target,obj],check=True);assert sha(archive)==before
-(out/'evidence.json').write_text(json.dumps({'base_archive_sha256':before,'base_unchanged':True,'input_memory_sha256':sha(prepared),'generated_sha256':sha(generated),'helper_sha256':sha(helper),'archive_sha256':sha(target),'host_injection':a.host_inject,'sanitized_memory_unit':a.sanitize,'scope':'Compatible anonymous private CoW groups only; not file/shared/ptrace/limits/physical-RSS/device/game proof','command':cmd},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'base_archive_sha256':before,'base_unchanged':True,'input_memory_sha256':sha(prepared),'generated_sha256':sha(generated),'helper_sha256':sha(helper),'archive_sha256':sha(target),'native_pages_per_group':a.native_pages_per_group,'host_injection':a.host_inject,'sanitized_memory_unit':a.sanitize,'scope':'Compatible anonymous private CoW groups only; not file/shared/ptrace/limits/physical-RSS/device/game proof','command':cmd},indent=2)+'\n')
 print('Copied anonymous CoW grouping archive built; pinned vendor unchanged')

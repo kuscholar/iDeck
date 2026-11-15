@@ -1,3 +1,34 @@
+# CURRENT Run57 FINAL:63 Library worked; BPM failed, native RFB allocation abort
+
+Read Run57 MD/EVIDENCE FIRST. User explicitly allows safe isolated upgrades;
+old approval questions superseded. Sourceparent7ca5490; current scoped span2
+feature/test/docs changes await checkpoint. Default1; vendor/FEX/Valve untouched.
+Host24 actualmemory ASanUBSan controls: dense64->32backings/both1MiB; sparse32
+both/512KiB->1MiB. Full63/23units/finalcalls/doubleinstruction/deepstrict/exactAir
+profiles/signedtext pass; real spanmarker configured8/copied2 observed.
+
+Actual63 sameLab installed, auth preserved, genuine saved-auth Library/inputACK1
+works. BPMACK2 black/header only. First guest269 SIGSEGV PCe7fb2cf0 /unmapped
+0x110005f007d /LDRw8[x8+18], actualCEFdiskSHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb
+unique36B ->file5e52cf0/ELFVA5e62cf0/bias e2150000. Reporter+3000offset wrong.
+Later guest415 BRK PCe733b270/ELFVA51eb270, recent prot0 anonymous8.06MiB
+mmap-12; NOT Run56sharedfile failure, no sharedprobe rows. No solecauseclaim.
+Native63PID20893 actuallySIGABRT03:20:20EST: OSreport NSAllocateMemoryPages/
+NSData copy -> LRRFBClient update+2464, appoffseta1c240. Notjetsam/timeout.
+Actual63signed mainSHA3d43820c0f37e9bd2bf39553eb4dd3e90fc31f41164323a5b0f7a58eb5f39084,
+install25570A03-E897-4B09-8225-286DC854001A.20893gone; NEW21122 sameURI listed,
+receipt still20893/no newLinux evidence. Revalidate beforeactions, preserveuser
+session. No observer/debugger active. Private run57 evidence only hashespublic.
+
+NEXT samehypothesis baseline span1 actualAir control, allotherflags same. Combined ARM64ELF20 hostregression nowPASS on lazy+checkedfork+span2 stack. No64built
+yet. NativeRFBallocation and firstCEFpointerfault are separate layers; no blind
+fallback/assertion suppression. Bridge125stillNOTgame, fulllicensedgame/return
+objective active. NeverSTABLE_SUCCESS/unload/complete without repeated actualgoal.
+CLIonly/neverMacunlock/credentialsGuardtrustlocksecurity changes. Main/other
+worktrees/accounts/games/saves untouched. Commit-s/pushonlyexperiment perhours.
+
+--- Historical Run56 and earlier ---
+
 # CURRENT Run56 FINAL:62 UI eventuallywhite; real native capacity probe observed
 
 Latest explicit safe-operationapproval persists; oldquestions below superseded.
