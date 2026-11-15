@@ -1,3 +1,66 @@
+# CURRENT Run58 FINAL:64 default-span ALSO native RFB allocation SIGABRT
+
+ReadRun58 MD/EVIDENCE FIRST.64originalspan1 actuallyrendered savedauthdesktop,
+LibraryACK1 but UIHome/noLibrarycompletion/BPM/game. ExactPID21278 absent, OSreport
+03:38:38EST EXC_CRASH/SIGABRT NSAllocateMemoryPages/NSData-copy/RFBupdate appoffset
+a1c240, same63nativefailure. Original2MiB sharedfilemmap nativeENOMEM12 at
+guest203/group178;16hostfailure rows. Actualprobe16KiBsharedRW succeeds/released;
+2MiBsharedRO/privateRW/anonymousRW allENOMEM12,allreleased/originalpreserved.
+Adjacentfoot2134366680/available871900712/regions49095 NOTatomic/exactcap. No
+GUEST_FAULT in complete64log, doesn'texclude63coarsecontributiontopointerfault.
+No liveuserLinuxsession found after64exit; revalidatebeforefutureupgrade.
+
+Sourcecheckpointcd63898 pushed; current58 ownadjacentELFfixture/docsdirty. Both
+span1/2real ARM64fork/CLONE_VM adjacentread4checksPASS; nanosleepwaitnotpure
+no-syscallTLBproof. Main/vendor/FEX/Valve/security/lock/accountdata untouched.
+No activeobserver/debugger; no65built. Rawrun58 private, evidencehashes public.
+FullgoalstillACTIVE, bridge125NOTgame. Latestall-safeauthorizationpersists.
+
+NEXT onehypothesis: audit/revalidate historical exclusivewholebacking private
+DONTNEED replacement fromRun18 on CURRENTlazy/fork/CoW stack, source
+PrivateDiscard.inc/build-madvise-stats.py. NeverAir-qualified, currenthybrid
+hardcodesPRIVATE_DISCARD=0. Ifhostbarrier/rollback/ARMELF controls pass, addnew
+explicitdefaultOFF hybridflag andcompare actual65 eligibilitycounts, resource
+behavior andrealUI, notrequests=reclaimedRAM. No speculativecap/mprotect/soft
+backing/assertion suppression. NativeRFBgracefulfailure canbe separate later
+fix; don'tmix hypotheses. StaticMachOsegments don'texplain475GBcoldvirtual,
+sourceguestsetrlimit doesn'tforwardhostAS/DATA. Nativeallocationcauseunknown.
+
+Preserveallapps/main/worktrees/auth/games/saves. CLIonly/neverMacunlockrequests/
+credentialsGuardtrustlockbypass. Commit-s/pushonlyexperimentperhours. NoSTABLE
+SUCCESS/unload/complete withoutfullrepeatedAirSteamUI/licensedgame/return.
+
+--- Run58 live chronology and earlier ---
+
+# LIVE Run58: baseline64 actualAir updater; do not interrupt
+
+Parentcd63898 checkpoint pushed/readback. Current original-span64 sameotherflags
+fullXcode/23units/finalcall/span2absence/sign/Airprofilecert pass, sameLab upgraded
+preservingallauth/games/save. ActualPID21278/installEF1FE8B8-2071-4EA1-9316-AE5B08538BC5;
+REVALIDATE beforeactions. Nativekernel-21278-886169-545242000.log. Interpreter.
+Currentgenuineupdater underway, no Library/BPM64 proofyet. Noobserver/debuggerlive.
+Private run58/air64-run-config-private.json andobserve64-private.py. Initial
+phase7/20sec/22guests/553MB observed; notCEFsuccess. Continue bounded observations.
+
+New own ARM64 adjacent-reader/CoW/fork test4checks PASS eachspan1/2host combined
+stacks. Waits cancrosssyscalls; notexclusion ofCEFpointercorruption. Noenginepatch.
+Runtime64 is controlonly, no newfix. ReadRun57originalCEFfault/nativeRFBabort
+below. Native63originalPID20893 wasOSaborted, notjetsam. New21122 recognized
+sameURI/no newreceiptLinux; stoppednormally forapprovedsafe64upgrade. Main/
+otherapps/data untouched. Latestbroad safe-operationauthorization persists,
+NEVERrepeatoldpermissionquestions. CLIonly/neverMacunlock/credentialsGuardtrust.
+
+NEXT finishsameflowLibrary/BPM64, getfreshoriginalfailure/nativecapacityprobe/
+OSreport ifany; distinguishchanged/intermittent failures, don'tclaimssolecause.
+Source58tests/docs currentlydirty; no65prepared. Historic exclusivewholebacking
+MADV_DONTNEED prototype fromRun18HOSTtested butNEVERdevicequalified; current
+hybridbuildexplicitlyPRIVATE_DISCARD=0. Ifcapacityrecurs, revisitactualeligible
+reclamation onlyaftercurrentcontrol; don'tblindlyturnon oldcandidate orassume
+requestedbytes=reclaimedmemory. FulllicensedMadeiragame/return stillgoal,
+bridge125NOTgame. NoSTABLE_SUCCESS/unload/complete.
+
+--- Run57 and earlier ---
+
 # CURRENT Run57 FINAL:63 Library worked; BPM failed, native RFB allocation abort
 
 Read Run57 MD/EVIDENCE FIRST. User explicitly allows safe isolated upgrades;

@@ -1,10 +1,10 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run57): actualAir63 genuine authenticated Library and fixed input worked;
-Big Picture failed. First CEF invalid-pointer load precedes separate reservation
-ENOMEM/BRK; native App subsequently SIGABRT in full-frame NSData copy allocation.
-Coarse anonymous CoW span is NOT a stability fix. Default remains1. Full licensed
-game/return/repeated-stability goal ACTIVE; baseline control next.
+Status (run58): original-span control64 reproduces native RFB snapshot-allocation
+SIGABRT and size-sensitive processwide mmap failure; coarse span is not required
+for this native failure. Authenticated desktop rendered; Library action did not
+complete before exit. No stable BPM/game/return. Goal ACTIVE; targeted reclamation
+prototype audit next, never infer success from compilation or initial rendering.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5549,3 +5549,60 @@ Next discriminator: same-flags baseline span1 actualAir control to distinguish
 new coarse span from existing/intermittent guest corruption/native capacity.
 Treat native RFB full-frame allocation and original CEF pointer fault separately.
 No new capacity cap, mprotect, FEX/Valve/assertion/security/lock change.
+
+## Run58 — original-span actualAir control
+
+Sourceparentcd63898591101684c41392e63fa1f9f555b61e18. Safe operations remain
+authorized; unchanged pinned vendor/main/worktrees/production app/accounts/data.
+Single discriminator: restore one-native-page CoW span, retain other62/63runtime
+flags, current rootfs/auth and genuine CEF bytes. Build64 fullXcode/23nativeunits,
+final actualCoWcall/span2markerabsence, matching Air profiles/cert/deepstrict and
+signedtext preservation pass. SameLab installUUIDEF1FE8B8-2071-4EA1-9316-AE5B08538BC5,
+PID21278 actual updater. Previous20893 already OS-aborted; recognized21122
+postexit/inert process normally stopped only after verifying sameinstallation
+and receipt still20893/no newLinux session. No uninstall or data transfer.
+
+New real ARM64 guest control `guest/cow-adjacent-probe.c` runs private fork
+sibling and CLONE_VM reader: warm adjacent page before main CoW writes, verify
+new values through reader/unchanged sibling, joins and unmap. Four checks pass
+on both1/2-native-page combined host stacks (ASanUBSan wrappers/memory, engine
+not fully sanitized). Bounded nanosleep waits can crosssyscalls; this is not a
+pure no-syscall TLB stress proof nor exclusion of actualCEF corruption. Existing
+pin's TLB read/write hits already check global mapping generation; no speculative
+engine/FEX patch. Source/artifact hashes and commands in private run58.
+
+Actual64 Library/BPM/failure/resource comparison still in progress. No game/return
+or stable-success claim. Next classify actual64 against63 before another runtime
+change; native RFB allocation and primary guest pointer fault remain separate.
+
+### Run58 final baseline64 result
+
+Actual original-span64 authenticated desktop/Store rendered. One Library action
+ACK1, but physical screen thenHome; no completed Library/BPM/game. Complete native
+log has no GUEST_FAULT line (not proof all faults impossible). First2MiB regular
+sharedRW mmap failednative12 at guest203/group178;16host-file failure rows.
+Existing bounded probe actually executed:16KiB samefile sharedRW succeeds and
+released;2MiB sharedRO/privateRW/anonymousRW allENOMEM12, all controls released,
+originalerror preserved. Adjacent periodic footprint2134366680/available871900712/
+regions49095/virtual483034742784 atmono886500562, NOT atomic or exact limit proof.
+
+Fresh process inventory confirms21278 gone; exactOS report21278/03:38:38EST is
+EXC_CRASH/SIGABRT with same NSData copying/NSAllocateMemoryPages -> RFB update
+appoffseta1c240 as63. Thus native allocation failure is NOT exclusive to expanded
+CoW. This DOES NOT exclude a contribution of expansion to the separate63 guest
+invalid-pointer fault; do not claim sole root cause. No retry/restart to force
+UI success. Native full-frame allocation and guest failures remain distinct.
+
+Read-only checks reject two guesses: mainMachO has48,480,256B DATA plus43MBTEXT,
+4GiBPAGEZERO, not a475GB staticsegment; cold virtual reservation owner is unknown,
+never attribute all toWine/FEX orphysicalRAM. Pinned guestsetrlimit stores guest
+task limits only, no hostAS/DATA mutation found. No security/resource-setting edits.
+
+Private run58 raw/evidence hashes in JSON. Next one hypothesis: historicalRun18
+exclusivewholebacking DONTNEED replacement may reduce retained committed memory
+BEFORE pressure, but remained OFF in currenthybrid and was neverAir-qualified.
+Audit current composition/real barriers and retesthost before any opt-in65build.
+Measure ACTUAL eligible replacement count and real AirUI/memory; requested or
+replaced bytes are NOT physicalreclamation. Preserve defaultspan1 and failed
+optionalspan2 research; no blind softgrants, cap/assertion/mprotect/FEX changes.
+Full licensedMadeiragame/return/repeatedstability objective remains incomplete.

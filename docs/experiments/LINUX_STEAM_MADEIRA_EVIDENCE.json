@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 57,
+  "latest_run": 58,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -15662,5 +15662,143 @@
       "experiments/linux-steam/tools/test-cow-native-group.py": "c3e29839cd20b2377a9e23aeccca2327d576d55030949e21ca913a70b03d2fd1"
     },
     "host_combined_ARM64_ELF_checks": 20
+  },
+  "run58": {
+    "source_parent": "cd63898591101684c41392e63fa1f9f555b61e18",
+    "phase": "FAILED baseline64 capacity/native RFB allocation. Desktop authenticated; Library action ACK but no Library completion/BPM reached. Original native crash reproduces without coarse span.",
+    "hypothesis": "Control for coarse span: one native page, otherwise same runtime flags/payload; cannot infer sole cause from a single different failure",
+    "full_Xcode_pass": true,
+    "native_units": 23,
+    "signature": {
+      "build": 64,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span2_marker_absent": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "6f05d1e7510d3e446a89bf917224638711ed09873b13a7d6cfba1b42e22718c2",
+      "signed_sha256": "7a42aed361f600547f3d6c3b5e3426def2b4f72f90b2d7516f45182bed137bd3",
+      "text_SHA256": "92267cb92a5dd28154b332ac9d8e8abdfe23f6075f10e34e135cfd13423cecb1",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "final_actual_cow_call": true,
+    "span2_marker_absent": true,
+    "device": {
+      "PID": 21278,
+      "installation_UUID": "EF1FE8B8-2071-4EA1-9316-AE5B08538BC5",
+      "same_Lab_only": true,
+      "container_preserved": true,
+      "old63_already_aborted": true,
+      "inert_recognized_postexit21122_stopped_after_unchanged_receipt_check": true
+    },
+    "host_adjacent_ELF": {
+      "span1": "PASS fourchecks",
+      "span2": "PASS fourchecks",
+      "scope": "Real ARM64 fork + CLONE_VM reader warms adjacent page before private CoW writer; nanosleep may occur in bounded waits, not a pure no-syscall stale-TLB proof; not CEF/Air cause exclusion"
+    },
+    "game": false,
+    "return": false,
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run58",
+    "updated_utc": "2026-11-15T08:42:41.524103+00:00",
+    "artifact_sha256": {
+      "runtime64/evidence.json": "85f4d40075a6cf609f356d50db0242c49ef43f2e24825c66b1851483350116fa",
+      "sign64-evidence-private.json": "f8659972d74062e90bda288851bdc69b4bad63cfe1d41920c8511d71b4ca3add",
+      "final64-cow-disasm-private.txt": "874f760b7b4c5a82fb1f84b5689dc6fd27971c2fa2dfaa474a89e334c447735c",
+      "adjacent-span1/evidence.json": "4027f1947149a52bea218ecb8e79b0c04751fc332c59fc2ab0dc4d6bbbf681d6",
+      "adjacent-span2/evidence.json": "d5fb0f601fa579dd1c0a4927e6dd6f123b1318641e31f8c2b4424ba6b3cabede",
+      "native64-final-private.log": "931f01dbe7dbe456587e836555e50449b019f86949fd30234815dee1b44a4263",
+      "crash64-21278-private.ips": "8053046f4c50ad8a40e1bafb96fdaa807f2caf442cb5e9b962a925e82bd004cb",
+      "processes64-final-private.json": "a941e3d7cf36a518368894f94a2db1864189bc1182292cdb112242b60e59e062",
+      "screen-desktop-private.png": "1c519bace6eac67d79a44307a092403ea9678ea8cfa00930861da95c7bfe155e",
+      "screen-library-private.png": "8c3cd67ee5cba1b5f393742dc5c27ecab807c309b6b558812cb4cf21da25c428"
+    },
+    "actual_desktop_visible": true,
+    "actual_Library_visible": false,
+    "actual_BPM_visible": false,
+    "Library_ACK_sequence": 1,
+    "native_PID21278_absent_verified": true,
+    "OS_report": {
+      "PID": 21278,
+      "capture_time": "2026-11-15T03:38:38-05:00",
+      "type": "EXC_CRASH SIGABRT",
+      "termination": "SIGNAL6 sameprocess",
+      "app_frame_offset": "0xa1c240",
+      "stack": [
+        "NSAllocateMemoryPages",
+        "NSData copying initializer",
+        "LRRFBClient update+2464"
+      ]
+    },
+    "original_mapping_failure": {
+      "tid": 203,
+      "tgid": 178,
+      "length": 2097152,
+      "offset": 0,
+      "flags": 1,
+      "prot": 3,
+      "native_errno": 12,
+      "file_length": 2097152,
+      "native_file_shared_failures": 16,
+      "guest_fault_lines_in_complete_native_log": 0,
+      "probe_trials": [
+        {
+          "length": 16384,
+          "shared_RW": true,
+          "success": true,
+          "released": true
+        },
+        {
+          "length": 2097152,
+          "shared_RO": true,
+          "success": false,
+          "errno": 12
+        },
+        {
+          "length": 2097152,
+          "private_RW": true,
+          "success": false,
+          "errno": 12
+        },
+        {
+          "length": 2097152,
+          "anonymous_RW": true,
+          "success": false,
+          "errno": 12
+        }
+      ],
+      "all_controls_released": true,
+      "original_error_preserved": true
+    },
+    "adjacent_nonatomic_resources": {
+      "mono_ms": 886500562,
+      "footprint_bytes": 2134366680,
+      "available_bytes": 871900712,
+      "region_count": 49095,
+      "virtual_bytes": 483034742784
+    },
+    "conclusion": "Native RFB copy-allocation abort and processwide size-sensitive mmap failure also occur at span1. This does not exclude a coarse-span contribution to the separate63 guest invalid-pointer fault. No exact Darwin region/RAM cap proven.",
+    "rejected_source_checks": {
+      "static_MachO_475GB_segment": false,
+      "largest_actual_DATA_vmsize": 48480256,
+      "PAGEZERO_bytes": 4294967296,
+      "native_cold_virtual_reservation_owner": "Not established; do not attribute to Wine/FEX or physicalRAM",
+      "guest_setrlimit_mutates_host_AS_DATA": "Pinned source only changes guest task limit table; no such native setrlimit found"
+    },
+    "next": "Audit/revalidate historical default-off exclusive whole-backing DONTNEED prototype on current composed stack; if passing, explicit separate64-control->65 Air experiment measuring actual eligible replacements, resource behavior and real UI. Do not equate request/replacement bytes with reclaimed RAM. No blind capacity/assertion/protection/FEX/Valve changes.",
+    "source_sha256": {
+      "experiments/linux-steam/guest/cow-adjacent-probe.c": "a79baffdb320288f67a0e4eeb6d2d957847308f86b4679a6ad8c937516614182",
+      "experiments/linux-steam/tools/test-cow-adjacent.py": "8b034b5431ed690ab53bb26137cc9eade7d2d937567024a2a416af34b7a03de3"
+    }
   }
 }
