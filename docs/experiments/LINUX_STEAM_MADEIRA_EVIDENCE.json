@@ -12,11 +12,11 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 55,
-  "recorded_at_utc": "2026-11-15T02:34:00.920314+00:00",
+  "latest_run": 56,
+  "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "e68a6689f861c22b6b34bf09eaa196b8af18ff73",
-  "source_parent": "e68a6689f861c22b6b34bf09eaa196b8af18ff73",
+  "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
+  "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
   "target": {
     "product": "iPad13,1",
     "model": "iPad Air4",
@@ -15123,5 +15123,400 @@
     ],
     "updated_UTC": "2026-11-15T02:42:28.616056+00:00"
   },
-  "source_checkpoint_note": "Last published checkpoint before Run55; current scoped commit recorded by Git, not self-referential."
+  "source_checkpoint_note": "Last published checkpoint before Run55; current scoped commit recorded by Git, not self-referential.",
+  "run56": {
+    "phase": "COMPLETED bounded discriminator, full goal incomplete: actual62 genuine Library/BPM/menu input, then game-detail background->white; native failure control recorded small shared success and all three larger alternativesENOMEM",
+    "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
+    "user_authorization": "Explicit user approved all safe operations, prioritizing nonblocking experiment; prior debugger recovery and isolated61 upgrade boundaries resolved. No credentials/Guard/trust/lock/security changes authorized or performed.",
+    "recovery": {
+      "old_host_debugger_found": false,
+      "old_exec_TTY_unavailable": true,
+      "same_Air60_PID": 19384,
+      "health_sequences": [
+        4972,
+        4995,
+        4996
+      ],
+      "interrupt_sent": false,
+      "historical_V4_detach_timing": "not observed",
+      "Lab_recovery_verified": true
+    },
+    "artifact_verification": {
+      "main_SHA256": "b96aa2ae2a9e2d6713f809ee9ea2178094d0c3b1379264c6879bbbf2277e8a90",
+      "watch_SHA256": "9fca248acfe0180079a157b7de152bc7a312127554d1d0114d3c5fb6767f9e60",
+      "deep_strict_signing": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "expires": "2026-11-20T04:42:36",
+          "device_matches": true,
+          "debug_allowed": true
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "expires": "2026-11-20T04:42:34",
+          "device_matches": true,
+          "debug_allowed": true
+        }
+      ]
+    },
+    "deployment": {
+      "same_bundle": "com.kuschqin.ideck.freshtest",
+      "oldLab_terminated_only": true,
+      "install_succeeded": true,
+      "uninstalled": false,
+      "launch_succeeded": true,
+      "currentPID": 20200,
+      "installationUUID": "5E36A869-2C96-44F1-9204-D13B7064E475",
+      "arguments": [
+        "linux-steam-retained-frontend"
+      ],
+      "app_data_transfer": false,
+      "working_apps_or_accounts_changed": false
+    },
+    "hypothesis": "Distinguish same-file shared mapping/backing limits from global native allocation/map pressure. A single bounded failure-only probe compares one native-page sharedRW, same-length sharedRO, same-length privateRW and same-length anonymousRW; never substitutes them for original failure.",
+    "limits": "No source/app/FEX/Valve patch, sourcebuild success is historical61 not new; no Library/BPM/input/game/return/stability claim yet. No new debugger attach.",
+    "private_artifacts_base": ".madeira-install/linux-steam-ipad/run56",
+    "updated_UTC": "2026-11-15T07:56:15.898647+00:00",
+    "observed_failure": {
+      "native61PID": 20200,
+      "guest_tid": 379,
+      "guest_tgid": 270,
+      "guest_role_limit": "Reported type=zygote; derived process role not proven renderer from inherited argv alone",
+      "failure": "host_file_mmap native_errno12 -> guest mmap result-12, then same thread libcef BRK0 and group status5",
+      "guest_fd": 65,
+      "native_host_fd": 430,
+      "file_bytes": 9523200,
+      "length": 9523200,
+      "offset": 0,
+      "host_page": 16384,
+      "correction": 0,
+      "host_prot": 3,
+      "host_flags": 1,
+      "refs": 2,
+      "closest_prior_resource": {
+        "mono_ms": 879645652,
+        "footprint_bytes": 2330368496,
+        "available_bytes": 675898896,
+        "region_count": 56728,
+        "virtual_bytes": 483012689920
+      },
+      "limit": "Adjacent periodic sample, not atomic at mmap failure. POSIX ENOMEM is observed; exact Mach VM return/root capacity class unknown. Native app did not die."
+    },
+    "actual61_results": {
+      "genuine_saved_auth_desktop_header": true,
+      "genuine_Library_visible": true,
+      "Library_click_native_ACK_sequence": 1,
+      "Library_visual_result": "Actual games list/news/covers visible after single Library click; private screenshot contains account/friends, never publish raw",
+      "BPM_click_ACK_sequence": 2,
+      "BPM_visible": false,
+      "BPM_observation": "New full-root mapped window/focused descendant, then black->white and browser window recreation. Remained white in final screenshot; no navigation/game success.",
+      "window_stream_rows_first_wave": [
+        2,
+        4,
+        6
+      ],
+      "window_stream_replaced_on_legitimate_updater_restart": true,
+      "retained_wave1_only": "Actual61 update42 and normal backend/viewer drain followed by one authorized auto-restart; last returned result NOT whole current session quiescence",
+      "historical_log_warning": "CEF log includes Nov12/14 NOTREACHED/badIPC213; NOT fresh Nov15 evidence or cause."
+    },
+    "minimal_patch": {
+      "files": [
+        "app/FileMmapProbe.inc",
+        "tools/file-mmap-probe.py",
+        "tools/build-file-map-cleanup.py",
+        "tools/build-hybrid-linux-runtime.py"
+      ],
+      "gate": "Explicit --file-mmap-failure-probe requires copied qualified file-map-cleanup; default generated realfs byte-identical to61",
+      "admission": "First native-lifetime ENOMEM, regular complete file, sharedRW, offset0, native-page<=length<=16MiB only",
+      "bounded_actions": "At most4 diagnostic mmap and immediate munmap, no accesses/guest PTE transfer/FD closure; stop on release failure. No retry of original same-sized sharedRW request, original Linux/native error restored.",
+      "no_changes": [
+        "Vendor/FEX/Valve bytes",
+        "assertions",
+        "mprotect",
+        "code-signing/security/lock settings",
+        "production main/app/data"
+      ]
+    },
+    "tests": {
+      "host_exact_function_ASan_UBSan_Werror_cases": 30,
+      "host_native_own_unlinked_file": true,
+      "host_default_disabled_and_original_success_preserved": true,
+      "host_cleanup_failure_stops_remaining_trials": true,
+      "file_cleanup_regression": "Baseline3 failed-transfer leaks reproduced; patched3 released, both3 success cases retained; exact source unchanged in default probe-off generation",
+      "runtime62_native_adapters_compiled": 23,
+      "full_Xcode62_result": 0,
+      "final_realfs_direct_probe_call_verified": true,
+      "signing": {
+        "status": 0,
+        "final_realfs_direct_probe_call": true,
+        "exact_Air_profile_certificate_match": true,
+        "unsigned_sha256": "db316f1e0b3d9184cd19b3d86b5d99346d896430dfb1ec55464c92b83b1b8837",
+        "signed_sha256": "e354566eae9a0628589818c134266f4fa1e1060bc24e5632ff951f5c33a01db8"
+      },
+      "text_preservation": {
+        "scope": "Final linked/signed iOS artifact only",
+        "text_unsigned_equals_signed": true,
+        "text_SHA256": "92bcd3a405f32b81a21f0494e8e80e57492ee46b94d109a48f7ac695f1d94ba0",
+        "native_probe_call_verified": true,
+        "device_runtime_validated": false
+      },
+      "interpreter_probe_device_run": "Actual62 all4 controls completed; only one page mapping succeeded and was released; full original-failure behavior preserved. No UI stability fix."
+    },
+    "cef_byte_verification": {
+      "scope": "Actual Air61 CEF file and existing runtime FAULT_CODE metadata; no target-memory access added",
+      "official_CEF_SHA256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb",
+      "bytes": 218132264,
+      "reported_offset_negative_control": {
+        "FAULT_MAP_reported_file_offset": "0x6351060",
+        "disk_instruction_at_reported_offset": "0x54ffff01",
+        "matches_runtime_BRK": false
+      },
+      "byte_verified_fault": {
+        "runtime_PC": "0xe84ae060",
+        "runtime_instruction": "BRK #0",
+        "exact_runtime_36_byte_pattern_disk_hits": 1,
+        "pattern_start_file_offset": "0x634e050",
+        "actual_BRK_file_offset": "0x634e060",
+        "ELF_BRK_VA": "0x635e060",
+        "reported_offset_bias_bytes": 12288,
+        "byte_derived_load_bias_candidate": "0xe2150000"
+      },
+      "limits": [
+        "Reported file-offset is not trustworthy as literal disk offset for this sample;12KiB bias is consistent with native16KiB alignment correction but source cause not fixed/proven here.",
+        "Exact function symbol not identified; nearest cef_get_xdisplay+largeoffset labels are rejected.",
+        "Same-thread mmapENOMEM precedes fatal; no assertion suppression, fallback or sole-root-cause claim."
+      ]
+    },
+    "deployment62": {
+      "same_ID_in_place_upgrade": true,
+      "old61_normal_terminate_only": true,
+      "installed": true,
+      "launched": true,
+      "PID": 20594,
+      "installation_UUID": "590D1B80-44C2-433B-BE8D-0A734A25A5CC",
+      "receipt": "kernel-20594-881693-786674000.log",
+      "genuine_updater_visible": true,
+      "later_authenticated_desktop_header_visible": true,
+      "probe_observed": true,
+      "no_debugger_JIT_needed_or_attached": true,
+      "source_frozen_before_build": "b512255 plus scoped dirty62 sources; per-source/artifact hashes below"
+    },
+    "target_fresh": {
+      "model": "iPad Air (4th generation)",
+      "product": "iPad13,1",
+      "OS": "27.2",
+      "build": "24B119",
+      "CPU": "arm64e / arm64",
+      "physical_memory_bytes": 4056186880
+    },
+    "next": "One new hypothesis: coarser compatible private-anonymous CoW groups may reduce native mapping pressure. First extend isolated real-kernel dense/sparse/barrier/accounting controls, measuring mapping/rounding vs extra materialization. Default-off parameter, no file/shared/protection crossing, no FEX/Valve changes; only after tests/build/final linkage/profile verification compare actualAir UI/input and memory. Keep bridge125 honest and continue toward licensed game/return; no assertion suppression/anonymous shared-memory fallback.",
+    "source_sha256": {
+      "experiments/linux-steam/app/FileMmapProbe.inc": "f252702b9e0af8e98031ab094dde0199dfb7d443a6c86204cac0dfba8601e5d1",
+      "experiments/linux-steam/tools/file-mmap-probe.py": "86f1c5127dd488b41d7e7cd9130cb8f5134d0d18d860fd79835c07bad862aebf",
+      "experiments/linux-steam/tools/file-mmap-probe-control.c": "bc31695b889b41e3d5df28bf186d2fc590f2e038f2e2a104f243362d4c97fd7f",
+      "experiments/linux-steam/tools/test-file-mmap-probe.py": "e4b17f691e59eb9603bf81ef75ca48c10820c698b24b3990736292b2d8616db4",
+      "experiments/linux-steam/tools/build-file-map-cleanup.py": "b6c98884fbea4f659b95e7cf29ecb611ab8c0af96e138ab4bfa63b98dac919c9",
+      "experiments/linux-steam/tools/build-hybrid-linux-runtime.py": "d6817b06729b252b4b3780e009091baaa6800a0c2614c7f805f7a9b3f9afb743"
+    },
+    "actual62_results": {
+      "genuine_saved_auth_desktop_Library": true,
+      "BPM_home_visually_confirmed": true,
+      "Back_opens_MainMenu": true,
+      "Down_visually_selects_Library": true,
+      "Activate_from_Library_result": "Restored DDLC detail background only, then white; no Install or Play reached",
+      "native_CLI_sequence_final": 5,
+      "physical_touch_or_Bluetooth_test": false,
+      "shared_steamapps_list": "CoreDevice.ActionError3, may be absent until first install; not installed-game proof",
+      "default_steamapps_appmanifests": [],
+      "actual_game": false,
+      "SteamPlay_to_bridge": false,
+      "game_return": false,
+      "current_health": {
+        "schema": 1,
+        "pid": 20594,
+        "build": 62,
+        "native_log": "kernel-20594-881693-786674000.log",
+        "sequence": 132,
+        "mono_ms": 883003807,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 141,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2121046368,
+        "cpu_valid": 1,
+        "cpu_user_us": 2047408556,
+        "cpu_system_us": 249308087,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 5,
+          "last_action": 6,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      },
+      "bounded_live_observer": "First samplehealth71 native0 probe rows, second live native copy7000 while healthcopy succeeded -> observer stopped. Later capped/stopped immutable log copied once successfully; no debugger/pause required."
+    },
+    "actual62_probe": {
+      "tid": 163,
+      "tgid": 140,
+      "bytes": 4767744,
+      "host_page": 16384,
+      "original_native_errno": 12,
+      "original_Linux_result": -12,
+      "trials": [
+        {
+          "kind": "same_file_one_native_page_sharedRW",
+          "bytes": 16384,
+          "mapped": true,
+          "released": true
+        },
+        {
+          "kind": "same_file_same_length_sharedRO",
+          "bytes": 4767744,
+          "mapped": false,
+          "native_errno": 12
+        },
+        {
+          "kind": "same_file_same_length_privateRW",
+          "bytes": 4767744,
+          "mapped": false,
+          "native_errno": 12
+        },
+        {
+          "kind": "same_length_anonymousRW",
+          "bytes": 4767744,
+          "mapped": false,
+          "native_errno": 12
+        }
+      ],
+      "attempted": 4,
+      "all_successful_mappings_released": true,
+      "original_result_preserved": true,
+      "diagnostic_result_used_for_guest": false,
+      "nearby_previous_periodic_vm_sample": {
+        "mono_ms": 882792802,
+        "footprint_bytes": 2236537304,
+        "available_bytes": 769730088,
+        "virtual_bytes": 483073245184,
+        "region_count": 57043
+      },
+      "mmap_linkage": "Final linked62 imports mmap from libSystem; no defined Wine/FEX replacement symbol observed",
+      "interpretation": "Supports a size-sensitive native allocation/placement/capacity constraint spanning file-backed and anonymous mappings. Rejects sole file-permission/backing cause. Exact Mach return, region limit, largest allocatable gap and root cause remain unproved.",
+      "first_app_vm_sample": {
+        "mono_ms": 881693788,
+        "footprint_bytes": 5392032,
+        "virtual_bytes": 475568488448
+      },
+      "limit": "Probe caught a4.55MiB main-browser-group request, not the exact61 9.08MiB/tid379 request. Do not conflate original groups/timing or infer a universal limit from adjacent samples."
+    },
+    "actual_observations_early61": {
+      "physical_screens": [
+        "Genuine ValveSteam updater/Extracting package",
+        "Black guest display/pointer/nativeoverlay",
+        "Black guest display/pointer/nativeoverlay"
+      ],
+      "X11_sample_rows": [
+        2,
+        4,
+        6
+      ],
+      "first_stream_append_and_clocks_advance": true,
+      "last_mapped_updater_window": 4194306,
+      "Steam_client_manifest_version": 1792618285,
+      "bootstrap_phase": "Extracting package since current06:34:41; no assumption of hang until progress sampled",
+      "current_health": {
+        "schema": 1,
+        "pid": 20200,
+        "build": 61,
+        "native_log": "kernel-20200-879061-638858000.log",
+        "sequence": 16,
+        "mono_ms": 879211649,
+        "phase": 7,
+        "initial_call_returned": false,
+        "tracked_guest_entries": 23,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 944622440,
+        "cpu_valid": 1,
+        "cpu_user_us": 266727250,
+        "cpu_system_us": 11906139,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        }
+      },
+      "last_retained_receipt": "Still old60/19384 wave1, not authoritative for61"
+    },
+    "artifact_sha256": {
+      "device56-details-private.json": "183982e587021589b5d38a6cbae18add40aaf11b3a799c6bbdca47a3b4dc30c2",
+      "host-debugger-processes-private.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "health-before-private.json": "68254ef947bb239073934770b14ed8892a2f224eddc9333d3c95e3380f8321a6",
+      "health-recovered-private.json": "fc874bd6854d04ebe30a3a63cc6b9e0d429e022d7cf2ff5d7dfdcb7ec7cbab45",
+      "signed61-revalidation-private.json": "9686c2cb2587c8b3d099871653a657936e67ea4cf5471d5ef96fcce7ce9debd3",
+      "install61-observer-private.json": "adb323ac3b14f0a09602576203cbb478e738f5771d1b6954f73538425a344e06",
+      "launch61-observer-private.json": "5372095a22b690ec951a986b6cd3d14a2c767821e4ce2bec2964f575ab0ae1a3",
+      "receipt61-private.json": "ecbb430ce4878e3e78000e335df9e516424eb6ea97038f4dddc1f5045f7e9856",
+      "screen61-first-private.png": "8089798d8367152ccc75f31933027441a5e5c387562058f8357d0b126d40c66f",
+      "screen61-after-library-private.png": "aa9d2386b240b1ba8869b5c5ae9cc915fe6b7badf65762997fd453c36721b688",
+      "screen61-bpm-settled-private.png": "5578e144d3cc78555c176e0e32e57a7b446fae8efc52b134b667e1152cd66c05",
+      "screen61-final-private.png": "0368730d1b5d901fec4c5b7839657c5c2fb8982583003bd86316d8e18ded20cb",
+      "native61-bpm-second-private.log": "5248c58edbe312902dd4ec14985e2aa5526b5b62cafdabaf25fe2a964f77b1a4",
+      "cef61-byte-verified-evidence.json": "906b32dac213d15de14e29344ccbd8e37e092b39a62b3c61f7dd2dc0e5a4ecf4",
+      "cef61-byte-verified-trap-disassembly-private.txt": "59c004b8460b07081f04d274459a647f8495e06550ba7b223fa2c789bcf6b5b5",
+      "mmap-probe-host/evidence.json": "9f1befa04256aea0f26851a8e8bbc8b052fcff786e97a76c311476e6d5c453d3",
+      "file-cleanup-regression/evidence.json": "b968480f9316c7aa5989d05ba0ee8f67c36b13c5e3298befd0dc86ba0bfb4e9c",
+      "runtime62/evidence.json": "9b2afe86f7bdea5bef2f66bef6ac446d5ce61a1337a4915aafcc1352357d1fe6",
+      "runtime62/file-map-cleanup/evidence.json": "4ccd580d2e4b47ec2e4e3b6b30d3a2621d5508e196924f0cfe63c54863892026",
+      "hybrid62/prepare-evidence.json": "516c50a4b2541295045e3c52e73c12914df7c306d370f5014875a67c39b490fc",
+      "hybrid62/package-validation.json": "549d6b93a2ceb03df866636aedce6f604067fc12aa1240b8b16f329a084dfec4",
+      "hybrid62/build-result.json": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+      "sign62-result-private.json": "11919dc37cec9116c2fac897ccdc9e847532130f6442b32599b4c5bcecda9336",
+      "final62-linked-sign-evidence.json": "4faab30eca8e4c3ef75410cb1d86e8577bf4516a388085d5006057fb2f018c80",
+      "final62-realfs-call-private.txt": "38fa63864616a098d780cfef577ff51e286ac5d78e24c64cadd09e822e102ce6",
+      "install62-observer-private.json": "8d08257335b950ee76161009512c7a983c74e9d0e3a3eca6d17ec654057bd5c8",
+      "launch62-observer-private.json": "31ecbf3cc8a1c837ce60b3787d754d9743501319a3e01ddf1497dec2395c4ec0",
+      "receipt62-private.json": "f042ee1b0374ed9361e782fc76fee2d5d610274bdec49db77f8737cd6b03167c",
+      "screen62-library-private.png": "27430a118d860fe16603cea96cf0f0b0223259b60a629f10fd07e2f8ac0e6fb9",
+      "screen62-bpm-watch-private.png": "a8b8d085eb3d91c76353b4a32f8b0de2c4a4487f411e9d3bd34f9aae08ef9922",
+      "screen62-back-menu-private.png": "25170542d822cf9b96e2322dad691194c8ab05a3108c32761c765a15ef3ca2d0",
+      "screen62-menu-library-selected-private.png": "b3c4e4014b173afddd23f499b7a420d431889b578889c6783c4c8f93fb7a65be",
+      "screen62-bpm-library-private.png": "342e462cd61c612fb953dcf01a23c73b3c6e40e2d98939aaf42a20e9420d62c1",
+      "screen62-ddlc-settled-private.png": "f6955d5451fd738d2bd9e0765958bb3bfb7e12be22077452ded5817abb2f61d5",
+      "health62-ddlc-settled-private.json": "3402ee7ac1405e6970c2a245d0ad1ff5e2c5b6ca2f86c802ad474bafdc64468a",
+      "probe62-watch-result-private.json": "993b0a2abe3c6688e55ffaf1bd1f4eb6ea847b2228c493134411d908e53463b3",
+      "native62-capped-private.log": "38d4af7b81ba7dc456f5b2911caadaf50f3839c5f40a209e413dc3ed2c3e27bd",
+      "probe62-observed-rows-private.json": "04e5311764216e9eb28bf89513fcb740d09a3eabd5a3ab8b3b0b773c330b467f",
+      "native62-capped-observer-private.json": "47f84e69918475be18ccaf8b2ccdd85e28feeabe29ab945a15662aacd95271e6"
+    },
+    "official_CEF_file_sha256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb"
+  }
 }

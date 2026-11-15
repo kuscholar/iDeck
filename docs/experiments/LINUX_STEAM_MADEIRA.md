@@ -1,11 +1,11 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run55): first actual Air60 native PC snapshotV3 completed/resumed, but
-follow-upV4 debugger/SB state query is now hung. V4 collector never executed;
-o current detach proof. Health copies both3638, possibly paused. Official
-detach queued, Ctrl-C auto-review rejected; narrowly scoped user recovery
-permission requested and pending. Do not quit/kill debugger, start another
-experiment or upgrade active60. Genuine UI/game/return stability unachieved.
+Status (run56): actual Air62 Library/BPM/menu input verified, but restored game
+detail background then white, no Install/Play reached. Bounded native mmap probe
+actually recorded16KiB shared success vs4.55MiB sharedRO/private/anonymousENOMEM;
+all successful controls released, original error preserved. Size-sensitive native
+allocation pressure supported; exact VM limit/root cause unknown.62PID20594 still
+live, native log capped/copied. Full licensed game/return/stability goal ACTIVE.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -5337,3 +5337,128 @@ Linux/Wine/display/storage teardown->reliable Steam return/repeated stability.
 Bridge125 remains diagnostic. Existing goal API still reported blocked; no
 status/scheduler mutation, successsentinel/unload, Mac-unlock request or changes
 to account/games/saves/main/other worktrees/working apps.
+
+## Run56 — safe-operation approval, real Air61/62 UI and shared-mmap discriminator
+
+User explicitly approved all safe operations and prioritizes continued experiments.
+Prior Ctrl-C/61-upgrade questions are superseded. Fresh volume UUID, migration
+status, fork refs/branch/worktrees and clean parentb512255 verified. Main remains
+2ac39be, other worktrees unchanged. Actual Air details refreshed: Air4/iPad13,1,
+iPadOS27.2/24B119, arm64e/arm64, physical RAM4056186880bytes. CLI only.
+No host LLDB remains, oldTTY unavailable. Same60/19384/B55DD703 health4972->4996
+advanced, proving current recovery without another interrupt. HistoricalV4 detach
+moment/duration remains unknown. No lock/trust/security/account setting changed.
+
+Signed61 original hashes/deep-strict and both exact Air/app/certificate profiles
+revalidated. Codesign and an unnecessary broad file enumeration waited on local
+I/O; only our identity-verified scanner was interrupted, validation completed.
+Normally ended only60 and installed61 sameID, retaining its own root/config/data.
+Actual61PID20200/install5E36A869-2C96-44F1-9204-D13B7064E475. Genuine updater
+rendered, completed official1792618285 extraction and42/drain/one automatic
+retained restart. First wave X11 rows2->4->6 advanced; new wave resets stream,
+so do not call replacement append or use returned updater report as current
+teardown. Actual saved-auth desktop then Library list/news/covers visible after
+one fixed Library click, nativeACK1. No agent credentials/Guard or auth transfer.
+
+**Actual61 failure.** One genuineBPM clickACK2 created a full-root mapped window
+and focused descendant, but black->white content and browser recreation persisted.
+Native same-thread379/group270 mmap length9523200/offset0/sharedRW returned
+DarwinENOMEM12 then Linux-12, followed by libcef BRK0/groupstatus5. FD65/native430,
+file size9523200/statOK/refs2; reported rolezygote is not proof of actual renderer
+role after fork. Adjacent periodic sample mono879645652: footprint2330368496,
+available675898896, virtual483012689920, region_count56728. These are not atomic
+at failure and do not prove a Mach/kernel capacity class or sole root cause.
+Native app continued. Historical Nov12/14 CEF CHECK/badIPC213 lines in appended
+cef_log are NOT fresh Nov15 evidence; no attribution from those old errors.
+
+**Byte verification correction.** Copied actual official Air libcef privately,
+218132264bytes/SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb.
+Literal reportedfileoffset0x6351060 contains B.NE, not runtimeBRK0. Exact36-byte
+runtime instruction sequence has ONE match atdisk0x634e050; BRKfileoffset0x634e060,
+ELFVA0x635e060, giving candidate loadbias0xe2150000. The reportedfileoffset is
+biased0x3000 in this sample, consistent with16KiB alignment correction, not a
+proven repaired reporter. Do not use nearest `cef_get_xdisplay+largeoffset`
+labels as function identification. Full ELF/disassembly/rawlogs/screens remain
+private; metadata/hashes only may be published. No Valve binary modifications.
+
+**Minimal62 experiment.** New own FileMmapProbe.inc and copied-realfs generator
+flag `--file-mmap-failure-probe` (requires existing `--file-map-cleanup`). Default
+generated realfs source remains byte-identical to61. On first native-lifetime
+sharedRW/offset0/ENOMEM regular complete file between one nativepage and16MiB,
+compare at most4 native controls: sharedRW one nativepage; sharedRO full length;
+privateRW full length; anonymousRW full length. Immediately unmap successful
+controls without touching bytes; no guest PTE transfer, original retry/fallback,
+FD closure, assertion suppression, mprotect or host/game runtime changes. Stop
+on release failure; preserve original result/errno. Counts are bounded, native
+syscall blocking time is not a hard timeout. This diagnoses capacity/backing
+without pretending an unshared copy satisfies Chromium shared-memory semantics.
+
+HOST30 exact realfs-function ASan/UBSan/Werror cases pass, including actual own
+unlinked native backing, once-only/negative gates, success/error preservation
+and injected cleanup failure. Existing transfer-ownership regression passes
+baseline3leaks vs fixed3releases plus both3caller-owned successes. Namespace-
+qualified23 iOS adapters/fullXcode62 pass. Final realfs_mmap direct probe call is
+actually linked, marker present; unsigned/signed __TEXT,__text SHA equal. Unsigned
+mainSHAdb316f1e0b3d9184cd19b3d86b5d99346d896430dfb1ec55464c92b83b1b8837;
+signedmainSHAe354566eae9a0628589818c134266f4fa1e1060bc24e5632ff951f5c33a01db8.
+Both exact existing Air profiles/certificate matched, deep-strict passes; no new
+profile/keychain settings. Source vendorpin/FEX/Wine/Valve unchanged.
+
+Normal sameID62 upgrade installed, actualPID20594/install590D1B80-44C2-433B-
+BE8D-0A734A25A5CC, nativekernel-20594-881693-786674000.log. Runtime62 genuine
+updater then authenticated desktop/Library actually rendered again. One fixed
+BPM click yielded real home/covers/control hints. One Back openedMainMenu;
+oneDown visibly selectedLibrary, then oneActivate requestedLibrary. This is
+real basic UI/input evidence, not repeated stability/Bluetooth/physicaltouch.
+First complete bounded62 samplehealth71 had zero probe rows; next native live
+copy failedCoreDevice7000 and observer stopped. Screenshot/currentUI continued,
+so no crash inferred and no claim the conditional probe fired or fixed61.
+Four early auxiliary whole-CEF file_backend failures had native_errno0, different
+from61 shared-file hostENOMEM and outside probe gate. Do not conflate them.
+
+Private run56 stores source/build/sign/actualdevice receipts and raw files. No
+credentials/copiedauth/Guard/workingapp/account/game/save edits, no newdebugger,
+FEX/Valve/security/lock changes. Full goal ACTIVE, bridge125 still diagnostic;
+no stable sentinel/scheduler unload. Continue Library/control/SteamPlay request,
+legitimate owned Windows depot download to shared storage, existing licensed
+Madeira launch and qualified fullreturn/repeat. If further mapping failure,
+collect complete probe rows and original failure with exact session qualification
+before a minimal backed-memory fix. Do not restart a working62 merely to force
+an error; safe isolated upgrades are authorized when technically justified.
+
+### Run56 final62 control result and current limitation
+
+At actual62 health132/nativePID20594 the log was capped/stopped. One copy of that
+now-immutable file succeeded, avoiding a debugger or pause. It contains the exact
+six probe rows for tid163/group140, original sharedRW length4767744/offset0,
+DarwinENOMEM12->Linux-12. Trial0 sharedRW16KiB succeeded/released; trials1/2/3
+same-length sharedRO/privateRW/anonymousRW all returnedENOMEM12. Four attempted,
+all successful mappings released, original error retained, no guest substitution.
+This is a different4.55MiB request than61's9.08MiB renderer-derived fatal, not a
+claim of the same role/frame. Supports a size-sensitive process-wide native
+allocation/placement/capacity constraint, not solely file protection/backing.
+Does NOT identify a kernel region limit or prove physical RAM exhausted. Closest
+prior periodic samplefootprint2236537304/available769730088/regions57043/virtual
+483073245184 is non-atomic. Final62 `_mmap` is undefined/imported from libSystem,
+not a defined Wine/FEX function. First pre-Linux resource sample already has
+virtual475568488448 atfootprint5392032: do not attribute all virtual reservation
+to Linux or assume those bytes are physically resident.
+
+Actual62 Back openedMainMenu, Down visiblyselectedLibrary; Activate restored
+DokiDoki detail background only, then full white by02:40EST. No Install/Play,
+compatibility-tool invocation, actualgame or return. Guest141/health132 alive,
+CLIseq5 and filepolicy0/gamefalse; advancing health is not interactive stability.
+DefaultSteam steamapps had no appmanifests; sharedsteamapps listingActionError3
+may simply mean notcreated, not game/storage corruption proof. No downloads,
+credential/Guard actions or save changes. Rawscreens contain account/friends and
+are private; published evidence only hashes/qualified observations. Current62
+PID20594/590D1B80 preserved, no observer/debugger remains running.
+
+Next hypothesis: coarser compatible private-anonymous CoW materialization may
+reduce native mapping pressure. First compare dense vs sparse real-kernel
+backing counts and rounding cost; test mixed/shared/file/protection boundaries,
+rollback, source offsets and refcounts/accounting. Only a default-off bounded
+parameter after host proof, then actual Air UI/memory regression. Do not raise
+limits, suppress assertions, substitute anonymous backing for shared IPC or
+claim a fixed native VM cap. Complete SteamPlay->licensed Madeira game/full
+return/repeated stability remains the active goal; no successsentinel/unload.

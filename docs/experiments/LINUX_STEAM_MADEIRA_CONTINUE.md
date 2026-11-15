@@ -1,3 +1,107 @@
+# CURRENT Run56 FINAL:62 UI eventuallywhite; real native capacity probe observed
+
+Latest explicit safe-operationapproval persists; oldquestions below superseded.
+Current62 PID20594/install590D1B80-44C2-433B-BE8D-0A734A25A5CC, revalidate before
+actions. Actual Library/BPMhome/Back-menu/Down-Library worked, butActivate restored
+DDLCdetail background only ->white02:40EST, no Install/Play. Nativehealth132/
+guest141/CLIseq5/filepolicy0/gamefalse. Not game execution or stableUI. Preserve
+allauth/game/save data; experimentalLab safe upgrades approved, no newquestions.
+
+Capped/stopped native4MiB log copiedONCE successfully (livecopy7000 was transient
+observer failure, notdeath). ACTUAL probe sixrows: tid163/group140 original
+sharedRW/offset0/4767744B ENOMEM12->-12;16KiB samefile sharedRW succeeds/released;
+full4767744 sharedRO/privateRW/anonymousRW allENOMEM12. attempted4/allreleased1,
+originalresultpreserved. Finalmmap importlibSystem, notdefinedWine/FEX override.
+Closest periodicfootprint2236537304/available769730088/regions57043/virtual
+483073245184 non-atomic. Supports size-sensitive native processwide allocation/
+placement/capacity issue, NOTsolefilepermissions or provenregioncap/RAMcause.
+Differentrequest/group from61tid379/9.08MiB. Firstappvirtual475568488448 already
+at5MBfootprint, doNOTattribute allVA toLinux or allVA tophysicalmemory.
+
+Source62: FileMmapProbe.inc/generator/buildflag defaultOFF,HOST30exactfunction
+ASanUBSanWerror + nativeunlinkedownfile, ownershipregression/defaultsourceequal,
+23native/fullXcode/FINALcallsite/textsame/deepstrict/Airprofiles PASS. Actual
+probe nowexecuted, butNOTfix. No activeobserver/debugger left. Private run56
+artifacts/sourcehashes inEVIDENCE; repo ownchanges currentlyuncommitted. Publish
+reviewedcheckpoint onlyexperiment perAGENTShours; main/otherworktrees untouched.
+
+NEXT onehypothesis: coarser compatible anonymousCoW groups could reduce native
+mapping pressure. FIRST extend real-kernel dense/sparse/backing/rounding/bytes/
+flag-boundary/accounting/rollback controls; quantifyextra materialization. Then
+defaultOFF boundedparameter ifsupported, no file/shared/protection crossing,
+no cap/assertion/mprotect/FEX/Valve/security/lock changes, actualAir compare.
+Stillcontinue genuineSteamPlay/customtool->licensednativeMadeira game/fullreturn/
+repeats. Bridge125NOTgame. NoSTABLE_SUCCESS/unload/goalcomplete. CLIonly/neverMac
+unlock; no credentials/Guard/trust automation or accountdata transfer. Permission
+is NOTthe blocker. Do not repeatstatusonlyresearch; implement thenactualtest.
+
+--- Detailed prior Run56 chronology, superseded by final state above ---
+
+# LIVE Run56: genuine62 BPM/input works; safe-operation approval persists
+
+READ Run56 MD/EVIDENCE FIRST. Sourceparentb512255, own62patches/docs currently
+uncommitted; don't overwrite. All safe recovery/normal isolated upgrades are
+EXPLICITLYapproved by latestuser; NEVER repeat old61/Ctrl-C approval questions.
+Still no lock bypass/Macunlockrequests, credentials/Guard/trust automation,
+FEX/Valve/security/Codexstate edits, workingapp/account/game/save changes.
+
+Old debugger gone, same60 health4972->4996 recovered, no newinterrupt. ExactAir
+UUID/migration/origin/branch/remote/worktrees verified. Fresh Air4/iPad13,1 OS27.2/
+24B119 RAM4056186880. Only com.kuschqin.ideck.freshtest remains Labidentity.
+61installed/actualLibrary input succeeded, BPMwhitefailed with same-thread379/
+group270 host sharedfilemmap9,523,200B ENOMEM12 -> Linux-12 -> libcefBRK/group5.
+Native appnotdead. Adjacent available675898896B/region56728 notatomic/solecause.
+OldNov12/14CEF CHECK/badIPC213 NOTcurrenterror. Main/otherworktrees preserved.
+
+Critical61Cefbytecorrection: actualELF SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb.
+RuntimeFAULT_MAP literalfileoffset0x6351060 WRONG fordiskBRK; unique36B pattern
+at0x634e050 givesBRKfile0x634e060, ELFVA0x635e060, candidatebias0xe2150000.
+Reportedoffset+0x3000 samplebias likelynativealignment; reporterNOTfixed/proven.
+No nearestexportedfunctionlabels, disassembly/binaryprivate only.
+
+NEW FileMmapProbe.inc + explicit --file-mmap-failure-probe composedwith existing
+file-map-cleanup into COPIEDreal.c. Defaultsourcebyte-identical61. Firstmatching
+sharedRW/offset0/ENOMEM regularfile1nativepage..16MiB only:4different controlmaps
+sharedpageRW/sharedfullRO/privatefullRW/anonymousfullRW, immediateunmap/no
+contents/PTEwrites/originalretry/fallback. Stopreleasefailure, preserveoriginal
+result/errno. Oncepernative lifetime. HOST30 ASanUBSanWerror exactfunction +
+realunlinkedownfile, existingownershipregression PASS.23adapters/fullXcode62/
+FINALrealfs->probeCALL/deepstrict/exactAirprofiles/cert/textpreservation PASS.
+Signed62mainSHAe354566eae9a0628589818c134266f4fa1e1060bc24e5632ff951f5c33a01db8.
+Private immutable run56/signed62/Madeira.app installed SAMEID/no uninstall/data
+transfer, old61normallyterminated afterfreshidentity.62 ACTUALPID20594,
+install590D1B80-44C2-433B-BE8D-0A734A25A5CC; revalidate beforeactions. Config
+run56/air62-run-config-private.json has exactdevice/URI/currentreceipt. Native
+kernel-20594-881693-786674000.log. Interpreter; no newJIT/debuggerrequired.
+
+Actual62 genuine desktopLibrary thenBPMHOME rendered. Screensprivate contain
+account/friends, no publication. Back opensMainMenu, Down visuallyLibraryselected,
+lastoneActivate sent to thatverifiedLibrary item: RESULT STILLTOOBSERVE.
+NativeCLIactions totalexpected5 (Library,BPM,Back,Down,Activate); oldackonlyseq2
+was earlier. Do NOT doubleActivate blindly. Current62 remains live; preserve.
+No SteamPlay/download/game/return proof. Defaultsteamappsno appmanifests; shared
+steamappslistCoreDeviceActionError3 (possiblynotcreatedyet), not installedgame
+proof or root corruption. Need legitimate smallowned/free Windowsgame+custom
+compattool choice/sharedinstall and actualbridge->nativeDock auth/JIT/launch.
+
+Firstcomplete62 boundedobserver samplehealth71 no probe rows. Nextlive native
+copy CoreDevice7000 (healthcopy succeeded) -> observer33852 TERMINAL, stopped.
+Notappcrash/no rootfix claim. Other4early file_backend220MB failures have
+native_errno0, outside sharedhostENOMEM gate. Never conflate. Can collectsmall
+health/window/screenshot independently; ifneedlog use strictlyserial bounded
+identityverified stop/copy/finallySIGCONT with verifiedresume, NEVER newLLDBSB
+poll duringattach. Do not stopfunctional62 merelytoforce failure; keepactualgoal.
+
+NEXT capture actualLibrary result frompendingActivate, navigate safelybyone
+verifiedstep atatime. RequestArrow/EnteronlygenuineUI, no credentials orhidden
+execcontract. Ifmappingfailure recurs, completeprobe/originalcontext then
+minimalbackedmemoryfix. StableinteractiveLibrary/BPM->realSteamPlay/licensed
+Madeiragame/fullteardown/reliableSteamreturn/repeats remain objective. Bridge125
+NOTgame. NoSTABLE_SUCCESS/unload/goalcomplete/newresearcher/cadencechanges.
+Commit-s/pushonlyexperimentAGENTShours afterreview; currentSundayallows.
+
+--- Historical Run55; pending approvals below are SUPERSEDED ---
+
 # URGENT Run55 V4: debugger cleanup pending, NOT currently verified detached
 
 Read latest Run55 MD/EVIDENCE before ANY action. V3 snapshot/resume below was
