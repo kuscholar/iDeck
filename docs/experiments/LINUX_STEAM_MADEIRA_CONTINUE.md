@@ -1,3 +1,28 @@
+# LIVE68 Run62: admission capture succeeded; Library request pending
+
+HEAD466c021 pushed; newactual evidence docsdirty. Native23696/installDAB59580-
+8BD2-4466-928E-50B7988614DE, kernel23696-1042878-945412000.log. Revalidate.
+Private run62/observe68-private.py NEWtag. Normalupdater42/restart observed;
+health34/153guests footprint2124208624/4970brokerslots/allerrors0. ONE fixed
+Libraryevent justsent input68-library; don'trepeat/restartbeforefreshstate.
+
+Actualname-free max8mainwaitsampler captures4frames for180/188/renderer270!
+Privatekernel68-renderer945403B zeroFAULTinthatwindow,12dedupinstructionwindows
+ALLunique inEXACTcurrentCEF+glibc. SHA/currentmodulepaths/EVIDENCE.run62.actual68.
+Renderer270 untimed393 expected0/allbits ffff4390: libc82c4c/85648->CEF630fab4
+(pthread_cond_wait@PLT)->6338580. Exactsource+disassembly infers WaitManyImpl,
+notnearestcef_get_xdisplaysymbol. Cyclesadvancingaroundwait; NOpersistentdeadlock/
+lostwake/rootcauseproof. Bound4framesdoesn'tgivehighercaller. NativeRFBcopy
+abortseparateknownrisk. No68game/return/stability; bridge125NOTgame.
+
+NEXT actualLibraryresult/samecurrentnativefaults andwaitercorrelation before
+anotherpatch. Keep68live; no69prepared. FullgenuineSteam+licensedMadeiragame/
+return/repeatsgoalACTIVE, neverSTABLE_SUCCESS/unload/complete. CLIonlyneverMac
+unlock/passwordsGuardtrust/security; noFEX/Valve/vendor/main/otherapps changes.
+Allsafepermission persists; scope/check hours beforecommit-s/pushonlyexperiment.
+
+--- Prior62 ---
+
 # LIVE68 Run62: updater actual; preserve new session
 
 Actual68PID23696/installDAB59580-8BD2-4466-928E-50B7988614DE; receiptkernel-

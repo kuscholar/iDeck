@@ -5915,3 +5915,30 @@ firsthealthphase0 racedstartup and is NOT no-execution proof. No68caller/UI/
 game/return qualificationyet. Symbolizer ambiguity negative: two identical
 suppliedELFs correctly report2candidates/notunique, no assumedbase. Rawprivate
 run62; sameCLI-only/security/FEX/Valve/main/authpreservation constraints.
+
+### Run62 actual68 waiter capture — admission hypothesis supported, UI not proven
+
+Source466c021 pushed. Actual68 retained normalupdater42/restart, native23696
+stillactive. Newname-free sampler ACTUALLY emits4ABI/code frames for main180,
+188 and renderer270, while67 hadzero. Privatekernel68-renderer snapshot945403B/
+SHA1056e33a1e7f88a591b3d8abbbf696c59945b699d084324f0551062a01d3e65c
+contains12deduplicated codewindows, all unique within EXACTcopied currentCEF
+andglibc executable segments. DeviceCEF SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb;
+glibc1716616B/SHA70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13.
+Renderer270 futex393 expected0/allbitset/untimed ffff4390. Frames actualguestLR
+E1342C50/E134564C/E845FAB8/E8488584 map to glibc82c4c/85648,
+CEF630fab4/6338580 callsites respectively; directBL630fab4 resolves declared
+pthread_cond_wait@PLT. Inference: CEF63383bc..6338580 matches exactChromium126
+WaitableEvent::WaitManyImpl (sortevent/indexpairs, enqueue, reverseunlock,
+SyncWaiterconditionloop). Exactsource fetched/inspected/provenancehashes saved.
+NOT nearestexportcef_get_xdisplay identification. This4framebound stops before
+its higher-level caller. Main270 cycles also advanced between samples, so no
+proof of persistentdeadlock/lostwake or synchronizationrootcause. Zero recorded
+guestfaults in this window only. Existingguard/watchdog/memory/runtime unchanged.
+
+Health34 mono1043208961 footprint2124208624,153guestentries,broker4970slots/
+40chunks/80MiBreserved/allerrors0. Desktopchrome/blackcontent initial screenshot;
+ONEfixedLibraryevent sent, UIresultpending. No Library/BPM/SteamPlay/game/return
+qualification. Keepcurrent68 alive. NEXT capture highercallers only if repeated
+samewaitandwatchdog correlates; separate nativeRFBcopyfailure remains unresolved.
+Do not equate observer success with userexperience or goalcompletion.

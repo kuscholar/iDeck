@@ -16511,8 +16511,101 @@
       "visible": "official Steam updater extracting; first health phase0 racing startup, NOT no-execution evidence",
       "guest_caller_capture": false,
       "Library_BPM_verified": false,
-      "game_return": false
+      "game_return": false,
+      "last_health": {
+        "schema": 1,
+        "pid": 23696,
+        "build": 68,
+        "native_log": "kernel-23696-1042878-945412000.log",
+        "sequence": 34,
+        "mono_ms": 1043208961,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 153,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 2124208624,
+        "cpu_valid": 1,
+        "cpu_user_us": 709944651,
+        "cpu_system_us": 63564861,
+        "append_log_capped": false,
+        "append_log_stopped": false,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        },
+        "cow_broker": {
+          "alloc": 9807,
+          "release": 4837,
+          "map_attempts": 47,
+          "map_failures": 0,
+          "unmaps": 7,
+          "live_slots": 4970,
+          "live_chunks": 40,
+          "logical_bytes": 78635008,
+          "reserved_native_bytes": 83886080,
+          "ownership_errors": 0,
+          "unmap_failures": 0,
+          "overlap_rejections": 0,
+          "capacity_refusals": 0,
+          "advice_calls": 4830,
+          "advice_failures": 0,
+          "physical_reclaim_measured": false
+        }
+      },
+      "caller_snapshot": {
+        "bytes": 945403,
+        "SHA256": "1056e33a1e7f88a591b3d8abbbf696c59945b699d084324f0551062a01d3e65c",
+        "records": 12,
+        "unique_code_matches_supplied_modules": 12,
+        "renderer_tid": 270,
+        "renderer_futex": {
+          "op": 393,
+          "expected": 0,
+          "bitset": 4294967295,
+          "timed": false,
+          "address": "0xffff4390"
+        },
+        "renderer_ELF_calls": [
+          "libc:82c4c",
+          "libc:85648",
+          "CEF:630fab4->pthread_cond_wait@PLT",
+          "CEF:6338580->630fa20"
+        ],
+        "CEF_wait_function": "Inference from disassembly and exact126 source: WaitableEvent::WaitManyImpl; not a symbol-confirmed name",
+        "all_future_waits_or_deadlock_proven": false,
+        "guest_faults_in_snapshot": 0
+      },
+      "current_CEF_SHA256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb",
+      "current_libc_SHA256": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+      "wait_source_provenance": [
+        {
+          "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/base/synchronization/waitable_event_posix.cc?format=TEXT",
+          "sha256": "2a0b307b68ce1227231d86d04071a458acf7f8f4519be00bfe0601e621f2d54c"
+        },
+        {
+          "url": "https://chromium.googlesource.com/chromium/src/+/126.0.6478.183/base/synchronization/condition_variable_posix.cc?format=TEXT",
+          "sha256": "5e7a1c7e1273cf150f49de42f38414f0a7ecb0d42a90dd832fc8d64869f68fc6"
+        }
+      ],
+      "Library_event": "one fixed request sent; visible result pending, dispatch NOT success",
+      "preserve_live_session": true
     },
-    "symbolizer_duplicate_control": "PASS exact candidate2 remains ambiguous, no inferred base"
+    "symbolizer_duplicate_control": "PASS exact candidate2 remains ambiguous, no inferred base",
+    "source_checkpoint": "466c021",
+    "device_new_wait_callers_validated": true
   }
 }
