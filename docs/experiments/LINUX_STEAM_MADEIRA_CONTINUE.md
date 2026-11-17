@@ -1,3 +1,55 @@
+# Run63 signing69 observer26442 live — harvest before deployment
+
+FullXcode69PASS, finalRFBupdate->snapshothelpercall and MachOsymbolizednative
+malloc/memcpy_chk/NSDataNoCopyinit verified on SAMEbinary. Unusedmarkerdeadstrip/
+genericdisassemblerunsymbolizedCstub verifiernegatives corrected, no rebuild.
+Kernelmemoryidentical68. HOSThelper andrealgeneratedRFBdecoder/5healthconfigs
+PASS. ExistingAirprofilecert checks signingonlydisposablecopy. Private run63/
+qualify-sign69-private.py. Observer26442 active; doNOTduplicate. deploy69-private.py
+prepared, refuses ANYoldLabprocess atfreshcheck; runONLYafterdeepstrict/signtext
+pass. observe69-private.py NEWtags. No69install/runtimeproofyet. FullgoalACTIVE,
+bridge125NOTgame; noSTABLE_SUCCESS/unload. CLIonlyneverMacunlock/credentials/
+Guard/trust/security/FEX/Valve/vendor/main/workingapp edits. Data preserved.
+
+# Run63 69 XcodePASS/finalRFBcallPASS; signing49984 inprogress
+
+Harvestobserver49984 beforeanydeploy/signretry. FullXcode69exit0, realfinal
+LRRFBClientupdate->checked_snapshot BLverified, nohostallocationinjection;
+kernelmemorysourceidentical68. Private run63/final69-linkevidence +signed69
+copyinprogress. HOSTsnapshothelper+actualgeneratedRFBdecoder+5healthconfigs
+PASS; allnegativesretained. No69install/deviceproofyet. Airfreshinventoryat
+runstartNO Labprocess; revalidatebeforeinstall, preserveanynewusertest.
+Existingprofilematch/cert/signtext/deepstrict required. NoFEX/Valve/vendor/
+main/security/authchanges. FullgoalACTIVE/bridge125NOTgame/neverSTABLE_SUCCESS.
+
+# Run63 checked immutable frame snapshot — HOSTpass/runtime69 building
+
+Sourceparent3b292fd pushed/cleanbeforeown63. Previousgoalturnprogress: exact68
+nativeRFBcopyabort established plusactualrendererwaitcaptured. NOcurrentLab
+process on freshNov16check. No69deviceactionsyet. Ownsource/tests/docsdirty.
+
+SINGLEnewdefaultOFF --checked-frame-snapshot replaces ONLYgeneratedRFB
+_pixels.copy with helpercheckedmalloc+memcpy+NSDataadopt/deallocator (no large
+Foundationcopy). Independent immutablepixels; noalias/reuse, lastretainerfrees.
+NULLpixelallocreturnsnil->existingfail/NO displaystop, Linuxpreserved. Tiny
+Foundationobjectallocation notmadeinfallible; no exceptioncatch/assertionsuppress
+orFAKEblankframe/Steam/FEX/vendor change. Other decoder resize/raw/patchallocs
+unchanged. ThisdoesNOTpromiseRAMcapacity/CEFwait/gamefix.
+
+HOSTFoundationASanUBSan/Werror maxdimensions+5refusals+retainer/immutability+
+8threads512frames PASS snapshot-host-v2 (v1nullabilitycompileerrorretained/fixed).
+515nativeownedbuffers released exactly, live0. DefaultgeneratedRFBsourcebyte
+identical68. Health5config/postcap test +runtime69 nowobserver86113; harvest
+beforeAppbuild. Private run63/runtime69-command-private.json +buildlog. No69
+sign/install/UIproof. NEXT finishruntime/fullXcode/finalRFBupdate->helpercall,
+exactAirprofiles/cert/signtext thenfreshsessioncheck/safeLabupgradeonly. Bounded
+statscalls/failures/livebytes/release health distinguishes actualeffect. No
+Macunlock/credentialsGuardtrust/securitysettings. Preservemain/allapps/data.
+FulllicensedSteamPlay->Madeiragame/return/repeats ACTIVE; bridge125NOTgame.
+NeverSTABLE_SUCCESS/unload/complete. Commit-s/pushonlyexperimentperAGENTShours.
+
+--- Prior62 ---
+
 # Run62 TERMINAL68 nativeRFBcopy allocation — no live Lab now
 
 Source466c021 +actualcallerevidence6ee2eac pushed. Freshinventory NO Labprocess.

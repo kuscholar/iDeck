@@ -11,6 +11,9 @@
 #include <sys/resource.h>
 #include <stdatomic.h>
 #include <stdint.h>
+#if IDECK_LAB_RFB_CHECKED_SNAPSHOT
+#include "CheckedFrameSnapshot.h"
+#endif
 #if IDECK_LAB_COW_BROKER
 #include "CowBackingBroker.h"
 #endif
@@ -152,6 +155,13 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
             (unsigned long long)s.reserved_native_bytes,(unsigned long long)s.ownership_errors,
             (unsigned long long)s.native_unmap_failures,(unsigned long long)s.overlap_rejections,
             (unsigned long long)s.capacity_refusals,(unsigned long long)s.advice_calls,(unsigned long long)s.advice_failures);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_RFB_CHECKED_SNAPSHOT
+    if(length>1&&(size_t)length<sizeof body){
+        struct ideck_frame_snapshot_stats s;ideck_frame_snapshot_stats_read(&s);size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"frame_snapshot\":{\"calls\":%llu,\"failures\":%llu,\"live_frames\":%llu,\"live_bytes\":%llu,\"peak_live_bytes\":%llu,\"releases\":%llu}}\n",(unsigned long long)s.calls,(unsigned long long)s.failures,(unsigned long long)s.live_frames,(unsigned long long)s.live_bytes,(unsigned long long)s.peak_live_bytes,(unsigned long long)s.releases);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif

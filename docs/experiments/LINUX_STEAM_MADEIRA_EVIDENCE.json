@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 62,
+  "latest_run": 63,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -16617,5 +16617,36 @@
     "source_checkpoint": "466c021",
     "device_new_wait_callers_validated": true,
     "next": "Separate default-off RFB owned framebuffer snapshot allocation experiment with checked allocation failure and exact-byte/input/lifetime regressions; keep all guest synchronization unchanged"
+  },
+  "run63": {
+    "source_parent": "3b292fdb334b54af27463a03783b169fbe027d12",
+    "hypothesis": "Checked malloc immutable pixel snapshot avoids repeated Foundation largecopy allocation abort; not a CEF synchronization fix",
+    "default_off": true,
+    "host_snapshot": "PASS realFoundation ASanUBSan/Werror maxdims/immutable/delayedrelease/allocNULL/512concurrentframes",
+    "owned_allocations_freed": 515,
+    "no_exception_suppression": true,
+    "default_generated_rfb_identical68": true,
+    "runtime_build": "PASS25nativeunits",
+    "device_new_probe_validated": false,
+    "game_return_stable": false,
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run63",
+    "snapshot_evidence_sha256": "f6fbac48112fa2b55cf79634d2cfff24d31d2520b8993db09653e742e5450673",
+    "actual_generated_RFB_decoder_control": "PASS rawfull/partial/immutable retained frame/allocNULL no callback, actual generated decoderASanUBSan",
+    "health_post_cap_configurations": 5,
+    "private_evidence_sha256": {
+      "rfb-decoder-host-v5/evidence.json": "9e1702c7a9420d36a2e90b92f65a3287b1e5e21522a92848dce1baa4863bcfce",
+      "snapshot-host-v2/evidence.json": "f6fbac48112fa2b55cf79634d2cfff24d31d2520b8993db09653e742e5450673",
+      "health-snapshot-v1/evidence.json": "3b778cb65fb0df199e367740f231d7aabb04c5d750aadb7452655b0c7c5e6655",
+      "runtime69/evidence.json": "87d6e19744e07633673b98545ac7d820b9eae72b82bb5dc452492c3a24b0c2e7"
+    },
+    "host_negative_controls": [
+      "missingnullabilityfixed",
+      "nonexistentFramebufferPatch.m harness reference removed (headeronly)",
+      "same-thread AF_UNIX16KiB fixture blocked sender; reducedfixture16x16, no runtimechange",
+      "release assertion beforeautoreleasepool drain movedafteractualdrain"
+    ],
+    "full_Xcode": "PASS",
+    "final_RFB_calls_checked_snapshot": true,
+    "kernel_memory_source_identical68": true
   }
 }

@@ -5954,3 +5954,66 @@ fullframecopy allocation atRFBboundary using checked genuinelyowned framebuffer
 storage/snapshot, exactbyte/lifetime/coalescing/error tests, defaultOFF. Do not
 suppress exceptions/assertions or claim allocation changes repair guestwaits.
 No69prepared. Main/accounts/games/saves unchanged. FullgoalstillACTIVE.
+
+
+## Run63 — checked immutable RFB snapshot allocation
+
+Parent3b292fd, freshmountUUID/origin/branch/worktrees/remote/migration checked.
+FreshAirprocessinventory noLab session, previous68exitreport retained. New
+DEFAULT-OFF --checked-frame-snapshot replaces ONLY _pixels.copy in generated
+pinnedRFB completion source. Own helper validates exactexistingdimension/length,
+checks malloc beforecopy, memcpyindependentpixels and immutableNSData adopts
+buffer via deallocator. Lastconsumerrelease freesactualallocation; neveralias
+mutabledecoder/backing, no reusewhilequeuedmain/Metalholdsnapshot. Pixelmalloc
+NULL returnsnil; generateddecoder takesexisting displayerror/NO path, preserving
+Linuxguest. No retry/capincrease/fakeframe or catch/suppression ofObjCexceptions.
+TinyFoundationobjectallocation andotherdecoder buffers remain possiblefailure
+points. Doesnotclaimphysicalcapacityfix or repairChromium synchronization.
+
+HOST realFoundation helper/fixture/protocol ASanUBSan/Werror passed maximum
+pinneddimensionlimits fromRFBProtocol.h (no capchanges), exactbyte
+comparison and source mutation isolation, invaliddims/length/nil and forced
+pixelmallocNULL, extraNSDatacopy retain+delayed release,8threads512frames, all515
+ownedallocationsfreed/live0. Testactualreportedpeak16384000B is hostsnapshot
+storage only, not appRSS/Airperformance. Firstcompile caughtmissingnullability
+annotations, fixedheaders; negativeartifactretained. DefaultgeneratedRFBsource
+byteidentical68. Health5configuration/postcap and25iOSunits runtime69 nowrunning;
+no69Appbuild/sign/install/UIvalidationyet. Private run63 artifacts outsideGit.
+
+Run63 actual GENERATED RFB decoder HOSTcontrol nowPASS: socketpair protocol
+fixture feeds16x16rawfull and3x4partialupdates into unchanged realupdate method,
+checks exactimmutable old/newpixels, thenforcescheckedmallocNULL andverifies
+NOframecallback plusreturnNO/existingdisplayerror. Afteractualautoreleasepool
+drain bothownedbuffers released/live0. Nohandshake/auth/Steam/Metalclaim.
+Testharness negativesretained: nonexistentFramebufferPatch.m removed(header
+only),16KiBsame-threadAF_UNIX fixtureblocked onsmallnativebuffer (reduced to
+16x16fixture, runtimeunchanged), releasecheck movedafteractualautoreleasepool
+drain ratherthanbefore. Runtime69 25nativeunits and5realhealth/postcapconfigs
+PASS. FullXcode69 stillactive copyresources; no69install ordeviceproofyet.
+
+Run63 fullXcode69PASS. Actual finalRFBupdate BLcallsownchecked_snapshot; MachO-
+specific symbolizedstubs verifyactualhelpercallsnative_malloc,___memcpy_chk and
+objcinitWithBytesNoCopy:length:deallocator:. Brokerkernelmemory sourceidentical68.
+Two verifier-only negatives retained: unusedmarkerfunction wasdeadstripped (not
+needed because actualcall exists); genericELF-styledisassembly failedtosymbolize
+MachO Cstubs, correctedwith --macho --symbolize-operands onSAMEunchangedbinary.
+No rebuild/runtimemodification to make a marker pass. Finalverificationevidence
+run63/final69-link-evidence-private.json. ExactAirprofiles signingnow, notyet
+installed; no deviceRFBfix claim.
+
+Reproduce Run63 host gates with NEW private output directories (never overwrite
+active artifacts):
+
+```sh
+python3 experiments/linux-steam/tools/test-frame-snapshot.py "$PRIVATE_NEW/snapshot"
+python3 experiments/linux-steam/tools/build-rfb-lifetime.py "$PRIVATE_NEW/rfb" --checked-frame-snapshot
+python3 experiments/linux-steam/tools/test-frame-snapshot.py "$PRIVATE_NEW/decoder" --rfb-generated "$PRIVATE_NEW/rfb/LabRFBJoined.generated.inc"
+python3 experiments/linux-steam/tools/test-navigation-health.py "$PRIVATE_NEW/health"
+```
+
+`PRIVATE_NEW` must be a caller-selected NEW path under actualmounted easystore,
+outsideGit. Hybrid runtime command is previous68qualifiedflags plus ONLY
+`--checked-frame-snapshot`; source25unit/archive commands retained in private
+run63/runtime69-command-private.json and runtime69/evidence.json. DefaultRFB
+and guestmemory comparison outputs retained. No Valve/client/auth/signing payload
+belongs in source. iOSbinary publicdistribution licensing gate staysunresolved.

@@ -73,19 +73,21 @@ int main(int argc,char **argv){
 '''
 (out/'control.c').write_text(fixture)
 tests = []
-for enabled, policy, broker in ((0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 1, 1)):
-    private = out/f'gate{enabled}-policy{policy}-broker{broker}'
+for enabled, policy, broker, snapshot in ((0, 0, 0,0), (1, 0, 0,0), (1, 1, 0,0), (1, 1, 1,0), (1,1,1,1)):
+    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}'
     private.mkdir(mode=0o700)
-    binary = out/f'control{enabled}-policy{policy}-broker{broker}'
+    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}'
     command = ['xcrun', 'clang', '-Wall', '-Wextra', '-Werror',
                '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                f'-DIDECK_LAB_CLI_INPUT={enabled}', f'-DIDECK_LAB_GAME_FILE_POLICY={policy}',
                f'-DIDECK_LAB_COW_BROKER={broker}',
+               f'-DIDECK_LAB_RFB_CHECKED_SNAPSHOT={snapshot}',
                '-I'+str(lab/'app'), str(out/'control.c'), str(lab/'app/NativeKernelLog.c')]
     if policy:
         command += [str(lab/'app'/name) for name in
                     ('GameFilePolicy.c', 'GameFiles.c', 'LaunchProtocol.c')]
     if broker:command += [str(lab/'app/CowBackingBroker.c')]
+    if snapshot:command += ['-fobjc-arc','-fblocks','-I'+str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner'),str(lab/'app/CheckedFrameSnapshot.m'),str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner/RFBProtocol.c'),'-framework','Foundation']
     command += ['-o', str(binary)]
     subprocess.run(command, check=True)
     result = subprocess.run([binary, private], check=True, capture_output=True, text=True, timeout=25)
@@ -109,6 +111,8 @@ for enabled, policy, broker in ((0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 1, 1)):
         assert s['advice_calls']==1 and not s['advice_failures'] and not s['ownership_errors']
         assert not s['physical_reclaim_measured']
     else:assert 'cow_broker' not in receipt
+    if snapshot:assert receipt['frame_snapshot']==dict(calls=0,failures=0,live_frames=0,live_bytes=0,peak_live_bytes=0,releases=0)
+    else:assert 'frame_snapshot' not in receipt
     tests.append({'gate': enabled, 'file_policy_gate': policy, 'broker_gate':broker,'command': command, 'exit': result.returncode,
                   'receipt': receipt})
 sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
