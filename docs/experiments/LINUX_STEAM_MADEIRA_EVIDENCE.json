@@ -16647,6 +16647,9 @@
     ],
     "full_Xcode": "PASS",
     "final_RFB_calls_checked_snapshot": true,
-    "kernel_memory_source_identical68": true
+    "kernel_memory_source_identical68": true,
+    "source_checkpoint": "aabdb23",
+    "signing": "LIVE samecodesign64840 U/diskwait; completion unproven; no69deployment",
+    "observer": 26442
   }
 }

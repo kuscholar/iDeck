@@ -1,3 +1,27 @@
+# Run63 aabdb23 pushed; signing69 VERIFIED LIVE, not finished
+
+Sourceimplementation/tests/fullXcode69/finalMachOcalls checkpointaabdb23 pushed.
+OwnnormalCLI signingobserver26442 ACTIVE; lastactualps64840 codesign STAT U,
+0.3%CPU/elapsed2:53 at23:29EST, waitingdiskI/O; noCodeResourcesseal/receipt yet.
+Parent64646/privatequalify-sign69, child64831resign-app,64840codesign onlyTHIS
+Lab69disposablecopy. DoNOTkills/retry/rebuild/sign/installfromtimeout. Re-poll
+samehandle26442 orrevalidateexactprocessandprivate sign69-evidence receipt.
+Keepauthorization/constraints unchanged; not genuineuseractiongate/goalblocked.
+No69install/runtimeproofyet. deploy69-private.py preparedrefuseanyoldLabprocess,
+runONLYafteractualsignreceipt/deepstrict/textpass andfreshAirsessioncheck.
+
+Useful63done: actualgeneratedRFBfull/partialdecoder withretainedimmutableframes,
+forcedmallocNULL/no callback/errorreturn, hostrealFoundationmaxdims512concurrent
+snapshots/all515released,5healthconfigs,25iOSunits/fullXcode/finalupdate->helper
+andMachOnative_malloc/___memcpy_chk/NoCopyinit bindingPASS. DefaultgeneratedRFB
+identical68; guestmemoryidentical68. NoattemptedtinyFoundationinfallibility/
+ObjCexceptioncatch/assertionbypass. Existingauth/games/saves/main preserved.
+FullgenuineSteamLibrary/BPM +licensedMadeiragame/return/repeatsgoalACTIVE;
+bridge125NOTgame. NoSTABLE_SUCCESS/unload/goalcomplete. CLIonlyneverMacunlock/
+credentialsGuardtrust/security/FEX/Valve/vendor edits. Rawprivate run63.
+
+--- Prior63 ---
+
 # Run63 signing69 observer26442 live — harvest before deployment
 
 FullXcode69PASS, finalRFBupdate->snapshothelpercall and MachOsymbolizednative
