@@ -12,7 +12,7 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 61,
+  "latest_run": 62,
   "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -16435,7 +16435,84 @@
         }
       },
       "visible": "genuine Steam updater extracting; no Library/BPM proof yet",
+      "game_return": false,
+      "trial_result": "Desktop chrome black; zero eligible-name caller rows; later native NSData allocation abort",
+      "native_exit": {
+        "pid": 22266,
+        "captureTime": "2026-11-15 08:46:00.2297 -0500",
+        "signal": "SIGABRT",
+        "exception": "EXC_CRASH",
+        "native_stack": "NSAllocateMemoryPages -> NSData copy -> LRRFBClient update+2464",
+        "application_imageOffset": 10602524,
+        "image_uuid": "5f4af0fa-87c9-36bb-93f0-a1d35faafd65",
+        "crash_report_SHA256": "6105a36f6759a8312d9aa92474f533d0d1cbe5c463346fa392868b0591f223d2",
+        "helper_cause_proven": false
+      },
+      "native_log_summary": {
+        "bytes": 2280974,
+        "sha256": "173e599050e8b4eb2e7e09f935fadbd7b48012426d84fd567507dd77f74a8525",
+        "wait_caller_rows": 0,
+        "reported_guest_SIGTRAP_lines": 2,
+        "recorded_native_ENOMEM_mmap_failures": 0,
+        "scope": "complete retained log through native exit, not generic capacity proof"
+      }
+    },
+    "source_checkpoint": "e7b39e7449b44ed7ee2ea7f7e0ee83bb6f91fe2c"
+  },
+  "run62": {
+    "source_parent": "e7b39e7449b44ed7ee2ea7f7e0ee83bb6f91fe2c",
+    "phase": "diagnostic admission correction",
+    "observation": "Main untimed futex266 is present while CrRendererMain-only caller rows0; actual name unverified",
+    "hypothesis": "Name-free max8-main-task admission yields bounded diagnostic without assuming Chromium thread name",
+    "scope": "existing helper/ABI/code constraints unchanged; no futex semantic, allocation, watchdog, policy or Valve changes",
+    "host_real_ARM64_generic_name_probe": "PASS name-independent-ELF-v1, normal wake/exit0",
+    "native_build": "PASS runtime24units/fullXcode68",
+    "device": "Build68 installed same isolated container and actual updater visible, old inert22456 normally ended after identitycheck",
+    "private_artifact_base": ".madeira-install/linux-steam-ipad/run62",
+    "stable": false,
+    "final_sampler_calls_helper": true,
+    "name_independent_marker_present": true,
+    "memory_source_identical67": true,
+    "actual_device_recheck": "Nov16 23:02 sameLab22456/install2468CC7D phase0/noGuests; signing68 in progress, no installyet",
+    "symbolizer_golden_fixture": "Actual ARM64 ELF2codewindows uniquelymatched and zero loadbias verified",
+    "private_evidence_sha256": {
+      "name-independent-ELF-v1/evidence.json": "7483053aff2d4ff1cbec818e15bc8c6a8af23460b3d5bef4d5031e4ac568b10c",
+      "symbolizer-real-ARM64-control.json": "0bee2464257e5dc988e41bb862caf7bb67e8634a038bee74eae9bab2d081e685",
+      "final68-sampler-call-private.txt": "0460376c7984027f396da6dfb66669ffe232042a5b21204bc062847136b3a56b"
+    },
+    "signing": {
+      "build": 68,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span2_marker_absent": true,
+      "exclusive_discard_marker_and_counter": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "837013f3f8476e179d367619b5bc6cbf996aaebd178920b22a1cb16b52c15eba",
+      "signed_sha256": "4e7cbe6acda50511550175ede2c15d6e86a23a20f627771e1a8d598077a1a8f6",
+      "text_SHA256": "c8c2423060c756659da21c8963227fd4f5dccde78de2ee360ffdf58009c4ec5c",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "actual68": {
+      "pid": 23696,
+      "install_uuid": "DAB59580-8BD2-4466-928E-50B7988614DE",
+      "native_log": "kernel-23696-1042878-945412000.log",
+      "visible": "official Steam updater extracting; first health phase0 racing startup, NOT no-execution evidence",
+      "guest_caller_capture": false,
+      "Library_BPM_verified": false,
       "game_return": false
-    }
+    },
+    "symbolizer_duplicate_control": "PASS exact candidate2 remains ambiguous, no inferred base"
   }
 }

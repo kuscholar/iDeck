@@ -16,7 +16,7 @@ src="$repo/vendor/LinuxRunner";host="$LINUX_LAB_ARTIFACTS/host";lab="$repo/exper
 guest_extra=(-DIDECK_TEST_WAIT_CALLERS=0);host_extra=(-DIDECK_LAB_BLOCKED_WAIT_CALLERS=0)
 case "${LINUX_LAB_WAIT_CALLERS_TEST:-0}" in
  0) ;;
- 1) guest_extra=(-DIDECK_TEST_WAIT_CALLERS=1 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fno-optimize-sibling-calls)
+ 1) guest_extra=(-DIDECK_TEST_WAIT_CALLERS=1 -DIDECK_TEST_WAIT_NAME_UNMATCHED=1 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fno-optimize-sibling-calls)
     host_extra=(-DIDECK_LAB_BLOCKED_WAIT_CALLERS=1 "$lab/app/BlockedWaitCallers.c") ;;
  *) exit 2 ;;
 esac

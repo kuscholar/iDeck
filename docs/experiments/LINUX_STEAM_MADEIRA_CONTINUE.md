@@ -1,3 +1,76 @@
+# LIVE68 Run62: updater actual; preserve new session
+
+Actual68PID23696/installDAB59580-8BD2-4466-928E-50B7988614DE; receiptkernel-
+23696-1042878-945412000.log. Revalidate. Private run62/observe68-private.py NEWtag,
+air68-launch-private.json. SameLabupgrade/deepstrict/profilecert/signtextPASS;
+physicalupdaterextracting. Firsthealthphase0 racedstartup; doNOTrestartfromthat.
+No68caller/UI/game/returnproofyet. Oldinert22456 normallyended, noappdata/auth
+change. NEXT observe normalupdater42/restart thenboundednativecallerrows +UI.
+Keepcurrent68alive; no parallelobserver/reinstall. Name-free mainwaitscope8/
+fixedABI/codehelper4 testedrealARM64withgenericname, no sync/watchdog change.
+Symbolizergolden2uniquematches/loadbias0 andduplicateELF2ambiguouscandidatesPASS.
+NoSTABLE_SUCCESS/unload/goalcomplete. Fulllicensedgame/returngoalACTIVE. Allsafe
+permission persists; CLIonlyneverMacunlock/credentialsGuardtrust/securityedits.
+NoFEX/Valve/vendor/main/otherworktree/workingapp changes. Commit-s/pushonlyexp.
+
+--- Prior62 ---
+
+# Run62 68 signed; deployment47348 running — harvest first
+
+Build68deepstrict/exactAirprofilecert/textpreservation PASS, private
+run62/sign68-evidence-private.json. Normalisolatedupgrade observer47348 now
+freshchecksoldLab22456/URI thenendsONLYthat inertprocess and installs68/launch.
+No68runtimeproofyet; harvestbeforeanyrepeat. NoMacunlock/password/Guard/trust/
+security changes. Existingall-safeauthorization persists; data retained.
+
+# Run62 LIVE signing68 — do not duplicate
+
+Nov16 23:01EST resumed samewriter. Mount/origin/main/worktrees verified. Build68
+runtime24units/fullXcodePASS/finalsampler->helpercall +MAIN_SCOPE_V2markerPASS;
+broker memorysourceidentical67. ExistingAirprofiles/certmatched. Ownsigning
+observer56587 preparingdisposablecopy signed68; harvestbeforedeployment.
+Private run62/qualify-sign68-private.py/sign68-evidence-private.json expected.
+No68installedyet. FreshcurrentAir22456 sameoldinstall2468CC7D phase0/noLinux,
+receiptstillold kernel22456/904972. Noactivetest. Revalidatefreshbeforeactions.
+
+run62/deploy68-private.py prepared exact22456 oldURI guard; ONLYrunaftersignpass.
+observe68-private.py prepared NEWtags. No68runtimeproof. Code-symbolizergolden
+2actualARM64matches/loadbias0 PASS. Allpendingown62source/docs retained. Full
+scope/CLIonly/noFEXValvevendorsecuritymainauth edits. NeverSTABLE_SUCCESS/unload.
+
+--- Prior62 ---
+
+# Run62:67 ended by nativeRFB allocation abort;68 admission repair HOSTpass
+
+Parent/source e7b39e7 PUSHED; ownRun62tinyobserver/tests/docsdirty. Native67old
+22266 ACTUAL08:46EST SIGABRT NSAllocateMemoryPages->NSData copy->LRRFBClient
+update+2464, exactOSreport/image5f4af0fa-87c9-36bb-93f0-a1d35faafd65. Notjetsam/
+timeout/probeproof. Complete2,280,974B log zero callerrows evenmain266untimed393
+present; controlledhostCrRendererMainname didnotqualifyactualthreadname. Two
+sameguest271hungSIGTRAP reports, zero recordednativeENOMEM/MMAP_FAILURE.
+
+Current12:11ESTactualscreenshotHOME, sameinstall2468CC7D-AA69-4C11-B21E-
+16F80228C6DB newnative22456 receiptkernel-22456-904972-764429000.log phase0/
+guest0/foot4.9MiB. NOactiveLinuxsession. Revalidatebeforeactions; don'ttarget
+stale22266 orkillanunknownuser session. No68built/signed/launchedyet.
+
+NewdefaultOFF observeradmissionremovesunverifiedtaskname, caps8MAINuntimed
+waiters per sample. Existinghelper4ABIframes/GROWSDOWN/readablefileEXECwords/
+trylock/statechecks unchanged; noarbitrarybuffers/strings, sync/timeout/mapping/
+watchdog/policy/FEX/Valve/vendor/security change. HOSTactualARM64 ProbeMain
+fixture name-independent-ELF-v1 PASS withnormalwake/exit0. NEXT build68same67
+stackonlyadmissionchange, finalcode/profiles/signtext gates; freshinertLab
+identitythen safeupgradeperall-safeauthorization. Boundedserialobservercollect
+newcallers BEFOREwatchdog/nativeRFBexit; no overlappingexperiments. KeepRFB
+allocationfailure separatefuturefeatureflag; no exception/assertion suppression.
+
+TaskfulllicensedSteamPlay->Madeiragame/return/repeatedstability ACTIVE,
+bridge125NOTgame. NeverSTABLE_SUCCESS/unload/complete. CLIonlyneverMacunlock/
+credentialsGuardtrust/locksecurity edits. Main/otherworktrees/apps/auth/games/
+saves intact. Rawartifactsprivate run61/run62. Commit-s/pushonlyexperimenthours.
+
+--- Prior Run61 ---
+
 # LIVE67 Run61: updater running; preserve actual session
 
 Actual67installed/launched PID22266/install2468CC7D-AA69-4C11-B21E-16F80228C6DB,

@@ -5866,3 +5866,52 @@ screen still genuine updater extracting. No67waitercallers/UI/game/return
 validationyet. Signedhash/text in EVIDENCE.run61.signing. Leavecurrent67alive,
 letordinary updater42/restart finish; nextbounded native snapshot of sampler
 counts/status/callwords, compareactual visible frontend. No success sentinel.
+
+Run61 actual negative: early67 native781671B contains main266 untimedfutex393
+but ZERO caller probe rows; no evidence the CrRendererMain-only predicate matches
+this real client. HOST naming was controlled; no actual thread-name assumption
+is justified. Full retained67native2,280,974B SHA173e599050e8b4eb2e7e09f935fadbd7b48012426d84fd567507dd77f74a8525
+likewise ZEROcallerrows,2sameguest271/group266SIGTRAP/CrashHungProcess reports,
+zero recordednativeENOMEM/MMAP_FAILURE. At08:46:00EST exactOSreport confirms
+nativePID22266 EXC_CRASH/SIGABRT via NSAllocateMemoryPages/NSData copy into
+LRRFBClient update+2464 (appoffset10602524/image5f4af0fa-87c9-36bb-93f0-a1d35faafd65).
+This matches earlier63/64nativecopy failure class; not jetsam, not an observer
+copy timeout. Zeroeligiblehelperrows means no actual waiter-code capture proof.
+No sole cause or mapping-cap solution claimed. Later resumed12:11EST screenshot
+Home, sameinstall newnative22456 receiptphase0/guest0; no Linux session is active.
+Do not target stale22266 or assume this is interactiveSteam. Preserve inert22456
+until qualified next build/freshidentity check. No Mac unlock/credentials asked.
+
+## Run62 — correct unverified diagnostic thread-name admission
+
+Samewriter/volumeUUID/origin/main/branch reverified after heartbeat. Parent e7b39e7
+pushed. Tiny DEFAULT-OFF observer correction admits at most8 main-thread untimed
+futexwaiters per sample, no task-name assumption or strings output; existing
+ABI/GROWSDOWN/file-backedEXEC/call/bounds/trylock/statechecks unchanged. Emits
+numeric candidate/admission counts. No new futex semantics or rendering fix.
+Actual HOST ARM64 fixture now uses ProbeMain (not CrRendererMain) and production
+sampler captures callers, then normalwake/exit0. Negative old67name-specific
+result retained. Native68 not built yet. NativeRFBfull-snapshot allocation
+abort remains a separate known layer; do not mix a speculative rendering patch
+into this admission experiment. Next qualify68 then sample before watchdog;
+only safe isolated upgrade of own inertLab, preserve all accounts/data/apps.
+
+Run62 resumedNov16 23:01EST samewriter. MountUUID/migration/origin/remote/main/
+worktrees reverified, own uncommitted62 retained. ActualAir still old67install
+2468CC7D-AA69-4C11-B21E-16F80228C6DB/native22456, receiptphase0/noLinuxguests;
+no activeSteamtest interrupted. Runtime68/fullXcode exit0 and finalsamplerBLto
+helper/name-independent marker verified. Kernelbroker memory source identical67.
+Prepared68 signingcopy now inprogress/existingprofiles matched, no68installedyet.
+New read-only code-byte symbolizer tested against actual ARM64 golden probe:
+2unique executable-segment matches givecorrect zero loadbias. It emits all
+candidates/bounded16, never assumes a nearest-export function or uniquematch
+outside supplied modules. Private run62/symbolizer-real-ARM64-control.json.
+
+Run62 actual68 signed/deepstrict/profilecertmatch/textpreservation passed.
+Freshverified inert67/22456 normallyended; sameLabID upgrade preserved container.
+Actual68PID23696/installDAB59580-8BD2-4466-928E-50B7988614DE/nativekernel-
+23696-1042878-945412000.log. Physicalscreenshot genuine updater extracting;
+firsthealthphase0 racedstartup and is NOT no-execution proof. No68caller/UI/
+game/return qualificationyet. Symbolizer ambiguity negative: two identical
+suppliedELFs correctly report2candidates/notunique, no assumedbase. Rawprivate
+run62; sameCLI-only/security/FEX/Valve/main/authpreservation constraints.

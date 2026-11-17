@@ -23,7 +23,11 @@ static void worker(void){
 }
 void _start(void){
 #if IDECK_TEST_WAIT_CALLERS
+#if IDECK_TEST_WAIT_NAME_UNMATCHED
+    if(call(167,15,(long)"ProbeMain",0,0,0,0)){call(94,95,0,0,0,0,0);__builtin_unreachable();}
+#else
     if(call(167,15,(long)"CrRendererMain",0,0,0,0)){call(94,95,0,0,0,0,0);__builtin_unreachable();}
+#endif
 #endif
     long child=probe_clone(0x10f00,stack+sizeof stack,worker);
     if(child<0){call(94,92,0,0,0,0,0);__builtin_unreachable();}

@@ -72,6 +72,9 @@ void ideck_linux_lab_log_tasks(void) {
 #endif
     } rows[128];
     unsigned count=0,skipped=0,last=task_last_pid_locked(),limit=last<1024?last:1024,scanned=0;
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+    unsigned caller_candidates=0,caller_admitted=0;
+#endif
     for(unsigned pid=1;pid<=limit&&count<128;pid++) {
         scanned=pid;struct task *task=pid_get_task(pid);
         if(!task||task->exiting||!task->group)continue;
@@ -101,7 +104,10 @@ void ideck_linux_lab_log_tasks(void) {
                __atomic_load_n(&task->cpu.pc,__ATOMIC_RELAXED)!=r->pc)r->futex=0;
 #if IDECK_LAB_BLOCKED_WAIT_CALLERS
             if(r->futex&&r->tid==r->tgid&&!r->timed&&(command==0||command==9)&&
-               !strcmp(task->comm,"CrRendererMain")&&task->mm&&task->mem==&task->mm->mem){
+               task->mm&&task->mem==&task->mm->mem){
+                caller_candidates++;
+                if(caller_admitted>=8)goto caller_sample_done;
+                caller_admitted++;
                 /* general_lock retains this mm. The helper never waits for its
                  * read lock and never materializes a guest page. Only fixed ABI
                  * frame links + file-backed executable words, no buffer dump. */
@@ -114,6 +120,7 @@ void ideck_linux_lab_log_tasks(void) {
                     memset(&r->callers,0,sizeof r->callers);r->callers.status=5;
                 }
             }
+caller_sample_done:;
 #endif
         }
 #endif
@@ -122,6 +129,10 @@ void ideck_linux_lab_log_tasks(void) {
     unlock(&pids_lock);
     char line[384];snprintf(line,sizeof line,"LINUX_TASK_SAMPLE rows=%u last_allocated=%u scanned_through=%u skipped_busy=%u truncated=%d best_effort=1",count,last,scanned,skipped,scanned<last);
     ideck_native_log_line(line);
+#if IDECK_LAB_BLOCKED_WAIT_CALLERS
+    snprintf(line,sizeof line,"IDECK_WAIT_CALLER_MAIN_SCOPE_V2 candidates=%u admitted=%u limit=8 task_names_not_assumed=1",caller_candidates,caller_admitted);
+    ideck_native_log_line(line);
+#endif
     for(unsigned i=0;i<count;i++) {
         const struct row *r=&rows[i];
         snprintf(line,sizeof line,"LINUX_TASK tid=%d tgid=%d instrumented_wait=%d zombie=%d last_syscall=%u cycles=%llu faults=%llu resolved=%llu fault_wait_ns=%llu memory_stage=%u",r->tid,r->tgid,r->waiting,r->zombie,r->syscall,(unsigned long long)r->cycles,(unsigned long long)r->faults,(unsigned long long)r->resolved,(unsigned long long)r->wait_ns,r->stage);
