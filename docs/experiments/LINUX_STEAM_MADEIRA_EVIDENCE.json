@@ -16601,11 +16601,21 @@
           "sha256": "5e7a1c7e1273cf150f49de42f38414f0a7ecb0d42a90dd832fc8d64869f68fc6"
         }
       ],
-      "Library_event": "one fixed request sent; visible result pending, dispatch NOT success",
-      "preserve_live_session": true
+      "Library_event": "Sent later than native exit per exact crash timestamp; no current input or UI success inferred",
+      "preserve_live_session": false,
+      "native_exit": {
+        "pid": 23696,
+        "capture_time": "2026-11-16 23:10:25.0041 -0500",
+        "exception": "EXC_CRASH/SIGABRT",
+        "stack": "NSAllocateMemoryPages -> NSData copy -> LRRFBClient update+2464",
+        "app_image_offset": 10602620,
+        "report_SHA256": "36f8a86fe79e77c2edce514a5e30ec8d9c739be2ab5a75ef2f9148b3e49f7634",
+        "process_inventory_after_exit": "no Lab process"
+      }
     },
     "symbolizer_duplicate_control": "PASS exact candidate2 remains ambiguous, no inferred base",
     "source_checkpoint": "466c021",
-    "device_new_wait_callers_validated": true
+    "device_new_wait_callers_validated": true,
+    "next": "Separate default-off RFB owned framebuffer snapshot allocation experiment with checked allocation failure and exact-byte/input/lifetime regressions; keep all guest synchronization unchanged"
   }
 }

@@ -1,3 +1,27 @@
+# Run62 TERMINAL68 nativeRFBcopy allocation — no live Lab now
+
+Source466c021 +actualcallerevidence6ee2eac pushed. Freshinventory NO Labprocess.
+Exactnative23696 crash23:10:25.0041EST EXC_CRASH/SIGABRT NSAllocateMemoryPages->
+NSData copy->LRRFBClientupdate+2464/appoffset10602620. Privatecrash68-native.ips
+hashEVIDENCE. Health34wasstale; laterLibraryeventafterexitprovidesNOinput/UIproof.
+Don'ttargetstale23696/restartjustforretry. No69candidateyet. SameisolatedLab68
+installed/accountroot preserved. Checkdevicefreshbeforeanynewqualifiedtest.
+
+Usefulprogress: actual namefree8main/4ABIframeprobe emitted12windows, allunique
+inEXACTonAirCEF+glibc; renderer270cond_wait/CEFWaitManyinference. Maincycles
+advanced, no deadlock/lostwakecauseproven. Source/default/gates/tests documented.
+NEXT separate defaultOFF RFBfullframesnapshot allocation experiment toaddress
+repeated63/64/67/68nativeabort. Usecheckedgenuineownedmemory/snapshot, preserve
+pixelbytes/immutability/asyncMetal+RFBdrains/input; testerror/dimensions/lifetime/
+coalescing; no catch-all/assertion suppression/fakeframes/Valve/FEXpatch.
+Independentguestwaitdiagnostics unchanged. NeedactualLibrary/BPM/Play->licensed
+Madeiragame/return/repeats; bridge125NOTgame. NeverSTABLE_SUCCESS/unload/complete.
+CLIonlyneverMacunlock/credentialsGuardtrust/securitysettings. Allsafepermission
+persists; preservemain/otherworktrees/workingapps/auth/games/saves. Commit-s/
+pushonlyexpinhours. Rawprivate run62; nooverlappingobserversactive.
+
+--- Earlier62 (historical) ---
+
 # LIVE68 Run62: admission capture succeeded; Library request pending
 
 HEAD466c021 pushed; newactual evidence docsdirty. Native23696/installDAB59580-

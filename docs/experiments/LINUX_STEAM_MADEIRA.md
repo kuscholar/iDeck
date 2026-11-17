@@ -5942,3 +5942,15 @@ ONEfixedLibraryevent sent, UIresultpending. No Library/BPM/SteamPlay/game/return
 qualification. Keepcurrent68 alive. NEXT capture highercallers only if repeated
 samewaitandwatchdog correlates; separate nativeRFBcopyfailure remains unresolved.
 Do not equate observer success with userexperience or goalcompletion.
+
+Run62 terminal correction: unchangedhealth34 was NOTliveproof. Freshprocess
+inventory hasnoLab; exactreport Madeira-2026-11-16-231029.ips confirmsnative
+23696 exited23:10:25.0041EST EXC_CRASH/SIGABRT NSAllocateMemoryPages->NSData
+copy->LRRFBClientupdate+2464/appoffset10602620. Thus laterLibrarydispatch was
+afterexit and providesNO input/UIvalidation. No relaunch/kill/reinstall repeated.
+The diagnostic admission hypothesis succeeded (actual boundedcallers), but the
+userexperience didnot. Next SINGLE separate experiment should address repeated
+fullframecopy allocation atRFBboundary using checked genuinelyowned framebuffer
+storage/snapshot, exactbyte/lifetime/coalescing/error tests, defaultOFF. Do not
+suppress exceptions/assertions or claim allocation changes repair guestwaits.
+No69prepared. Main/accounts/games/saves unchanged. FullgoalstillACTIVE.
