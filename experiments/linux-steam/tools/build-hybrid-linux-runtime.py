@@ -34,6 +34,7 @@ p.add_argument('--cow-backing-broker',action='store_true',help='Explicit owned d
 p.add_argument('--blocked-wait-callers',action='store_true',help='Default-off bounded main-renderer blocked-futex existing ABI/code-only caller metadata; no synchronization changes')
 p.add_argument('--checked-frame-snapshot',action='store_true',help='Default-off checked malloc pixel copy adopted by immutable NSData; no Foundation large-copy allocation, allocationNULL stops display')
 p.add_argument('--frame-snapshot-pool',action='store_true',help='Default-off four preallocated1280x800 immutable snapshot slots; allocation/exhaustion are explicit failures, no late pixel malloc')
+p.add_argument('--map-pte-preflight',action='store_true',help='Default-off ordinary-map page-table allocation preflight with ENOMEM metadata rollback; no cap increase')
 p.add_argument('--fiber-hash-growth-guard',action='store_true',help='Default-off preserve initialized translation hash if growth calloc fails; request existing flush, no cap change')
 p.add_argument('--exclusive-private-discard',action='store_true',help='Explicit whole-backing private DONTNEED replacement experiment; unsupported mappings retain original path, not a physical-RAM reclamation claim')
 p.add_argument('--stage-dock-request',action='store_true',help='Copy a normally drained captured request into Swift metadata slot; NOT Wine/game execution')
@@ -86,6 +87,10 @@ if a.cow_native_group:
     memory=out/'fork-map-failure/memory.c' if a.fork_map_failure else out/'lazy/memory.c'
     run('build-cow-native-group.py',src,build,kernel,memory,out/'cow-native-group',*(['--native-pages-per-group',str(a.cow_native_pages_per_group)] if a.cow_native_pages_per_group!=1 else []),*(['--backing-broker'] if a.cow_backing_broker else []))
     kernel=out/'cow-native-group/libish.a'
+if a.map_pte_preflight:
+    map_memory=out/('cow-native-group' if a.cow_native_group else 'fork-map-failure' if a.fork_map_failure else 'lazy')/'memory.c'
+    run('build-map-pte-guard.py',src,build,kernel,out/'map-pte','--memory-source',map_memory)
+    kernel=out/'map-pte/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
 engine=out/'engine/libish_emu.a'
 if a.fiber_hash_growth_guard:
@@ -120,6 +125,7 @@ if a.frame_snapshot_pool:
     flags+=['-DIDECK_LAB_FRAME_SNAPSHOT_POOL=1']
     sources += [lab/'app/FrameSnapshotPool.m']
 if a.fiber_hash_growth_guard:flags+=['-DIDECK_LAB_FIBER_HASH_GUARD=1']
+if a.map_pte_preflight:flags+=['-DIDECK_LAB_MAP_PTE_PREFLIGHT=1']
 if a.cow_backing_broker:flags+=['-DIDECK_LAB_COW_BROKER=1']
 if a.blocked_wait_callers:
     flags+=['-DIDECK_LAB_BLOCKED_WAIT_CALLERS=1']
@@ -172,5 +178,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
  'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

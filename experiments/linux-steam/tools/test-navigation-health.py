@@ -31,6 +31,9 @@ void ideck_lab_native_jit_read(struct ideck_lab_native_jit_stats *s){
     *s=(struct ideck_lab_native_jit_stats){-1,UINT64_MAX,UINT64_MAX,UINT64_MAX};
 }
 #endif
+#if IDECK_LAB_MAP_PTE_PREFLIGHT
+_Atomic uint64_t ideck_map_pte_allocation_failures=11; /* serializer fixture only */
+#endif
 #if IDECK_LAB_FIBER_HASH_GUARD
 _Atomic uint64_t ideck_fiber_hash_growth_failures=7; // serializer fixture only
 #endif
@@ -104,10 +107,10 @@ void pool_control_prepare(void){@autoreleasepool{
 void pool_control_release(void){frame=nil;pool=nil;}
 '''.replace('[NSData dataWithLength:', '[NSMutableData dataWithLength:'))
 tests = []
-for enabled, policy, broker, snapshot,pool,hashguard,jit in ((0,0,0,0,0,0,0),(1,0,0,0,0,0,0),(1,1,0,0,0,0,0),(1,1,1,0,0,0,0),(1,1,1,1,0,0,0),(1,1,1,0,1,0,0),(1,1,1,0,1,1,0),(1,1,1,0,1,1,1)):
-    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}'
+for enabled, policy, broker, snapshot,pool,hashguard,jit,pte in ((0,0,0,0,0,0,0,0),(1,0,0,0,0,0,0,0),(1,1,0,0,0,0,0,0),(1,1,1,0,0,0,0,0),(1,1,1,1,0,0,0,0),(1,1,1,0,1,0,0,0),(1,1,1,0,1,1,0,0),(1,1,1,0,1,1,1,0),(1,1,1,0,1,1,1,1)):
+    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}-pte{pte}'
     private.mkdir(mode=0o700)
-    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}'
+    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}-pte{pte}'
     command = ['xcrun', 'clang', '-Wall', '-Wextra', '-Werror',
                '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                f'-DIDECK_LAB_CLI_INPUT={enabled}', f'-DIDECK_LAB_GAME_FILE_POLICY={policy}',
@@ -116,6 +119,7 @@ for enabled, policy, broker, snapshot,pool,hashguard,jit in ((0,0,0,0,0,0,0),(1,
                f'-DIDECK_LAB_FRAME_SNAPSHOT_POOL={pool}',
                f'-DIDECK_LAB_FIBER_HASH_GUARD={hashguard}',
                f'-DIDECK_LAB_NATIVE_JIT={jit}',
+               f'-DIDECK_LAB_MAP_PTE_PREFLIGHT={pte}',
                '-I'+str(lab/'app'), str(out/'control.c'), str(lab/'app/NativeKernelLog.c')]
     if policy:
         command += [str(lab/'app'/name) for name in
@@ -154,6 +158,8 @@ for enabled, policy, broker, snapshot,pool,hashguard,jit in ((0,0,0,0,0,0,0),(1,
     else:assert 'fiber_hash_growth_failures' not in receipt
     if jit:assert receipt['native_jit']==dict(compiled=True,activation_status=-1,blocks=2**64-1,segments=2**64-1,code_bytes=2**64-1,TXM_requested=False)
     else:assert 'native_jit' not in receipt
+    if pte:assert receipt['map_pte_allocation_failures']==11
+    else:assert 'map_pte_allocation_failures' not in receipt
     tests.append({'gate': enabled, 'file_policy_gate': policy, 'broker_gate':broker,'command': command, 'exit': result.returncode,
                   'receipt': receipt})
 sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()

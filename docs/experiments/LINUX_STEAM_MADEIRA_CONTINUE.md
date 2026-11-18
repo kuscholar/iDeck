@@ -1,3 +1,27 @@
+# Run70 Build76 actual Air JIT/updater live26017, preserve
+
+REVALIDATE26017/install97F66ABD-8575-49D3-850D-DC81AEC86C90.76signedinstalled
+sameisolatedLab, preserveddata; standardinteractiveLLDB exactprepareBP,
+freshRX120MiB/7680pagewrites/ownoffer/normaldetachquit95332COMPLETE. Actual
+health2phase7/21guests/activation1/attempts200000/segments158956/code124992084,
+pool3frames0errors/PTEfail0. ActualgenuineSteamExtractingPackage screenshot,
+NOTLibrary/BPM/game/return. Preserveactive76; no duplicateinstall/restart/input
+onupdater/auth. Workspace/observe76-private.py NEWtag writesrun70. Letnormal
+42restart happen, inspectactualUI thenONEknownLibrary/BPMinputwithACK+screen.
+
+Newdefaultoff --map-pte-preflight ordinarymapmetadataallocations BEFORE oldmap/
+refcountmutation; failedrangeemptyPTEprune+ENOMEM, backing/accountingrollback.
+OriginalHOSTreproduces EXACTnull+26880/0x6900;18realwholekernelASanUBSan cases
+allallocations/fresh/replace/PROT_NONE/refs/accounting/metadatacleanup/retryPASS.
+9healthgatesPASS, fullruntime26units/Xcode76/finalactualcalls/deepstrict/actual
+Airprofile+textpreservationPASS. GuardbranchNOTyetexercisedonAir. InitialiOS
+buildermissingbrokerheaderfixed innewruntime76-v2, failedoutputretained.
+OnlyONEnewruntimechange vs69, sameISH_JIT_BLOCK_LIMIT200000, noPIC/capraise/
+watchdogmask. NoFEX/Valve/vendor/security/CodexDB/lock/credentialGuardtrustedit.
+CLIonlyNEVERMacunlock. Existingmain/apps/auth/games/savespreserved. Fullgoal
+ACTIVE/bridge125diagnostic/noSTABLE_SUCCESS/schedulerunload. Newsourcecheckpoint
+pendingfreshallowed22+localtime; previous9c9cfc6pushedonlyexperimentbranch.
+
 # Run69 actual75 PTE-map crash; preserve newer25946
 
 DoNOTtarget25808: actualOS22:02:20.4471EST SIGSEGV0x6900 atpt_map_accounted+432,

@@ -1,9 +1,9 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run69, actual Build75): Linux native JIT self-check and genuine Steam
-updater/desktop chrome run on Air; Library/BPM/game/return are NOT stable. Bounded
-translation attempts applied, but native page-table mapping crashed at22:02.
-See latest sections and EVIDENCE. Preserve any newer unclassified Lab process.
+Status (run70, actual Build76): Linux native JIT and genuine Steam updater run
+on Air after checked ordinary-PTE preflight. New guard not yet exercised on Air;
+interactive Library/BPM/game/return stability NOT established. Preserve the live
+Build76 session, revalidating PID26017/install97F66ABD before any action.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6420,3 +6420,50 @@ or anonymous accounting on ENOMEM. Keep existing fork/CoW policies unchanged.
 No PIC/capraise/watchdog/Valve/FEX/vendor/security changes. FullgoalACTIVE,
 bridge125 NOTgame, noSTABLE_SUCCESS or schedulerunload. Scoped checkpoint may
 be committed/pushed only after fresh allowed localtime verification.
+
+## Run70 — ordinary-map PTE allocation preflight
+
+Sourceparent9c9cfc61765d62585b6aa00aed057f40aa5462a0. SAME pinnedLinuxRunner,
+FEX/Wine/DXMT and existing policy flags. One default-off --map-pte-preflight:
+allocate/check target leaf metadata BEFORE any backing-refcount/old-map changes.
+On failure prune empty target metadata, preserve populated mappings and input
+backing ownership, return ENOMEM. Existing anonymous caller refunds its charge
+and releases its untransferred native mapping. No retry/capraise/watchdogmask.
+Other initial-engine/allocator failures and high-level MAP_FIXED semantics are
+not comprehensively fixed by this boundary.
+
+HOST original REAL complete kernel reproduces exact null+26880/0x6900 in
+mem_pt_new. Final18 ASanUBSan cases pass across fresh/replacement/PROT_NONE,
+every actual intermediate/leaf allocation refusal and data malloc refusal:
+old bytes/flags/refs and anonymous accounting retained, metadata live count
+restored, reservations untouched, subsequent normal map/unmap succeeds.
+Only memory.c is sanitized, not every external dependency. No Air injection.
+9 native-health gate/serializer/concurrency/post-cap configurations pass;
+its synthetic counter11 is a serializer fixture, not allocation/device proof.
+Repro: tools/test-map-pte-guard.py PRIVATE_ARTIFACT_ROOT NEW_PRIVATE_OUTPUT;
+then tools/test-navigation-health.py NEW_PRIVATE_OUTPUT (both underexperiments/
+linux-steam). Hashes/commands in EVIDENCE and private test manifests.
+
+Fullruntime76-v2/26adapterunits, Xcode76/finalscene/rootpin/ownedARM64tool and
+actualfinalMachO pt_map_accounted->preflight BEFOREunmap, checkedcalloc and
+empty-metadata rollback, no hostinjection symbols PASS. Existing pool/hash/
+preparedJIT/originaladvice actualcall checks retained. ExactAirprofiles/cert,
+deepstrict and signed/unsignedtext preservation PASS. Firsthost fixture compile/
+output/count errors corrected before tests; firstiOSoverlay lacked existing
+brokerheader include, failedoutputretained and separatev2 passes. No successful
+build alone is device/runtime evidence. Isolated76upgrade pending; confirm
+receipt/process/session before action, preserve accounts/games/saves. No new
+Library/BPM/game/return/stability claim; fullgoalACTIVE/bridge125stilldiagnostic.
+
+Run70 actualAir76: isolatedsamecontainerupgrade PASS; install97F66ABD-8575-
+49D3-850D-DC81AEC86C90, PID26017 (REVALIDATE). Original25946wasinertprewarm:
+freshhome screenshot, exactoldinstallation and dead25808receipt confirmed
+before ending. No liveuserLinux/game session restarted. ActualstandardCLI
+LLDB stoppednativeprepare, freshRX120MiB/7680pagewrites/offer, BPremoved,
+normaldetach+quit. Actualhealth2 phase7/21guests/activation1/attempts200000/
+158956segments/124992084codebytes and genuineSteamExtractingPackage screenshot
+prove initialguest/nativeJIT, notinteractiveLibrary/BPM. PTEfailurecounter0:
+newrollback NOTyetexercisedondevice. Pool3frames/0errors; noPlay. Preserve26017,
+allowordinary42restart, then one knownLibrary event ONLYwhenvisibledesktop.
+Source/build and availablehosttests complete; actualUI/game/return/stability
+remainincomplete. No credentials orGuard automation, no workingapp/datachange.

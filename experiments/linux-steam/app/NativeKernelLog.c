@@ -14,6 +14,9 @@
 #if IDECK_LAB_NATIVE_JIT
 #include "LabNativeJIT.h"
 #endif
+#if IDECK_LAB_MAP_PTE_PREFLIGHT
+extern _Atomic uint64_t ideck_map_pte_allocation_failures;
+#endif
 #if IDECK_LAB_FIBER_HASH_GUARD
 extern _Atomic uint64_t ideck_fiber_hash_growth_failures;
 #endif
@@ -185,6 +188,13 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
     if(length>1&&(size_t)length<sizeof body){
         size_t used=(size_t)length-2;
         int added=snprintf(body+used,sizeof body-used,",\"fiber_hash_growth_failures\":%llu}\n",(unsigned long long)atomic_load_explicit(&ideck_fiber_hash_growth_failures,memory_order_relaxed));
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_MAP_PTE_PREFLIGHT
+    if(length>1&&(size_t)length<sizeof body){
+        size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"map_pte_allocation_failures\":%llu}\n",(unsigned long long)atomic_load_explicit(&ideck_map_pte_allocation_failures,memory_order_relaxed));
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif

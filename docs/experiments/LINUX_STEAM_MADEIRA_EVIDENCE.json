@@ -17721,5 +17721,346 @@
         "TXM_requested": false
       }
     }
+  },
+  "run70": {
+    "source_parent": "9c9cfc61765d62585b6aa00aed057f40aa5462a0",
+    "hypothesis": "Build75 ordinary-map mem_pt_new leaf calloc failure produced offset-only0x6900 and unchecked pt_map_accounted store; preflight all target leaf metadata before backing/reference/old-map mutation, prune empty metadata and return ENOMEM on failure",
+    "one_change": "DEFAULT-OFF --map-pte-preflight, same optional JIT/200000attempt bound and120MiB arena; no capraise/PIC/Valve/FEX/vendor changes",
+    "host_regression": {
+      "scope": "HOST original full-kernel native PTE null failure reproduced; actual guarded memory.c ASanUBSan, every ordinary-map PTE allocation failure, input backing/old mappings/refs/anon accounting/empty metadata rollback. NOT Air/CEF/full engine initial-OOM/game/return proof",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "original_negative_exit": -6,
+      "negative_sha256": "04d2a6f87ea36b4bd43b17a0a390dc7ba883b06b4ac3fa5ab019f3d8c86370d2",
+      "rows": [
+        {
+          "kind": "fresh",
+          "fail_calloc": 0,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "39b3387dcf8c5194897a8643b4aadf8c66d2161855f879b2fc577a68dee4ee33"
+        },
+        {
+          "kind": "fresh",
+          "fail_calloc": 1,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "3ad4f0256c16338e2024fefeecbb6fb59a266c5662f1f7136cba4f4b0e9c1e20"
+        },
+        {
+          "kind": "fresh",
+          "fail_calloc": 2,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "73731b9e9f1c9da47cdd2c1dc52592e81667b214861f92d013b9f94c30789d03"
+        },
+        {
+          "kind": "fresh",
+          "fail_calloc": 3,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "d0ac36e13595bb30fa19575ac3e8755bcc26ba36b96deb9f9db6587a242b4804"
+        },
+        {
+          "kind": "fresh",
+          "fail_calloc": 4,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "cbeb810c91339a3c6f76ea6e119a357a16234a42e02d5bed5f384e0c3a25f4ab"
+        },
+        {
+          "kind": "fresh",
+          "fail_calloc": 5,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "7bfa0608dc223bbbf506c3667c9a615122c09531e2e0b1eb4f085b083ff1bf07"
+        },
+        {
+          "kind": "fresh",
+          "fail_calloc": 0,
+          "fail_malloc": 1,
+          "exit": 0,
+          "log_sha256": "ee55346c8463473f92b5449507f48f41807b1c5e9962e11cf4a8f7d58ce2f031"
+        },
+        {
+          "kind": "replace",
+          "fail_calloc": 0,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "1ebf5f3521fc55f05f9364a1bbfaf71f16b52ec2767a03bd765439a577a4e067"
+        },
+        {
+          "kind": "replace",
+          "fail_calloc": 1,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "1a43b9202f7e07cd8b4d9a086672ab1fcab9811ba83ab575aabc3039c034e009"
+        },
+        {
+          "kind": "replace",
+          "fail_calloc": 2,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "2afda57c3bf615418d2fb8bbaa235018b552fbc28f0dbff3704d0336f709719f"
+        },
+        {
+          "kind": "replace",
+          "fail_calloc": 0,
+          "fail_malloc": 1,
+          "exit": 0,
+          "log_sha256": "45fcbf6b3628a821b6075ce49d78d1222a4dfda9d35a6721f0f1185a78223bb6"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 0,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "64ebc23be6c8e3b0d5901fafcdf7148bfce88ee5dc63353bf00c430cdb53620b"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 1,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "8bb85bc91375ca4ae322b7e1b110afd4dfaacc89b30fa18f1d02faafadd92de9"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 2,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "3d28f00ad333db70c8773cefcbfed5535cb55122840ecc1ce9743715e6696493"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 3,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "5a26a55725785600a33e44bf13e6d1149747bb5f601fe067b6f7c57ad9c71f69"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 4,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "ffc030af000fef094da1b68567a3fd144a9a799940713122f1f714da75121242"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 5,
+          "fail_malloc": 0,
+          "exit": 0,
+          "log_sha256": "43a997d6bc524a9ef2a5b71b405a2962157a713301c71e80f22b75780eea980f"
+        },
+        {
+          "kind": "none",
+          "fail_calloc": 0,
+          "fail_malloc": 1,
+          "exit": 0,
+          "log_sha256": "0327e1e9a51c765a5fd6d1e816a6edcb1caeb0c848370ed0d47f9e01b65671c0"
+        }
+      ],
+      "sources_sha256": {
+        "map_pte_patch.py": "265824a343d3d4f67293bcefa7b9f277eb613f63130dea6c0d63cbdf103299f6",
+        "build-map-pte-guard.py": "2c67290466bdc3a831e1d9e452d31b6ba1fb05366437155091e687a29434cc48",
+        "map-pte-control.c": "860fe59094593ec3fb24d86f2f8a34d79caaf86a8c3423a4fb4cc28bbbcb03ff",
+        "test-map-pte-guard.py": "303197fae6398677128efc81ee63a8bafabb16788db2fa4a2f908f6040dfc258"
+      }
+    },
+    "initial_fixture_and_build_failures": [
+      "Host1 include search erroneously added vendor/kernel and shadowed system errno/time; corrected to root/private overlay/app includes",
+      "Host2 missing task declaration/sign comparison in owned harness; corrected",
+      "Host3 output binary collided with guard directory; unique control name",
+      "Host4 replace mapping legitimately needs fewer calloc calls; enumerate actual positive allocation count",
+      "First iOS76 compilation lacked existing CowBackingBroker header include; new runtime76-v2 passes without reusing failed output"
+    ],
+    "build": 76,
+    "native_units": 26,
+    "full_Xcode": {
+      "exit_code": 0,
+      "signed": false,
+      "installed": false
+    },
+    "final_link": {
+      "build": 76,
+      "binary_sha256": "0e8c774b03dbeb4e0621a59029fb512456bf3b062e647aba5935b56dcdd0ecf6",
+      "real_decoder_calls_pool": true,
+      "pool_prepare_calls_native_malloc": true,
+      "snapshot_calls_memcpy_and_immutable_NoCopy": true,
+      "controller_calls_prepare": true,
+      "scope": "Actual final MachO linkage only; NOTdeviceexecution/UI/gameproof",
+      "disassembly_sha256": {
+        "decoder": "960f8086314c83bedc2c35da5d25e4145f6a5f5ffe471e9c7b3da0f3150c1619",
+        "prepare": "2638596f0f4c84194d8c81f60851bfbee2e7706cf29933d4e1d38c7c98e81f19",
+        "snapshot": "2d6bd8a4cf886f21dac6c1187839221bb5438a7dca393cb70ca8d8b1029f09f1",
+        "startup": "e97e4825efe74c60bff1b2e3ae4d8ffe043d5071d9901e4f49876e4faf351c6a",
+        "advice": "55afcabdf6c8608c9347a5788f73492d07114dc59fad71caa60d8e8420cfeadd",
+        "resize": "b4bfe389572ad3c4f08800f797c16d892ee271a7764be76b0bb9457e9c61eadc",
+        "insert": "6f25eab2fcc20df633f0ebbb7ee2dbbd84e02128c038182a3392fde3da7bd2c1",
+        "jit_prepare": "4dda78eb75cd70a6dc7f4fd007a77cece5d2dae28455a9ae908efcd8522ef6f1",
+        "jit_adopt": "c29858e790e46942a831f5364d5e7324aa6c281a2e0529cee6e0b602f4920323",
+        "jit_range": "c037cfd7de501018111bb045a0c0483f9116acd0d5f2478ec2aeb341a2bfe03d",
+        "classic": "ce23f3d5518f55dab5c00b1cece5e783cb295ed70342da0259319372f87fe195",
+        "jit_read": "0b5090c2923e58447385468a38d69860f302429f8e10044c585a2b0921ca8055",
+        "frontend": "d0081893b3418bfbc6dbad373e895ba5cf4659c6fe63a3838799a162d9b4aa21"
+      },
+      "PTE_preflight_before_existing_unmap": true,
+      "PTE_failure_prunes_empty_metadata": true,
+      "no_HOST_allocator_injection": true,
+      "PTE_disassembly_sha256": {
+        "preflight": "f157584d8115abb5102e91c7b145da16a8a880cbcd609c1b011eeb23c3088935",
+        "map": "c988386fbc2564837e20833cb0f3f5c5e4e6bc174ef27d32a187006c204b1243",
+        "checkednew": "496c6fb5af15efb7f1869cd32e77c2399f5f767a7f64f002d444acda7c678beb"
+      }
+    },
+    "signing": {
+      "build": 76,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span2_marker_absent": true,
+      "exclusive_discard_marker_and_counter": false,
+      "original_advice_policy_requested": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "0e8c774b03dbeb4e0621a59029fb512456bf3b062e647aba5935b56dcdd0ecf6",
+      "signed_sha256": "8cbd4e0c7f779d492595464fd03c78c9c3d6247a4a979c9ab61f2dd1ff57e460",
+      "text_SHA256": "ed0c9e32b9ff5b1a77472ac7fff457bae9830c5682dff645e38eabffefdd6c11",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "host_health_configurations": 9,
+    "source_host_tests_pass": true,
+    "device_installation": {
+      "isolated_bundle": "com.kuschqin.ideck.freshtest",
+      "installation_uuid": "97F66ABD-8575-49D3-850D-DC81AEC86C90",
+      "pid_historical": 26017,
+      "native_receipt": "kernel-26017-1126821-676998000.log",
+      "real_MachO_uuid": "7A07F043-0925-3385-88B3-C9E04242B55D",
+      "signed_binary_sha256": "8cbd4e0c7f779d492595464fd03c78c9c3d6247a4a979c9ab61f2dd1ff57e460",
+      "prior_inert_prewarm25946_ended_after_identity_and_stale_receipt": true,
+      "same_private_data_preserved": true
+    },
+    "device_PTE_branch_exercised": false,
+    "Library_BPM_game_return_stable": false,
+    "private_base": ".madeira-install/linux-steam-ipad/run70",
+    "private_evidence_sha256": {
+      "runtime76-v2/evidence.json": "e0f618b7b64443d7d038a8a41f053aeb86f9291a3c0e31836922b9f4e11f6384",
+      "runtime76-v2/map-pte/evidence.json": "2b8589948db37e64670a66fa3e4abc9ed00e3f14300052eaedad02e8a6cad917",
+      "hybrid76/prepare-evidence.json": "8ddbd9c750ffdc62dd1da92fd96cfe006062a44a7593dc8f9d07705a684b22d7",
+      "hybrid76/build-result.json": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+      "final76-link-evidence-private.json": "a4fc4801abb37e4232be96f441ad6273dbf17018f1dafa9622e69af849b395d8",
+      "sign76-evidence-private.json": "b19119529f624b7bf9b9219cadfa963e5cc37600cf13b21435d208ee9521e3bb",
+      "air76-install-private.json": "75d9cf0dcefc91bbf4af494d33d8787fa22c960a6d326cf02f605f24472de6af",
+      "air76-launch-stopped-private.json": "4a5ed2d9e4cac2d5b615c5b9dd4c0b9053f0b9d2f5f777f0a9f2e36be7879225",
+      "health-prepared76a-data-private.json": "45a500211bbf1b192e0c15c877093e92273fad3be7430b201b9f9400c6159cbb",
+      "screen-prepared76a-private.png": "6c7853b646914f550b0df1987e89ce63c2f3c1f6d8d37bb22d994622e894a01f"
+    },
+    "private_workspace_sha256": {
+      "map-pte-host-final-v7/evidence.json": "b036f81258ea32043662c41a125d9b8a7b7e7bd7dccd0d7fb3e5e81f38f4fb0d",
+      "debugger-owned-region76-v1-private.json": "16ddff8743f72118542cdf96d9e48b62d445eb9146da8ea4a5571b397edb29b7"
+    },
+    "actual_health2": {
+      "schema": 1,
+      "pid": 26017,
+      "build": 76,
+      "native_log": "kernel-26017-1126821-676998000.log",
+      "sequence": 2,
+      "mono_ms": 1126872684,
+      "phase": 7,
+      "initial_call_returned": false,
+      "tracked_guest_entries": 21,
+      "tracked_linux_workers": 0,
+      "footprint_valid": 1,
+      "footprint_bytes": 675711728,
+      "cpu_valid": 1,
+      "cpu_user_us": 18470257,
+      "cpu_system_us": 1415336,
+      "append_log_capped": false,
+      "append_log_stopped": false,
+      "file_policy": {
+        "query_status": 0,
+        "submitted": 0,
+        "completed_sequence": 0,
+        "appid": 0,
+        "status": -35,
+        "library": -1,
+        "machine": 0,
+        "diagnostic_only": true,
+        "game_launched": false
+      },
+      "cli_navigation": {
+        "sequence": 0,
+        "last_action": 9,
+        "dispatch_only": true,
+        "physical_touch_test": false
+      },
+      "cow_broker": {
+        "alloc": 291,
+        "release": 150,
+        "map_attempts": 2,
+        "map_failures": 0,
+        "unmaps": 0,
+        "live_slots": 141,
+        "live_chunks": 2,
+        "logical_bytes": 2183168,
+        "reserved_native_bytes": 4194304,
+        "ownership_errors": 0,
+        "unmap_failures": 0,
+        "overlap_rejections": 0,
+        "capacity_refusals": 0,
+        "advice_calls": 150,
+        "advice_failures": 0,
+        "physical_reclaim_measured": false
+      },
+      "frame_pool": {
+        "preparations": 1,
+        "allocation_failures": 0,
+        "native_buffers": 4,
+        "native_bytes": 16384000,
+        "calls": 3,
+        "invalid": 0,
+        "exhausted": 0,
+        "live_slots": 1,
+        "peak_slots": 2,
+        "releases": 2
+      },
+      "fiber_hash_growth_failures": 0,
+      "map_pte_allocation_failures": 0,
+      "native_jit": {
+        "compiled": true,
+        "activation_status": 1,
+        "blocks": 200000,
+        "segments": 158956,
+        "code_bytes": 124992084,
+        "TXM_requested": false
+      }
+    },
+    "actual_screen": "Genuine Updating Steam / Extracting Package; NOT Library/BPM success",
+    "prepared_offer": {
+      "pid": 26017,
+      "image_uuid": "7A07F043-0925-3385-88B3-C9E04242B55D",
+      "RX_region": 4504649728,
+      "bytes": 125829120,
+      "page_bytes": 16384,
+      "prepared_pages": 7680,
+      "RX_segments_before": 1,
+      "RX_segments_after": 1,
+      "elapsed_s": 5.4696764999999985,
+      "offer_published": true,
+      "code_executed": false,
+      "Linux_started": false,
+      "Steam_UI_validated": false,
+      "scope": "Only fresh own code arena via authorized developer debugger; native adoption/self-check and actual guest/UI still unverified"
+    },
+    "actual_Linux_JIT_activation": true
   }
 }
