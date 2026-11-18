@@ -22,6 +22,12 @@
 #import "X11TraceInstall.h"
 #endif
 #import "RFBClient.h"
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+#import "FrameSnapshotPool.h"
+@interface LRRFBClient (IDECKFramePool)
+@property(nonatomic,strong) IDECKFrameSnapshotPool *ideckFramePool;
+@end
+#endif
 #if IDECK_LAB_RFB_LIFETIME
 #import "LabRFBCompletion.h"
 #endif
@@ -132,6 +138,9 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(nonatomic,strong) LRMetalFramebufferView *display;
 @property(nonatomic,strong) LRRFBClient *client;
 @property(nonatomic,strong) NSLock *frameLock;
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+@property(nonatomic,strong) IDECKFrameSnapshotPool *framePool;
+#endif
 @property(nonatomic,strong) NSData *latest;
 @property(nonatomic) CGSize latestSize;
 @property(nonatomic) BOOL deliveryQueued;
@@ -215,11 +224,22 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         [self.status.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:8]]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(releaseInput) name:UIApplicationWillResignActiveNotification object:nil];
     if(!self.display){[self showStatus:@"Metal framebuffer unavailable; no Linux session started."];return;}
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+    // This Lab's Xvfb command is fixed1280x800. Prepare four bounded pixel
+    // buffers BEFORE the Linux owner begins creating mappings. Larger/retained
+    // exhausted frames fail explicitly; no late pixel allocation or retry.
+    self.framePool=[[IDECKFrameSnapshotPool alloc]initWithWidth:1280 height:800];
+    if(!self.framePool){[self showStatus:@"Framebuffer pool preparation failed; no Linux session started."];return;}
+#endif
 #if IDECK_LAB_CLI_INPUT
     ideck_native_log_line("IDECK_LAB_FRONTEND_ENTRY_V1 step=register_cli_navigation");
     [self registerCLINavigation];
 #endif
+#if IDECK_LAB_NATIVE_JIT
+    [self showStatus:@"iDeck Linux Lab — preparing verified install image (optional engine)."];
+#else
     [self showStatus:@"iDeck Linux Lab — preparing verified install image (interpreter)."];
+#endif
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{[weakSelf startFrontend];});
 }
 - (void)dealloc {
@@ -354,6 +374,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         NSString *secret=password.length==8?[[NSString alloc]initWithData:password encoding:NSASCIIStringEncoding]:nil;
         if(!secret){[self showStatus:@"Guest display authentication material is unavailable."];return;}
         LRRFBClient *client=[[LRRFBClient alloc]initWithPort:5993 password:secret];
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+        client.ideckFramePool=self.framePool;
+#endif
         client.frameHandler=^(NSData *p,uint16_t w,uint16_t h,uint64_t f,uint64_t b){(void)f;(void)b;[weakSelf acceptPixels:p width:w height:h];};
         client.statusHandler=^(NSString *status){if([status hasPrefix:@"Display error:"])[weakSelf showStatus:status];};
         dispatch_async(dispatch_get_main_queue(),^{
@@ -484,6 +507,27 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     @autoreleasepool {
         static atomic_bool requested;
         if(atomic_exchange(&requested,true)){[self showStatus:@"A frontend lifetime was already requested. Existing state was preserved."];return;}
+#if IDECK_LAB_NATIVE_JIT
+        // Explicit developer-only preparation. No automatic attach, protocol
+        // BRK or unchecked code execution; ordinary mode keeps its interpreter.
+        BOOL classic=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-native-jit-classic"];
+        BOOL prepared=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-native-jit-prepared"];
+        if(classic){
+            extern int ideck_lab_native_jit_prepare_classic(void);
+            (void)ideck_lab_native_jit_prepare_classic();
+            [self showStatus:@"Classic JIT is unavailable in this Air experiment. No guest started."];return;
+        }
+        if(prepared){
+#if IDECK_LAB_DEBUGGER_PREPARED_JIT
+            extern int ideck_lab_native_jit_prepare_debugger(void);
+            if(ideck_lab_native_jit_prepare_debugger()!=0){
+                [self showStatus:@"Verified developer-prepared Linux code region unavailable. No guest started."];return;
+            }
+#else
+            [self showStatus:@"This Lab was built without the developer-prepared code-region mode. No guest started."];return;
+#endif
+        }
+#endif
         BOOL windowTrace=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-window-trace"];
         BOOL retained=[NSProcessInfo.processInfo.arguments containsObject:@"linux-steam-retained-frontend"];
 #if !IDECK_LAB_RETAINED_FRONTEND
@@ -627,6 +671,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         NSString *secret=password.length==8?[[NSString alloc]initWithData:password encoding:NSASCIIStringEncoding]:nil;
         if(!secret){[self showStatus:@"Guest display authentication material is unavailable."];return;}
         LRRFBClient *client=[[LRRFBClient alloc]initWithPort:5993 password:secret];
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+        client.ideckFramePool=self.framePool;
+#endif
 #if !IDECK_LAB_RFB_LIFETIME
         self.client=client;
 #endif

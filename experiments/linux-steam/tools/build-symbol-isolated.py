@@ -20,6 +20,8 @@ parser.add_argument('output', type=Path)
 parser.add_argument('--platform', choices=('host', 'ios'), required=True)
 parser.add_argument('--meson', required=True)
 parser.add_argument('--ninja', required=True)
+parser.add_argument('--native-jit', action='store_true',
+                    help='Build the optional pinned ARM64 emitter; default remains interpreter. Does not activate iOS JIT.')
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[3]
 source = repo / 'vendor/LinuxRunner'
@@ -45,7 +47,8 @@ if args.platform == 'ios':
     command += ['--cross-file', str(cross)]
 else:
     command += ['-Dc_args=' + json.dumps(c_args)]
-command += ['-Dengine=asbestos', '-Dguest_arch=arm64', '-Djit=false', '-Djit_emit=false',
+command += ['-Dengine=asbestos', '-Dguest_arch=arm64',
+            '-Djit=' + str(args.native_jit).lower(), '-Djit_emit=' + str(args.native_jit).lower(),
             '-Dcli_aot=', '-Dvdso_required=true']
 environment = dict(os.environ)
 environment['PATH'] = str(Path(args.ninja).resolve().parent) + os.pathsep + environment['PATH']
@@ -67,7 +70,8 @@ for name in ('libish.a', 'libish_emu.a', 'libfakefs.a'):
 definitions = [line for line in archives['libish.a']['namespaced_rows'] if '(__DATA,__thread_vars)' in line]
 assert len(definitions) == 1, definitions
 (out / 'evidence.json').write_text(json.dumps(dict(scope='Darwin arm64 isolated archives/symbols only, NOT final app or runtime coexistence',
-    linuxrunner=pin, platform=args.platform, sdk=sdk, namespace_header_sha256=hashof(header),
+    linuxrunner=pin, platform=args.platform, sdk=sdk, native_jit_compiled=args.native_jit,
+    native_jit_execution_validated=False, namespace_header_sha256=hashof(header),
     builder_sha256=hashof(Path(__file__)), archives=archives,
     existing_dirfd_overlay_sha256=hashof(repo/'experiments/linux-steam/patches/linuxrunner-dirfd.patch'),
     compile_commands_sha256=hashof(out/'build/compile_commands.json')), indent=2) + '\n')

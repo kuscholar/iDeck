@@ -11,6 +11,12 @@
 #include <sys/resource.h>
 #include <stdatomic.h>
 #include <stdint.h>
+#if IDECK_LAB_NATIVE_JIT
+#include "LabNativeJIT.h"
+#endif
+#if IDECK_LAB_FIBER_HASH_GUARD
+extern _Atomic uint64_t ideck_fiber_hash_growth_failures;
+#endif
 #if IDECK_LAB_RFB_CHECKED_SNAPSHOT
 #include "CheckedFrameSnapshot.h"
 #endif
@@ -19,6 +25,9 @@
 #endif
 #if IDECK_LAB_GAME_FILE_POLICY
 #include "GameFilePolicy.h"
+#endif
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+#include "FrameSnapshotPool.h"
 #endif
 #if IDECK_LAB_MADVISE_STATS
 #include "MadviseStats.h"
@@ -162,6 +171,28 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
     if(length>1&&(size_t)length<sizeof body){
         struct ideck_frame_snapshot_stats s;ideck_frame_snapshot_stats_read(&s);size_t used=(size_t)length-2;
         int added=snprintf(body+used,sizeof body-used,",\"frame_snapshot\":{\"calls\":%llu,\"failures\":%llu,\"live_frames\":%llu,\"live_bytes\":%llu,\"peak_live_bytes\":%llu,\"releases\":%llu}}\n",(unsigned long long)s.calls,(unsigned long long)s.failures,(unsigned long long)s.live_frames,(unsigned long long)s.live_bytes,(unsigned long long)s.peak_live_bytes,(unsigned long long)s.releases);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+    if(length>1&&(size_t)length<sizeof body){
+        struct ideck_frame_pool_stats s;ideck_frame_pool_stats_read(&s);size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"frame_pool\":{\"preparations\":%llu,\"allocation_failures\":%llu,\"native_buffers\":%llu,\"native_bytes\":%llu,\"calls\":%llu,\"invalid\":%llu,\"exhausted\":%llu,\"live_slots\":%llu,\"peak_slots\":%llu,\"releases\":%llu}}\n",(unsigned long long)s.preparations,(unsigned long long)s.allocation_failures,(unsigned long long)s.native_buffers,(unsigned long long)s.native_bytes,(unsigned long long)s.calls,(unsigned long long)s.invalid,(unsigned long long)s.exhausted,(unsigned long long)s.live_slots,(unsigned long long)s.peak_slots,(unsigned long long)s.releases);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_FIBER_HASH_GUARD
+    if(length>1&&(size_t)length<sizeof body){
+        size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"fiber_hash_growth_failures\":%llu}\n",(unsigned long long)atomic_load_explicit(&ideck_fiber_hash_growth_failures,memory_order_relaxed));
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_NATIVE_JIT
+    if(length>1&&(size_t)length<sizeof body){
+        struct ideck_lab_native_jit_stats s;ideck_lab_native_jit_read(&s);
+        size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"native_jit\":{\"compiled\":true,\"activation_status\":%d,\"blocks\":%llu,\"segments\":%llu,\"code_bytes\":%llu,\"TXM_requested\":false}}\n",s.activation_status,(unsigned long long)s.blocks,(unsigned long long)s.segments,(unsigned long long)s.code_bytes);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif

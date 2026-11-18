@@ -1,10 +1,9 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run61 installed67; see latest section): actual65 private replacement effective for some
-requests, genuine saved-auth desktop Library/BPM home/menu and pointer Away-wake
-verified. Large native mappings still fail; BPM Library/game/return/stability
-unproven. Keep active65. Goal ACTIVE; next owned-small-backing broker hypothesis
-requires isolated ownership tests before any runtime/deployment change.
+Status (run69, actual Build75): Linux native JIT self-check and genuine Steam
+updater/desktop chrome run on Air; Library/BPM/game/return are NOT stable. Bounded
+translation attempts applied, but native page-table mapping crashed at22:02.
+See latest sections and EVIDENCE. Preserve any newer unclassified Lab process.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6017,3 +6016,407 @@ outsideGit. Hybrid runtime command is previous68qualifiedflags plus ONLY
 run63/runtime69-command-private.json and runtime69/evidence.json. DefaultRFB
 and guestmemory comparison outputs retained. No Valve/client/auth/signing payload
 belongs in source. iOSbinary publicdistribution licensing gate staysunresolved.
+
+Run63 actual69 correction (2026-11-17 09:28 EST): signing/deepstrict passed,
+installed and launched SAME isolated Lab container. Actual new native PID23891/
+installUUID DAD4225A-46BD-4E70-AD0B-7D0258B8B637, revalidated at observation.
+Initial receipt build69/3 snapshots/zero failures. Fresh health3565 shows309
+snapshots, ONE checked pixel allocation failure,307 releases/one immutable frame
+retained,8,192,000B peak snapshot payload and2,008,848,928B native footprint.
+Actual physical screenshot explicitly shows native display allocation error over
+genuine signed-in desktop Steam Store. App native process survived; decoder
+stopped as designed. This supports failure containment, NOT interactive UI or
+a capacity/CEF fix. Capped native4,194,208B snapshot retained private; no account
+strings/screens in Git. No credentials/Guard automation or appdata reset. Main/
+working apps untouched. No stable Library/BPM/game/return qualification.
+
+Next ONE hypothesis: prepare a fixed bounded immutable frame-buffer pool before
+Linux startup, reuse ONLY after the last NSData consumer releases each slot.
+Current Lab Xvfb is fixed1280x800; four4,096,000B slots bound payload reservation
+to16,384,000B. Reject larger frames/exhaustion explicitly; never alias retained
+frames, silently retry, raise guest caps or change Linux/CEF synchronization.
+Must test decoder bytes, delayed/extra retain, exhaustion, preparation failure,
+shutdown lifetime and concurrent ownership before iOS build/device trial.
+
+## Run64 — startup-owned bounded immutable snapshot pool
+
+Parent971cea5; own uncommitted changes during weekday closedcommitwindow.
+DEFAULT-OFF --frame-snapshot-pool is mutuallyexclusive with69checkedmalloc.
+Controller prepares4slots for this Lab fixed1280x800 before Linux start, total
+16,384,000B payload. Real decoder takes independent immutable copy into free
+slot; NSData last-release callback returns slot, capturing pool lifetime. No
+late pixel allocation/retry/alias; larger frames, invalid length or fullpool
+explicitly fail existing display path. Preparation failure frees prior buffers
+and starts no Linuxguest. Controller teardown cannot free retained snapshots.
+Other decoder/Metal/Foundation allocations remain possiblefailure points. This
+doesnotrepair guestmapping pressure/CEFwaits or assert RAMcapacity.
+
+HOST actualFoundation ASanUBSan/Werror: all4partialprepare failure positions/
+rollback, bounds, exactbytes/source mutation isolation, extraNSData.copy retain,
+all4slots saturation/no late allocations, reuseonlylastrelease, poolowner gone
+before heldframes,512concurrent admissions with safe bounded refusals PASS.
+Actual generated pinnedRFB decoder HOST socketpair: full/partial exactpixels,
+oldframes immutable, allocator denied AFTERprepare stilldelivers4frames; fifth
+heldconsumer failsNO/no callback, allslotsfreed PASS. This is NOThandshake/UI/
+Metal/device evidence. Testv1 retained inherited misleadingindentationWerror;
+fixture v2 downgrades that existing vendorstyle warning, no vendoredit.
+Six numeric health configurations preserve actual pool counters afterlogcap.
+25iOSunits PASS; guestkernelmemoryidentical69; defaultRFBbyteidentical68.
+FullXcode70observer69541 pending; no sign/install/runtimeproofyet.
+
+Reproduce with NEW private output root on verifiedeasystore:
+
+```sh
+python3 experiments/linux-steam/tools/test-frame-pool.py "$PRIVATE_NEW/pool"
+python3 experiments/linux-steam/tools/build-rfb-lifetime.py "$PRIVATE_NEW/rfb" --frame-snapshot-pool
+python3 experiments/linux-steam/tools/test-frame-pool.py "$PRIVATE_NEW/decoder" --rfb-generated "$PRIVATE_NEW/rfb/LabRFBJoined.generated.inc"
+python3 experiments/linux-steam/tools/test-navigation-health.py "$PRIVATE_NEW/health"
+```
+
+Runtime command equals69qualifiedflags with ONLY --checked-frame-snapshot
+replaced by --frame-snapshot-pool. Private run64/runtime70-command-private.json.
+Need finalMachO decoder->poolmethod andstartup->prepare, Airprofiles/deepstrict/
+unchangedsignedtext, freshfailed69sessioncheck andsameLabupgrade. Then actual
+frames/input/Library/BPM andguest/nativefailures/stats, not process-only proof.
+Working apps/main/auth/games/saves unchanged; noFEX/Valve/vendor/security edits.
+
+Run64 actual70 device (Nov17): fullXcode/finalMachO/deepstrict/exactAirprofiles/
+unchangedsignedtext PASS, isolated samecontainer installed/launched ONCE.
+Freshnative24250/install1C100DD2-F194-4C55-99C3-B6D86803509E, revalidatebefore
+action. Startup actualpool1prepare/4buffers16,384,000B. NormalSteamupdater42
+and tracked viewer drain/restart observed. Saved login retained without agent
+credentials. Actualscreen Store, ONEknownLibraryclick -> selected Library/real
+gamelist andlatercover/newsimages. This is actual CLIinput/UIresponse, NOT
+physicaltouch/Bluetoothvalidation. Then ONEknownBigPicturebuttonclick ->tooltip
+thenblack display, nointeractiveGamepadUI.
+
+Latesthealth90 mono1082131385:359snapshots/358releases/peak3slots; allocation
+failures0/invalid0/exhaustion0. Nativefootprint2,064,521,688B atthissnapshot.
+Beyond69failedframe309 withnofurtherpayloadmalloc. Supportsboundeddisplay
+allocationhypothesis, NOTgeneralnativecapacity/CEF/rootcause/stabilityrepair.
+
+Actualnativewindow captured2gueststeamwebhelper272 SIGSEGV atguestE7FB2CF0,
+LDRw8,[x8,#24] withx8=6f005200740061, reportedaddr5200740079. Read-onlycandidate
+officialCEF68 SHA891d85... hasEXACT9instructionwindow uniquelyatfile5e52ce0,
+ELFVA5e62ce0/fault5e62cf0, inferredguestbiasE2150000. WholecurrentdeviceCEF
+diskhash NOTrecopied. IMPORTANT: FAULT_MAP reportedfile5e55cf0 differs3000.
+Pinnedcalls.c fault_mapping adds pt.offset butomits data.mapping_offset, so
+donottrustthatfileoffset/nearestexport asidentity. Exactbytesusedinstead.
+ExactChromium126 publicpartition_root.h/partition_page.h fetchedread-only,
+URLs/hashes privateprovenance. Codepattern agrees with RawFree/FreeInSlotSpan
+andderivedslot-span/bucket access; origin ofinvalidmetadata UNKNOWN. NoValve/
+CEF/FEX/vendor patch, assertion/watchdog/exception suppression.
+
+Keepcurrent70session; no repeatedclicks/blindrebuild/restart. NextONEindependent
+minimal ARM64 guest control should check untouchedmetadata/guardpages beside
+payload under privateCoW/madvise/mprotect plusconcurrent cachedreads. A pass
+onlyrejects that narrowrepro, notCEFcorruption. Bridge125 remains diagnostic;
+no SteamPlay->Madeiragame/return/stable success. Main/allworkingapps/accounts/
+games/saves unchanged. Ownedsource remainsdirty outsideallowedcommitwindow.
+
+## Run65 — minimal translated metadata/payload isolation
+
+KeepAir70alive/black; no newdevicebinary/session. OWNfreestandingARM64ELF
+models2MiBprivate reservation, untouched4KiBmetadata andPROT_NONEguards beside
+payload. Fork retains original contents, CLONE_VMworker warms adjacentmetadata/
+payload translations;16rounds actualmadvise/mprotect/CoW+newpayload writes, then
+retirepreviousprivateblock toexercisebrokerslotreuse. SevenHOSTguestchecksPASS,
+includingactualtranslatedguardread/write SIGSEGV refusals, forkisolation and
+joinedcleanup. Actualcurrentqualifiedhostkernel:12exclusive replacements,
+16brokerallocations/16releases/15nativeadvice calls/live0. Kernelarchivehashed
+unchanged; no hostVMlimitoverride. Ownwrappers+changedkernel units sanitized,
+notentireinterpreter/deps. NoSteam/client/authdata used. NarrowreproNOTobserved,
+NOTaCEF/actualAirallocatorclearance orrootcausefix.
+
+Initialv1 passedbasiccoherence butdidnotqualifyretiredslotreuse, so strengthened
+actualpaths/counters. v2 strictcompilecaughtwrongstatsaccessor, corrected to
+publicdeclaredideck_cow_broker_read_stats; v3PASSwithoutkernelchange. Private
+run65/metadata-host-v1..3 logs/hashes EVIDENCE. Reproduce againstqualified
+read-onlyarchive (alloutputsNEW/privateeasystore):
+
+```sh
+python3 experiments/linux-steam/tools/test-metadata-payload.py "$ARTIFACTS" "$ARTIFACTS/run60/composed-broker-v1/normal/cow/libish.a" "$PRIVATE_NEW/metadata"
+```
+
+To avoidassumingthisfixturevalidatesCEF, nextdiscriminatingdevicecomparison
+may retain70pool/broker/ALLotherflags butremoveONLY --exclusive-private-discard,
+restoringpinnedmadvisebehavior. ThisisaLabA/B, notrepairclaim/capincrease/Valve
+patch. Preservecurrent70untilqualifiedcandidateandfreshstate. ONEEscape sent
+to knownblackBPM toattemptdesktoprecovery; nativeACKaloneisNOTrecoveryproof.
+
+Run65 continuation: explicitlyviewed later70actualscreen shows WHITEblank after
+initialBLACK, notpermanentblack. ONEEscape ACK3 buthealth142/pool359unchanged;
+no desktop recovery. Metadatahostv3narrownegative givesnofixauthority. Next
+SINGLEcontrolled71A/B uses70identicalpool/broker/ALLotherflags butremovesONLY
+--exclusive-private-discard, restoringpinnedmadvisebehavior. Runtime71buildin
+progress; no newAiraction yet. SameLibrary/BPMinputsequence, compareactual
+fault/window. Samefaultrejects; differentENOMEM/otherfailureisinconclusive;
+onecleanentrydoesnotprovefullstability. No capchange/FEX/Valve/vendoredit.
+
+Run65 historical reconciliation: targetedsearch found Run57actual63 SAME
+E7FB2CF0/5E62CF0 fault witha differentbadpointer BEFOREexclusive-discard/broker
+were introduced.63usedcoarser2nativepageCoW; current70usesoriginalspan+broker.
+Thereforeexclusive-discard isNOTnecessaryfor thisfaultfamily.71canONLYtest
+its contribution underCURRENT otherwise-identicalconfiguration, notprovea
+solecause. DoNOTpresentthis asnewfaultorignoreprevious63exactCEFidentity and
+biaseddiagnosticoffsetknownthen. Narrowmetadatafixturepassdoesnotexclude
+otherinterpreter/allocator/lifetimebugs. FullXcode71PASS; actualoriginaladvice
+andpoolcall verification next; no71deviceproofyet.
+
+Run65 strongerpure-spin HOSTvariant alsoPASS: reader/sibling waitsinbounded
+guestatomic loops, no nanosleepsyscall thatwouldnormallyrefreshTLB. Existing
+hosttimer/engineinterrupts remainenabled; thisisnotaninterrupt-freeproof.
+Actual1exclusive replacement/16brokeralloc+release/15advice/live0. Other
+advicefallthroughisexpectedunderread-lockcontention, nothiddenmissingcoverage.
+No corruptionreproduced, no kernelpatchjustified. --pure-spin selectsfixture
+only, neveriPad/runtimefeature. Private metadata-spin-v1/evidence.json.
+
+Full71Xcode/real_sys_madvise->original/four-slotpool/finaltext/deepstrict/
+matchingexistingAirprofiles allPASS. GeneratedmemoryandRFBsourcesbyteidentical
+70; mmapdiffremovesONLYPrivateDiscardinclude+trybranch. Actual70stillwhiteblank
+at10:26EST/health256/pool359/ACK3/noPlay. FreshguardedSAMEcontainerupgrade71
+nowinprogress, notyetdevice/UIproof. No workingapps/accountrootmigration/reset.
+
+Run65 terminal71: actualPID24602 OSreport10:35:29.9256EST confirms native
+SIGSEGV/EXC_BAD_ACCESS at0x200000. Exactbuild71/image2b509159-617e-359e-bd68-
+c885e028af95 stacklist_null+12 ->list_init_add+28 ->fiber_resize_hash+284 ->
+fiber_insert+324 ->cpu_step_to_interrupt. Health38/pool234frames0errors was
+STALE; native24602 no longerlisted. New24805 sameinstallationobservedandleft
+untouched; receiptstilldead24602, no newLinuxproof. No71Library/BPMinputsent.
+A/B INCONCLUSIVE becauseindependentnativeallocation failureblockedcomparison,
+notCEFfixproof. DirectdeviceCEFcopy218132264B SHA891d85f97231fcafa5763b7140039c5
+d3cbbb99f2a42ede08de5991abcbc3cdb equalsactual63/68officialversion. Native
+preinputwindow17errno12rows, noGUEST_FAULT. RawprivateoutsideGit.
+
+Pinnedfiber_resize_hash callocunchecked before destructiveoldhash traversal.
+Crashaddr0x200000 fitsNULLnewarray+bucket offset; allocationNULLhypothesis
+requirescontrolledoriginal-vs-overlayrepro, notsolecausedeductionfromstack.
+NextONEdefaultOFFgrowthallocationguard: failedgrowthmustpreserveoldhash and
+requestexistingcacheflush, avoidretryuntilflush; initialengineallocation and
+otherallocationsremaindistinctlimits. NoFEX/Valve/vendor edits orcapraise.
+
+## Run66 — checked existing translation-hash growth
+
+DEFAULT-OFF --fiber-hash-growth-guard transformsONLYcopiedpinnedasbestos.c.
+Ifgrowthcallocfails with anALREADYinitializedtable, doNOTunlink/mutate/free
+oldtable: recordatomicnumericfailure, setEXISTINGflush_requested andreturn.
+Actualfiber_insert skips furthergrowth whileflushpending; existingtable accepts
+newblock andordinarycpu_run_to_interrupt policyflush handlesinvalidation/
+jetsamlifetime. Samecapacity/hashalgorithm/locks. INITIALengine/hash/pagehash
+allocationandothermemoryfailuresNOTcovered. Noexceptioncatch/assertion/
+watchdogsuppression orretry/capraise. NoFEX/Valve/vendor edits.
+
+HOST actualextractedpinnedresize+insert andrealheaders/list: originalinjected
+callocNULLreproducesUBSan nulllistaccess; guardedoldbucketbytes/allnodeskept,
+failure1/oneallocationattempt, furtherinsertsuseoldtableuntilflushrequestreset,
+successrehashallnodes PASS. Unrelatedpagehooks/clock/capneutral inthisfocused
+harness, NOTfullengineproof. FirstharnessTRACE_macroWerrorcorrectedlocally.
+
+Complete copiedHOSTengine ASanUBSan withactualownARM64ELF4096indirectbranches/
+2passes: actualgrowthNULLinjected1, guardedfailure1, growthattempts3, real
+existingcapflush1, guestexit0 PASS. HostinjectionforbiddeniOS. Initialv1immediate
+adjacentbranchescompiledtogether andZEROgrowth; mandatorycounterassertfailed,
+notacceptedassuccess. v2indirectbranchesforceactualgrowth. No engine/runtime
+capchange. NotactualSteam/CEF/Air/gamevalidation. Sevenhealthconfig/postcap
+serializercontrolsPASS, includesnewnumericcounter. Source/artifacthashesEVIDENCE,
+private run66. Runtime72buildingobserver30924; all71otherflagsretained.
+
+Reproduce isolatedHOSTgates withNEWprivatepaths:
+
+```sh
+python3 experiments/linux-steam/tools/test-fiber-hash-guard.py "$PRIVATE_NEW/hash"
+python3 experiments/linux-steam/tools/test-hash-growth-guest.py "$ARTIFACTS" "$ARTIFACTS/run60/composed-broker-v1/normal/cow/libish.a" "$ARTIFACTS/host/libish_emu.a" "$PRIVATE_NEW/engine"
+python3 experiments/linux-steam/tools/test-navigation-health.py "$PRIVATE_NEW/health"
+```
+
+Next finishruntime/fullXcode/finalresizecallocguard+actualflushgating/MachO
+counter/deepstrict/textpreservation thenfreshAirsession. Sameinstallnew24805
+observedandpreserved, receiptstilldead24602; doNOTtargetstalePIDs orassumeinert.
+Preservemain/allworkingapps/auth/games/saves. Weekdaycommitpushclosed;OWNdirty.
+FullgoalACTIVE; bridge125NOTgame/noSTABLE_SUCCESS/unload.
+
+Run66 fullXcode72PASS. FinalactualMachOresizecalloc->NULL/oldhash/oldsizechecks
+->atomiccounter->existingflushflag BEFOREanyold_list_removeverified; insertion
+retainsguardedgrowth/pendingflushgating. Firstverifierexpectedglobalsymbolin
+ADRPannotation, butMachOprintsaddressonly: correctednmaddress+ADRPoffset/
+branchinspection onSAMEbinary; no runtimechange/rebuild. Existingpool/
+originaladviceactualcalls verified. Signing72onlydisposablecopyactive; no72
+device/UIproofyet. Revalidatefresh24805/oldreceiptbeforeLab-onlyupgrade.
+
+Run66 actual72 continuation (Nov17): saved-login genuine desktop chrome was
+visible. ONE Library click ACK1 produced black content, not interactive Library.
+Actual guest helper276/group271 Chrome_ChildIOT BRK E83D1504 agrees with prior
+CrashHungProcess classification; not the native71 hash crash. Steam itself then
+showed Unexpected Transport Error startup0x3000, visually verified. ONE Down
+ACK2 was sent; NO Enter/recovery-option activation. Temporary dialog disappearance
+did not establish a restart; fresh resume72c screenshot again shows the error
+dialog. Preserve this session. Health124/mono1103392375:56guests,588436992B,
+pool1703frames/1702releases/peak3/0errors, hashgrowthfailures0, noPlay. The guard
+was NOT exercised on device and no CEF/stability fix is claimed. Logs/raw
+screens remain private; hashes in EVIDENCE.
+
+## Run67 — optional upstream ARM64 emitter qualification
+
+Hypothesis ONLY: interpreter overhead may contribute to Chromium responsiveness;
+not established by the watchdog. Add DEFAULT-OFF --native-jit to the isolated
+archive builder, using pinned unmodified LinuxRunner emitter/layouts. First
+qualify complete HOST engine with the SAME owned arithmetic/memory ARM64 ELF
+under interpreter/native modes in fresh processes; require correct checksum,
+actual translated-block/segment/byte counters and real backend description.
+A tiny-loop performance sample does NOT estimate Steam/CEF speed. No Air JIT
+activation, memory-policy change, FEX/Valve/vendor/security edits or repeated
+Lab restart. Initial build refused missing Linux vDSO linker; v2 prepends the
+existing private tool-bin/ld.lld, no dependency download or fake vDSO.
+Physical JIT/TXM remains unverified; never execute TXM breakpoint based solely
+on P_TRACED without the expected authorized debugger protocol. Keep72live.
+
+Run67 qualification: HOST identical arithmetic/memory ELF twice each mode passes
+with native5blocks/5segments/3220bytes and interpreterzero. Existing16syscall
+checks also pass both modes (including diagnostic125 bridge, NOT game). Noisy
+whole-host startup timings are not a Steam speedup measurement. Eight health
+configurations pass ASan/UBSan/concurrency/post-cap and uint64max serializer.
+First25s fixture timed out in unchanged noJIT pool configuration athealth90;
+bounded60s rerun passed, no runtime limit increase. Native/adapter layout
+mismatches refuse BEFORE output creation in both directions.
+
+73 passed26adapter compilation but was never installed; review found missing
+ish_app_native_fault_install. Corrected74 installs pinned native-fault chaining
+ONLY after verified classic region, before guest; setup failure stops guest.
+No TXM invocation, no FEX allocator/VM-policy change. Pinned real Darwin static
+read/write/previous-handler/fail-stop tests pass O0/O2; its added unresolved
+gadget-PC helper is a fail-if-called harness dependency, not gadget recovery
+proof. All runtime/vendor code remains pinned/unmodified. Full74 Xcode, actual
+final helper classicfalse->acquire->faultinstall and actual counter call/pool/
+hash/originaladvice, deepstrict/matchingAirprofiles and textpreservation PASS.
+JIT Linux-to-Wine SIGSEGV/BUS handoff remains a separate unqualified boundary.
+
+Fresh Air72 health1768,56guests,588142080B,pool1703/1702/0errors/hashfail0/CLI2/
+noPlay and actual screenshot still0x3000. Guarded samecontainer74 upgrade then
+STOPPED launch is pending; no device JIT/UI success yet. No credentials or
+account transfer; exact fresh PID/install must be revalidated for standard
+Xcode CLI attach/detach. Never repeat a failed unchanged device gate. Raw
+artifacts/private hashes in EVIDENCE, main/working apps/games/saves preserved.
+
+Run67 actual74 device result (20:41EST): installation succeeded, same private
+Lab container/auth/games/saves retained; UUID1BF10146-010D-453D-B0CF-8BFFA23351CE.
+Initial native25406 was a prewarm with retained_argument0/missing argument,
+NO Linux/JIT despite later launch request showing args. Local CLI64 missing
+--device was corrected by placing device options BEFORE variadic app args;
+no repeat install. Preserved unknown process, then verified it had exited.
+Fresh25477 launch got actual args; INTERACTIVE standard LLDB attached at
+dyldSIGSTOP then normaldetach observed. No TXM script/BRK was invoked.
+
+ActualOS report PID25477 20:41:21.0973-0500: SIGBUS/KERN_PROTECTION_FAILURE at
+0x117bf8000 executing generated self-check; stackjit_ios_acquire ->ownclassic
+prepare ->startFrontend. Lasthealth1/phase0/0guests/0frames/JITactivation0;
+no Linux or Steam started. Therefore classic mapping/protection acceptance
+and attach/detach are insufficient on this Air27.2. This is NOT the original
+CEF freeze, a successful nativeJIT test, or a Steam/Library comparison. Never
+repeat unchanged classic test here. Exact crash/hash in EVIDENCE, rawprivate.
+
+Next discriminating experiment: block known-failing classic activation and
+reuse the existing authorized per-region debugger preparation for ONLY the
+new120MiB Linux backend region. StikJIT1.9.0 INTEGRATION.md and ScriptRunner.swift
+primary sources reviewed; they require per16KiB preparation through normal
+developer debug connection underTXM. No implementation/device success yet.
+Do not assume ordinary RX allocation alone prepares pages or execute TXM
+breakpoints without the expected protocol handler. No FEX/Valve/security/
+entitlement/lock edits, credential/Guard/trust automation or working-app change.
+
+## Run68 — genuine debugger-prepared Linux code arena
+
+Same74binary, newownedtest25506, standardLLDB stopped exactlyios_region_verify
+BEFORE any self-check or guest. Actual ordinaryalias wasR/notW/notX over120MiB;
+one16KiB-page debuggerwrite succeeded butX remainedfalse. Whole-region helper
+refused BEFOREwrites on thisinvalidRX condition. Separate fresh16KiB region
+allocatedRX bystandarddeveloper debugger wasRX before/afteronebytepreparation;
+freed successfully, no code executed. OwnpausedLab25506 thennormallyended; no
+activeusergame/session was killed. Normalized directLLDBobservations stored
+privately; no standalone raw transcript for thesecontrols, no guessedflags.
+
+Implement DEFAULT-OFF--debugger-prepared-jit requiring optionalemitter. Own
+pre-guest single-use nativeoffer checks magic/currentPID/exact120MiB/16KiB
+alignment/pagecount/overflow. No guestIPC/path/text/launchpayload accepted.
+Copied pinnedjit.c adds boundedRX-segment validation, originalRWalias setup,
+post-aliasX validation, originalgenerated42selfcheck andexistingreadypublication.
+Classic Labactivation is disabled followingactualAir74fault. NoTXM BRK, PCskip,
+OSsetting/entitlement change, FEX/Valve/vendor mutation orcachecapraise.
+
+TwelveHOST ASanUBSan actualoffer cases PASS with replay/readiness/failure gates;
+OSadoption/faultsetup are explicit testfixture boundaries, notphysicalproof.
+Runtime75 26units/fullXcode/package/finalactualprepare->adopt->VMrange/RWalias/
+selfcheck/faultinstall andclassicdisabled/pool/hash/advice PASS. Firstverifier
+used wrongprivateartifactdirectory; corrected onSAMEbinary, no rebuild.
+Signingpending,75NOTinstalled. PrivateworkspaceLLDBhelper willprepareONLY a
+NEWfreshdebuggerRX120MiB region, validateimage/UUID/PID/stoplocation/noimage
+overlap, prepareall7680pages andpublishfixednativeoffer LAST. Thenstandard
+detach andactualselfcheck/ELF/SteamUI/input determineoutcome. NoJIT/UI/stability
+claimyet; Linux-to-Wine fault lifecycle/handoff remainsunqualified. Rawprivate
+artifactsandhashes EVIDENCE; main/workingapps/accounts/games/saves intact.
+
+Run68 actual75 Air evidence: matchingprofiles/deepstrict/finaltext PASS, same
+Labinstalled UUID1FBCBFC7-895D-4127-A67B-A6FB54A336C5, nativePID25523 (historical,
+revalidate). StandardinteractiveLLDB attachedatdyldSIGSTOP, resolved/stopped
+exactownprepare_debugger. NEWRX120MiB validatedwithoutimageoverlap,7680per16KiB
+debuggerwrites ACK in6.4617s, nativefixedofferpublished LAST. BPdeleted/normal
+detach. Automaticpreparedreceipt itself is NOT codeexecution evidence. Later
+actualhealth5 proves activation1 (onlyaftergenerated42selfcheck+faultsetup) and
+realLinuxphase7/21guests/212652blocks/159610segments/124989800nativecodebytes.
+Actualphysicalscreen genuineValveupdater ExtractingPackage. This establishes
+initialLinuxJITexecution ontheAir, NOTinteractiveLibrary/BPM/game/return/stability.
+
+Code region isalreadynear fixed120MiB capacityduringupdater. No capraise or
+measuredSteamperformanceclaim. Pool4frames/0errors/16MiBprepared. Preserve
+thisactualsession, allowonlynormaldocumented42restart, thenactualLibrary/BPM
+inputandfault/performanceassessment. No repeatinstall/launch/blindpatch.
+Rawreceipts/health/screensprivatewithhashes EVIDENCE. FullobjectiveACTIVE;
+bridge125stilldiagnostic. SourceOWNdirtyoutsidecommitwindow; main/workingapps/
+accounts/games/saves preserved, noFEX/Valve/vendor/security/lock/CodexDBchanges.
+
+Run68 finalunlimited observation: actualhealth119/frame335frozen/zeroCLIinput/
+noPlay,black~22minincludingstartup/debuggerpause. JITattempts15648001 vsnative
+segments159610/codebytes124989800 unchanged; hashgrowthguardbranchactually
+executed2times onAir whileappcontinued, NOTgeneralOOM/CEF/stabilityfix. Three
+SIG11 reports main271/libcef pcEBD8273C to unmapped390B274000 didNOTprovefatal
+crash: same271nonzombie/cyclesadvanced afterwards. Historicalwebhelper20:39UTC
+unresponsiveentries were older72, notnew75. OnlyfailedLab25523 thennormally
+SIGTERMended after freshidentity/state/screenshot, no games/account/data removal.
+
+Countersemanticcorrection: pinnedjit.c incrementsst_blocks AFTER jit_translate
+evenif codearena canno longerinstallsegments. Treat it astranslation ATTEMPTS,
+not successfullyinstalled/executedblocks. Segment/bytecounts andactualselfcheck
+are separate, nonealone provesinteractiveSteam.
+
+## Run69 — bounded existing emitter translation attempts
+
+ONEruntimeparameter ISH_JIT_BLOCK_LIMIT=200000 vsunlimited, SAMEinstalled75
+SHA65ade1436558af012dd9fd5314fec931665b7938e38fc5733fb6ac92820ae62f, container,
+120MiBpreparedregion andallotherflags; TERM=dumbretained, noPIC/capraise/code
+patch/watchdogmask/reinstall. Hypothesis: avoidmillions ofuselessfullcompiler
+attempts after nativecodeinstallationsplateau; notoriginalCEFrootcauseclaim.
+HOST sameimmutableengine/ownELFs limit2 passeschecksum and16syscalls with
+actual2attempts/positiveinstalledsegments, mixednative/gadgetpath. NotSteam
+performanceproof. Standardfresh25808attach/preparedBP/7680pages/offer/detach
+verified (confignewfile,publichelperonlyportableconfigwrapperchanged). Initial
+actualhealth3/phase7/20guests/activation1/attempts200000/segments158931/codebytes
+124992112 confirms bound applied. NoLibrary/BPM/game/return proofyet; preserve
+thissession, inspectactualUI andoneknowninputonlyaftergenuinedesktop appears.
+RawprivatehashesEVIDENCE, originalgoalACTIVE, noSTABLE_SUCCESS/unload.
+
+Run69 end: actual system report25808 at22:02:20.4471EST SIGSEGV/
+KERN_INVALID_ADDRESS0x6900, steamwebhel-346, pt_map_accounted+432 ->
+pt_map_nothing -> do_mmap. Exact signed75MachOUUID matches. Final disassembly
+calls mem_pt_new then unconditionally str x8,[x9]; x9=0x6900. Pinned mem_pt_new
+can return NULLleaf+index after unchecked calloc. This is a new native metadata
+failure, not proof the genuine CEF watchdog or all UI failures have one cause.
+Only desktop chrome was visually seen. ONE Library notification22:05 was AFTER
+actual crash; transport0 with nativeACK0 is NOT a Library click/UI response.
+Actual22:08 screenshot home; process inventory no25808, newer25946 preserved
+unclassified. No restart/input/kill of25946. Lasthealth44/2.25GB/attempts200000/
+pool155frames0errors/hashguard0/noPlay is stale after death, not live success.
+Next isolate ordinary PTE-allocation failure with original negative control,
+checked preflight and rollback; do not lose existing mappings/backing ownership
+or anonymous accounting on ENOMEM. Keep existing fork/CoW policies unchanged.
+No PIC/capraise/watchdog/Valve/FEX/vendor/security changes. FullgoalACTIVE,
+bridge125 NOTgame, noSTABLE_SUCCESS or schedulerunload. Scoped checkpoint may
+be committed/pushed only after fresh allowed localtime verification.

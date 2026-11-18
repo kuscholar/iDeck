@@ -17,6 +17,8 @@ import sys
 p=argparse.ArgumentParser(description=__doc__)
 for name in ('namespace_root','artifacts','output'):p.add_argument(name,type=Path)
 p.add_argument('--ninja',required=True)
+p.add_argument('--native-jit',action='store_true',help='Explicit optional emitter base with matching Linux adapter layouts; does not activate iOS JIT')
+p.add_argument('--debugger-prepared-jit',action='store_true',help='Default-off exact owned120MiB region handoff from authorized native developer debugger; requires native-jit')
 p.add_argument('--metal-drain',action='store_true',help='Track real Metal command/main bodies before retained transport completion')
 p.add_argument('--shared-library',action='store_true',help='Mount a separate app-private realfs Steam library, preserving default /Steam')
 p.add_argument('--capture-launch',action='store_true',help='Capture one checked native request; response remains125, no game execution')
@@ -31,6 +33,8 @@ p.add_argument('--cow-native-pages-per-group',type=int,choices=(1,2),default=1,h
 p.add_argument('--cow-backing-broker',action='store_true',help='Explicit owned dynamic chunks for private CoW only; no coarser copies, default off')
 p.add_argument('--blocked-wait-callers',action='store_true',help='Default-off bounded main-renderer blocked-futex existing ABI/code-only caller metadata; no synchronization changes')
 p.add_argument('--checked-frame-snapshot',action='store_true',help='Default-off checked malloc pixel copy adopted by immutable NSData; no Foundation large-copy allocation, allocationNULL stops display')
+p.add_argument('--frame-snapshot-pool',action='store_true',help='Default-off four preallocated1280x800 immutable snapshot slots; allocation/exhaustion are explicit failures, no late pixel malloc')
+p.add_argument('--fiber-hash-growth-guard',action='store_true',help='Default-off preserve initialized translation hash if growth calloc fails; request existing flush, no cap change')
 p.add_argument('--exclusive-private-discard',action='store_true',help='Explicit whole-backing private DONTNEED replacement experiment; unsupported mappings retain original path, not a physical-RAM reclamation claim')
 p.add_argument('--stage-dock-request',action='store_true',help='Copy a normally drained captured request into Swift metadata slot; NOT Wine/game execution')
 p.add_argument('--native-setup-transition',action='store_true',help='Explicit main-thread native setup button after normal drain/staging; disables Linux restart, no automatic game launch')
@@ -38,6 +42,8 @@ p.add_argument('--cli-input-controls',action='store_true',help='Development only
 p.add_argument('--x11-window-state',action='store_true',help='Explicit Lab-only bounded read-only X11 window/focus observer, no WM/input/pixels')
 a=p.parse_args();ns,base,out=(getattr(a,n).resolve() for n in ('namespace_root','artifacts','output'))
 assert all(str(x).startswith('/Volumes/easystore/') for x in (ns,base,out)) and not out.exists()
+assert not (a.checked_frame_snapshot and a.frame_snapshot_pool),'Select one explicit snapshot policy'
+assert not a.debugger_prepared_jit or a.native_jit,'Prepared-region handoff requires optional emitter'
 assert not a.capture_launch or (a.shared_library and a.metal_drain),'Capture integration needs explicit shared library and tracked Metal boundary'
 assert not a.dock_storage or a.capture_launch,'Dock storage needs explicit capture/shared/Metal integration'
 assert not a.register_shared_library or a.dock_storage,'Library registration requires the explicit physical Dock storage layout'
@@ -53,6 +59,7 @@ assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=Tru
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
 hashof=lambda x:hashlib.sha256(x.read_bytes()).hexdigest()
 original=json.loads((ns/'evidence.json').read_text());assert original['platform']=='ios'
+assert bool(original.get('native_jit_compiled',False))==a.native_jit, 'Native JIT engine and adapter layouts must be selected together'
 for name,data in original['archives'].items():assert hashof(build/name)==data['sha256'],name
 assert hashof(ns/'LinuxSymbolNamespace.h')==original['namespace_header_sha256']==hashof(lab/'app/LinuxSymbolNamespace.h')
 entries=json.loads((build/'compile_commands.json').read_text())
@@ -80,9 +87,16 @@ if a.cow_native_group:
     run('build-cow-native-group.py',src,build,kernel,memory,out/'cow-native-group',*(['--native-pages-per-group',str(a.cow_native_pages_per_group)] if a.cow_native_pages_per_group!=1 else []),*(['--backing-broker'] if a.cow_backing_broker else []))
     kernel=out/'cow-native-group/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
+engine=out/'engine/libish_emu.a'
+if a.fiber_hash_growth_guard:
+    run('build-fiber-hash-guard.py',src,build,engine,out/'hash-growth')
+    engine=out/'hash-growth/libish_emu.a'
+if a.debugger_prepared_jit:
+    run('build-debugger-jit-region.py',src,build,engine,out/'debugger-region')
+    engine=out/'debugger-region/libish_emu.a'
 runtime=out/'runtime';runtime.mkdir()
-for source,name in [(kernel,'libish.a'),(out/'engine/libish_emu.a','libish_emu.a'),(build/'libfakefs.a','libfakefs.a')]:shutil.copy2(source,runtime/name)
-run('build-rfb-lifetime.py',out/'rfb',*(['--checked-frame-snapshot'] if a.checked_frame_snapshot else []))
+for source,name in [(kernel,'libish.a'),(engine,'libish_emu.a'),(build/'libfakefs.a','libfakefs.a')]:shutil.copy2(source,runtime/name)
+run('build-rfb-lifetime.py',out/'rfb',*(['--checked-frame-snapshot'] if a.checked_frame_snapshot else []),*(['--frame-snapshot-pool'] if a.frame_snapshot_pool else []))
 sdk=subprocess.check_output(['xcrun','--sdk','iphoneos','--show-sdk-path'],text=True).strip()
 flags=['-target','arm64-apple-ios26.0','-isysroot',sdk,'-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DLOG_HANDLER_DPRINTF=1','-DISH_INTERNAL=1',
  '-DIDECK_LAB_LINUX_SYMBOL_NAMESPACE=1','-include',str(ns/'LinuxSymbolNamespace.h'),
@@ -94,10 +108,18 @@ flags=['-target','arm64-apple-ios26.0','-isysroot',sdk,'-DGUEST_ARM64=1','-DENGI
  '-I',str(src),'-I',str(build),'-I',str(lab/'app'),'-I',str(src/'app/LinuxRunner'),'-I',str(out/'rfb'),
  '-O0','-g','-fvisibility=hidden']
 sources=[lab/'app'/name for name in ('LinuxLabRuntime.c','LabDeviceFS.c','LabBridge.c','LaunchProtocol.c','ToolInstall.c','NativeKernelLog.c','NativeSignalLease.c','RetainedFrontend.c','LabRootFS.m','LabSocketPrefix.m','LinuxSteamViewController.m','LabRFBClient.m')]
+if a.native_jit:
+    flags+=['-DISH_JIT=1','-DIDECK_LAB_NATIVE_JIT=1']
+    sources += [lab/'app/LabNativeJIT.c']
+if a.debugger_prepared_jit:flags+=['-DIDECK_LAB_DEBUGGER_PREPARED_JIT=1']
 sources += [src/'app/LinuxRunner'/'RFBProtocol.c']
 if a.checked_frame_snapshot:
     flags+=['-DIDECK_LAB_RFB_CHECKED_SNAPSHOT=1']
     sources += [lab/'app/CheckedFrameSnapshot.m']
+if a.frame_snapshot_pool:
+    flags+=['-DIDECK_LAB_FRAME_SNAPSHOT_POOL=1']
+    sources += [lab/'app/FrameSnapshotPool.m']
+if a.fiber_hash_growth_guard:flags+=['-DIDECK_LAB_FIBER_HASH_GUARD=1']
 if a.cow_backing_broker:flags+=['-DIDECK_LAB_COW_BROKER=1']
 if a.blocked_wait_callers:
     flags+=['-DIDECK_LAB_BLOCKED_WAIT_CALLERS=1']
@@ -147,6 +169,8 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
 (out/'evidence.json').write_text(json.dumps({'scope':'Qualified copied NAMESPACED Linux kernel/engine/frontend link inputs ONLY; NOT combined app/Wine execution/device/game proof',
  'linuxrunner':original['linuxrunner'],'namespace_base_evidence_sha256':hashof(ns/'evidence.json'),
  'namespace_header_sha256':hashof(ns/'LinuxSymbolNamespace.h'),'base_archives_unchanged':True,
+ 'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
+ 'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

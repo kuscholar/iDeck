@@ -21,11 +21,26 @@ fixture = r'''
 #include <pthread.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdatomic.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#if IDECK_LAB_NATIVE_JIT
+#include "LabNativeJIT.h"
+void ideck_lab_native_jit_read(struct ideck_lab_native_jit_stats *s){
+    /* Serializer bounds fixture, not actual native execution evidence. */
+    *s=(struct ideck_lab_native_jit_stats){-1,UINT64_MAX,UINT64_MAX,UINT64_MAX};
+}
+#endif
+#if IDECK_LAB_FIBER_HASH_GUARD
+_Atomic uint64_t ideck_fiber_hash_growth_failures=7; // serializer fixture only
+#endif
 #if IDECK_LAB_COW_BROKER
 #include "CowBackingBroker.h"
 #include <sys/mman.h>
+#endif
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+extern void pool_control_prepare(void);
+extern void pool_control_release(void);
 #endif
 #if IDECK_LAB_CLI_INPUT
 static void *writer(void *unused){
@@ -40,6 +55,9 @@ int main(int argc,char **argv){
     assert(ideck_native_note_navigation(0)==-ENODEV);
 #endif
     assert(!ideck_native_log_start(argv[1]));
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+    pool_control_prepare();
+#endif
     assert(!ideck_native_health(60,"guest-running",7,0));
 #if IDECK_LAB_CLI_INPUT
     assert(ideck_native_note_navigation(9)==-EINVAL);
@@ -68,29 +86,46 @@ int main(int argc,char **argv){
     assert(ideck_cow_broker_release_owned(b,8192)==1);
     assert(!ideck_native_health(60,"guest-running",7,0));
 #endif
+#if IDECK_LAB_FRAME_SNAPSHOT_POOL
+    pool_control_release();
+    assert(!ideck_native_health(60,"guest-running",7,0));
+#endif
     puts(ideck_native_health_name());return 0;
 }
 '''
 (out/'control.c').write_text(fixture)
+(out/'pool-control.m').write_text('''#import "FrameSnapshotPool.h"
+#include <assert.h>
+static IDECKFrameSnapshotPool *pool;static NSData *frame;
+void pool_control_prepare(void){@autoreleasepool{
+    pool=[[IDECKFrameSnapshotPool alloc]initWithWidth:16 height:16];assert(pool);
+    frame=[pool snapshotPixels:[NSData dataWithLength:16*16*4] width:16 height:16];assert(frame);
+}}
+void pool_control_release(void){frame=nil;pool=nil;}
+'''.replace('[NSData dataWithLength:', '[NSMutableData dataWithLength:'))
 tests = []
-for enabled, policy, broker, snapshot in ((0, 0, 0,0), (1, 0, 0,0), (1, 1, 0,0), (1, 1, 1,0), (1,1,1,1)):
-    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}'
+for enabled, policy, broker, snapshot,pool,hashguard,jit in ((0,0,0,0,0,0,0),(1,0,0,0,0,0,0),(1,1,0,0,0,0,0),(1,1,1,0,0,0,0),(1,1,1,1,0,0,0),(1,1,1,0,1,0,0),(1,1,1,0,1,1,0),(1,1,1,0,1,1,1)):
+    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}'
     private.mkdir(mode=0o700)
-    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}'
+    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}'
     command = ['xcrun', 'clang', '-Wall', '-Wextra', '-Werror',
                '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                f'-DIDECK_LAB_CLI_INPUT={enabled}', f'-DIDECK_LAB_GAME_FILE_POLICY={policy}',
                f'-DIDECK_LAB_COW_BROKER={broker}',
                f'-DIDECK_LAB_RFB_CHECKED_SNAPSHOT={snapshot}',
+               f'-DIDECK_LAB_FRAME_SNAPSHOT_POOL={pool}',
+               f'-DIDECK_LAB_FIBER_HASH_GUARD={hashguard}',
+               f'-DIDECK_LAB_NATIVE_JIT={jit}',
                '-I'+str(lab/'app'), str(out/'control.c'), str(lab/'app/NativeKernelLog.c')]
     if policy:
         command += [str(lab/'app'/name) for name in
                     ('GameFilePolicy.c', 'GameFiles.c', 'LaunchProtocol.c')]
     if broker:command += [str(lab/'app/CowBackingBroker.c')]
     if snapshot:command += ['-fobjc-arc','-fblocks','-I'+str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner'),str(lab/'app/CheckedFrameSnapshot.m'),str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner/RFBProtocol.c'),'-framework','Foundation']
+    if pool:command += ['-fobjc-arc','-fblocks','-I'+str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner'),str(lab/'app/FrameSnapshotPool.m'),str(out/'pool-control.m'),str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner/RFBProtocol.c'),'-framework','Foundation']
     command += ['-o', str(binary)]
     subprocess.run(command, check=True)
-    result = subprocess.run([binary, private], check=True, capture_output=True, text=True, timeout=25)
+    result = subprocess.run([binary, private], check=True, capture_output=True, text=True, timeout=60)
     receipt = json.loads((private/result.stdout.strip()).read_text())
     assert receipt['append_log_capped'] and receipt['append_log_stopped']
     assert receipt['tracked_guest_entries'] == 7
@@ -113,6 +148,12 @@ for enabled, policy, broker, snapshot in ((0, 0, 0,0), (1, 0, 0,0), (1, 1, 0,0),
     else:assert 'cow_broker' not in receipt
     if snapshot:assert receipt['frame_snapshot']==dict(calls=0,failures=0,live_frames=0,live_bytes=0,peak_live_bytes=0,releases=0)
     else:assert 'frame_snapshot' not in receipt
+    if pool:assert receipt['frame_pool']==dict(preparations=1,allocation_failures=0,native_buffers=0,native_bytes=0,calls=1,invalid=0,exhausted=0,live_slots=0,peak_slots=1,releases=1)
+    else:assert 'frame_pool' not in receipt
+    if hashguard:assert receipt['fiber_hash_growth_failures']==7
+    else:assert 'fiber_hash_growth_failures' not in receipt
+    if jit:assert receipt['native_jit']==dict(compiled=True,activation_status=-1,blocks=2**64-1,segments=2**64-1,code_bytes=2**64-1,TXM_requested=False)
+    else:assert 'native_jit' not in receipt
     tests.append({'gate': enabled, 'file_policy_gate': policy, 'broker_gate':broker,'command': command, 'exit': result.returncode,
                   'receipt': receipt})
 sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()

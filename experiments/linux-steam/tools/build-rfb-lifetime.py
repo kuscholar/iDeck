@@ -8,7 +8,8 @@ all blocks return. Foreign queued callbacks remain the controller's responsibili
 """
 import argparse,hashlib,json,subprocess
 from pathlib import Path
-p=argparse.ArgumentParser(description=__doc__);p.add_argument('output',type=Path);p.add_argument('--checked-frame-snapshot',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser(description=__doc__);p.add_argument('output',type=Path);p.add_argument('--checked-frame-snapshot',action='store_true');p.add_argument('--frame-snapshot-pool',action='store_true');a=p.parse_args()
+assert not (a.checked_frame_snapshot and a.frame_snapshot_pool),'Select one explicit snapshot policy'
 repo=Path(__file__).resolve().parents[3];src=repo/'vendor/LinuxRunner';pin='d1419782da2e299fe22f1ddb85c70ae3d1e276b1'
 assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip()==pin
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
@@ -22,8 +23,20 @@ if a.checked_frame_snapshot:
  body='#import "CheckedFrameSnapshot.h"\n'+body
  replace('NSData *snapshot=_pixels.copy;','''NSData *snapshot=ideck_checked_frame_snapshot(_pixels,_width,_height);
                 if(!snapshot){[self fail:@"Framebuffer snapshot allocation failed; Linux session preserved"];return NO;}''')
+if a.frame_snapshot_pool:
+ body='#import "FrameSnapshotPool.h"\n'+body
+ replace('NSData *snapshot=_pixels.copy;','''NSData *snapshot=[_ideckFramePool snapshotPixels:_pixels width:_width height:_height];
+                if(!snapshot){[self fail:@"Framebuffer snapshot pool unavailable; Linux session preserved"];return NO;}''')
+ # Own extension is declared before the copied @implementation. Synthesizing the
+ # strong ivar binds the actual decoder; controller prepares it before any guest.
+ body=body.replace('@implementation LRRFBClient {','''@interface LRRFBClient ()
+@property(nonatomic,strong) IDECKFrameSnapshotPool *ideckFramePool;
+@end
+@implementation LRRFBClient {''',1)
 replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;')
 replace('_password=[password copy];_socket=-1;','_password=[password copy];_socket=-1;\n        _ideckAdmission=[NSRecursiveLock new];_ideckTasks=dispatch_group_create();')
+if a.frame_snapshot_pool:
+ replace('- (instancetype)initWithPort:', '@synthesize ideckFramePool=_ideckFramePool;\n- (instancetype)initWithPort:')
 replace('- (void)start {','''- (void)start {
     [_ideckAdmission lock];
     if(!_ideckClosing)[self ideckStartOriginal];
@@ -51,5 +64,5 @@ replace('- (void)enqueue:(NSData *)data keySymbols:(BOOL)keySymbols motion:(BOOL
 replace('dispatch_async(_inputQueue,','dispatch_group_async(_ideckTasks,_inputQueue,')
 body='/* Pinned GPL LinuxRunner source, notices retained; own opt-in completion additions. */\n'+body
 target=out/'LabRFBJoined.generated.inc';target.write_text(body)
-(out/'evidence.json').write_text(json.dumps(dict(scope='Generated copied RFB lifetime component, NOT execution/App/device proof',checked_frame_snapshot=a.checked_frame_snapshot,linuxrunner=pin,original_sha256=hashlib.sha256(original).hexdigest(),generated_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),generator_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()),indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps(dict(scope='Generated copied RFB lifetime component, NOT execution/App/device proof',checked_frame_snapshot=a.checked_frame_snapshot,frame_snapshot_pool=a.frame_snapshot_pool,linuxrunner=pin,original_sha256=hashlib.sha256(original).hexdigest(),generated_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),generator_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()),indent=2)+'\n')
 print('Copied RFB completion source generated; original source unchanged')

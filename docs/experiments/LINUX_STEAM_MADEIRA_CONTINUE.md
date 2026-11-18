@@ -1,3 +1,411 @@
+# Run69 actual75 PTE-map crash; preserve newer25946
+
+DoNOTtarget25808: actualOS22:02:20.4471EST SIGSEGV0x6900 atpt_map_accounted+432,
+mem_pt_new uncheckedleafcalloc+index; signed75UUID57A9D87D matches. ONE Library
+notification22:05 AFTERdeath, transport0/nativeACK0; NO Library/inputproof.
+22:08 screenshot home; freshprocess25946 sameinstall1FBC... preservedunknown,
+no blindkill/restart/upgrade. Revalidate receipt/process/UI before action.
+RuntimeISH_JIT_BLOCK_LIMIT200000 applied; no completeUI/game/return stability.
+Next ordinary-PTE failure negativecontrol and checkedpreflight+rollback with
+backing/refcount/anonymous-accounting preservation. No PIC or secondhypothesis.
+Sourceownedchanges+tests reviewed, checkpoint pending freshdate22+window.
+Main/allworkingapps/auth/games/saves/FEX/Valve/vendor untouched. CLIonlyNEVER
+Macunlock/passwordGuardtrustautomation/security/CodexDBedits. Bridge125still
+diagnostic/fullgoalACTIVE/noSTABLE_SUCCESS/schedulerunload. Rawcrash/frames
+private, hashesEVIDENCE. OriginalphysicalAir ELF +LinuxJIT succeeded, NOTfullgoal.
+
+# Run69 SAME75 boundedemitter live25808; preserve, noUIproofyet
+
+REVALIDATE25808/install1FBCBFC7-895D-4127-A67B-A6FB54A336C5. SAMEsigned75
+binarySHA65ade143... SAMEprefix/RX120MiB/prep/allflags, ONLYruntimeenvadds
+ISH_JIT_BLOCK_LIMIT=200000 (TERM=dumb unchanged, noPIC). Old25523failed
+black~22min/15.65Mfulltranslationattempts/segments159610plateau/hashguard2;
+normalSIGTERM after freshnoPlay/CLI0/frame335freeze. DoNOTtargetold25523.
+Hostimmutableengine+sameownedELF limit2 arithmeticchecksum+16syscalls PASS,
+actualattempts2/mixednative+gadgets. New25808standardLLDBattach/preparedBP,
+publictools/lldb_prepared_jit.py withNEWprivateconfig,7680pages/offer/normal
+detach PASS. No liveLLDB session61400 (quitcomplete). Actualhealth3/phase7/
+20guests/JITactivation1/attempts200000/segments158931/bytes124992112, pool3
+frames0errors. UpdatedUI stillunverified; observe SAMEsession (workspace/
+observe75_limit_private.py NEWtags writesrun69), no duplicateinstall/launch.
+NoMemorycapraise/watchdogmask/Valve/FEX/vendor/security/CodexDBchanges, no
+credentialGuardtrustautomation. CLIonlyNEVERMacunlock. Main/allworkingapps/
+auth/games/saves preserved. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS.
+Countercorrection: st_blocks countsjit_translateattempts evenafternativepool
+full, NOT allsuccessfultranslations; segments/bytes trackinstalledcode.
+SourceOWNdirtyweekdaycommitpushCLOSED(last21:50EST); checkfreshlocaltimebefore
+commit/push. Forkremoteexperiment971cea/main2ac39be revalidated21:50.
+
+# Run68 initialJITworks but UIblack22min; unlimited25523 ended, nextbounded
+
+DoNOTtarget25523: normalSIGTERM completed after fresh identity/noPlay/CLI0/
+frame335frozen andactualblackscreen. Same75 remainsinstalled, UUID1FBCBFC7-
+895D-4127-A67B-A6FB54A336C5. NewprewarmPIDmayexist; revalidate/preserveunknown
+session. Lastnative receipt25523/health119/15648001jit_translate calls but
+159610segments/124989800bytes plateau. Hashgrowthguardactuallytriggered2
+onAir whileappalive; NOTgeneralOOM/CEFfix. CEFmain271 signals3 butremained
+alive/nonzombie/cyclesadvanced; historicalwebhelperunresponsiveNOTnew75proof.
+FullgoalACTIVE/LibraryBPM/game/returnFALSE/noSTABLE_SUCCESS.
+NextONEexistingflag ISH_JIT_BLOCK_LIMIT=200000 only, SAMEsigned75/prefix/
+120MiBregion/allotherflags, no reinstall/build/capraise/watchdogmask. Host
+actualmixednative/fallback limit2 arithmetic+16syscalls qualification in
+workspace/native-block-limit-host-private.py pending. Harvest beforedevice.
+ThenstoppedNEWPID via existingAirLab, standardinteractiveLLDB +resolved
+prepare_debuggerBP, public tools/lldb_prepared_jit.py acceptsONE newprivate
+configpath (doNOToverwritepreviousconfig/receipt). Modearg remains linux-
+steam-native-jit-prepared. Allcode/offercounts/imageUUIDgates; freshownedRX
+only, noPCskip/FEX/Valve/vendoredits/credentialsGuardtrustautomation.
+CLIonlyNEVERMacunlock/security/CodexDBchanges; preserveworkingapps/main/data.
+SourceOWNdirtyweekdaycommitpushCLOSED(last21:47EST). Rootwritesreviewedonly.
+
+# Run68 actual75 preparednativeJIT + genuineupdater; preserve25523
+
+REVALIDATE PID25523/install1FBCBFC7-895D-4127-A67B-A6FB54A336C5.75signed/
+installed sameisolatedLab, actualnormalLLDBattachdyld/prepare_debuggerBP,
+newRX120MiB/7680pagewrites6.46s/allACK, ownofferpublished, BPdeleted andnormal
+detach. Actualhealth5/phase7/21guests/activation1/212652translatedblocks/
+159610segments/124989800codebytes, pool4frames/0errors. ActualgenuineSteam
+updaterExtracting, NOTLibrary/BPM/game proof. Keep session, NOrepeatlaunch/
+install; wait normal42/drain/restart andinspectactualUI thenONEknowninput.
+Fixed120MiB codecache nearlyfullalready; no raise orperformanceinference.
+Own prepared-region75receipt validatescodepreparation ONLY; laterhealth proves
+selfcheck+faultinstall/actualELF. Private workspace/observe75-private.py NEWtags
+writesrun68. No presumedliveLLDBsession (64358normaldetach+quitcomplete).
+FullgoalACTIVE/bridge125NOTgame, game/return/stabilityFALSE/noSTABLE_SUCCESS.
+NormalMadeira/main/apps/accounts/games/saves preserved. CLIonlyNEVERMacunlock/
+credentialGuardtrust/security/FEX/Valve/vendor/CodexDBchanges. Source OWNdirty
+weekdaycommitpushCLOSED(last21:27EST), sourceHEAD971cea. Rootwritesrequire
+reviewedescalation, no bypass. Next actualLibrary/BPM/stability discrimination
+before any further runtime patch.
+
+# Run68 fullBuild75/finalcalls PASS; signing pending, no75deviceproof
+
+Preserve exactAir/currentapps; actualownpaused25506 ended via debugger BEFORE
+anyLinux/Steam. Revalidatefreshprocesses; iOS can prewarm newPID withoutargs.
+Actual74 alias expectedRX wasRonly (SBMemoryRegionInfo Xfalse), onecode-page
+debuggerwrite didNOTgrantX. Fresh native debuggerRX16KiB stayedRX afterwrite,
+then freed. No codeexecution inthatcontrol. Wholeoldregion script REFUSED
+BEFOREwrites onmissingX; no relaxedguard orknownfault replay.
+NewDEFAULT-OFF--debugger-prepared-jit sourceimplemented. Classicdisabled; own
+single-use nativeoffer magic/PID/exact120MiB/alignment/pagecount validated.
+Copiedjit.c accepts genuineRXrange, normalRWalias/postXcheck/original42test,
+existingreadypublication. NoTXM BRK/PCskip/FEX/Valve/vendoredits. HOST12contract
+ASanUBSanPASS/backendOSfixtureboundaries explicit. Runtime26units/fullXcode75/
+actualMachOcalls/classicdisabled/pool/hash/advicePASS. Signing75 active;
+harvest beforedeployment. Private workspace/qualify-sign75-private.py.
+Next exactLab-onlyupgrade signed75, NEWstoppedPID +standardinteractiveLLDB.
+Set/resolve breakpoint ideck_lab_native_jit_prepare_debugger BEFOREcontinue.
+Workspace prepare_linux_jit_offer.py allocatesONLYfreshown120MiB RX, validates
+noimageoverlap, prepares per16KiB via developer API, publishes ownfixedoffer
+LAST afterall7680writes. Config prepared-region75-config-private.json must
+match NEWPID/actual75MachOUUID; nonewrittenyet. No external credentials/PCskip.
+Then removeownBP andnormaldetach; check actualselfcheck/result/counters +
+genuineSteamUI. All75device/JIT/UI/gameproofFALSEcurrently. OriginalgoalACTIVE,
+bridge125NOTgame/noSTABLE_SUCCESS/unload. Main/apps/auth/games/saves preserved.
+CLIonlyNEVERMacunlock/trustGuardcredentialautomation/security/CodexDBchanges.
+Rootwrites stillrequire reviewed escalation; no approval bypass. Commitpush
+weekdayCLOSED(last21:14EST).
+
+# Run67 actual74 classic self-check protection fault; no Linux/JIT success
+
+74installed in isolated existing com.kuschqin.ideck.freshtest, installUUID
+1BF10146-010D-453D-B0CF-8BFFA23351CE. NO assumedlivePID: actual25477 dead on
+freshinventory. OS20:41:21 SIGBUS/KERN_PROTECTION_FAILURE0x117bf8000 generated
+selfcheck ->jit_ios_acquire ->ownprepareclassic ->startFrontend. Native
+receiptkernel-25477-1120666-168517000.log health1phase0/0guests/0frames/JIT0.
+Actualinteractive standardLLDB attached dyldSIGSTOP then detached. Classic
+mprotect passed but generated code was not executable; NOTLinux/CEFfailure.
+DO NOTrepeatclassic onthisAir. Needgateknownfailure, thenONEminimal own-region
+authorizeddebugger-preparation experiment. OfficialStikJIT1.9.0INTEGRATION.md
+andSources/ScriptRunner.swift reviewed: attachalone insufficient underTXM;
+per16KiBdebugger-preparation required. No newTXM/adoption code yet.
+Earlierprewarm25406 hadNOretainedarg/noLinux; failedlocalCLI launch64 was
+argumentordering, notdevicecrash. Correctfreshlaunch25477 hadactualargs.
+Rawcrash/LLDB/privatecontrols in workspace/2026-11-17/raise-cybersecurity-concern;
+runtime74/fullXcode/finalcalls/deepstrict/matchingAirprofiles/textPASS. Host
+realJIT+16syscalls/8health/pinnedDarwinfaultcontrolsPASS, notdeviceUI.
+Rootwrites require reviewed escalation; quotaerror earlierresolved, no bypass.
+CLIonlyNEVERMacunlock/credentialsGuardtrust/security/FEX/Valve/vendor/CodexDB
+edits. Allworkingapps/main/auth/games/saves preserved. FullgoalACTIVE,bridge125
+NOTgame/noSTABLE_SUCCESS/unload. CommitpushweekdayCLOSED(last20:44EST).
+
+# Run67 Build74 signed; guarded Lab-only deployment pending
+
+Harvest deployment observer before any repeat. Private command in workspace/
+deploy74-private.py; runtime74/fullXcode/final classicfalse->OSacquire then
+faultinstall + pool/hash/originaladvice/deepstrict/matchingAirprofiles/textPASS.
+73 NEVERinstalled/superseded on fault-installer review. HOST repeated sameELF
++16syscall checks +8healthconfigs +pinned Darwin fault/chaining/failstopPASS.
+Current72same25112/install302802A3... freshhealth1768/frame1703/CLI2/noPlay;
+screenshot STILLgenuine0x3000 error, no newuser test. Guard preserves changes.
+74 launches STOPPED explicitly; exact newPID/install must come from receipt.
+Next standard authorized LLDB device attach/detach to NEWPID, then explicit
+linux-steam-native-jit-classic tries ONLYclassic OS path BEFORELinux. NoTXM/
+BRKscript/entitlement/lock/securitychanges. Refusal=interpreter, handlerfailure
+stops beforeguest. Positivehealthtranslations not aloneinteractiveUIproof.
+NoFEX/Valve/vendor/CodexDB/auth/Guard/trustautomation; preserveworkingapps/main/
+games/saves. CLIonlyNEVERMacunlock. Rootwrite nowneeds reviewed escalation,
+temporaryquotaerrorresolved, no bypass. GoalACTIVE/bridge125NOTgame/noSUCCESS.
+JITsignal lifecycle/handoff toWine not qualified. CommitpushweekdayCLOSED.
+
+# Run67 optional emitter HOST qualification; actual72 transport error
+
+Preserve72native25112/install302802A3-CFEF-4D64-A4AB-EADBBDE083D9; REVALIDATE.
+ActualLibraryblack then genuineSteam0x3000 recoverydialog visuallyverified.
+GuestCEFhelper276 Chrome_ChildIOT CrashHungProcess; no primary nativehashfault.
+ONE DownACK2; NO Enter/restartoptionactivation, don't infer recovery.
+Latesthealth124/56guests/588436992B/pool1703frames0errors/hashfail0/noPlay.
+GuardpathNOTexercisedonAir. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS.
+Run67DEFAULT-OFF--native-jit builder only; completeHOSTengine qualification
+being built, NOTiOSactivation orCEFfix. InitialrequiredvDSOlinkerPATHfailure
+recorded; v2existingtool-bin/ld.lld. Harvest11934 beforehostcontrol. Keepall
+main/apps/auth/games/saves; noFEX/Valve/vendor/security/CodexDB/lockchanges,
+CLIonlyNEVERMacunlock/credentialsGuardtrustautomation. CommitpushCLOSEDweekday.
+
+# Run66 actual72 installed/launched; initialphase0, preserve25112
+
+ActualPID25112/install302802A3-CFEF-4D64-A4AB-EADBBDE083D9 mustrevalidate.
+Receiptkernel-25112-1102162-361476000.log/build72, firsthealth1/phase0/pool0/
+newfiber_hash_growth_failures0. NOLinux/UIproofyet; initialstartupobservation
+only. ObserveSAMEsessionwithrun66/observe72-private.py NEWtags, don'trepeat
+install/launch. Strictguardmatchedoldinert24805 andstale71receipt24602; only
+thatLabnormallyended+samecontainerupgrade, accounts/games/savesunchanged.
+Full72Xcode/finalhashcallocNULLbranch/actualflushguard/pool/originaladvice/
+deepstrict/exactAirprofiles/signedtextPASS. HostoriginalNULLrepro/guardrollback
++fullengineactualARM64failure1/flush1/exit0 +7healthconfigsPASS. Initialengine/
+otherallocsoutofscope, noCEFfix/stabilityclaim. CLIonlyneverMacunlock/security/
+credentialGuardtrust/FEX/Valve/vendor/CodexDBedits. Main/allworkingappsuntouched.
+Ownsource/docsdirtyweekdaycommitpushCLOSED. FullgoalACTIVE/bridge125NOTgame,
+noSTABLE_SUCCESS/unload/goalcomplete.
+
+# Run66 signing72PASS; guarded deployment96584 active
+
+Harvest96584 beforeanyrepeat. FullXcode/finalactualhashNULLguard+pool+original
+advice/deepstrict/matchingAirprofiles/signedtext preservationPASS. Freshold71
+receiptSTILLdead24602/health38/frame234/noinput/noPlay; current24805sameinstall
+03D2128C freshlymatchedbyguard, no newLinuxsessionobserved. Normalendonlythat
+oldLab+samecontainerupgrade72inprogress. NOT72device/UIproofyet. Rawrun66
+signing/deployreceiptsprivate. No workingapps/auth/games/saves/mainmodified.
+One-hypothesishashgrowthcallocfailurepreservesoldtable/existingflush;initial
+engine/otherallocsoutofscope. Hostactualfunctions+completeengineELF failure1/
+existingflush1/guestexit0+7healthconfigsPASS. CLIonlyneverMacunlock/credentials
+Guardtrust/security/FEX/Valve/vendor/CodexDBedits. Ownsource/docsdirtyoutside
+commitpushwindow. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS/unload.
+
+# Run66 fullXcode72/finalNULLguardPASS; signing active, no72deviceproof
+
+Runtime25units/fullXcode72PASS. FinalactualcallocNULL/oldhash/oldsizebranch +
+linkedcounterADRPaddress/flush BEFOREoldlistmutation andinsertflushgating
+verified. Existingpool/originaladvicecallsretained. Verifier-onlyglobalsymbol
+annotationassumptioncorrectedusingnmaddress onSAMEbinary, no rebuild.
+SigningonlydisposablecopyexistingexactAirprofiles; harvestobserver15988before
+deploy. Private run66/qualify-sign72-private.py. Candidate72NOTinstalledyet.
+Freshcurrent24805same03D2128C install; receiptSTILLdead24602/health38/frame234/
+noinput/noPlay observedbefore72; preserveunknownnewsession andstrictguard.
+HostcontrolledoriginalNULLfails, guardedrollback+completeengineELF/actualflush
+PASS. NoCEF/rootcapacityfixclaim; INITIALengine/otherallocsoutofscope.
+CLIonlyneverMacunlock/credentialsGuardtrust/security/FEX/Valve/vendor/CodexDB
+changes; main/allworkingapps/accounts/games/saves preserved. Ownsource/docs
+dirtyweekdaycommitpushCLOSED. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS.
+
+# Run66 runtime72PASS/fullXcodeactive59848, preserve new24805
+
+ActualhostoriginalNULLfailure reproduced; actualguardedresize+insert rollback/
+retryboundPASS; COMPLETEengine ARM64ELF injection1/guard1/existingflush1/exit0
+PASS. DefaultOFFhashgrowthguardonly; INITIALengine/otherallocsremainoutofscope.
+Runtime72compiled25units. FullXcodeobserver59848 ACTIVE; harvestbeforefinal/
+sign/deploy. Same71memory/RFB/CASPt lbsourcebytes, kernelarchivehashdifferent
+(recompiledmetadata), noarchiveidentityclaim. SourceOWNdirtycommitwindowCLOSED.
+Fresh14:54device24805same03D2128C installation preserved, receiptSTILLdead24602/
+health38. Readbefore72unchanged. Don'ttarget24602/restartunknownnewusertest.
+Private run66/verify-link72-private.py, qualify-sign72-private.py preparednotrun.
+FullgoalACTIVE/bridge125NOTgame; noSTABLE_SUCCESS. CLIonlyneverMacunlock/
+credentialsGuardtrust/security/FEX/Valve/vendor/CodexDBchanges. Preserveall
+workingapps/main/accounts/games/saves.
+
+# Run66 actualHOSThashfailure+engineflushPASS; runtime72building30924
+
+Harvest30924beforeAppbuild. NewDEFAULT-OFF--fiber-hash-growth-guard copied
+asbestos.c ONLY. ExistinggrowthcallocNULL preservesoldhash/requestsordinary
+flush; no repeatedgrowthwhilepending. INITIALengine/otherallocationsoutofscope.
+ActualextractedoriginalfailsNULLlist, guardedrollback/rehashPASS; COMPLETEHOST
+engine ownARM64indirectbranchELF injected1growthNULL/guard1/actualflush1/exit0.
+SevenhealthconfigsPASS inclnumericcounter. NoFEX/Valve/vendoredit/capraise.
+Initialfullfixturezeroactualgrowthfailedgate, correctedindirectbranches(v2PASS).
+Private run66 commands/evidence. Build72runtimeaddingonlyflagto71config.
+Actual71native24602deadOSreport; new24805sameinstall03D2128C observedfresh14:54
+andUNTOUCHED. Receiptold24602, noassumednewLinuxsession; revalidatebeforeany
+upgrade. Main/allworkingapps/accounts/games/saves preserved. CLIonlyneverMac
+unlock/credentialsGuardtrust/security/CodexDBchanges. CommitpushweekdayCLOSED.
+FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS/unload.
+
+# Run65 terminal71 nativehashgrowthSIGSEGV; Run66 guard next
+
+Actual71PID24602 DEAD10:35:29.9256EST exactOSreport build71/UUID2b509159...,
+SIGSEGV0x200000 list_null->list_init_add->fiber_resize_hash->fiber_insert.
+Lasthealth38/pool234NOerrorsSTale. Original-adviceA/BINCONCLUSIVE, no71Library/
+BPMinputs. New24805sameinstall03D2128C-8695-49F7-B774-79EA7A7539F7 observed
+anduntouched; fresh14:54inventorySTILL24805, receiptold24602. NoLinuxsession
+assumed/no kill/restart. ActualcurrentCEF218132264B/fullSHA891d85...matches
+historical. Rawrun65crash/hash/logsEVIDENCE.
+NextONEcopiedenginegrowthcallocfailureguard; preserveoldhash/requestexisting
+flush/avoidretryuntilflush. Firstcontrolledactualoriginal-vs-patchedhelper
+HOSTfailureinjection, sourceguard/defaultOFF; nofalseCEF/capacityfixclaim.
+Initialengineandotherallocfailuresremainoutofscope. CLIonlyneverMacunlock/
+credentialsGuardtrust/security/FEX/Valve/vendor/CodexDBchanges. Preservemain/
+allapps/auth/games/saves. Ownsource/docsdirty;weekday14:54commitpushCLOSED.
+FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS/unload/complete.
+
+# Run65 actual71 installed/launched; updater ongoing, preserve24602
+
+Actual71nativePID24602/install03D2128C-8695-49F7-B774-79EA7A7539F7 (revalidate),
+receiptkernel-24602-1083937-527073000.log. Initialhealth6/pool1prepare4buffers/
+5frames/0errors/peak2; physicalofficialSteamupdaterExtracting, NOTLibrary/BPM
+proof. DoNOTrepeatinstall/restart.71all70flagsEXCEPTexclusive-discardOFF,
+finaloriginalsysmadvise+pool/deepstrict/matchingAirprofiles/signedtextPASS.
+Old70whiteblankfreshguardmatched24250/frame359/ACK3/noPlay, normallyendedONLY
+Lab thenSAMEcontainerupgrade; auth/games/saves preserved.
+Private run65/observe71-private.py NEWtags; awaitnormalupdater42/drain/restart
+thenknownLibrary/BPMsameboundedinputs. StrongerHOSTpure-spin metadata7checks
+PASS/narrownegative; hostinterruptsallowed, notCEF/deviceclearance. Earlier63
+sameCEFfaultpredatesdiscard;71onlycurrentcontributiontest, neverrootcauseproof.
+Main/allworkingapps untouched; noFEX/Valve/vendor/security/auth/CodexDBedits.
+CLIonlyneverMacunlock. OWNdirtysource/docs/windowCLOSED. FullgoalACTIVE,bridge
+125NOTgame/noSTABLE_SUCCESS/unload/goalcomplete.
+
+# Run65 signed71 PASS; guarded SAMEcontainerupgrade active
+
+Harvestdeployobserver14319 beforeanyrepeat. FullXcode/finaloriginalsysmadvise+pool/
+exactAirprofiles/deepstrict/textpreservation71PASS. Fresh70physicalWHITEblank/
+health256/frame359/CLIseq3/noPlay at10:26; identity24250/install1C100DD2 matched
+byguard. NormallyendONLYfailed70 +sameLabcontainerupgrade71 inprogress. No71
+UIproofyet. Private run65/deploy71-private.py andair71 receipts.
+Hostmetadata7checks andstrongerpure-spin7checksPASS (1exclusive/16brokeralloc+
+release/15advice/live0; no guestwaitsyscalls, hostinterruptsstillallowed). No
+CEFcorruptionrepro/rootfixclaim. Same63faultpredatesdiscard, so71onlycurrent
+contributionA/B. Keepallotherflags/pool/kernelmemorysourceidentical70.
+CLIonlyneverMacunlock/security/credentialGuardtrust/FEX/Valve/vendor/CodexDB
+changes. Preservemain/allworkingapps/auth/games/saves. WeekdaycommitpushCLOSED;
+OWNsource/docsdirty. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS.
+
+# Run65 71fullXcode/finaloriginal-advice+poolPASS; signing observer pending
+
+CurrentAir70historicalPID24250/install1C100DD2..., revalidate; Libraryactual
+responded, BPMblackthenwhiteblank; ONEEscapeACK3/no recovery. Pool359frames0
+errors/peak3; nativehealth142advanced, no newuserPlay. SourceOWNdirtywindowCLOSED.
+Hostmetadata/payloadactualARM647checksPASS/12replacement/16alloc+release/15advice,
+narrownegative only. Historical63SAMECEFfaultBEFOREdiscard/broker (coarserCoW),
+so71iscontributioncomparisonCURRENTconfig, neversolecauseproof. Runtime71
+25units/fullXcode/final_sys_madvise->_ideck_original_madvise andpoolcallsPASS.
+SAMEallflagsEXCEPT --exclusive-private-discard removed. No71deviceproofyet.
+Signingonlydisposable71copy usingmatchingexistingprofiles/cert; harvestexact
+observerbeforesafeguardedupgrade. Private run65/qualify-sign71-private.py,
+observe71-private.py NEWtags, deploy71-private.py requiresold70sameidentity/
+healthpool359/CLIseq3/noPlay; refusals preserveunknownorchangedsession.
+CLIonlyneverMacunlock/credentialGuardtrust/security/FEX/Valve/vendor/CodexDB
+changes; keepallworkingapps/main/accounts/games/saves. FullgoalACTIVE, bridge
+125NOTgame, neverSTABLE_SUCCESS/unload/goalcomplete.
+
+# Run65 metadataHOST7checksPASS; runtime71 original-advice A/B building
+
+Keepcurrent70native24250/install1C100DD2 aliveuntilqualifiedcandidate/freshstate.
+ActualLibraryworked; BPMtransitionblackthenWHITEblank, notverifiedGamepadUI.
+ONEEscapeACK3, health142/pool359unchanged, no recovery. Pool0errors/peak3 still.
+ActualguestCEFfault272SIG11 classifiedreadonly, originunknown. Metadata/payload
+HOSTactualARM64sevenchecksPASS,12exclusive replacements/16brokeralloc+release/
+15nativeadvice/live0; narrowreproNOTobserved, NOTCEF/deviceclearance.
+NextONEcomparison71keep70pool/broker/allflagsEXCEPTremoveexclusive-private-
+discard ->originalpinnedmadvise. Runtime71inprogress; harvestbeforeAppbuild.
+Private run65/runtime71-command-private.json/log. Noclaimedfix/newdeviceaction.
+Userall-safeauthorizationpersists, neverMacunlock/credentials/Guard/trust/
+security/FEX/Valve/vendor/CodexDBedits; preservemain/allapps/auth/games/saves.
+WeekdaycommitpushCLOSED, OWNdirtyworkpreserved. FullgoalACTIVE,bridge125NOTgame.
+
+# Run64 actual70 Library input works; BPMblack withguestCEF fault; preserve
+
+Currenthistorical native24250/install1C100DD2-F194-4C55-99C3-B6D86803509E must
+revalidate.70samecontainerinstalled; savedlogin andLibraryactualgamelist/covers
+responded toONEknownclick. ONEBPMclick ->black. Health90/mono1082131385 pool359
+frames/0allocfail/0invalid/0exhaustion/358releases/peak3; nativealive, noRFBerror.
+Supportedboundedpoolhypothesis, NOTUIstability. ActualguestCEF272 SIGSEGV
+E7FB2CF0 invalidpointer6f005200740061. Exact9codewords matchhistoricalofficialCEF
+uniquelyfile5e52ce0/ELFfault5e62cf0/biasE2150000. FAULT_MAPoffsetwrong3000:
+pinneddiagnosticomitsmapping_offset; nevernearestexport/offsetblindattribution.
+PublicChromium126RawFree/FreeInSlotSpanpatterninference, corruptionoriginUNKNOWN.
+NoValve/FEX/vendor/security/CodexDB/credentialedits; CLIonlyneverMacunlock.
+NextONEminimalhostactualARM64metadata/payload/guardCoW+advicecoherencecontrol,
+keepAir70alive, noinputretry oroverlappingdeviceexperiment. Ownchangesdirty
+weekdaycommitpushCLOSED. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS.
+
+# Run64 actual70 installed/launched; preserve live24250/updater
+
+ActualBuild70PID24250/install1C100DD2-F194-4C55-99C3-B6D86803509E (revalidate),
+receiptkernel-24250-1081241-365212000.log; initialhealth2 confirms poolprepared1/
+4buffers16,384,000B,3frames/0invalid/0exhaustion/2released/peak2. Physicalscreen
+genuineSteamupdaterExtractingpackage, NOTLibrary/login/BPM/gameproof. No
+reinstall/restartwhileactive. Expectedexisting one-timeupdaterexit42 handling
+retained. Private run64/observe70-private.py NEWtags capturesreceipt/health/screen.
+FinalMachO/deepstrict/exactAirprofilecert/textpreservationPASS, signed70immutable.
+Oldfailed69exact23891 normallyended thenSAMEcontainerupgraded; auth/games/saves
+untouched. FullgoalACTIVE/bridge125NOTgame. AwaitactualframesandknownsafeSteam
+Library/BPMnavigation aftergenuineUI appears. RawprivatehashesEVIDENCE. CLIonly
+neverMacunlock/credentialsGuardtrust/security/FEX/Valve/vendoredits. Main/all
+otherapps/worktrees preserved. WeekdaycommitpushwindowCLOSED; OWNdirtychanges
+leftuncommitted. NeverSTABLE_SUCCESS/unload/goalcompletewithoutfullrepeats.
+
+# Run64 fullXcode70/finalMachO PASS; signing7267 active
+
+Samepreparedsource build initiallysandbox-refused workspaceinfo.plist; normal
+Xcodeaccess samecommandPASS. Finalactualdecoder->poolselector,init->malloc,
+snapshot->memcpy+immutableNoCopy,startup->prepare verified. Signingonlydisposable
+70copy existingAirprofiles/cert; observer7267 ACTIVE, owncodesign36715 U at
+lastcheck. DoNOTretry/kill/duplicate. Qualifiedartifactnotyetinstalled. Fresh
+old69screen09:40stilldisplayallocationfailure, health3636same309calls/1failure/
+0navigation; identity23891/installDAD4225A. Safealloperationsauthorization
+permitsendONLYthisfailedLab +samecontainerupgrade aftersignpass/freshguard.
+Private run64/deploy70-private.py validatesstrictidentity/state andsignedhash.
+FullgoalACTIVE/noSTABLE_SUCCESS;25nativeunits/6health/hostpool+decoderPASS.
+Main/workingapps/auth/games/saves untouched; noFEX/Valve/vendor/securityedits.
+CLIonlyneverMacunlock. WeekdaycommitwindowCLOSED; leaveOWNchangesdirty.
+
+# Run64 HOSTpool+actualdecoder+healthPASS; fullXcode70 active69541
+
+Readactual69failurebelow. FreshAir69native23891/installDAD4225A alive but
+displaycheckedmallocFAILED; noinputtest/restartduringhostwork. OneNEWdefaultOFF
+--frame-snapshot-pool4slots1280x800 preparedbeforeLinux, immutablelastconsumer
+release reuse/lifetime. HOSTASanUBSan/Werror +actualgenerateddecoderfull/partial/
+lateallocatorNULL/exhaustion/no callback/cleanup PASS;6healthconfigsPASS;25iOS
+unitsPASS. Guestmemoryidentical69/defaultRFBidentical68. Private run64 outputs.
+FullXcode70 observer69541 ACTIVE, harvestbeforefinalverify/sign/install. No70
+deviceproofyet. Newfiles+docs OWNdirty; weekday09xx closedcommitpushwindow.
+DoNOTeditFEX/Valve/vendor/main/security/auth/CodexDBs. CLIonlyneverMacunlock.
+SafetestLabupgradeauthorized; revalidatefailed69/anynewusertestbeforeaction.
+FullgoalACTIVE,bridge125NOTgame; noSTABLE_SUCCESS/unload/complete.
+
+# Run63 actual69 alive, display FAILED explicitly; new pool experiment next
+
+FreshNov17 09:28 exactAir native23891/installDAD4225A revalidated.69installed/
+launched, startup3snapshots0fail, latesthealth3565=309calls/1allocfailure/307
+releases/1retainedframe. Actualscreen native Displayerror snapshotallocation
+failed;Linuxsessionpreserved over real signed-in SteamStore. Failurecontained,
+NOTinteractiveLibrary/BPM. DoNOTrepeatblindinput orclaimUIsuccess/nativeabort.
+Rawprivate run63 hashesEVIDENCE. Safeoperations authorized; preserveapps/auth/
+games/saves, noFEX/Valve/vendor/security/Codexedits, CLIonlyneverMacunlock.
+NextONEdefaultOFF preallocated4slot1280x800 immutableframepool; validate lifetime/
+exactpixels/NULL/exhaustion/concurrency thenbuild/link/device. At09:28weekday
+commit/pushwindowCLOSED; leaveownedchangesuncommitted. FullgoalACTIVE,bridge125
+NOTgame; neverSTABLE_SUCCESS/unload. Oldnotesbelowarehistorical.
+
+# Run63 signing69 PASS; isolated deployment1572 inprogress
+
+ExactAirprofilecert/deepstrict/signtextpreservation actualPASS. Existing26442
+completed, notlive. Private run63/sign69-evidence-private.json. InitialnoLab
+installguard REFUSED new23816 (retainednegative). ReadcurrentprocesssameoldURI,
+receiptSTILLcrashed23696/health34unchanged, no newLinuxstartup. Saferevalidated
+exactinert23816 normallyendonly thenSAMEcontainerLab69upgradeobserver1572 now
+running. No69runtimeproof; harvestbeforeanyrepeat. Userall-safeauthorization
+persists; no workingapps/main/auth/securitychanged. NoMacunlockrequests.
+
 # Run63 aabdb23 pushed; signing69 VERIFIED LIVE, not finished
 
 Sourceimplementation/tests/fullXcode69/finalMachOcalls checkpointaabdb23 pushed.
