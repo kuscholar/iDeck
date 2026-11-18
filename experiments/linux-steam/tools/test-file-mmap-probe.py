@@ -9,7 +9,7 @@ from pathlib import Path
 import subprocess
 
 p=argparse.ArgumentParser(description=__doc__)
-p.add_argument('artifacts',type=Path);p.add_argument('output',type=Path);a=p.parse_args()
+p.add_argument('artifacts',type=Path);p.add_argument('output',type=Path);p.add_argument('--va-headroom-hook',action='store_true',help='Exercise actual copied file-probe dispatch; native headroom backend is a counted fixture, separately tested with real own mappings');a=p.parse_args()
 repo=Path(__file__).resolve().parents[3];lab=repo/'experiments/linux-steam';src=repo/'vendor/LinuxRunner'
 out=a.output.resolve();host=a.artifacts.resolve()/'host'
 assert str(out).startswith('/Volumes/easystore/') and not out.exists()
@@ -46,15 +46,24 @@ for enabled,body in [(0,fixed),(1,on)]:
     function=body[body.index('int realfs_mmap('):body.index('\nssize_t realfs_readlink(')]
     if enabled:headers2=headers+'#define IDECK_LAB_FILE_MMAP_PROBE 1\n#include "FileMmapProbe.inc"\n'
     else:headers2=headers
+    if enabled and a.va_headroom_hook:headers2='#define IDECK_LAB_VA_HEADROOM_PROBE 1\n'+headers2
     unit=out/('real-'+str(enabled)+'.c');unit.write_text(headers2+function);obj=unit.with_suffix('.o')
     subprocess.run(['xcrun','clang',*flags,'-Dmmap=probe_mmap','-Dmunmap=probe_munmap','-Dfstat=probe_fstat','-Dpt_map=ideck_test_pt_map','-c',unit,'-o',obj],check=True)
     binary=out/('control-'+str(enabled))
-    subprocess.run(['xcrun','clang',*flags,lab/'tools/file-mmap-probe-control.c',obj,'-o',binary],check=True)
+    hook=[]
+    if a.va_headroom_hook:
+        counted=out/('hook-'+str(enabled)+'.c')
+        counted.write_text('#include "VAHeadroomProbe.h"\n#include <assert.h>\n#include <errno.h>\n#include <stdio.h>\n#include <sys/mman.h>\nstatic unsigned calls;\nvoid ideck_va_headroom_probe(int fd,size_t bytes,off_t offset,int prot,int flags,int error){\n assert(fd>=0&&bytes>0&&bytes<=IDECK_VA_HEADROOM_BYTES&&!offset&&prot==(PROT_READ|PROT_WRITE)&&flags==MAP_SHARED&&error==ENOMEM);calls++;errno=ENOTTY;\n}\n__attribute__((destructor)) static void report(void){fprintf(stderr,"HEADROOM_HOOK calls=%u\\n",calls);}\n')
+        hook=[counted]
+    subprocess.run(['xcrun','clang',*flags,lab/'tools/file-mmap-probe-control.c',obj,*hook,'-o',binary],check=True)
     for case in cases:
         log=out/(str(enabled)+'-'+case+'.log')
         with log.open('x') as stream:
             result=subprocess.run([binary,case,str(enabled),out/(str(enabled)+'-'+case+'-own-file')],stdout=stream,stderr=subprocess.STDOUT,timeout=15)
         assert result.returncode==0,(enabled,case,log)
+        if a.va_headroom_hook:
+            expected=1 if enabled and case in ('all-success','all-fail','shared-fail','native') else 0
+            assert f'HEADROOM_HOOK calls={expected}' in log.read_text(),(enabled,case,'Wrong additional dispatch count')
         results.append({'enabled':bool(enabled),'case':case,'exit':result.returncode,'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest()})
-(out/'evidence.json').write_text(json.dumps({'scope':'HOST exact realfs_mmap with native API stubs; native case uses real own unlinked file. No Steam/device/capacity diagnosis.', 'linuxrunner':cleanup.PIN,'cases':results,'source_sha256':{str(f.relative_to(repo)):hashlib.sha256(f.read_bytes()).hexdigest() for f in [lab/'app/FileMmapProbe.inc',lab/'tools/file-mmap-probe.py',lab/'tools/file-mmap-probe-control.c',Path(__file__)]}},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'scope':'HOST exact realfs_mmap with native API stubs; native case uses real own unlinked file. No Steam/device/capacity diagnosis.', 'linuxrunner':cleanup.PIN,'VA_headroom_hook_fixture':a.va_headroom_hook,'cases':results,'source_sha256':{str(f.relative_to(repo)):hashlib.sha256(f.read_bytes()).hexdigest() for f in [lab/'app/FileMmapProbe.inc',lab/'tools/file-mmap-probe.py',lab/'tools/file-mmap-probe-control.c',Path(__file__)]}},indent=2)+'\n')
 print('PASS30 HOST exact-function ASan/UBSan Werror cases; original error/success preserved, controls never installed, no device claim')

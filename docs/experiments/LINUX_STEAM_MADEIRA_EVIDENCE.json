@@ -17962,11 +17962,18 @@
       "air76-install-private.json": "75d9cf0dcefc91bbf4af494d33d8787fa22c960a6d326cf02f605f24472de6af",
       "air76-launch-stopped-private.json": "4a5ed2d9e4cac2d5b615c5b9dd4c0b9053f0b9d2f5f777f0a9f2e36be7879225",
       "health-prepared76a-data-private.json": "45a500211bbf1b192e0c15c877093e92273fad3be7430b201b9f9400c6159cbb",
-      "screen-prepared76a-private.png": "6c7853b646914f550b0df1987e89ce63c2f3c1f6d8d37bb22d994622e894a01f"
+      "screen-prepared76a-private.png": "6c7853b646914f550b0df1987e89ce63c2f3c1f6d8d37bb22d994622e894a01f",
+      "health-resume76e-data-private.json": "f6b50d22e5e9365dfc2b1c0a35724117fbe88163062a7201b557ddd9947291b4",
+      "screen-resume76e-private.png": "2957c213b164029ac6866392f3702ad54255472f913545b552479763789645f1"
     },
     "private_workspace_sha256": {
       "map-pte-host-final-v7/evidence.json": "b036f81258ea32043662c41a125d9b8a7b7e7bd7dccd0d7fb3e5e81f38f4fb0d",
-      "debugger-owned-region76-v1-private.json": "16ddff8743f72118542cdf96d9e48b62d445eb9146da8ea4a5571b397edb29b7"
+      "debugger-owned-region76-v1-private.json": "16ddff8743f72118542cdf96d9e48b62d445eb9146da8ea4a5571b397edb29b7",
+      "native76-end-private.log": "1edbc8d945e020a3991c857762a7360c1623fbd439d553fb0d7b5ea306245184",
+      "native76-end-categories-private.json": "33ea0bb45ad7f946109cbd67b7584ec9d7e0b9a7ade4d347521fa1fe8f3715de",
+      "webhelper76-end-private.log": "165569617c8998dffc8dcc4935f0d321645051b312f7b847da4497cde9752cdb",
+      "webhelper76-end-categories-private.json": "91633d278b5e314addb9ee4deba3eeb60b14fa2d9448d9352ce588de7a0652c1",
+      "resume76e-processes-private.json": "728fad9b178c65c61b372921950038ad5bbfbdd8023e2f18f36f7fd0abe67a8c"
     },
     "actual_health2": {
       "schema": 1,
@@ -18061,6 +18068,739 @@
       "Steam_UI_validated": false,
       "scope": "Only fresh own code arena via authorized developer debugger; native adoption/self-check and actual guest/UI still unverified"
     },
-    "actual_Linux_JIT_activation": true
+    "actual_Linux_JIT_activation": true,
+    "final_observation": {
+      "time_local": "2026-11-18 01:30 EST",
+      "native_pid": 26017,
+      "process_identity_revalidated": true,
+      "physical_screen": "black X11 desktop and cursor, no genuine Library/BPM",
+      "health": {
+        "schema": 1,
+        "pid": 26017,
+        "build": 76,
+        "native_log": "kernel-26017-1126821-676998000.log",
+        "sequence": 1115,
+        "mono_ms": 1138002803,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 182,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 1901025848,
+        "cpu_valid": 1,
+        "cpu_user_us": 8434541833,
+        "cpu_system_us": 2145746019,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        },
+        "cow_broker": {
+          "alloc": 14771,
+          "release": 9525,
+          "map_attempts": 49,
+          "map_failures": 0,
+          "unmaps": 7,
+          "live_slots": 5246,
+          "live_chunks": 42,
+          "logical_bytes": 83230720,
+          "reserved_native_bytes": 88080384,
+          "ownership_errors": 0,
+          "unmap_failures": 0,
+          "overlap_rejections": 0,
+          "capacity_refusals": 0,
+          "advice_calls": 9518,
+          "advice_failures": 0,
+          "physical_reclaim_measured": false
+        },
+        "frame_pool": {
+          "preparations": 1,
+          "allocation_failures": 0,
+          "native_buffers": 4,
+          "native_bytes": 16384000,
+          "calls": 317,
+          "invalid": 0,
+          "exhausted": 0,
+          "live_slots": 1,
+          "peak_slots": 2,
+          "releases": 316
+        },
+        "fiber_hash_growth_failures": 0,
+        "map_pte_allocation_failures": 0,
+        "native_jit": {
+          "compiled": true,
+          "activation_status": 1,
+          "blocks": 200000,
+          "segments": 158956,
+          "code_bytes": 124992084,
+          "TXM_requested": false
+        }
+      },
+      "PTE_guard_exercised": false,
+      "UI_success": false,
+      "game_or_return_success": false,
+      "elapsed_observation_limit": "roughly3hours including startup/debugger preparation, not an interactive-stability pass",
+      "native_failure_evidence": "18 MMAP_FAILURE records. First same regular complete2097152B file native mmap ENOMEM12; native16KiBsharedRW succeeds, full sharedRO/privateRW/anonymousRW all12. Separate byte-verified CEF trap matches historical compositor fatal site; not proof of sole cause or physical-RAM exhaustion."
+    }
+  },
+  "run71": {
+    "source_parent": "f2f881edcc7313e016f8f0834a18a0e91cc41a57",
+    "hypothesis": "Lack of available native virtual-address mapping headroom may contribute to regular-file mmap ENOMEM; release an early owned unpopulated reservation and compare one fresh ordinary OS-selected file mapping",
+    "one_change": "default-off --va-headroom-probe,16MiB PROT_NONE reserve before Linux and one eligible failure control after release; no fixed/hinted address, no payload reads/writes, no change to original guest result, no memory cap raise",
+    "host_ownership_contract": {
+      "scope": "HOST real own PROT_NONE reservation and own unlinked regular file; refusal wrappers explicit. Once-only/concurrent/error preservation/gates/cleanup controls, ASanUBSan. NOT actual iPad VA capacity or UI fix proof",
+      "rows": [
+        {
+          "case": "not-prepared",
+          "exit": 0,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "prepare-fail",
+          "exit": 0,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "release-fail",
+          "exit": 0,
+          "log_sha256": "724687e0341488e9b74073187424e707bd3ce02d636a1be4c61236cc4ce6270a"
+        },
+        {
+          "case": "trial-fail",
+          "exit": 0,
+          "log_sha256": "724687e0341488e9b74073187424e707bd3ce02d636a1be4c61236cc4ce6270a"
+        },
+        {
+          "case": "cleanup-fail",
+          "exit": 0,
+          "log_sha256": "724687e0341488e9b74073187424e707bd3ce02d636a1be4c61236cc4ce6270a"
+        },
+        {
+          "case": "shrunk",
+          "exit": 0,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "normal",
+          "exit": 0,
+          "log_sha256": "724687e0341488e9b74073187424e707bd3ce02d636a1be4c61236cc4ce6270a"
+        },
+        {
+          "case": "concurrent",
+          "exit": 0,
+          "log_sha256": "724687e0341488e9b74073187424e707bd3ce02d636a1be4c61236cc4ce6270a"
+        }
+      ],
+      "source_sha256": {
+        "VAHeadroomProbe.h": "695c038eade5d2c6d6a4c7826036750198b556dc94f99d72c2ac1768a071da52",
+        "VAHeadroomProbe.c": "b8886036ca381c240a5f5df2ab10be7fbbf6db702883d508f11c808988ca29ba",
+        "va-headroom-control.c": "11e8841773ea303ecaaf5634494316f88a0ae5c930d08686dd01cc62d0e9b0fb"
+      }
+    },
+    "exact_realfs_hook_contract": {
+      "scope": "HOST exact realfs_mmap with native API stubs; native case uses real own unlinked file. No Steam/device/capacity diagnosis.",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "VA_headroom_hook_fixture": true,
+      "cases": [
+        {
+          "enabled": false,
+          "case": "all-success",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "all-fail",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "shared-fail",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "release-fail",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "native",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "private",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "read-only",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "offset",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "too-large",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "too-small",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "other-errno",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "bad-fd",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "not-regular",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "shrunk",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": false,
+          "case": "original-success",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "all-success",
+          "exit": 0,
+          "log_sha256": "4fc07e1b90246149eab9f41479b325cb7cbb38fd6a8f2d462bd74975018bf79f"
+        },
+        {
+          "enabled": true,
+          "case": "all-fail",
+          "exit": 0,
+          "log_sha256": "af8901bc9136fab35a37508da80e6084e0e122eb1f3b7752b62bdf16de2583c9"
+        },
+        {
+          "enabled": true,
+          "case": "shared-fail",
+          "exit": 0,
+          "log_sha256": "2d4aaa79b4be13a656d9c328d9a787e63bd3c348f04b571d5ad14da21fed8357"
+        },
+        {
+          "enabled": true,
+          "case": "release-fail",
+          "exit": 0,
+          "log_sha256": "b74aee63d96682054f236872aaf578f1602c5daf1ddd9a4956db9f06c7a1e23f"
+        },
+        {
+          "enabled": true,
+          "case": "native",
+          "exit": 0,
+          "log_sha256": "4fc07e1b90246149eab9f41479b325cb7cbb38fd6a8f2d462bd74975018bf79f"
+        },
+        {
+          "enabled": true,
+          "case": "private",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "read-only",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "offset",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "too-large",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "too-small",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "other-errno",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "bad-fd",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        },
+        {
+          "enabled": true,
+          "case": "not-regular",
+          "exit": 0,
+          "log_sha256": "8b3679657b055882f6433b8628ee7006d8b7ba92fb5a61a30055bbe6ecaa40bf"
+        },
+        {
+          "enabled": true,
+          "case": "shrunk",
+          "exit": 0,
+          "log_sha256": "8b3679657b055882f6433b8628ee7006d8b7ba92fb5a61a30055bbe6ecaa40bf"
+        },
+        {
+          "enabled": true,
+          "case": "original-success",
+          "exit": 0,
+          "log_sha256": "ab99571aebd5f586672c870a595215260962bfd5e11fe5792b4e83389af6d8ba"
+        }
+      ],
+      "source_sha256": {
+        "experiments/linux-steam/app/FileMmapProbe.inc": "378df2fb0896b54e15620a430657f4c615a39974be0140f533de70764e104b11",
+        "experiments/linux-steam/tools/file-mmap-probe.py": "86f1c5127dd488b41d7e7cd9130cb8f5134d0d18d860fd79835c07bad862aebf",
+        "experiments/linux-steam/tools/file-mmap-probe-control.c": "bc31695b889b41e3d5df28bf186d2fc590f2e038f2e2a104f243362d4c97fd7f",
+        "experiments/linux-steam/tools/test-file-mmap-probe.py": "ec6ddf658f790c431ccf2ad4384e032336f8e7f13e889e45aacc31b0522970e5"
+      }
+    },
+    "existing_unchanged_default_hook_regression": {
+      "scope": "HOST exact realfs_mmap with native API stubs; native case uses real own unlinked file. No Steam/device/capacity diagnosis.",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "cases": [
+        {
+          "enabled": false,
+          "case": "all-success",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "all-fail",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "shared-fail",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "release-fail",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "native",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "private",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "read-only",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "offset",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "too-large",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "too-small",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "other-errno",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "bad-fd",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "not-regular",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "shrunk",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": false,
+          "case": "original-success",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "all-success",
+          "exit": 0,
+          "log_sha256": "a8c0e1c8ad11e5eb40f825dc657b8204daf5e108600a3b68022f89a8cf892ad4"
+        },
+        {
+          "enabled": true,
+          "case": "all-fail",
+          "exit": 0,
+          "log_sha256": "6d7d84fb82bcf676f9a66951aca2d3f8abfa6b2d5afd11bbdeae10499325a06a"
+        },
+        {
+          "enabled": true,
+          "case": "shared-fail",
+          "exit": 0,
+          "log_sha256": "0235d42abc4c61306b4abcf2875cc383ec594b8bcb99264ef198ceb061b5751e"
+        },
+        {
+          "enabled": true,
+          "case": "release-fail",
+          "exit": 0,
+          "log_sha256": "5187f0cda65bd315c1a83d15fee2e07c060119b420e593ef689cb9809289e3c5"
+        },
+        {
+          "enabled": true,
+          "case": "native",
+          "exit": 0,
+          "log_sha256": "a8c0e1c8ad11e5eb40f825dc657b8204daf5e108600a3b68022f89a8cf892ad4"
+        },
+        {
+          "enabled": true,
+          "case": "private",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "read-only",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "offset",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "too-large",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "too-small",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "other-errno",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "bad-fd",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        },
+        {
+          "enabled": true,
+          "case": "not-regular",
+          "exit": 0,
+          "log_sha256": "889f90b245720413ffc852a1263a8b0f71361fd71a0909b246879746f17408fd"
+        },
+        {
+          "enabled": true,
+          "case": "shrunk",
+          "exit": 0,
+          "log_sha256": "889f90b245720413ffc852a1263a8b0f71361fd71a0909b246879746f17408fd"
+        },
+        {
+          "enabled": true,
+          "case": "original-success",
+          "exit": 0,
+          "log_sha256": "615656d60c64202976c31b9c296f572720ca1307ab28d0a9f437d8a996ed23b2"
+        }
+      ],
+      "source_sha256": {
+        "experiments/linux-steam/app/FileMmapProbe.inc": "378df2fb0896b54e15620a430657f4c615a39974be0140f533de70764e104b11",
+        "experiments/linux-steam/tools/file-mmap-probe.py": "86f1c5127dd488b41d7e7cd9130cb8f5134d0d18d860fd79835c07bad862aebf",
+        "experiments/linux-steam/tools/file-mmap-probe-control.c": "bc31695b889b41e3d5df28bf186d2fc590f2e038f2e2a104f243362d4c97fd7f",
+        "experiments/linux-steam/tools/test-file-mmap-probe.py": "e4b17f691e59eb9603bf81ef75ca48c10820c698b24b3990736292b2d8616db4"
+      }
+    },
+    "limitations": [
+      "The reservation itself changes address-space use and one mapping entry; success after release does not distinguish contiguous-hole shortage from other per-process mapping resources",
+      "Native allocator metadata may consume RAM even though reservation contents are never accessed",
+      "No failed cleanup is retried; retain bounded failure evidence",
+      "No device result or UI/game fix is inferred from host wrappers or compilation"
+    ],
+    "build": 77,
+    "full_Xcode": {
+      "exit_code": 0,
+      "signed": false,
+      "installed": false
+    },
+    "device_installation": {
+      "isolated_bundle": "com.kuschqin.ideck.freshtest",
+      "installation_uuid": "9FF89F76-2D81-4E41-BBDF-759B66E71511",
+      "pid_historical": 26281,
+      "native_receipt": "kernel-26281-1139093-574003000.log",
+      "signed_MachO_uuid": "85C1E33B-B9B5-3DAE-BD93-503045C001FA",
+      "signed_sha256": "2a6c82067f344e3f53c01cf97bd6f4095066871106fc594ce96200d471f2f455",
+      "data_preserved": true,
+      "previous_failed26017_normal_termination_after_fresh_identity_health_screen": true
+    },
+    "Linux_UI_game_return_stable": false,
+    "private_base": ".madeira-install/linux-steam-ipad/run71",
+    "native_units": 27,
+    "final_link": {
+      "build": 77,
+      "binary_sha256": "ae14979102122c40f3d5479cee86d8dcc1567f700c5cab87e586a260dd754bc0",
+      "real_decoder_calls_pool": true,
+      "pool_prepare_calls_native_malloc": true,
+      "snapshot_calls_memcpy_and_immutable_NoCopy": true,
+      "controller_calls_prepare": true,
+      "scope": "Actual final MachO linkage only; NOTdeviceexecution/UI/gameproof",
+      "disassembly_sha256": {
+        "decoder": "71d53ab8616e99e8146a073806fc3b8f348119d03f1b8858e820ad792fe9667d",
+        "prepare": "bf7f92f4382f16b4d180cc6801005b0e11295471243f682b3aa68421067bec7a",
+        "snapshot": "6388d043837245054d68435cea621d0573b5d33b163c113fec5739efade14ff3",
+        "startup": "3edc0657ab4435095551d6d5c76c90aad913566eae32733d02ee4c783c5f91a7",
+        "advice": "5c69e1a02999294db854cd9e0ce7de21fc0ba2509b01b8b0bee45a0da5456f46",
+        "resize": "b71baec7792cfa372cfea2f927f1565a96c28e1da92ab000b1ec5e0b88cc778c",
+        "insert": "27966fe688c523a915e75b4a1fc6d2c7c2427270611f6163ce05343cb6c4d289",
+        "jit_prepare": "09513161b23676ab54cc1ebc602e117dd12a577fea241b5218603dc03a32b06b",
+        "jit_adopt": "76e563bc4ef3ff66b84574ce38853aeadf8a5fafbc57b98f72394cdfc3610539",
+        "jit_range": "a26e8c5d44eff5467bd4cb4588f3374de6f8baad1ea6548556217cbfceab0620",
+        "classic": "d4943662aa5589fe954e578bed81301456d703a823a529d24d8de2aeb1720b76",
+        "jit_read": "2f4b429da4ddee0e972d40f208b7539a9fb2e4817a1a29c495c13b134d01d6c5",
+        "frontend": "17bef33a650003748ca6e5cf3d299fff8980d3d3b8d4e572ba73fb407728258d"
+      },
+      "PTE_preflight_before_existing_unmap": true,
+      "PTE_failure_prunes_empty_metadata": true,
+      "no_HOST_allocator_injection": true,
+      "PTE_disassembly_sha256": {
+        "preflight": "4ab28d583281957851785a81b4586dc3eaceb4912eb104778992eff269fe411c",
+        "map": "59095e8c7ed9684407631f4121bb4a9c0232d9cecd07acf3d582bf5d64e6d1a1",
+        "checkednew": "0148eadaa7a17aa022b6347c1635bec74b10b7e6c7f7da80dc1019924242bc4b"
+      },
+      "actual_headroom_prepare_before_Linux": true,
+      "actual_realfs_failure_calls_independent_headroom_probe": true,
+      "host_injection_absent": true,
+      "headroom_disassembly_sha256": {
+        "headroom": "d0b6827a832b61f757b3073f29561605a21016749e7e33f0fd603dccaabfe073",
+        "filecontrol": "f8ee4594a6aa4052f1b8de0693627f48cf22faf562bbd01869ebb763d7b83bba"
+      }
+    },
+    "signing": {
+      "build": 77,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span2_marker_absent": true,
+      "exclusive_discard_marker_and_counter": false,
+      "original_advice_policy_requested": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "ae14979102122c40f3d5479cee86d8dcc1567f700c5cab87e586a260dd754bc0",
+      "signed_sha256": "2a6c82067f344e3f53c01cf97bd6f4095066871106fc594ce96200d471f2f455",
+      "text_SHA256": "42153245d21bb51ff4f3fdcd069e976d68b81fb87f6a5469fa800e9c86caabe5",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "prepared_region": {
+      "pid": 26281,
+      "image_uuid": "85C1E33B-B9B5-3DAE-BD93-503045C001FA",
+      "RX_region": 4521426944,
+      "bytes": 125829120,
+      "page_bytes": 16384,
+      "prepared_pages": 7680,
+      "RX_segments_before": 1,
+      "RX_segments_after": 1,
+      "elapsed_s": 6.253817292000001,
+      "offer_published": true,
+      "code_executed": false,
+      "Linux_started": false,
+      "Steam_UI_validated": false,
+      "scope": "Only fresh own code arena via authorized developer debugger; native adoption/self-check and actual guest/UI still unverified"
+    },
+    "actual_health5": {
+      "schema": 1,
+      "pid": 26281,
+      "build": 77,
+      "native_log": "kernel-26281-1139093-574003000.log",
+      "sequence": 5,
+      "mono_ms": 1139168581,
+      "phase": 7,
+      "initial_call_returned": false,
+      "tracked_guest_entries": 21,
+      "tracked_linux_workers": 0,
+      "footprint_valid": 1,
+      "footprint_bytes": 1062472696,
+      "cpu_valid": 1,
+      "cpu_user_us": 87586534,
+      "cpu_system_us": 5467890,
+      "append_log_capped": false,
+      "append_log_stopped": false,
+      "file_policy": {
+        "query_status": 0,
+        "submitted": 0,
+        "completed_sequence": 0,
+        "appid": 0,
+        "status": -35,
+        "library": -1,
+        "machine": 0,
+        "diagnostic_only": true,
+        "game_launched": false
+      },
+      "cli_navigation": {
+        "sequence": 0,
+        "last_action": 9,
+        "dispatch_only": true,
+        "physical_touch_test": false
+      },
+      "cow_broker": {
+        "alloc": 290,
+        "release": 149,
+        "map_attempts": 2,
+        "map_failures": 0,
+        "unmaps": 0,
+        "live_slots": 141,
+        "live_chunks": 2,
+        "logical_bytes": 2183168,
+        "reserved_native_bytes": 4194304,
+        "ownership_errors": 0,
+        "unmap_failures": 0,
+        "overlap_rejections": 0,
+        "capacity_refusals": 0,
+        "advice_calls": 149,
+        "advice_failures": 0,
+        "physical_reclaim_measured": false
+      },
+      "frame_pool": {
+        "preparations": 1,
+        "allocation_failures": 0,
+        "native_buffers": 4,
+        "native_bytes": 16384000,
+        "calls": 3,
+        "invalid": 0,
+        "exhausted": 0,
+        "live_slots": 1,
+        "peak_slots": 2,
+        "releases": 2
+      },
+      "fiber_hash_growth_failures": 0,
+      "map_pte_allocation_failures": 0,
+      "native_jit": {
+        "compiled": true,
+        "activation_status": 1,
+        "blocks": 200000,
+        "segments": 158945,
+        "code_bytes": 124991884,
+        "TXM_requested": false
+      }
+    },
+    "actual_preguest_reservation": "bytes16777216 prepared1 error0 payload_read0 payload_write0 fixed_address0",
+    "actual_JIT_selfcheck_and_fault_setup": true,
+    "actual_screen": "Genuine Updating Steam / Extracting Package",
+    "actual_headroom_release_trial": "NOT triggered/observed yet; inspect SAME session",
+    "Library_BPM_input_verified": false,
+    "private_evidence_sha256": {
+      "runtime77/evidence.json": "4c9b90f7778c7bcc8644f2f7606e480d0d3886fb02f373a49cbd8c9d8adb7107",
+      "runtime77/file-map-cleanup/evidence.json": "c30f164d7a3514e48fea1483f225fadb565cd971a4245aade5236169636ebfdf",
+      "hybrid77/prepare-evidence.json": "daebe57ce377b1a210056984241373c6d895da2ccb51974cc2a06085b70e5b4c",
+      "hybrid77/build-result.json": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+      "final77-link-evidence-private.json": "7033ecf141c60d01042659cecb5ec193967b8d692a072cdc87f17b326d729b4b",
+      "sign77-evidence-private.json": "16dd2ba1710c4ca24fb6d93e6355bba011e60ea3c0ad536e71cd10e48a262ac7",
+      "air77-end-failed76-private.json": "6c9e4e54c4742b9e17d6b7c38c71ea905f3d639c3808c381f3786119b697881c",
+      "air77-install-private.json": "a9aaa7bd4ac80a70984b1075aa7c250ee866188e5442f06ad05203e7e834210e",
+      "air77-launch-stopped-private.json": "eda7b6cea8fcba6098d89f7db2273c610a5f0e678a66e90a90ebfcb47438e0d5",
+      "health-starting77b-data-private.json": "501fa7413f22dc8a67d0d4b8753f663b5e5199dea18dea6eefa303878603fc7e",
+      "screen-starting77b-private.png": "da7fbc6bf3ec19c795451537e375f4d83e488b4ff857a5268068830e1cd01ce1"
+    },
+    "private_workspace_sha256": {
+      "debugger-owned-region77-v1-private.json": "cd5997ddd199af1fb5889df1f65838bd79c97ec27a8f278fbe7cd104c74d661c",
+      "native77-initial-private.log": "da3ada08bf675b47383996142389a34098630365b251ba8de1ec208818ed497d",
+      "va-headroom-host-final-v2/evidence.json": "a75904f103521e4a42b2e31ae82c444ce26b84b63252327058c3b65be3eada55",
+      "va-headroom-hook-host-v1/evidence.json": "e4cdbf9430bdd218943e82aeeb63d937106567237a770dc11939ac889563a7b2",
+      "va-existing-probe-regression-v1/evidence.json": "4b37a59b65a9a3bbfa83f5fa92809df8f0bdc6406dbe7e07f342483cdf437730"
+    }
   }
 }

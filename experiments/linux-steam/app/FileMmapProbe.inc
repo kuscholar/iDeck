@@ -7,6 +7,9 @@
 #include <stdatomic.h>
 #include <stdint.h>
 #include <stdio.h>
+#if IDECK_LAB_VA_HEADROOM_PROBE
+#include "VAHeadroomProbe.h"
+#endif
 #ifndef IDECK_LAB_FILE_MMAP_PROBE
 #define IDECK_LAB_FILE_MMAP_PROBE 0
 #endif
@@ -72,6 +75,9 @@ static void ideck_file_mmap_failure_probe(int tid, int tgid, int fd,
         IDECK_MMAP_PROBE_LOG(line);
         if (!released) { all_released = 0; break; }
     }
+#if IDECK_LAB_VA_HEADROOM_PROBE
+    if (all_released) ideck_va_headroom_probe(fd,bytes,offset,prot,flags,original_error);
+#endif
     snprintf(line, sizeof line,
             "IDECK_FILE_MMAP_PROBE_V1 phase=end tid=%d tgid=%d attempted=%u all_released=%d original_result_preserved=1",
             tid, tgid, attempted, all_released);

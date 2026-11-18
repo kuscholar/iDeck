@@ -1,9 +1,10 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run70, actual Build76): Linux native JIT and genuine Steam updater run
-on Air after checked ordinary-PTE preflight. New guard not yet exercised on Air;
-interactive Library/BPM/game/return stability NOT established. Preserve the live
-Build76 session, revalidating PID26017/install97F66ABD before any action.
+Status (run71, actual Build77): same-container Air Lab installed and running,
+with a default-off native VA-headroom discriminator. Pre-guest16MiB reservation,
+Linux native JIT and genuine Steam updater are observed. Failure-time release
+comparison and interactive Library/BPM/game/return stability are NOT verified.
+Preserve live PID26281/install9FF89F76, revalidating before any action.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6467,3 +6468,65 @@ newrollback NOTyetexercisedondevice. Pool3frames/0errors; noPlay. Preserve26017,
 allowordinary42restart, then one knownLibrary event ONLYwhenvisibledesktop.
 Source/build and availablehosttests complete; actualUI/game/return/stability
 remainincomplete. No credentials orGuard automation, no workingapp/datachange.
+
+Run70 final observation (Nov18 01:30EST): the exact same native26017 is alive,
+but after roughly three hours the physical screen is still a black X11 desktop
+with a cursor. Health1115 has frame317, PTEfailure0, hashfailure0, noCLIinput or
+Play, and a capped native append log. This is a failed UI experiment, not a
+stability pass or evidence the PTE guard was exercised. The log has18 native
+file-map failures: the first complete2MiB regular shared mapping returns Darwin
+ENOMEM12; the existing once-only controls can map16KiB, while whole-length
+sharedRO/privateRW/anonymousRW also fail12. CEF runtime36-byte trap code matches
+one location in the retained official ELF SHA891d85f9... atdisk634e050; reported
+file-offset6351060 is again biased, not literal disk offset. No sole-root-cause
+or physical-RAM exhaustion claim; preserve raw logs privately, hashesEVIDENCE.
+
+## Run71 — native virtual-address headroom discriminator
+
+Source parent f2f881edcc7313e016f8f0834a18a0e91cc41a57. One default-off change:
+reserve16MiB PROT_NONE before Linux. At the existing first eligible complete
+shared-file ENOMEM, after ordinary controls are released, release only that
+owned reservation and attempt one new OS-selected mapping with the original
+file/size/flags. Immediately release a successful control without accessing
+contents. Never use a fixed/hinted address, install the control in guest PTEs,
+retry or replace the failed Steam request. The original error/errno survives.
+
+Eight HOST contract groups use actual own Darwin reservations and unlinked
+files with explicit refusal wrappers: preparation/eligibility, one-shot reuse,
+16concurrent callers, mapping/release/cleanup failures and errno preservation.
+The actual copied realfs/probe hook passes30 ASanUBSan cases with a counted
+headroom backend fixture, including no dispatch on original success or failed
+control cleanup. Existing default-off30 cases also pass. These prove ownership
+and dispatch contracts, not actual iPad capacity or Steam UI improvement.
+Reproduce with tools/test-va-headroom.py NEW_PRIVATE_OUTPUT and
+ tools/test-file-mmap-probe.py PRIVATE_ARTIFACT_ROOT NEW_PRIVATE_OUTPUT
+ --va-headroom-hook (tools underexperiments/linux-steam).
+
+The reservation itself changes native VA use and mapping count. A successful
+control after release would support a mapping-headroom constraint, not identify
+contiguous-hole shortage versus all other native map resources. Untouched
+PROT_NONE contents are not a zero-overhead or physical-RAM-reclamation claim.
+Build77 in progress in a new private tree; original installed76 remains intact.
+Full goal remains ACTIVE: genuine interactive Library/BPM and real licensed
+Madeira game/return/repeated stability remain incomplete; bridge125 is diagnostic.
+
+Run71 actualAir77: full27adapter/Xcode/final package PASS. Actual finalMachO
+startup calls own reservation preparation, and the copied realfs failure probe
+calls the independent headroom component; original PTE/pool/hash/advice/prepared
+JIT checks retained. No HOST allocator-injection symbols. Deep-strict signing,
+matching existing Air/app/certificate profiles and exact executable-text
+preservation pass. Fresh76 health1209/frame317/zeroCLI/noPlay and physicalblack
+screen verified before normalSIGTERM of only failed26017. Upgrade uses the same
+Lab ID and existing data container; accounts/games/saves and other apps retained.
+
+77installed UUID9FF89F76-2D81-4E41-BBDF-759B66E71511, nativePID26281 (REVALIDATE),
+MachOUUID85C1E33B-B9B5-3DAE-BD93-503045C001FA. StandardinteractiveCLI debugger
+stopped exactly ownpreparation, allocated/prepared fresh120MiB RX and published
+single-use offer. OwnBP removed, normaldetach andquit complete. Native receipt
+confirms headroom prepare16MiB success and originalJIT selfcheck result0.
+Health5 phase7/21guests/JITactivation1/attempts200000/segments158945/code124991884
+and genuineSteam ExtractingPackage screen establish initialonAirLinux/JIT;
+NOT interactive Library/BPM or game/return. Failure-time release/control has
+not been observed yet. Preserve this active session and inspect its actual
+probe result before any additional runtime hypothesis or restart. Allrawlogs,
+screens and signing artifacts remain private; exact hashes inEVIDENCE.

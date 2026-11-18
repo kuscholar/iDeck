@@ -34,6 +34,7 @@ p.add_argument('--cow-backing-broker',action='store_true',help='Explicit owned d
 p.add_argument('--blocked-wait-callers',action='store_true',help='Default-off bounded main-renderer blocked-futex existing ABI/code-only caller metadata; no synchronization changes')
 p.add_argument('--checked-frame-snapshot',action='store_true',help='Default-off checked malloc pixel copy adopted by immutable NSData; no Foundation large-copy allocation, allocationNULL stops display')
 p.add_argument('--frame-snapshot-pool',action='store_true',help='Default-off four preallocated1280x800 immutable snapshot slots; allocation/exhaustion are explicit failures, no late pixel malloc')
+p.add_argument('--va-headroom-probe',action='store_true',help='Default-off16MiB preguest PROT_NONE reserve/release and one control mapping on shared-file ENOMEM; no guest fallback')
 p.add_argument('--map-pte-preflight',action='store_true',help='Default-off ordinary-map page-table allocation preflight with ENOMEM metadata rollback; no cap increase')
 p.add_argument('--fiber-hash-growth-guard',action='store_true',help='Default-off preserve initialized translation hash if growth calloc fails; request existing flush, no cap change')
 p.add_argument('--exclusive-private-discard',action='store_true',help='Explicit whole-backing private DONTNEED replacement experiment; unsupported mappings retain original path, not a physical-RAM reclamation claim')
@@ -51,6 +52,7 @@ assert not a.register_shared_library or a.dock_storage,'Library registration req
 assert not a.retire_empty_probe or a.register_shared_library,'Empty-probe retirement requires explicit shared-library registration'
 assert not a.stage_dock_request or a.dock_storage,'Native request staging requires explicit captured Dock storage integration'
 assert not a.native_setup_transition or a.stage_dock_request,'Native setup presentation requires explicit request staging'
+assert not a.va_headroom_probe or a.file_mmap_failure_probe,'Headroom discriminator requires existing exact failure probe'
 assert not a.file_mmap_failure_probe or a.file_map_cleanup,'File-mmap probe requires the copied qualified file-backend source'
 assert a.cow_native_pages_per_group==1 or a.cow_native_group,'Coarser CoW span requires explicit anonymous grouping'
 assert not a.cow_backing_broker or (a.cow_native_group and a.cow_native_pages_per_group==1),'Broker requires original one-native-page CoW groups'
@@ -77,7 +79,7 @@ run('build-madvise-stats.py',src,build,out/'logging/libish.a',out/'advice',*(['-
 run('build-lazy-pages.py',src,build,out/'advice/libish.a',out/'lazy')
 kernel=out/'lazy/libish.a'
 if a.file_map_cleanup:
-    run('build-file-map-cleanup.py',src,build,kernel,out/'file-map-cleanup',*(['--mmap-failure-probe'] if a.file_mmap_failure_probe else []))
+    run('build-file-map-cleanup.py',src,build,kernel,out/'file-map-cleanup',*(['--mmap-failure-probe'] if a.file_mmap_failure_probe else []),*(['--va-headroom-probe'] if a.va_headroom_probe else []))
     kernel=out/'file-map-cleanup/libish.a'
 if a.fork_map_failure:
     run('build-fork-map-failure.py',src,build,kernel,out/'fork-map-failure',
@@ -126,6 +128,9 @@ if a.frame_snapshot_pool:
     sources += [lab/'app/FrameSnapshotPool.m']
 if a.fiber_hash_growth_guard:flags+=['-DIDECK_LAB_FIBER_HASH_GUARD=1']
 if a.map_pte_preflight:flags+=['-DIDECK_LAB_MAP_PTE_PREFLIGHT=1']
+if a.va_headroom_probe:
+    flags+=['-DIDECK_LAB_VA_HEADROOM_PROBE=1']
+    sources += [lab/'app/VAHeadroomProbe.c']
 if a.cow_backing_broker:flags+=['-DIDECK_LAB_COW_BROKER=1']
 if a.blocked_wait_callers:
     flags+=['-DIDECK_LAB_BLOCKED_WAIT_CALLERS=1']
@@ -178,5 +183,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
  'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'va_headroom_probe_enabled':a.va_headroom_probe,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

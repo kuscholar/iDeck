@@ -1,3 +1,36 @@
+# Run71 Build77 live26281: preserve, observe headroom trial and UI
+
+Revalidate PID26281, installation9FF89F76-2D81-4E41-BBDF-759B66E71511 and receipt
+kernel-26281-1139093-574003000.log before acting. Full27units/Xcode/finalcalls/
+exactAirprofiles/deepstrict/text preservation PASS. Installed same isolated
+com.kuschqin.ideck.freshtest, saveddata intact. StandardLLDB56990 detached and
+quit normally. Actual early16MiB PROT_NONE reservation prepared1/error0; JIT
+selfcheck result0, health5 phase7/21guests/activation1/200000attempts/158945
+segments/124991884bytes, genuine SteamExtractingPackage. These are NOT actual
+interactiveLibrary/BPM/game/return proof. Do NOT restart/reinstall or clickupdater.
+Workspace/observe77-private.py NEWtag writesrun71. On first genuine eligible
+mmapENOMEM, inspect IDECK_VA_HEADROOM_PROBE_V1 phase=trial in bounded native log:
+reservation_released/fresh_mapping/map_errno/trial_released. No such trial was
+observed yet. Then inspect realUI and only known navigation on visibledesktop.
+
+ONLYnew77change: default-off --va-headroom-probe.16MiB untouchedPROT_NONE
+reservation BEFORELinux; first eligible shared-file ENOMEM releases ONLY its
+own reservation and tries one NEW OS-selected mapping; immediate cleanup,
+original guest result/errno unchanged. No MAP_FIXED/hints/payloadaccess/retries.
+Host8contractgroups,30exact hook-fixture and30default-regression cases pass.
+These are not native capacity/UI fixes. Even a success-after-release cannot
+alone distinguish contiguous VA holes from other mapping resources. No capraise.
+
+Old76/26017 normalSIGTERMended after fresh blackscreen/frame317frozen/noCLI/noPlay
+and exactidentity; NEVERtargetoldPID. It stayed alive~3h butUIfailed, PTEguard0.
+Actual76log18MMAP_FAILURE; first2MiB completefile nativeENOMEM, 16KiB sharedmaps,
+fullRO/private/anonymous fail12. No solecause orphysicalRAMexhaustion claim.
+Rawartifacts/hash manifests private. Sourceparentf2f881e; inspect currentHEAD
+for publishedcheckpoint. Onlyexperimentbranch signedoff/push in allowedhours.
+Main, workingapps, phone, auth/games/saves/FEX/Valve/vendor untouched. CLIonly,
+NEVERMacunlock, passwords/Guard/trust automation/security/CodexDB changes.
+FullgoalACTIVE, bridge125diagnostic, noSTABLE_SUCCESS or schedulerunload.
+
 # Run70 Build76 actual Air JIT/updater live26017, preserve
 
 REVALIDATE26017/install97F66ABD-8575-49D3-850D-DC81AEC86C90.76signedinstalled

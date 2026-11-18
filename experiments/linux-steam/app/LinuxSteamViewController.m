@@ -22,6 +22,9 @@
 #import "X11TraceInstall.h"
 #endif
 #import "RFBClient.h"
+#if IDECK_LAB_VA_HEADROOM_PROBE
+#include "VAHeadroomProbe.h"
+#endif
 #if IDECK_LAB_FRAME_SNAPSHOT_POOL
 #import "FrameSnapshotPool.h"
 @interface LRRFBClient (IDECKFramePool)
@@ -230,6 +233,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     // exhausted frames fail explicitly; no late pixel allocation or retry.
     self.framePool=[[IDECKFrameSnapshotPool alloc]initWithWidth:1280 height:800];
     if(!self.framePool){[self showStatus:@"Framebuffer pool preparation failed; no Linux session started."];return;}
+#endif
+#if IDECK_LAB_VA_HEADROOM_PROBE
+    if(ideck_va_headroom_prepare()!=0){[self showStatus:@"Address-space discriminator preparation failed. No guest started."];return;}
 #endif
 #if IDECK_LAB_CLI_INPUT
     ideck_native_log_line("IDECK_LAB_FRONTEND_ENTRY_V1 step=register_cli_navigation");
