@@ -6868,3 +6868,14 @@ pool/PTE/hash/headroom/cache+softstack/8frame observer callsites. NativeKernelLo
 comment only clarified sequence0 historical initial9 afterbuild; executable
 statements unchanged. NOT installed ordevicewake proof yet. Safe authorized
 Lab-only data-preserving upgrade next, after fresh27711 identity/screen capture.
+
+Run77 actual82 installation/launch: fresh previous81noPlay/CLI11/screensaver
+recorded, only exact27711 normallyterminated. In-placeLabinstallCLI0 preserving
+container; new25CA5426-78C8-4811-B23C-E35E716AF926/PID28066/MachOUUID4F0781FB-
+43F0-3EC5-A12A-BEC09882D6AD/receiptkernel-28066-1161226-896401000.log.
+SameISH_JIT0/prepared120MiB/7680pages; LLDB11450 asynchronousattach initially
+madefirstcontinuepremature(processnotlaunched), actualSIGSTOPthencontinue
+reachedOWNpreparation, offerpublished, BPdeleted/detached/quitnormally.
+Health2phase7/21guests/zeroemission/CLI0/noPlay. No actual82UI/wake proofyet;
+letupdatercomplete, noactiveLLDB/reinstall. Fullhashes/EVIDENCE. Prior81UIpositive
+retainedasdistinctrun, notinferredfor82. FullgoalstillACTIVE.

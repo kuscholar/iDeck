@@ -1,3 +1,30 @@
+# Latest Run77 ACTUAL82 Air28066 — preserve current updater/session
+
+Source779ccfd1e7247f1dfdedd4f17ffdcd5478c8f45e (check HEAD). Actual installed82
+installation25CA5426-78C8-4811-B23C-E35E716AF926, MachOUUID4F0781FB-43F0-3EC5-
+A12A-BEC09882D6AD. NewPID28066/receiptkernel-28066-1161226-896401000.log;
+NEVER target old27711. Prior81 exact fresh screen/health/CLI11/noPlay captured
+then normal Lab-only termination; data-preserving82upgrade installCLI0. New
+launch withoutterminate-existing, ISH_JIT0/same120MiB7680pagepreparation.
+LLDB11450 normalBPdelete/detach/quit COMPLETE; noactiveLLDB. Initialattach was
+asynchronous, firstcontinue saidprocessnotlaunched; afteractualSIGSTOP continued
+normally; nootherPID/lock/auth changes. Newhealth2phase7/21guests/zeroemission/
+CLI0/noPlay. WORK observe82-private.py NEWtag writes run77; noinput/restart.
+
+ONLY newwake9centercontrol; same81 runtime/rootfs/flags. FullXcode/package/
+deepstrictsigning/Airprofile+cert/finalMachOwake+pread+priorpolicies/hosttests PASS.
+Not newUI/wake success yet. Letgenuine updater42restart finish, screenshotactual
+desktop beforefixed Library/BPMinput. Onactualscreensaver onlyone wake9, wait
+nativehealthACK thenphysicalscreenshot. Neednewnavhelperuses28066/build82/
+newreceipt andacceptsaction9 (old81helperMUSTNOTreuse). No newruntimevariable
+or blindauth/blackinput. Retain current until discriminating test.
+
+Prior81 actual genuineLibrary/BPM/rightRatatan/detailsInstall1.68GBpositive;
+no repeatedstablecoldstart/gamePlay/Madeira/return/physicaltouch/Bluetooth.
+Bridge125 diagnostic; nogoalcomplete/STABLE_SUCCESS/schedulerunload. Nextafter
+wake: configureactualcustomtool/sharedWindowsdepots andlegitimatePlay capture.
+CLIonly NEVERMacunlock/security/lock/Codex/FEX/Valve/main/otherapps/authchanges.
+
 # Latest Run76 UI positive / Run77 fixed wake candidate (07:50 EST)
 
 HEAD031216f (inspect current HEAD); exact81/27711/F6A1A1A0/native receipt
