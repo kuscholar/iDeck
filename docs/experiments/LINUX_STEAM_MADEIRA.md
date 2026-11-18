@@ -1,11 +1,10 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run74, actual Build79 on Air26979): fixed LinuxSteam-only4MiBsoft-stack
-policy executes ondevice (soft4096KiB/hardunlimited readback). Realupdater and
-zero native-emission counters observed; no new Library/BPM validation yet.
-Run73same78 had actual partial Library response then BigPicturewhite loading.
-Fullgoal not achieved: no repeated interactive stability/Windowsgame/return.
-Preserve/revalidate26979/install317D045A, no blind restart.
+Status (run75, actual Build80 on Air27183):8-frame observer ACTUALLYcaptures
+higherCEFcallers; currentdesktopchrome/blackcontent, LibraryACK1doesnotprove
+usableLibrary. Firstfataltrace differsfrom79: Blinkdiskread preadENOMEM then
+fullreadPCHECK. Mainwait uppercaller isFontServiceThread.MatchFamilyName;
+causalitybetweenfailuresUNKNOWN. Preserve27183; no stableBPM/game/return.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6708,3 +6707,71 @@ phone/main/workingapp/FEX/Valve/vendor/security/lock changes.
 NEXT preserve26979 while updater completes. Verify normal42restart policy too,
 realdesktop/Library/BPM/input and boundednewfault/mmap artifacts before another
 patch. No game/return proof, bridge125stilldiagnostic, noSTABLE_SUCCESS/unload.
+
+## Run74 full-load correction / Run75 higher wait callers
+
+Actual79 realStore renderedpromotionbanner/recommendations; oneLibraryACK1 then
+blackX11, nointeractiveLibrary. Freshuncapped1453005B private native log has
+0recordedMMAP_FAILURE and2reports ofsame282/group277/parent166SIG5 atCEF
+PCe83d1504, opcodeBRK d4200000. Actualmodule copiedfromthisAir:218132264B,
+SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb matches
+priorofficialCEF. Unique36B pattern confirmsdiskPC6271504/ELFVA6281504/bias
+E2150000; actualsavedcallerEBAF6800/BL99a67fc->6281514 matches alreadyexact-source
+Run60 CrashHungProcess. No nearestexport/canary/originalSIGSEGV conflation or
+assertion/watchdog suppression. NoMMAP_FAILURE is finitewindow, notcapacityfix.
+Beforetrap main277 last4samplecycles1571145624, untimedfutex393/expected0/allbits
+ffff4390;4existingABI/codeframes match exactcurrentCEF/glibc (17uniquecaller
+records in suppliedmodules). WaitManyImpl is priorstructural-source inference;
+its uppercaller andwhyitnevercompletes remainUNKNOWN. Afterclick timing doesnot
+proveclickcausation. Stackpolicy testPASS doesNOTproveSteamcompatibilityfix.
+
+Run75 SINGLEdiagnostic variable: explicit --blocked-wait-frames8 requires
+existing --blocked-wait-callers; originaldefault4 remains. SameexistingPTE,
+mainstackABI fields only,9instructionwords/file-backedEXEC/callchecks,
+nonblockinglocks/no pagefault/mutation orstrings. Atmost8eligiblemainwaiters,
+8frames each; symbolizerallows0..7/bounded128distinctrows andallcandidates.
+HOST28realPTEASanUBSanWerror cases coverboth4/8/longerchaintruncation/terminal/
+lockbusy/bounds/permissions/no accounting-generation changes; invalid6 refused.
+OwnrealARM64ELF frame7matchesuniquely; sameinputtwice correctlyreports2/nonunique.
+No synchronization/timeouts/watchdog/clientbinary orFEX/vendor patch.
+
+Full80/27nativeobjects/finalpackage/actualsignedsampler->helper8bound+392Boutput/
+priorinitial+retainedfixedpolicycommands/deepstricttext preservation PASS.
+Freshfailed79only normallyended afteridentity/blackframe253/CLI1/noPlay; sameLab
+upgrade preservescontainer. Actual80PID27183/installF2945DF6-17DF-4ACE-862A-
+CBF29069CAC4/MachOUUIDBB889FC2-AD13-3C61-B54B-CC211F263B71/signedSHA0782a91d...
+(fullhashEVIDENCE). SameISH_JIT0/TERM/limit200000/soft4MiB/cacheoff/prepared120MiB
+7680pages/otherflags. LLDB64232 ownBPdeleted/normaldetachquitCOMPLETE. Health4
+phase7/21guests/emissionallzero/CLI0/noPlay; actual8CEFcaller/UI resultPENDING.
+NEXT preserve27183 whileofficialupdater/42restart progresses; capturebefore
+watchdog andmatchhighercallers toexactELFs, thenchooseonecause-specific test.
+No guaranteedUIrepair, no game/return/goalcompletion/successsentinel/unload.
+
+Run75 actual continuation06:35EST: exact27183/F2945DF6 stillalive, nooverlaphost
+experiment. Health1102/1120 current (NOToldreceiptalone); actualdesktopchrome/
+blackcontent, oneLibraryACK1/frame477unchanged. Capped4194217B native snapshot
+SHAc6b34f1d... has20MMAP_FAILURE/19guestfaultreports.8framecountand154frame7rows
+proveobserverworks;31codewindowsmatchuniquelyinsuppliedexactCEF/glibc. Actual80
+CEFcopied218132264B/SHA891d85f... matches79. No claim3hoursaliveisUIstability.
+Healthlaterfiberhashrefusal3/PTErefusal4; originalguardsactive, notresourcefix.
+
+IMPORTANTfirst80fault is280/group277/parent156 ThreadPoolForeg, NOTsame79saved
+CrashHungProcesscaller evenwithsamegenericBRKPC. Priorcall67pread(fd31,
+0x3017204020,0x4ee50f,offset0) returns-12ENOMEM; exactELFcallerA7CED84 references
+DoRead, Blinkdisk_data_allocator.cc, line212 andLikelyfilecorruption. Exact
+[Chromium126DoRead](https://raw.githubusercontent.com/chromium/chromium/126.0.6478.183/third_party/blink/renderer/platform/disk_data_allocator.cc)
+checksfullreadat212. PinnedLinuxRunner sys_pread allocates size+1 scratch then
+backendpread; eitherallocationorbackendENOMEM mustbediscriminated, no guessed
+rootcause or check/Valvepatch. Main2778frames go beyondWaitableEvent intoELF
+580A6E4/refsMatchFamilyName/font_service_thread.cc55/histogram; exact
+[Chromium126fontservice](https://raw.githubusercontent.com/chromium/chromium/126.0.6478.183/components/services/font/public/cpp/font_service_thread.cc)
+postsreplyworkthenwaitsat59. No proofdiskfailurecausesmissingfontreply. Later
+CEFloghaszygotechild-pingmissing/networkservicerestarts, notautomaticallyfirst
+cause; no sandbox/origin/check changes. Primarysourcecopies/hashesEVIDENCE.
+
+Priorrecord-write wasnotexecuted becauseautomaticapprovalreviewhitusagequota;
+afterthe06:29reset, re-auditedvolume/branch/remotes/currentprocess andcompleted
+thatwrite. No approvalbypass orsecurity/Codexsettingschange. NEXT keep80live,
+isolateexact5MiBregularpread scratchENOMEM vsbackend onHOST before a bounded
+scratchcandidate; requirebytes/EOF/offset/error/cleanup/nonregular/default
+controls. FullgoalACTIVE, bridge125NOTgame, noSTABLE_SUCCESS/unload.

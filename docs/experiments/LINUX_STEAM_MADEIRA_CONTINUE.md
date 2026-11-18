@@ -1,3 +1,67 @@
+# Run75 ACTUAL80 eightcallers PASS; firstBlinkpreadENOMEM/fontwait; preserve27183
+
+REVALIDATE27183/installF2945DF6-17DF-4ACE-862A-CBF29069CAC4/receiptkernel-27183-
+1145336-891225000.log. Latest06:35processinventoryEXACT;health1102/1120 current,
+Steamdesktopchrome/blackcontent, LibraryACK1/frame477nochange/noPlay. Noactive
+hostLLDB/build/ish. Source80changespending scopedcommit (inspectHEADf4fe4f4).
+Original8frameobserverACTUALLYworks(count8/154frame7rows);31codewindowsunique
+inexactCEF/glibc. Capped4,194,217B log20MMAP_FAILURE/19guestfaults, finiteonly.
+Actual80CEF218132264B/SHA891d85f... copied, matches79. No3hourUIstabilityclaim.
+
+First80faultThreadPoolForeg280/group277/parent156 genericBRKE83D1504 is NOT
+same79CrashHungProcesscaller. Actualprecedingpread67 fd31/buf3017204020/
+size4ee50f/offset0 returnsENOMEM12. ELFcallerA7CED84+rodataDoRead/Blink
+ disk_data_allocator.cc212/Likelyfilecorruption matchesexactChromium126 fullread
+PCHECK. Main277highercaller580A6E4/rodataMatchFamilyName/font_service_thread.cc55
+andhistogram, sourcepostsMojoquerythenWaitableEventWait59. CausalityUNKNOWN;
+laterzygotechildpingmissing/networkservicerestarts cannotbeassumedfirstcause.
+No Valve/assertion/watchdog/origin/securitychanges. FullprivatehashesEVIDENCE.
+
+NEXT preserve27183; isolateexactrealregular5MiBsys_pread scratchmallocENOMEM
+vsbackend onHOST. A possibledefaultoffbounded64KiB scratchpath requiresfull
+bytes/EOF/offset/errors/refcounts/cleanup/nonregular/default regression proof
+beforedevice. No blindresource retry/capraise orredesign. Existingpinned
+LinuxRunner fs.c sys_pread allocates size+1; fdopsrealfs_pread returnsmappedhost
+preaderrors too, so distinguishfailure sites. Do notinferfilecorruption/auth
+failure merelyfromgenericfataltext. Workspaceobserve80-private.py NEWtag ->run75.
+LLDB64232 detachedquitcomplete; sameISH_JIT0/TERM/limit200000/soft4MiB/cacheoff/
+prepared120MiB/other80flags. Currentbridge125NOTgame; noLibrary/BPM/repeated
+stability/game/return/noSTABLE_SUCCESS/unload. CLIonlyNEVERMacunlock/credentials/
+Guard/trustautomation/security/lock/CodexDB/FEX/Valve changes.
+
+# Run75 ACTUAL80 Air27183/updater; expandedcaller result PENDING
+
+REVALIDATE27183/installF2945DF6-17DF-4ACE-862A-CBF29069CAC4/receiptkernel-27183-
+1145336-891225000.log. Build80signedSHA0782a91d..., MachOUUIDBB889FC2-AD13-
+3C61-B54B-CC211F263B71. Sourceparentf4fe4f4 (inspectHEAD forcheckpoint).
+ONLYnewexplicit --blocked-wait-frames8 with existingobserver, default4 unchanged.
+SameISH_JIT0/TERM/limit200000/guestsoft4MiB/cacheoff/headroom16MiB/allotherflags/
+prepared120MiB7680pages. LLDB64232 normaldetachquitcomplete, noactiveLLDB.
+Health4phase7/21guests/actualzeroemission/CLI0/noPlay. Workspaceobserve80-private.py
+NEWtag ->run75. Keepalive, noanotherpatch/restart duringactiveupdater/test.
+
+HOST28realPTEASanUBSanWerror4/8frames/longerchaintruncation/no-materialization/
+locks/permissions/generation/accounting PASS, invalid6refused. OwnrealELFframe7
+uniqueandduplicateinputambiguous testsPASS. FullXcode27nativeobjects/finalpackage/
+actualsignedsampler->helper8bound392Boutput/unchangedinitial+retainedstackpolicy/
+deepstrict/text PASS. NOTactual8CEFcaller/UIproofyet. AllprivateART/run75,
+exacthashesEVIDENCE. Converterexceptionbinarydistribution remainsunresolved;
+onlysourcepublishing, noValve/rootfs/profile/auth/rawlog Git.
+
+Prior79actualStorecontentthenLibraryACK1/black.1453005Buncappedlog0MMAP_FAILURE,
+2same282/group277Chrome_ChildIOT BRKreports. CurrentAirCEFactual218132264B/
+SHA891d85f... unique36Bdisk6271504/ELF6281504/biasE2150000; savedcallerEBAF6800
+BL99a67fc->6281514 sameexactRun60CrashHungProcess, notoriginalinvalidread or
+canary. Main277last4cycles1571145624 frozen, untimedfutex393/ffff4390;4frames
+stopatWaitManyImpl candidate, HIGHERcallerunknown. CurrentexactCEF/glibc17byte
+matchesuniqueinsuppliedmodules. No timedwait/lostwake/allocator solecauseclaim.
+Old26979exactblackframe253/CLI1/noPlay normallyendedbeforedata-preserving80;
+neverusestalepid. NEXTcaptureboundednativewaitrowsBEFOREwatchdog; require
+count>4/frames4..7thenexactmodulebytes/sources, no nearestexport/functionguess.
+ObserveactualdesktopbeforeLibrary/BPM/fixedinput. Bridge125NOTgame, fullgoal
+ACTIVE/noSTABLE_SUCCESS/schedulerunload. CLIonlyNEVERMacunlock/credentialsGuard/
+trustautomation/security/lock/CodexDB/FEX/Valve changes.
+
 # Run74 ACTUAL79 Air26979/updater; keep live, initialpolicy verified
 
 REVALIDATE26979/install317D045A-A99D-40EC-9524-ADCDEE6032C0/receiptkernel-26979-

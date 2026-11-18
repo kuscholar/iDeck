@@ -3,7 +3,12 @@
 #define IDECK_BLOCKED_WAIT_CALLERS_H
 #include <stdint.h>
 struct mem;
+#ifndef IDECK_WAIT_CALLER_LIMIT
 #define IDECK_WAIT_CALLER_LIMIT 4
+#endif
+#if IDECK_WAIT_CALLER_LIMIT != 4 && IDECK_WAIT_CALLER_LIMIT != 8
+#error Select the original4 or explicit bounded8 caller frames only
+#endif
 struct ideck_wait_caller { uint64_t lr; uint32_t code[9]; };
 struct ideck_wait_callers {
     unsigned count, status;

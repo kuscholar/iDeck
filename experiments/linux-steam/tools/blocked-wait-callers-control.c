@@ -25,15 +25,15 @@ int main(int argc,char **argv){
     assert(!pt_map_nothing(current->mem,code,1,P_READ|P_WRITE));
     struct pt_entry *cp=mem_pt(current->mem,code);
     cp->data->fd=generic_open("/dev/null",0,0);assert(!IS_ERR(cp->data->fd));
-    for(unsigned i=0;i<4;i++){
+    for(unsigned i=0;i<IDECK_WAIT_CALLER_LIMIT+1;i++){
         uint64_t fp=stack*PAGE_SIZE+0x100+i*32,lr=code*PAGE_SIZE+0x100+i*0x80;
-        uint64_t abi[2]={i==3?0:fp+32,lr};assert(!user_write(fp,abi,sizeof abi));
+        uint64_t abi[2]={i==IDECK_WAIT_CALLER_LIMIT?0:fp+32,lr};assert(!user_write(fp,abi,sizeof abi));
         uint32_t instructions[9];for(unsigned j=0;j<9;j++)instructions[j]=0xd503201f;
         instructions[3]=0x94000008+i;assert(!user_write(lr-16,instructions,sizeof instructions));
     }
     cp->flags=P_READ|P_EXEC;
     uint64_t fp=stack*PAGE_SIZE+0x100,original[2];assert(!user_read(fp,original,sizeof original));
-    unsigned expected_count=4,expected_status=0;struct pt_entry *sp=mem_pt(current->mem,stack);
+    unsigned expected_count=IDECK_WAIT_CALLER_LIMIT,expected_status=0;struct pt_entry *sp=mem_pt(current->mem,stack);
     size_t saved_offset=sp->offset;
     if(!strcmp(mode,"unaligned")){fp++;expected_count=0;expected_status=4;}
     else if(!strcmp(mode,"unmapped")){fp=0x700100;expected_count=0;expected_status=2;}

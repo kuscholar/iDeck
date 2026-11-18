@@ -28,7 +28,7 @@ def main():
     assert a.log.stat().st_size<=8*1024*1024 and not a.output.exists()
     assert str(a.output.resolve()).startswith('/Volumes/easystore/')
     modules=[(f.name,*load(f)) for f in a.elf];rows=[];seen=set()
-    regex=r'^LINUX_WAIT_CALLER tid=(\d+) frame=([0-3]) lr=(0x[0-9a-f]+) code_start=(0x[0-9a-f]+) words=([0-9a-f,]+)$'
+    regex=r'^LINUX_WAIT_CALLER tid=(\d+) frame=([0-7]) lr=(0x[0-9a-f]+) code_start=(0x[0-9a-f]+) words=([0-9a-f,]+)$'
     for line in a.log.read_text().splitlines():
         m=re.fullmatch(regex,line)
         if not m:continue
@@ -36,7 +36,7 @@ def main():
         words=tuple(int(x,16) for x in m[5].split(','));assert len(words)==9 and start+16==lr and not lr%4 and lr<1<<48
         key=(tid,frame,lr,words)
         if key in seen:continue
-        seen.add(key);assert len(seen)<=64
+        seen.add(key);assert len(seen)<=128
         pattern=struct.pack('<9I',*words);candidates=[];count=0
         for name,data,spans in modules:
             for off,va,size in spans:
