@@ -8,7 +8,8 @@
 #error Select only the explicit default-off guest libc policy
 #endif
 /* Constant guest-only environment. Never import Darwin environment values or
- * change stack sizes, RLIMITs, allocator capacities, Wine/FEX or credentials.
+ * change allocator capacities, Wine/FEX or credentials. A separate default-off
+ * guest shell stack policy, if selected, is not part of this environment.
  * The default bytes match the original initial and retained Steam env arrays.
  */
 static inline const char *ideck_guest_steam_environment(void){

@@ -1,10 +1,11 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run72, actual Build78): guest libc exited-stack cache disabled behind a
-feature flag. Real host32-thread mapping reduction is measured; Air78 shows
-saved-auth Steam desktop but Libraryclick ACK1 returns to black. No interactive
-Library/BPM/game/return stability. Preserve/revalidate PID26470/installD31078A3;
-next discriminator is the SAME binary/VA preparation with only ISH_JIT=0.
+Status (run74, actual Build79 on Air26979): fixed LinuxSteam-only4MiBsoft-stack
+policy executes ondevice (soft4096KiB/hardunlimited readback). Realupdater and
+zero native-emission counters observed; no new Library/BPM validation yet.
+Run73same78 had actual partial Library response then BigPicturewhite loading.
+Fullgoal not achieved: no repeated interactive stability/Windowsgame/return.
+Preserve/revalidate26979/install317D045A, no blind restart.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6613,3 +6614,97 @@ retaining its prepared VA reservation. No JIT/FEX/Valve/runtime source patch,
 PIC/stack-size/cap or second parameter change. Preserve26470 untilfreshfailure
 classification; no repeatinstall and never interrupt a new user/game session.
 FullgoalACTIVE; bridge125diagnostic; no game/return/repeatedstability success.
+
+## Run73 — same78 native-emitter off, with prepared arena retained
+
+Sourcecheckpoint4eb7b86e788eb032b6be148decaf10982e2ed558. No install, source/runtime
+binary or game/account/state replacement. Exact same78SHA40a96814... and install
+D31078A3 remain. After fresh identity/blackframe719/CLI1/noPlay, only failed26470
+normallySIGTERMended. New26573 launched stopped with ONLY addedISH_JIT=0;
+TERM=dumb andISH_JIT_BLOCK_LIMIT200000 retained. The pinned jit_init env_off
+branch returnsbeforeemission. Stillprepared identical120MiB/7680pages through
+normalCLI debugger, ownBPdelete/normaldetach+quit7090 complete. No arena removal,
+JIT/FEX/Valve patch, changed caps/stack/PIC or second runtime parameter.
+
+Actualhealth6/phase7/20guests andhealth43/phase8/138guests showactivation1 but
+blocks0/segments0/codebytes0, proving engine emission off while region selfcheck
+and Linux execution work. GenuineSteam updater and saved-userloading appear;
+then blackX11, noinputsent/no Library/BPM/game/return. An uncapped1952362B native
+snapshot has131MMAP_FAILURE records and0recordedguestfaults in this finite window.
+First2MiB regularsharedfile probe again fails fullRO/private/anonymous12 while
+16KiB succeeds; releasingown16MiB allowsnewfullsharedmap andnormalcleanup,
+originalguesterror preserved. Initial and retained cacheoffmarkers bothremain.
+
+The emitter-causality comparison is INCONCLUSIVE: changed native mapping-pressure
+failures prevent treating absence of the earlier guestfault as a fix or proving
+emitter responsibility. Officialwebhelper PID-number matches cannot identify
+current process role, so no Crashpad-primary/secondary inference or suppression.
+Rawlogs/screens/privateconfig remainoutsideGit, exacthashesEVIDENCE. Keep26573
+active while preparing host-only standardLinuxstack-soft-limit measurement;
+require realglibc peakmappedrange/stacksize/hardlimit/function results before
+any newdeviceconfiguration. No speculative smallPROT_NONE threshold patch;
+existing metadata mremap/signal semantics need separate work. FullgoalACTIVE,
+bridge125diagnostic/noSTABLE_SUCCESS or schedulerunload.
+
+## Run73 later UI / Run74 measured guest soft-stack experiment
+
+Fresh same26573/Build78 receipt: desktop chrome returns, one fixed Library event
+nativeACKsequence1 selects Library and renders the genuine game list/home
+widgets. This is actual UI-response evidence, not fullcontent/repeated-stability
+proof. Fixed Big Picture event nativeACKsequence2 then black/white loading;
+health118 and138 frame448, noPlay. Native appendlog is capped byhealth105;
+absence of later faults cannot be inferred. Do not label the earlier black
+snapshot a permanent processdeath, or call dispatch/splash interactiveBPM.
+
+HOST reproducible own realglibc2.41 diagnostic runs fourwaves of8 concurrently
+alive pthreads, barriers/joins and sampled64KiB-stack checks in fresh no-account
+roots. Default and cacheoff8MiB threads activeVM69943296B; cacheoff+soft4MiB
+activeVM36388864B, samebaseline2277376B:33554432B/32MiB fewer live guest mapped
+ranges. Afterjoins cacheoff variants both2310144B; default36126720B. Hardlimit
+remains18446744073709551615, soft8388608->4194304. Both defaults and4MiB complete
+PASS; exact productionpolicy executes, default fullcommand byte-identical,
+enabledcommand only fixedpolicy, invalidgate2 refused. This is NOT measured
+nativeRSS/reclaim/Steamperformance or proof all CEF threads use these defaults.
+
+Minimal default-off --pthread-stack-soft-limit adds fixed Linuxguest shell
+`ulimit -S -s 4096` immediately before Steam, AFTER X11 processes start. It checks
+actualsoft4096KiB and identicalhardlimit, writes numericreadback only to
+/tmp/ideck-steam-stack-policy.txt, fails rather than starting Steam on error.
+Sharedcommand covers initial and normal42restart; explicitpthread attributes,
+Darwinlimits/nativecaps/ordinaryWine/FEX/Valve/vendor unchanged. Cache marker
+retains requested_only and drops obsolete global stack_size_changed=0 claim.
+Production-source tests: experiments/linux-steam/tools/test-pthread-stack-peak.py
+PRIVATE_ARTIFACT_ROOT STOPPED_ACCOUNT_FREE_ROOT NEW_PRIVATE_OUTPUT. Exact hashes
+and measurements EVIDENCE/run74; private rootfs/ELF/logs outsideGit.
+
+Build79 is preparing under private run74; NO installation/newAirparameter yet.
+Finish fullbuild/regressions/finalactualMachO/signing and freshcurrentUI/state
+before upgrade. Keep same emitteroff/120MiBpreparedarena/cacheoff/otherflags to
+isolate one policy. Smaller stacks may expose application stack-depth needs;
+do not suppress resulting faults or claim compatibility from ownprobe. Fullgoal
+ACTIVE, bridge125 remains diagnostic/noWindowsgame/return, noSTABLE_SUCCESS or
+schedulerunload.
+
+Run74 deployment checkpoint: actual final79 initial/retained shell command
+arrays recovered from signedMachO references and both verifiedpolicy placement;
+27nativeadapterobjects compiled (NOT27unittests), fullXcode/package/34Pythonunit
+cases/envASanUBSan/X11gates/deepstrictsigning/textpreservation PASS. Initial
+unittestdiscover mistakenly imported standaloneRFB-CLI asunittest; corrected
+explicitmodules all34PASS, rawfailure retained. Hostfinalv2 also proves smaller
+hardlimit causespolicyfailure and no following launch; numericreadback matches.
+Existing matchingAir/app/cert profiles reused, no newentitlements.
+
+Freshfailed26573 only endednormally afteridentity/whiteBigPicture/CLI2/frame450/
+noPlay. SameLab79 install317D045A-A99D-40EC-9524-ADCDEE6032C0 preservescontainer,
+PID26979/MachOUUID573D6CBE-C292-3CD5-A5FD-445E65ED875F; signedSHA640de536...
+(actual fullhash EVIDENCE). RetainedISH_JIT0/TERM/limit200000/prepared120MiB
+7680pages/guestcacheoff/allotherflags. LLDB55790 ownBPdeleted/normaldetachquit
+complete. Actualhealth2/15 Linuxrunning/emissionallzero, activation1alone is
+selfcheckproof. RealSteamExtractingPackage visible. Copiednewnumericguestfile
+soft4096KiB/hardunlimited proves initialshellpolicy executed, NOT individualCEF
+stackattributes orBPM stability. No input/credential/Guard/accounttransfer,
+phone/main/workingapp/FEX/Valve/vendor/security/lock changes.
+
+NEXT preserve26979 while updater completes. Verify normal42restart policy too,
+realdesktop/Library/BPM/input and boundednewfault/mmap artifacts before another
+patch. No game/return proof, bridge125stilldiagnostic, noSTABLE_SUCCESS/unload.

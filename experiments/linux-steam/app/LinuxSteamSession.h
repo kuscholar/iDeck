@@ -1,3 +1,4 @@
+#include "GuestSteamStackPolicy.h"
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
  * Fixed genuine desktop launch, not an account/credential command contract.
  * Native adapter removes only its own stale display readiness paths BEFORE
@@ -44,6 +45,7 @@
     "kill -0 \"$vpid\"; n=$((n+1)); test \"$n\" -lt 100; sleep .1; done; " \
     "echo ready > /tmp/ideck-display-ready; " \
     IDECK_X11_STATE_START \
+    IDECK_GUEST_STEAM_STACK_POLICY \
     "cd /Steam; export DISPLAY=:99 STEAM_RUNTIME=1; " \
     "export LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/Steam/steamrtarm64/panorama; " \
     TRACE_ENV \

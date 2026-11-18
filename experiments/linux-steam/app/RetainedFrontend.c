@@ -48,7 +48,7 @@ static int restart_guest(void){
     const char args[]=IDECK_LINUX_STEAM_ARGS;
     const char *env=ideck_guest_steam_environment();
 #if IDECK_LAB_PTHREAD_STACK_CACHE_OFF && IDECK_LAB_NATIVE_LOG
-    ideck_native_log_line("IDECK_GUEST_GLIBC_POLICY_V1 stack_cache_off=1 retained_restart=1 requested_only=1 stack_size_changed=0");
+    ideck_native_log_line("IDECK_GUEST_GLIBC_POLICY_V1 stack_cache_off=1 retained_restart=1 requested_only=1");
 #endif
     error=do_execve("/bin/sh",3,args,env);if(error)return error;
     exit_hook=observe;struct task *child=current;current=NULL;pthread_t thread;

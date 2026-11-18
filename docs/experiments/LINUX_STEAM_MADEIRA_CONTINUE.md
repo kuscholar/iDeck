@@ -1,3 +1,85 @@
+# Run74 ACTUAL79 Air26979/updater; keep live, initialpolicy verified
+
+REVALIDATE26979/install317D045A-A99D-40EC-9524-ADCDEE6032C0/receiptkernel-26979-
+1144278-955785000.log. Build79 signedSHA640de536..., MachOUUID573D6CBE-C292-
+3CD5-A5FD-445E65ED875F. NewLinuxSteam-onlysoft4MiB policy; initialactualfile
+/tmp/ideck-steam-stack-policy.txt readssoft_kib4096/hard_kibunlimited. NOT
+perCEFstackattributes orUIeffectproof. SameISH_JIT0/TERM/limit200000/cacheoff/
+allpreviousflags and120MiBprepared7680pages. LLDB55790 normaldetachquitcomplete;
+health2/15 phase7/genuineExtractingPackage/actualzeroemission/CLI0/noPlay.
+Workspaceobserve79-private.py NEWtag writesprivate run74. No activeLLDB.
+
+Sourceparent4eb7b86; scopedcheckpoint mayfollow (inspectHEAD). FullXcode/
+27nativeadapterobjects (NOTunittests)/34actualPythonunits/envASanUBSan/X11gates/
+actualsignedinitial+retainedpolicycommandreferences/deepstrict/text PASS. Initial
+broadunittestdiscover errorwasCLIimport; correctedmodulesall34pass, artifactkept.
+Hostfinalv2 real32threads4waves/allstacks/barriers/joins/numericreadback/policy
+failureblockslaunch PASS. GuestVM32MiBlessat8activethreads, notDarwinRSS or
+Steamperformance. Newdefaultoffflag onlyguestsoftlimit, hard/Darwin/explicit
+pthreadattributes/nativecaps/FEX/Valve/vendor unchanged. Allartifactsprivate.
+
+Old26573 was exactfailedwhiteBPM/frame450/CLI2/noPlay before normalSIGTERMand
+sameLabdata-preservingupgrade. Run73 had actualLibrary game list/widgets after
+ACK1; BPMACK2 white loading, nofullstability. Never targetoldPID. NEXT preserve
+26979, observeupdate/normal42restartpolicyreadback/realdesktop then onlyknown
+Library/BPM/navigation. Captureboundedfault/mmap/UIevidence, no guessingornew
+patchduringactiveexperiment. Currentbridge125NOTgame; noPlay/game/return or
+repeatedstabilityproof/noSTABLE_SUCCESS/schedulerunload. CLIonlyNEVERMacunlock/
+passwordGuardtrustautomation/security/lock/CodexDB/FEX/Valve changes.
+
+# Run74 preparing79; same78/26573 actual Library response, BPM white loading
+
+REVALIDATE26573/installD31078A3-9BA2-40D7-A412-A71F41903558/receiptkernel-26573-
+1142335-625714000.log. Same78/emitterOFF/prepared120MiB. Later real desktop
+returned; Library fixedevent nativeACK1 -> visible Librarygame list/widgets,
+partialcontent. BigPicture fixedevent nativeACK2 -> blackthenwhite loading,
+health118/138frame448/noPlay. Actual Libraryresponse is positive partialUI,
+NOT repeatedstability orBPM/game. Appendlog cappedbyhealth105; don'tinfer nofault.
+Observe onlycurrentactualUI, no blindnavigation onwhite/auth/updater.
+
+HOST real32pthread/glibc2.41 productionpolicy/default/cacheoff/soft4MiB tests
+PASS: activeguestVM69943296->36388864B, 32MiBless; threadstack8->4MiB,
+soft8->4MiB, sameunlimitedhard. NotDarwinRSS/Steamperformance. Defaultcommand
+byte-identical, enabledonlyfixedpolicy, invalidgate2 refused. Newdefaultoff
+--pthread-stack-soft-limit is LinuxSteam shellonly, afterX11, bothinitial/
+normal42restart. Checkssoft/hard/readback; nohard/Darwin/explicitpthreadattributes/
+FEX/Valve/vendor changes. Cachemarker removes misleadingstackunchangedclaim.
+FullprivateBuild79 preparingrun74; NOTinstalled/devicevalidated. Finishfull
+regressions/finalMachO/signing; revalidatecurrentAirUI/user/game beforeupgrade,
+preserveanyrecoveredinteractiveUI. If eligiblefailedsession, authorizedsafeLab
+upgradepreservesdata; retainISH_JIT0/TERM/limit200000/prepared120MiB/allotherflags.
+Workspacebuild79-private.py; currentobserverobserve78-off-private.py NEWtag.
+FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS/schedulerunload.
+
+# Run73 SAME78 emitter-off live26573; comparison inconclusive, preserve
+
+REVALIDATE26573/installD31078A3-9BA2-40D7-A412-A71F41903558/receiptkernel-26573-
+1142335-625714000.log. Source4eb7b86 published. No newinstall/source/runtimebinary;
+SAMESHA40a96814..., ONLYISH_JIT=0 added, TERM=dumb/limit200000/guestcacheoff/
+headroom16MiB unchanged. Stillnormalprepare120MiB/7680pages/ownoffer. LLDB7090
+BPdeleted/normaldetachquitCOMPLETE. Actualhealth6phase7/20guests andhealth43
+phase8/138guests, activation1 butEMISSION0blocks/0segments/0bytes. Activation
+alone is NOT guestemitter use. Actualgenuineupdater/saveduserdataLoading, then
+blackX11; NOinput/game. Workspaceobserve78-off-private.py NEWtag writesrun73.
+
+Uncapped1952362B log131MMAP_FAILURE/0guestfault observed. First2MiBsharedfile
+original+fullRO/private/anon fail12;16KiB succeeds; releaseown16MiB thenfullnew
+sharedmap/cleanup succeeds, originalerror preserved. This is NOTUIrepair or
+proofnativeemittercause; A/B INCONCLUSIVE because native allocation patterns/
+failures differ. No roleinference fromhistoricPIDnumber matches, no suppression.
+
+NEXT keepthissession while HOST-only genuineglibc default-stack softlimit
+comparison is prepared. Need peakguestVM/realstacksize/hard-limit/function proof
+before ANY newAirparameter/restart. DoNOTblindlowerstack/patchmmap/enablePIC;
+no broadsmallPROT_NONE lazy change withoutmremap/signal correctness. On freshUI
+observe ONLYknownnavigation ifactualdesktopappears; preserveanynewuser/game.
+
+Old26470 endednormally after freshblackframe719/CLI1/noPlay/identity. Main/
+allworkingapps/phone/auth/games/saves/FEX/Valve/vendor preserved. CLIonlyNEVER
+Macunlock/credentialGuardtrustautomation/security/CodexDB/lockchanges. Fullgoal
+ACTIVE/bridge125NOTgame/noSTABLE_SUCCESS/schedulerunload. Rawartifactsprivate,
+hashesEVIDENCE; scoped signedoffprogress onlyexperimentbranch allowedhours.
+
 # Run72 actual78 native guestfault after Library; next SAME78 ISH_JIT=0
 
 Revalidate current26470/installD31078A3-9BA2-40D7-A412-A71F41903558/receipt

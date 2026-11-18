@@ -359,7 +359,7 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
         current->files->files[2] = fd_retain(output);
     }
 #if IDECK_LAB_PTHREAD_STACK_CACHE_OFF && IDECK_LAB_NATIVE_LOG
-    if(frontend)ideck_native_log_line("IDECK_GUEST_GLIBC_POLICY_V1 stack_cache_off=1 retained_restart=0 requested_only=1 stack_size_changed=0");
+    if(frontend)ideck_native_log_line("IDECK_GUEST_GLIBC_POLICY_V1 stack_cache_off=1 retained_restart=0 requested_only=1");
 #endif
     atomic_store(&phase, 6);
     if ((err = do_execve(program, distro_probe || frontend || dependencies || tool_probe ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
