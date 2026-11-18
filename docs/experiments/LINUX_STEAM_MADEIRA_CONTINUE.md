@@ -1,3 +1,37 @@
+# Run76 ACTUAL81 Air27711/updater; boundedpread effect PENDING
+
+REVALIDATE27711/installF6A1A1A0-96AF-4AE1-8741-54FEBE61E072/receiptkernel-27711-
+1158218-211890000.log. Build81signedSHA3b196e64..., MachOUUIDBC97841B-CB98-
+3615-B94B-1BFBECA1757E. Sourceparent7e41ff0; pending5sourcefiles+docs inspectHEAD.
+ONLYnew --bounded-regular-pread: privatecopiedsys_preadregularrealbackend/
+request>64KiB<=16MiB/nonmemfd/validranges, one64KiBscratch. Partialprogress/
+EOF/errors visible, no newallocation/backendfailure retry orfakebytes/checkpatch.
+SameISH_JIT0/TERM/limit200000/soft4MiB/cacheoff/8waitframes/headroom16MiB/
+prepared120MiB7680pages/allother80flags. LLDB42160 normaldetachquitCOMPLETE.
+Health3phase7/20guests/zeroemission/CLI0/noPlay, actualUIlarge-readresult PENDING.
+Workspaceobserve81-private.py NEWtag ->run76; noactiveLLDB. Keepcurrentalive.
+
+FullXcode27nativeobjects/finalpackage/actualsignedpread->64KiBhelper/copy/cleanup/
+logger/noHOSTinject/otherprioractualcalls/deepstrict/textPASS. HOST34realPTE/fd/
+regularpread cases ASanUBSanWerror: original5170447Bread forcedallocrefusal
+ENOMEM/0backend; candidatefullcorrectbytes/79backends/64KiBpeak/onealloc+free.
+Independentbackendrefusal sameerrno, no claimactualAirfailuresiteproven. EOF/
+short/partialerrors/offset/refcounts/cleanup/pipe/actualmemfdexclusion PASS.
+PrivateHOSTv1missingprototypefixed, finalv4; allnegativeartifactsretained.
+
+InstallCLI81timedout120sexit2; no blindreinstall. Actualappsreadback81/F6A1A1A0/
+containeraccessible plusprocessesnone; launchedTHATinstalledpackagewithout
+terminate-existing. Priorfailed80exact27183/black477/CLI1/noPlay normallyended.
+DoNOTtargetoldpid. Source75actual8callers exposedFontServiceThread.MatchFamilyName
+wait and earlierBlinkDiskDataAllocator.DoRead pread5170447ENOMEM->PCHECK212;
+causalitybetweenfailureandfontreplyunknown.80hadlatermemoryguardsrefuse3/4,
+notfixedby34HOSTtests. NEXTlet81updater/normal42restart complete; boundednative
+logmarker IDECK_BOUNDED_REGULAR_PREAD_V1 actualrequested/fullresult/backend_error/
+copy_failed; comparefirstfaultandknownactualUI. NavigateONLYactualdesktop,
+no blindblack/authinput. FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS/unload.
+CLIonlyNEVERMacunlock/credentialsGuardtrustautomation/security/lock/CodexDB/
+FEX/Valve/main/otherworktree/app/auth/game/savechanges.
+
 # Run75 ACTUAL80 eightcallers PASS; firstBlinkpreadENOMEM/fontwait; preserve27183
 
 REVALIDATE27183/installF2945DF6-17DF-4ACE-862A-CBF29069CAC4/receiptkernel-27183-

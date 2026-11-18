@@ -1,10 +1,9 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run75, actual Build80 on Air27183):8-frame observer ACTUALLYcaptures
-higherCEFcallers; currentdesktopchrome/blackcontent, LibraryACK1doesnotprove
-usableLibrary. Firstfataltrace differsfrom79: Blinkdiskread preadENOMEM then
-fullreadPCHECK. Mainwait uppercaller isFontServiceThread.MatchFamilyName;
-causalitybetweenfailuresUNKNOWN. Preserve27183; no stableBPM/game/return.
+Status (run76, actual Build81 on Air27711): default-off boundedregularpread
+candidate has34realHOSTcontrols/fullbuild/finalactualcalls/signingPASS; actual
+Linux/updater startup observed. ActuallargeCEFread/UIeffect PENDING. Preserve
+27711/installF6A1A1A0; no stableLibrary/BPM/game/return yet.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6775,3 +6774,45 @@ thatwrite. No approvalbypass orsecurity/Codexsettingschange. NEXT keep80live,
 isolateexact5MiBregularpread scratchENOMEM vsbackend onHOST before a bounded
 scratchcandidate; requirebytes/EOF/offset/error/cleanup/nonregular/default
 controls. FullgoalACTIVE, bridge125NOTgame, noSTABLE_SUCCESS/unload.
+
+## Run76 — bound regular pread scratch after actual BlinkreadENOMEM
+
+Parent7e41ff0published; samepinnedLinuxRunner/realregularfile sys_preadoriginal
+allocatescount+1. HOSTexplicitallocatorrefusal above1MiB reproducesoriginal
+5170447B readENOMEM with0backendcalls. Explicitbackendrefusal separately yields
+sameerrno with1backendcall; thereforedeviceerrnoalone doesNOTproveallocationsite.
+NewdefaultOFF --bounded-regular-pread usesone64KiBscratch andsequentialexplicit
+offsets ONLYrealregularbackend/>64KiB<=16MiB/validnonoverflowingaddress+offset,
+excludingmemfd/otherbackends. Allother/defaultpaths preserved. No newfailure
+retry; short/EOF/error endsread, actualpartialprogress returnedwhenappropriate,
+buffer/lock/fdrefs released. Nopayload/pathlogging/fakebytes/ValveCHECKpatch.
+Privatecopiedkernel/fs.c/archive only, base/vendor/FEX remainunchanged.
+
+HOST34cases acrossoriginal/candidate ASanUBSanWerror transformedfs+control,
+realpinnedPTE/fd/archive. Sameforcedlargeallocrefusal candidate readsALL5170447B
+in79backendcalls, scratchpeak65536B, oneallocation/onefree, exactpatternbytes.
+TestscoverEOF/short/zero/small/boundaries/oversize/negativeoffset/unmappedbuffer/
+invalidfd/pipe/actualmemfdexclusion/backendfirsterror/partiallatererror, unchanged
+descriptoroffsets+refs andcleanups. Notwholekernel sanitizer orAir/UIproof.
+Reprotools/test-bounded-pread.py PRIVATE_ARTIFACT_ROOT PRIVATE_PINNED_HOST_ARCHIVE
+NEW_PRIVATE_OUTPUT. FirstHOSTcompilemissingrealfs_preadprototype correctedusing
+existingABI declaration; negativev1 retained, finalv4evidence/hashesEVIDENCE.
+
+Full81/27nativeobjects/finalpackage/actualsignedsys_pread->helper->64KiBmalloc/
+realbackend/user_write/cleanup/limitednumericlog; HOSTinjectabsent; prior8frame/
+initial+retainedstackpolicy/deepstrict/textpreservation PASS. Privateverification
+scriptcopy accidentallychangedMachOsection80stride to81; fixedandindependently
+walked SAMEunsigned/signed80byte-sectiontext, no runtime/binarychange.
+
+Freshfailed80 exact27183/F2945DF6/blackframe477/CLI1/noPlay normallyended;
+Lab-onlydata-preserving81upgrade commandtimedout120s/exit2. DIDNOTretryinstall:
+actualappsreadbackconfirms81/F6A1A1A0-96AF-4AE1-8741-54FEBE61E072/containeraccess,
+processreadbacknoLab. LaunchedALREADYinstalled81withoutterminate-existing.
+Actual27711/MachOUUIDBC97841B-CB98-3615-B94B-1BFBECA1757E/signedSHA3b196e64...
+(fullhashEVIDENCE). LLDB42160 exactsame120MiB7680pageoffer, ownBPdeleted/normal
+detachquitcomplete. Health3phase7/20guests/zeroemission/CLI0/noPlay, genuine
+updaterstartup. Onlynewruntimebehavior isregularpread; allother80flags retained.
+NEXT preserve27711, letnormal42restart finish, verifyactuallarge-read marker
+andfirstfault/realLibrary/BPM/input. NotnewUI/game/return/stability success.
+NoSTABLE_SUCCESS/unload; no main/otherapp/phone/auth/save/FEX/Valve/vendor/
+security/lock/Codexchanges.
