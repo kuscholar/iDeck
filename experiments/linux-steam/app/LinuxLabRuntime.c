@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception */
 #include "LinuxLabRuntime.h"
+#include "GuestSteamEnvironment.h"
 #if IDECK_LAB_BLOCKED_WAIT_CALLERS
 #include "BlockedWaitCallers.h"
 #if !IDECK_LAB_NATIVE_LOG || !defined(GUEST_ARM64)
@@ -357,9 +358,12 @@ static int run(const char *root_path, int mode, const struct ideck_tool_payload 
         current->files->files[1] = output;
         current->files->files[2] = fd_retain(output);
     }
+#if IDECK_LAB_PTHREAD_STACK_CACHE_OFF && IDECK_LAB_NATIVE_LOG
+    if(frontend)ideck_native_log_line("IDECK_GUEST_GLIBC_POLICY_V1 stack_cache_off=1 retained_restart=0 requested_only=1 stack_size_changed=0");
+#endif
     atomic_store(&phase, 6);
     if ((err = do_execve(program, distro_probe || frontend || dependencies || tool_probe ? 3 : steam_probe ? 4 : compat_probe ? 3 : 1,
-                         frontend ? frontend_arguments : tool_probe ? tool_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : env)) < 0) return err;
+                         frontend ? frontend_arguments : tool_probe ? tool_args : dependencies ? dependency_args : distro_probe ? distro_args : args, compat_probe ? compat_env : frontend ? ideck_guest_steam_environment() : env)) < 0) return err;
     exit_hook = observe_exit;
     current = NULL;
     pthread_t worker;

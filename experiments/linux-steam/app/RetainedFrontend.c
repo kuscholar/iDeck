@@ -6,6 +6,10 @@
 #error Retained frontend requires explicit frontend/tool and actual lifetime providers
 #endif
 #include "LinuxLabRuntime.h"
+#include "GuestSteamEnvironment.h"
+#if IDECK_LAB_NATIVE_LOG
+#include "NativeKernelLog.h"
+#endif
 #include "NativeWorkerJoins.h"
 #include "JoinableGuests.h"
 #include "JoinedProfile.h"
@@ -42,8 +46,10 @@ static int restart_guest(void){
     for(unsigned i=0;i<4;i++){error=generic_unlinkat(AT_PWD,stale[i]);if(error&&error!=-2)return error;}
     error=create_stdio("/dev/null",MEM_MAJOR,DEV_NULL_MINOR);if(error)return error;
     const char args[]=IDECK_LINUX_STEAM_ARGS;
-    const char env[]="HOME=/root\0PATH=/usr/bin:/bin\0LANG=C\0STEAM_RUNTIME=1\0"
-        "LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/lib/aarch64-linux-gnu\0";
+    const char *env=ideck_guest_steam_environment();
+#if IDECK_LAB_PTHREAD_STACK_CACHE_OFF && IDECK_LAB_NATIVE_LOG
+    ideck_native_log_line("IDECK_GUEST_GLIBC_POLICY_V1 stack_cache_off=1 retained_restart=1 requested_only=1 stack_size_changed=0");
+#endif
     error=do_execve("/bin/sh",3,args,env);if(error)return error;
     exit_hook=observe;struct task *child=current;current=NULL;pthread_t thread;
     ideck_guest_lifetime_reserve();error=pthread_create(&thread,NULL,enter,child);

@@ -12,10 +12,10 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 63,
-  "recorded_at_utc": "2026-11-15T07:56:15.898647+00:00",
+  "latest_run": 72,
+  "recorded_at_utc": "2026-11-18T07:16:12.150933+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
-  "source_checkpoint": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
+  "source_checkpoint": "f559d757c4f65de85edd543cc5b1f35296ba32aa",
   "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
   "target": {
     "product": "iPad13,1",
@@ -15123,7 +15123,7 @@
     ],
     "updated_UTC": "2026-11-15T02:42:28.616056+00:00"
   },
-  "source_checkpoint_note": "Last published checkpoint before Run55; current scoped commit recorded by Git, not self-referential.",
+  "source_checkpoint_note": "Published parent before current Run72 changes. Each private build prepare-evidence hashes all actual dirty inputs; per-run sections and live Git HEAD are authoritative.",
   "run56": {
     "phase": "COMPLETED bounded discriminator, full goal incomplete: actual62 genuine Library/BPM/menu input, then game-detail background->white; native failure control recorded small shared success and all three larger alternativesENOMEM",
     "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -18780,7 +18780,25 @@
     "actual_preguest_reservation": "bytes16777216 prepared1 error0 payload_read0 payload_write0 fixed_address0",
     "actual_JIT_selfcheck_and_fault_setup": true,
     "actual_screen": "Genuine Updating Steam / Extracting Package",
-    "actual_headroom_release_trial": "NOT triggered/observed yet; inspect SAME session",
+    "actual_headroom_release_trial": {
+      "source_log": "workspace/native77-login-private.log",
+      "regular_shared_file_bytes": 4198400,
+      "native_page_bytes": 16384,
+      "original_errno": 12,
+      "ordinary_controls": {
+        "one_native_page_shared_RW": 0,
+        "full_shared_RO": 12,
+        "full_private_RW": 12,
+        "full_anonymous_RW": 12
+      },
+      "released_owned_reservation_bytes": 16777216,
+      "reservation_released": true,
+      "fresh_original_size_shared_RW_mapping_succeeded": true,
+      "trial_released": true,
+      "original_guest_error_preserved": true,
+      "payload_access_or_fixed_address": false,
+      "interpretation": "Supports native mapping headroom constraint; does not distinguish hole/overall native VA/other mapping resources or prove a causal UI fix"
+    },
     "Library_BPM_input_verified": false,
     "private_evidence_sha256": {
       "runtime77/evidence.json": "4c9b90f7778c7bcc8644f2f7606e480d0d3886fb02f373a49cbd8c9d8adb7107",
@@ -18793,14 +18811,430 @@
       "air77-install-private.json": "a9aaa7bd4ac80a70984b1075aa7c250ee866188e5442f06ad05203e7e834210e",
       "air77-launch-stopped-private.json": "eda7b6cea8fcba6098d89f7db2273c610a5f0e678a66e90a90ebfcb47438e0d5",
       "health-starting77b-data-private.json": "501fa7413f22dc8a67d0d4b8753f663b5e5199dea18dea6eefa303878603fc7e",
-      "screen-starting77b-private.png": "da7fbc6bf3ec19c795451537e375f4d83e488b4ff857a5268068830e1cd01ce1"
+      "screen-starting77b-private.png": "da7fbc6bf3ec19c795451537e375f4d83e488b4ff857a5268068830e1cd01ce1",
+      "health-ready77f-data-private.json": "f45a88a22057d883768643679a41f4f24d22fe6798fa24efccbc1e3c6d2c014d",
+      "screen-ready77f-private.png": "88a6fbc9aa325c3806b8b1f97b7261e01b8cc5941116ce8920ec45ba249ef761"
     },
     "private_workspace_sha256": {
       "debugger-owned-region77-v1-private.json": "cd5997ddd199af1fb5889df1f65838bd79c97ec27a8f278fbe7cd104c74d661c",
       "native77-initial-private.log": "da3ada08bf675b47383996142389a34098630365b251ba8de1ec208818ed497d",
       "va-headroom-host-final-v2/evidence.json": "a75904f103521e4a42b2e31ae82c444ce26b84b63252327058c3b65be3eada55",
       "va-headroom-hook-host-v1/evidence.json": "e4cdbf9430bdd218943e82aeeb63d937106567237a770dc11939ac889563a7b2",
-      "va-existing-probe-regression-v1/evidence.json": "4b37a59b65a9a3bbfa83f5fa92809df8f0bdc6406dbe7e07f342483cdf437730"
+      "va-existing-probe-regression-v1/evidence.json": "4b37a59b65a9a3bbfa83f5fa92809df8f0bdc6406dbe7e07f342483cdf437730",
+      "native77-login-private.log": "06bb4b8c83c2d42299b6f3bd838758251265a1f87d4967cd360cb647447bdc9d"
+    },
+    "later_UI_observation": {
+      "health148": {
+        "schema": 1,
+        "pid": 26281,
+        "build": 77,
+        "native_log": "kernel-26281-1139093-574003000.log",
+        "sequence": 148,
+        "mono_ms": 1140598594,
+        "phase": 8,
+        "initial_call_returned": true,
+        "tracked_guest_entries": 125,
+        "tracked_linux_workers": 0,
+        "footprint_valid": 1,
+        "footprint_bytes": 1987287728,
+        "cpu_valid": 1,
+        "cpu_user_us": 3065821674,
+        "cpu_system_us": 402011345,
+        "append_log_capped": true,
+        "append_log_stopped": true,
+        "file_policy": {
+          "query_status": 0,
+          "submitted": 0,
+          "completed_sequence": 0,
+          "appid": 0,
+          "status": -35,
+          "library": -1,
+          "machine": 0,
+          "diagnostic_only": true,
+          "game_launched": false
+        },
+        "cli_navigation": {
+          "sequence": 0,
+          "last_action": 9,
+          "dispatch_only": true,
+          "physical_touch_test": false
+        },
+        "cow_broker": {
+          "alloc": 3703992,
+          "release": 3677884,
+          "map_attempts": 214,
+          "map_failures": 0,
+          "unmaps": 7,
+          "live_slots": 26108,
+          "live_chunks": 207,
+          "logical_bytes": 418451456,
+          "reserved_native_bytes": 434110464,
+          "ownership_errors": 0,
+          "unmap_failures": 0,
+          "overlap_rejections": 0,
+          "capacity_refusals": 0,
+          "advice_calls": 3677877,
+          "advice_failures": 0,
+          "physical_reclaim_measured": false
+        },
+        "frame_pool": {
+          "preparations": 1,
+          "allocation_failures": 0,
+          "native_buffers": 4,
+          "native_bytes": 16384000,
+          "calls": 148,
+          "invalid": 0,
+          "exhausted": 0,
+          "live_slots": 1,
+          "peak_slots": 2,
+          "releases": 147
+        },
+        "fiber_hash_growth_failures": 0,
+        "map_pte_allocation_failures": 0,
+        "native_jit": {
+          "compiled": true,
+          "activation_status": 1,
+          "blocks": 200000,
+          "segments": 158945,
+          "code_bytes": 124991884,
+          "TXM_requested": false
+        }
+      },
+      "screen": "black X11 cursor, unchanged frame148, no Library/BPM",
+      "input_or_game_started": false,
+      "UI_stability_pass": false
+    }
+  },
+  "run72": {
+    "source_parent": "f559d757c4f65de85edd543cc5b1f35296ba32aa",
+    "hypothesis": "Unused exited glibc pthread stack caches retain guest mappings and native backing under mapping-headroom pressure; disable only that standard guest cache and compare real Steam UI/allocations",
+    "one_change": "default-off --pthread-stack-cache-off; fixed GLIBC_TUNABLES=glibc.pthread.stack_cache_size=0 in initial and retained Linux frontend environments only. Stack size/RLIMIT/kernel/FEX/Wine/native-JIT/cache capacities unchanged",
+    "supporting_primary_sources": [
+      "https://github.com/bminor/glibc/blob/glibc-2.41/manual/tunables.texi",
+      "https://github.com/bminor/glibc/blob/glibc-2.41/sysdeps/aarch64/nptl/bits/pthreadtypes-arch.h"
+    ],
+    "host_actual_glibc": {
+      "scope": "HOST real ARM64 glibc32 pthreads/default-vs-zero stack cache in isolated account-free VFS clones; actual VM maps and loader tunable. NOT Air/Steam/UI/game/capacity success",
+      "rows": [
+        {
+          "mode": "default",
+          "exit": 0,
+          "elapsed_s": 0.07455237499999967,
+          "values": {
+            "glibc": "2.41",
+            "cache_setting": "default",
+            "baseline_vm_bytes": "2273280",
+            "wave0_vm_bytes": "36122624",
+            "wave0_thread_stack_bytes": "8388608",
+            "wave1_vm_bytes": "36122624",
+            "wave1_thread_stack_bytes": "8388608",
+            "wave2_vm_bytes": "36122624",
+            "wave2_thread_stack_bytes": "8388608",
+            "wave3_vm_bytes": "36122624",
+            "wave3_thread_stack_bytes": "8388608",
+            "complete": "PASS"
+          },
+          "actual_loader_tunable": "glibc.pthread.stack_cache_size: 0x2800000 (min: 0x0, max: 0xffffffffffffffff)"
+        },
+        {
+          "mode": "disabled",
+          "exit": 0,
+          "elapsed_s": 0.14754383299999674,
+          "values": {
+            "glibc": "2.41",
+            "cache_setting": "glibc.pthread.stack_cache_size=0",
+            "baseline_vm_bytes": "2273280",
+            "wave0_vm_bytes": "2306048",
+            "wave0_thread_stack_bytes": "8388608",
+            "wave1_vm_bytes": "2306048",
+            "wave1_thread_stack_bytes": "8388608",
+            "wave2_vm_bytes": "2306048",
+            "wave2_thread_stack_bytes": "8388608",
+            "wave3_vm_bytes": "2306048",
+            "wave3_thread_stack_bytes": "8388608",
+            "complete": "PASS"
+          },
+          "actual_loader_tunable": "glibc.pthread.stack_cache_size: 0x0 (min: 0x0, max: 0xffffffffffffffff)"
+        }
+      ],
+      "source_sha256": "89084e963ca7c68cf99ec3550dd91a3cac05fa7f27b4112d757cb69fd68bc961",
+      "glibc_sha256": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+      "guest_elf_sha256": "e18f4527f1157b23c1cdc3dca4e58c2c76c92437c713ab997651a39107b7f383",
+      "host_cli_sha256": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+      "driver_sha256": "24b02b289f1a15ceb90cfd45287ca1900ccf643ce7f95075f8bd67fb548cd79f"
+    },
+    "guest_environment_contract": {
+      "scope": "HOST actual shared guest-env header bytes/default identity/one fixed entry/invalid gate refusal. NOT guest loader/Steam/on-Air effect proof",
+      "rows": [
+        {
+          "enabled": 0,
+          "entry_count": 5,
+          "bytes_sha256": "5653449b8f0e935038c470bdb719cf8f7368f9d89bc16f42c404dae3677c3eff"
+        },
+        {
+          "enabled": 1,
+          "entry_count": 6,
+          "bytes_sha256": "858539fc34c9190af372e7cb9cf85f82cc173059474e7070b637ae77428f8a00"
+        }
+      ],
+      "invalid_gate_refused": true,
+      "header_sha256": "5a95c3ad335fac17612628700f50031ef0f24ad6fc68761be1e6061ad5a0b3bb"
+    },
+    "measured_guest_mapping_reduction_bytes": 33816576,
+    "thread_stack_size_both_modes_bytes": 8388608,
+    "memory_metric_limit": "sum of own guest /proc/self/maps ranges after32 real threads; NOT Darwin RSS or on-Air/Steam improvement measurement",
+    "rejected_unimplemented_alternative": "Broadening small PROT_NONE lazy reservation eligibility would also expose unsupported metadata-only mremap and signal-reason semantics. No such kernel change made; prefer measured standard glibc setting first.",
+    "host_ps_query_limit": "Optional non-escalated ps introspection was denied; no process terminated or settings changed; host controls independently completed normally.",
+    "build": 78,
+    "Xcode": {
+      "exit_code": 0,
+      "signed": false,
+      "installed": false
+    },
+    "installed": {
+      "bundle": "com.kuschqin.ideck.freshtest",
+      "installation_uuid": "D31078A3-9BA2-40D7-A412-A71F41903558",
+      "pid_historical": 26470,
+      "native_receipt": "kernel-26470-1141058-841604000.log",
+      "MachO_uuid": "D2D3B81F-3C76-35D0-8540-BE7686F1F908",
+      "signed_sha256": "40a96814dead64f27c6370d8cbf9f5146fb4ce8aab585d926f7477a4a0ccf216",
+      "auth_games_saves_preserved": true,
+      "failed77_ended_after_fresh_black_frozen148_noCLI_noPlay_identity": true
+    },
+    "Library_BPM_game_return_stable": false,
+    "private_base": ".madeira-install/linux-steam-ipad/run72",
+    "private_workspace_sha256": {
+      "pthread-cache-host-final-v2/evidence.json": "59462b7e012e52dfddf32c5d581943ea63bef45990bb109382def01e7ee84ceb",
+      "guest-steam-env-host-v1/evidence.json": "f34212f852fc5cd8f528598e7e01e3479770c4f8fae349f4b8e48744523a494b",
+      "native78-startup-private.log": "7a7f4120f400ce9a5621adf30d6361c6c1950d90625ec2a3d17d95fec64fea79",
+      "native78-library-private.log": "05c7baa9592450b26d38ee0dead7be66eba686e5787071f71fd1808027f0a27a",
+      "air78-libc-private.so": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+      "air-before78-details-private.json": "3fdf6ef2ab06bced38fd4721e84ff93a1f88bf1755019a60f37d8e2945e5942f",
+      "debugger-owned-region78-v1-private.json": "760f78c2ad64782113c11658c1566024afe63db61eeb0ba77853388d24b42def",
+      "glibc241-tunables-private.txt": "5b68d03f2d016c469c5742e83f29924f2a906a4d668b6c5dd970ccc82ee6ca06",
+      "glibc241-aarch64-pthread-abi-private.txt": "168c2064bdab0843eb247c536489a030860055075bf099635a8eaa30b1a8930a"
+    },
+    "native_units": 27,
+    "final_link": {
+      "build": 78,
+      "binary_sha256": "51b68c5e8ba88f2e60d42c55cad7b1db5c14f1de16ea9218a135f98d0083b620",
+      "real_decoder_calls_pool": true,
+      "pool_prepare_calls_native_malloc": true,
+      "snapshot_calls_memcpy_and_immutable_NoCopy": true,
+      "controller_calls_prepare": true,
+      "scope": "Actual final MachO linkage only; NOTdeviceexecution/UI/gameproof",
+      "disassembly_sha256": {
+        "decoder": "90823f78fac97b07bb387f4132beb9ed44bc0a7f72145828e6725cabc62ae6ee",
+        "prepare": "46a65088b23ce210e44c33d10c1398dcab9b7214e6d81420647a5143a84f35ff",
+        "snapshot": "eaf04c9ecb11e314ae572a8d74fd0252134847509028929256c94a3fbc76d3b4",
+        "startup": "b39728b05e64011d9d4a8866cb6b132615025bb2bebfa6eed20bcbd4b8ff5b1e",
+        "advice": "bde0baec593aedf8c1d8b5bfe29bc3e18eb6441a8f31253b9a0fb300bdd7c8d7",
+        "resize": "f2d414bc1e3e31117728051e1749ee4d78fde46924b2c61cf82dddd53f5d32ad",
+        "insert": "9d9f226a42921787ef017ece9e5b4952946f4d64c844a973365bcc8161c375a6",
+        "jit_prepare": "1bcc6df443a4ba0c3cc92444d8c7b3ca40ca5221ca98434fa7641c93cbb76764",
+        "jit_adopt": "8f2cac9893e56435c12c5e4e0074df18b8963f3c432be9f1cc27dd572658a88f",
+        "jit_range": "361122f79ee1c2726524025676d7aa00350b12da2fcf2c6d31f9a831b1ff047b",
+        "classic": "c7490ccbbaa1efc3d32eeb6930f6e59fe875b2fa2af9becd10b7a109ac6e0e29",
+        "jit_read": "3bbb32cfb1fbf05ee82a91ac7cec9dcd701eac0deee27575716900f8fb8991cd",
+        "frontend": "1f6028d10ecda3d56be5031fbb08a0f8e951d61de65081fde6ad171fb3077e53"
+      },
+      "PTE_preflight_before_existing_unmap": true,
+      "PTE_failure_prunes_empty_metadata": true,
+      "no_HOST_allocator_injection": true,
+      "PTE_disassembly_sha256": {
+        "preflight": "85ee7800e40710c27a91f0e6bb0a00490589074fa9e123b878526a5220d5d2f7",
+        "map": "829a382e9294131fef8a5a0f1f982206236e416a34e246dd9e7a2247ada7c07f",
+        "checkednew": "675204bed38a538ba4d8c2c818670a96856edeead001f7e995fd2d90435dfb3e"
+      },
+      "actual_headroom_prepare_before_Linux": true,
+      "actual_realfs_failure_calls_independent_headroom_probe": true,
+      "host_injection_absent": true,
+      "headroom_disassembly_sha256": {
+        "headroom": "ec4888535863157f2bba01d409aea4c451d404f8c66b5366c5fc93ab04fc3c73",
+        "filecontrol": "ea0873138ca10b449b36dc0302abdded6ff3fa3586d2240c5561451f4c2cb79a"
+      },
+      "actual_initial_and_retained_guest_env_calls": true,
+      "exact_fixed_cache_key_present": true,
+      "actual_guest_header_sha256": "5a95c3ad335fac17612628700f50031ef0f24ad6fc68761be1e6061ad5a0b3bb",
+      "env_disassembly_sha256": {
+        "initialenv": "9509d3414a072c99abd6a9f37545fe6a6d98194fa0edb1f8605023102242fa71",
+        "retainedenv": "ae1df5ff7a96f62553404573f12491a281b849fa5d47a793cee78fd8d751973b"
+      }
+    },
+    "signing": {
+      "build": 78,
+      "deep_strict_pass": true,
+      "profiles": [
+        {
+          "bundle": "com.kuschqin.ideck.freshtest",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:36"
+        },
+        {
+          "bundle": "com.kuschqin.ideck.freshtest.JITHelper",
+          "device_and_certificate_match": true,
+          "expiry": "2026-11-20T04:42:34"
+        }
+      ],
+      "span2_marker_absent": true,
+      "exclusive_discard_marker_and_counter": false,
+      "original_advice_policy_requested": true,
+      "cow_and_probe_symbols": true,
+      "unsigned_sha256": "51b68c5e8ba88f2e60d42c55cad7b1db5c14f1de16ea9218a135f98d0083b620",
+      "signed_sha256": "40a96814dead64f27c6370d8cbf9f5146fb4ce8aab585d926f7477a4a0ccf216",
+      "text_SHA256": "ad396d65ac3aa88fcd4b2e64936c50c07fc0c2d48efefa62801b198ea5e10973",
+      "text_unchanged_by_signing": true,
+      "device_runtime_validated": false
+    },
+    "fresh_device": {
+      "model": "iPad Air4",
+      "product": "iPad13,1",
+      "os": "27.2",
+      "build": "24B119",
+      "architecture": "arm64e/arm64",
+      "developerMode": "enabled"
+    },
+    "actual_libc_sha256": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+    "actual_libc_matches_host_control": true,
+    "prepared_offer": {
+      "pid": 26470,
+      "image_uuid": "D2D3B81F-3C76-35D0-8540-BE7686F1F908",
+      "RX_region": 4498358272,
+      "bytes": 125829120,
+      "page_bytes": 16384,
+      "prepared_pages": 7680,
+      "RX_segments_before": 1,
+      "RX_segments_after": 1,
+      "elapsed_s": 7.0633932090000044,
+      "offer_published": true,
+      "code_executed": false,
+      "Linux_started": false,
+      "Steam_UI_validated": false,
+      "scope": "Only fresh own code arena via authorized developer debugger; native adoption/self-check and actual guest/UI still unverified"
+    },
+    "actual_health53": {
+      "schema": 1,
+      "pid": 26470,
+      "build": 78,
+      "native_log": "kernel-26470-1141058-841604000.log",
+      "sequence": 53,
+      "mono_ms": 1141636860,
+      "phase": 8,
+      "initial_call_returned": true,
+      "tracked_guest_entries": 179,
+      "tracked_linux_workers": 0,
+      "footprint_valid": 1,
+      "footprint_bytes": 2146179856,
+      "cpu_valid": 1,
+      "cpu_user_us": 1005279684,
+      "cpu_system_us": 121088375,
+      "append_log_capped": false,
+      "append_log_stopped": false,
+      "file_policy": {
+        "query_status": 0,
+        "submitted": 0,
+        "completed_sequence": 0,
+        "appid": 0,
+        "status": -35,
+        "library": -1,
+        "machine": 0,
+        "diagnostic_only": true,
+        "game_launched": false
+      },
+      "cli_navigation": {
+        "sequence": 1,
+        "last_action": 0,
+        "dispatch_only": true,
+        "physical_touch_test": false
+      },
+      "cow_broker": {
+        "alloc": 8272,
+        "release": 4800,
+        "map_attempts": 31,
+        "map_failures": 0,
+        "unmaps": 3,
+        "live_slots": 3472,
+        "live_chunks": 28,
+        "logical_bytes": 54267904,
+        "reserved_native_bytes": 58720256,
+        "ownership_errors": 0,
+        "unmap_failures": 0,
+        "overlap_rejections": 0,
+        "capacity_refusals": 0,
+        "advice_calls": 4797,
+        "advice_failures": 0,
+        "physical_reclaim_measured": false
+      },
+      "frame_pool": {
+        "preparations": 1,
+        "allocation_failures": 0,
+        "native_buffers": 4,
+        "native_bytes": 16384000,
+        "calls": 679,
+        "invalid": 0,
+        "exhausted": 0,
+        "live_slots": 1,
+        "peak_slots": 2,
+        "releases": 678
+      },
+      "fiber_hash_growth_failures": 0,
+      "map_pte_allocation_failures": 0,
+      "native_jit": {
+        "compiled": true,
+        "activation_status": 1,
+        "blocks": 200000,
+        "segments": 159719,
+        "code_bytes": 124989876,
+        "TXM_requested": false
+      }
+    },
+    "actual_policy_markers": {
+      "initial": true,
+      "retained_restart": true,
+      "scope": "constant guest environment requested, not independent per-CEF tunable readback"
+    },
+    "actual_UI": {
+      "saved_auth_desktop_chrome_seen": true,
+      "Library_event": 1,
+      "native_navigation_ack": 1,
+      "after_Library": "black X11; no interactive Library/BPM proof",
+      "game_or_return": false
+    },
+    "bounded_native_snapshot": {
+      "bytes": 2463728,
+      "sha256": "05c7baa9592450b26d38ee0dead7be66eba686e5787071f71fd1808027f0a27a",
+      "recorded_MMAP_FAILURE": 0,
+      "guest_fault_records": 29,
+      "limits": "Finite uncapped snapshot; no universal mapping-failure absence or cache-causal UI fix claim"
+    },
+    "first_guest_fault": {
+      "tid": 268,
+      "tgid": 268,
+      "PC": 3891997936,
+      "signal": 11,
+      "unmapped_read_address": 352194920569,
+      "instruction": 3107985672,
+      "owner": "actual loader map libcef.so",
+      "retained_official_ELF_sha256": "891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb",
+      "runtime36byte_pattern_unique_file_hit": 98905312,
+      "byte_verified_PC_file_offset": 98905328,
+      "ELF_VA": 98970864,
+      "candidate_load_bias": 3793027072,
+      "limit": "Code-site match against retained official ELF; not a new full on-device libcef file hash, nearest exported function name or sole-cause diagnosis"
+    },
+    "next_discriminator": "SAME78/prefix/flags/120MiB prepared region, change ONLY host ISH_JIT=0. Pinned jit_init returns before emission; actual zero attempt/segment/byte counters required. Preserve current session until fresh failure/state classification, no repeat install.",
+    "private_evidence_sha256": {
+      "runtime78/evidence.json": "866c75f9d7639bd6d251ee7f09e38cafb3cc3137bf6f805d91cd652e505ad45e",
+      "hybrid78/prepare-evidence.json": "ab36249213b77906c2f4f169cb8ac28d3bac6bdd658dfb5d0e1596d6a94a747b",
+      "hybrid78/build-result.json": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+      "final78-link-evidence-private.json": "1d67920b49b78ce1ac57db0e76248ae52d5a0116c56e2750a4adc73d48cfc2c9",
+      "sign78-evidence-private.json": "0267ee2ddcfeb4fc3ccd261ff77e79f44fd0dc3508863f7c4ce24cf2e8ff82fd",
+      "air78-install-private.json": "fc28bf5c76638adf364f658ff06b657258a2fb8a3fb74f759788af7ffc88e7cb",
+      "air78-launch-stopped-private.json": "4344e581695332bbf77c96199a89cf2718f3b4b155a449431b58f7c73021b09d",
+      "health-library78c-data-private.json": "c9381bc7e1353ff17bbf48880fc5dfdf086f1fa259d89ca640bce852a1541be5",
+      "screen-startup78b-private.png": "95889205110bb74bf535bf86c714f17fd844219c10ef59dae3540497852abe7c",
+      "screen-library78c-private.png": "798b334cd5cc9db92a34ef22ec1f884c255b3b8dee4c1d60b5752afc1951b764",
+      "library-click1/receipt.json": "952252df434f36168a84ed72e3f60c8547a27ab2c5b39f702bd816d7428032e9"
     }
   }
 }

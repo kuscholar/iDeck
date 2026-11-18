@@ -1,10 +1,10 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run71, actual Build77): same-container Air Lab installed and running,
-with a default-off native VA-headroom discriminator. Pre-guest16MiB reservation,
-Linux native JIT and genuine Steam updater are observed. Failure-time release
-comparison and interactive Library/BPM/game/return stability are NOT verified.
-Preserve live PID26281/install9FF89F76, revalidating before any action.
+Status (run72, actual Build78): guest libc exited-stack cache disabled behind a
+feature flag. Real host32-thread mapping reduction is measured; Air78 shows
+saved-auth Steam desktop but Libraryclick ACK1 returns to black. No interactive
+Library/BPM/game/return stability. Preserve/revalidate PID26470/installD31078A3;
+next discriminator is the SAME binary/VA preparation with only ISH_JIT=0.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6530,3 +6530,86 @@ NOT interactive Library/BPM or game/return. Failure-time release/control has
 not been observed yet. Preserve this active session and inspect its actual
 probe result before any additional runtime hypothesis or restart. Allrawlogs,
 screens and signing artifacts remain private; exact hashes inEVIDENCE.
+
+Run71 actual discriminator result: complete shared-file4198400B mapping failed
+with DarwinENOMEM12. All full-length ordinarycontrols (sharedRO/privateRW/
+anonymousRW) also failed12; one16KiBsharedRW succeeded. Releasing the early
+16MiB ownPROT_NONE span succeeded, after which a NEW same-size/sharedRW/file
+mapping succeeded and was immediately released. No bytes accessed orfixed/hinted
+address used, originalguesterror preserved. This supports native mapping-space
+headroom pressure but does not distinguish contiguous holes, totalnativeVA or
+other mapresources. It is a real resource-change discriminator, NOT a UI fix.
+Athealth148 native26281/frame148 remainsblack with zeroCLI/noPlay; no genuine
+Library/BPM or game/return/stability success. PreserveuntilnexttestedA/B ready.
+
+## Run72 — release unused glibc pthread stack caches
+
+Sourceparentf559d757c4f65de85edd543cc5b1f35296ba32aa. Prefer a standard, measured
+Linux userspace configuration before changing reservation semantics. Merely
+broadening smallPROT_NONE lazy mapping eligibility would expose existing
+metadata-only mremap and signal-reason gaps; no such kernel changes were made.
+Exactglibc2.41 [tunable documentation](https://github.com/bminor/glibc/blob/glibc-2.41/manual/tunables.texi)
+describes the exited-thread stack cache, default41943040B. The inspected
+[AArch64 ABI header](https://github.com/bminor/glibc/blob/glibc-2.41/sysdeps/aarch64/nptl/bits/pthreadtypes-arch.h)
+provides the opaque LP64 attribute/barrier sizes used by our own diagnostic.
+
+HOST two fresh unauthenticated fakefs clones run the SAME dynamically linked
+ARM64glibc2.41 program: four waves of8 realpthread threads, barriers, joins,
+stack-byte checks and own /proc/self/maps summaries. Actual dynamicloader
+--list-tunables reports cache0x2800000 vs0, both threadstack sizes remain8MiB.
+Aftereach wave, default guestVM36122624B vs disabled2306048B:33816576B fewer
+guest mapped ranges. Both completePASS. This is NOT measuredDarwinRSS,
+physicalreclaim, Steam responsiveness or onAir success. HostglibcSHA70fa4c4c...
+matches the prior byte-verified Air libc, but fresh target validation still
+requires deployment/runtime evidence. Originalsource root is closed/account-free
+and cloned; install throughguestVFS, no SQL editing, app/auth transfer orSteam
+hostlaunch. Originalandnew roots/private artifacts retained.
+
+New DEFAULT-OFF --pthread-stack-cache-off adds exactly
+GLIBC_TUNABLES=glibc.pthread.stack_cache_size=0 to the constant Linuxfrontend
+environment, including normalupdater restart. Nonfrontend/compatibility probes
+retain their originalenv. Sharedheader tests verify exactdefault bytes, only
+one extra fixedentry, no Darwin-env import and invalidgate refusal. Native
+policy markers explicitly say requested_only; they do NOT prove CEF honors it.
+No stack-size/RLIMIT/kernel/FEX/Wine/JIT-capacity orsecurity setting changes.
+Repro: tools/test-pthread-stack-cache.py PRIVATE_ARTIFACT_ROOT
+ STOPPED_ACCOUNT_FREE_ROOT NEW_PRIVATE_OUTPUT; tools/test-guest-steam-env.py
+ NEW_PRIVATE_OUTPUT. Nextfull78 build and actualsameAir UI/mapping comparison;
+allother77 flags retained, including once-only headroom discriminator. Keep
+77liveuntilfreshidentity/UI/state qualifies the controlled next experiment.
+
+Run72 actualAir78: full27units/Xcode/finalpackage/actualinitial+retainedenv
+calls and fixedcachekey/header hash PASS; prior pool/PTE/hash/headroom/JIT/advice
+actualcalls retained. Existing exactAir/app/cert profiles, deepstrict and
+executabletext-preservation PASS. Freshdevice is Air4/iPad13,1/iPadOS27.2(24B119).
+Copied actualpubliclibc1716616B/SHA70fa4c4c... matches realhostcachecontrol.
+This dependency match does not itself prove the Steam/CEF policy effect.
+
+Only failed77/26281 was normally ended after freshidentity/blackframe148/noCLI/
+noPlay; sameLab78upgrade retains data, installD31078A3-9BA2-40D7-A412-A71F41903558,
+PID26470 (REVALIDATE), MachOUUIDD2D3B81F-3C76-35D0-8540-BE7686F1F908. Standard
+CLI LLDB prepared fresh120MiB/7680pages/oneoffer; ownBP removed/normaldetach/quit
+51014complete. Actualhealth41 shows LinuxJITactivation1/200000attempts/realguest
+startup; initial and normal42-restart policy markers both recorded. No agent
+credentials, Guard, account transfer, FEX/Valve/vendor/security/lock changes.
+
+Actual saved-auth genuine Steam desktopchrome rendered. ONE Library event was
+sent only on that visible desktop: nativeACK1. Then physicalscreenblack; no
+interactiveLibrary/BPM. Health53 stillalive,179guests/pool679frames0errors/noPlay.
+Uncapped2463728B native snapshot has ZEROrecordedMMAP_FAILURE but29guestfault
+records, not universalabsence or proof the cache fixed all memory failures.
+Firstguest268 SIG11 atPCe7fb2cf0 reads unmapped5200740079, opcodeb9401908.
+Actual loader sayslibcef; unique36B runtime code pattern matches retainedofficial
+ELF atfile5e52ce0, PCfile5e52cf0/ELFVA5e62cf0, candidatebias e2150000. The
+reported5e55cf0 is not literal disk offset; do not use nearest exports or claim
+this invalidread proves a specific allocator/translation cause.
+
+NEXT one-variable discriminator: SAMEinstalled78/prefix/allflags and STILL
+preparethe SAME120MiB ownRXarena, but hostenv ISH_JIT=0 only. Pinnedjit_init
+returnsbeforeemission onenv_off. Require actualzeroattempt/segment/code counters
+with directELF/Steam evidence; preparedselfcheckactivation1 alone is not emitter
+use. This separates the optional native emitter from the gadget path while
+retaining its prepared VA reservation. No JIT/FEX/Valve/runtime source patch,
+PIC/stack-size/cap or second parameter change. Preserve26470 untilfreshfailure
+classification; no repeatinstall and never interrupt a new user/game session.
+FullgoalACTIVE; bridge125diagnostic; no game/return/repeatedstability success.

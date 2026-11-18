@@ -1,3 +1,38 @@
+# Run72 actual78 native guestfault after Library; next SAME78 ISH_JIT=0
+
+Revalidate current26470/installD31078A3-9BA2-40D7-A412-A71F41903558/receipt
+kernel-26470-1141058-841604000.log. Full78/27units/finalinitial+retainedguestenv/
+matchingprofiles/deepstrict/text PASS. ActualLinuxJIT and both cacheoff policy
+markers observed. ActualAirlibc1716616B/SHA70fa4c4c matches realHOST32thread
+control: guestVM33816576B less withunusedcacheoff, SAME8MiBthreadstacks; NOT
+DarwinRSS/Steamperformance. Air4/iPad13,1/27.2(24B119) refreshedNov18.
+Saved-auth realdesktopchrome thenONE Libraryclick nativeACK1 -> blackscreen,
+noLibrary/BPM/game. Snapshot2463728B uncapped has0MMAP_FAILURE/29guestfaults;
+first268/libcefPCe7fb2cf0 reads unmapped5200740079 (no solecause claim). Unique
+36Bsite matchedretainedofficialELFfile5e52ce0, notreportedbiased5e55cf0.
+Current78 same120MiBpreparedarena/200000attemptbound/JITactivation1. LLDB51014
+normaldetachquitCOMPLETE. No repeatedinput/install, no presumeddeadPID.
+
+NEXTONEdiscriminator afterfreshstate/failurecheck: SAMEsigned78 SHA40a96814...
+SAMEprefix/data/flags, stillstandardpreparethe same120MiBownRXregion, ONLY
+addhostenv ISH_JIT=0 (TERM=dumb/ISH_JIT_BLOCK_LIMIT200000 unchanged). Pinned
+jit_init returnsbeforeemission; require actualzeroattempt/segment/bytecounters
+plusrealELF/UIobservations. This does NOT patchFEX/Valve or throwaway the VA
+region, avoiding thatresourceconfound. Hostnative/interpreter basicELF controls
+alreadyqualified, realCEFstillneedsdeviceA/B. DoNOTlowerstacksize/changePIC or
+makeanotherguess whilethispending. Workspaceobserve78-private.py NEWtags writes
+run72; next runtimeA/B shoulduseNEWrun73artifactdirectory/config/receipts, not
+modifythe binary or previousartifacts. Preserve any new user/game session.
+
+Prior77/26281 endednormally onlyafterfreshblackfrozen148/noCLI/noPlay. Actual77
+headroomprobe: full4198400B file/sharedmmapENOMEM,16KiBworks/fullRO/private/anon
+fail12; releaseown16MiBPROT_NONE succeeds, newfullsharedmapping+cleanup succeeds,
+originalguesterrorunchanged. Supports native VAheadroom, NOTUIrepair/solecause.
+Sourceparentf559d75; currentRun72sourcecheckpoint pending scopedallowed-hour
+review. CLIonlyNEVERMacunlock, credentials/Guard/trustautomation/security/CodexDB/
+FEX/Valve/vendor changes. Main/allworkingapps/phone/auth/games/saves preserved.
+FullgoalACTIVE/bridge125NOTgame/noSTABLE_SUCCESS or schedulerunload.
+
 # Run71 Build77 live26281: preserve, observe headroom trial and UI
 
 Revalidate PID26281, installation9FF89F76-2D81-4E41-BBDF-759B66E71511 and receipt
