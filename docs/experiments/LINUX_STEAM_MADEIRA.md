@@ -6816,3 +6816,55 @@ NEXT preserve27711, letnormal42restart finish, verifyactuallarge-read marker
 andfirstfault/realLibrary/BPM/input. NotnewUI/game/return/stability success.
 NoSTABLE_SUCCESS/unload; no main/otherapp/phone/auth/save/FEX/Valve/vendor/
 security/lock/Codexchanges.
+
+## Run76 actual UI / Run77 wake control — 2026-11-18 07:50 EST
+
+Build81 source checkpoint031216f043c06d944c7c81c4f533d40008e8cea7 now has
+actual on-Air UI evidence, beyond process/BrowserReady: same27711/F6A1A1A0
+saved-auth desktop, Library ACK1 renders game covers/news/icons, Big Picture
+ACK2 renders genuine home, Right ACK3 visibly changes selection to Ratatan.
+After one header-pointer ACK6 dismissed Steam's art screensaver, Enter ACK7
+opens real Ratatan details (Install,1.68GB required,2.2h playtime). Private
+run76 screen-library81d/screen-bpm81e/screen-bpm81rightf/screen-detail81m plus
+health49/60/75/135; exact hashes in EVIDENCE.json. No new credentials/Guard,
+account transfer, game download, Play or launch/return. Physical touch and
+Bluetooth remain unverified. These positive interactions are not repeated
+stable cold starts or an end-to-end game cycle.
+
+Screensaver recurs and Escape/header clicks do not reliably dismiss it. Fresh
+health239 still exact81/27711/phase8/noPlay; physical screen-centerwake81n shows
+Phasmophobia art/Away. One center gesture via existing bounded shared host RFB
+control was attempted after4 protocol fixtures passed (normal/refused auth/
+no-auth-only offer/wrong dimensions). USB mux Connect to5993 refused before
+RFB auth/input; no gesture or new Steam instance, no bypass. Earlier private
+configuration-key typo occurred before a proxy started. Native viewer stayed
+alive. Host socket fixture required ordinary executor escalation; no settings
+changed. Raw session-display password kept private, never printed/published.
+
+Next single hypothesis: old fixed pointers are outside screensaver body. New
+Lab-only named wake9 uses current native RFB connection and fixed center
+move/left-down/up, with existing active-window/guest/client/touch/focus/bounds/
+350ms gates. No arbitrary coordinates/text, credential entry, Steam settings,
+security change or game-launch API. Exact extracted admission ASan/UBSan/Werror
+17 negative/10 paired actions plus actual center/masks/throttle pass; real
+numeric health writer concurrency/post-cap/refusals/gates pass. Build82 is
+being compiled privately with same81 Linux flags/rootfs and prepared-region
+policy; no install/restart until build/sign/final-link checks pass.
+
+Actual bounded-pread markers prove64KiB scratch executes and smaller full reads
+451968/262512/1606930 succeed. The first8 success cap was consumed before
+5170447, so original target success is NOT independently captured. Capped
+4194149B later native snapshot has9MMAP_FAILURE/0GUEST_FAULT; not proof of later
+fault absence or a complete capacity fix. Library/BPM positive effect is
+observed; sole causality not established by one run. Bridge still diagnostic125.
+After wake validation, configure actual Steam custom tool/shared Windows
+depots and test genuine Play capture before real Madeira handoff. Full goal
+ACTIVE; no STABLE_SUCCESS, scheduler unload, main/other app/phone/FEX/Valve edits.
+
+Run77 predeployment: actual final82 runtime/fullXcode/27nativeobjects/package/
+existingAirprofiles+cert/deepstrict/textpreservation PASS. Signed MachO contains
+new wake9 branch/3pointer calls/numeric writer bound9 and previous boundedpread/
+pool/PTE/hash/headroom/cache+softstack/8frame observer callsites. NativeKernelLog
+comment only clarified sequence0 historical initial9 afterbuild; executable
+statements unchanged. NOT installed ordevicewake proof yet. Safe authorized
+Lab-only data-preserving upgrade next, after fresh27711 identity/screen capture.

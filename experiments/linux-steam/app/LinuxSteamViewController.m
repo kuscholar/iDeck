@@ -258,7 +258,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 - (void)registerCLINavigation {
     // Explicit development-build opt-in. No text, request data, shell command,
     // credentials or native game-launch API is accepted by these notifications.
-    NSArray<NSString *> *names=@[@"library",@"big-picture",@"left",@"right",@"up",@"down",@"activate",@"back",@"page-down"];
+    NSArray<NSString *> *names=@[@"library",@"big-picture",@"left",@"right",@"up",@"down",@"activate",@"back",@"page-down",@"wake"];
     self.cliInputTokens=[NSMutableArray new];__weak typeof(self) weakSelf=self;
     for(NSUInteger i=0;i<names.count;i++){
         int token=-1;NSString *name=[@"com.kuschqin.ideck.linuxlab.test-input." stringByAppendingString:names[i]];
@@ -276,13 +276,22 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 }
 - (void)dispatchCLINavigation:(NSUInteger)action {
     NSAssert(NSThread.isMainThread,@"Lab navigation belongs to main");
-    if(action>8||!self.view.window||UIApplication.sharedApplication.applicationState!=UIApplicationStateActive||
+    if(action>9||!self.view.window||UIApplication.sharedApplication.applicationState!=UIApplicationStateActive||
        self.guestEnded||!self.acceptsFrames||!self.client||self.input.activeTouch||self.input.isFirstResponder)return;
     CGSize pixels=self.input.pixels;
     if(!isfinite(pixels.width)||!isfinite(pixels.height)||pixels.width<1||pixels.height<1||pixels.width>65535||pixels.height>65535)return;
     NSTimeInterval now=NSProcessInfo.processInfo.systemUptime;
     if(now-self.cliInputLastEvent<0.35)return;self.cliInputLastEvent=now;
-    if(action<2){
+    if(action==9){
+        // Fixed screensaver-body gesture. Inspect the real screen first; never
+        // use this on authentication, a download confirmation or an unknown UI.
+        uint16_t x=(uint16_t)((pixels.width-1)*0.5);
+        uint16_t y=(uint16_t)((pixels.height-1)*0.5);
+        self.input.lastPixel=CGPointMake(x,y);
+        [self.client pointerX:x y:y buttons:0];
+        [self.client pointerX:x y:y buttons:1];
+        [self.client pointerX:x y:y buttons:0];
+    }else if(action<2){
         // Two known desktop Steam chrome controls, in guest framebuffer space.
         // Verify the actual screen before use; never use on an authentication UI.
         CGFloat x=(action==0?0.145:0.905)*(pixels.width-1);

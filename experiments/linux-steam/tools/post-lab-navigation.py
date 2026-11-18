@@ -10,7 +10,7 @@ from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--device',required=True,help='Exact paired device ID from private run configuration')
 p.add_argument('--output',type=Path,required=True,help='New private directory on easystore')
-p.add_argument('action',choices=['library','big-picture','left','right','up','down','activate','back','page-down'])
+p.add_argument('action',choices=['library','big-picture','left','right','up','down','activate','back','page-down','wake'])
 a=p.parse_args();out=a.output.resolve()
 assert str(out).startswith('/Volumes/easystore/') and not out.exists()
 out.mkdir(mode=0o700,parents=True)

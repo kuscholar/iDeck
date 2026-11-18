@@ -1,3 +1,25 @@
+# Latest Run76 UI positive / Run77 fixed wake candidate (07:50 EST)
+
+HEAD031216f (inspect current HEAD); exact81/27711/F6A1A1A0/native receipt
+kernel-27711-1158218-211890000.log still LIVE. Actual Library and BPM home render;
+Right changes Ratatan selection; Enter opens real Ratatan details/Install1.68GB.
+Private run76 screenshots81d/e/rightf/detail81m and health49/60/75/135 hashes in
+EVIDENCE. No game installed/Play/bridge/game return; physicaltouch/Bluetooth/
+repeated stability UNVERIFIED. Keep successful current session until next build
+fully qualified. Screensaver art/Away recurs, fixed header clicks/Escape unreliable.
+Actual freshhealth239, screenshot-centerwake81n stillart/noPlay. Native CLI ACK11.
+
+Host shared RFB center control fixtures4PASS but actual USBmux5993 Connect
+refused BEFORE auth/input; do not repeat unchanged route or infer Steam crash.
+Run77/Build82 runtime/fullXcode/package/signing/finalcalls PASS, ONLY new Lab CLI fixed centerwake9
+with existing gates/throttle. Source and realhealthwriter sanitizer controlsPASS.
+Not installed/devicevalidated yet. WORK build82-private.py completed;
+revalidate process/build and finish link/sign before any authorized Lab upgrade.
+Same81 flags: ISH_JIT0/TERM/limit200000/prepared120MiB/soft4MiB/cacheoff/8callers/
+64KiBregularpread/headroom/priorguards; vendor/FEX/Valve untouched. Existing
+observe81-private.py NEWtag safe read-only; no active LLDB. After upgrade never
+reuse oldPID/receipt. No success sentinel/unload/fullgoal claim.
+
 # Run76 ACTUAL81 Air27711/updater; boundedpread effect PENDING
 
 REVALIDATE27711/installF6A1A1A0-96AF-4AE1-8741-54FEBE61E072/receiptkernel-27711-

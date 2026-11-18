@@ -60,9 +60,9 @@ static pid_t owner_pid;
 static uint64_t health_sequence;
 #if IDECK_LAB_CLI_INPUT
 static uint64_t navigation_sequence;
-static unsigned navigation_action=9; /* No dispatch yet; outside the 0..8 set. */
+static unsigned navigation_action=9; /* Historical initial value; sequence==0 means no dispatch. */
 int ideck_native_note_navigation(unsigned action){
-    if(action>8)return -EINVAL;
+    if(action>9)return -EINVAL;
     pthread_mutex_lock(&lock);
     int error=health_directory<0?-ENODEV:owner_pid!=getpid()?-EXDEV:
         navigation_sequence==UINT64_MAX?-EOVERFLOW:0;

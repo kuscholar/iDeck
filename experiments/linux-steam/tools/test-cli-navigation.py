@@ -34,14 +34,15 @@ enum {UIApplicationStateActive=0};
 @implementation Input
 @end
 static unsigned pointerEvents,keyEvents,downs,logs;
+static uint16_t lastX,lastY;static uint8_t masks[3];
 @interface Client:NSObject
 @end
 @implementation Client
-- (void)pointerX:(uint16_t)x y:(uint16_t)y buttons:(uint8_t)buttons {assert(x<1600&&y<1000);pointerEvents++;downs+=buttons==1;}
+- (void)pointerX:(uint16_t)x y:(uint16_t)y buttons:(uint8_t)buttons {assert(x<1600&&y<1000);lastX=x;lastY=y;assert(pointerEvents<3);masks[pointerEvents++]=buttons;downs+=buttons==1;}
 - (void)key:(uint32_t)key down:(BOOL)down {assert(key>=0xff00&&key<=0xffff);keyEvents++;downs+=down;}
 @end
 static void ideck_native_log_line(const char *line){assert(strstr(line,"physical_touch_test=0"));logs++;}
-static int ideck_native_note_navigation(unsigned action){assert(action<9);return 0;}
+static int ideck_native_note_navigation(unsigned action){assert(action<10);return 0;}
 @interface Control:NSObject
 @property(strong) FakeView *view;
 @property(strong) Input *input;
@@ -62,7 +63,7 @@ int main(void){@autoreleasepool{
 for(unsigned variant=0;variant<17;variant++){
  Control *c=ready();NSUInteger action=0;
  switch(variant){
- case 0:action=9;break;
+ case 0:action=10;break;
  case 1:action=NSUIntegerMax;break;
  case 2:c.view.window=nil;break;
  case 3:UIApplication.sharedApplication.applicationState=1;break;
@@ -82,13 +83,14 @@ for(unsigned variant=0;variant<17;variant++){
  }
  [c dispatchCLINavigation:action];assert(!pointerEvents&&!keyEvents&&!downs&&!logs);
 }
-for(NSUInteger action=0;action<9;action++){
+for(NSUInteger action=0;action<10;action++){
  Control *c=ready();[c dispatchCLINavigation:action];
  assert(logs==1&&downs==1);
- assert(action<2?(pointerEvents==2&&!keyEvents):(keyEvents==2&&!pointerEvents));
+ if(action==9){assert(pointerEvents==3&&!keyEvents&&lastX==799&&lastY==499);assert(masks[0]==0&&masks[1]==1&&masks[2]==0);}
+ else assert(action<2?(pointerEvents==2&&!keyEvents):(keyEvents==2&&!pointerEvents));
  [c dispatchCLINavigation:action];assert(logs==1&&downs==1); /* Immediate flood refused. */
 }
-puts("HOST exact CLI navigation admission:17 negative cases,9 paired events,throttle PASS; count-only UI/RFB stubs, NOT physical input proof");return 0;}}
+puts("HOST exact CLI navigation admission:17 negative cases,10 paired events,throttle PASS; count-only UI/RFB stubs, NOT physical input proof");return 0;}}
 '''
 (out/'control.m').write_text(fixture)
 cmd=['xcrun','clang','-fobjc-arc','-fsanitize=address,undefined','-Wall','-Wextra','-Werror',str(out/'control.m'),'-framework','Foundation','-framework','CoreGraphics','-o',str(out/'control')]
@@ -96,5 +98,5 @@ subprocess.run(cmd,check=True)
 with (out/'control.log').open('x') as log:r=subprocess.run([out/'control'],stdout=log,stderr=subprocess.STDOUT,timeout=20)
 assert not r.returncode
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-(out/'evidence.json').write_text(json.dumps({'scope':'HOST exact admission method with count-only UI/RFB stubs; NOT Darwin delivery/physical input/Steam UI proof','exit':r.returncode,'command':cmd,'negative_cases':17,'paired_actions':9,'frontend_source_sha256':sha(source),'extracted_method_sha256':hashlib.sha256(method.encode()).hexdigest(),'fixture_sha256':sha(out/'control.m'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'scope':'HOST exact admission method with count-only UI/RFB stubs; NOT Darwin delivery/physical input/Steam UI proof','exit':r.returncode,'command':cmd,'negative_cases':17,'paired_actions':10,'frontend_source_sha256':sha(source),'extracted_method_sha256':hashlib.sha256(method.encode()).hexdigest(),'fixture_sha256':sha(out/'control.m'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
 print((out/'control.log').read_text())

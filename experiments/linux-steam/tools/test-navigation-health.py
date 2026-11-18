@@ -48,7 +48,7 @@ extern void pool_control_release(void);
 #if IDECK_LAB_CLI_INPUT
 static void *writer(void *unused){
     (void)unused;
-    for(unsigned i=0;i<500;i++)assert(!ideck_native_note_navigation(i%9));
+    for(unsigned i=0;i<500;i++)assert(!ideck_native_note_navigation(i%10));
     return NULL;
 }
 #endif
@@ -63,7 +63,7 @@ int main(int argc,char **argv){
 #endif
     assert(!ideck_native_health(60,"guest-running",7,0));
 #if IDECK_LAB_CLI_INPUT
-    assert(ideck_native_note_navigation(9)==-EINVAL);
+    assert(ideck_native_note_navigation(10)==-EINVAL);
     assert(ideck_native_note_navigation(UINT32_MAX)==-EINVAL);
     pthread_t threads[8];
     for(unsigned i=0;i<8;i++)assert(!pthread_create(&threads[i],NULL,writer,NULL));
@@ -77,7 +77,7 @@ int main(int argc,char **argv){
     for(unsigned i=0;i<5000;i++)ideck_native_log_line(line);
     size_t capped=ideck_native_log_bytes();assert(capped<=IDECK_NATIVE_LOG_LIMIT);
 #if IDECK_LAB_CLI_INPUT
-    assert(!ideck_native_note_navigation(8));
+    assert(!ideck_native_note_navigation(9));
 #endif
     assert(!ideck_native_health(60,"guest-running",7,0));
     assert(ideck_native_log_bytes()==capped);
@@ -134,7 +134,7 @@ for enabled, policy, broker, snapshot,pool,hashguard,jit,pte in ((0,0,0,0,0,0,0,
     assert receipt['append_log_capped'] and receipt['append_log_stopped']
     assert receipt['tracked_guest_entries'] == 7
     if enabled:
-        assert receipt['cli_navigation'] == {'sequence': 4001, 'last_action': 8,
+        assert receipt['cli_navigation'] == {'sequence': 4001, 'last_action': 9,
                                              'dispatch_only': True, 'physical_touch_test': False}
     else:
         assert 'cli_navigation' not in receipt
