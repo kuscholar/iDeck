@@ -25,6 +25,17 @@ static void preserve_report(const char *root,unsigned wave){
     }
     assert(!ferror(input)&&count==16);assert(!fclose(input)&&!fclose(output));
 }
+#if IDECK_PROBE_LAZY_STACK
+extern _Atomic uint64_t ideck_stack_map_requests, ideck_stack_map_reserved;
+extern _Atomic uint64_t ideck_stack_map_no_hole, ideck_stack_map_metadata_failures;
+
+static void check_lazy_stack(unsigned wave) {
+    assert(atomic_load(&ideck_stack_map_requests) == wave);
+    assert(atomic_load(&ideck_stack_map_reserved) == wave);
+    assert(!atomic_load(&ideck_stack_map_no_hole));
+    assert(!atomic_load(&ideck_stack_map_metadata_failures));
+}
+#endif
 static int wave_pid, wave_status;
 static void observed_exit(struct task *task, int status) {
     if(task->pid==wave_pid)wave_status=status;
@@ -51,6 +62,9 @@ int main(int argc,char **argv) {
     assert(!ideck_linux_lab_live_guest_threads());
     struct task *init=reap();struct mm *init_mm=init->mm;
     preserve_report(argv[1],1);
+#if IDECK_PROBE_LAZY_STACK
+    check_lazy_stack(1);
+#endif
     void *init_root=init->fs;
     for(unsigned wave=2;wave<=4;wave++) {
         assert(!ideck_joinable_guests_begin_next_wave());
@@ -67,6 +81,9 @@ int main(int argc,char **argv) {
         assert(!ideck_linux_lab_live_guest_threads());
         assert(reap()==init&&init->mm==init_mm&&init->fs==init_root);
         preserve_report(argv[1],wave);
+#if IDECK_PROBE_LAZY_STACK
+        check_lazy_stack(wave);
+#endif
         struct ideck_joinable_guests_snapshot s;
         assert(!ideck_joinable_guests_snapshot(&s)&&s.all_registered_children_joined);
         printf("RETAINED_ROOT wave=%u wait_status=%d joined=%u cumulative_slots=%u same_init_root_mm=1\n",wave,wave_status,s.joined,s.slots);fflush(stdout);

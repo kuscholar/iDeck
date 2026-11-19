@@ -9,24 +9,34 @@ case "$LINUX_LAB_RETAINED_OUT" in /Volumes/easystore/*) ;; *) exit 2;; esac
 [[ ! -e "$LINUX_LAB_RETAINED_OUT" ]] || exit 2
 out="$LINUX_LAB_RETAINED_OUT";mkdir -p -m 700 "$out"
 lab="$repo/experiments/linux-steam";src="$repo/vendor/LinuxRunner";host="$LINUX_LAB_ARTIFACTS/host"
+archive="$host/libish.a"
+stack_args=(-DIDECK_PROBE_LAZY_STACK=0)
+native_sources=("$lab/tools/retained-root-control.c")
+if [[ -n "${LINUX_LAB_RETAINED_STACK_ARCHIVE:-}" ]]; then
+    archive="$LINUX_LAB_RETAINED_STACK_ARCHIVE"
+    [[ "$archive" = /Volumes/easystore/* && -f "$archive" ]] || exit 2
+    stack_args=(-DIDECK_PROBE_LAZY_STACK=1)
+    native_sources+=("$lab/app/NativeKernelLog.c" "$lab/app/SharedFileReserve.c")
+fi
 for mode in default enabled;do
     flags=(-DIDECK_LAB_GUEST_WAVES=0)
     [[ $mode != enabled ]] || flags=(-DIDECK_LAB_GUEST_WAVES=1)
     xcrun clang -fsanitize=address,undefined -DIDECK_JOIN_GUEST_CAPACITY=2 "${flags[@]}" -Wall -Wextra -Werror -I "$lab/app" \
         "$lab/app/JoinableGuests.c" "$lab/tests/guest-waves-test.c" -o "$out/gates-$mode"
 done
-python3 "$lab/tools/build-guest-lifetime.py" "$src" "$host" "$host/libish.a" "$out/guest" --sanitize --join-guests --guest-waves
+python3 "$lab/tools/build-guest-lifetime.py" "$src" "$host" "$archive" "$out/guest" --sanitize --join-guests --guest-waves
 xcrun clang -fsanitize=address,undefined -DGUEST_ARM64=1 -DENGINE_ASBESTOS=1 -DLOG_HANDLER_DPRINTF=1 -DISH_INTERNAL=1 -DIDECK_LAB_GUEST_LIFETIME=1 \
     -I "$src" -I "$host" -I "$lab/app" -Wall -Wextra -Werror -Wno-unused-parameter \
-    "$lab/app/LinuxLabRuntime.c" "$lab/app/LabDeviceFS.c" "$lab/app/LabBridge.c" "$lab/app/LaunchProtocol.c" "$lab/tools/retained-root-control.c" \
-    "$out/guest/libish.a" -L "$host" -lish_emu -lfakefs -lsqlite3 -o "$out/control"
+    "$lab/app/LinuxLabRuntime.c" "$lab/app/LabDeviceFS.c" "$lab/app/LabBridge.c" "$lab/app/LaunchProtocol.c" \
+    "${stack_args[@]}" "${native_sources[@]}" "$out/guest/libish.a" -L "$host" -lish_emu -lfakefs -lsqlite3 -o "$out/control"
 mkdir "$out/root"
 xcrun clang --target=aarch64-linux-gnu --ld-path="$LD_LLD" -nostdlib -static -ffreestanding -fno-builtin -fno-stack-protector -O2 -Wall -Wextra -Werror \
-    "$lab/guest/probe.c" "$lab/guest/clone.S" -Wl,-e,_start -o "$out/root/probe"
+    "${stack_args[@]}" "$lab/guest/probe.c" "$lab/guest/clone.S" -Wl,-e,_start -o "$out/root/probe"
 python3 - "$out" <<'PY'
 from pathlib import Path
-import hashlib,json,subprocess,sys,time
+import hashlib,json,os,subprocess,sys,time
 out=Path(sys.argv[1]);start=time.monotonic()
+stack=bool(os.environ.get('LINUX_LAB_RETAINED_STACK_ARCHIVE'))
 for mode in ('default','enabled'):
     with (out/f'gates-{mode}.log').open('xb') as log:
         gate=subprocess.run([str(out/f'gates-{mode}')],stdout=log,stderr=log,timeout=10)
@@ -40,9 +50,11 @@ reports={}
 for wave in range(1,5):
     data=(out/f'root/wave-{wave}-results.txt').read_bytes();lines=data.decode().splitlines()
     assert len(lines)==16 and all(x.endswith('=PASS') for x in lines)
+    expected='lazy-stack-guard-thread-futex=PASS' if stack else 'thread-futex=PASS'
+    assert expected in lines, (wave, expected)
     reports[str(wave)]=dict(checks=len(lines),sha256=hashlib.sha256(data).hexdigest())
 (out/'evidence.json').write_text(json.dumps(dict(scope='HOST retained root FOUR actual ARM64 ELF waves; NOT Steam/Wine/App/iPad or safe handoff',
- status=r.returncode,elapsed_seconds=round(time.monotonic()-start,3),gate_modes=['default','enabled'],rows=rows,per_wave_reports=reports,
+ exact_lazy_stack_counts_verified=stack,status=r.returncode,elapsed_seconds=round(time.monotonic()-start,3),gate_modes=['default','enabled'],rows=rows,per_wave_reports=reports,
  control_sha256=hashlib.sha256((out/'control').read_bytes()).hexdigest(),log_sha256=hashlib.sha256(text.encode()).hexdigest()),indent=2)+'\n')
 print('HOST retained root/init/mm + four real ARM64 ELF waves PASS, original one-shot API unchanged')
 PY

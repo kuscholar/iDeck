@@ -19,7 +19,9 @@ static void report(const char *name, int pass) {
     if (!pass) failures++;
 }
 static volatile int child_done;
+#if !IDECK_PROBE_LAZY_STACK
 static char stack[65536] __attribute__((aligned(16)));
+#endif
 extern long probe_clone(long flags, void *stack, void (*entry)(void));
 static void thread(void) {
     __atomic_store_n(&child_done, 1, __ATOMIC_RELEASE);
@@ -71,13 +73,26 @@ void _start(void) {
     report("ipv4-socket", sock >= 0);
     if (sock >= 0) call(57, sock, 0, 0, 0, 0, 0);
     /* CLONE_VM|FS|FILES|SIGHAND|THREAD|SYSVSEM; no libc/TLS in this fixture. */
+#if IDECK_PROBE_LAZY_STACK
+    const long stack_size = 0x410000, guard = 0x10000;
+    long stack_map = call(222, 0, stack_size, 0, 0x20022, -1, 0);
+    int stack_ready = stack_map > 0 &&
+        call(226, stack_map + guard, stack_size - guard, 3, 0, 0, 0) == 0 &&
+        call(64, fd, stack_map + guard - 1, 1, 0, 0, 0) == -14;
+    long tid = stack_ready ? probe_clone(0x50f00, (void *)(stack_map + stack_size), thread) : -1;
+#else
     long tid = probe_clone(0x50f00, stack + sizeof stack, thread);
+#endif
     struct { long sec, nsec; } timeout = {2, 0};
     while (tid > 0 && !__atomic_load_n(&child_done, __ATOMIC_ACQUIRE)) {
         long r = call(98, (long)&child_done, 0, 0, (long)&timeout, 0, 0);
         if (r == -110 || (r < 0 && r != -11 && r != -4)) break;
     }
+#if IDECK_PROBE_LAZY_STACK
+    report("lazy-stack-guard-thread-futex", tid > 0 && child_done == 1);
+#else
     report("thread-futex", tid > 0 && child_done == 1);
+#endif
     static struct ideck_launch_request request = {
         .magic=IDECK_LAUNCH_MAGIC, .version=IDECK_LAUNCH_VERSION, .appid=480,
         .verb=1, .argc=1, .argument_bytes=sizeof(IDECK_LAUNCH_ROOT "Control/control.exe"),

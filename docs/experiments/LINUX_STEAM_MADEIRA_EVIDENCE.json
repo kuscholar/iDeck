@@ -13,7 +13,7 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": 83,
-  "recorded_at_utc": "2026-11-19T05:50:33.824613+00:00",
+  "recorded_at_utc": "2026-11-19T05:56:28.544564+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "9733746228f405670734b80b7b1c1964080ea84a",
   "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -22142,6 +22142,36 @@
         "path": "run83/screen-currentVisible-private.png",
         "sha256": "6d69eb1db15f8d151f7c4b855fc3e01bae67804f10f65f9b210055e979c561d9",
         "bytes": 2025140
+      },
+      {
+        "path": "run83/retained-repro-v2-default/evidence.json",
+        "sha256": "47976f51e47556d8267f2a2892f7be950128403f02ea557014a67c4405dcb4f8",
+        "bytes": 1215
+      },
+      {
+        "path": "run83/retained-repro-v2-stack/evidence.json",
+        "sha256": "fd0f0d5bd61a3f7efd529f6c6c0556297ef58350837585e65181987a022e7d69",
+        "bytes": 1213
+      },
+      {
+        "path": "run83/health-afterHostWaves-data-private.json",
+        "sha256": "add021b02065625fe2f61d83f6a874503ec5361ad5513f37000552393cb8f73e",
+        "bytes": 1701
+      },
+      {
+        "path": "run83/screen-afterHostWaves-private.png",
+        "sha256": "7092ec4a219dd696e2314d29f6cdee9ac859b1d230214019ecca300cd56a0953",
+        "bytes": 1989531
+      },
+      {
+        "path": "run83/health-escapeSettled-data-private.json",
+        "sha256": "ae11a087bb9ec16d3bbcf036c6d5f5335c17266acb6e30b1e2fd438789ce66c7",
+        "bytes": 1701
+      },
+      {
+        "path": "run83/screen-escapeSettled-private.png",
+        "sha256": "339255b83e7526eebc359b0d43d702513b7cdee7f9a35cb56034f4c75dc90bf8",
+        "bytes": 1142798
       }
     ],
     "goal_complete": false,
@@ -22226,6 +22256,21 @@
     "independent_host_verification": {
       "Dock": "Actual manifest and option parser, request staging and single-slot rejection PASS with owned fixtures.",
       "Wine": "Actual initial pthread/TLS join and failure paths PASS on host. Existing server join plus initial join alone does not prove all Wine children/FEX/rendering quiescent."
+    },
+    "retained_stack_regression": {
+      "default_and_stack_modes": "PASS; four real ARM64 ELF executions each, using existing join/reap and same init/root/mm. Stack mode sent exact guarded MAP_STACK and created a thread reaching futex. Per-wave eligible/accepted counts were 1, 2, 3 and 4. No Air game or Wine handoff proof.",
+      "current_Air": {
+        "sequence": 175,
+        "frame_calls": 914,
+        "lazy_stack": {
+          "requests": 223,
+          "reserved": 223,
+          "no_hole": 0,
+          "metadata_failures": 0
+        },
+        "Play_requests": 0,
+        "visual": "rotating Steam screensaver art after settled Escape, same PID. No new install confirmation."
+      }
     }
   }
 }

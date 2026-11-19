@@ -1,3 +1,29 @@
+## Run83 continuation — repeated ARM64 stack regression
+
+The same Air Lab86 PID 29952 still renders Steam screensaver artwork. Escape
+was acknowledged as Lab event 11. The artwork continued to rotate after the
+settling interval. Latest health 175 shows 914 frame calls, 223 successful
+guarded stack reservations in 223 requests, and zero Play requests. A
+physical wake tap is still the device test boundary. No installer or terms
+screen is visible.
+
+The opt-in retained-root regression now runs the exact guarded stack
+shape through a real ARM64 ELF on the current host archive. Default and
+opt-in modes each pass four waves with 16 assertions per wave. In the
+opt-in mode the stack has a 64 KiB inaccessible guard, protection for the
+usable stack, and a new thread that runs through the guest clone/futex path.
+Each wave was joined and reaped with the same init/root/mm. Host counts
+confirm exactly one additional eligible and successful reservation per wave,
+with zero reservation failures. The harness default still exercises the
+ordinary ELF fixture. A first default run caught macOS Bash treating an empty
+array as unbound; both modes passed after correcting that harness issue.
+
+Reproduce using the earlier retained-root command and a fresh private output.
+Add `LINUX_LAB_RETAINED_STACK_ARCHIVE` pointing to the prepared host
+`run83/stack-host-v1/libish.a` to select the new case. Raw fixture output and
+device captures stay private. Host results do not establish an Air game
+handoff or a return to Steam. Keep the current Air session available.
+
 ## Run83 follow-up — Steam screensaver transition and handoff controls
 
 The brief black view during idle transitioned to Steam artwork in the same
