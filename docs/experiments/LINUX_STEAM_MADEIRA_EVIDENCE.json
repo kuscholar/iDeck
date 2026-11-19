@@ -22326,6 +22326,111 @@
           "bytes": 1307
         }
       ]
+    },
+    "wineserver_join_receipt": {
+      "source_base": "877786ba7bbb7e79c541f6bfe2fcbb476089a3a0",
+      "live_Air": {
+        "build": 86,
+        "pid": 29952,
+        "sequence": 248,
+        "frame_calls": 1279,
+        "play_requests": 0,
+        "screen_pair": "Genuine Ratatan screensaver art at sequence 220, black loading transition at sequence 248."
+      },
+      "change": "Observe the real pthread_join result in the existing private server stop path. Distinguish no handle, success and failure, bound to the current initial Wine pthread generation.",
+      "host": "Three ASan/UBSan modes passed. Exact copied stop awaits a real owned pthread; fixture exercises no handle and nonzero real self-join refusal. Previous test failed because Darwin did not guarantee EDEADLK here. Full ARM64 iOS bridge objects also compiled.",
+      "candidate": {
+        "build": 87,
+        "binary_sha256": "22d99fbb1507f0bf24d7961fe32d47d2c5a6e338c61d69bab2b431759a6043e5",
+        "stop_calls": [
+          "10000438c:\tcc f4 8f 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "_ideck_lab_wine_initial_report_server_join:",
+          "10001bd98:\t49 96 8f 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "10001bda8:\t57 a2 ff 97\tbl\t_ideck_lab_wine_initial_report_server_join",
+          "10001bdf0:\t45 a2 ff 97\tbl\t_ideck_lab_wine_initial_report_server_join",
+          "100a08b80:\tcf e2 67 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "100a0e1f0:\t33 cd 67 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "100a39154:\t5a 21 67 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "100abd7c8:\tbd 0f 65 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "100abda64:\t16 0f 65 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "100abdedc:\tf8 0d 65 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "100d97268:\t15 a9 59 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "101c306f0:\tf3 43 1f 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "1022f9044:\t9e 21 04 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "102341370:\td3 00 03 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join",
+          "102373fe0:\tb7 35 02 94\tbl\t0x1024016bc ; symbol stub for: _pthread_join"
+        ],
+        "process_calls": [
+          "_wineserver_stop:",
+          "100022e5c:\tbb e3 ff 97\tbl\t_wineserver_stop"
+        ],
+        "receipt_fields": [
+          "server_join_state",
+          "server_join_error"
+        ],
+        "signed": false,
+        "installed": false,
+        "linux_runtime": "Exactly the already qualified runtime86 archive; no Linux runtime code change in this candidate.",
+        "scope": "Private unsigned Xcode package and final Mach-O linkage, no device runtime claim."
+      },
+      "next": "Preserve live Air86. On visible idle artwork, physical touch and readback precede genuine Install, official terms if shown, shared Windows download, and actual Play. Verify Wine game and collect server, child worker, Metal, signal and storage release evidence before attempting return.",
+      "artifacts": [
+        {
+          "path": "run83/health-postWireFollow-data-private.json",
+          "sha256": "2da8a665a61ce1b7856c21d67e4b7de12548962db7a446458ecc4dd7e3fd1167",
+          "bytes": 1703
+        },
+        {
+          "path": "run83/screen-postWireFollow-private.png",
+          "sha256": "a9ad89e015faec17788234644a5078c3384f1a04d6d609a908cbb73b85c7094b",
+          "bytes": 1704089
+        },
+        {
+          "path": "run83/health-liveWhileJoinBuild-data-private.json",
+          "sha256": "3dcc6827eb9c22e015ce30ac8d6d1edc3953916972a7dbf6fec856c5946ad069",
+          "bytes": 1703
+        },
+        {
+          "path": "run83/screen-liveWhileJoinBuild-private.png",
+          "sha256": "0cf8aa75cc5ae2e223956c9208626370399745cf8db5c115b1fde173a6722eda",
+          "bytes": 71953
+        },
+        {
+          "path": "run83/wineserver-stop-host-v3/evidence.json",
+          "sha256": "3e3b9045812dbbd7ec9def8518f43e5cfd1b479478e9e338a563513d38265d19",
+          "bytes": 2523
+        },
+        {
+          "path": "run83/wineserver-stop-host-v3/WineServerBridge-ios.o",
+          "sha256": "e5faf9ca7733a4c1370aeb09ac2129a2db3d3aec3eb9ab1f1fa62001ac844f02",
+          "bytes": 9432
+        },
+        {
+          "path": "run83/wineserver-stop-host-v3/WineInitialJoin-ios.o",
+          "sha256": "4f8568cc8489725afb59aff7fa9cdbdb9682ea0087ba10c376b2fd492c90085b",
+          "bytes": 5344
+        },
+        {
+          "path": "run83/hybrid87-join/prepare-evidence.json",
+          "sha256": "07b80803826d22e89802e0b244f4d3e1d60ac171598103fecd50fe5d50c75510",
+          "bytes": 322254
+        },
+        {
+          "path": "run83/hybrid87-join/build-result.json",
+          "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "bytes": 54
+        },
+        {
+          "path": "run83/hybrid87-join/package-validation.json",
+          "sha256": "575fc5e6220f628ce9b145daf6422a3ae20f1da081436a75a84228a77356d164",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid87-join/final-server-join-link-private.json",
+          "sha256": "a4e77680b74445643877907e1897f153099c485c5be0195f76e09634bed08ed5",
+          "bytes": 1594
+        }
+      ]
     }
   }
 }

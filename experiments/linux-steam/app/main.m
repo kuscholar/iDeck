@@ -144,6 +144,7 @@ extern const char ideck_casp_order_marker[];
             @"initial_created":@(wine.initial_created),@"initial_joined":@(wine.initial_joined),
             @"create_error":@(wine.create_error),@"observer_error":@(wine.observer_error),
             @"body_result_source":@(wine.body_result_source),@"body_exit_code":@(wine.body_exit_code),
+            @"server_join_state":@(wine.server_join_state),@"server_join_error":@(wine.server_join_error),
             @"all_Wine_workers_qualified":@NO,@"game_exit_qualified":@NO};
         NSData *data=[NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
         if(!self.wineInitialReceiptURL||!data||![data writeToURL:self.wineInitialReceiptURL options:NSDataWritingAtomic error:nil])

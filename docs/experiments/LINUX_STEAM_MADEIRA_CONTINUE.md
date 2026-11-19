@@ -1,3 +1,18 @@
+## Run83 continuation — native server exit receipt
+
+Same live Air86 PID 29952 still alternates between Steam idle artwork and a
+black loading frame. Health 220 and 248 show frames 1161 and 1279 with no Play
+request. No input or restart was performed. Keep Air86 in place. The device
+boundary remains a physical tap while Steam artwork is visible, then a real
+Install and Play check only after the interactive content returns.
+
+The Lab-only native receipt now retains the actual wineserver pthread join
+status, distinct from an absent handle or a failed join. Three real host
+pthread modes passed with ASan/UBSan and the full unsigned Build87 iOS package
+linked the observer in the real bridge. Build87 reuses the exact runtime86
+Linux archive and was not installed. No game exit, all-worker drain, or
+return claim. See `run83.wineserver_join_receipt` for exact evidence.
+
 ## Run83 continuation — black transition and wake transport
 
 Current Air Build86 PID 29952 showed black with a loading indicator and

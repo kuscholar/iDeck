@@ -7318,3 +7318,46 @@ discriminator is one physical Air touch on visible Steam artwork, with
 a before/after capture. Check for the genuine Ratatan Install control only
 after the content returns. The selected library's installation,
 compatibility-tool capture, Madeira game, and repeated return remain open.
+
+## Run83 follow-up — require evidence for the native server join
+
+Air Build86 PID 29952 remained live while preparing the next candidate.
+Health 220 showed genuine rotating Ratatan artwork at 1161 frame calls.
+Health 248 showed black with the loading indicator at 1279 calls. Both
+showed 224/224 guarded stack reservations, zero Play requests, and the same
+dispatch sequence. No new input, restart, install, or account action was taken.
+
+The existing Wine stop path ignored its `pthread_join` return value and
+logged a join even on failure. The private Lab copy now captures the real
+outcome in the current initial Wine pthread's generation. Its numeric receipt
+distinguishes unknown, no handle, joined, and refusal with errno. The same
+thread owns each report and may submit it only once. Later generations reset
+the fields. Ordinary iDeck, the working app and the Wine/FEX libraries did
+not change. A successful server join establishes one prerequisite for native
+release. It does not prove game exit, all workers, GPU drain, storage, signal
+cleanup, or return to Linux.
+
+`python3 experiments/linux-steam/tools/test-wine-initial-join.py "$NEW_PRIVATE_OUT"`
+runs the actual copied server stop function with fixture globals and real
+pthreads. Three ASan/UBSan modes passed, covering the successful join, absent
+handle, actual nonzero self-join refusal and existing initial-thread/TLS
+drain and failure paths. The first self-join test incorrectly insisted on
+one errno. The passing test checks the raw nonzero result because Darwin
+returned different codes. The actual copied server bridge and observer
+also compiled as ARM64 iOS objects. That compile permits the inherited
+unused callback argument.
+
+To reproduce the candidate, run the prior Build86 `build-hybrid-app.py`
+command in a fresh output directory with build number 87. Reuse the exact
+qualified `runtime86` input and pass `--madeira-setup --observe-wine-initial-join --build`.
+The private package passed Xcode and package verification. Its final iOS
+Mach-O contains the call from the initial Wine thread to the original stop
+path, its calls to `pthread_join` and the new receipt producer, and both
+receipt keys. Build87 is unsigned and uninstalled. All commands and hashes
+are in private `run83/hybrid87-join`, `run83/wineserver-stop-host-v3` and
+the redacted `run83.wineserver_join_receipt`.
+
+Leave the live Air session in place. The next physical discriminator is
+a tap only when actual Steam idle artwork is visible, followed by checking
+the post-tap screen. Game install, genuine Play, licensed Windows execution,
+and a repeatable return remain open.

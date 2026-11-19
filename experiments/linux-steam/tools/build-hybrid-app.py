@@ -169,6 +169,8 @@ if a.madeira_setup:
         join_hook=importlib.util.module_from_spec(spec);spec.loader.exec_module(join_hook)
         bridge=native/'WineProcessBridge.m';bridge.write_text(join_hook.patched(bridge.read_text()))
         cold_sources['private-adapted/WineProcessBridge.m']=hashof(bridge)
+        server=native/'WineServerBridge.m';server.write_text(join_hook.patched_server(server.read_text()))
+        cold_sources['private-adapted/WineServerBridge.m']=hashof(server)
         build_id='C0E100000000000000000013';ref_id='C0E100000000000000000014'
         assert build_id not in text and ref_id not in text
         text=text.replace('/* End PBXBuildFile section */','\t\t'+build_id+' = {isa = PBXBuildFile; fileRef = '+ref_id+'; };\n/* End PBXBuildFile section */')

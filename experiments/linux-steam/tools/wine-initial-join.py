@@ -18,3 +18,18 @@ def patched(source):
     assert body.count(EARLY)==1
     body=body.replace(EARLY,'    if (ideck_lab_wine_initial_ready()) {\n        LOG("Lab initial Wine pthread is not reaped; preserve the current session");\n        return -1;\n    }\n\n'+EARLY)
     return '#include "WineInitialJoin.h"\n'+before+body.replace(CREATE,REPLACEMENT).replace(DETACH,'    /* Lab observer owns the initial pthread join; other Wine threads unchanged. */')
+
+def patched_server(source):
+    # Preserve ordinary control flow and add only the actual join outcome.
+    before, stop = source.split("void wineserver_stop(void) {", 1)
+    join = '        pthread_join(t, NULL);'
+    finished = '        wine_log_msg("Wineserver thread joined");\n    }'
+    assert stop.count(join) == 1 and stop.count(finished) == 1, "Pinned wineserver stop contract changed"
+    stop = stop.replace(join, '''        int error = pthread_join(t, NULL);
+        (void)ideck_lab_wine_initial_report_server_join(1, error);''')
+    stop = stop.replace(finished, '''        if (!error) wine_log_msg("Wineserver thread joined");
+        else wine_log_msg("Wineserver join failed: %d", error);
+    } else {
+        (void)ideck_lab_wine_initial_report_server_join(0, 0);
+    }''')
+    return '#include "WineInitialJoin.h"\n' + before + "void wineserver_stop(void) {" + stop
