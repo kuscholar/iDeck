@@ -13,7 +13,7 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": 83,
-  "recorded_at_utc": "2026-11-19T05:27:46.770667+00:00",
+  "recorded_at_utc": "2026-11-19T05:45:00.701004+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "9733746228f405670734b80b7b1c1964080ea84a",
   "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -21953,7 +21953,7 @@
   },
   "run83": {
     "source_parent": "f7446ff982dda1b2f528099e0bcd7c58f1a7a817",
-    "phase": "Signed Build86 installed once and running retained interpreter. Initial stack reservation telemetry observed.",
+    "phase": "Actual Air86 Library, Big Picture, keyboard navigation, and game details succeeded. Install prompt not yet reached. Current session preserved.",
     "observed_failure": "Run82 first trap has guest anonymous MAP_STACK mmap ENOMEM before clone. See run82.first_fault.",
     "patch": "Default-off --lazy-stack-reservation. Only exact null hint, length 0x410000, PROT_NONE, flags 0x20022, fd -1, offset 0 uses existing private guest lazy VMA. Original address selection, guard, demand zero, guest protections and allocation accounting retained.",
     "hypothesis": "Avoid the eager contiguous Darwin VA allocation and full PTE table for that glibc stack reservation. Guest VA placement and later backing still must succeed.",
@@ -22027,10 +22027,65 @@
         "path": "run83/health-initial-data-private.json",
         "sha256": "5e4dbc64cd2c43850faa4bc930548b2e8dfac1929d103926c6b448062f7821d3",
         "bytes": 1679
+      },
+      {
+        "path": "run83/bootstrap86-first-private.txt",
+        "sha256": "b1b35ca3a81435aa7fc78b9e42426d5fadea62118ff47779ba0039f8bd991976",
+        "bytes": 169436
+      },
+      {
+        "path": "run83/bounded86-stack-private/summary-private.json",
+        "sha256": "de8e0ff98ecdc06eecd8eef8b8f837d61c64a1016eeb8f94cd50d4c47915bdb3",
+        "bytes": 43170
+      },
+      {
+        "path": "run83/bounded86-after-library-private/summary-private.json",
+        "sha256": "c415026fc913aed44aef1c621d8cb87a09a1afa41d5c10d3ba7346fc29c707fd",
+        "bytes": 16944
+      },
+      {
+        "path": "run83/screen-afterLibraryWindow-private.png",
+        "sha256": "2e88fe8220e223d4e83d7352be58eaad564beb937a89781d2d4917afb3b2ff48",
+        "bytes": 428043
+      },
+      {
+        "path": "run83/bounded86-after-library-private/6-screen-private.png",
+        "sha256": "eeceaba25caa8a5a4942ea54e0f5e50c1afc357af66ac95ce7405f48ab592c21",
+        "bytes": 1258107
+      },
+      {
+        "path": "run83/screen-bpmRightSettled-private.png",
+        "sha256": "136cf12e0a76a0c2aa9bb361423e7a83358967f125936bc85d0dc8e5d615d87e",
+        "bytes": 1540147
+      },
+      {
+        "path": "run83/screen-ratatanSettled-private.png",
+        "sha256": "38460d1e4bf2870b791b02e4e49f50d79528019afca207eb8c1f05e0cffd850b",
+        "bytes": 1529297
+      },
+      {
+        "path": "run83/screen-destinationSettled-private.png",
+        "sha256": "89a8c2c5f9cc669b047e08e1681215211b2a922a812d6d0cbbbe7448e826dd18",
+        "bytes": 1578527
+      },
+      {
+        "path": "run83/screen-wakeSettled-private.png",
+        "sha256": "a7b1fc4ee126976f65608d23c6b5f26ad2aaf65594087d9e3a1e284db0b3fc44",
+        "bytes": 1736411
+      },
+      {
+        "path": "run83/screen-canFocus-private.png",
+        "sha256": "0745e3ba21f1117b811b3944d8fa481c8e93b8507bfea4dea6624fe78ec0e4b2",
+        "bytes": 1735474
+      },
+      {
+        "path": "run83/health-canFocus-data-private.json",
+        "sha256": "0acc3a0e1c4ed34fc370a9c898a2d6084d9ec30738b82a400bb189d69f53a0a6",
+        "bytes": 1700
       }
     ],
     "goal_complete": false,
-    "next": "Finish bounded observer session 43870. Then use a single verified Library navigation if the actual Store/Friends screen is visible. Do not rerun or overlap the current device test.",
+    "next": "Preserve Air86 PID 29952. User asked to tap Ratatan Install directly after CLI keyboard path showed search instead of the installer. Continue at the isolated library destination and any user-only license prompt. No active observers.",
     "device_boot": {
       "build": 86,
       "pid": 29952,
@@ -22047,6 +22102,44 @@
     },
     "initial_phase": 7,
     "initial_guest_entries": 21,
-    "initial_Windows_game_launched": false
+    "initial_Windows_game_launched": false,
+    "verified_physical_screen": {
+      "Library": true,
+      "Big_Picture": true,
+      "CLI_RFB_game_focus_changed": true,
+      "CLI_RFB_Ratatan_details_open": true,
+      "physical_touch_verified": false,
+      "controller_verified": false,
+      "install_target_confirmed_current_run": false,
+      "game_installed": false,
+      "game_launched": false,
+      "returned_to_Steam": false
+    },
+    "last_health": {
+      "sequence": 105,
+      "lazy_stack": {
+        "requests": 220,
+        "reserved": 220,
+        "no_hole": 0,
+        "metadata_failures": 0
+      },
+      "frame_calls": 552,
+      "game_requests": 0,
+      "append_log_capped": true
+    },
+    "finite_observers": [
+      {
+        "attempted": 46,
+        "successful_native_log_samples": 45,
+        "last_health": 49,
+        "matching_faults_in_last_sample": 0
+      },
+      {
+        "attempted": 18,
+        "successful_native_log_samples": 17,
+        "last_health": 70,
+        "matching_faults_in_last_sample": 0
+      }
+    ]
   }
 }

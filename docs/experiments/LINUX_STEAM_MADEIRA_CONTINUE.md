@@ -1,3 +1,32 @@
+## Run83 Air86 Library, Big Picture and navigation verified
+
+The Air4 rendered the real Steam Store after the official updater. One
+Library click led to the actual list, covers and news. The first Big Picture
+click produced a tooltip. A repeat after the Library finished loading entered
+Big Picture. Right moved focus to Ratatan and Enter opened its details. These
+fixed Lab CLI events went through existing RFB input, with screen readback.
+Physical touch and controller tests remain pending.
+
+Health sequence 105 reports 220 successful lazy reservations on 220 matching
+stack requests, zero placement or metadata failures and zero game requests.
+Two bounded observers produced 62 successful native log copies through health
+70, with two transient copy failures. No guest fault was observed in the
+successful snapshots. The append log later capped, limiting claims about
+faults after that window.
+
+Ratatan is offered as Install, with 1.68 GB required. The Up/Enter path
+highlighted Install but displayed Steam search instead of an install
+destination. Idle artwork then covered the view. One wake moved the pointer
+and eventually restored the game details. Back was acknowledged, but search
+remained visible. The current path still needs a direct tap on the visible
+Install control from the user. If prompted, the user should choose the
+isolated `/mnt/ideck/SteamLibrary` and decide personally on any game terms.
+
+Preserve Build86 PID 29952, installation
+`6A3F5231-4CEE-4904-8743-2B76549237BA`, receipt
+`kernel-29952-1220594-27127000.log`. Both bounded observers finished.
+No game install, Play request, Madeira game or return verified. Goal active.
+
 ## Run83 Build86 installed and running on Air4
 
 Build 86 passed full Xcode build, package verification, matching Air app and
