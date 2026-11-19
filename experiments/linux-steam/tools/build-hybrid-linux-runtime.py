@@ -26,6 +26,7 @@ p.add_argument('--dock-storage',action='store_true',help='New physical drive_c l
 p.add_argument('--register-shared-library',action='store_true',help='Register the shared install location before first Steam guest, retaining prior metadata')
 p.add_argument('--retire-empty-probe',action='store_true',help='Retire only the exact empty legacy Control probe directories through Linux VFS')
 p.add_argument('--bounded-regular-pread',action='store_true',help='Default-off regularfilepread64KiB scratch, requests>64KiB<=16MiB only; preserves errors/offsets, no allocation/backend retries')
+p.add_argument('--lazy-stack-reservation',action='store_true',help='Use an existing lazy VMA for the observed private anonymous PROT_NONE MAP_STACK request')
 p.add_argument('--shared-file-reserve',action='store_true',help='Default-off16MiB owned VA for eligible shared regular files only after native ENOMEM; not a retry loop or anonymous copy')
 p.add_argument('--file-map-cleanup',action='store_true',help='Release native file backings only when pt_map rejects ownership; no cap/allocation retry')
 p.add_argument('--file-mmap-failure-probe',action='store_true',help='Lab-only shared-file ENOMEM discriminator: at most four immediately unmapped controls, original result unchanged')
@@ -57,6 +58,7 @@ assert not a.register_shared_library or a.dock_storage,'Library registration req
 assert not a.retire_empty_probe or a.register_shared_library,'Empty-probe retirement requires explicit shared-library registration'
 assert not a.stage_dock_request or a.dock_storage,'Native request staging requires explicit captured Dock storage integration'
 assert not a.native_setup_transition or a.stage_dock_request,'Native setup presentation requires explicit request staging'
+assert not a.lazy_stack_reservation or (a.fork_map_failure and a.map_pte_preflight),'Lazy stack experiment requires qualified fork and PTE handling'
 assert not a.shared_file_reserve or (a.file_map_cleanup and a.cow_backing_broker and a.map_pte_preflight),'Owned shared reserve requires qualified cleanup, broker and PTE layout'
 assert not a.shared_file_reserve or not (a.file_mmap_failure_probe or a.va_headroom_probe),'Reserve allocator and observational failure/headroom probes are mutually exclusive'
 assert not a.va_headroom_probe or a.file_mmap_failure_probe,'Headroom discriminator requires existing exact failure probe'
@@ -107,6 +109,9 @@ if a.shared_file_reserve:
     run('build-shared-file-reserve.py',src,build,kernel,out/'shared-file-reserve',
         '--real-source',out/'file-map-cleanup/real.c','--memory-source',out/'map-pte/memory.c')
     kernel=out/'shared-file-reserve/libish.a'
+if a.lazy_stack_reservation:
+    run('build-lazy-stack-map.py',src,build,kernel,out/'fork-map-failure/mmap.c',out/'lazy-stack')
+    kernel=out/'lazy-stack/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
 engine=out/'engine/libish_emu.a'
 if a.fiber_hash_growth_guard:
@@ -144,6 +149,7 @@ if a.frame_snapshot_pool:
     sources += [lab/'app/FrameSnapshotPool.m']
 if a.fiber_hash_growth_guard:flags+=['-DIDECK_LAB_FIBER_HASH_GUARD=1']
 if a.map_pte_preflight:flags+=['-DIDECK_LAB_MAP_PTE_PREFLIGHT=1']
+if a.lazy_stack_reservation:flags+=['-DIDECK_LAB_LAZY_STACK=1']
 if a.shared_file_reserve:
     flags+=['-DIDECK_LAB_SHARED_FILE_RESERVE=1']
     sources += [lab/'app/SharedFileReserve.c']
@@ -202,5 +208,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
  'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'bounded_regular_pread_enabled':a.bounded_regular_pread,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'blocked_wait_caller_frames':a.blocked_wait_frames,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'va_headroom_probe_enabled':a.va_headroom_probe,'shared_file_reserve_enabled':a.shared_file_reserve,'guest_pthread_stack_soft_limit':a.pthread_stack_soft_limit,'guest_pthread_stack_cache_off':a.pthread_stack_cache_off,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'bounded_regular_pread_enabled':a.bounded_regular_pread,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'blocked_wait_caller_frames':a.blocked_wait_frames,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'va_headroom_probe_enabled':a.va_headroom_probe,'shared_file_reserve_enabled':a.shared_file_reserve,'lazy_stack_reservation_enabled':a.lazy_stack_reservation,'guest_pthread_stack_soft_limit':a.pthread_stack_soft_limit,'guest_pthread_stack_cache_off':a.pthread_stack_cache_off,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

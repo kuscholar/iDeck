@@ -1,3 +1,49 @@
+## Run83 Build86 installed and running on Air4
+
+Build 86 passed full Xcode build, package verification, matching Air app and
+helper profile and certificate checks, deep strict signing and final signed
+Mach-O verification. The final binary dispatches guest mmap to both the
+bounded lazy path and ordinary mapper. Its SHA-256 is
+`c1baf24ffb241118393e230851a393ef4baf225ca721ee3924987e3d28bdb7f2`.
+
+The prior failed Build85 was still black, with 996 frame calls and zero game
+requests. CoreDevice confirmed its normal termination and absence before one
+same-container install. Build86 version, installation
+`6A3F5231-4CEE-4904-8743-2B76549237BA` and PID `29952` read back. The Lab
+launch uses the retained interpreter with ISH_JIT=0. Receipt
+`kernel-29952-1220594-27127000.log` matches the install. The first Air health
+record counts 9 eligible requests and 9 successful lazy reservations, with
+zero placement or metadata failures. It also shows zero game requests.
+
+Bounded observer `monitor86-stack-private.py` in private workspace session
+43870, artifacts under `run83/bounded86-stack-private`, follows startup and
+ends at the first guest fault or 480 seconds. Preserve this session. A true
+Library, BPM and game-return check remain pending.
+
+## Run83 — glibc MAP_STACK reservation discriminator
+
+Build 85 stopped at a thread-stack mapping request before clone. The requested
+size was 0x410000 bytes and protection was PROT_NONE. Build 86 adds the
+default-off `--lazy-stack-reservation` option. It routes this exact anonymous
+MAP_STACK shape through LinuxRunner's existing lazy private VMA path. The
+qualifying request retains guest address selection. Normal mappings still use
+their existing paths. Post-cap health reports request, reserved, no-hole and
+metadata-failure counts.
+
+On Mac, the base and patched Linux kernel libraries both passed real syscall
+handler tests covering guard read/write refusal, stack protection, zero-fill,
+fork isolation, partial unmap, final cleanup and excluded mapping shapes. The
+patched mmap translation unit and fixture ran with ASan/UBSan. This exercises
+the host implementation. The Air test still needs to show whether the request
+uses the new path and whether Library remains interactive.
+
+The exact copied-archive builder and host test are
+`experiments/linux-steam/tools/build-lazy-stack-map.py` and
+`experiments/linux-steam/tools/lazy-stack-map-control.c`. The run83 evidence
+record pins command and input/output hashes. Current Air85 PID 29444 remains in
+place while the new binary is qualified. Full goal stays active. The Windows
+bridge still returns diagnostic 125.
+
 ## Run82 Air85 Library result and follow-up (November 19, 00:19 EST)
 
 On the selected Air4, Build 85 retained interpreter session PID 29444 rendered

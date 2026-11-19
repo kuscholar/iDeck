@@ -12,8 +12,8 @@
   "droiddeck": "f33d5b9e09ed27d68137aba4e711f8fca9eb93e9",
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
-  "latest_run": 82,
-  "recorded_at_utc": "2026-11-19T05:20:05.108195+00:00",
+  "latest_run": 83,
+  "recorded_at_utc": "2026-11-19T05:27:46.770667+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "9733746228f405670734b80b7b1c1964080ea84a",
   "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -21950,5 +21950,103 @@
       "realfs_MMAP_FAILURE_rows": 0,
       "exact_ENOMEM_origin": "Unclassified: guest placement, contiguous native reserve, or map metadata; no fresh CEF text errno for tid368."
     }
+  },
+  "run83": {
+    "source_parent": "f7446ff982dda1b2f528099e0bcd7c58f1a7a817",
+    "phase": "Signed Build86 installed once and running retained interpreter. Initial stack reservation telemetry observed.",
+    "observed_failure": "Run82 first trap has guest anonymous MAP_STACK mmap ENOMEM before clone. See run82.first_fault.",
+    "patch": "Default-off --lazy-stack-reservation. Only exact null hint, length 0x410000, PROT_NONE, flags 0x20022, fd -1, offset 0 uses existing private guest lazy VMA. Original address selection, guard, demand zero, guest protections and allocation accounting retained.",
+    "hypothesis": "Avoid the eager contiguous Darwin VA allocation and full PTE table for that glibc stack reservation. Guest VA placement and later backing still must succeed.",
+    "host_controls": {
+      "baseline_and_candidate": "PASS with actual Linux mmap/mprotect/CoW PTE and unmap paths, guard read/write refusal, zero-fill, read/write, child byte isolation, partial unmap and ordinary mapping exclusion. ASan/UBSan enabled for fixture and patched mmap unit.",
+      "actual_iPad_coverage": false
+    },
+    "source_sha256": {
+      "tools/build-lazy-stack-map.py": "2a6a55ad3bf1228f1a7e8d898bbd01daaf9ca07f2311e93b601980414b3d3d25",
+      "tools/lazy-stack-map-control.c": "ea8db0517564426f0e768c811ebc9750b28aa4cb514b7422f4fc48e5ef480cf4",
+      "tools/build-hybrid-linux-runtime.py": "04cfe92167443608678337cbe6cdbad19de0291cea0f3c8a55ab954964c94915",
+      "app/NativeKernelLog.c": "9b43866b4b9b4d25123920493a3d9568d654dab9656324df5d29eef0ee4ce247"
+    },
+    "private_artifacts": [
+      {
+        "path": "run83/stack-host-v1/evidence.json",
+        "sha256": "d7e0bd262c91215e7673233eb268a64521dfeb68b8a950cf5907caa61f476140",
+        "bytes": 2006
+      },
+      {
+        "path": "run83/stack-host-v1/test-baseline.log",
+        "sha256": "eb3ba4ce11ff6f72428e69387a791b8874f45a32e614b1b3ac916fd189f46d1c",
+        "bytes": 68
+      },
+      {
+        "path": "run83/stack-host-v1/test-candidate.log",
+        "sha256": "eb3ba4ce11ff6f72428e69387a791b8874f45a32e614b1b3ac916fd189f46d1c",
+        "bytes": 68
+      },
+      {
+        "path": "run83/runtime86/lazy-stack/evidence.json",
+        "sha256": "a7f8cb53ccdf564015d0265cffdff5c382f062071efe187488a473685fd96038",
+        "bytes": 2436
+      },
+      {
+        "path": "run83/runtime86/evidence.json",
+        "sha256": "d7d4b597410deb1bd7d383ebb83d0422fc4166a8b31230c41888eaafe1281bd2",
+        "bytes": 105345
+      },
+      {
+        "path": "run83/hybrid86/build-result.json",
+        "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+        "bytes": 54
+      },
+      {
+        "path": "run83/package83-private.json",
+        "sha256": "d3a06144203adad30a990c3deb8a59fcd973eac7d0e9dec45db9c773baefa98c",
+        "bytes": 702
+      },
+      {
+        "path": "run83/sign86-evidence-private.json",
+        "sha256": "3943879df9348c1c09631496282fa3e084a603d9cfe18957defcce0f9f740482",
+        "bytes": 958
+      },
+      {
+        "path": "run83/final86-stack-map-link-private.json",
+        "sha256": "dad9012d189d43e7cf61df899c1f8181b5da5e44c9da785037a5a3cab41b4694",
+        "bytes": 724
+      },
+      {
+        "path": "run83/run83-session-private.json",
+        "sha256": "87d558b2692d0361dfbfa309fc3e6bde8d2d803b86a295523c2da45e8b298869",
+        "bytes": 251
+      },
+      {
+        "path": "run83/receipt-initial-data-private.json",
+        "sha256": "a33b2cb8118c6ebf0ce75d314dec12436621aaa59a1226e8d093c65e45f76d01",
+        "bytes": 313
+      },
+      {
+        "path": "run83/health-initial-data-private.json",
+        "sha256": "5e4dbc64cd2c43850faa4bc930548b2e8dfac1929d103926c6b448062f7821d3",
+        "bytes": 1679
+      }
+    ],
+    "goal_complete": false,
+    "next": "Finish bounded observer session 43870. Then use a single verified Library navigation if the actual Store/Friends screen is visible. Do not rerun or overlap the current device test.",
+    "device_boot": {
+      "build": 86,
+      "pid": 29952,
+      "installationUUID": "6A3F5231-4CEE-4904-8743-2B76549237BA",
+      "signed_binary_sha256": "c1baf24ffb241118393e230851a393ef4baf225ca721ee3924987e3d28bdb7f2",
+      "interpreter": true,
+      "device_UI_not_yet_verified": true
+    },
+    "initial_stack": {
+      "requests": 9,
+      "reserved": 9,
+      "no_hole": 0,
+      "metadata_failures": 0
+    },
+    "initial_phase": 7,
+    "initial_guest_entries": 21,
+    "initial_Windows_game_launched": false
   }
 }

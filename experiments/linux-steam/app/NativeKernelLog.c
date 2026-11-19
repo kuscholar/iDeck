@@ -14,6 +14,10 @@
 #if IDECK_LAB_NATIVE_JIT
 #include "LabNativeJIT.h"
 #endif
+#if IDECK_LAB_LAZY_STACK
+extern _Atomic uint64_t ideck_stack_map_requests, ideck_stack_map_reserved;
+extern _Atomic uint64_t ideck_stack_map_no_hole, ideck_stack_map_metadata_failures;
+#endif
 #if IDECK_LAB_MAP_PTE_PREFLIGHT
 extern _Atomic uint64_t ideck_map_pte_allocation_failures;
 #endif
@@ -128,7 +132,7 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
     valid=task_info(mach_task_self(),TASK_VM_INFO,(task_info_t)&info,&count)==KERN_SUCCESS&&count>=TASK_VM_INFO_REV1_COUNT;
     if(valid)footprint=info.phys_footprint;
 #endif
-#if IDECK_LAB_SHARED_FILE_RESERVE
+#if IDECK_LAB_SHARED_FILE_RESERVE || IDECK_LAB_LAZY_STACK
     char body[4096],temporary[160];
 #elif IDECK_LAB_COW_BROKER
     char body[3072],temporary[160];
@@ -221,6 +225,18 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
             (unsigned long long)s.capacity_refusals,(unsigned long long)s.map_failures,
             (unsigned long long)s.release_failures,(unsigned long long)s.invalid_releases,s.quarantined);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_LAZY_STACK
+    if (length > 1 && (size_t)length < sizeof body) {
+        size_t used = (size_t)length - 2;
+        int added = snprintf(body + used, sizeof body - used,
+            ",\"lazy_stack\":{\"requests\":%llu,\"reserved\":%llu,\"no_hole\":%llu,\"metadata_failures\":%llu}}\n",
+            (unsigned long long)atomic_load_explicit(&ideck_stack_map_requests, memory_order_relaxed),
+            (unsigned long long)atomic_load_explicit(&ideck_stack_map_reserved, memory_order_relaxed),
+            (unsigned long long)atomic_load_explicit(&ideck_stack_map_no_hole, memory_order_relaxed),
+            (unsigned long long)atomic_load_explicit(&ideck_stack_map_metadata_failures, memory_order_relaxed));
+        length = added < 0 || (size_t)added >= sizeof body - used ? -1 : (int)used + added;
     }
 #endif
     int n=snprintf(temporary,sizeof temporary,".%s-%llu.tmp",healthname,(unsigned long long)sequence);
