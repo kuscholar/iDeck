@@ -26,13 +26,14 @@ p.add_argument('--dock-storage',action='store_true',help='New physical drive_c l
 p.add_argument('--register-shared-library',action='store_true',help='Register the shared install location before first Steam guest, retaining prior metadata')
 p.add_argument('--retire-empty-probe',action='store_true',help='Retire only the exact empty legacy Control probe directories through Linux VFS')
 p.add_argument('--bounded-regular-pread',action='store_true',help='Default-off regularfilepread64KiB scratch, requests>64KiB<=16MiB only; preserves errors/offsets, no allocation/backend retries')
+p.add_argument('--shared-file-reserve',action='store_true',help='Default-off16MiB owned VA for eligible shared regular files only after native ENOMEM; not a retry loop or anonymous copy')
 p.add_argument('--file-map-cleanup',action='store_true',help='Release native file backings only when pt_map rejects ownership; no cap/allocation retry')
 p.add_argument('--file-mmap-failure-probe',action='store_true',help='Lab-only shared-file ENOMEM discriminator: at most four immediately unmapped controls, original result unchanged')
 p.add_argument('--fork-map-failure',action='store_true',help='Return ENOMEM on failed child page-table/reservation allocation; no capacity/retry changes')
 p.add_argument('--cow-native-group',action='store_true',help='Group compatible private anonymous CoW pages inside one native-page range; no file/shared/cap changes')
 p.add_argument('--cow-native-pages-per-group',type=int,choices=(1,2),default=1,help='Explicit CoW span experiment: two native pages may reduce backings at extra materialization cost')
 p.add_argument('--cow-backing-broker',action='store_true',help='Explicit owned dynamic chunks for private CoW only; no coarser copies, default off')
-p.add_argument('--blocked-wait-frames',type=int,choices=(4,8),default=4,help='Read-only waiter observer depth; original4 or explicit8 ABI/code frames, requires blocked-wait-callers')
+p.add_argument('--blocked-wait-frames',type=int,choices=(4,8,16),default=4,help='Read-only waiter observer depth; original4 or explicit8/16 ABI/code frames, requires blocked-wait-callers')
 p.add_argument('--blocked-wait-callers',action='store_true',help='Default-off bounded main-renderer blocked-futex existing ABI/code-only caller metadata; no synchronization changes')
 p.add_argument('--checked-frame-snapshot',action='store_true',help='Default-off checked malloc pixel copy adopted by immutable NSData; no Foundation large-copy allocation, allocationNULL stops display')
 p.add_argument('--frame-snapshot-pool',action='store_true',help='Default-off four preallocated1280x800 immutable snapshot slots; allocation/exhaustion are explicit failures, no late pixel malloc')
@@ -56,6 +57,8 @@ assert not a.register_shared_library or a.dock_storage,'Library registration req
 assert not a.retire_empty_probe or a.register_shared_library,'Empty-probe retirement requires explicit shared-library registration'
 assert not a.stage_dock_request or a.dock_storage,'Native request staging requires explicit captured Dock storage integration'
 assert not a.native_setup_transition or a.stage_dock_request,'Native setup presentation requires explicit request staging'
+assert not a.shared_file_reserve or (a.file_map_cleanup and a.cow_backing_broker and a.map_pte_preflight),'Owned shared reserve requires qualified cleanup, broker and PTE layout'
+assert not a.shared_file_reserve or not (a.file_mmap_failure_probe or a.va_headroom_probe),'Reserve allocator and observational failure/headroom probes are mutually exclusive'
 assert not a.va_headroom_probe or a.file_mmap_failure_probe,'Headroom discriminator requires existing exact failure probe'
 assert not a.file_mmap_failure_probe or a.file_map_cleanup,'File-mmap probe requires the copied qualified file-backend source'
 assert a.cow_native_pages_per_group==1 or a.cow_native_group,'Coarser CoW span requires explicit anonymous grouping'
@@ -100,6 +103,10 @@ if a.map_pte_preflight:
 if a.bounded_regular_pread:
     run('build-bounded-pread.py',src,build,kernel,out/'bounded-pread','--enabled')
     kernel=out/'bounded-pread/libish.a'
+if a.shared_file_reserve:
+    run('build-shared-file-reserve.py',src,build,kernel,out/'shared-file-reserve',
+        '--real-source',out/'file-map-cleanup/real.c','--memory-source',out/'map-pte/memory.c')
+    kernel=out/'shared-file-reserve/libish.a'
 run('build-casp-order.py',src,build,build/'libish_emu.a',out/'engine')
 engine=out/'engine/libish_emu.a'
 if a.fiber_hash_growth_guard:
@@ -137,6 +144,9 @@ if a.frame_snapshot_pool:
     sources += [lab/'app/FrameSnapshotPool.m']
 if a.fiber_hash_growth_guard:flags+=['-DIDECK_LAB_FIBER_HASH_GUARD=1']
 if a.map_pte_preflight:flags+=['-DIDECK_LAB_MAP_PTE_PREFLIGHT=1']
+if a.shared_file_reserve:
+    flags+=['-DIDECK_LAB_SHARED_FILE_RESERVE=1']
+    sources += [lab/'app/SharedFileReserve.c']
 if a.va_headroom_probe:
     flags+=['-DIDECK_LAB_VA_HEADROOM_PROBE=1']
     sources += [lab/'app/VAHeadroomProbe.c']
@@ -192,5 +202,5 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
  'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,
- 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'bounded_regular_pread_enabled':a.bounded_regular_pread,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'blocked_wait_caller_frames':a.blocked_wait_frames,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'va_headroom_probe_enabled':a.va_headroom_probe,'guest_pthread_stack_soft_limit':a.pthread_stack_soft_limit,'guest_pthread_stack_cache_off':a.pthread_stack_cache_off,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
+ 'tracked_Metal_command_boundary_enabled':a.metal_drain,'separate_realfs_library_enabled':a.shared_library,'native_launch_capture_enabled':a.capture_launch,'physical_Dock_storage_enabled':a.dock_storage,'shared_library_registration_enabled':a.register_shared_library,'empty_legacy_probe_retirement_enabled':a.retire_empty_probe,'bounded_regular_pread_enabled':a.bounded_regular_pread,'file_map_failed_transfer_cleanup_enabled':a.file_map_cleanup,'file_mmap_failure_probe_enabled':a.file_mmap_failure_probe,'fork_mapping_failure_checks_enabled':a.fork_map_failure,'anonymous_cow_native_group_enabled':a.cow_native_group,'cow_native_pages_per_group':a.cow_native_pages_per_group,'cow_backing_broker_enabled':a.cow_backing_broker,'blocked_wait_callers_enabled':a.blocked_wait_callers,'blocked_wait_caller_frames':a.blocked_wait_frames,'checked_frame_snapshot_enabled':a.checked_frame_snapshot,'frame_snapshot_pool_enabled':a.frame_snapshot_pool,'fiber_hash_growth_guard_enabled':a.fiber_hash_growth_guard,'map_pte_preflight_enabled':a.map_pte_preflight,'va_headroom_probe_enabled':a.va_headroom_probe,'shared_file_reserve_enabled':a.shared_file_reserve,'guest_pthread_stack_soft_limit':a.pthread_stack_soft_limit,'guest_pthread_stack_cache_off':a.pthread_stack_cache_off,'exclusive_private_discard_enabled':a.exclusive_private_discard,'native_dock_request_staging_enabled':a.stage_dock_request,'native_setup_transition_enabled':a.native_setup_transition,'cli_input_controls_enabled':a.cli_input_controls,'x11_window_state_enabled':a.x11_window_state,'gpu_storage_and_Wine_admission_qualified':False},indent=2)+'\n')
 print('Built namespaced Linux frontend+qualified runtime copies; no Wine or device execution')

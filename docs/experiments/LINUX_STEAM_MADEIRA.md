@@ -1,9 +1,6 @@
 # Linux Steam + Madeira on iPad: experiment log
 
-Status (run76, actual Build81 on Air27711): default-off boundedregularpread
-candidate has34realHOSTcontrols/fullbuild/finalactualcalls/signingPASS; actual
-Linux/updater startup observed. ActuallargeCEFread/UIeffect PENDING. Preserve
-27711/installF6A1A1A0; no stableLibrary/BPM/game/return yet.
+Status (Run82): Air85 renders Store and Friends. Library stalls after CEF thread-stack mmap ENOMEM. The shared-file reserve ran on device. Game launch and return remain unverified.
 Started 2026-11-06 America/New_York. Branch `experiment/linux-steam-madeira-ipad`.
 This log is the resumption point; preserve uncommitted experiments between runs.
 
@@ -6879,3 +6876,271 @@ reachedOWNpreparation, offerpublished, BPdeleted/detached/quitnormally.
 Health2phase7/21guests/zeroemission/CLI0/noPlay. No actual82UI/wake proofyet;
 letupdatercomplete, noactiveLLDB/reinstall. Fullhashes/EVIDENCE. Prior81UIpositive
 retainedasdistinctrun, notinferredfor82. FullgoalstillACTIVE.
+
+## Run77 negative repeat / Run78 unused prepared-region discriminator
+
+Same82/28066 eventually renders genuine Store/chrome, but LibraryACK1+2 do
+not establish Library selection. BPMACK3 removes desktop; lateractualX11
+all8childwindowsunmapped/focus0, nativeframe548stops/footprint715577528. Exact
+nativePIDstillalive, noPlay. Wake9neverused: itsUItest remains pending because
+thereisno screensaver/windowtowake. Thus81Library/BPMsuccessisNOTrepeatstable.
+Capped4194272Blog has1271MMAP_FAILURE/17GUEST_FAULT rows; actualCEF218132264B
+SHA891d85f... unchanged. First285/group280Chrome_ChildIOT BRK+savedebaf6800
+chain matches79CrashHungProcess, unlike80BlinkDoRead. Later353invalidread
+5200740079/CEF5e65cf0 andmappingstorm aredistinct. Nooriginalerror suppression.
+
+Firstregular4198400BRWsharedmapoffset0ENOMEM; releasingOWN16MiBreserve lets
+freshSAMEfdcontrolmap succeedandunmap, originalfailurepreserved. Priornearby
+region63557/footprint2263996936/available742270456; laterregionmax73003refutes
+a strict65536regionlimit claim. InitialVM475568947200with5MiBfootprint/111regions
+isnotphysicalRAM/FEXculpritproof. GrowingnativecopyCore7000/POSIX60 wasnot
+processdeath: exactPIDaliveandstablecappedcopylaterworks. AllprivatehashesJSON.
+
+NEXTsamebinary82, noinstall: omitunusedlinux-steam-native-jit-preparedargument
+anddeveloperarena setup whilekeepingISH_JIT0andallotherparameters/rootfs/auth.
+Actualpreparation111->15489regionsandfootprint5MiB->133MiB, yetemissionallzero.
+ExistingordinaryinterpreterpathneedsnoJIT; sourcepinnedjit_initreturnsearly,
+optionalnativeemitterfaultshimnotused. This testsunneededarena/mapoverhead,
+notwatchdogcausality orcapacityfix. Onlyafterfreshfailed28066/noPlay/windowstate
+identitynormalterminateLab, thenSAME82launchoncewithoutstartstopped/prepare.
+Requireactivation0/zeroemission/newhealth andactualLibrary/BPM/input. NoFEX/
+Valve/vendor/security/lock/main/otherapp/authchanges; noSTABLE_SUCCESS/unload.
+Outside08:00allowedGitwindow, keepnewdocsuncommitted/unpushed; continueddevice
+workauthorized. FullgoalACTIVE, bridge125stillNOTgameorreturn.
+
+Run78 actualsame82/noarena launchedPID28190, sameinstallation25CA5426.../receipt
+kernel-28190-1162536-327396000.log. Old28066freshhealth124/frame548/CLI3/noPlay/
+all8windowsunmapped/focus0plusprocessidentity beforeLab-onlynormaltermination.
+Noinstall/newbinary, no debugger/preparedarg/startstopped; ISH_JIT0same. Actual
+Linux/updaterrenders, health3/21guests/activation0/nativecounters0/noPlay. Native
+initial96regions/5392008footprint then307/16942920; priorpreparation15489/
+132941712beforeLinux. Sourceearlyjit_initenv-offdoesnotallocate/nativefault
+shimnotneededforemission0. Differentearlytimestamps, notpeakRAM/stabilityproof.
+Finite125575Bstartup0mmapfail/0guestfault, hashesJSON. NEXTpreserve28190while
+updaternormalrestart; inspectactualLibrary/BPM/input/wakebeforeanyfurtherchange.
+
+Run78 actual UI progress (11:45EST continuation, same28190 preserved): single
+LibraryACK1 eventually renders genuine40games/covers/news. BPMACK2initialblack;
+readinessduring3hgapUNOBSERVED. Freshphysicalscreenat11:41isSteamart/screensaver.
+OneNEWfixedwake9/nativeACK3dismisses tofullyrenderedBigPicturehome. RightACK4
+visiblyselectsRatatan; EnterACK5gamedetailsInstall1.68GB/2.2hplaytime; Right6/7
+Controller/gearfocuswhite. Realfunctionalityevidence, notmeredispatchACK.
+Samepidafter~3h20mstillresponds isNOTcontinuousinteractive/repeatedcoldstart/
+gamecyclestability. No download/Play/physicaltouch/Bluetooth/game/returnyet.
+CurrentgenuinegearEnter8inspectionpending; nextProperties/Compatibilityfor
+actualcustomtool thenWindowsdepots/sharedstorage/Playcapture. Keepalive.
+
+Finite1953630BLibrarylog2MMAP_FAILURE/0GUEST_FAULTonly; AudioService388 ELF
+libcef218132264B map220493720 file_backend-ENOMEM/nativeerrno0, no corresponding
+host_file_mmap/PTEfailurecounter. SourceprivatebeyondEOFanonymousbackingbranch
+possiblebutNOTsiteproof; donotclaimcapacityfixed. Laterappendlogcapped.
+Noarenaalsoomitsdebuggerattachment/nativeemitterfaultshim; OSdebugstate not
+independentlycontrolled, causalUI/peakRAMimprovementnotproven. Rawprivatehashes
+JSON; HEAD9733746/main2ac39/worktrees/origin/mountreverified11:40,nooverlapping
+hostjobs. DocsleftdirtyoutsideallowedGitwindow; fullgoalACTIVE/noSTABLE_SUCCESS.
+
+## Run78 actual Steam compatibility-tool selection and install boundary
+
+The same Air session (Build82 PID28190) rendered Ratatan Properties and the
+genuine Steam compatibility dropdown. The custom iDeck Madeira diagnostic tool
+is present and visibly selected after ACK22. This verifies actual discovery and
+selection, beyond installing a VDF. It does not verify Steam Play invocation.
+The official Install dialog then offered the shared /mnt/ideck/SteamLibrary
+(2.94GB free; Ratatan requires1.68GB). Choosing it reaches the game's official
+EULA. Human acceptance was requested and is pending. No terms were automated;
+no depot completion, launch capture, Windows game or return is claimed.
+
+The Steam artwork screensaver recurred during keyboard-only navigation. A
+center click with the cursor already centered failed; fixed motion to blank
+header restored the existing menu, later the game view. A scoped candidate
+changes only Lab action9's first motion packet to at most8px off-center, followed
+by center press/release; width below2 is refused. The source-level ASan/UBSan
+regression fails unchanged82 on missing displacement and passes the candidate,
+including repeated centered cursors, bounds, existing gates and throttle.
+Pinned RFB queues preserve button transitions, but actual repeated wake remains
+unverified. New private83 build runs separately; the live82 binary is untouched.
+Raw screenshots/tests stay private; exact hashes and boundaries are in run78
+JSON. Noon remote branch/main read-back and volume UUID pass. Changes stay dirty
+outside allowed Git hours. Next: human EULA, actual shared Windows download,
+Steam Play diagnostic capture, then real licensed Madeira handoff and return.
+
+Run79 Build83 final qualification completed: copied runtime and full Xcode
+build/package pass. The actual final iOS Mach-O contains the small wake motion
+and width guard, followed by three pointer sends with the original masks.
+Existing environment/soft-stack/pread/8-frame caller and pool/PTE/hash/headroom
+linkage checks pass. A reused verifier first expected a nonexistent signed83
+file; it was corrected to the intentionally unsigned final product and passes.
+This is a verifier-path correction, not a runtime fix. Build83 is unsigned and
+not installed; actual repeated wake remains unverified. Live82/EULA retained.
+No game/return claim, no STABLE_SUCCESS. All raw artifacts private run79, hashes
+in evidence JSON. Five scoped source/test/docs files remain dirty outside the
+allowed weekday Git window; no commit/push or unrelated worktree mutation.
+
+## Run78 later black-screen failure and Run80 same-binary recovery
+
+The user's current black-screen report was verified at13:02EST on the physical
+Air (same82/28190). An independent shared Linux RFB observer also sees black.
+One pointer-only motion arrives but does not restore content; Escape31 leaves
+black; F1 creates a white menu panel without real menu text. Thus prior genuine
+Library/BPM/tool-selection evidence remains historical initial success, while
+current stability has failed. This is not shown to be solely native Metal
+presentation or a native app crash. Native logging was already capped. Fresh
+webhelper logs show screensaver hide/close18:00:58/59UTC and resource activity
+18:04:33, insufficient for a root-cause claim. No terms or credentials automated.
+
+After saving private raw artifacts/hashes and fresh exact process/noPlay checks,
+one normal SIGTERM ended only the failed Lab28190. A later process read confirms
+absence before reopening the exact same installed82 (no upgrade/reinstall). A
+CLI option-order error64 occurred before execution; corrected ordering launches
+28690 once. Same container/rootfs/account/library state, ISH_JIT0, no debugger or
+unused arena. Actual official updater extracting is visible; health4 phase7.
+Interactive Library/BPM/EULA recovery remains pending. The83 private wake-motion
+candidate is unsigned/uninstalled and is not claimed to fix this black state.
+Current Run80 evidence is separate; main/other worktrees/apps/data intact.
+
+## Run80 reproduced transient recovery; Run81 bounded16 diagnostic
+
+The same82 recovery updater completed at18:14:11UTC and verified installation
+at18:14:20. Saved login records freshSuccess/OK18:15:13 without credentials.
+The account spinner appears, then windows briefly map and are all removed with
+focus0. A finite uncapped1119606B log contains0MMAP_FAILURE and two occurrences
+of the SAMEtid286/group281/BRK, not two independent faults. The actual current
+CEF ELF hash remains891d85f... (218132264B); unique36B instructions plus saved
+caller/precedingBL reproduce the exact prior CrashHungProcess classification.
+The8-frame main wait ends inside synchronization; the producer remains unknown.
+Later the real Store fully renders (observed13:25EST). This bounds inference:
+the first hung child does not prove an irrevocable whole-client failure or
+explain all of the old black period. One Library click then returns black;
+sequence alone does not prove click causation. No usable Library/BPM recovery.
+
+An explicit16-frame read-only observer extends the existing4default/8option.
+The helper body/checks/trylocks and no-materialization rule stay intact; only
+its bounded array/loop parameter grows. Symbolizer accepts0..15/256distinctrows
+and preserves all ambiguity. HOST42 real-PTE sanitized controls and frame15
+owned ELF matching/duplicate non-uniqueness pass. Full84 copiedruntime/Xcode/
+package, actual signed16-bound/776B helper and sampler call, prior policy
+linkages, matching existing Air/main/helper profiles and deep-strict signing/
+text preservation pass. Old black82/28690 is normally ended after fresh exact
+identity/noPlay checks; same Lab upgrade84/install0/apps84/readback/one launch
+succeeds. Actual84PID29037/install8858F329-3E17-444F-842C-67CA4AAB61B0 early
+updater/zeroJITemission only, NOT UI success. Prior fixedwake source is also
+compiled but action9 remains unexercised. No binary/security/lock/auth bypass
+or FEX/vendor change. Bounded current16capture pending; rawprivate/hashJSON.
+
+Run81 actual bounded16 result and distinct current compositor failure: initial
+300s observer ends with416callerrows/maxframe15 and finite0fault/0mmap failures;
+actual Store+Friends render. After one LibraryACK1 the central content is black.
+A second bounded observer captures firstfault at Compositor286/group279 PC
+e84ae060/ELF635e060, distinct from the prior82hung-child trap. Actual CEF hash
+is revalidated unchanged. Static code references BitmapRasterBufferProvider
+near a saved caller; no exact CHECK/source-line cause is invented.
+
+Before this firstfault two actual262144B sharedRW nativefile mappings fail
+ENOMEM. Samefd16KiB works, but262144B sharedRO/privateRW/anonymousRW controls
+fail. Releasing the owned16MiB PROT_NONE diagnostic reservation allows a fresh
+samefd262144B sharedRW map, immediately unmapped; original error is preserved.
+Nearby native available~745MB/footprint2.26GB/regions52.9k. Contiguous usable
+VA fragmentation/placement is a hypothesis, not totalRAM or a strictregioncap
+finding. Next HOST only: verify a bounded OWN-reserve sharedfile mapping
+allocator with real alias/ownership/free/capacity/failure/concurrency semantics
+before any integration. No blind retry, Valve CHECK patch or arbitrary native
+address replacement. Current84 preserved; no game/return/stability success.
+
+## Run82 — bounded owned shared-file VA reserve (2026-11-18)
+
+2026-11-18 ~17:08EST. Same HEAD9733746228f405670734b80b7b1c1964080ea84a /
+originexperiment; main2ac39 unchanged, mount UUID580CADCD-33F5-4D78-9530-
+2287615873CA verified. Git window CLOSED: scoped source/tests/docs remain dirty,
+no commit/push. Continue this active writer; no parallel researcher.
+
+Air last observed16:46: Build84/PID29037/install8858F329-3E17-444F-842C-
+67CA4AAB61B0, receiptkernel-29037-1181169-763346000.log, real header but black
+centralLibrary/noPlay/submitted0. Preserve until fresh identity+physicalscreen
+check; no old EULA prompt/action, no credentials/Guard/lock/Mac unlock requests.
+
+Run81 actual failed262144Bfilemaps/16MiBreserve-release success motivated ONE
+allocator experiment. New default-off --shared-file-reserve owns16MiB preguest
+PROT_NONE nativeVA; only originalENOMEM + regularnativefile sharedRW/offset0/
+nativepage-aligned <=16MiB may map actual samefile into a free OWN span.
+No guessed guest addresses, shared-file copy, mprotect/check suppression or
+syscall retry loop. Old observational map/headroom probes MUST be off. Existing
+PTE data references release live mapping only at lastref/failedpt_map transfer;
+replace with ownedemptyreservation. Failure quarantines/poisons, never repairs
+unknown VA. Terminal native setup refuses live/quarantined state; do not claim
+this proves full Linux/Wine reclamation or game handoff. No FEX/vendor/Valve edits.
+
+HOST PASS:11 realDarwin ownership/capacity/failure modes/800concurrentallocations;
+13actualLinux realfs/sys_mmap64/PTE/fd modes include sharedalias/partialunmap/
+fork/memfd seals+closedfd/data+metadatafailure cleanup. Nativehealth10gates and
+post-logcap prepare/map/release/drain pass. Changedunits+ownhelper ASan/UBSan,
+not wholedependencies. OriginalENOMEM HOST-injected, NOT actual iOS fragmentation.
+Reproducible new scripts app/SharedFileReserve.[ch], tools/build-shared-file-
+reserve.py/shared_file_reserve_patch.py/test-shared-file-reserve[-integration].py.
+
+Private run82/runtime85 + hybrid85 fullXcode/package PASS; signed85 matches
+existing Air app/helper/device/cert/unexpired profiles, deepstrict and exact
+__TEXT preserved. Actual final reserve/old stack+pread+caller16/PTE/framepool
+calls checked, HOST injection and oldprobes absent. New85 has NOT been installed
+or device-run in this checkpoint. Build != runtimefix. Source identity still
+com.kuschqin.ideck.freshtest/iDeckLinuxLab, existing container preserved.
+
+NEXT single discriminator: revalidate exact current84 receipt/process/noPlay and
+physical black screen; if still failed, normalend only Lab once, confirmabsence,
+upgrade qualified85/verifyinstalledversion and launch interpreter0 once. Observe
+structured reserve counters (including afterlogcap) and firstfault/actualUI;
+bounded controls only after visibleview. Don't overwrite binary while testing.
+Full goal ACTIVE: genuine repeatLibrary/BPM + Play->licensedMadeira game->return
+stillunproven, bridge125 diagnostic. No STABLE_SUCCESS or scheduler unload.
+
+## Run82 actual85 device startup
+
+2026-11-18 ~17:13EST. Signed85 installed/readback85, install58512AB8-BA56-48B3-
+8F9D-96373A0FB1C9. Fresh old84/29037 black/noPlay normallyended once/absent;
+no uninstall/data change. Before intendedlaunch, system already had85idle29384:
+receipt85 butphase0/guests0/workers0/framepreps0/reservestate0 and Home screen,
+retained_argument0. Guard refused overlap. After fresh exactidle proof, normalend
+29384/confirmabsence, ONE correct retained interpreter launch29444. No Linux
+crash/trust/credential or active Steam-test interruption inferred from prewarm.
+
+CURRENT29444 receiptkernel-29444-1194383-255887000.log, actual state1 reserve
+prepared16MiB/nativepage16384; activation0/blocks0/no debugger or preparedarena.
+InitialrealUI is officialSteam updater extraction, NOT Library/BPM. Actual
+bootstrap extraction22:10:03UTC/updatecomplete22:13:16UTC; wait live startup.
+Active bounded observer WORKmonitor85-reserve-private.py unifiedsession3977,
+private run82/bounded85-reserve-private,300s/read-only, stopsfirstfault. Do not
+launch another observer/researcher/build/reinstall/restart. Latestcounters0
+mapped/attempts, so allocator adoption and UI benefit remain UNTESTED. Read
+actual summary/health/screens before any nextinput. No EULA/Guard automation.
+
+HOST11module/13realLinuxPTE+memfd/10health gates, fullXcode85/finalsignedcalls/
+matchedAirprofiles/deepstrict/text preservation PASS. Details below. GoalACTIVE,
+bridge125 diagnostic/no game/return/stability, no STABLE_SUCCESS/unload.
+Main2ac39/originexperiment9733746 unchanged; weekday17:13 outsideGitwindow,
+leave editsuncommitted/unpushed. CLIonly/noMacunlock/security/FEX/Valve edits.
+
+## Run82 Air85 Library result and follow-up (November 19, 00:19 EST)
+
+On the selected Air4, Build 85 retained interpreter session PID 29444 rendered
+the actual Store and Friends. One Library click was acknowledged. The center
+went black. The startup observer and first-fault observer both exited. The
+latest read-only CLI process check confirms the same PID and installation. A
+fresh physical screenshot shows a black canvas and the Lab controls. Health
+sequence 2566 reports zero Play requests.
+
+The first fault follows a different path than Build 84. The saved instructions
+match the current official ARM64 CEF executable at ELF 0x62fdc5c. Its helper
+calls pthread_create and checks whether the return was zero. Guest tid 368
+attempted anonymous MAP_STACK with length 0x410000 and PROT_NONE. It returned
+ENOMEM. The retained call trace contains no later clone before the trap.
+The initial failure log has zero realfs MMAP_FAILURE rows. Later capped-log
+health reports 245 eligible shared-file attempts, 154 successful allocations
+and releases, and 91 capacity refusals. The reserve reached 16 MiB peak and
+zero live bytes. This verifies its use on Air and leaves Library stability
+unresolved. The failing stack request is below LinuxRunner's 16 MiB threshold
+for anonymous PROT_NONE lazy reservations.
+
+The next discriminator uses the existing lazy reservation path for the exact
+observed no-hint private anonymous MAP_STACK request. Guard access, partial
+protection, fork, unmap and excluded mappings need real Linux syscall tests.
+Keep the active Air session during qualification. See run82 in the evidence JSON
+for source and artifact hashes. The game bridge still returns diagnostic 125.

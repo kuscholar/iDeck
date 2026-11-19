@@ -45,6 +45,12 @@ _Atomic uint64_t ideck_fiber_hash_growth_failures=7; // serializer fixture only
 extern void pool_control_prepare(void);
 extern void pool_control_release(void);
 #endif
+#if IDECK_LAB_SHARED_FILE_RESERVE
+#include "SharedFileReserve.h"
+#include <fcntl.h>
+#include <sys/mman.h>
+static void *reserved;
+#endif
 #if IDECK_LAB_CLI_INPUT
 static void *writer(void *unused){
     (void)unused;
@@ -58,6 +64,14 @@ int main(int argc,char **argv){
     assert(ideck_native_note_navigation(0)==-ENODEV);
 #endif
     assert(!ideck_native_log_start(argv[1]));
+#if IDECK_LAB_SHARED_FILE_RESERVE
+    assert(!ideck_file_reserve_prepare());
+    char own_file[4096];assert(snprintf(own_file,sizeof own_file,"%s/reserve-fixture",argv[1])>0);
+    int own_fd=open(own_file,O_CREAT|O_EXCL|O_RDWR,0600);assert(own_fd>=0&&!ftruncate(own_fd,262144));
+    reserved=ideck_file_reserve_after_enomem(own_fd,262144,0,PROT_READ|PROT_WRITE,MAP_SHARED,ENOMEM);
+    assert(reserved!=MAP_FAILED&&!close(own_fd));
+#endif
+
 #if IDECK_LAB_FRAME_SNAPSHOT_POOL
     pool_control_prepare();
 #endif
@@ -93,6 +107,10 @@ int main(int argc,char **argv){
     pool_control_release();
     assert(!ideck_native_health(60,"guest-running",7,0));
 #endif
+#if IDECK_LAB_SHARED_FILE_RESERVE
+    assert(ideck_file_reserve_release(reserved,262144)==1&&!ideck_file_reserve_drain());
+    assert(!ideck_native_health(60,"guest-running",7,0));
+#endif
     puts(ideck_native_health_name());return 0;
 }
 '''
@@ -107,10 +125,10 @@ void pool_control_prepare(void){@autoreleasepool{
 void pool_control_release(void){frame=nil;pool=nil;}
 '''.replace('[NSData dataWithLength:', '[NSMutableData dataWithLength:'))
 tests = []
-for enabled, policy, broker, snapshot,pool,hashguard,jit,pte in ((0,0,0,0,0,0,0,0),(1,0,0,0,0,0,0,0),(1,1,0,0,0,0,0,0),(1,1,1,0,0,0,0,0),(1,1,1,1,0,0,0,0),(1,1,1,0,1,0,0,0),(1,1,1,0,1,1,0,0),(1,1,1,0,1,1,1,0),(1,1,1,0,1,1,1,1)):
-    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}-pte{pte}'
+for enabled, policy, broker, snapshot,pool,hashguard,jit,pte,reserve in ((0,0,0,0,0,0,0,0,0),(1,0,0,0,0,0,0,0,0),(1,1,0,0,0,0,0,0,0),(1,1,1,0,0,0,0,0,0),(1,1,1,1,0,0,0,0,0),(1,1,1,0,1,0,0,0,0),(1,1,1,0,1,1,0,0,0),(1,1,1,0,1,1,1,0,0),(1,1,1,0,1,1,1,1,0), (1,1,1,0,1,1,1,1,1)):
+    private = out/f'gate{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}-pte{pte}-reserve{reserve}'
     private.mkdir(mode=0o700)
-    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}-pte{pte}'
+    binary = out/f'control{enabled}-policy{policy}-broker{broker}-snapshot{snapshot}-pool{pool}-hash{hashguard}-jit{jit}-pte{pte}-reserve{reserve}'
     command = ['xcrun', 'clang', '-Wall', '-Wextra', '-Werror',
                '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                f'-DIDECK_LAB_CLI_INPUT={enabled}', f'-DIDECK_LAB_GAME_FILE_POLICY={policy}',
@@ -120,11 +138,13 @@ for enabled, policy, broker, snapshot,pool,hashguard,jit,pte in ((0,0,0,0,0,0,0,
                f'-DIDECK_LAB_FIBER_HASH_GUARD={hashguard}',
                f'-DIDECK_LAB_NATIVE_JIT={jit}',
                f'-DIDECK_LAB_MAP_PTE_PREFLIGHT={pte}',
+               f'-DIDECK_LAB_SHARED_FILE_RESERVE={reserve}',
                '-I'+str(lab/'app'), str(out/'control.c'), str(lab/'app/NativeKernelLog.c')]
     if policy:
         command += [str(lab/'app'/name) for name in
                     ('GameFilePolicy.c', 'GameFiles.c', 'LaunchProtocol.c')]
     if broker:command += [str(lab/'app/CowBackingBroker.c')]
+    if reserve:command += [str(lab/'app/SharedFileReserve.c')]
     if snapshot:command += ['-fobjc-arc','-fblocks','-I'+str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner'),str(lab/'app/CheckedFrameSnapshot.m'),str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner/RFBProtocol.c'),'-framework','Foundation']
     if pool:command += ['-fobjc-arc','-fblocks','-I'+str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner'),str(lab/'app/FrameSnapshotPool.m'),str(out/'pool-control.m'),str(lab.parents[1]/'vendor/LinuxRunner/app/LinuxRunner/RFBProtocol.c'),'-framework','Foundation']
     command += ['-o', str(binary)]
@@ -160,7 +180,13 @@ for enabled, policy, broker, snapshot,pool,hashguard,jit,pte in ((0,0,0,0,0,0,0,
     else:assert 'native_jit' not in receipt
     if pte:assert receipt['map_pte_allocation_failures']==11
     else:assert 'map_pte_allocation_failures' not in receipt
-    tests.append({'gate': enabled, 'file_policy_gate': policy, 'broker_gate':broker,'command': command, 'exit': result.returncode,
+    if reserve:
+        s=receipt['shared_file_reserve']
+        assert s['query_status']==0 and s['state']==3 and s['capacity_bytes']==16777216
+        assert s['mapped']==s['released']==s['attempts']==1 and s['peak_bytes']==262144
+        assert not any(s[k] for k in ['live','live_bytes','capacity_refusals','map_failures','release_failures','invalid_releases','quarantined_pages'])
+    else:assert 'shared_file_reserve' not in receipt
+    tests.append({'gate': enabled, 'file_policy_gate': policy, 'broker_gate':broker,'reserve_gate':reserve,'command': command, 'exit': result.returncode,
                   'receipt': receipt})
 sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
 (out/'evidence.json').write_text(json.dumps({

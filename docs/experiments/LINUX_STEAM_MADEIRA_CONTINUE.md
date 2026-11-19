@@ -1,3 +1,351 @@
+## Run82 Air85 Library result and follow-up (November 19, 00:19 EST)
+
+On the selected Air4, Build 85 retained interpreter session PID 29444 rendered
+the actual Store and Friends. One Library click was acknowledged. The center
+went black. The startup observer and first-fault observer both exited. The
+latest read-only CLI process check confirms the same PID and installation. A
+fresh physical screenshot shows a black canvas and the Lab controls. Health
+sequence 2566 reports zero Play requests.
+
+The first fault follows a different path than Build 84. The saved instructions
+match the current official ARM64 CEF executable at ELF 0x62fdc5c. Its helper
+calls pthread_create and checks whether the return was zero. Guest tid 368
+attempted anonymous MAP_STACK with length 0x410000 and PROT_NONE. It returned
+ENOMEM. The retained call trace contains no later clone before the trap.
+The initial failure log has zero realfs MMAP_FAILURE rows. Later capped-log
+health reports 245 eligible shared-file attempts, 154 successful allocations
+and releases, and 91 capacity refusals. The reserve reached 16 MiB peak and
+zero live bytes. This verifies its use on Air and leaves Library stability
+unresolved. The failing stack request is below LinuxRunner's 16 MiB threshold
+for anonymous PROT_NONE lazy reservations.
+
+The next discriminator uses the existing lazy reservation path for the exact
+observed no-hint private anonymous MAP_STACK request. Guard access, partial
+protection, fork, unmap and excluded mappings need real Linux syscall tests.
+Keep the active Air session during qualification. See run82 in the evidence JSON
+for source and artifact hashes. The game bridge still returns diagnostic 125.
+
+# Run82 ACTUAL85 on Air29444: owned reserve prepared; preserve bounded test
+
+2026-11-18 ~17:13EST. Signed85 installed/readback85, install58512AB8-BA56-48B3-
+8F9D-96373A0FB1C9. Fresh old84/29037 black/noPlay normallyended once/absent;
+no uninstall/data change. Before intendedlaunch, system already had85idle29384:
+receipt85 butphase0/guests0/workers0/framepreps0/reservestate0 and Home screen,
+retained_argument0. Guard refused overlap. After fresh exactidle proof, normalend
+29384/confirmabsence, ONE correct retained interpreter launch29444. No Linux
+crash/trust/credential or active Steam-test interruption inferred from prewarm.
+
+CURRENT29444 receiptkernel-29444-1194383-255887000.log, actual state1 reserve
+prepared16MiB/nativepage16384; activation0/blocks0/no debugger or preparedarena.
+InitialrealUI is officialSteam updater extraction, NOT Library/BPM. Actual
+bootstrap extraction22:10:03UTC/updatecomplete22:13:16UTC; wait live startup.
+Active bounded observer WORKmonitor85-reserve-private.py unifiedsession3977,
+private run82/bounded85-reserve-private,300s/read-only, stopsfirstfault. Do not
+launch another observer/researcher/build/reinstall/restart. Latestcounters0
+mapped/attempts, so allocator adoption and UI benefit remain UNTESTED. Read
+actual summary/health/screens before any nextinput. No EULA/Guard automation.
+
+HOST11module/13realLinuxPTE+memfd/10health gates, fullXcode85/finalsignedcalls/
+matchedAirprofiles/deepstrict/text preservation PASS. Details below. GoalACTIVE,
+bridge125 diagnostic/no game/return/stability, no STABLE_SUCCESS/unload.
+Main2ac39/originexperiment9733746 unchanged; weekday17:13 outsideGitwindow,
+leave editsuncommitted/unpushed. CLIonly/noMacunlock/security/FEX/Valve edits.
+
+# Run82 / Build85: owned shared-file VA reserve, HOST-qualified; device test next
+
+2026-11-18 ~17:08EST. Same HEAD9733746228f405670734b80b7b1c1964080ea84a /
+originexperiment; main2ac39 unchanged, mount UUID580CADCD-33F5-4D78-9530-
+2287615873CA verified. Git window CLOSED: scoped source/tests/docs remain dirty,
+no commit/push. Continue this active writer; no parallel researcher.
+
+Air last observed16:46: Build84/PID29037/install8858F329-3E17-444F-842C-
+67CA4AAB61B0, receiptkernel-29037-1181169-763346000.log, real header but black
+centralLibrary/noPlay/submitted0. Preserve until fresh identity+physicalscreen
+check; no old EULA prompt/action, no credentials/Guard/lock/Mac unlock requests.
+
+Run81 actual failed262144Bfilemaps/16MiBreserve-release success motivated ONE
+allocator experiment. New default-off --shared-file-reserve owns16MiB preguest
+PROT_NONE nativeVA; only originalENOMEM + regularnativefile sharedRW/offset0/
+nativepage-aligned <=16MiB may map actual samefile into a free OWN span.
+No guessed guest addresses, shared-file copy, mprotect/check suppression or
+syscall retry loop. Old observational map/headroom probes MUST be off. Existing
+PTE data references release live mapping only at lastref/failedpt_map transfer;
+replace with ownedemptyreservation. Failure quarantines/poisons, never repairs
+unknown VA. Terminal native setup refuses live/quarantined state; do not claim
+this proves full Linux/Wine reclamation or game handoff. No FEX/vendor/Valve edits.
+
+HOST PASS:11 realDarwin ownership/capacity/failure modes/800concurrentallocations;
+13actualLinux realfs/sys_mmap64/PTE/fd modes include sharedalias/partialunmap/
+fork/memfd seals+closedfd/data+metadatafailure cleanup. Nativehealth10gates and
+post-logcap prepare/map/release/drain pass. Changedunits+ownhelper ASan/UBSan,
+not wholedependencies. OriginalENOMEM HOST-injected, NOT actual iOS fragmentation.
+Reproducible new scripts app/SharedFileReserve.[ch], tools/build-shared-file-
+reserve.py/shared_file_reserve_patch.py/test-shared-file-reserve[-integration].py.
+
+Private run82/runtime85 + hybrid85 fullXcode/package PASS; signed85 matches
+existing Air app/helper/device/cert/unexpired profiles, deepstrict and exact
+__TEXT preserved. Actual final reserve/old stack+pread+caller16/PTE/framepool
+calls checked, HOST injection and oldprobes absent. New85 has NOT been installed
+or device-run in this checkpoint. Build != runtimefix. Source identity still
+com.kuschqin.ideck.freshtest/iDeckLinuxLab, existing container preserved.
+
+NEXT single discriminator: revalidate exact current84 receipt/process/noPlay and
+physical black screen; if still failed, normalend only Lab once, confirmabsence,
+upgrade qualified85/verifyinstalledversion and launch interpreter0 once. Observe
+structured reserve counters (including afterlogcap) and firstfault/actualUI;
+bounded controls only after visibleview. Don't overwrite binary while testing.
+Full goal ACTIVE: genuine repeatLibrary/BPM + Play->licensedMadeira game->return
+stillunproven, bridge125 diagnostic. No STABLE_SUCCESS or scheduler unload.
+
+# Current Run81/Build84: distinct compositor shared-map ENOMEM; HOST reserve prototype next
+
+2026-11-18 ~13:40EST. Preserve Air84PID29037/install8858F329-3E17-444F-842C-
+67CA4AAB61B0/receiptkernel-29037-1181169-763346000.log, ISH_JIT0/noarena/debugger.
+No active build/LLDB/RFBrelay/boundedobserver. Initial observer41863 completed300s;
+after-Library observer completed at firstfault. LatestCLI1/action0, health45,
+noPlay/submitted0. ActualStore+Friends rendered, oneLibraryclick then central
+black withFriendsstillvisible, not Library/BPM success. Do not repeat old EULA
+request while no EULA visible. Main2ac39/originexperiment9733746 reverified13:32;
+nine scoped files dirty, outside Gitwindow, no commit/push. All other apps/state
+preserved. No STABLE_SUCCESS/unload or Mac unlock requests.
+
+Actual84 diagnostic works:416code-only callerrows/maxframe15 before firstfault,
+61distinctmatches/53unique in exact actualCEF. Re-read officialELF218132264B/SHA
+891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb. FirstCURRENT84
+fault Compositor286/group279/PCe84ae060→ELF635e060, NOT prior82Chrome_ChildIOT/
+CrashHungProcess. Twooccurrence rows are SAMEfault. Static actualELF reference
+nearcaller7a15364 is BitmapRasterBufferProvider; no invented exactsourcecause.
+Main279pretrap16frames nowavailable (older8insideWaitMany), symbolizerresults
+current84-callers-at-first-fault-private.json. Raw allprivate run81.
+
+Most useful CURRENT discriminator: fourMMAP_FAILURE rows before firsttrap,
+twoactualDarwin262144BsharedRWfilemaps offset0→ENOMEM (Compositor286 +browser188).
+Samefd16KiBsharedRWcontrol succeeds;262144Bread-onlyshared/privateRW/anonymousRW
+allENOMEM. ReleasingOWN16MiBPROT_NONEreserve thenfreshOS-selectedsamefd262144B
+sharedRW succeeds andunmaps. Original-12 preserved. Nearbyfootprint2.26GB/
+available745MB/regions52.9k. Supports contiguous usable nativeVA fragmentation/
+placement hypothesis, NOT totalRAMexhaustion/strict64kcap proof; concurrent
+allocationactivity remains uncontrolled. Different from Run80 finitefirsttrap
+0MMAP_FAILURE/CrashHung and subsequentlateStore recovery; don'tconflate them.
+
+NEXT independent HOST prototype: a bounded16MiB nativeVA reserve for eligible
+regularfileMAP_SHARED/RW/offset0/nativepage-aligned maps ONLY after realENOMEM.
+Use only addresses insideOWNreservation, never guest/arbitrary addresses; no
+blind loop/retry or mprotect workaround. Preserve real sharedfilebacking/bytes,
+validate ownership/lastref release, capacity/error paths, quarantine failures,
+no-fallback ordinary paths and proper teardown. No production/sourceintegration
+until meaningful realDarwin mapping/alias/refusal/concurrency tests PASS. This
+prototype is PLANNED, not implemented. Keep current84 alive while HOSTwork.
+Potential future Lab-only flag/copiedrealfs +data_release ownership hooks, no
+FEX/Valve/vendor/JIT/ordinaryMadeira/sourceapp identity changes; not yet designed
+or qualified, no successclaim. Future device test only after fullbuild/sign/link.
+
+# Current: actual Build84 diagnostic, Air PID29037 — preserve startup
+
+2026-11-18 ~13:31EST. HEAD9733746228f405670734b80b7b1c1964080ea84a,
+experiment/linux-steam-madeira-ipad origin kuscholar/iDeck. Main2ac39 unchanged.
+MountUUID verified. Nine scoped source/test/docs files dirty, outside Git hours;
+no commit/push. No FEX/Valve/vendor/working-app/auth/save/security/lock changes.
+
+Live Air Lab Build84 PID29037, install8858F329-3E17-444F-842C-67CA4AAB61B0,
+receiptkernel-29037-1181169-763346000.log. ISH_JIT0/no debugger/preparedarena.
+Oldfailed82/28690 normallyended after fresh identity/black/CLI1/noPlay; same Lab
+upgrade install0 independently apps84 readback, then launch once. Data retained.
+Earlyhealth2 phase7/21guests/activation0/nativeemission0, updater only. No true84
+interactive frontend,16caller,game orreturn proof yet. No overlapping build/LLDB.
+
+User black report WAS verified. Run78 motion-only/Escape/F1 failed; normal same82
+recovery Run80 updater completed18:14:11UTC/verification18:14:20, new loginSuccess
+OK18:15:13 without credentials. Account spinner thenblack; fresh X11 mapped
+windows briefly then9allunmapped/focus0. Uncapped1119606B first-traplog has
+0MMAP_FAILURE and2occurrences SAMEtid286/group281/PCe83d1504. Actual post-update
+CEF218132264B/SHA891d85f97231fcafa5763b7140039c5d3cbbb99f2a42ede08de5991abcbc3cdb;
+unique36B disk62714f4->ELFPC6281504, savedEBAF6800->ELF99a6800/BL99a67fc->6281514
+matches prior exact-source CrashHungProcess, NOT independent two faults/canary/
+nearestexport cause. Higher8frame main281 stops insidewait, producer UNKNOWN.
+Later realStore fullyrendered by13:25 (exactreadytimeunobserved); so firsttrap
+is NOT proven toexplain all subsequent black duration. ONE LibraryACK1 then
+white dropdown/fullblack again; temporal sequence is NOT clickcausation proof.
+No Library/BPM/game/return recovery. Current user has NO visible EULA to accept;
+do NOT repeat old acceptance request or automate terms.
+
+84 adds explicit diagnostic --blocked-wait-frames16; originaldefault4 and8 kept.
+Same guard/helperbody, no arbitrary payloads/page materialization/wait/watchdog
+changes. Symbolizer0..15/bounded256/all ambiguities. HOST42realPTE ASanUBSanWerror
+and realownedELFframe15 unique/duplicate controls PASS. Fullruntime/Xcode/package,
+actualSIGNEDhelper16/776B+sampler and oldstack/env/pread/pool/PTE/hash/headroom
+linkage/deepstrict/text preservation PASS. Existing authorized profiles match
+Air+main+helper+certificate+expiry; no GUI/account/security changes. Prior83wake
+motionfixcompiledbutaction9UNUSEDthisrepro; do notclaimitrepairsoriginalblack.
+
+ACTIVE bounded read-only observer WORKmonitor84-callers-private.py unified
+session41863, max300s, health10s + nativeoncephase8. Do not start overlapping
+observer/researcher orkillcurrentstartup. Artifactsrun81/bounded84-observer-private.
+Use WORKobserve84-private.py UNIQUE_TAG for physicalscreenshot+identity. Do not
+use old82controls/oldPIDs. NEXT current84 pre-watchdoghighercallers + firstfault,
+exactcurrentELF matching, then onecause-specific test. UI stillmustbeactually
+visible/interactive. No arbitraryblack clicks/terms/password/Guard/trust
+operations. CLIonly NEVERMacunlock. FullgoalACTIVE/bridge125NOTgame/noReturn/
+noSTABLE_SUCCESS or schedulerunload. Allrawprivate, hashesEVIDENCErun80/81.
+
+# Current: user black screen confirmed; same82 recovery Run80 starting
+
+2026-11-18 ~13:11 EST. Live Lab is now Build82 PID28690, SAME installation
+25CA5426-78C8-4811-B23C-E35E716AF926; receipt
+kernel-28690-1180035-983450000.log. Old Run78/28190 ended normally after user
+reported black and exact process/health/noPlay checks. No reinstall/upgrade,
+no debugger, no native arena, ISH_JIT=0. Existing accounts/rootfs/games/saves
+preserved. Current source HEAD9733746, five scoped dirty files remain uncommitted
+outside weekday Git hours. Private Build83/run79 unsigned/uninstalled.
+
+User report overrides prior EULA as CURRENT screen. Real Air13:02 black; same
+Linux RFB framebuffer also black. Pointer-only0,0 visibly moves pointer but does
+not restore content. One Escape/CLI31 fails. One F1 creates white left panel,
+real screenshot still black/white: no actual menu recovery. No Enter, click,
+terms acceptance or credentials. Not stable and not solely Metal composition.
+Native cap cannot establish later absence of faults. Fresh private browser logs
+show screensaver hide/close18:00:58/59UTC then resource activity18:04:33, not a
+proven fault cause. All current raw evidence/hashes in run78 JSON.
+
+Old28190 got ONE normal SIGTERM. Immediate listing still showed process, later
+read confirms absent. First launch CLI exit64 (option order, did not execute),
+corrected command/fresh no-overlap gate launches28690 exactly once. Official
+Steam updater is visibly extracting; health4/phase7/21guests, zero code emitted.
+This is NOT interactive recovery. Current helper WORK
+observe82-recovery-private.py UNIQUE_TAG ->run80; navigation helper
+nav82-recovery-observe-private.py ACTION UNIQUE_TAG uses28690/exact new receipt.
+Do not use old run78 controls. Do not touch unknown black/auth/EULA buttons.
+
+NEXT preserve startup/updater42 normal restart and inspect real screenshot.
+Once genuine Library/BPM is visibly interactive, restore Ratatan installation
+EULA for human reading/acceptance. No account transfer/Guard automation,
+no main/FEX/Valve/security/lock/Codex/working-app changes, no Mac unlock request.
+Full goal ACTIVE; no STABLE_SUCCESS or scheduler unload. Bridge125 still only
+capture, no actual Windows game/return. Do not call83 a black-screen fix.
+
+# Current: Run78 genuine tool selection passed; waiting at game EULA
+
+Updated 2026-11-18 around 12:10 EST. HEAD/origin experiment remain
+9733746228f405670734b80b7b1c1964080ea84a; origin/main remains
+2ac39beff91251d36f3ad6331d3f8402b3c10e18 (remote read-back at noon).
+Mount UUID verified. Outside allowed commit/push hours: leave changes dirty.
+
+Preserve live Air Build82 PID28190, installation
+25CA5426-78C8-4811-B23C-E35E716AF926, receipt
+kernel-28190-1162536-327396000.log. Same no-arena interpreter run, ISH_JIT=0,
+zero native code emitted. No reinstall, restart or debugger this continuation.
+
+Actual Steam Big Picture Properties > Compatibility dropdown displays our
+custom `iDeck Madeira (Lab, diagnostic only)` alongside official tools.
+ACK19 opens list; ACK20/21 focuses custom tool; ACK22 selects it and the real
+Properties UI displays the selected name. No Linux Proton game execution used.
+Back23/24 and left27/28 return to focused Ratatan Install. ACK29 opens Install;
+a later read-only screenshot shows /mnt/ideck/SteamLibrary selected, 2.94GB free,
+1.68GB required. ACK30 reaches official Ratatan EULA. User has been asked to
+read/accept on Air. DO NOT automate acceptance, infer it from elapsed time, or
+send blind input. Preserve EULA until a fresh reply/state. No depot completion,
+Play, native bridge invocation, game or return demonstrated.
+
+Wake limitation: center ACK9 while cursor already centered failed; real blank
+header motion ACK10/26 restored menu/game. Keyboard navigation still allows
+screensaver. Candidate action9 first moves at most8px, then center press/release;
+width<2 refused, masks remain0/1/0 and all gates/throttle retained. Exact-method
+ASan/UBSan test fails original on no displacement and passes candidate including
+8 repeated-center cases/17 negatives/10 actions/1 narrow refusal. Source and
+regression edits isolated. Private Build83/run79 copied runtime, full Xcode,
+package and final Mach-O motion/guard/pointer sequence checks PASS. Existing
+stack/env/pread/callers/PTE/hash/headroom/pool linkage retained. Build session63955
+and verifier90435 finished; NO active build/debugger. Intentionally unsigned,
+NOT installed or device-tested. First stack verifier expected absent signed83;
+corrected unsigned verifier passes (test-path mismatch, not Linux failure).
+Active Build82 remains unchanged. Evidence/hashes in run79 JSON.
+
+NEXT after human EULA: inspect real download to shared library, verify actual
+AppID/manifests/content before Play, then diagnostic125 capture and legitimate
+Madeira launch/return work. For current UI use WORK nav82-noarena-observe-private.py
+ACTION UNIQUE_TAG, observe82-noarena-private.py UNIQUE_TAG. Identity checks
+28190/82 precede input. Latest sequence30, health1352, file_policy.submitted0.
+Actual input/RFB dispatch ACK is not UI proof. X11 watcher capped120 rows and is
+stale after this multi-hour run; do not treat it as current focus/map evidence.
+Screenshots/health/raw logs stay private run78; redacted hashes in JSON.
+Full goal ACTIVE; no STABLE_SUCCESS, no scheduler unload, no main/FEX/Valve/
+security/lock/Codex/working-app/auth transfer changes; never ask Mac unlock.
+
+# Latest Run78 ACTUAL Library/BPM/wake/input PASS initially — preserve28190
+
+HEAD9733746228f405670734b80b7b1c1964080ea84a, originexperimentmatches/main
+2ac39beff unchanged11:40EST. MountUUIDverified. DocsdirtyoutsideGitwindow; no
+activeLLDB/build/ish/otherresearcher. CurrentSAME82/28190/install25CA5426-78C8-
+4811-B23C-E35E716AF926/receiptkernel-28190-1162536-327396000.log. Noarena/
+ISH_JIT0/activation0/allnativeemission0; noinstall/debugger/sourcechange.
+
+ActualLibraryACK1 eventually40games/covers/news, screenshotafterLibrary82f.
+BPMACK2initialblackthenunobservedgap. Fresh11:41stillSAMEPID/health1212, actual
+genuineSteamart/screensaver. ONEwake9ACK3ACTUALLYdismisses tofullBPMhome;
+RightACK4TombRaider->Ratatan, EnterACK5detailsInstall1.68GB, RightACK6Controller/
+ACK7gearwhite. ThisisrealUIresponse, NOTdispatchonly/processexistence; not
+continuous3hourUI/repeatedcoldstart/gamecycle/physicaltouch/Bluetooth proof.
+NOgameinstall/Play yet, bridge125/noReturn/fullgoalstillACTIVE. Exactprivate
+screens/health/hashesJSONrun78. Logcapped, laterabsenceoffaultNOTproven.
+
+Currentsettingsgear EnterACK8 posted via WORKnav82-noarena-observe-private.py
+activatesettingsNoArena82o; inspectactualscreenshot/ACK beforeANYnextinput.
+NEXTgenuineSettings->Properties->Compatibility toverifycustomiDeckMadeira
+discovery/selection, THENsharedWindowsdepots/download/SteamPlaycapture. Preserve
+currentinteractive session/auth. Neverblindclickblack/authscreens/community
+text, automatepassword/Guard, replaceworkingapp, editFEX/Valve/security/lock/
+Codex/main/otherworktrees oraskMacunlock. NoSTABLE_SUCCESS/unload.
+
+# Latest Run78 LIVE same82/no-unused-arena PID28190 — preserve current updater
+
+SourceHEAD9733746228f405670734b80b7b1c1964080ea84a, docsdirtyoutside08:00
+Gitwindow. Canonicalbranch/origin unchanged. NewPID28190/Build82 SAMEinstallation
+25CA5426-78C8-4811-B23C-E35E716AF926, receiptkernel-28190-1162536-327396000.log.
+Oldfailed28066freshhealth124/noPlay/CLI3/frame548/all8X11childrenunmapped/focus0
+thenexactprocessidentitynormalLab-onlySIGTERM. Nootherappdata/processchanged.
+SAMEsignedbinary82 noinstall/debugger/startstopped/terminateexisting; omitONLY
+linux-steam-native-jit-prepared setup, keepISH_JIT0/TERM/limit200000/soft4MiB/
+cacheoff/64KiBpread/8callers/headroom/allpriorflags/rootfs/auth. Nativefaultshim
+foroptionalemitternotinstalled/used; interpreterearlyenv-offpathverifiedsource.
+
+Actualhealth3phase7/21guests/activation0/allnativeemission0/noPlay; realofficial
+updaterrenders. Earlybaseline96regions/5.39MBfootprint then307regions/16.94MB,
+vspriorprepared15489/132.94MBbeforeLinux. Thismeasuresoverheadremovalonly; not
+peakRAM/fix/UI/repeatedstability. Finite125575Blog0fault/0mmapfail; laterunknown.
+WORK observe82-noarena-private.py NEWtag ->run78; nav82-noarena-observe-private.py
+ACTION TAG supportsfixedwake9butONLYonactualSteamart/screensaver, neverblack/
+authUI. collect82-noarena-private.py NEWtag numericmarkerlog/private; xstate82-
+noarena-private.py NEWtag numericwindows. NoactiveLLDB/build/otherresearcher.
+
+NEXTletnormalupdater42restartcomplete, actualdesktop/Library/BPM/inputthen
+wake9discriminator ifscreensaver. Comparefirstfault/VMtomatchedprepared82; no
+blindrestart/newruntimepatchduringcurrenttest. Last82hadStore/chromebutfailed
+LibraryACK1+2 thenBPMACK3/rootblack/allwindowsteardown, capped1271mappingfail/
+17faultrows. NoWake9deviceproofyet. FullgoalACTIVE/bridge125NOTgame/noReturn/
+noSTABLE_SUCCESS/unload. CLIonlyNEVERMacunlock/security/lock/Codex/FEX/Valve/
+main/otherapps/authsavechanges. RevalidatecurrentPIDbeforeanyaction.
+
+# Latest: Run77 failed UI repeat / Run78 unused-arena control preparing
+
+HEAD9733746 pushed; docsnegative82/run78pendinguncommitted (outside08:00window).
+Exact82/28066/25CA5426-78C8-4811-B23C-E35E716AF926 stilllive untilfreshcheck.
+No Librarysuccesson82; ACK1+2didnotselectLibrary, BPMACK3blackthenall8X11
+childrenunmapped/focus0/frame548/health87noPlay. Wake9NOTsent. Nativeappalive,
+notuseractivegame. Cappedlog4194272B/1271MMAP_FAILURE/17guestfaultrows, actual
+CEFunchanged891d85f..., first285zygoteCrashHungchain/later353readfault/mmap
+stormdistinct. Stablelogcopyaftercapworks; priorCore7000notcrashproof.
+
+Nextonehypothesis: removeUNUSED120MiBpreparedRX+aliasfromISH_JIT0 control.
+Actualstartupregion111->15489/footprint5MiB->133MiB beforeguest. SAMEsigned82,
+NOrebuild/install, sameallotherflags/env/prefix/rootfs/auth, omitpreparedarg/
+debuggerpreparation; existingordinaryinterpreterpathdoesnotneedJIT. Fresh
+exactfailed28066/noPlay/allwindowsunmapped beforeLab-onlynormalterminate,
+launchoncewithoutstartstopped/terminateexisting, requireactivation0/emission0.
+CaptureactualVM/realLibrary/BPM/input; no blindblackclick orsolecauseclaim.
+Run78executionPENDING, doNOTassumereplacementPID. Preserveallotherapps/main/
+FEX/Valve/security/lock/Codex/account/game/save. CLIonlyNEVERMacunlock.
+GoalstillACTIVE/bridge125NOTgame/return/noSTABLE_SUCCESS/unload.
+
 # Latest Run77 ACTUAL82 Air28066 — preserve current updater/session
 
 Source779ccfd1e7247f1dfdedd4f17ffdcd5478c8f45e (check HEAD). Actual installed82

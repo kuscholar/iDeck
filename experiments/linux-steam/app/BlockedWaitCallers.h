@@ -6,8 +6,8 @@ struct mem;
 #ifndef IDECK_WAIT_CALLER_LIMIT
 #define IDECK_WAIT_CALLER_LIMIT 4
 #endif
-#if IDECK_WAIT_CALLER_LIMIT != 4 && IDECK_WAIT_CALLER_LIMIT != 8
-#error Select the original4 or explicit bounded8 caller frames only
+#if IDECK_WAIT_CALLER_LIMIT != 4 && IDECK_WAIT_CALLER_LIMIT != 8 && IDECK_WAIT_CALLER_LIMIT != 16
+#error Select the original4 or explicit bounded8/16 caller frames only
 #endif
 struct ideck_wait_caller { uint64_t lr; uint32_t code[9]; };
 struct ideck_wait_callers {

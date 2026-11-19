@@ -22,6 +22,12 @@
 #import "X11TraceInstall.h"
 #endif
 #import "RFBClient.h"
+#if IDECK_LAB_SHARED_FILE_RESERVE
+#if IDECK_LAB_VA_HEADROOM_PROBE
+#error Owned reserve allocator cannot share the observational headroom reservation
+#endif
+#include "SharedFileReserve.h"
+#endif
 #if IDECK_LAB_VA_HEADROOM_PROBE
 #include "VAHeadroomProbe.h"
 #endif
@@ -234,6 +240,10 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     self.framePool=[[IDECKFrameSnapshotPool alloc]initWithWidth:1280 height:800];
     if(!self.framePool){[self showStatus:@"Framebuffer pool preparation failed; no Linux session started."];return;}
 #endif
+#if IDECK_LAB_SHARED_FILE_RESERVE
+    if(ideck_file_reserve_prepare()!=0){[self showStatus:@"Shared-file address reserve preparation failed. No guest started."];return;}
+    ideck_native_log_line("IDECK_SHARED_FILE_RESERVE_V1 prepared=1 capacity_bytes=16777216 native_ENOMEM_only=1");
+#endif
 #if IDECK_LAB_VA_HEADROOM_PROBE
     if(ideck_va_headroom_prepare()!=0){[self showStatus:@"Address-space discriminator preparation failed. No guest started."];return;}
 #endif
@@ -280,6 +290,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
        self.guestEnded||!self.acceptsFrames||!self.client||self.input.activeTouch||self.input.isFirstResponder)return;
     CGSize pixels=self.input.pixels;
     if(!isfinite(pixels.width)||!isfinite(pixels.height)||pixels.width<1||pixels.height<1||pixels.width>65535||pixels.height>65535)return;
+    if(action==9&&pixels.width<2)return; // A wake must include real pointer displacement.
     NSTimeInterval now=NSProcessInfo.processInfo.systemUptime;
     if(now-self.cliInputLastEvent<0.35)return;self.cliInputLastEvent=now;
     if(action==9){
@@ -287,8 +298,12 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         // use this on authentication, a download confirmation or an unknown UI.
         uint16_t x=(uint16_t)((pixels.width-1)*0.5);
         uint16_t y=(uint16_t)((pixels.height-1)*0.5);
+        // Steam may ignore a stationary click after keyboard-only activity.
+        // Move first, then press/release at center; the button transition keeps
+        // the first motion from coalescing into the center packet. No drag.
+        uint16_t approachX=x>=8?x-8:x+1;
         self.input.lastPixel=CGPointMake(x,y);
-        [self.client pointerX:x y:y buttons:0];
+        [self.client pointerX:approachX y:y buttons:0];
         [self.client pointerX:x y:y buttons:1];
         [self.client pointerX:x y:y buttons:0];
     }else if(action<2){
@@ -424,6 +439,13 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
        ideck_retained_frontend_snapshot(&state)||state.error||state.guest_status||state.phase!=IDECK_FRONTEND_DORMANT||
        ideck_linux_lab_live_guest_threads()!=0||ideck_linux_lab_native_worker_entries()!=0||
        !self.nativeRequestSequence||ideck_lab_pending_dock_sequence()!=self.nativeRequestSequence)return;
+#if IDECK_LAB_SHARED_FILE_RESERVE
+    // All prior real backend/viewer/Metal gates passed. A retained Linux
+    // backing or poisoned owned span refuses native handoff; never pretend
+    // that process presence or guest exit alone reclaimed these mappings.
+    if(ideck_file_reserve_drain()!=0){[self showStatus:@"Linux shared-file cleanup is incomplete. Native setup remains blocked."];return;}
+    ideck_native_log_line("IDECK_SHARED_FILE_RESERVE_V1 terminal_drain=1 linux_restarts_disabled=1");
+#endif
     self.nativeSetupTransferred=YES;self.nativeSetupButton.enabled=NO;self.restartSteamButton.enabled=NO;
     [self releaseInput];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"IDeckLinuxMadeiraSetupWillPresent" object:nil];

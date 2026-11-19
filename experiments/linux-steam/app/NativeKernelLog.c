@@ -23,6 +23,9 @@ extern _Atomic uint64_t ideck_fiber_hash_growth_failures;
 #if IDECK_LAB_RFB_CHECKED_SNAPSHOT
 #include "CheckedFrameSnapshot.h"
 #endif
+#if IDECK_LAB_SHARED_FILE_RESERVE
+#include "SharedFileReserve.h"
+#endif
 #if IDECK_LAB_COW_BROKER
 #include "CowBackingBroker.h"
 #endif
@@ -125,7 +128,9 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
     valid=task_info(mach_task_self(),TASK_VM_INFO,(task_info_t)&info,&count)==KERN_SUCCESS&&count>=TASK_VM_INFO_REV1_COUNT;
     if(valid)footprint=info.phys_footprint;
 #endif
-#if IDECK_LAB_COW_BROKER
+#if IDECK_LAB_SHARED_FILE_RESERVE
+    char body[4096],temporary[160];
+#elif IDECK_LAB_COW_BROKER
     char body[3072],temporary[160];
 #else
     char body[1536],temporary[160];
@@ -203,6 +208,18 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
         struct ideck_lab_native_jit_stats s;ideck_lab_native_jit_read(&s);
         size_t used=(size_t)length-2;
         int added=snprintf(body+used,sizeof body-used,",\"native_jit\":{\"compiled\":true,\"activation_status\":%d,\"blocks\":%llu,\"segments\":%llu,\"code_bytes\":%llu,\"TXM_requested\":false}}\n",s.activation_status,(unsigned long long)s.blocks,(unsigned long long)s.segments,(unsigned long long)s.code_bytes);
+        length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
+    }
+#endif
+#if IDECK_LAB_SHARED_FILE_RESERVE
+    if(length>1&&(size_t)length<sizeof body){
+        struct ideck_file_reserve_stats s={0};
+        int query=ideck_file_reserve_snapshot(&s);size_t used=(size_t)length-2;
+        int added=snprintf(body+used,sizeof body-used,",\"shared_file_reserve\":{\"query_status\":%d,\"state\":%u,\"capacity_bytes\":%u,\"native_page_bytes\":%zu,\"live\":%u,\"live_bytes\":%zu,\"peak_bytes\":%zu,\"attempts\":%llu,\"mapped\":%llu,\"released\":%llu,\"capacity_refusals\":%llu,\"map_failures\":%llu,\"release_failures\":%llu,\"invalid_releases\":%llu,\"quarantined_pages\":%u}}\n",
+            query,s.state,IDECK_FILE_RESERVE_BYTES,s.page_bytes,s.live,s.live_bytes,s.peak_bytes,
+            (unsigned long long)s.attempts,(unsigned long long)s.mapped,(unsigned long long)s.released,
+            (unsigned long long)s.capacity_refusals,(unsigned long long)s.map_failures,
+            (unsigned long long)s.release_failures,(unsigned long long)s.invalid_releases,s.quarantined);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif
