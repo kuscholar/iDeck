@@ -1,3 +1,21 @@
+## Run83 continuation — black transition and wake transport
+
+Current Air Build86 PID 29952 showed black with a loading indicator and
+then genuine Steam screensaver art about 30 seconds later with no added
+test input. Health 193 to 196 and frame calls 989 to 1003 confirm the same
+live session. Dispatch sequence remains 11 and captured Play requests remain
+zero. Preserve the active session. One physical tap while artwork is visible
+is the next device discriminator. Verify the actual post-tap screen before
+targeting Install or a library selection.
+
+The host ASan/UBSan loopback now checks that the exact Lab wake packet
+sequence arrives as move, press, release. Four existing RFB lifetime cases
+also pass. This narrows the problem beyond intermittent host-fixture
+coalescing and does not verify Air transport or Steam-side wake handling.
+No new iOS build was deployed. See `run83.wake_wire_control` for hashes.
+The actual game installation, licensed Madeira launch and repeatable return
+are still open.
+
 ## Run83 continuation — repeated ARM64 stack regression
 
 The same Air Lab86 PID 29952 still renders Steam screensaver artwork. Escape

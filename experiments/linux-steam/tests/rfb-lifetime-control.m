@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception */
 #import "LabRFBCompletion.h"
+#import "LabRFBWake.h"
 #include <assert.h>
 #include <stdatomic.h>
 #include <unistd.h>
@@ -13,6 +14,8 @@ int main(int argc,char **argv){@autoreleasepool{
     __block atomic_bool entered=false,returned=false,notified=false;
     dispatch_semaphore_t release=dispatch_semaphore_create(0);
     BOOL input=[mode isEqual:@"input-held"],frame=[mode isEqual:@"frame-held"];
+    BOOL wake=[mode isEqual:@"wake-wire"];
+    __block atomic_uint wakeWrites=0;
     void (^hold)(void)=^{
         if(atomic_exchange(&entered,true))return;
         dispatch_semaphore_wait(release,DISPATCH_TIME_FOREVER);
@@ -22,14 +25,30 @@ int main(int argc,char **argv){@autoreleasepool{
         (void)n;(void)bytes;assert(w==32&&h==16&&pixels.length==2048);
         if(frame)hold();
         if(input)[weakClient key:0xff50 down:NO];
+        if(wake&&!atomic_exchange(&entered,true))ideck_rfb_wake(weakClient,15,7);
     };
     if(input)client.transportMetricsHandler=^(NSDictionary *event){if([event[@"input_sequence"] unsignedLongLongValue])hold();};
+    if(wake)client.transportMetricsHandler=^(NSDictionary *event){
+        if(![event[@"stage"] isEqual:@"rfb_input_write"])return;
+        assert([event[@"packet_type"] unsignedIntValue]==5);
+        assert([event[@"packet_bytes"] unsignedIntValue]==6);
+        assert([event[@"written"] boolValue]);
+        if(atomic_fetch_add(&wakeWrites,1)==2){
+            [weakClient ideckStopWithCompletion:^{
+                assert(atomic_load(&wakeWrites)==3);
+                puts("RFB_WAKE move_press_release_written=3");
+                exit(0);
+            }];
+        }
+    };
     if([mode isEqual:@"before-start"]){
         [client ideckStopWithCompletion:^{
             assert(dispatch_get_specific(&mainQueueKey)==&mainQueueKey);atomic_store(&notified,true);
             [client start];[client key:0xff50 down:NO];
             puts("RFB_LIFETIME stopped_before_start=1 completion_main=1");exit(0);
         }];
+    }else if(wake){
+        [client start];
     }else{
         [client start];
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{

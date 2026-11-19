@@ -22175,7 +22175,7 @@
       }
     ],
     "goal_complete": false,
-    "next": "User taps visible screensaver on Air once, then checks the visible Ratatan details and Install. Verify shared package completion and actual Play request next. Continue preserving exact live Air86; no active observer.",
+    "next": "One physical tap while genuine screensaver artwork is visible; inspect the returned screen before Install. Verify library choice, ownership, download completion and actual Play request. Preserve exact live Air86.",
     "device_boot": {
       "build": 86,
       "pid": 29952,
@@ -22271,6 +22271,61 @@
         "Play_requests": 0,
         "visual": "rotating Steam screensaver art after settled Escape, same PID. No new install confirmation."
       }
+    },
+    "wake_wire_control": {
+      "source_base": "94232e938336f360df75c24484f33e8528e9a40c",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "build": 86,
+      "pid": 29952,
+      "signed_binary_sha256": "c1baf24ffb241118393e230851a393ef4baf225ca721ee3924987e3d28bdb7f2",
+      "direct_observation": "Air black frame then genuine rotating Steam artwork about 30 seconds later, same receipt, no added input.",
+      "sequence": [
+        193,
+        196
+      ],
+      "frame_calls": [
+        989,
+        1003
+      ],
+      "lazy_stack_requests": 223,
+      "lazy_stack_reserved": 223,
+      "file_policy_submitted": 0,
+      "game_launched": false,
+      "host_loopback": "ASan/UBSan, four prior lifetime cases and one new wake case passed. Actual pinned client sent motion (7,7), press (15,7), release (15,7) in order.",
+      "host_probe_correction": "First test asserted on framebuffer metrics. Retest filtered rfb_input_write and checked the independent peer's raw pointer packets.",
+      "limit": "Host fixture has no Steam and makes no Air transport or iOS linkage claim. Current Air still runs unchanged Build86.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume0059-data-private.json",
+          "sha256": "99017883e2036c63549972bc132e26bf882d2491cb519e0383bd672eecc02eb2",
+          "bytes": 1701
+        },
+        {
+          "path": "run83/screen-resume0059-private.png",
+          "sha256": "8ce3c3db7958da909e35598e086ef6787f45d5b3744aa469f36dc76bc355e515",
+          "bytes": 72144
+        },
+        {
+          "path": "run83/health-idleFollow0101-data-private.json",
+          "sha256": "2bdca056258dd656f6c5473f2bb4f5ba2c6047e2afb95dfe787e411fcd9fccdb",
+          "bytes": 1703
+        },
+        {
+          "path": "run83/screen-idleFollow0101-private.png",
+          "sha256": "92df3bb9d1cb3f8a436e6f43e709817a2f2acb65866e798e5927e793e36b9748",
+          "bytes": 1363319
+        },
+        {
+          "path": "run83/wake-wire-v2/generated/evidence.json",
+          "sha256": "adef16d5b4f5dfc90adc33f38a05b656ca0ef4440ba85ac836664d7c5832cb8d",
+          "bytes": 486
+        },
+        {
+          "path": "run83/wake-wire-v2/results/evidence.json",
+          "sha256": "7aae28bf6b7972a68d65990990e344f4f4658a7c82a31feece06d86b7cc3ab06",
+          "bytes": 1307
+        }
+      ]
     }
   }
 }

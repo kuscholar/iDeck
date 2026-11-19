@@ -13,8 +13,9 @@ def exact(s,n):
         data+=block
     return data
 rows=[]
-for mode in ['before-start','handshake-blocked','frame-held','input-held']:
+for mode in ['before-start','handshake-blocked','frame-held','input-held','wake-wire']:
     server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(1);port=server.getsockname()[1];accepted=[];errors=[]
+    received_wake=[]
     def serve():
         try:
             s,_=server.accept();accepted.append(True)
@@ -26,6 +27,14 @@ for mode in ['before-start','handshake-blocked','frame-held','input-held']:
                 s.sendall(b'RFB 003.008\n');exact(s,12);s.sendall(b'\1\2');assert exact(s,1)==b'\2';s.sendall(bytes(16));exact(s,16);s.sendall(bytes(4));exact(s,1)
                 s.sendall(struct.pack('!HH',32,16)+bytes(20));exact(s,20);header=exact(s,4);exact(s,struct.unpack('!H',header[2:])[0]*4);exact(s,10)
                 s.sendall(b'\0\0\0\1'+struct.pack('!HHHHi',0,0,32,16,0)+bytes(2048))
+                if mode=='wake-wire':
+                    while len(received_wake)<3:
+                        msg=exact(s,1)
+                        if msg==b'\3':
+                            exact(s,9) # FramebufferUpdateRequest can interleave.
+                        else:
+                            assert msg==b'\5'
+                            received_wake.append(struct.unpack('!BHH',exact(s,5)))
                 while s.recv(128):pass
         except (EOFError,ConnectionError):pass
         except (TimeoutError,socket.timeout):
@@ -37,6 +46,11 @@ for mode in ['before-start','handshake-blocked','frame-held','input-held']:
     text=result.stdout+result.stderr;(out/(mode+'.log')).write_text(text)
     assert not t.is_alive() and result.returncode==0 and not errors,(mode,result.returncode,text,errors)
     assert bool(accepted)==(mode!='before-start'),(mode,accepted)
-    rows.append(dict(mode=mode,status=result.returncode,peer_accepted=bool(accepted),log_sha256=hashlib.sha256(text.encode()).hexdigest()))
+    row=dict(mode=mode,status=result.returncode,peer_accepted=bool(accepted),log_sha256=hashlib.sha256(text.encode()).hexdigest())
+    if mode=='wake-wire':
+        assert received_wake==[(0,7,7),(1,15,7),(0,15,7)],received_wake
+        assert 'move_press_release_written=3' in text
+        row['received_pointer_packets']=received_wake
+    rows.append(row)
 (out/'evidence.json').write_text(json.dumps(dict(scope='HOST actual socket/GCD lifetime controls; no iOS App/UI/Steam/game proof',tests=rows,control_sha256=hashlib.sha256(a.control.read_bytes()).hexdigest()),indent=2)+'\n')
-print('Four actual RFB lifetime controls PASS; callback tasks must return before completion')
+print('Four RFB lifetime controls and one wake packet loopback control PASS')

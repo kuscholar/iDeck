@@ -7269,3 +7269,52 @@ Add `LINUX_LAB_RETAINED_STACK_ARCHIVE` pointing to the prepared host
 `run83/stack-host-v1/libish.a` to select the new case. Raw fixture output and
 device captures stay private. Host results do not establish an Air game
 handoff or a return to Steam. Keep the current Air session available.
+
+## Run83 follow-up — re-observed black frame and wake packet loopback
+
+From branch source `94232e938336f360df75c24484f33e8528e9a40c`, Air Build86
+kept the same receipt/PID 29952. Health 193 showed 989 frame calls with a
+black image and a loading indicator. About 30 seconds later health 196
+showed 1003 frame calls and the genuine Steam Little Nightmares screensaver
+art. There was no new test input between captures. Both samples had 223
+successful reservations out of 223, dispatch sequence 11, and zero captured
+Play requests. These captures establish recovery from this black sample
+to idle artwork. They do not establish that other black reports have the
+same cause or that Steam returned to interactive content.
+
+The wake action uses the same move, press and release as Build86. Extract
+that sequence into a shared inline helper and exercise it with the actual
+pinned RFB client and a localhost test peer. Hypothesis tested: on a newly
+connected idle transport, the client's normal pointer coalescer drops the
+initial motion or a button transition. The peer saw all three distinct
+packets at the intended coordinates, in order. This rejects the
+hypothesis for the host fixture. Four existing lifetime controls still
+passed. The first test iteration counted framebuffer metrics as input;
+the successful control filters the input-write stage and independently
+asserts the peer's packet contents. Current Air's dispatch ACK does not
+prove the Air transport wrote or that X11 or Steam handled the
+gesture. Tests are host-only and no new iOS build was deployed.
+
+From the experiment root, choose a fresh private directory on easystore
+as `$out`. The fixture uses the earlier run32 RFB build inputs:
+
+```sh
+lab=experiments/linux-steam
+vendor_src=vendor/LinuxRunner/app/LinuxRunner
+python3 "$lab/tools/build-rfb-lifetime.py" "$out/generated"
+xcrun clang -fobjc-arc -fblocks -DIDECK_LAB_RFB_LIFETIME=1 \
+  -Wall -Wextra -Werror -Wno-unused-function -Wno-misleading-indentation \
+  -fsanitize=address,undefined -fno-sanitize-recover=all \
+  -I"$out/generated" -I"$lab/app" -I"$vendor_src" \
+  "$lab/tests/rfb-lifetime-control.m" "$lab/app/LabRFBClient.m" \
+  "$vendor_src/RFBProtocol.c" -framework Foundation -o "$out/control"
+python3 "$lab/tests/test_rfb_lifetime.py" "$out/control" "$out/results"
+```
+
+Raw paired captures and loopback evidence stay private under `run83/`
+and `run83/wake-wire-v2/`. Source pins, artifact hashes, and frame counts
+are in `LINUX_STEAM_MADEIRA_EVIDENCE.json` under `run83.wake_wire_control`. The current device
+discriminator is one physical Air touch on visible Steam artwork, with
+a before/after capture. Check for the genuine Ratatan Install control only
+after the content returns. The selected library's installation,
+compatibility-tool capture, Madeira game, and repeated return remain open.

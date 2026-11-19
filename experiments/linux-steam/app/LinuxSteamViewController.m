@@ -22,6 +22,9 @@
 #import "X11TraceInstall.h"
 #endif
 #import "RFBClient.h"
+#if IDECK_LAB_CLI_INPUT
+#import "LabRFBWake.h"
+#endif
 #if IDECK_LAB_SHARED_FILE_RESERVE
 #if IDECK_LAB_VA_HEADROOM_PROBE
 #error Owned reserve allocator cannot share the observational headroom reservation
@@ -298,14 +301,8 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         // use this on authentication, a download confirmation or an unknown UI.
         uint16_t x=(uint16_t)((pixels.width-1)*0.5);
         uint16_t y=(uint16_t)((pixels.height-1)*0.5);
-        // Steam may ignore a stationary click after keyboard-only activity.
-        // Move first, then press/release at center; the button transition keeps
-        // the first motion from coalescing into the center packet. No drag.
-        uint16_t approachX=x>=8?x-8:x+1;
         self.input.lastPixel=CGPointMake(x,y);
-        [self.client pointerX:approachX y:y buttons:0];
-        [self.client pointerX:x y:y buttons:1];
-        [self.client pointerX:x y:y buttons:0];
+        ideck_rfb_wake(self.client,x,y);
     }else if(action<2){
         // Two known desktop Steam chrome controls, in guest framebuffer space.
         // Verify the actual screen before use; never use on an authentication UI.
