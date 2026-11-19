@@ -13,7 +13,7 @@
   "private_artifact_root": ".madeira-install/linux-steam-ipad (outside repository)",
   "schema_version": 7,
   "latest_run": 83,
-  "recorded_at_utc": "2026-11-19T05:45:00.701004+00:00",
+  "recorded_at_utc": "2026-11-19T05:50:33.824613+00:00",
   "previous_source_checkpoint": "9348bb8eebe9d4de2076f6f057c923e41e1cccd7",
   "source_checkpoint": "9733746228f405670734b80b7b1c1964080ea84a",
   "source_parent": "b5122550bb64aeae2f428282cdf663cf9f3c9c60",
@@ -21953,7 +21953,7 @@
   },
   "run83": {
     "source_parent": "f7446ff982dda1b2f528099e0bcd7c58f1a7a817",
-    "phase": "Actual Air86 Library, Big Picture, keyboard navigation, and game details succeeded. Install prompt not yet reached. Current session preserved.",
+    "phase": "Real interactive Library/BPM and Ratatan details verified. Preserved Air86 now cycles Steam idle artwork. Physical tap needed for a reliable wake and game install.",
     "observed_failure": "Run82 first trap has guest anonymous MAP_STACK mmap ENOMEM before clone. See run82.first_fault.",
     "patch": "Default-off --lazy-stack-reservation. Only exact null hint, length 0x410000, PROT_NONE, flags 0x20022, fd -1, offset 0 uses existing private guest lazy VMA. Original address selection, guard, demand zero, guest protections and allocation accounting retained.",
     "hypothesis": "Avoid the eager contiguous Darwin VA allocation and full PTE table for that glibc stack reservation. Guest VA placement and later backing still must succeed.",
@@ -22082,10 +22082,70 @@
         "path": "run83/health-canFocus-data-private.json",
         "sha256": "0acc3a0e1c4ed34fc370a9c898a2d6084d9ec30738b82a400bb189d69f53a0a6",
         "bytes": 1700
+      },
+      {
+        "path": "run83/screen-userGate-private.png",
+        "sha256": "45ff0f411d7324b70c0dabba6431b6b6e56f27753290b1fabd03f93fd7e076f6",
+        "bytes": 70994
+      },
+      {
+        "path": "run83/screen-afterBlackWindow-private.png",
+        "sha256": "41c33b5bb9e0698c59c3a1ee7287ca98ea42abf3271f8a5f60a0df28c4fb2a4f",
+        "bytes": 1293760
+      },
+      {
+        "path": "run83/screen-secondWake86-private.png",
+        "sha256": "82cd35cd3572a9525136b7b01feefbcfe9d9db6bdcfa82dfe26a24e2afe4bad3",
+        "bytes": 1282162
+      },
+      {
+        "path": "run83/health-secondWake86-data-private.json",
+        "sha256": "bbad992f4b5be230dafe399005708b21589b735244b26e0af75a58ba5fd6b447",
+        "bytes": 1701
+      },
+      {
+        "path": "run83/native-black86-private.txt",
+        "sha256": "ce9a273c0bf61415151e9d1999cd84e17473a6ff1e118193b62e2025b11b5bc3",
+        "bytes": 4194246
+      },
+      {
+        "path": "run83/xstate-black86-private.txt",
+        "sha256": "ecc5d6c83a85f07768790095e9110ad11e91e1978d2d301a7b083f165c0b5b66",
+        "bytes": 97982
+      },
+      {
+        "path": "run83/content-black86-private.txt",
+        "sha256": "06304f14d44eb901a0db3b4733577c54b7f803f23ae855d01492ab2d49ef4d42",
+        "bytes": 18877
+      },
+      {
+        "path": "run83/web-black86-private.txt",
+        "sha256": "e8ec6e397c786913bfb3966f837f0df472162453d4c91fdbf1237fc7479a797e",
+        "bytes": 2363721
+      },
+      {
+        "path": "run83/host-dock-selection-resume/evidence.json",
+        "sha256": "4c41a54a7e4bff7703359f2dbc51a5beae9c10cd2f8494ccbb3ffce12cf8f6c8",
+        "bytes": 2742
+      },
+      {
+        "path": "run83/host-wine-join-resume/evidence.json",
+        "sha256": "602555c3856b26fc4126f6bfd1414006bb41c6f5dfece9d771c3701e1442147d",
+        "bytes": 1977
+      },
+      {
+        "path": "run83/health-currentVisible-data-private.json",
+        "sha256": "6d1b951a71e58ffc313258e221131cfbe091969252e6e1c63e6efa957f21bcc6",
+        "bytes": 1701
+      },
+      {
+        "path": "run83/screen-currentVisible-private.png",
+        "sha256": "6d69eb1db15f8d151f7c4b855fc3e01bae67804f10f65f9b210055e979c561d9",
+        "bytes": 2025140
       }
     ],
     "goal_complete": false,
-    "next": "Preserve Air86 PID 29952. User asked to tap Ratatan Install directly after CLI keyboard path showed search instead of the installer. Continue at the isolated library destination and any user-only license prompt. No active observers.",
+    "next": "User taps visible screensaver on Air once, then checks the visible Ratatan details and Install. Verify shared package completion and actual Play request next. Continue preserving exact live Air86; no active observer.",
     "device_boot": {
       "build": 86,
       "pid": 29952,
@@ -22140,6 +22200,32 @@
         "last_health": 70,
         "matching_faults_in_last_sample": 0
       }
-    ]
+    ],
+    "post_idle": {
+      "same_pid": 29952,
+      "sequence": 131,
+      "frame_calls": 625,
+      "lazy_stack": {
+        "requests": 222,
+        "reserved": 222,
+        "no_hole": 0,
+        "metadata_failures": 0
+      },
+      "screensaver_black_frame_recovered_to_artwork": true,
+      "x11": "Same two 1280x800 visible windows and same focus before and after the black sample.",
+      "fresh_steam_events": "webhelper screensaver create/show 05:46:25-31 UTC; fresh screenshot has moving artwork.",
+      "native_log": "4194246 bytes, capped, zero GUEST_FAULT and MMAP_FAILURE rows before cap",
+      "steam_content": "Two libraries present, both loaded zero app manifests at current startup. No current Ratatan installation observed.",
+      "latest_user_input": "Install-tap request suspended while black/idle; do not tap unidentified black content.",
+      "wake10": "Dispatched during visible Steam artwork; immediate screenshot retained art. Inspect settled frame.",
+      "game_requests": 0,
+      "final_health_sequence": 140,
+      "final_frame_calls": 684,
+      "result_after_wake10": "Still changing screensaver artwork after approximately two minutes. No blind input or reboot."
+    },
+    "independent_host_verification": {
+      "Dock": "Actual manifest and option parser, request staging and single-slot rejection PASS with owned fixtures.",
+      "Wine": "Actual initial pthread/TLS join and failure paths PASS on host. Existing server join plus initial join alone does not prove all Wine children/FEX/rendering quiescent."
+    }
   }
 }

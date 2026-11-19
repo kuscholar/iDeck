@@ -7219,3 +7219,27 @@ Preserve Build86 PID 29952, installation
 `6A3F5231-4CEE-4904-8743-2B76549237BA`, receipt
 `kernel-29952-1220594-27127000.log`. Both bounded observers finished.
 No game install, Play request, Madeira game or return verified. Goal active.
+
+## Run83 follow-up — Steam screensaver transition and handoff controls
+
+The brief black view during idle transitioned to Steam artwork in the same
+Air86 PID. Webhelper recorded a screensaver transition at 05:46:25–31 UTC.
+Numeric X11 showed the same two mapped 1280x800 windows and the same focus
+before and after. Frame count advanced to 625. The capped native log has no
+fault rows before its cutoff. Health counts 222/222 matching stack
+reservations and zero Play requests. One wake on visible art delivered ACK
+10. Its immediate readback still showed artwork. Preserve the session and
+recheck the settled frame before any game action.
+
+Host rechecks of the actual Dock selection, request staging and initial Wine
+pthread/TLS join passed. The continue path still depends on a real installed
+owned title and valid Play request, then verified shutdown and licensed
+Madeira launch. Steam reports two libraries but zero installed app manifests
+at startup. No game launch, game exit or return is verified. The initial Wine
+join marker covers one thread. Full Wine worker/FEX/display quiescence needs
+separate evidence before any return implementation can revive Linux.
+
+After wake ACK 10 the next physical observation was still rotating Steam
+screensaver artwork. Build86 health 140 and frame 684 were read back from the
+same live PID. The safe interaction boundary is now one user tap on visible
+screen-saver art, then the genuine Install control when it is visible.
