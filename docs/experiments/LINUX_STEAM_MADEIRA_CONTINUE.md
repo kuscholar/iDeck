@@ -17,7 +17,8 @@ at this time. No interpreting generic crash-related text as a proven crash.
 
 The signed Build88 main and helper profiles both still matched the Air
 development bundle and device and were within validity when read. The
-earlier expires at 04:42:34 UTC Nov 20. Authorization to end a live
+earlier expires at 04:42:34 UTC Nov 20. The standard local Xcode stores
+had no later exact match. Authorization to end a live
 session and revalidation at install are still prerequisites. Keep the
 existing Lab in place. Next physical discriminator is one full-frame
 request on Build88 after reproducing the symptom, then a real screen and

@@ -22762,7 +22762,18 @@
           "sha256": "06304f14d44eb901a0db3b4733577c54b7f803f23ae855d01492ab2d49ef4d42",
           "bytes": 18877
         }
-      ]
+      ],
+      "profile_inventory": {
+        "checked_utc": "2026-11-20T04:24:13Z",
+        "profiles_read_including_signed_candidate": 7,
+        "exact_main_expiries_utc": [
+          "2026-11-20T04:42:36Z"
+        ],
+        "exact_helper_expiries_utc": [
+          "2026-11-20T04:42:34Z"
+        ],
+        "scope": "User's standard Xcode provisioning stores and the signed Lab copy. Exact app, Air hardware, existing certificate and development entitlement. No newer pair found. No signing or account changes."
+      }
     }
   }
 }

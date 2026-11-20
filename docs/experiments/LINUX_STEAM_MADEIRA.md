@@ -7500,3 +7500,8 @@ existing Lab in place. Next physical discriminator is one full-frame
 request on Build88 after reproducing the symptom, then a real screen and
 frame readback. Genuine Play, licensed Windows game execution and
 repeatable return are still unverified.
+
+Read-only local profile inventory at 23:24 EST found no later authorized
+main/helper pair for the exact Air, Lab application IDs and current
+certificate. After 23:42:34 EST, a valid matching pair is required before
+any install. No profile was created, imported or changed.
