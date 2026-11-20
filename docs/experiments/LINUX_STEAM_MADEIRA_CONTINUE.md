@@ -1,3 +1,112 @@
+## Run83 follow-up — late white frame and scoped refresh checkpoint
+
+At 23:21–23:22 EST Build86 PID 29952 still responded to numeric health
+queries. The guest area had changed from the screensaver strip to white,
+with its pointer visible. Two screenshots were identical over the
+60-second sampling interval, and the count stayed at 17022. Seven frames
+had arrived since the last sample at 18:39. That rules out treating the
+earlier frame stall as an uninterrupted decoder stop throughout this
+period. It does not establish that the client recovered its interactive UI
+or identify which display component accounts for the change. Play remains
+zero; there was no input or app lifecycle action.
+
+The exact two snapshots, crop hash, source pin and bounded copies of
+Steam's current log files are indexed under `run83.post_idle_white_frame`.
+Recent Steam log lines did not establish an interactive foreground view
+at this time. No interpreting generic crash-related text as a proven crash.
+
+The signed Build88 main and helper profiles both still matched the Air
+development bundle and device and were within validity when read. The
+earlier expires at 04:42:34 UTC Nov 20. Authorization to end a live
+session and revalidation at install are still prerequisites. Keep the
+existing Lab in place. Next physical discriminator is one full-frame
+request on Build88 after reproducing the symptom, then a real screen and
+frame readback. Genuine Play, licensed Windows game execution and
+repeatable return are still unverified.
+
+## Run83 continuation — after the sign-only checkpoint
+
+18:39 Air check: the system notice is gone from the screenshot; no Codex
+input. Same Build86 PID 29952 and frame count 17015, health 6555, zero Play.
+The partial frame remains. Build88 is signed and verified but uninstalled.
+The earlier profile expires at 04:42:34 UTC Nov 20. Revalidate at install
+and preserve the old live session until it ends or there is explicit
+permission to end only that Lab.
+
+Seven host controls now pass. The partial-reply case proves the receipt
+can be true while a guest frame remains stale, and the blocked reader
+drains on ordinary viewer shutdown. Current Air has not run this test.
+Changes are local outside the approved Git window.
+
+## Run83 continuation — exact refresh linkage and Air signing
+
+At 18:35 EST the same Build86 PID 29952 remained alive. Health 6530
+still counted 17015 frames and zero Play requests. A system account
+notice was covering the visible residual Steam frame. This belongs
+to the physical device user. No input was sent and the Lab was
+neither stopped nor upgraded.
+
+Build88 was signed in a separate private copy using the existing exact
+Air development profiles and certificate. The main app and helper
+both matched the bundle IDs and the physical device. Deep-strict
+signature and embedded profile checks passed, and signing preserved
+the binary's `__TEXT,__text` SHA-256. The earlier helper profile expires
+at 04:42:34 UTC on 2026-11-20. Revalidate the profiles before any later
+install. Neither signature nor linkage verifies runtime recovery.
+
+The prior audit used a generic disassembly option with the Mach-O
+parser and accidentally retained unrelated instructions. Re-run
+`xcrun llvm-objdump --macho --disassemble --dis-symname '<exact block>'`
+on Build88. The exact block passes ten bytes to `write:count:` and
+calls the completion block. Only the bounded audit is now indexed.
+The original private output remains intact. See
+`run83.refresh_signing_and_device_notice` for exact hashes.
+
+Resume after the device user handles the system notice. Recheck the
+existing session before any authorization-gated Lab test. Keep the
+current Air application, accounts and saves. No new physical Steam
+interaction, Windows execution, repeatable return or stability proof.
+
+## Run83 continuation — full-frame refresh candidate
+
+Air Build86 PID 29952 still shows a partial idle frame. At 13:10 EST,
+health 4584 records 17015 snapshots, only two up from 08:01–08:03, and zero
+Play. No app input, restart, signing or upgrade. Keep the existing session
+until a physical wake or an authorized end to the current test.
+
+Fresh private Build88 implements one full-frame RFB request in the existing
+CLI input opt-in. Six host tests passed and the full unsigned iOS Mach-O
+contains the new handler, queued send and receipt fields. The physical test
+is a single refresh while reproducing the fault, a new local-write receipt
+and independent picture/frame readback. No Air refresh, game or return
+validation. See `run83.full_refresh_discriminator` for hashes. These scoped
+changes remain local outside the Git window.
+
+## Run83 follow-up — long-idle display stops producing frames
+
+At 08:01–08:03 EST Air Build86 still had the exact existing PID 29952.
+Four screenshots separated by roughly 90 seconds had the same cropped
+guest content: a narrow strip of Steam artwork over a black lower area.
+Health advanced 2729 to 2738 while the frame snapshot count stayed at
+17013. The frame pool reported no failure and no Play request arrived.
+This observation extends beyond the earlier brief black-to-art transitions.
+
+The native append log is capped. The numeric X11 watcher ran its full
+120-sample quota well before the stall, so its last focus/gallery state
+cannot identify the current layer. Steam logs have no new fatal,
+unresponsive or installation marker in this interval. Current evidence
+locates the symptom at or before delivery of the next framebuffer
+snapshot. It cannot distinguish Steam rendering, Xvnc, or the viewer
+transport reading path. No input, install, or restart was performed.
+
+Use the existing read-only receipt and health recipe for the exact Air
+PID, then `sips -c 1400 2280` on each private capture to exclude system
+chrome. Reproducible hashes are under `run83.long_idle_frame_stall`. Avoid
+blind input to the obscured guest. A normal touch/readback on recovered
+art, or a separately authorized Lab display recovery if stalled, comes
+before game installation. The commit window had ended, so this evidence
+remains in the branch worktree for the next permitted checkpoint.
+
 ## Run83 continuation — native server exit receipt
 
 Same live Air86 PID 29952 still alternates between Steam idle artwork and a

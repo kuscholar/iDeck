@@ -271,7 +271,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 - (void)registerCLINavigation {
     // Explicit development-build opt-in. No text, request data, shell command,
     // credentials or native game-launch API is accepted by these notifications.
-    NSArray<NSString *> *names=@[@"library",@"big-picture",@"left",@"right",@"up",@"down",@"activate",@"back",@"page-down",@"wake"];
+    NSArray<NSString *> *names=@[@"library",@"big-picture",@"left",@"right",@"up",@"down",@"activate",@"back",@"page-down",@"wake",@"refresh-display"];
     self.cliInputTokens=[NSMutableArray new];__weak typeof(self) weakSelf=self;
     for(NSUInteger i=0;i<names.count;i++){
         int token=-1;NSString *name=[@"com.kuschqin.ideck.linuxlab.test-input." stringByAppendingString:names[i]];
@@ -289,8 +289,12 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 }
 - (void)dispatchCLINavigation:(NSUInteger)action {
     NSAssert(NSThread.isMainThread,@"Lab navigation belongs to main");
-    if(action>9||!self.view.window||UIApplication.sharedApplication.applicationState!=UIApplicationStateActive||
+    if(action>10||!self.view.window||UIApplication.sharedApplication.applicationState!=UIApplicationStateActive||
        self.guestEnded||!self.acceptsFrames||!self.client||self.input.activeTouch||self.input.isFirstResponder)return;
+    if(action==10){
+        [self requestCLIDisplayRefresh];
+        return;
+    }
     CGSize pixels=self.input.pixels;
     if(!isfinite(pixels.width)||!isfinite(pixels.height)||pixels.width<1||pixels.height<1||pixels.width>65535||pixels.height>65535)return;
     if(action==9&&pixels.width<2)return; // A wake must include real pointer displacement.
@@ -318,6 +322,18 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     (void)ideck_native_note_navigation((unsigned)action);
     char line[128];snprintf(line,sizeof line,"IDECK_LAB_CLI_INPUT_V1 action=%u dispatch_only=1 physical_touch_test=0",(unsigned)action);
     ideck_native_log_line(line);
+}
+- (void)requestCLIDisplayRefresh {
+    NSURL *support=[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
+    NSURL *receipt=[support URLByAppendingPathComponent:@"iDeckLinuxLab/last-display-refresh.json"];
+    // This sends no guest input. A new framebuffer and actual screen readback
+    // are independently required even if the local write succeeded.
+    [self.client ideckRequestFullRefreshWithCompletion:^(BOOL written){
+        NSDictionary *fields=LabIdentifiedResult(@{@"full_refresh_written":@(written),@"ui_verified":@NO});
+        NSData *data=[NSJSONSerialization dataWithJSONObject:fields options:0 error:nil];
+        if(!receipt||!data||![data writeToURL:receipt options:NSDataWritingAtomic error:nil])
+            ideck_native_log_line("IDECK_RFB_REFRESH_V1 receipt_write_failed=1");
+    }];
 }
 #endif
 - (void)showStatus:(NSString *)value {dispatch_async(dispatch_get_main_queue(),^{self.status.text=value;self.status.hidden=NO;});}

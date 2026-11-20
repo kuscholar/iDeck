@@ -13,9 +13,9 @@ def exact(s,n):
         data+=block
     return data
 rows=[]
-for mode in ['before-start','handshake-blocked','frame-held','input-held','wake-wire']:
+for mode in ['before-start','handshake-blocked','frame-held','input-held','wake-wire','full-refresh','refresh-partial-reply']:
     server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(1);port=server.getsockname()[1];accepted=[];errors=[]
-    received_wake=[]
+    received_wake=[];refresh_requests=[];partial_reply_sent=[]
     def serve():
         try:
             s,_=server.accept();accepted.append(True)
@@ -25,8 +25,24 @@ for mode in ['before-start','handshake-blocked','frame-held','input-held','wake-
                     while s.recv(64):pass
                     return
                 s.sendall(b'RFB 003.008\n');exact(s,12);s.sendall(b'\1\2');assert exact(s,1)==b'\2';s.sendall(bytes(16));exact(s,16);s.sendall(bytes(4));exact(s,1)
-                s.sendall(struct.pack('!HH',32,16)+bytes(20));exact(s,20);header=exact(s,4);exact(s,struct.unpack('!H',header[2:])[0]*4);exact(s,10)
-                s.sendall(b'\0\0\0\1'+struct.pack('!HHHHi',0,0,32,16,0)+bytes(2048))
+                s.sendall(struct.pack('!HH',32,16)+bytes(20));exact(s,20);header=exact(s,4);exact(s,struct.unpack('!H',header[2:])[0]*4)
+                initial=exact(s,10)
+                frame_header=b'\0\0\0\1'+struct.pack('!HHHHi',0,0,32,16,0)
+                s.sendall(frame_header+bytes(2048))
+                if mode in ('full-refresh','refresh-partial-reply'):
+                    assert struct.unpack('!BBHHHH',initial)==(3,0,0,0,32,16)
+                    # Stay idle after the first update until the same viewer
+                    # asks once for the full extent again.
+                    for _ in range(2):
+                        request=struct.unpack('!BBHHHH',exact(s,10))
+                        assert request[0]==3 and request[2:]==(0,0,32,16)
+                        refresh_requests.append(request[1])
+                    assert sorted(refresh_requests)==[0,1]
+                    if mode=='full-refresh':
+                        s.sendall(frame_header+bytes([0x5a])*2048)
+                    else:
+                        s.sendall(frame_header+bytes([0x5a])*256)
+                        partial_reply_sent.append(True)
                 if mode=='wake-wire':
                     while len(received_wake)<3:
                         msg=exact(s,1)
@@ -51,6 +67,13 @@ for mode in ['before-start','handshake-blocked','frame-held','input-held','wake-
         assert received_wake==[(0,7,7),(1,15,7),(0,15,7)],received_wake
         assert 'move_press_release_written=3' in text
         row['received_pointer_packets']=received_wake
+    if mode=='full-refresh':
+        assert sorted(refresh_requests)==[0,1] and 'second_frame=1 same_connection=1' in text
+        row['post_first_frame_requests']=refresh_requests
+    if mode=='refresh-partial-reply':
+        assert partial_reply_sent and sorted(refresh_requests)==[0,1]
+        assert 'short_reply_never_published=1 blocked_reader_drained=1' in text
+        row['partial_reply_bytes']=256
     rows.append(row)
 (out/'evidence.json').write_text(json.dumps(dict(scope='HOST actual socket/GCD lifetime controls; no iOS App/UI/Steam/game proof',tests=rows,control_sha256=hashlib.sha256(a.control.read_bytes()).hexdigest()),indent=2)+'\n')
-print('Four RFB lifetime controls and one wake packet loopback control PASS')
+print('Four RFB lifetime controls plus wake, full-refresh and partial-reply loopback controls PASS')

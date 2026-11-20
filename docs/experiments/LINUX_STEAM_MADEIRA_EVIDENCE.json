@@ -22431,6 +22431,338 @@
           "bytes": 1594
         }
       ]
+    },
+    "long_idle_frame_stall": {
+      "source_base": "4f41cea62c1bb0ec75a8f99c2ea0601f2ed0b51c",
+      "build": 86,
+      "pid": 29952,
+      "signed_binary_sha256": "c1baf24ffb241118393e230851a393ef4baf225ca721ee3924987e3d28bdb7f2",
+      "observations": [
+        {
+          "health": 2729,
+          "monotonic_ms": 1247874357,
+          "frame_calls": 17013,
+          "frame_pool_refusals": 0
+        },
+        {
+          "health": 2731,
+          "monotonic_ms": 1247894358,
+          "frame_calls": 17013,
+          "frame_pool_refusals": 0
+        },
+        {
+          "health": 2735,
+          "monotonic_ms": 1247934359,
+          "frame_calls": 17013,
+          "frame_pool_refusals": 0
+        },
+        {
+          "health": 2738,
+          "monotonic_ms": 1247964359,
+          "frame_calls": 17013,
+          "frame_pool_refusals": 0
+        }
+      ],
+      "elapsed_ms": 90002,
+      "guest_area_crop": {
+        "height": 1400,
+        "width": 2280,
+        "command": "sips -c 1400 2280",
+        "sha256_all_four": "247e260a116ff90a79b4e0d33faed2fb2932f82f6b25226d0d598d47ef0dd342"
+      },
+      "observation": "Same partial screensaver artwork and black lower region. No additional frame snapshots or Play requests across four samples, while process health advances. No frame-pool refusal recorded.",
+      "log_limits": "Native append capped; X11 watcher finished its bounded sample count long before this window; Steam webhelper/content files provide no new fatal/unresponsive/installation marker in this interval.",
+      "next": "Do not target an obscured guest control. Preserve lab session. Verify physical input if full artwork returns. If display remains stalled, obtain authorized recovery path and distinguish guest display from transport before retrying real Install/Play.",
+      "artifacts": [
+        {
+          "path": "run83/health-afterJoinCheckpoint-data-private.json",
+          "sha256": "1a67b65fc6387238f86235f0a8dbacb3ac776f9f2202d341ad5609e1ea23869d",
+          "bytes": 1708
+        },
+        {
+          "path": "run83/health-afterLongIdleSettled-data-private.json",
+          "sha256": "4d56d13be564e103dc21917b8c5be54b35773a73ed7f379022b019f9c54302c7",
+          "bytes": 1708
+        },
+        {
+          "path": "run83/health-afterLongIdleMinute-data-private.json",
+          "sha256": "149c4fa18033749f38122a80919d31ec00b7a4fa6ac266a5ad7c69dec6568819",
+          "bytes": 1708
+        },
+        {
+          "path": "run83/health-afterLongIdleRecheck-data-private.json",
+          "sha256": "f250bb94b848664574129bfbab8ca2f5feb605fa39e155fa798bd227f4b2997d",
+          "bytes": 1708
+        },
+        {
+          "path": "run83/screen-afterJoinCheckpoint-private.png",
+          "sha256": "decc9cf0ab6223c1d062d2f573a420488ad77ed20974bf52766ebdab02a72204",
+          "bytes": 560319
+        },
+        {
+          "path": "run83/screen-afterLongIdleSettled-private.png",
+          "sha256": "decc9cf0ab6223c1d062d2f573a420488ad77ed20974bf52766ebdab02a72204",
+          "bytes": 560319
+        },
+        {
+          "path": "run83/screen-afterLongIdleMinute-private.png",
+          "sha256": "9d3c917a89424f973f5c7b3065b84e462905acec15d8f7522e1ae58be219069a",
+          "bytes": 560555
+        },
+        {
+          "path": "run83/screen-afterLongIdleRecheck-private.png",
+          "sha256": "a0a0335ef05418cf53c648ae7ba87c3c20068a347fda55ab662d0df56a42ede4",
+          "bytes": 560634
+        },
+        {
+          "path": "run83/after-long-idle-private/xstate.txt",
+          "sha256": "e2a08ee25c7105847b46bd48baccd7cceba4b82a033b259fb5d29d9001acb51f",
+          "bytes": 301592
+        },
+        {
+          "path": "run83/after-long-idle-private/steamweb.txt",
+          "sha256": "635b0f3ed59b07fffb9813db37cb59125d672992442b113fdc636e69b65332a9",
+          "bytes": 2395195
+        },
+        {
+          "path": "run83/after-long-idle-private/content.txt",
+          "sha256": "06304f14d44eb901a0db3b4733577c54b7f803f23ae855d01492ab2d49ef4d42",
+          "bytes": 18877
+        }
+      ]
+    },
+    "full_refresh_discriminator": {
+      "source_base": "4f41cea62c1bb0ec75a8f99c2ea0601f2ed0b51c",
+      "LinuxRunner_pin": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "live_device": {
+        "build": 86,
+        "pid": 29952,
+        "health_sequence": 4584,
+        "frame_calls": 17015,
+        "file_policy_submitted": 0,
+        "screenshot": "Same partial strip of Steam idle artwork over black. The native frame pool advanced only two calls after roughly five hours."
+      },
+      "host_loopback": "Four lifetime controls, wake packet order and full-refresh controls pass with ASan/UBSan. A synthetic idle peer received one incremental and one explicit non-incremental request on one established connection and delivered a second known raw frame. No duplicate or post-stop refresh was admitted.",
+      "hypothesis": "The current partial picture might be held by the incremental-damage display path. An independent full-frame request on the same connection can show whether the server/viewer pair can still deliver a complete frame after stalling.",
+      "candidate": {
+        "binary_sha256": "6a15022ce4b61a0fb1674029460db176e9313bc270b28743c6a6cb9332f48eb4",
+        "linked_symbols": [
+          "-[LinuxSteamViewController requestCLIDisplayRefresh]",
+          "-[LRRFBClient ideckRequestFullRefreshWithCompletion:]",
+          "___53-[LRRFBClient ideckRequestFullRefreshWithCompletion:]_block_invoke"
+        ],
+        "block_call_sites": [
+          "100a1d31c:\t54 91 67 94\tbl\t0x10240186c ; symbol stub for: _objc_autoreleasePoolPush",
+          "100a1d38c:\t15 b9 67 94\tbl\t\"_objc_msgSend$write:count:\"",
+          "100a1d39c:\t00 01 3f d6\tblr\tx8",
+          "100a1d3a4:\t2f 91 67 94\tbl\t0x102401860 ; symbol stub for: _objc_autoreleasePoolPop",
+          "100a1d3c4:\t94 8d 67 94\tbl\t0x102400a14 ; symbol stub for: ___stack_chk_fail"
+        ],
+        "markers": [
+          "refresh-display",
+          "iDeckLinuxLab/last-display-refresh.json",
+          "full_refresh_written"
+        ],
+        "build": 88,
+        "signed": false,
+        "installed": false,
+        "scope": "Exact Mach-O block filtered with --macho --disassemble --dis-symname; 10-byte writer call verified"
+      },
+      "build_retry": "Initial Xcode build exit 65: clang temporary-file ENOSPC with 117 MiB free on macOS Data. Identical staged source rebuilt with the compiler TMPDIR on easystore. Neither attempt signed or installed.",
+      "limits": "A completed write only proves the client sent ten bytes to its local socket. A no-frame result cannot isolate Steam, the peer, or an incomplete RFB rectangle. Build86 has no refresh handler and Build88 is uninstalled. No game execution or return evidence.",
+      "artifacts": [
+        {
+          "path": "run83/health-nextRenderCheck-data-private.json",
+          "sha256": "3a4a5c18c76f8008e2ddacf545042b724287601b87f648264c0afad134386159",
+          "bytes": 1714
+        },
+        {
+          "path": "run83/screen-nextRenderCheck-private.png",
+          "sha256": "f847cdd56eab23c9a684f154bdb6ac63b02ea03c76e99b7aa5029e805c4b926a",
+          "bytes": 1094624
+        },
+        {
+          "path": "run83/display-refresh-wire-v1/generated/evidence.json",
+          "sha256": "91e5216fccb9a245c48a66a70b563b5666b92e788b4da1ca5198b11a12a14a96",
+          "bytes": 486
+        },
+        {
+          "path": "run83/display-refresh-wire-v1/results/evidence.json",
+          "sha256": "d770afef0c5e9eaf2f7bd2803abe706a8ac435fac4cd6db429405c6fe8f7e9b5",
+          "bytes": 1552
+        },
+        {
+          "path": "run83/runtime88-refresh/evidence.json",
+          "sha256": "500f38f0788e85a0800cda4bbbfec366329b22ff43fec27d5fa56a16b4443e4d",
+          "bytes": 106161
+        },
+        {
+          "path": "run83/hybrid88-refresh/prepare-evidence.json",
+          "sha256": "224c54879e8483dc36ceb510138264b389bdf77fe8038f560da6948cfb36765b",
+          "bytes": 322266
+        },
+        {
+          "path": "run83/hybrid88-refresh/build-result.json",
+          "sha256": "9b5c9b3bc2d13cb4b816fb794dd9381e6759b57a1dc75e2fa7f5e7fb33e00254",
+          "bytes": 55
+        },
+        {
+          "path": "run83/hybrid88-refresh/retry-build-result.json",
+          "sha256": "7c5851c54538a4f0e4ef4163e91e0e2bd3e3f4d141901aa2be6465a1dd15e079",
+          "bytes": 53
+        },
+        {
+          "path": "run83/hybrid88-refresh/package-validation.json",
+          "sha256": "ef65c7eb8136ec75b1aceb6c96d0562fc9c672d65ec01d62f3fcc415475bb0e1",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid88-refresh/final-refresh-link-bounded-private.json",
+          "sha256": "81d30d5ec07e0d09e3087123905874f84465e400c3a003deddda9e1ee95f3da0",
+          "bytes": 1007
+        }
+      ],
+      "linkage_recheck": "First audit applied a generic symbol option in Mach-O mode and included unrelated code. The exact Mach-O symbol audit replaces it with five real block call sites and the ten-byte writer length."
+    },
+    "refresh_signing_and_device_notice": {
+      "source_base": "4f41cea62c1bb0ec75a8f99c2ea0601f2ed0b51c",
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "health": 6530,
+        "frames": 17015,
+        "play_requests": 0,
+        "system_account_notice_visible": true,
+        "result": "Residual partial Steam frame now behind an iPadOS account notice; screenshot contents private. No input, account approval, app stop, install, or launch."
+      },
+      "signing": {
+        "build": 88,
+        "profiles": [
+          {
+            "profile_role": "main",
+            "expiry_utc": "2026-11-20T04:42:36Z",
+            "bundle_device_certificate_match": true
+          },
+          {
+            "profile_role": "helper",
+            "expiry_utc": "2026-11-20T04:42:34Z",
+            "bundle_device_certificate_match": true
+          }
+        ],
+        "deep_strict": true,
+        "unsigned_sha256": "6a15022ce4b61a0fb1674029460db176e9313bc270b28743c6a6cb9332f48eb4",
+        "signed_sha256": "965dbe067a165f4b35c1e5b19c2e9596e2eddfd7d091f3428b487c9cc83715c8",
+        "text_sha256": "98616d7c4ae90746c526a9104c4da29c2bc2ddd65e3ede938679a32b678cf176",
+        "text_unchanged": true,
+        "installed": false,
+        "device_launch": false
+      },
+      "deployment_gate": "The iPadOS notice cleared from the later capture without Codex input. Existing Build86 remains alive, frozen and with no Play receipt. Wait for the existing test to end or obtain specific authorization before ending it. Revalidate both profiles at install.",
+      "artifacts": [
+        {
+          "path": "run83/signed88-refresh/verification-private.json",
+          "sha256": "ceee98b54f4cd8728d234d1bb92f99e721e7f5d34aabdc395163503e73e7a18c",
+          "bytes": 664
+        },
+        {
+          "path": "run83/hybrid88-refresh/final-refresh-link-bounded-private.json",
+          "sha256": "81d30d5ec07e0d09e3087123905874f84465e400c3a003deddda9e1ee95f3da0",
+          "bytes": 1007
+        },
+        {
+          "path": "run83/health-resume1835-data-private.json",
+          "sha256": "72cd91941e12be887c614ee3d7f304319f0bdeac9b6a012c6539ecb6ae6e543c",
+          "bytes": 1725
+        },
+        {
+          "path": "run83/screen-resume1835-private.png",
+          "sha256": "648cf20549b771a3cf5662e80a3c1c4f303d8529b477fc28b9d3c2bd00cd48cb",
+          "bytes": 1259675
+        }
+      ],
+      "post_sign_recheck": {
+        "sequence": 6555,
+        "frame_calls": 17015,
+        "play_requests": 0,
+        "system_notice_visible": false,
+        "guest_picture": "Same frozen partial artwork and black lower area. The reason the notice cleared was not observed.",
+        "partial_reply_host_control": "All seven ASan/UBSan cases passed. Real copied client wrote full refresh, peer sent a valid full-update header but only 256 of 2048 bytes. Last complete frame retained. Ordinary shutdown drained the blocked decoder. No Air refresh performed.",
+        "artifacts": [
+          {
+            "path": "run83/health-afterLocalSign1839-data-private.json",
+            "sha256": "fff6ab3e16c3780c48dcab957047316c3859f66de22a3f9ab5f816e814355936",
+            "bytes": 1725
+          },
+          {
+            "path": "run83/screen-afterLocalSign1839-private.png",
+            "sha256": "d5b8b9a2afad461976be2dbb969f4cedcdfa182ecd2d48dc5c5fb78a73e5bee6",
+            "bytes": 1095891
+          },
+          {
+            "path": "run83/display-refresh-partial-v1/results/evidence.json",
+            "sha256": "1bceabd59eb5c9dc8b64a874ce4d76cc9e2f548c6295600e914524daae670dee",
+            "bytes": 1773
+          }
+        ]
+      }
+    },
+    "post_idle_white_frame": {
+      "source_base": "4f41cea62c1bb0ec75a8f99c2ea0601f2ed0b51c",
+      "LinuxRunner_pin": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "device_build": 86,
+      "pid": 29952,
+      "sequences": [
+        8247,
+        8253
+      ],
+      "elapsed_ms": 60001,
+      "frames": 17022,
+      "frames_added_since_1839": 7,
+      "play_requests": 0,
+      "crop": "sips -c 1200 2010",
+      "crop_sha256_both": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94",
+      "finding": "Previously obscured screensaver strip changed to a fully white, pointer-visible guest area. Seven new snapshots mean the earlier stall did not persist continuously. No additional decode snapshots or visible progress across the two later samples.",
+      "bounds": "No current Steam Library, BPM, Play, Wine game or return evidence from these two snapshots. The last matching Steam screensaver line predated these snapshots by hours. Current causal layer is unknown.",
+      "profile_checked_before_expiry": true,
+      "earlier_profile_expiry_utc": "2026-11-20T04:42:34Z",
+      "next": "Preserve live Build86. Before any deployment ensure authorized end of current session and both matching profiles are still valid, then capture real Steam baseline and one on-device full-refresh observation.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume2321-data-private.json",
+          "sha256": "13f876ca747704e4f17404cfaad62875b264102c4b9dc64134d6d4e34f37b6cb",
+          "bytes": 1722
+        },
+        {
+          "path": "run83/screen-resume2321-private.png",
+          "sha256": "90fd240d3e387fc27912f8af3c034ddc07988f281eadca0588ef20ded35c112d",
+          "bytes": 212630
+        },
+        {
+          "path": "run83/health-settle2322-data-private.json",
+          "sha256": "74e403b1ddfb7cb5bb1a3169582bf2ffb14830280eacba659e38ec59cf2ffbb0",
+          "bytes": 1722
+        },
+        {
+          "path": "run83/screen-settle2322-private.png",
+          "sha256": "6689d5e6080b2789df89746672b237ec3520fd879e999ae9777595b4eafbe925",
+          "bytes": 212414
+        },
+        {
+          "path": "run83/resume2321-private/steamweb.txt",
+          "sha256": "fd52d9810533979d863e5653bbc42aafddf6a69588582c5f8a6be745bc87d84c",
+          "bytes": 2592754
+        },
+        {
+          "path": "run83/resume2321-private/cef.txt",
+          "sha256": "e10b78bbbfbe9b459ebfee3aa422562314ad8849cff3193e277b3f6bf00a8fd6",
+          "bytes": 2425771
+        },
+        {
+          "path": "run83/resume2321-private/content.txt",
+          "sha256": "06304f14d44eb901a0db3b4733577c54b7f803f23ae855d01492ab2d49ef4d42",
+          "bytes": 18877
+        }
+      ]
     }
   }
 }

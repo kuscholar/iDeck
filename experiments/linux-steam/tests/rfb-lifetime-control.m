@@ -14,7 +14,11 @@ int main(int argc,char **argv){@autoreleasepool{
     __block atomic_bool entered=false,returned=false,notified=false;
     dispatch_semaphore_t release=dispatch_semaphore_create(0);
     BOOL input=[mode isEqual:@"input-held"],frame=[mode isEqual:@"frame-held"];
-    BOOL wake=[mode isEqual:@"wake-wire"];
+    BOOL wake=[mode isEqual:@"wake-wire"],partial=[mode isEqual:@"refresh-partial-reply"];
+    BOOL refresh=partial||[mode isEqual:@"full-refresh"];
+    __block atomic_bool refreshWritten=false;
+    __block atomic_uint seenFrames=0;
+    if(refresh)assert(![client ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
     __block atomic_uint wakeWrites=0;
     void (^hold)(void)=^{
         if(atomic_exchange(&entered,true))return;
@@ -26,6 +30,31 @@ int main(int argc,char **argv){@autoreleasepool{
         if(frame)hold();
         if(input)[weakClient key:0xff50 down:NO];
         if(wake&&!atomic_exchange(&entered,true))ideck_rfb_wake(weakClient,15,7);
+        if(refresh)atomic_fetch_add(&seenFrames,1);
+        if(refresh&&n==1){
+            assert([weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){
+                assert(written);atomic_store(&refreshWritten,true);
+                if(partial)dispatch_after(dispatch_time(DISPATCH_TIME_NOW,500*NSEC_PER_MSEC),dispatch_get_main_queue(),^{
+                    assert(atomic_load(&seenFrames)==1);
+                    [weakClient ideckStopWithCompletion:^{
+                        assert(atomic_load(&seenFrames)==1);
+                        puts("RFB_REFRESH short_reply_never_published=1 blocked_reader_drained=1");
+                        exit(0);
+                    }];
+                });
+            }]);
+            assert(![weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
+        }else if(refresh&&n==2){
+            assert(!partial);
+            const uint8_t *data=pixels.bytes;
+            for(NSUInteger i=0;i<pixels.length;i++)assert(data[i]==0x5a);
+            [weakClient ideckStopWithCompletion:^{
+                assert(atomic_load(&refreshWritten));
+                assert(![weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
+                puts("RFB_REFRESH second_frame=1 same_connection=1 duplicate_refused=1");
+                exit(0);
+            }];
+        }
     };
     if(input)client.transportMetricsHandler=^(NSDictionary *event){if([event[@"input_sequence"] unsignedLongLongValue])hold();};
     if(wake)client.transportMetricsHandler=^(NSDictionary *event){
@@ -47,7 +76,7 @@ int main(int argc,char **argv){@autoreleasepool{
             [client start];[client key:0xff50 down:NO];
             puts("RFB_LIFETIME stopped_before_start=1 completion_main=1");exit(0);
         }];
-    }else if(wake){
+    }else if(wake||refresh){
         [client start];
     }else{
         [client start];

@@ -33,7 +33,7 @@ if a.frame_snapshot_pool:
 @property(nonatomic,strong) IDECKFrameSnapshotPool *ideckFramePool;
 @end
 @implementation LRRFBClient {''',1)
-replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;')
+replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;\n    BOOL _ideckRefreshSubmitted;\n    _Atomic uint32_t _ideckRequestedExtent;')
 replace('_password=[password copy];_socket=-1;','_password=[password copy];_socket=-1;\n        _ideckAdmission=[NSRecursiveLock new];_ideckTasks=dispatch_group_create();')
 if a.frame_snapshot_pool:
  replace('- (instancetype)initWithPort:', '@synthesize ideckFramePool=_ideckFramePool;\n- (instancetype)initWithPort:')
@@ -55,6 +55,27 @@ replace('- (void)stop {','''- (void)stop {
     });
 }
 - (void)ideckStopOriginal {''')
+replace('- (BOOL)request:(BOOL)incremental {','''- (BOOL)request:(BOOL)incremental {
+    // The decoder owns width/height, including DesktopSize updates. Publish a
+    // single consistent extent to the control queue before the normal write.
+    atomic_store(&_ideckRequestedExtent,((uint32_t)_width<<16)|_height);''')
+replace('- (BOOL)update {','''- (BOOL)ideckRequestFullRefreshWithCompletion:(void (^)(BOOL))completion {
+    if(!completion)return NO;
+    [_ideckAdmission lock];
+    uint32_t extent=atomic_load(&_ideckRequestedExtent);
+    if(_ideckClosing||_ideckRefreshSubmitted||!atomic_load(&_ready)||atomic_load(&_stopped)||!extent){
+        [_ideckAdmission unlock];return NO;
+    }
+    _ideckRefreshSubmitted=YES;
+    dispatch_group_async(_ideckTasks,_inputQueue,^{@autoreleasepool{
+        uint8_t packet[10]={3,0,0,0,0,0,(uint8_t)(extent>>24),(uint8_t)(extent>>16),
+                            (uint8_t)(extent>>8),(uint8_t)extent};
+        completion([self write:packet count:sizeof packet]);
+    }});
+    [_ideckAdmission unlock];
+    return YES;
+}
+- (BOOL)update {''')
 replace('- (void)enqueue:(NSData *)data keySymbols:(BOOL)keySymbols motion:(BOOL)motion {','''- (void)enqueue:(NSData *)data keySymbols:(BOOL)keySymbols motion:(BOOL)motion {
     [_ideckAdmission lock];
     if(!_ideckClosing)[self ideckEnqueue:data keySymbols:keySymbols motion:motion];

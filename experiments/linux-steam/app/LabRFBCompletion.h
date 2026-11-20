@@ -7,5 +7,8 @@
  * No timer-based success, group wait on main or Linux/game quiescence claim.
  */
 - (void)ideckStopWithCompletion:(dispatch_block_t)completion;
+/* One non-incremental request per connected viewer. Completion runs on the
+ * input queue and means only that the request bytes were written locally. */
+- (BOOL)ideckRequestFullRefreshWithCompletion:(void (^)(BOOL written))completion;
 @end
 #endif
