@@ -1,3 +1,41 @@
+## Run83 follow-up — recover from an unstaged Play request
+
+At 04:29 EST Air Build86 PID 29952 reported health 10093 and 17022 frames.
+The guest area crop matches the 23:21 white frame, including the pointer.
+No captured Play and no device action. The two known exact Air profiles
+expired before this observation. A read-only scan of the standard local
+profile stores and the signed candidate inspected seven entries and
+found zero currently valid exact matches for either bundle. No profile
+or account action was attempted.
+
+An unstaged Play capture remains owned by the C slot after a failed
+Madeira handoff. On the explicit retained-frontend restart button,
+discard only the still-matching unstaged sequence after the frontend
+and display drained. A request already owned by Madeira refuses
+restart. A mismatched sequence leaves the slot and display untouched.
+The existing ordinary Metal reopen gate then governs the next Linux
+wave. The button says it discards a Play request. This path grants no
+Wine admission and performs no automatic retry.
+
+Use the existing `test-capture-launch.py --dock-storage` recipe, with
+fresh private output. The actual host ARM64 ELF and bounded IPC reject
+a wrong sequence without freeing the capture, allow the exact discard,
+then admit the next request. The synthetic Windows PE is never executed.
+`test-native-setup-entry.py <new-private-out>` compiles the exact
+restart and setup methods with counted host stubs. It verifies refusal
+while the display is undrained, native ownership, stale discard and
+Metal failure, as well as one explicit restart and a normal restart.
+Both host controls passed under ASan/UBSan.
+
+Replay the recorded runtime88 controller compile with a fresh output
+path, once with and once without `IDECK_LAB_NATIVE_SETUP_TRANSITION`.
+Both ARM64 iOS objects pass; only the transition object imports
+`ideck_game_file_policy_discard`. This change has no new full App
+link or device test. Evidence hashes in `run83.unstaged_handoff_retry`.
+Next Air test still needs an exact valid main/helper development pair
+and the authorized end of the existing Lab test. Diagnostic 125
+remains; no game start, game exit, return, or stability claim.
+
 ## Run83 follow-up — late white frame and scoped refresh checkpoint
 
 At 23:21–23:22 EST Build86 PID 29952 still responded to numeric health

@@ -16,13 +16,19 @@ body = source.read_text()
 start = body.index('- (void)openNativeMadeiraSetup {')
 end = body.index('\n}', start) + 2
 method = body[start:end]
+restart_start = body.index('- (void)restartRetainedSteam {')
+restart_end = body.index('\n}', restart_start) + 2
+restart = body[restart_start:restart_end]
 out = a.output.resolve()
 assert str(out).startswith('/Volumes/easystore/') and not out.exists()
 out.mkdir(mode=0o700, parents=True)
 fixture = r'''#import <Foundation/Foundation.h>
 #include <assert.h>
 #include "RetainedFrontend.h"
-enum { UIModalPresentationFullScreen = 0 };
+#include <errno.h>
+#define IDECK_LAB_NATIVE_SETUP_TRANSITION 1
+#define IDECK_LAB_METAL_DRAIN 1
+enum { UIModalPresentationFullScreen = 0, UIControlStateNormal = 0 };
 @interface UIViewController:NSObject
 @property int modalPresentationStyle;
 @property BOOL modalInPresentation;
@@ -36,8 +42,25 @@ enum { UIModalPresentationFullScreen = 0 };
 @end
 @interface FakeButton:NSObject
 @property BOOL enabled;
+@property(copy) NSString *title;
+- (void)setTitle:(NSString *)title forState:(int)state;
 @end
 @implementation FakeButton
+- (void)setTitle:(NSString *)title forState:(int)state {assert(state==UIControlStateNormal);self.title=title;}
+@end
+static int discards,reopens,connects,discardError;
+static BOOL reopenAllowed;
+static uint64_t expectedDiscard;
+static int ideck_game_file_policy_discard(uint64_t sequence){
+    assert(sequence==expectedDiscard);
+    discards++;
+    return discardError;
+}
+@interface FakeDisplay:NSObject
+- (BOOL)ideckReopenMetal;
+@end
+@implementation FakeDisplay
+- (BOOL)ideckReopenMetal {reopens++;return reopenAllowed;}
 @end
 static struct ideck_frontend_result result;
 static int snapshotError,guestThreads,nativeWorkers,factoryCalls,presents,notices,releases,logs;
@@ -50,7 +73,13 @@ static void *ideck_lab_madeira_setup_controller(void){factoryCalls++;return (__b
 static void ideck_native_log_line(const char *line){assert(strstr(line,"game_started=0"));logs++;}
 @interface Control:NSObject
 @property BOOL nativeSetupTransferred,retainedDisplayDrained,guestEnded,acceptsFrames;
-@property uint64_t nativeRequestSequence;
+@property uint64_t nativeRequestSequence,unstagedRestartSequence;
+@property BOOL retainedBackendReady,frontendRequested;
+@property unsigned retainedNextWave;
+@property(strong) NSCondition *frontendCommands;
+@property(strong) NSURL *retainedRoot;
+@property(strong) FakeDisplay *display;
+@property(copy) NSString *status;
 @property(strong) FakeButton *nativeSetupButton,*restartSteamButton;
 @property(strong) UIViewController *presentedViewController;
 @property(strong) FakeView *view;
@@ -58,11 +87,16 @@ static void ideck_native_log_line(const char *line){assert(strstr(line,"game_sta
 @end
 @implementation Control
 - (void)releaseInput {releases++;}
+- (void)showStatus:(NSString *)value {self.status=value;}
+- (void)connectRetainedDisplay:(NSURL *)root wave:(unsigned)wave {
+    assert(root==self.retainedRoot&&wave==self.retainedNextWave&&self.frontendRequested);
+    connects++;
+}
 - (void)presentViewController:(UIViewController *)controller animated:(BOOL)animated completion:(void (^)(void))completion {
     assert(controller.modalInPresentation&&controller.modalPresentationStyle==UIModalPresentationFullScreen);
     assert(animated&&!completion);self.presentedViewController=controller;presents++;
 }
-''' + method + r'''
+''' + method + '\n' + restart + r'''
 @end
 static Control *ready(void){
     snapshotError=guestThreads=nativeWorkers=0;pendingSequence=7;
@@ -71,6 +105,40 @@ static Control *ready(void){
     c.restartSteamButton=[FakeButton new];c.restartSteamButton.enabled=NO;
     c.retainedDisplayDrained=c.guestEnded=YES;c.nativeRequestSequence=7;
     c.view=[FakeView new];c.view.window=[NSObject new];return c;
+}
+static Control *readyRestart(void){
+    Control *c=ready();
+    pendingSequence=0;discardError=0;reopenAllowed=YES;discards=reopens=connects=0;
+    c.nativeRequestSequence=0;c.nativeSetupButton.enabled=NO;
+    c.restartSteamButton.enabled=YES;c.retainedBackendReady=YES;c.retainedNextWave=1;
+    c.frontendCommands=[NSCondition new];c.display=[FakeDisplay new];
+    c.retainedRoot=[NSURL fileURLWithPath:@"/fixture"];
+    return c;
+}
+static void restartCases(void){
+    for(int test=0;test<4;test++){
+        Control *c=readyRestart();c.unstagedRestartSequence=expectedDiscard=71;
+        if(test==0)c.retainedDisplayDrained=NO;
+        if(test==1)pendingSequence=72;
+        if(test==2)c.nativeSetupTransferred=YES;
+        if(test==3)c.restartSteamButton.enabled=NO;
+        [c restartRetainedSteam];
+        assert(!discards&&!reopens&&!connects&&c.unstagedRestartSequence==71&&!c.frontendRequested);
+    }
+    Control *c=readyRestart();c.unstagedRestartSequence=expectedDiscard=71;discardError=-ESTALE;
+    [c restartRetainedSteam];
+    assert(discards==1&&!reopens&&!connects&&c.unstagedRestartSequence==71&&!c.frontendRequested&&c.status.length);
+    c=readyRestart();c.unstagedRestartSequence=expectedDiscard=71;reopenAllowed=NO;
+    [c restartRetainedSteam];
+    assert(discards==1&&reopens==1&&!connects&&!c.unstagedRestartSequence&&!c.frontendRequested);
+    c=readyRestart();c.unstagedRestartSequence=expectedDiscard=71;
+    [c restartRetainedSteam];
+    assert(discards==1&&reopens==1&&connects==1&&!c.unstagedRestartSequence&&c.frontendRequested);
+    assert(c.retainedNextWave==2&&!c.retainedBackendReady&&!c.guestEnded&&!c.restartSteamButton.enabled&&c.acceptsFrames);
+    [c restartRetainedSteam];
+    assert(discards==1&&connects==1);
+    c=readyRestart();[c restartRetainedSteam];
+    assert(!discards&&reopens==1&&connects==1&&c.frontendRequested);
 }
 int main(void){@autoreleasepool{
 id observer=[NSNotificationCenter.defaultCenter addObserverForName:@"IDeckLinuxMadeiraSetupWillPresent" object:nil queue:nil usingBlock:^(NSNotification *note){(void)note;notices++;}];
@@ -103,7 +171,8 @@ assert(factoryCalls==1&&presents==1&&notices==1&&releases==1&&logs==1);
 assert(c.nativeSetupTransferred&&!c.nativeSetupButton.enabled&&!c.restartSteamButton.enabled);
 [c openNativeMadeiraSetup];assert(factoryCalls==1&&presents==1&&notices==1&&releases==1&&logs==1);
 [NSNotificationCenter.defaultCenter removeObserver:observer];
-puts("HOST exact native setup entry:18 refusal cases, single presentation request, no duplicate PASS; UI/runtime dependencies are count-only stubs");
+restartCases();
+puts("HOST exact native setup entry:18 refusal cases, single presentation, and unstaged restart policy PASS; UI/runtime dependencies are count-only stubs");
 return 0;}}
 '''
 (out / 'control.m').write_text(fixture)
@@ -120,6 +189,7 @@ sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     'command': cmd, 'exit': r.returncode, 'refusal_cases': 18,
     'actual_frontend_sha256': sha(source),
     'extracted_method_sha256': hashlib.sha256(method.encode()).hexdigest(),
+    'extracted_restart_method_sha256': hashlib.sha256(restart.encode()).hexdigest(),
     'fixture_sha256': sha(out / 'control.m'), 'log_sha256': sha(out / 'control.log'),
 }, indent=2) + '\n')
 print((out / 'control.log').read_text())

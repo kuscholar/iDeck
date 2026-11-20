@@ -174,6 +174,7 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 #if IDECK_LAB_NATIVE_SETUP_TRANSITION
 @property(nonatomic,strong) UIButton *nativeSetupButton;
 @property(nonatomic) uint64_t nativeRequestSequence;
+@property(nonatomic) uint64_t unstagedRestartSequence;
 @property(nonatomic) BOOL nativeSetupTransferred;
 #endif
 #endif
@@ -433,7 +434,21 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 #if IDECK_LAB_NATIVE_SETUP_TRANSITION
     if(self.nativeSetupTransferred)return; // No Linux revival over a native session.
 #endif
-    if(!self.restartSteamButton.enabled||!self.retainedBackendReady||!self.guestEnded||self.client)return;
+    if(!self.restartSteamButton.enabled||!self.retainedBackendReady||!self.retainedDisplayDrained||!self.guestEnded||self.client)return;
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+    // This is the user's explicit discard-and-restart action after the
+    // frontend drained. A native-owned request must stay in the handoff.
+    if(ideck_lab_pending_dock_sequence()){
+        [self showStatus:@"A Play request is already owned by Madeira."];
+        return;
+    }
+    if(self.unstagedRestartSequence){
+        int error=ideck_game_file_policy_discard(self.unstagedRestartSequence);
+        if(error){[self showStatus:@"The Play request changed. Steam has not been restarted."];return;}
+        self.unstagedRestartSequence=0;
+        [self.restartSteamButton setTitle:@"Restart Steam" forState:UIControlStateNormal];
+    }
+#endif
 #if IDECK_LAB_METAL_DRAIN
     if(![self.display ideckReopenMetal]){[self showStatus:@"Display cleanup is incomplete or the GPU reported a failure. Session preserved."];return;}
 #endif
@@ -525,16 +540,25 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                     if(self.retainedDisplayDrained){
                         self.restartSteamButton.enabled=self.retainedBackendReady;
 #if IDECK_LAB_NATIVE_SETUP_TRANSITION
-                        if(self.retainedBackendReady&&!result.guest_status&&capturedRequestReady&&
-                           [fields[@"native_request_stage_sequence"] unsignedLongLongValue]){
-                            self.nativeRequestSequence=[fields[@"native_request_stage_sequence"] unsignedLongLongValue];
-                            self.nativeSetupButton.hidden=NO;self.nativeSetupButton.enabled=YES;
-                            self.restartSteamButton.enabled=NO; // Captured request owns this experimental transition.
+                        if(self.retainedBackendReady&&capturedRequestReady){
+                            uint64_t staged=[fields[@"native_request_stage_sequence"] unsignedLongLongValue];
+                            if(!result.guest_status&&staged){
+                                self.nativeRequestSequence=staged;
+                                self.nativeSetupButton.hidden=NO;self.nativeSetupButton.enabled=YES;
+                                self.restartSteamButton.enabled=NO; // Madeira owns the staged request.
+                            }else{
+                                self.unstagedRestartSequence=capturedSequence;
+                                [self.restartSteamButton setTitle:@"Discard Play Request and Restart Steam" forState:UIControlStateNormal];
+                            }
                         }
 #endif
                         BOOL update=ideck_frontend_update_exit(result.guest_status);
                         NSString *message=self.retainedBackendReady?(update?@"Steam update completed. Ready to restart.":(capturedRequestReady?@"Steam closed. Play request captured; Windows has not started.":@"Steam closed. Ready to restart in the retained environment.")):
                             (error?@"Backend cleanup failed. Existing state was preserved.":@"Steam exited unexpectedly. Existing state was preserved; no automatic retry.");
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+                        if(self.unstagedRestartSequence)
+                            message=@"The Play request could not be handed to Madeira. Discard it to restart Steam and try again.";
+#endif
                         [self showStatus:message];
                         // Honor exactly one documented updater restart, only after
                         // the real backend and viewer drains. Repeated 42 requires

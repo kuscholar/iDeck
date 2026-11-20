@@ -74,6 +74,8 @@ int main(int argc,char **argv){
 #endif
  r.appid++;ideck_game_file_policy_inspect(&r);
  if(ideck_game_file_policy_pending(&r,&seq)||memcmp(&r,&original,sizeof r))return 7;
+ if(ideck_game_file_policy_discard(seq+1)!=-ESTALE)return 26;
+ if(ideck_game_file_policy_pending(&r,&seq)||seq!=1||memcmp(&r,&original,sizeof r))return 27;
  if(ideck_game_file_policy_discard(seq))return 8;
  ideck_game_file_policy_inspect(&original);
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=3||memcmp(&r,&original,sizeof r))return 9;

@@ -22774,6 +22774,54 @@
         ],
         "scope": "User's standard Xcode provisioning stores and the signed Lab copy. Exact app, Air hardware, existing certificate and development entitlement. No newer pair found. No signing or account changes."
       }
+    },
+    "unstaged_handoff_retry": {
+      "source_base": "42f9c39ec806e603667a18077823e48eb93bef97",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "sequence": 10093,
+        "frames": 17022,
+        "play": 0,
+        "cropped_screen_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "profile_inventory_utc": "2026-11-20T09:29:21Z",
+      "valid_exact_profile_counts": {
+        "main": 0,
+        "helper": 0,
+        "inspected": 7
+      },
+      "implementation": "An explicitly requested restart after frontend/display exit discards only the matching still-unstaged Play copy. Requests owned by Madeira, changed sequence and incomplete drain refuse restart. No automatic retry.",
+      "validation": "Actual host ARM64 ELF IPC accepted one request, rejected stale discard, and accepted a new request after exact discard. ASan/UBSan UI-method fixture exercises real method statements with interaction stubs. iOS controller object compiled with and without native transition; discard import is only in the transition build.",
+      "scope": "No final Mach-O built for this change and no profile, device lifecycle or account modification. Diagnostic125 remains unchanged.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume0429-data-private.json",
+          "sha256": "6785bbc6f6aa9f8ad78a562bbb945fbd630779240d730145dee060832238e599",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume0429-private.png",
+          "sha256": "9229eda5d839ad0c5219922f1e4553f863f6e09f10153ac316c7bfcc4ff6f5e8",
+          "bytes": 213608
+        },
+        {
+          "path": "run83/native-retry-host-v1/evidence.json",
+          "sha256": "43c881d3f5478879980ae03c26222ce2c504bf93c2a893082e1772ffe6c46317",
+          "bytes": 1173
+        },
+        {
+          "path": "run83/abandon-capture-host-v1/evidence.json",
+          "sha256": "894022637deddcbc8736f49265e55f24cb296b5f557d9d6becb7f15fa8a04285",
+          "bytes": 5857
+        },
+        {
+          "path": "run83/unstaged-retry-ios-object-v1/evidence.json",
+          "sha256": "0e44ec9306392782acd7f7ceea4a037881b90f4a5193e43f6a4fb88b2f844960",
+          "bytes": 7068
+        }
+      ]
     }
   }
 }
