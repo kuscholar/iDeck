@@ -15,7 +15,8 @@ int main(int argc,char **argv){@autoreleasepool{
     dispatch_semaphore_t release=dispatch_semaphore_create(0);
     BOOL input=[mode isEqual:@"input-held"],frame=[mode isEqual:@"frame-held"];
     BOOL wake=[mode isEqual:@"wake-wire"],partial=[mode isEqual:@"refresh-partial-reply"];
-    BOOL refresh=partial||[mode isEqual:@"full-refresh"];
+    BOOL silent=[mode isEqual:@"refresh-silent"],empty=[mode isEqual:@"refresh-empty-reply"];
+    BOOL refresh=partial||silent||empty||[mode isEqual:@"full-refresh"];
     __block atomic_bool refreshWritten=false;
     __block atomic_uint seenFrames=0;
     if(refresh)assert(![client ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
@@ -32,20 +33,27 @@ int main(int argc,char **argv){@autoreleasepool{
         if(wake&&!atomic_exchange(&entered,true))ideck_rfb_wake(weakClient,15,7);
         if(refresh)atomic_fetch_add(&seenFrames,1);
         if(refresh&&n==1){
+            IDECKRFBDecodeProgress initial=[weakClient ideckDecodeProgress];
+            assert(initial.started==1&&initial.decoded==1);
             assert([weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){
                 assert(written);atomic_store(&refreshWritten,true);
-                if(partial)dispatch_after(dispatch_time(DISPATCH_TIME_NOW,500*NSEC_PER_MSEC),dispatch_get_main_queue(),^{
+                if(partial||silent||empty)dispatch_after(dispatch_time(DISPATCH_TIME_NOW,500*NSEC_PER_MSEC),dispatch_get_main_queue(),^{
                     assert(atomic_load(&seenFrames)==1);
+                    IDECKRFBDecodeProgress progress=[weakClient ideckDecodeProgress];
+                    assert(progress.started==(silent?1:2)&&progress.decoded==(empty?2:1));
                     [weakClient ideckStopWithCompletion:^{
                         assert(atomic_load(&seenFrames)==1);
-                        puts("RFB_REFRESH short_reply_never_published=1 blocked_reader_drained=1");
+                        printf("RFB_REFRESH started=%llu decoded=%llu published=1 reader_drained=1\n",
+                            (unsigned long long)progress.started,(unsigned long long)progress.decoded);
                         exit(0);
                     }];
                 });
             }]);
             assert(![weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
         }else if(refresh&&n==2){
-            assert(!partial);
+            assert(!partial&&!silent&&!empty);
+            IDECKRFBDecodeProgress progress=[weakClient ideckDecodeProgress];
+            assert(progress.started==2&&progress.decoded==2);
             const uint8_t *data=pixels.bytes;
             for(NSUInteger i=0;i<pixels.length;i++)assert(data[i]==0x5a);
             [weakClient ideckStopWithCompletion:^{

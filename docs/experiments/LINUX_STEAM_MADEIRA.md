@@ -7770,3 +7770,45 @@ session. Require exact bundle/extension, Air device, existing certificate
 and validity matches before signing a copy of Build92 and rechecking
 the active Lab. See `run83.build92_cli_profile_renewal` for hashes and
 results. Play, game execution, return and stability remain unverified.
+
+## Run83 follow-up — distinguish an incomplete RFB update from a quiet display
+
+At 16:10 EST the exact Air Lab still returned Build86 PID 29952, health
+22941, 17022 frames, zero Play, and a white guest crop matching the prior
+readback. No input or lifecycle action. A fresh read-only profile check
+found zero exact usable Air main/helper entries among four. No repeat of
+the failed account/provisioning probes.
+
+The existing one-shot Lab refresh receipt confirms a local write. The
+new before/after connection counters distinguish no framebuffer update
+started, a partial decode, and a complete decode. Sample again once,
+nominally two seconds after the successful write, only if the same viewer
+is still attached. Count a decoded message even when it has no rectangles.
+These are numeric observations; an RFB server update carries no request ID.
+Confirm visible changes separately with frame counters and a screenshot.
+
+Use the Run83 `wake-wire-v2` host recipe with a fresh output directory.
+All nine real loopback cases passed under ASan/UBSan. Including the first
+good frame, the silent, partial, and empty-update cases respectively show
+started/decoded/published counts of 1/1/1, 2/1/1, and 2/2/1. The complete
+pixel update delivered a second verified fixture frame. The existing
+lifetime and wake cases passed in the same suite.
+
+Use the exact runtime90 evidence commands for the RFB source generator
+with frame-pool enabled and the two ARM64 adapters (`LabRFBClient` and
+`LinuxSteamViewController`). Redirect their outputs and generated include
+path to a fresh tree, copy the runtime archives, and replace those two
+objects with `xcrun ar rcs`. Member checks confirmed that only those two
+objects changed, excluding the archive symbol index. The original runtime
+hashes and LinuxRunner pin match. Run the Build92 private app recipe with
+this new runtime tree, fresh app output, and build number 93. Xcode and
+package checks passed. The final Mach-O contains both atomic increments,
+both loads and the controller's baseline/request/delayed sample calls.
+See `run83.build93_refresh_decode_progress` for hashes.
+
+Build93 is unsigned and uninstalled. Once both matching Air development
+profiles are available and the existing session can be safely replaced,
+reproduce the white screen, send one full refresh, and compare the new
+receipt with a real guest crop and independent frame count. The current
+bridge still returns diagnostic125. No Windows game cycle or stable
+return has been observed.

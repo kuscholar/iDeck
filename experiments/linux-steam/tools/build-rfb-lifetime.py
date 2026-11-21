@@ -15,7 +15,7 @@ assert subprocess.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=Tru
 assert not subprocess.check_output(['git','-C',str(src),'status','--porcelain','--untracked-files=no'],text=True).strip()
 relative='app/LinuxRunner/RFBClient.m';original=subprocess.check_output(['git','-C',str(src),'show',pin+':'+relative]);assert (src/relative).read_bytes()==original
 out=a.output.resolve();assert str(out).startswith('/Volumes/easystore/') and not out.exists();out.mkdir(parents=True)
-body=original.decode()
+body='#import "LabRFBCompletion.h"\n'+original.decode()
 def replace(old,new):
  global body
  assert body.count(old)==1,(old,body.count(old));body=body.replace(old,new)
@@ -33,7 +33,7 @@ if a.frame_snapshot_pool:
 @property(nonatomic,strong) IDECKFrameSnapshotPool *ideckFramePool;
 @end
 @implementation LRRFBClient {''',1)
-replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;\n    BOOL _ideckRefreshSubmitted;\n    _Atomic uint32_t _ideckRequestedExtent;')
+replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;\n    BOOL _ideckRefreshSubmitted;\n    _Atomic uint32_t _ideckRequestedExtent;\n    _Atomic uint64_t _ideckUpdatesStarted,_ideckUpdatesDecoded;')
 replace('_password=[password copy];_socket=-1;','_password=[password copy];_socket=-1;\n        _ideckAdmission=[NSRecursiveLock new];_ideckTasks=dispatch_group_create();')
 if a.frame_snapshot_pool:
  replace('- (instancetype)initWithPort:', '@synthesize ideckFramePool=_ideckFramePool;\n- (instancetype)initWithPort:')
@@ -59,7 +59,12 @@ replace('- (BOOL)request:(BOOL)incremental {','''- (BOOL)request:(BOOL)increment
     // The decoder owns width/height, including DesktopSize updates. Publish a
     // single consistent extent to the control queue before the normal write.
     atomic_store(&_ideckRequestedExtent,((uint32_t)_width<<16)|_height);''')
-replace('- (BOOL)update {','''- (BOOL)ideckRequestFullRefreshWithCompletion:(void (^)(BOOL))completion {
+replace('- (BOOL)update {','''- (IDECKRFBDecodeProgress)ideckDecodeProgress {
+    // Read decoded first; its increment follows the reader's started increment.
+    uint64_t decoded=atomic_load(&_ideckUpdatesDecoded);
+    return (IDECKRFBDecodeProgress){atomic_load(&_ideckUpdatesStarted),decoded};
+}
+- (BOOL)ideckRequestFullRefreshWithCompletion:(void (^)(BOOL))completion {
     if(!completion)return NO;
     [_ideckAdmission lock];
     uint32_t extent=atomic_load(&_ideckRequestedExtent);
@@ -76,6 +81,9 @@ replace('- (BOOL)update {','''- (BOOL)ideckRequestFullRefreshWithCompletion:(voi
     return YES;
 }
 - (BOOL)update {''')
+replace('    void (^metrics)(NSDictionary *)=self.transportMetricsHandler;\n    double decodeBegin=',
+        '    atomic_fetch_add(&_ideckUpdatesStarted,1);\n    void (^metrics)(NSDictionary *)=self.transportMetricsHandler;\n    double decodeBegin=')
+replace('    if(changed){_frames++;', '    atomic_fetch_add(&_ideckUpdatesDecoded,1);\n    if(changed){_frames++;')
 replace('- (void)enqueue:(NSData *)data keySymbols:(BOOL)keySymbols motion:(BOOL)motion {','''- (void)enqueue:(NSData *)data keySymbols:(BOOL)keySymbols motion:(BOOL)motion {
     [_ideckAdmission lock];
     if(!_ideckClosing)[self ideckEnqueue:data keySymbols:keySymbols motion:motion];

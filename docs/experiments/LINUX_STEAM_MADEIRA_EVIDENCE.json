@@ -23421,6 +23421,187 @@
           "bytes": 434
         }
       ]
+    },
+    "build93_refresh_decode_progress": {
+      "source_base": "9d5f697d76cbd87fc7f7bca05b0eb55f649e29ea",
+      "candidate": {
+        "build": 93,
+        "arch": "arm64",
+        "unsigned_sha256": "5c9caae42ba92b8a1f3fde93ad51f71123c214458bf0dacb25fc82da82aff6c4",
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "runtime_archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "721b53026331684989046f684efae339b7c9ff3d7298e4f814972d18a4925076",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LabRFBCompletion.h": "2c8b7104a10ce148428765e25188a11d0cd6bd8b8a820a79a616e46528cba67d",
+          "experiments/linux-steam/app/LinuxSteamViewController.m": "6b73fdae66f888ba8c7aa6129cb4ff89ff920d202ff4c4f0bca439f9eb8cc4e7",
+          "experiments/linux-steam/tests/rfb-lifetime-control.m": "2a184003b6dbd6c50e27a44ef3fa1a7880f1a97cd63fc5d366ef2489e16827a1",
+          "experiments/linux-steam/tests/test_rfb_lifetime.py": "dfe935adb15c224b7e879dff259d5b4f4a8de7297bb6c9277dc47bbe534c0032",
+          "experiments/linux-steam/tools/build-rfb-lifetime.py": "8484ba4a1ce78344598260f12b9f27c87041824c49578cc3f797399530bd12c6"
+        },
+        "baseline_call": "100a15300:\t78 c7 67 94\tbl\t_objc_msgSend$ideckDecodeProgress",
+        "request_call": "100a15424:\t47 c7 67 94\tbl\t\"_objc_msgSend$ideckRequestFullRefreshWithCompletion:\"",
+        "delayed_block": "___52-[LinuxSteamViewController requestCLIDisplayRefresh]_block_invoke_2",
+        "delayed_sample_call": "100a15c58:\t22 c5 67 94\tbl\t_objc_msgSend$ideckDecodeProgress",
+        "snapshot_atomic_loads": [
+          "100a1e93c:\t08 fd df c8\tldar\tx8, [x8]",
+          "100a1e954:\t08 fd df c8\tldar\tx8, [x8]"
+        ],
+        "decode_atomic_increments": [
+          "100a1ee9c:\t28 01 e8 f8\tldaddal\tx8, x8, [x9]",
+          "100a1f49c:\t28 01 e8 f8\tldaddal\tx8, x8, [x9]"
+        ],
+        "signed": false,
+        "installed": false
+      },
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "health_sequence": 22941,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "local_profiles": {
+        "inspected": 4,
+        "valid_main": 0,
+        "valid_helper": 0
+      },
+      "host_cases": [
+        {
+          "mode": "before-start",
+          "status": 0,
+          "peer_accepted": false
+        },
+        {
+          "mode": "handshake-blocked",
+          "status": 0,
+          "peer_accepted": true
+        },
+        {
+          "mode": "frame-held",
+          "status": 0,
+          "peer_accepted": true
+        },
+        {
+          "mode": "input-held",
+          "status": 0,
+          "peer_accepted": true
+        },
+        {
+          "mode": "wake-wire",
+          "status": 0,
+          "peer_accepted": true,
+          "received_pointer_packets": [
+            [
+              0,
+              7,
+              7
+            ],
+            [
+              1,
+              15,
+              7
+            ],
+            [
+              0,
+              15,
+              7
+            ]
+          ]
+        },
+        {
+          "mode": "full-refresh",
+          "status": 0,
+          "peer_accepted": true,
+          "post_first_frame_requests": [
+            1,
+            0
+          ]
+        },
+        {
+          "mode": "refresh-partial-reply",
+          "status": 0,
+          "peer_accepted": true,
+          "partial_reply_bytes": 256,
+          "started": 2,
+          "decoded": 1,
+          "published": 1
+        },
+        {
+          "mode": "refresh-silent",
+          "status": 0,
+          "peer_accepted": true,
+          "started": 1,
+          "decoded": 1,
+          "published": 1
+        },
+        {
+          "mode": "refresh-empty-reply",
+          "status": 0,
+          "peer_accepted": true,
+          "started": 2,
+          "decoded": 2,
+          "published": 1
+        }
+      ],
+      "hypothesis": "A local full-refresh write may leave RFB waiting for an update or stalled partway through one. Completed decode must be distinguished from frame delivery and actual rendering.",
+      "limitation": "RFB does not correlate a framebuffer update with a request. Counters are connection progress only; no Air input, upgrade, Play, game, return or stability proof.",
+      "artifacts": [
+        {
+          "path": "run83/health-refresh93-preflight-data-private.json",
+          "sha256": "ea6f6510880f6719717aefb798dd310774547cd272a775f2e823b25e5d29353d",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-refresh93-preflight-private.png",
+          "sha256": "72ed74203852e1179c6b99db3716bc7679e7cfbf2118014cadbe19e9cdcbb742",
+          "bytes": 213434
+        },
+        {
+          "path": "run83/crop-refresh93-preflight-private.png",
+          "sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94",
+          "bytes": 36857
+        },
+        {
+          "path": "run83/rfb-refresh-progress-v1/generated/evidence.json",
+          "sha256": "e8b17cd3960b8f21ed7d49b217b1222b882e2de929e385cc07593a045af617bc",
+          "bytes": 486
+        },
+        {
+          "path": "run83/rfb-refresh-progress-v1/results/evidence.json",
+          "sha256": "f6cd743bb1dd772415be9a13497274ac35489fa6a3d7cdd5b04d1c2a5edeaa7b",
+          "bytes": 2324
+        },
+        {
+          "path": "run83/runtime93-rfb-progress-v2/evidence.json",
+          "sha256": "10d6086d3f5e697d0ae64f4369d5d96d9c4ee112933445eb8327c753cb8d38bf",
+          "bytes": 114031
+        },
+        {
+          "path": "run83/hybrid93-rfb-progress/prepare-evidence.json",
+          "sha256": "58f2bf17f5668628561806d3cf3b28512ce34dbc7cd1dba5600cf6827244c749",
+          "bytes": 322406
+        },
+        {
+          "path": "run83/hybrid93-rfb-progress/build-result.json",
+          "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "bytes": 54
+        },
+        {
+          "path": "run83/hybrid93-rfb-progress/package-validation.json",
+          "sha256": "be6430e4060badbaf53e439a97e165eae77a6538581bbec3a87059ff4c242ea0",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid93-rfb-progress/final-rfb-progress-link-private.json",
+          "sha256": "944b5d90a4f3df776c568c91870c341b9c5e51e425bea2697cac4a248228899e",
+          "bytes": 1930
+        }
+      ]
     }
   }
 }
