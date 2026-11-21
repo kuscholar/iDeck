@@ -1,3 +1,30 @@
+## Run83 follow-up — Build92 CLI provisioning renewal attempt
+
+At 13:01–13:03 EST, the previous Apple Development identity was still
+available in the local keychain. Both archived Lab profiles had expired
+at 04:42 UTC on November 20. An isolated two-target `xcodebuild`
+`-allowProvisioningUpdates` probe first used manual signing and the two
+exact historical profile names. Xcode declined both with no matching
+profile. A second probe targeted the selected Air and used automatic
+signing with the exact certificate, which Xcode rejected as conflicting
+settings. With Xcode's documented `Apple Development` identity type,
+automatic provisioning returned `No Accounts` and no matching profiles.
+All three probes exited 65. The two bundle IDs and existing team were
+used throughout. No device registration flag was supplied. A fresh scan
+of four local profiles still found no usable exact Air main/helper pair.
+This is the CLI account/provisioning result for this invocation. App
+compilation and runtime were not exercised by these probes.
+
+Read-only Air observation confirms existing Build86 PID 29952, health
+sequence 21819, 17022 frames, zero Play and the same white guest crop.
+Build92's unsigned binary hash still matches its prior audit. There was
+no Lab termination, signing of Build92, install, or device input. Obtain
+the two renewed development profiles from an authorized Apple Developer
+session. Require exact bundle/extension, Air device, existing certificate
+and validity matches before signing a copy of Build92 and rechecking
+the active Lab. See `run83.build92_cli_profile_renewal` for hashes and
+results. Play, game execution, return and stability remain unverified.
+
 ## Run83 follow-up — recheck the selected Play request before native Dock handoff
 
 At 11:01 EST the exact Air still showed Build86 PID 29952, health

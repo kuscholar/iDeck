@@ -23309,6 +23309,118 @@
           "bytes": 2423
         }
       ]
+    },
+    "build92_cli_profile_renewal": {
+      "source_head": "5f6f7293637bf2a567dbb13090970cd67c1ff8d8",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "unsigned_build92_sha256": "a9e3767d2bb96905599db2b2bedbcf7eb5ba9c4cd382b2285518202e3ed37f99",
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "sequence": 21819,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "attempts": [
+        {
+          "mode": "exact-name manual download",
+          "checked_utc": "2026-11-21T18:01:28Z",
+          "existing_identity_available": true,
+          "before_inspected": 4,
+          "before_valid_roles": [
+            "False",
+            "False"
+          ],
+          "xcode_exit": 65,
+          "xcode_no_accounts": false,
+          "xcode_no_matching_profiles": true,
+          "xcode_missing_specifier": false,
+          "xcode_sign_or_project_error": true,
+          "after_inspected": 4,
+          "valid_main": false,
+          "valid_helper": false
+        },
+        {
+          "mode": "automatic with exact signing identity",
+          "checked_utc": "2026-11-21T18:02:27Z",
+          "existing_identity_available": true,
+          "before_inspected": 4,
+          "before_valid_roles": [
+            "False",
+            "False"
+          ],
+          "xcode_exit": 65,
+          "xcode_no_accounts": false,
+          "xcode_no_matching_profiles": false,
+          "xcode_identity_conflict": true,
+          "xcode_missing_specifier": false,
+          "xcode_sign_or_project_error": true,
+          "after_inspected": 4,
+          "valid_main": false,
+          "valid_helper": false
+        },
+        {
+          "mode": "automatic Apple Development identity selection",
+          "checked_utc": "2026-11-21T18:03:05Z",
+          "existing_identity_available": true,
+          "before_inspected": 4,
+          "before_valid_roles": [
+            "False",
+            "False"
+          ],
+          "xcode_exit": 65,
+          "xcode_no_accounts": true,
+          "xcode_no_matching_profiles": true,
+          "xcode_identity_conflict": false,
+          "xcode_missing_specifier": false,
+          "xcode_sign_or_project_error": true,
+          "after_inspected": 4,
+          "valid_main": false,
+          "valid_helper": false
+        }
+      ],
+      "installed": false,
+      "signed": false,
+      "device_input": false,
+      "old_lab_terminated": false,
+      "artifacts": [
+        {
+          "path": "run83/hybrid92-final-dock-recheck/final-dock-handoff-recheck-link-private.json",
+          "sha256": "0f84e1e5c0ddf64e03767666880b85e523d61ae96dc23f7e222e5cad04f8facc",
+          "bytes": 2423
+        },
+        {
+          "path": "run83/health-signing92-1303-data-private.json",
+          "sha256": "757b09b6a48d69462c1b9cd108a44b8f6162f6c951298566cae73c9c880b4b53",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/crop-signing92-1303-private.png",
+          "sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94",
+          "bytes": 36857
+        },
+        {
+          "path": "run83/screen-signing92-1303-private.png",
+          "sha256": "213278eed8ae7765f7e5f46782cab74d889eadff374e894c529978479cc7358a",
+          "bytes": 213329
+        },
+        {
+          "path": "run83/profile-sync-build92-v1/result.json",
+          "sha256": "8ec8ddd980478d5b6f4c0c95dcbdd34078d95388c79f693104e8d173b779df92",
+          "bytes": 399
+        },
+        {
+          "path": "run83/profile-renew-build92-v1/result.json",
+          "sha256": "b96f2f685fffa3116dd79a7399c3497817af519c08a773c8500c4e22eab3dde7",
+          "bytes": 435
+        },
+        {
+          "path": "run83/profile-managed-build92-v1/result.json",
+          "sha256": "f742d3155dad8c65fdf3f3a6a70ccb2ed06c557cd6655ce5da5538f94294b8a2",
+          "bytes": 434
+        }
+      ]
     }
   }
 }
