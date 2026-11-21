@@ -65,14 +65,17 @@ int ideck_lab_wine_initial_report_result(unsigned source,uint32_t code) {
     if(!error){state.body_result_source=source;state.body_exit_code=code;}
     pthread_mutex_unlock(&lock);return error;
 }
-int ideck_lab_wine_initial_report_server_join(int attempted,int join_error) {
-    if((attempted!=0&&attempted!=1)||join_error<0||(!attempted&&join_error))return EINVAL;
+int ideck_lab_wine_initial_report_server_join(int attempted,int join_error,unsigned main_outcome) {
+    if((attempted!=0&&attempted!=1)||join_error<0||(!attempted&&join_error)||
+       main_outcome>IDECK_WINE_SERVER_MAIN_RETURNED_NONZERO||
+       ((!attempted||join_error)&&main_outcome!=IDECK_WINE_SERVER_MAIN_UNKNOWN))return EINVAL;
     pthread_mutex_lock(&lock);
     int error=!owner||!state.initial_created?ENODEV:owner!=getpid()?EXDEV:
         !pthread_equal(initial_thread,pthread_self())?EPERM:
         state.server_join_state?EALREADY:state.initial_joined?ESTALE:0;
     if(!error){
         state.server_join_error=join_error;
+        state.server_main_outcome=main_outcome;
         if(!attempted)state.server_join_state=IDECK_WINE_SERVER_NO_HANDLE;
         else state.server_join_state=join_error?IDECK_WINE_SERVER_JOIN_FAILED:IDECK_WINE_SERVER_JOINED;
     }

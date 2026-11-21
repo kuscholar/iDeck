@@ -23120,6 +23120,94 @@
           "bytes": 2670
         }
       ]
+    },
+    "wineserver_main_result": {
+      "source_base": "e79bcf30a0d4f68637421b30c5f2089771b794fd",
+      "candidate": {
+        "build": 91,
+        "unsigned_sha256": "0534393a7ff4b30a627ec46a43020aa2ba1fbe1828414f6a1e56a053d81f74d1",
+        "pinned_runtime90_evidence_sha256": "a47bfbdc410c2c381fc0d13bb14e89818afe4cfe6fb5f35cfa14c2c030606aca",
+        "pinned_runtime_archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "8bb624ee25ebead1301436ba119f8322242bf0e5ae9fd01330c60909ede4ec13",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "server_main_and_token_calls": [
+          "10001bd18:\tcd 14 32 94\tbl\t_wineserver_main",
+          "10001bd44:\t83 00 00 94\tbl\t_ideck_server_main_exit_value"
+        ],
+        "server_join_call": "10001be30:\t83 9a 8f 94\tbl\t0x10240283c ; symbol stub for: _pthread_join",
+        "server_join_reports": [
+          "10001bea8:\t17 a2 ff 97\tbl\t_ideck_lab_wine_initial_report_server_join",
+          "10001bef4:\t04 a2 ff 97\tbl\t_ideck_lab_wine_initial_report_server_join"
+        ],
+        "fatal_pthread_exit": "10001b6ec:\t45 9c 8f 94\tbl\t0x102402800 ; symbol stub for: _pthread_exit",
+        "numeric_receipt_field": "server_main_outcome",
+        "signed": false,
+        "installed": false,
+        "actual_server_started": false
+      },
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "sequence": 19251,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "profiles": {
+        "utc": "2026-11-21T10:57:51Z",
+        "inspected": 4,
+        "valid_main": 0,
+        "valid_helper": 0
+      },
+      "hypothesis": "Successful server join alone is ambiguous about main returning. A server pthread can exit early and still join.",
+      "result": "Host actual pthread joins distinguish zero, nonzero and no return token, and existing missing-handle/join-failure/initial TLS controls pass. iOS full Build91 links the exact server return-token path, fatal pthread_exit path, joined report and new numeric field.",
+      "scope": "No device input, install, game launch, storage release, full Wine cleanup, return or stability proof. Experimental bridge remains diagnostic125.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume0555-data-private.json",
+          "sha256": "cf43064c70362e15f5c90f07f4800fb7f0553bc9ffb3d828d88441887feeb04e",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume0555-private.png",
+          "sha256": "c80c9a750370457df7d0b80543447c247143629decdaac82c70a27235a273478",
+          "bytes": 214139
+        },
+        {
+          "path": "run83/wineserver-body-result-v1/evidence.json",
+          "sha256": "1c83ad51af6ce01114e223fea272479136665c3984212be18852e67f34cee5ea",
+          "bytes": 2573
+        },
+        {
+          "path": "run83/wineserver-body-result-v1/wine-stop-observed-ios.o",
+          "sha256": "2f6c838e88e6642bf80b507bcb71e46ceaca2c5f56a60b2e00bc46175b23c90f",
+          "bytes": 13960
+        },
+        {
+          "path": "run83/hybrid91-wineserver-result/build-result.json",
+          "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "bytes": 54
+        },
+        {
+          "path": "run83/hybrid91-wineserver-result/prepare-evidence.json",
+          "sha256": "2dffd1c81322017ceb34ac0c986aaa63e24baad3c3df16cdacc7f35037193dc5",
+          "bytes": 322306
+        },
+        {
+          "path": "run83/hybrid91-wineserver-result/package-validation.json",
+          "sha256": "18c036327082125389fde4ce969c16bd3f714bf13eade331e04ed11fea6ad7f1",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid91-wineserver-result/final-server-main-result-link-private.json",
+          "sha256": "e4d012e3bc31811e402b1a503b0eae1e9f904c9abbbe9476bf88d1739331f473",
+          "bytes": 1348
+        }
+      ]
     }
   }
 }

@@ -7668,3 +7668,40 @@ session until it ends or there is specific authorization to stop it.
 Then test a single physical full-frame recovery before attempting
 Play and native launch. Windows execution, return and repeat
 stability remain unverified.
+
+## Run83 follow-up — separate wineserver return from pthread join
+
+At 05:55 EST Build86 PID 29952 still reported 17022 frames, zero
+Play, health sequence 19251 and the same white guest-area crop. No
+Air mutation. A read-only inventory at 05:57 EST again found no
+valid exact profile for the Lab main app or helper.
+
+A successful server pthread join does not establish whether
+`wineserver_main` actually returned. In the private Lab adaptation,
+the normal return now carries a distinct zero or nonzero token.
+The existing early `pthread_exit` path carries neither. A failed
+join, no handle, or unrecognized outcome cannot produce a known
+main result. The existing bounded native receipt records the new
+numeric field. Production bridge sources and runtime guards are
+unchanged. This supplies one exit observation, not full Wine
+cleanup or consent to restart Linux.
+
+Run `test-wine-initial-join.py` with a new private output. Three
+host sanitizer modes passed. Real pthread joins used the exact
+generated stop routine and generated return values, including a
+thread directly exiting with `pthread_exit(NULL)`. Existing
+initial-thread TLS, observer failure and server-join controls
+also passed. The actual ARM64 iOS bridge and observer objects
+partially link.
+
+Fresh unsigned Build91 reuses the exact qualified runtime90 input.
+Replay the Build90 app command with that runtime, new output and
+build number 91. Its Xcode package and final ARM64 symbol audit
+pass, including the token call after server main, separate
+fatal-exit call, actual join call and the receipt field. See
+`run83.wineserver_main_result` for hashes. No sign or install.
+
+Next on Air still requires the exact valid main/helper development
+profiles and the completed or explicitly authorized end of the
+old session. The compatibility bridge remains diagnostic125.
+Neither Windows gameplay nor repeated return to Steam is verified.

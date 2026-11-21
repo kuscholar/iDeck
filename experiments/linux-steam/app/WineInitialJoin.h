@@ -17,6 +17,11 @@ enum ideck_wine_server_join_state {
     IDECK_WINE_SERVER_JOIN_UNKNOWN, IDECK_WINE_SERVER_NO_HANDLE,
     IDECK_WINE_SERVER_JOINED, IDECK_WINE_SERVER_JOIN_FAILED
 };
+enum ideck_wine_server_main_outcome {
+    IDECK_WINE_SERVER_MAIN_UNKNOWN,
+    IDECK_WINE_SERVER_MAIN_RETURNED_ZERO,
+    IDECK_WINE_SERVER_MAIN_RETURNED_NONZERO
+};
 struct ideck_wine_initial_snapshot {
     uint64_t generation;
     unsigned phase,initial_created,initial_joined;
@@ -25,6 +30,7 @@ struct ideck_wine_initial_snapshot {
     uint32_t body_exit_code;
     unsigned server_join_state;
     int server_join_error;
+    unsigned server_main_outcome;
 };
 /* Private Lab replacement for ONE initial-thread create+detach pair only.
  * The original entry/attributes are retained. An owned observer joins that
@@ -39,8 +45,9 @@ int ideck_lab_wine_initial_snapshot(struct ideck_wine_initial_snapshot *);
  * NOT proof of child-game exit, licensing, all-worker teardown or safe return. */
 int ideck_lab_wine_initial_report_result(unsigned source,uint32_t code);
 /* Records one observed server stop outcome from the current initial Wine
- * thread. No handle and an unsuccessful join do not establish server exit. */
-int ideck_lab_wine_initial_report_server_join(int attempted,int join_error);
+ * thread. A successful join only reports a known main result if the
+ * server returned the corresponding token through pthread_join. */
+int ideck_lab_wine_initial_report_server_join(int attempted,int join_error,unsigned main_outcome);
 /* Early refusal before Wine mutates prefix/socket state. Zero means only that
  * this initial-thread observer is idle, never full Wine/runtime readiness. */
 int ideck_lab_wine_initial_ready(void);

@@ -20,16 +20,33 @@ def patched(source):
     return '#include "WineInitialJoin.h"\n'+before+body.replace(CREATE,REPLACEMENT).replace(DETACH,'    /* Lab observer owns the initial pthread join; other Wine threads unchanged. */')
 
 def patched_server(source):
-    # Preserve ordinary control flow and add only the actual join outcome.
+    # Observe the server's actual pthread join and main return in the private Lab only.
     before, stop = source.split("void wineserver_stop(void) {", 1)
+    thread = 'static void *wineserver_thread_func(void *arg) {'
+    marker = '        g_wineserver_running = 0;\n    }\n    return NULL;'
+    token = '''static char ideck_server_zero_token;
+static char ideck_server_nonzero_token;
+static void *ideck_server_main_exit_value(int result) {
+    return result ? &ideck_server_nonzero_token : &ideck_server_zero_token;
+}
+'''
+    assert before.count(thread)==1 and before.count(marker)==1
+    before=before.replace(thread,token+thread).replace(marker,
+        '        g_wineserver_running = 0;\n        return ideck_server_main_exit_value(ret);\n    }')
     join = '        pthread_join(t, NULL);'
     finished = '        wine_log_msg("Wineserver thread joined");\n    }'
     assert stop.count(join) == 1 and stop.count(finished) == 1, "Pinned wineserver stop contract changed"
-    stop = stop.replace(join, '''        int error = pthread_join(t, NULL);
-        (void)ideck_lab_wine_initial_report_server_join(1, error);''')
+    stop = stop.replace(join, '''        void *value = NULL;
+        int error = pthread_join(t, &value);
+        unsigned main_outcome = IDECK_WINE_SERVER_MAIN_UNKNOWN;
+        if (!error && value == &ideck_server_zero_token)
+            main_outcome = IDECK_WINE_SERVER_MAIN_RETURNED_ZERO;
+        if (!error && value == &ideck_server_nonzero_token)
+            main_outcome = IDECK_WINE_SERVER_MAIN_RETURNED_NONZERO;
+        (void)ideck_lab_wine_initial_report_server_join(1, error, main_outcome);''')
     stop = stop.replace(finished, '''        if (!error) wine_log_msg("Wineserver thread joined");
         else wine_log_msg("Wineserver join failed: %d", error);
     } else {
-        (void)ideck_lab_wine_initial_report_server_join(0, 0);
+        (void)ideck_lab_wine_initial_report_server_join(0, 0, IDECK_WINE_SERVER_MAIN_UNKNOWN);
     }''')
     return '#include "WineInitialJoin.h"\n' + before + "void wineserver_stop(void) {" + stop

@@ -20,6 +20,7 @@ static int inside_destructor,release_destructor;
 static atomic_int calls,body_returned;
 static int fail_call;
 void wineserver_stop(void);
+void *control_server_return(int code);
 pthread_t g_wineserver_thread;
 int g_wineserver_should_stop, g_wineserver_running;
 int control_create(pthread_t *thread,const pthread_attr_t *attr,void *(*entry)(void *),void *argument){
@@ -38,14 +39,24 @@ static void *guest(void *argument){
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,1)==EINVAL);
     assert(!ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP,0xc0000005u));
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0)==EALREADY);
-    assert(ideck_lab_wine_initial_report_server_join(0,EINVAL)==EINVAL);
+    assert(ideck_lab_wine_initial_report_server_join(0,EINVAL,0)==EINVAL);
     assert(!pthread_create(&g_wineserver_thread,NULL,empty,NULL));
     wineserver_stop();
     assert(g_wineserver_should_stop);
-    assert(ideck_lab_wine_initial_report_server_join(0,0)==EALREADY);
+    assert(ideck_lab_wine_initial_report_server_join(0,0,0)==EALREADY);
     assert(!pthread_setspecific(key,(void *)1));atomic_store(&body_returned,1);return NULL;
 }
 static void *empty(void *argument){return argument;}
+static void *server_result_fixture(void *argument){
+    int mode=*(const int *)argument;
+    if(mode==2)pthread_exit(NULL); /* Same result as existing fatal thread exit. */
+    return control_server_return(mode);
+}
+static void *joined_server_result(void *argument){
+    assert(!pthread_create(&g_wineserver_thread,NULL,server_result_fixture,argument));
+    wineserver_stop();
+    return NULL;
+}
 static void *normal(void *argument){
     assert(!ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0));
     if(argument){
@@ -63,7 +74,10 @@ int main(int argc,char **argv){
     assert(!value.generation&&!ideck_lab_wine_initial_ready());
     assert(!value.body_result_source);
     assert(!value.server_join_state);
-    assert(ideck_lab_wine_initial_report_server_join(1,0)==ENODEV);
+    assert(ideck_lab_wine_initial_report_server_join(0,0,IDECK_WINE_SERVER_MAIN_RETURNED_ZERO)==EINVAL);
+    assert(ideck_lab_wine_initial_report_server_join(1,EDEADLK,IDECK_WINE_SERVER_MAIN_RETURNED_ZERO)==EINVAL);
+    assert(ideck_lab_wine_initial_report_server_join(1,0,99)==EINVAL);
+    assert(ideck_lab_wine_initial_report_server_join(1,0,0)==ENODEV);
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0)==ENODEV);
     pthread_attr_t attr;assert(!pthread_attr_init(&attr));assert(!pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED));
     pthread_t thread;assert(ideck_lab_wine_initial_create(&thread,&attr,guest,NULL)==EINVAL);
@@ -79,7 +93,8 @@ int main(int argc,char **argv){
     assert(!ideck_lab_wine_initial_snapshot(&value)&&value.initial_created&&!value.initial_joined);
     assert(value.body_result_source==IDECK_WINE_BODY_LONGJMP&&value.body_exit_code==0xc0000005u);
     assert(value.server_join_state==IDECK_WINE_SERVER_JOINED&&!value.server_join_error);
-    assert(ideck_lab_wine_initial_report_server_join(1,0)==EPERM);
+    assert(value.server_main_outcome==IDECK_WINE_SERVER_MAIN_UNKNOWN);
+    assert(ideck_lab_wine_initial_report_server_join(1,0,0)==EPERM);
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP,0)==EPERM);
     assert(ideck_lab_wine_initial_ready()==EBUSY);
     pthread_t another;assert(ideck_lab_wine_initial_create(&another,NULL,empty,NULL)==EBUSY);
@@ -110,6 +125,16 @@ int main(int argc,char **argv){
         assert(value.initial_joined&&value.generation==previous+3);
         assert(value.server_join_state==IDECK_WINE_SERVER_JOIN_FAILED&&value.server_join_error>0);
         printf("HOST server self-join refusal=%d\n",value.server_join_error);
+        assert(value.server_main_outcome==IDECK_WINE_SERVER_MAIN_UNKNOWN);
+        unsigned expected[]={IDECK_WINE_SERVER_MAIN_RETURNED_ZERO,IDECK_WINE_SERVER_MAIN_RETURNED_NONZERO,IDECK_WINE_SERVER_MAIN_UNKNOWN};
+        for(int mode=0;mode<3;mode++){
+            assert(!ideck_lab_wine_initial_create(&another,NULL,joined_server_result,&mode));
+            for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
+            assert(value.initial_joined&&value.generation==previous+4+(uint64_t)mode);
+            assert(value.server_join_state==IDECK_WINE_SERVER_JOINED&&!value.server_join_error);
+            assert(value.server_main_outcome==expected[mode]);
+        }
+        puts("HOST joined server outcome distinguishes main returned zero/nonzero and pthread_exit without marker");
     }
     assert(!pthread_key_delete(key));puts("HOST real initial pthread/TLS join and failure controls PASS; no Wine/Steam/game/return proof");return 0;
 }
@@ -123,11 +148,13 @@ server=module.patched_server(server_original.read_text())
 (out/'WineServerBridge-private.m').write_text(server)
 # Exercise the exact copied stop function with owned host fixture globals.
 stop=server[server.index('void wineserver_stop(void) {'):]
+tokens=server[server.index("static char ideck_server_zero_token;"):server.index("static void *wineserver_thread_func")]
+assert server.count("return ideck_server_main_exit_value(ret);")==1
 (out/'server-stop-control.c').write_text('''#include "WineInitialJoin.h"
 extern pthread_t g_wineserver_thread;
 extern int g_wineserver_should_stop, g_wineserver_running;
 static void wine_log_msg(const char *format, ...) {(void)format;}
-'''+stop)
+'''+tokens+'\nvoid *control_server_return(int code){return ideck_server_main_exit_value(code); }\n'+stop)
 common=['xcrun','clang','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-g','-I',str(source)]
 commands=[common+['-Dpthread_create=control_create','-c',str(source/'WineInitialJoin.c'),'-o',str(out/'join.o')],common+[str(out/'control.c'),str(out/'server-stop-control.c'),str(out/'join.o'),'-o',str(out/'control')]]
 for cmd in commands:subprocess.run(cmd,check=True)
@@ -140,5 +167,5 @@ assert adapted.count('ideck_lab_wine_initial_report_result(')==2
 assert adapted.index('ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP')<adapted.index('        g_wine_running = 0;',adapted.index('        if (setjmp('))
 (out/'WineProcessBridge-private.m').write_text(adapted)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-(out/'evidence.json').write_text(json.dumps({'scope':'HOST server stop join success and missing handle with copied bridge body, self-join refusal from the host pthread API, actual initial pthread+held TLS destructor, body-result owner/duplicate/invalid refusals, uint32 abnormal vs known-normal vs unknown, generation reset, injected create/observer failures and private exact bridge hook; NOT actual Wine workers/device/game/return proof','commands':commands,'modes':[0,1,2],'exit':0,'join_source_sha256':sha(source/'WineInitialJoin.c'),'bridge_original_sha256':sha(repo/'app/Madeira/WineProcessBridge.m'),'bridge_private_sha256':sha(out/'WineProcessBridge-private.m'),'server_original_sha256':sha(server_original),'server_private_sha256':sha(out/'WineServerBridge-private.m'),'server_stop_fixture_sha256':sha(out/'server-stop-control.c'),'fixture_sha256':sha(out/'control.c'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'scope':'HOST server stop join, explicit main return tokens/early pthread_exit and missing handle with copied bridge body, self-join refusal from the host pthread API, actual initial pthread+held TLS destructor, body-result owner/duplicate/invalid refusals, uint32 abnormal vs known-normal vs unknown, generation reset, injected create/observer failures and private exact bridge hook; NOT actual Wine workers/device/game/return proof','commands':commands,'modes':[0,1,2],'exit':0,'join_source_sha256':sha(source/'WineInitialJoin.c'),'bridge_original_sha256':sha(repo/'app/Madeira/WineProcessBridge.m'),'bridge_private_sha256':sha(out/'WineProcessBridge-private.m'),'server_original_sha256':sha(server_original),'server_private_sha256':sha(out/'WineServerBridge-private.m'),'server_stop_fixture_sha256':sha(out/'server-stop-control.c'),'fixture_sha256':sha(out/'control.c'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
 print((out/'control.log').read_text())
