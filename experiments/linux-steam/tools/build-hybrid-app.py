@@ -140,17 +140,23 @@ if a.madeira_setup:
         text=text.replace(anchor,anchor+'\n\t\t\t\t'+build_id+' /* cold setup source */,')
     # Only the private Lab's Swift importer sees the fixed request/map ABI.
     # Implementations already live in the qualified frontend archive.
-    for name in ('LaunchProtocol.h','WindowsLaunchMap.h'):
+    recheck_pending=bool(e.get('native_dock_request_staging_enabled'))
+    headers=('LaunchProtocol.h','WindowsLaunchMap.h')
+    if recheck_pending:headers+=('GameFilePolicy.h',)
+    for name in headers:
         target=native/name;assert not target.exists();target.write_bytes((lab/'app'/name).read_bytes())
         cold_sources['experiments/linux-steam/app/'+name]=hashof(target)
-    bridging=native/'Madeira-Bridging-Header.h';bridging.write_text(bridging.read_text()+'\n#include "WindowsLaunchMap.h"\n')
+    bridging=native/'Madeira-Bridging-Header.h'
+    imports='\n#include "WindowsLaunchMap.h"\n'
+    if recheck_pending:imports+='#include "GameFilePolicy.h"\n'
+    bridging.write_text(bridging.read_text()+imports)
     cold_sources['private-adapted/Madeira-Bridging-Header.h']=hashof(bridging)
     # The pending request chooses Valve's actual option in the SAME normal
     # Dock launch path, never a separate EXE launcher or auth/session shortcut.
     import importlib.util
     spec=importlib.util.spec_from_file_location('dock_option_hook',lab/'tools/dock-launch-selection.py')
     hook=importlib.util.module_from_spec(spec);spec.loader.exec_module(hook)
-    content=native/'ContentView.swift';content.write_text(hook.patched(content.read_text()))
+    content=native/'ContentView.swift';content.write_text(hook.patched(content.read_text(),recheck_pending=recheck_pending))
     cold_sources['private-adapted/ContentView.swift']=hashof(content)
     spec=importlib.util.spec_from_file_location('native_setup_rules',lab/'tools/native-setup-adaptation.py')
     setup_rules=importlib.util.module_from_spec(spec);spec.loader.exec_module(setup_rules)

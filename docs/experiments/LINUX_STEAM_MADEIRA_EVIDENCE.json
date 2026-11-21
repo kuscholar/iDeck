@@ -23208,6 +23208,107 @@
           "bytes": 1348
         }
       ]
+    },
+    "native_dock_final_shared_recheck": {
+      "source_base": "071d2a5a18cd7d6edd7d118b8683d01166803726",
+      "candidate": {
+        "build": 92,
+        "architecture": "arm64",
+        "unsigned_sha256": "a9e3767d2bb96905599db2b2bedbcf7eb5ba9c4cd382b2285518202e3ed37f99",
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "pinned_runtime90_evidence_sha256": "a47bfbdc410c2c381fc0d13bb14e89818afe4cfe6fb5f35cfa14c2c030606aca",
+        "pinned_runtime_archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "8bb624ee25ebead1301436ba119f8322242bf0e5ae9fd01330c60909ede4ec13",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LabDockRequest.swift": "1f95edf0c44ebd97350af1b10ce11e75daeff5b56a1e864961dc2461ebace90b",
+          "experiments/linux-steam/tools/build-hybrid-app.py": "8a94ed670b42756392926f634bda4a809850bab938e12100d241380a373a349b",
+          "experiments/linux-steam/tools/dock-launch-selection.py": "df1ff79220c2bdce28334107401686adae644a80bf7962a63b00ecf373e205f3",
+          "experiments/linux-steam/tools/test-dock-selection.py": "de5f4491b980c0d008e0fa23cf1ea17699ace4aaf50e60f7de864eea94a4fe68"
+        },
+        "selection_call": "100638d6c:\t59 d0 e8 97\tbl\t_$s7Madeira14LabDockPendingC12launchOption3for7options8fallback14installedGamess6UInt32V5index_s6UInt64VSg8sequencetAA0C4GameV_SayAA011SteamLaunchF0VGSgAJSayAQGyXEtKF",
+        "dock_resume_symbol": "_$s7Madeira11ContentViewV9startDock33_210CB801764C3044F996987440283C1BLL_11compactPool7profileyAA0E4GameV_SbAA12LibraryEntryVSgtFyyYacfU1_TY4_",
+        "dock_resume_calls_in_address_order": [
+          {
+            "wine_process_is_running": "100639584:\tb2 a6 e7 97\tbl\t_wine_process_is_running"
+          },
+          {
+            "validateForHandoff": "100639a98:\t10 ce e8 97\tbl\t_$s7Madeira14LabDockPendingC18validateForHandoff8sequence7recheckys6UInt64VSg_s5Int32VAHXEtKF"
+          },
+          {
+            "credentialsForDock": "100639ab0:\ta5 2c fb 97\tbl\t_$s7Madeira11SteamSignInO18credentialsForDockSS11accountName_SS12refreshTokentSgyFZ"
+          },
+          {
+            "writeHandoff": "100639b60:\t46 3c e9 97\tbl\t_$s7Madeira0A4DockO12writeHandoff7account5token5appIDySS_SSSitKFZ"
+          }
+        ],
+        "file_recheck_thunk_address": "0x10063c33c",
+        "linked_c_recheck_call": "10063c344:\t99 a0 0f 94\tbl\t_ideck_game_file_policy_revalidate_pending_shared",
+        "signed": false,
+        "installed": false
+      },
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "sequence": 21082,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "profiles": {
+        "utc": "2026-11-21T16:01:32Z",
+        "inspected": 4,
+        "valid_main": 0,
+        "valid_helper": 0
+      },
+      "hypothesis": "The chosen Valve option can outlive its staged request or shared executable across native connection preparation.",
+      "result": "Host Swift/C controls refuse stale or missing inputs and preserve ordinary Dock selection. The Build92 final ARM64 async Dock resume calls validation before the existing Steam handoff.",
+      "scope": "No new physical input, installation, Play, Wine execution, game return, or stability evidence. The bridge remains diagnostic125.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume1101-data-private.json",
+          "sha256": "039da20b6273d52a6d51828a671fff21b6e0973ef649d2f0e386d4795abb3251",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume1101-private.png",
+          "sha256": "5343d7b4d7d189fb2985e986cbe04db35964c3aa82bb4faa76a81292d0b1c4f4",
+          "bytes": 213168
+        },
+        {
+          "path": "run83/dock-final-recheck-host-v1/evidence.json",
+          "sha256": "fa5f91348ee820a05d047ec187d4df47251f998d8e9c0d4b612ff90a1446422d",
+          "bytes": 2742
+        },
+        {
+          "path": "run83/dock-final-recheck-c-v1/evidence.json",
+          "sha256": "6740d3b23786f407512a7a5afd71c90a793657b7d3f4a9308fea6aac5d8e2798",
+          "bytes": 5907
+        },
+        {
+          "path": "run83/hybrid92-final-dock-recheck/build-result.json",
+          "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "bytes": 54
+        },
+        {
+          "path": "run83/hybrid92-final-dock-recheck/package-validation.json",
+          "sha256": "0c13f3a9eeecb562b2c533a77534ff75db47912ed69c7eadcd2640846314bbb6",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid92-final-dock-recheck/prepare-evidence.json",
+          "sha256": "ed80bb1741c3493f5a6afb902958f379f77ff3eac09a6c2a91eeae0aa1d7f081",
+          "bytes": 322430
+        },
+        {
+          "path": "run83/hybrid92-final-dock-recheck/final-dock-handoff-recheck-link-private.json",
+          "sha256": "0f84e1e5c0ddf64e03767666880b85e523d61ae96dc23f7e222e5cad04f8facc",
+          "bytes": 2423
+        }
+      ]
     }
   }
 }

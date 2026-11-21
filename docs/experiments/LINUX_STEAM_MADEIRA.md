@@ -7705,3 +7705,41 @@ Next on Air still requires the exact valid main/helper development
 profiles and the completed or explicitly authorized end of the
 old session. The compatibility bridge remains diagnostic125.
 Neither Windows gameplay nor repeated return to Steam is verified.
+
+## Run83 follow-up — recheck the selected Play request before native Dock handoff
+
+At 11:01 EST the exact Air still showed Build86 PID 29952, health
+sequence 21082, 17022 frames and zero Play submissions. The guest crop
+matched the earlier white image with cursor. Read-only inventory at
+11:01:32 EST found zero valid exact Lab main and helper profiles among
+four entries. The running session was left in place.
+
+The Lab-selected Valve option could survive a stale request or missing
+shared executable while native Dock asynchronously finished its Steam
+connection preparation. Carry its capture sequence with the option.
+After preparation and the existing JIT/session checks, verify the same
+staged sequence and recheck its physical executable through the retained
+shared-library descriptor. Refuse on error before the existing Steam
+sign-in handoff. A normal Dock launch with no staged request keeps its
+usual launch option and needs no shared-library check.
+
+Run `test-dock-selection.py` with a new private output. Its Swift/C
+controls passed matching, stale/replaced, and late missing file cases,
+as well as ordinary Dock, real sparse launch-option keys, and request
+ownership. Run the existing `test-capture-launch.py --dock-storage`
+against the pinned Lab host archives with a new output and the recorded
+LLVM/MinGW tools. Its sanitizer control passed the real Linux ELF bridge
+and shared-file revalidation. It inspected the included own PE fixture.
+
+Replay the Build91 private app command with the unchanged
+`runtime90-late-recheck`, fresh output, and `--build-number 92`.
+Unsigned Build92 passed Xcode and package validation. The final ARM64
+Dock async resume calls the validation after its Wine session check and
+before the existing Steam handoff. Builds, dependencies and device
+observation are indexed in `run83.native_dock_final_shared_recheck`.
+Build92 has neither been signed nor installed. The exact valid Air main
+and helper profiles are still required for a fresh deployment. Once
+deployment is available and the prior session is safe to replace, check
+a physical full-frame refresh before attempting Steam Play. The bridge
+still returns diagnostic125. Windows gameplay, return and repeat
+stability remain unverified.

@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
 """Real Dock manifest parser/model + Lab request selection, no login or runtime."""
-import argparse,hashlib,json,subprocess
+import argparse,hashlib,json,runpy,subprocess
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('output',type=Path);a=p.parse_args()
 out=a.output.resolve();repo=Path(__file__).resolve().parents[3];lab=repo/'experiments/linux-steam';dock=repo/'app/Madeira/MadeiraDock.swift'
 assert str(out).startswith('/Volumes/easystore/') and not out.exists();out.mkdir(mode=0o700,parents=True)
+hook=runpy.run_path(str(lab/'tools/dock-launch-selection.py'))['patched']
+content=(repo/'app/Madeira/ContentView.swift').read_text()
+unflagged=hook(content)
+flagged=hook(content,recheck_pending=True)
+assert 'validateForHandoff' not in unflagged and flagged.count('validateForHandoff') == 1
+start=flagged.index('    private func startDock(')
+body=flagged[start:flagged.index('\n    private func ',start+1)]
+assert body.index('await SteamOwnedLibrary.shared.prepareDock()') < body.index('validateForHandoff') < body.index('SteamSignIn.credentialsForDock()') < body.index('MadeiraDock.writeHandoff(')
+print('HOST private staged Dock adapter rechecks after prepareDock and before the existing sign-in handoff PASS')
 source=dock.read_text()
 def extract(signature,end):
  start=source.index(signature);stop=source.index(end,start)+len(end);return source[start:stop]
@@ -120,10 +129,24 @@ precondition(LabDockPending.shared.discard(sequence:2) == 0)
 precondition(ideck_lab_pending_dock_sequence()==0)
 let dispatcher=LabDockPending()
 let untouched=try dispatcher.launchOption(for:game,options:nil,fallback:19,installedGames:{fatalError("Ordinary fallback must not query shared files")})
-precondition(untouched==19 && dispatcher.stage(decoded,sequence:1)==0)
+precondition(untouched.index==19 && untouched.sequence==nil)
+try dispatcher.validateForHandoff(sequence: untouched.sequence, recheck: {_ in fatalError("Ordinary fallback must not read Lab files")})
+precondition(dispatcher.stage(decoded,sequence:1)==0)
 let nativeOptions=SteamLaunchOption.parse(["11":["executable":"Game.exe","arguments":#"--label "two words" """#,"workingdir":".","config":["oslist":"windows"]]])
 let exact=try dispatcher.launchOption(for:game,options:nativeOptions,fallback:19,installedGames:{[game]})
-precondition(exact==11 && dispatcher.snapshot()?.sequence==1)
+precondition(exact.index==11 && exact.sequence==1 && dispatcher.snapshot()?.sequence==1)
+var checkedSequence: UInt64?
+try dispatcher.validateForHandoff(sequence: exact.sequence) { checkedSequence=$0; return 0 }
+precondition(checkedSequence==1)
+do {
+    try dispatcher.validateForHandoff(sequence: exact.sequence) {_ in -ENOENT}
+    fatalError("A missing executable passed the native handoff")
+} catch LabDockPending.Failure.sharedExecutable(let code) { precondition(code == -ENOENT) }
+do {
+    try dispatcher.validateForHandoff(sequence: untouched.sequence) {_ in fatalError("Newly staged request was not the selected one")}
+    fatalError("An ordinary fallback became a different staged launch")
+} catch LabDockSelection.Failure.mismatched {}
+
 var refusals=0
 for entry in [0,1,2] {
     do {
@@ -132,6 +155,14 @@ for entry in [0,1,2] {
     }catch{refusals+=1}
 }
 precondition(refusals==3 && dispatcher.snapshot()?.sequence==1)
+precondition(dispatcher.discard(sequence:1)==0 && dispatcher.stage(decoded,sequence:2)==0)
+do {
+    try dispatcher.validateForHandoff(sequence:exact.sequence) {_ in fatalError("A stale selection queried the new request")}
+    fatalError("A stale option was handed to the new request")
+} catch LabDockSelection.Failure.mismatched {}
+precondition(dispatcher.snapshot()?.sequence==2)
+print("HOST staged sequence preserved across handoff, changed slot and missing physical file refuse, ordinary path does not recheck PASS")
+
 let slot=LabDockPending(),raceLock=NSLock();var results:[Int32]=[]
 DispatchQueue.concurrentPerform(iterations:8) { i in
     let result=slot.stage(decoded,sequence:UInt64(i+1))

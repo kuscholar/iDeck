@@ -83,14 +83,27 @@ final class LabDockPending {
 
     /// Used at the existing native Dock launch-option selection point. All
     /// authentication/JIT/session/installer/Valve LaunchApp steps remain in
-    /// ContentView.startDock. This snapshot neither claims nor discards a slot.
+    /// ContentView.startDock. Keep the exact capture sequence across the
+    /// asynchronous Dock preparation without claiming or discarding it.
     func launchOption(for game: DockGame, options: [SteamLaunchOption]?,
-                      fallback: UInt32, installedGames: () -> [DockGame]) throws -> UInt32 {
-        guard let captured = snapshot() else { return fallback }
+                      fallback: UInt32, installedGames: () -> [DockGame]) throws -> (index: UInt32, sequence: UInt64?) {
+        guard let captured = snapshot() else { return (fallback, nil) }
         guard let options else { throw LabDockSelection.Failure.missing }
         let selected = try captured.request.select(installedGames: installedGames())
         guard selected.game == game else { throw LabDockSelection.Failure.mismatched }
-        return try selected.launchOption(appID: game.id, options: options)
+        return (try selected.launchOption(appID: game.id, options: options), captured.sequence)
+    }
+
+    /// Fail closed before the regular native Steam handoff. Ordinary Dock
+    /// choices keep their fallback and never touch the Lab shared library.
+    enum Failure: Error { case sharedExecutable(Int32) }
+
+    func validateForHandoff(sequence: UInt64?, recheck: (UInt64) -> Int32) throws {
+        guard snapshot()?.sequence == sequence else { throw LabDockSelection.Failure.mismatched }
+        guard let sequence else { return }
+        let status = recheck(sequence)
+        guard status == 0 else { throw LabDockPending.Failure.sharedExecutable(status) }
+        guard snapshot()?.sequence == sequence else { throw LabDockSelection.Failure.mismatched }
     }
 }
 
