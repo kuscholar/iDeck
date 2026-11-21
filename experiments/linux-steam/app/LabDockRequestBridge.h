@@ -8,6 +8,9 @@
  * request. This is NOT Wine admission, a license result or a game exit ACK. */
 int32_t ideck_lab_receive_dock_request(const void *frame,size_t size,uint64_t sequence);
 uint64_t ideck_lab_pending_dock_sequence(void);
+/* Before opening native setup, drop exactly the staged Swift snapshot.
+ * The caller still owns the original Linux capture. */
+int32_t ideck_lab_discard_staged_dock_sequence(uint64_t sequence);
 #if IDECK_LAB_NATIVE_SETUP_TRANSITION
 /* Same retained controller factory as the isolated cold native setup route.
  * Main-thread-only presentation; never starts a guest or enters credentials. */

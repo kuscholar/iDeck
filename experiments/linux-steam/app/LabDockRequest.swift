@@ -108,3 +108,8 @@ public func ideckLabReceiveDockRequest(_ frame: UnsafeRawPointer?, _ length: Int
 public func ideckLabPendingDockSequence() -> UInt64 {
     LabDockPending.shared.snapshot()?.sequence ?? 0
 }
+
+@_cdecl("ideck_lab_discard_staged_dock_sequence")
+public func ideckLabDiscardStagedDockSequence(_ sequence: UInt64) -> Int32 {
+    LabDockPending.shared.discard(sequence: sequence)
+}

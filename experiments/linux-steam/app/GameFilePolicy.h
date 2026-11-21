@@ -26,5 +26,9 @@ int ideck_game_file_policy_observation(struct ideck_game_file_observation *out);
  * busy until native discard. Arguments stay in app memory for the launch contract;
  * never log/persist raw frames or interpret this receipt as a game exit. */
 int ideck_game_file_policy_pending(struct ideck_launch_request *,uint64_t *sequence);
+/* Read-only check through the shared physical library after guest drain,
+ * for the exact still-pending capture. No file is retained or opened for
+ * execution. This supplies no exclusive lease or game/license proof. */
+int ideck_game_file_policy_revalidate_pending_shared(uint64_t sequence);
 int ideck_game_file_policy_discard(uint64_t sequence);
 #endif

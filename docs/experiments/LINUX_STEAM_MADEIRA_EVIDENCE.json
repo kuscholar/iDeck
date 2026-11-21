@@ -22822,6 +22822,304 @@
           "bytes": 7068
         }
       ]
+    },
+    "post_drain_shared_file_recheck": {
+      "source_base": "78d72f52fe2e68e3a218ccc745365f69c8020b1e",
+      "LinuxRunner_pin": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "health_sequence": 11924,
+        "frames": 17022,
+        "Play": 0,
+        "cropped_screen_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "valid_exact_Air_profiles": {
+        "main": 0,
+        "helper": 0,
+        "inspected": 7,
+        "utc": "2026-11-20T14:34:37Z"
+      },
+      "patch": "After clean retained frontend drain, re-open the exact pending request in the registered physical shared library before mapping, binding, or staging it. Close every borrowed handle. The old request remains available for explicit recovery if checking fails.",
+      "hypothesis_result": "Host test demonstrates a valid capture no longer suffices after the executable disappears or becomes an invalid PE. Wrong/retired sequences and the default library are refused, the original restored file passes, and capture-off and 48 default host regressions pass.",
+      "iOS_scope": "Actual ARM64 iOS controller and policy compiled, then resolved in relocatable link. No new final App or deployment.",
+      "not_proven": "Cross-phase executable identity, atomic file freeze, exclusive storage ownership, Valve license, game launch, return, or repeated stable UI.",
+      "next": "Keep existing session. After a valid exact main/helper development pair exists and the live test ends or is specifically authorized to finish, perform Build88 full-frame discriminator with real screen readback. An App with this additional handoff check requires a new full build.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume0934-data-private.json",
+          "sha256": "97b8fdc8fcdc6b0b4d7b9be99fd20f25ad52a07b26048e3aa532c49b9352d4be",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume0934-private.png",
+          "sha256": "4b9813d0083252ac7aa2cfaa130afba022e31e72ffd2b6d875c757ccbdd1bbc6",
+          "bytes": 213706
+        },
+        {
+          "path": "run83/revalidate-captured-shared-v1/evidence.json",
+          "sha256": "e692a1ab7768052aa39f8dd5511e40849f38e1cdd74aa80333e6aa8bde4c73c2",
+          "bytes": 5874
+        },
+        {
+          "path": "run83/revalidate-capture-off-v1/evidence.json",
+          "sha256": "9384a6cfeb4dedf9a2ac0b40f10fa8b48701c3041ddc96210ffaa3f15bae77ea",
+          "bytes": 5864
+        },
+        {
+          "path": "run83/revalidate-native-file-controls-v1/evidence.json",
+          "sha256": "2c01986e8090bbd8a1018d54f6e89a20a0d6ff3e90668ec96e1bc3d4414c4c2e",
+          "bytes": 2852
+        },
+        {
+          "path": "run83/revalidate-handoff-ios-objects-v1/evidence.json",
+          "sha256": "4ede5eee6adfb1accb4cfd65b8834a7285615bb060af0c558fddb6aeb4d81c1c",
+          "bytes": 8155
+        }
+      ]
+    },
+    "linked_build89_handoff_candidate": {
+      "source_base": "78d72f52fe2e68e3a218ccc745365f69c8020b1e",
+      "scoped_worktree_source_sha256": {
+        "experiments/linux-steam/app/GameFilePolicy.c": "66062b9cb3aa5d2133caf03462281e1ef2432df4916a95202ccd4e71d258de78",
+        "experiments/linux-steam/app/GameFilePolicy.h": "c5a787fde276d9d637e21343c6cc0abfa88073960ec49ea704f00ec92f36a564",
+        "experiments/linux-steam/app/LinuxSteamViewController.m": "387f8dcd110b1814e86cdf1b00a881780249a5ee6e09b719678f302a590e678b"
+      },
+      "candidate": {
+        "build": 89,
+        "unsigned_binary_sha256": "bc7b68af1c1a3f69371ef1130c186ba201792b59a986c46a9dc8f6e3100bb3ce",
+        "runtime_evidence_sha256": "7343b271a4b43a410dd31218879ba33d2350b6d426682c7e9d7ec479af5eab50",
+        "runtime_archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "95e28339db921cd16682af64b43641a1a2b47394fe03b1440ce6202dd76ac001",
+          "libideck_linux_frontend.a": "9042fe8ef3daa367a3109f941047e1e183c6e0a9c35c54eea56a3bd6df0c074c",
+          "libish_emu.a": "a0dc53dca5703a95cfead0e45467e600ef0bfd36257056098781776e22f0a629"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "caller_symbol": "___81-[LinuxSteamViewController startRetainedOwnerRoot:lab:binary:discovery:manifest:]_block_invoke_2",
+        "caller_order": [
+          "100a17b60:\t05 2f 00 94\tbl\t_ideck_game_file_policy_revalidate_pending_shared",
+          "100a17bd0:\t53 35 00 94\tbl\t_ideck_windows_launch_map",
+          "100a17cd4:\t6b 36 00 94\tbl\t_LabBindWindowsLibrary",
+          "100a17f20:\t0d 56 d9 97\tbl\t_ideck_lab_receive_dock_request"
+        ],
+        "conditional_branches_before_mapping": [
+          "100a17bbc:\t48 03 00 35\tcbnz\tw8, 0x100a17c24"
+        ],
+        "policy_path": [
+          "100a23944:\t48 04 00 94\tbl\t_ideck_game_files_from_roots",
+          "100a2395c:\tee 04 00 94\tbl\t_ideck_game_files_unchanged",
+          "100a2396c:\t7d 00 00 94\tbl\t_ideck_game_files_close"
+        ],
+        "explicit_restart_discard": "100a16840:\t73 34 00 94\tbl\t_ideck_game_file_policy_discard",
+        "one_shot_RFB_handler_present": true,
+        "signed": false,
+        "installed": false
+      },
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "sequence": 13756,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "profile_recheck": {
+        "utc": "2026-11-20T19:40:15Z",
+        "inspected": 5,
+        "exact_valid_main": 0,
+        "exact_valid_helper": 0
+      },
+      "observation": "Same frozen white crop and frame count. Existing session kept. Valid matching main and helper provisioning unavailable.",
+      "limits": "Unsigned Build89 package and Mach-O proof only. Window did not allow a commit. No install, JIT, Steam UI, game or return validation from Build89.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume1440-data-private.json",
+          "sha256": "ac0f77c742349348357b0f5753fe8d059df6d10b0f47c3b770cedd7d2b80a3ce",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume1440-private.png",
+          "sha256": "672bf842f05cf4d5d38ae62086864d3e163fd418d626ddc1ff598473ded96f70",
+          "bytes": 213587
+        },
+        {
+          "path": "run83/runtime89-handoff-recheck/evidence.json",
+          "sha256": "7343b271a4b43a410dd31218879ba33d2350b6d426682c7e9d7ec479af5eab50",
+          "bytes": 106937
+        },
+        {
+          "path": "run83/hybrid89-handoff-recheck/prepare-evidence.json",
+          "sha256": "98d798f632e5fef726a3efde51805a6dc2bfd84af84ef9de53cb74afffe6b8a5",
+          "bytes": 322298
+        },
+        {
+          "path": "run83/hybrid89-handoff-recheck/build-result.json",
+          "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "bytes": 54
+        },
+        {
+          "path": "run83/hybrid89-handoff-recheck/package-validation.json",
+          "sha256": "60394f66e172249cc16eddfccac63e121302ac06dbb7e30addc2184dce96aed5",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid89-handoff-recheck/final-handoff-link-private.json",
+          "sha256": "720301407e168b7999b6f088d7fc5f9931c7cc6e5879b05ea191ab0f7095f181",
+          "bytes": 1578
+        }
+      ]
+    },
+    "staged_file_recheck_before_native_setup": {
+      "source_base": "78d72f52fe2e68e3a218ccc745365f69c8020b1e",
+      "LinuxRunner_pin": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "health": 15587,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "profiles": {
+        "checked_utc": "2026-11-21T00:45:26Z",
+        "inspected": 4,
+        "exact_valid_main": 0,
+        "exact_valid_helper": 0
+      },
+      "change": "Before terminal drain and setup presentation, recheck the exact still-pending physical file. On failure, clear only the matching staged Swift snapshot, retain the C capture, and offer explicit discard/restart.",
+      "host": "Actual ObjC setup method with counted stubs proves no terminal drain, presentation or restart on stale/missing check failure. The real Swift bridge discards only the matching sequence and refuses zero or conflicting values. Both regression suites passed.",
+      "iOS": "Actual controller and bridge source compiled as ARM64 iOS objects with fixture model type definitions for Swift, then the exact C-facing symbol was resolved in a relocatable link. No new final app. Immutable Build89 remains at earlier source.",
+      "limits": "Diagnostic125, no new signature or installation, no real Play or game/return validation.",
+      "artifacts": [
+        {
+          "path": "run83/health-resume1945-data-private.json",
+          "sha256": "8bd69c380e829a187762dc55dd8c6719c80c7f8914f521e82a329df23f7a4ecc",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume1945-private.png",
+          "sha256": "74f9c029aa5c409fa9dd721cf73bab27be35d2c250841f35d46862a10ab47115",
+          "bytes": 212859
+        },
+        {
+          "path": "run83/late-file-ui-v1/evidence.json",
+          "sha256": "fdbc0045dc7d9f6d936e58ab3f84cbdda87472264166d13a8c3a84d5879b2f70",
+          "bytes": 1163
+        },
+        {
+          "path": "run83/late-file-swift-v1/evidence.json",
+          "sha256": "450665216a5f2ed45c82d08d8486912383b963645bd116651c4f454c3bc7f792",
+          "bytes": 2670
+        },
+        {
+          "path": "run83/late-file-ios-objects-v1/evidence.json",
+          "sha256": "ad0215c9b2e33c96b6c223bfc10d2bdd88c33a84c7f58a6873ad2b10d18f68b9",
+          "bytes": 6591
+        }
+      ]
+    },
+    "linked_build90_late_recheck_candidate": {
+      "source_base": "78d72f52fe2e68e3a218ccc745365f69c8020b1e",
+      "source_sha256": {
+        "experiments/linux-steam/app/GameFilePolicy.c": "66062b9cb3aa5d2133caf03462281e1ef2432df4916a95202ccd4e71d258de78",
+        "experiments/linux-steam/app/GameFilePolicy.h": "c5a787fde276d9d637e21343c6cc0abfa88073960ec49ea704f00ec92f36a564",
+        "experiments/linux-steam/app/LabDockRequest.swift": "e32d181e4acae66acde39b173cfe5b51bbfb2eab3ab05e02e25e876cdadcf344",
+        "experiments/linux-steam/app/LabDockRequestBridge.h": "5b8859c309e97f9d48a1b26bcbfda7388da735a701284ccd62b36a87d54e590b",
+        "experiments/linux-steam/app/LinuxSteamViewController.m": "8e27330ac0c6dc09e58271884a5b7bef00cc5e30180934520f47b500c2db0c04"
+      },
+      "candidate": {
+        "build": 90,
+        "unsigned_binary_sha256": "3e1bf84f2ab5e95c09235c95065d9ffe1fbb6e86b07e7aaf0bc9f0ad4472d771",
+        "runtime_sha256": "a47bfbdc410c2c381fc0d13bb14e89818afe4cfe6fb5f35cfa14c2c030606aca",
+        "runtime_archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "8bb624ee25ebead1301436ba119f8322242bf0e5ae9fd01330c60909ede4ec13",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "open_native_setup_call_order": [
+          "100a16f48:\t8a 32 00 94\tbl\t_ideck_game_file_policy_revalidate_pending_shared",
+          "100a16f60:\tbe 5a d9 97\tbl\t_ideck_lab_discard_staged_dock_sequence",
+          "100a170b8:\tf2 2b 00 94\tbl\t_ideck_file_reserve_drain",
+          "100a171c4:\teb 78 d9 97\tbl\t_ideck_lab_madeira_setup_controller"
+        ],
+        "condition_after_recheck": [
+          "100a16f54:\t28 0b 00 34\tcbz\tw8, 0x100a170b8"
+        ],
+        "restart_discard_call": "100a168b0:\td6 34 00 94\tbl\t_ideck_game_file_policy_discard",
+        "signed": false,
+        "installed": false
+      },
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "health": 17419,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "profiles": {
+        "utc": "2026-11-21T05:50:37Z",
+        "inspected": 4,
+        "valid_main": 0,
+        "valid_helper": 0
+      },
+      "result": "Final App Mach-O links both the fresh file check and exact Swift slot rollback before terminal drain and native setup. Host-tested source hashes still match.",
+      "scope": "Build and final link only, uninstalled and unsigned. No physical recovery, Steam Play, game or return validation.",
+      "artifacts": [
+        {
+          "path": "run83/hybrid90-late-recheck/final-late-recheck-link-private.json",
+          "sha256": "7046f924f2e8f470d0363310d73d30ec54f0eef602bf56068e2ca102e8c12b90",
+          "bytes": 1213
+        },
+        {
+          "path": "run83/runtime90-late-recheck/evidence.json",
+          "sha256": "a47bfbdc410c2c381fc0d13bb14e89818afe4cfe6fb5f35cfa14c2c030606aca",
+          "bytes": 106646
+        },
+        {
+          "path": "run83/hybrid90-late-recheck/build-result.json",
+          "sha256": "6e93a4fa8ba3f90c2773190ace3b48e71a9331ccb0c965644ddc3be7ff9626a6",
+          "bytes": 54
+        },
+        {
+          "path": "run83/hybrid90-late-recheck/package-validation.json",
+          "sha256": "d05597c1c69e8816e9014042eaebe752b79fe049d987865eed4d93b12fe0180e",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid90-late-recheck/prepare-evidence.json",
+          "sha256": "5aee194a8abd15110eb4db1575e8965651d11ce61866cd87474362e6c721ce44",
+          "bytes": 322286
+        },
+        {
+          "path": "run83/health-resume0050-data-private.json",
+          "sha256": "6b62ea83a40f76b63e7cce43cdb8c54a2d1af6a8ba72cb607d326bf7b470e832",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-resume0050-private.png",
+          "sha256": "81366e61423f6dd84908f69d238547e8e6b77c722abf90da295f1d658bef9394",
+          "bytes": 214153
+        },
+        {
+          "path": "run83/late-file-ios-objects-v1/evidence.json",
+          "sha256": "ad0215c9b2e33c96b6c223bfc10d2bdd88c33a84c7f58a6873ad2b10d18f68b9",
+          "bytes": 6591
+        },
+        {
+          "path": "run83/late-file-ui-v1/evidence.json",
+          "sha256": "fdbc0045dc7d9f6d936e58ab3f84cbdda87472264166d13a8c3a84d5879b2f70",
+          "bytes": 1163
+        },
+        {
+          "path": "run83/late-file-swift-v1/evidence.json",
+          "sha256": "450665216a5f2ed45c82d08d8486912383b963645bd116651c4f454c3bc7f792",
+          "bytes": 2670
+        }
+      ]
     }
   }
 }

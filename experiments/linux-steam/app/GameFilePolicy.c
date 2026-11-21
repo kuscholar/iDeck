@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <pthread.h>
+#include <string.h>
 static pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;
 static int root=-1,shared=-1;
 static pid_t native_owner;
@@ -72,6 +73,31 @@ int ideck_game_file_policy_pending(struct ideck_launch_request *out,uint64_t *se
     int result=root<0?-ENODEV:native_owner!=getpid()?-EXDEV:pending_sequence?0:-EAGAIN;
     if(!result){*out=pending;*sequence=pending_sequence;}
     pthread_mutex_unlock(&lock);return result;
+}
+int ideck_game_file_policy_revalidate_pending_shared(uint64_t sequence) {
+    if(!sequence)return -EINVAL;
+    struct ideck_launch_request request;
+    int descriptor=-1;
+    pthread_mutex_lock(&lock);
+    int error=root<0?-ENODEV:native_owner!=getpid()?-EXDEV:sequence!=pending_sequence?-ESTALE:0;
+    if(!error&&strncmp(pending.install,IDECK_LAUNCH_ROOT,sizeof IDECK_LAUNCH_ROOT-1))error=-EXDEV;
+    if(!error&&shared<0)error=-ENODEV;
+    if(!error){
+        request=pending;
+        descriptor=copy_directory(shared);
+        if(descriptor<0)error=descriptor;
+    }
+    pthread_mutex_unlock(&lock);
+    if(error)return error;
+    struct ideck_game_files *files=NULL;
+    error=ideck_game_files_from_roots(-1,descriptor,&request,sizeof request,&files);
+    if(!error)error=ideck_game_files_unchanged(files);
+    ideck_game_files_close(files);
+    close(descriptor);
+    pthread_mutex_lock(&lock);
+    if(!error&&sequence!=pending_sequence)error=-ESTALE;
+    pthread_mutex_unlock(&lock);
+    return error;
 }
 int ideck_game_file_policy_discard(uint64_t sequence) {
     pthread_mutex_lock(&lock);

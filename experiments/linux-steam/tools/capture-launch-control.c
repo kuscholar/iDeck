@@ -21,7 +21,7 @@ static void *inspect_concurrent(void *request){
  ideck_game_file_policy_inspect(request);return NULL;
 }
 #endif
-static int check_default_routes(const char *root){
+static int check_default_routes(const char *root,struct ideck_launch_request *request){
  char path[4096];snprintf(path,sizeof path,"%s/data",root);int data=open(path,O_RDONLY|O_DIRECTORY|O_CLOEXEC);
  int shared=ideck_shared_steam_prepare(root);
  if(data<0||shared<0)return 1;
@@ -36,7 +36,7 @@ static int check_default_routes(const char *root){
  ideck_game_files_close(files);files=NULL;
  if(!e)e=ideck_game_files_from_roots(data,shared,&r,sizeof r,&files);
  if(!e&&ideck_game_files_library(files)!=IDECK_LIBRARY_DEFAULT)e=1;
- ideck_game_files_close(files);close(data);close(shared);return e;
+ ideck_game_files_close(files);close(data);close(shared);if(!e)*request=r;return e;
 }
 int main(int argc,char **argv){
  if(argc!=2)return 2;
@@ -51,7 +51,8 @@ int main(int argc,char **argv){
  int shared=ideck_shared_steam_prepare(argv[1]);
  if(data<0||shared<0||ideck_game_file_policy_start_shared(data,shared))return 3;
  close(data);close(shared);
- if(check_default_routes(argv[1]))return 19;
+ struct ideck_launch_request default_request;
+ if(check_default_routes(argv[1],&default_request))return 19;
  int wait=ideck_linux_lab_run(argv[1]);if(wait){printf("guest-wait=%d\n",wait);return 4;}
 #if !IDECK_LAB_CAPTURE_LAUNCH
  struct ideck_launch_request ignored;uint64_t ignored_seq;
@@ -76,7 +77,20 @@ int main(int argc,char **argv){
  if(ideck_game_file_policy_pending(&r,&seq)||memcmp(&r,&original,sizeof r))return 7;
  if(ideck_game_file_policy_discard(seq+1)!=-ESTALE)return 26;
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=1||memcmp(&r,&original,sizeof r))return 27;
+ if(ideck_game_file_policy_revalidate_pending_shared(0)!=-EINVAL||
+    ideck_game_file_policy_revalidate_pending_shared(seq+1)!=-ESTALE||
+    ideck_game_file_policy_revalidate_pending_shared(seq))return 28;
+ const char *library=IDECK_LAB_DOCK_STORAGE?"MadeiraPrefix/drive_c/SteamLibrary":"SharedSteamLibrary";
+ char game[4096],saved[4096];
+ if(snprintf(game,sizeof game,"%s/%s/steamapps/common/Bridge Probe/probe.exe",argv[1],library)>=(int)sizeof game||
+    snprintf(saved,sizeof saved,"%s.original",game)>=(int)sizeof saved)return 29;
+ if(rename(game,saved)||ideck_game_file_policy_revalidate_pending_shared(seq)!=-ENOENT)return 30;
+ int empty_file=open(game,O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC,0600);
+ if(empty_file<0||close(empty_file)||ideck_game_file_policy_revalidate_pending_shared(seq)!=-ENOEXEC)return 31;
+ if(unlink(game)||rename(saved,game)||ideck_game_file_policy_revalidate_pending_shared(seq))return 32;
+ if(ideck_game_file_policy_pending(&r,&seq)||seq!=1||memcmp(&r,&original,sizeof r))return 33;
  if(ideck_game_file_policy_discard(seq))return 8;
+ if(ideck_game_file_policy_revalidate_pending_shared(seq)!=-ESTALE)return 34;
  ideck_game_file_policy_inspect(&original);
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=3||memcmp(&r,&original,sizeof r))return 9;
  if(ideck_game_file_policy_discard(seq))return 10;
@@ -90,6 +104,11 @@ int main(int argc,char **argv){
  if(ideck_game_file_policy_discard(seq))return 15;
  ideck_game_file_policy_inspect(&original);
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=6||memcmp(&r,&original,sizeof r))return 16;
+ if(ideck_game_file_policy_discard(seq))return 35;
+ ideck_game_file_policy_inspect(&default_request);
+ if(ideck_game_file_policy_pending(&r,&seq)||seq!=7||
+    ideck_game_file_policy_revalidate_pending_shared(seq)!=-EXDEV)return 36;
+ puts("PASS exact shared revalidation, missing/invalid file, restored file, retired capture and default-library refusal");
  printf("PASS actual ARM64 IPC -> separate native shared files -> one owned request; busy retains first; two concurrent native requests yield one slot; native discard permits next; response125; Windows game NOT executed\n");return 0;
 #endif
 }

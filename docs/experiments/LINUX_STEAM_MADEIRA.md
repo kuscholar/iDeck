@@ -7543,3 +7543,128 @@ link or device test. Evidence hashes in `run83.unstaged_handoff_retry`.
 Next Air test still needs an exact valid main/helper development pair
 and the authorized end of the existing Lab test. Diagnostic 125
 remains; no game start, game exit, return, or stability claim.
+
+## Run83 follow-up — recheck the game file before staging
+
+At 09:34 EST Air Build86 PID 29952, health 11924 and frame count 17022
+had the same white-area crop as the preceding device observation.
+Zero Play requests and no device mutation. The seven-entry local
+profile check again found no valid pair for the exact Air development
+bundle, helper, and signing certificate.
+
+The controller now checks the exact pending capture against the
+registered physical shared library after a clean Linux frontend
+drain, before path mapping, VDF binding or a Madeira request.
+A missing, invalid, default-library, or stale capture remains unstaged.
+The check is read-only, releases its descriptors, and preserves the
+pending sequence for explicit restart recovery. It checks the current
+file and path; it is not a cross-phase identity promise or storage
+lease, and adds no game execution or licensing path.
+
+Run the existing `test-capture-launch.py --dock-storage` recipe and
+repeat with `--capture-off`, each with a fresh private directory.
+The host ARM64 probe captured a valid synthetic PE. The native check
+then refused it after it was removed or replaced with an empty file,
+and accepted it when restored. Invalid, stale and default-library
+requests were refused. The capture-off regression and all 48 existing
+native file controls passed. No PE was executed.
+
+Using the recorded runtime88 compiler flags, GameFilePolicy.c and
+LinuxSteamViewController.m compiled for ARM64 iOS and
+`xcrun ld -r -arch arm64` resolved the controller's new policy call.
+This is a relocatable link, not a final runnable App. Artifacts and
+dependency hashes are indexed in `run83.post_drain_shared_file_recheck`.
+The branch remains uncommitted outside the Git window. The next
+physical test still needs matching valid profiles and an ended or
+specifically authorized existing Lab session. No refresh, Play, game,
+return, or stability proof was added on Air.
+
+## Run83 follow-up — full Build89 handoff-link verification
+
+At 14:40 EST the selected Air4 still reported
+Build86 PID 29952, health 13756 and 17022 frames. The guest-area crop
+matched its earlier white frame. Zero Play requests and no Air input
+or lifecycle action. A read-only inventory of five local profile
+entries found no valid exact main/helper pair for the Air Lab and
+existing certificate.
+
+A private unsigned Build89 passed the full Xcode build and package
+validation with the already qualified Build88 flags and LinuxRunner
+pin, rebuilt into fresh external directories. Staged App build input,
+compiler flags, archive hashes and final Mach-O hash are indexed under
+`run83.linked_build89_handoff_candidate`. Reproduce using the Build88
+runtime and app commands with new private outputs, build number 89 and
+the compiler temporary directory on easystore. The already recorded
+host capture controls still match the sources byte for byte.
+
+The final binary has a direct call in the retained-owner block to the
+physical-library recheck before launch mapping, VDF binding and native
+staging. The same exact-symbol disassembly identifies the read-only
+validation calls, explicit restart discard and the retained one-shot
+RFB handler. The evidence lists only these targeted call sites.
+Build89 is neither signed nor installed. This is app integration
+evidence. It adds no actual Steam Play, Windows execution or return
+validation. Changes remain local outside the Git window. On-device
+recovery still requires a matching valid profile pair and a completed
+or specifically authorized end to the existing Air test.
+
+## Run83 follow-up — recheck again before opening native setup
+
+At 19:45 EST Air Build86 PID 29952 remained alive, with health 15587
+and no new frames beyond 17022. The white crop hash matched and Play
+remained zero. There was no device action. A read-only scan of four
+local entries found zero valid exact development profiles for both
+the Air Lab main app and helper.
+
+A file can become unavailable after post-drain validation while the
+user considers opening Madeira. Reuse the exact sequence/file check
+on that action before the terminal reserve drain. On failure, retire
+only the matching Swift snapshot. Keep the C request until the user
+chooses the existing discard-and-restart action. A conflicting Swift
+sequence leaves both sides untouched and blocks setup. No new
+automatic restart, Wine admission or licensing behavior.
+
+Run `test-native-setup-entry.py` and `test-dock-selection.py` with
+fresh private outputs. The exact controller methods with counted
+stubs verify no terminal drain or setup on either recheck failure
+path, and no automatic Linux restart. The real Swift C ABI refuses
+zero and wrong sequence values before accepting the exact one.
+Both host regressions passed. Separately compile the ARM64 iOS
+controller with the recorded runtime89 flags and the Swift bridge
+with the harness's extracted model definitions. A relocatable link
+resolves the discard symbol. This change is not in the earlier
+Build89 binary and has no new final App, signature or Air test.
+
+Commands, source, dependency and artifact hashes are in
+`run83.staged_file_recheck_before_native_setup`. The current Git
+window still excludes commit and push. Preserve active Air86. A
+valid exact main/helper profile pair and a completed or specifically
+authorized end to the current Lab are still needed before physical
+testing. No Windows game, return or stability proof.
+
+## Run83 follow-up — full Build90 late-handoff link
+
+At 00:50 EST Air Build86 PID 29952 still reported 17022 frames and
+zero Play, with health sequence 17419 and the same white guest-area
+crop. There was no device mutation. At 00:50:37 a read-only inventory
+of four local signing entries found zero valid exact matches for the
+Lab main app or helper. The current session remains in place.
+
+Fresh unsigned Build90 completed the full Xcode build and package
+validation with the Build89 feature flags and the same LinuxRunner
+pin. Use the Build89 runtime and app commands with newly named private
+paths and build number 90. The final ARM64 Mach-O's exact setup method
+contains the physical-file recheck and exact sequence rollback before
+the ordinary terminal reserve drain and native setup factory. It
+also contains the explicit restart's C discard call and the one-shot
+RFB refresh handler. Host-tested controller and Swift bridge source
+hashes still match. Build90 has not been signed or installed.
+
+The evidence index `run83.linked_build90_late_recheck_candidate` contains
+exact final call sites, source/dependency and artifact hashes. No
+cause of the white frame or on-device fix is claimed. Use a matching
+valid Air Lab main/helper development pair and preserve the old
+session until it ends or there is specific authorization to stop it.
+Then test a single physical full-frame recovery before attempting
+Play and native launch. Windows execution, return and repeat
+stability remain unverified.

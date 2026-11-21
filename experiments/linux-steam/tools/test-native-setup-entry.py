@@ -28,6 +28,7 @@ fixture = r'''#import <Foundation/Foundation.h>
 #include <errno.h>
 #define IDECK_LAB_NATIVE_SETUP_TRANSITION 1
 #define IDECK_LAB_METAL_DRAIN 1
+#define IDECK_LAB_SHARED_FILE_RESERVE 1
 enum { UIModalPresentationFullScreen = 0, UIControlStateNormal = 0 };
 @interface UIViewController:NSObject
 @property int modalPresentationStyle;
@@ -41,7 +42,7 @@ enum { UIModalPresentationFullScreen = 0, UIControlStateNormal = 0 };
 @implementation FakeView
 @end
 @interface FakeButton:NSObject
-@property BOOL enabled;
+@property BOOL enabled,hidden;
 @property(copy) NSString *title;
 - (void)setTitle:(NSString *)title forState:(int)state;
 @end
@@ -65,12 +66,25 @@ static int ideck_game_file_policy_discard(uint64_t sequence){
 static struct ideck_frontend_result result;
 static int snapshotError,guestThreads,nativeWorkers,factoryCalls,presents,notices,releases,logs;
 static uint64_t pendingSequence;
+static int checks,stageDiscards,recheckError,stageDiscardError,drains;
+static int ideck_file_reserve_drain(void){drains++;return 0;}
+static int ideck_game_file_policy_revalidate_pending_shared(uint64_t sequence){
+    assert(sequence==pendingSequence);checks++;return recheckError;
+}
+static int32_t ideck_lab_discard_staged_dock_sequence(uint64_t sequence){
+    assert(sequence==pendingSequence);stageDiscards++;
+    if(!stageDiscardError)pendingSequence=0;
+    return stageDiscardError;
+}
 int ideck_retained_frontend_snapshot(struct ideck_frontend_result *out){*out=result;return snapshotError;}
 static int ideck_linux_lab_live_guest_threads(void){return guestThreads;}
 static int ideck_linux_lab_native_worker_entries(void){return nativeWorkers;}
 static uint64_t ideck_lab_pending_dock_sequence(void){return pendingSequence;}
 static void *ideck_lab_madeira_setup_controller(void){factoryCalls++;return (__bridge_retained void *)[UIViewController new];}
-static void ideck_native_log_line(const char *line){assert(strstr(line,"game_started=0"));logs++;}
+static void ideck_native_log_line(const char *line){
+    if(strstr(line,"game_started=0"))logs++;
+    else assert(strstr(line,"terminal_drain=1"));
+}
 @interface Control:NSObject
 @property BOOL nativeSetupTransferred,retainedDisplayDrained,guestEnded,acceptsFrames;
 @property uint64_t nativeRequestSequence,unstagedRestartSequence;
@@ -100,10 +114,11 @@ static void ideck_native_log_line(const char *line){assert(strstr(line,"game_sta
 @end
 static Control *ready(void){
     snapshotError=guestThreads=nativeWorkers=0;pendingSequence=7;
+    checks=stageDiscards=recheckError=stageDiscardError=drains=0;
     result=(struct ideck_frontend_result){.guest_status=0,.phase=IDECK_FRONTEND_DORMANT};
     Control *c=[Control new];c.nativeSetupButton=[FakeButton new];c.nativeSetupButton.enabled=YES;
     c.restartSteamButton=[FakeButton new];c.restartSteamButton.enabled=NO;
-    c.retainedDisplayDrained=c.guestEnded=YES;c.nativeRequestSequence=7;
+    c.retainedDisplayDrained=c.retainedBackendReady=c.guestEnded=YES;c.nativeRequestSequence=7;
     c.view=[FakeView new];c.view.window=[NSObject new];return c;
 }
 static Control *readyRestart(void){
@@ -164,11 +179,22 @@ for(int variant=0;variant<18;variant++){
     case 16:c.nativeRequestSequence=0;break;
     case 17:pendingSequence=8;break;
     }
-    [c openNativeMadeiraSetup];assert(!factoryCalls&&!presents&&!notices&&!releases&&!logs);
+    [c openNativeMadeiraSetup];assert(!factoryCalls&&!presents&&!notices&&!releases&&!logs&&!checks&&!stageDiscards);
 }
-Control *c=ready();[c openNativeMadeiraSetup];
+Control *c=ready();recheckError=-ENOENT;stageDiscardError=-ESTALE;
+[c openNativeMadeiraSetup];
+assert(checks==1&&stageDiscards==1&&pendingSequence==7&&!c.nativeSetupTransferred&&!drains);
+assert(c.nativeSetupButton.enabled&&!c.restartSteamButton.enabled&&c.nativeRequestSequence==7);
+c=ready();recheckError=-ENOENT;
+[c openNativeMadeiraSetup];
+assert(checks==1&&stageDiscards==1&&!pendingSequence&&!c.nativeSetupTransferred&&!drains);
+assert(!c.nativeSetupButton.enabled&&c.nativeSetupButton.hidden&&c.restartSteamButton.enabled);
+assert(c.unstagedRestartSequence==7&&!c.nativeRequestSequence&&!c.frontendRequested);
+assert(!factoryCalls&&!presents&&!notices&&!releases&&!logs);
+c=ready();[c openNativeMadeiraSetup];
 assert(factoryCalls==1&&presents==1&&notices==1&&releases==1&&logs==1);
 assert(c.nativeSetupTransferred&&!c.nativeSetupButton.enabled&&!c.restartSteamButton.enabled);
+assert(checks==1&&!stageDiscards&&drains==1);
 [c openNativeMadeiraSetup];assert(factoryCalls==1&&presents==1&&notices==1&&releases==1&&logs==1);
 [NSNotificationCenter.defaultCenter removeObserver:observer];
 restartCases();

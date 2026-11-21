@@ -467,6 +467,23 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
        ideck_retained_frontend_snapshot(&state)||state.error||state.guest_status||state.phase!=IDECK_FRONTEND_DORMANT||
        ideck_linux_lab_live_guest_threads()!=0||ideck_linux_lab_native_worker_entries()!=0||
        !self.nativeRequestSequence||ideck_lab_pending_dock_sequence()!=self.nativeRequestSequence)return;
+    // The file can change while the staged request waits for this UI action.
+    // Recheck before the terminal reserve drain or native setup presentation.
+    uint64_t sequence=self.nativeRequestSequence;
+    int recheck=ideck_game_file_policy_revalidate_pending_shared(sequence);
+    if(recheck){
+        if(ideck_lab_discard_staged_dock_sequence(sequence)){
+            [self showStatus:@"The staged Play request changed. Madeira did not open."];
+            return;
+        }
+        self.nativeRequestSequence=0;
+        self.unstagedRestartSequence=sequence;
+        self.nativeSetupButton.enabled=NO;self.nativeSetupButton.hidden=YES;
+        [self.restartSteamButton setTitle:@"Discard Play Request and Restart Steam" forState:UIControlStateNormal];
+        self.restartSteamButton.enabled=self.retainedBackendReady;
+        [self showStatus:@"The game files could not be rechecked. Discard the request to restart Steam."];
+        return;
+    }
 #if IDECK_LAB_SHARED_FILE_RESERVE
     // All prior real backend/viewer/Metal gates passed. A retained Linux
     // backing or poisoned owned span refuses native handoff; never pretend
@@ -511,9 +528,14 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
                 if(capturedRequestReady){fields[@"captured_sequence"]=@(capturedSequence);fields[@"captured_appid"]=@(capturedRequest.appid);}
 #if IDECK_LAB_DOCK_STORAGE
                 if(capturedRequestReady&&!error&&!result.guest_status&&result.phase==IDECK_FRONTEND_DORMANT){
+                    int recheck=ideck_game_file_policy_revalidate_pending_shared(capturedSequence);
+                    fields[@"windows_file_recheck_error"]=@(recheck);
                     struct ideck_windows_launch_map mapped;
-                    int mapping=ideck_windows_launch_map(&capturedRequest,&mapped);
-                    fields[@"windows_mapping_error"]=@(mapping);
+                    int mapping=recheck;
+                    if(!recheck){
+                        mapping=ideck_windows_launch_map(&capturedRequest,&mapped);
+                        fields[@"windows_mapping_error"]=@(mapping);
+                    }
                     if(!mapping){
                         BOOL created=NO;NSError *bindingError=nil;
                         NSURL *documents=[NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
