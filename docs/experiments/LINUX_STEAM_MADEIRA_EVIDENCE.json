@@ -23602,6 +23602,142 @@
           "bytes": 1930
         }
       ]
+    },
+    "real_guest_static_x11_refresh": {
+      "source_base": "dff8356c1b9ebc6cbd4df3941d44e47bdff3f055",
+      "linuxrunner_revision": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "host_runs": [
+        {
+          "scope": "HOST LinuxRunner with actual Xvfb/x11vnc and Lab framebuffer pool; own idle desktop only",
+          "viewer": {
+            "idle_frames": 1,
+            "prior_incremental_writes": 1,
+            "full_written": 1,
+            "updates_started": 2,
+            "updates_decoded": 2,
+            "frames": 2,
+            "identical_second": 1,
+            "pool_exhausted": 0
+          },
+          "display_exit": 0,
+          "linuxrunner": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+          "source_db_sha256": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "dependencies_sha256": {
+            "Xvfb": "d7e34c84456cb0325bc663121ac9b39d990ecfdab0854d834d4bb56c72118810",
+            "x11vnc": "c02e72d9360580206ba69e562ed015f3633284e01188a754317e414d19c78bb2"
+          },
+          "recipe_sha256": "439a6508a10ad529a7f544afc7cbff906f420e5fcb4d618ca962a3cbc611288b",
+          "fixture_sha256": "85bdeb54c967e63bd35edd9a6ed94575a85950b1801de611106392f48e9c79cb",
+          "viewer_sha256": "99cc751ed40926068c36cdc97704f94a2c0dba3da79cd61136e1ace956011773",
+          "generated_sha256": "30e465d9cdeca2805c305d9483c0a1d82ede0402959fd0d3fa5577f313127627",
+          "expected_static_refresh": true
+        },
+        {
+          "scope": "HOST LinuxRunner with actual Xvfb/x11vnc and Lab framebuffer pool; own idle desktop only",
+          "viewer": {
+            "idle_frames": 1,
+            "prior_incremental_writes": 1,
+            "full_written": 1,
+            "updates_started": 2,
+            "updates_decoded": 2,
+            "frames": 2,
+            "identical_second": 1,
+            "pool_exhausted": 0
+          },
+          "display_exit": 0,
+          "linuxrunner": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+          "source_db_sha256": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "dependencies_sha256": {
+            "Xvfb": "d7e34c84456cb0325bc663121ac9b39d990ecfdab0854d834d4bb56c72118810",
+            "x11vnc": "c02e72d9360580206ba69e562ed015f3633284e01188a754317e414d19c78bb2"
+          },
+          "recipe_sha256": "439a6508a10ad529a7f544afc7cbff906f420e5fcb4d618ca962a3cbc611288b",
+          "fixture_sha256": "85bdeb54c967e63bd35edd9a6ed94575a85950b1801de611106392f48e9c79cb",
+          "viewer_sha256": "6d81b01a68a22072a9d04b02182069940f9f686042971a204634ff3004061c64",
+          "generated_sha256": "30e465d9cdeca2805c305d9483c0a1d82ede0402959fd0d3fa5577f313127627",
+          "runner_sha256": "f5fd9996297755a7650b5de61b05c4add5a53769aeede5b37440303b310d620b",
+          "expected_static_refresh": true
+        }
+      ],
+      "hypothesis": "An otherwise idle x11vnc cannot return the unchanged framebuffer after an incremental request is pending.",
+      "rejected_on_host": true,
+      "matched_build93_rfb_generated_source": true,
+      "air": {
+        "build": 86,
+        "pid": 29952,
+        "health_sequence": 24774,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "valid_development_profiles": {
+        "inspected": 4,
+        "main": 0,
+        "helper": 0
+      },
+      "limit": "Host Xvfb and x11vnc only. No new App build, Air refresh, Steam paint or Play, game execution or stability qualification.",
+      "artifacts": [
+        {
+          "path": "run83/health-xvfb-refresh-preflight-data-private.json",
+          "sha256": "cc6a32d4bd9786d5a4266c3f97d95e396987f74d44e3dbf7227fc72a1aa51d59",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/crop-xvfb-refresh-preflight-private.png",
+          "sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94",
+          "bytes": 36857
+        },
+        {
+          "path": "run83/screen-xvfb-refresh-preflight-private.png",
+          "sha256": "1f9d2f8785dc13c9528b750bba6fd313098a4a0f02714610d0e5a19bcbaecb0c",
+          "bytes": 213049
+        },
+        {
+          "path": "run83/runtime93-rfb-progress-v2/rfb/evidence.json",
+          "sha256": "f140f8e8efd79d94490c24f7b27e1f4abab0c3353ca164cbc5e83111573508c1",
+          "bytes": 485
+        },
+        {
+          "path": "run83/real-x11-refresh-v1/evidence.json",
+          "sha256": "459105395f8ed7a4b4c190a9c329ac6cd968eefde15ae529d99af62c468911ee",
+          "bytes": 1101
+        },
+        {
+          "path": "run83/real-x11-refresh-v1/viewer.log",
+          "sha256": "338f2c26b342702d06ee1c1df020d5b8b0a7e8ab21db7495487d39820101d626",
+          "bytes": 155
+        },
+        {
+          "path": "run83/real-x11-refresh-v1/generated/evidence.json",
+          "sha256": "f140f8e8efd79d94490c24f7b27e1f4abab0c3353ca164cbc5e83111573508c1",
+          "bytes": 485
+        },
+        {
+          "path": "run83/real-x11-refresh-v1/host-display.log",
+          "sha256": "02ff7fdf0446eba9ac43cca57566322867c56c0cb6aef36159d642dc4544eee7",
+          "bytes": 5927
+        },
+        {
+          "path": "run83/real-x11-refresh-v2/evidence.json",
+          "sha256": "577421ab737188f95782685b021b741418e3bf759524d34d5320b3db477f54c0",
+          "bytes": 1188
+        },
+        {
+          "path": "run83/real-x11-refresh-v2/viewer.log",
+          "sha256": "338f2c26b342702d06ee1c1df020d5b8b0a7e8ab21db7495487d39820101d626",
+          "bytes": 155
+        },
+        {
+          "path": "run83/real-x11-refresh-v2/generated/evidence.json",
+          "sha256": "f140f8e8efd79d94490c24f7b27e1f4abab0c3353ca164cbc5e83111573508c1",
+          "bytes": 485
+        },
+        {
+          "path": "run83/real-x11-refresh-v2/host-display.log",
+          "sha256": "a8dd549c205bccfab16fae39a220f34ab496bda747fb5b5289c945e46db5e460",
+          "bytes": 5596
+        }
+      ]
     }
   }
 }

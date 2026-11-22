@@ -7812,3 +7812,45 @@ reproduce the white screen, send one full refresh, and compare the new
 receipt with a real guest crop and independent frame count. The current
 bridge still returns diagnostic125. No Windows game cycle or stable
 return has been observed.
+
+## Run83 follow-up — full refresh of a quiet real X11 desktop
+
+At 21:15 EST the selected Air still returned Build86 PID 29952. Health
+reached 24774, the frame count stayed at 17022, Play remained zero, and
+the white guest crop matched the earlier observation. The read-only
+profile inventory again found no exact valid main/helper pair among four
+entries. No device input or lifecycle action.
+
+Test the narrower hypothesis that an idle x11vnc cannot deliver a static
+frame on a full refresh after the first incremental request. A real
+1280x800 Xvfb/x11vnc pair ran twice under LinuxRunner, in separate private
+fakefs copies, with the Lab viewer and framebuffer pool. The generated
+RFB implementation matches Build93's source byte for byte. Each run
+observed one initial frame, one incremental write with no additional
+frame during the idle observation, then one accepted full refresh and
+a second decoded frame byte-identical to the first. Both finished with
+two decoded updates, two published frames, and zero pool exhaustion.
+This rejects the hypothesis on this host fixture. It demonstrates that a
+freshly decoded frame can be visually identical, including during a
+successful refresh. The Air white-screen cause remains open.
+
+Run the following from the experiment root after verifying the stopped
+host source root and idle port 5993. The first run passed. Its initial
+replay was refused before starting a guest when a historical test's
+temporary filename existed in the source root. The final runner uses a
+dedicated name and cleans it up within its own cloned guest. The second
+run passed with the final runner and left the source database unchanged.
+
+```sh
+python3 experiments/linux-steam/tools/test-real-x11-refresh.py \
+  "$PRIVATE_LAB/host/ish" "$PRIVATE_LAB/run52/x11-state-clean-root" \
+  "$NEW_PRIVATE_OUTPUT"
+```
+
+Hashes, package binaries, host receipts and Air snapshot metadata are in
+`run83.real_guest_static_x11_refresh`. Build93 remains unsigned and
+uninstalled pending matching development profiles. Once safe to upgrade,
+compare the actual Air refresh counters with its framebuffer count and
+guest crop. If decode and publication advance but the Air still displays
+white, inspect current X11 composition before changing the transport.
+Steam Play, a licensed game, and repeatable return are all unverified.
