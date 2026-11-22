@@ -23796,6 +23796,58 @@
           "bytes": 434
         }
       ]
+    },
+    "build93_cli_reuse_history_profile_search": {
+      "source_base": "edc3f6b511ef5a5d73477f8207f2ec46b8aada68",
+      "source_earlier": "Run2 existing authorized profile; Run50 reused installed Lab main/helper",
+      "linuxrunner_revision": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "unsigned_build93_sha256": "5c9caae42ba92b8a1f3fde93ad51f71123c214458bf0dacb25fc82da82aff6c4",
+      "profile_scan": {
+        "utc": "2026-11-22T05:12:09+00:00",
+        "counts": {
+          "xcode_cache": {
+            "containers": 2,
+            "profile_entries": 2
+          },
+          "xcode_archive": {
+            "containers": 0,
+            "profile_entries": 0
+          },
+          "lab_packages": {
+            "containers": 117,
+            "profile_entries": 117
+          },
+          "local_downloads": {
+            "containers": 0,
+            "profile_entries": 0
+          }
+        },
+        "exact_matching_dev_profiles": {
+          "main": 2,
+          "helper": 2
+        },
+        "newest_expiry": {
+          "main": "2026-11-20T04:42:36Z",
+          "helper": "2026-11-20T04:42:34Z"
+        },
+        "unexpired_matches": {
+          "main": 0,
+          "helper": 0
+        },
+        "usable_pair": false
+      },
+      "exact_air_existing_lab_process": true,
+      "air_requires_passcode": false,
+      "installed": false,
+      "signed": false,
+      "device_input": false,
+      "artifacts": [
+        {
+          "path": "run83/air93-expanded-profiles-v1/result.json",
+          "sha256": "94fed4d552c298ff0d1cd6e8dd79db2c99abd87ebbcc8ad90620cf01d59cbf3f",
+          "bytes": 637
+        }
+      ]
     }
   }
 }

@@ -1,3 +1,31 @@
+## Run83 follow-up — replay the prior CLI signing preflight
+
+Run2 used an already issued Air development profile for the isolated
+Lab bundle. Run50 signed a disposable app and helper copy with a still
+valid exact pair. The successful steps were `tools/resign-app.py`,
+deep-strict `codesign` verification, then CoreDevice on an idle Lab.
+Those records do not show CLI issuance when authorization was absent.
+
+For Build93, check local provisioning stores, Xcode archives and
+iDeck/Madeira DerivedData, prepared private Lab packages and named
+local IPAs. Inspect only profile metadata with `security cms -D` and
+match both bundle IDs, the established App ID prefix/team, exact Air,
+development permission, and certificates held by the existing signing
+keychain. The scoped scan decoded 119 profile entries, including
+archive duplicates. It found zero unexpired matches for either role.
+The newest exact main and helper expiry times are recorded in
+`run83.build93_cli_reuse_history_profile_search` as UTC values. No new signing or
+installation was attempted with expired assets.
+
+The CLI was already running in the user's Aqua bootstrap. `xcodebuild`
+documents provisioning access via an authorized Xcode account or, where
+supported by the team, an App Store Connect key. The previous managed
+CLI retry returned `No Accounts`. No account state was inferred from that
+error. CoreDevice still found the prior Lab process on the exact Air with
+no passcode required. The live Lab and working app were left in place.
+Resume standard CLI re-signing when an exact valid pair is issued. Genuine
+Play, Windows execution, and repeated return remain open.
+
 ## Run83 follow-up — recheck Air and provisioning after the user unlocked
 
 At 23:46 EST the selected Air's CoreDevice lock-state command succeeded
