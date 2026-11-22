@@ -24703,6 +24703,122 @@
           "sha256": "722c2c219f86584006819806c64b1edb6225b3a712436da3c569e0a46b137601"
         }
       ]
+    },
+    "build94_signed_play_chain_and_late_air93_activity": {
+      "source_base": "b1719edfaf2aa428329faab39672174a78cd1af0",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "signed_build94": {
+        "source_base": "b1719edfaf2aa428329faab39672174a78cd1af0",
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "build": 94,
+        "signed_sha256": "31ce6266f027468b54789c6efc9308f51f5e186f718a0f36556875c797826a9b",
+        "resource_sha256": {
+          "ideck-madeira": "5d18e8d929ee79c76ca00927850760e4605ba369161e43e72466447e169c4072",
+          "compatibilitytool.vdf": "d07191480e0e777074f9888087e181b9b72153d2a8d4986dde42a861fe5945b5",
+          "toolmanifest.vdf": "1bf9e84774d6e8e6ca28d1f9f77deca9a295b873d9b4313f36c91787bd445de8"
+        },
+        "iOS_runtime_archive_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "ca34e8ac563a438b8113f62ebf10543576db1900bba6e301c0a6fa0e8dd95432",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "host_archive_sha256": {
+          "libish.a": "dbe9c22a57e4ab266269a0a8d7d51ae19aa68b06568431122084c5a3b7c7c79b",
+          "libish_emu.a": "4ba32ea5751e5889271f9c399e553d74b05e630d9223a93d4ff94d9c376584a4",
+          "libfakefs.a": "298c320dcc988023629b04c713129afa9591393186e007965ccde7cc723f7368"
+        },
+        "host_executable_sha256": "a7d841543f9fdf3ea0dd969046d0e54c27ec8dfa051d22bf95a48557cc7568a9",
+        "linked_call_sites": {
+          "___81-[LinuxSteamViewController startRetainedOwnerRoot:lab:binary:discovery:manifest:]_block_invoke_2": [
+            "100a19260:\t13 d4 ff 97\tbl\t_ideck_retained_frontend_run",
+            "100a19490:\tb2 2f 00 94\tbl\t_ideck_game_file_policy_pending",
+            "100a19628:\t93 2f 00 94\tbl\t_ideck_game_file_policy_revalidate_pending_shared",
+            "100a19698:\te1 35 00 94\tbl\t_ideck_windows_launch_map",
+            "100a1979c:\tf9 36 00 94\tbl\t_LabBindWindowsLibrary",
+            "100a199e8:\t1f 51 d9 97\tbl\t_ideck_lab_receive_dock_request"
+          ],
+          "_ideck_retained_frontend_run": [
+            "100a0e828:\t53 ec ff 97\tbl\t_ideck_linux_lab_steam_frontend_with_tool"
+          ],
+          "_ideck_linux_lab_steam_frontend_with_tool": [
+            "100a099b0:\t7c fb ff 97\tbl\t_run"
+          ],
+          "_run": [
+            "100a08ef0:\t0e 04 00 94\tbl\t_ideck_lab_bridge_install",
+            "100a09094:\tdb 06 00 94\tbl\t_ideck_tool_install"
+          ],
+          "-[LinuxSteamViewController openNativeMadeiraSetup]": [
+            "100a18684:\ted d6 ff 97\tbl\t_ideck_retained_frontend_snapshot",
+            "100a1871c:\t3f 56 d9 97\tbl\t_ideck_lab_pending_dock_sequence",
+            "100a18814:\t18 33 00 94\tbl\t_ideck_game_file_policy_revalidate_pending_shared",
+            "100a18984:\t80 2c 00 94\tbl\t_ideck_file_reserve_drain",
+            "100a18a90:\t31 75 d9 97\tbl\t_ideck_lab_madeira_setup_controller",
+            "100a18adc:\t69 c2 67 94\tbl\t\"_objc_msgSend$presentViewController:animated:completion:\""
+          ],
+          "_wine_process_start": [
+            "10001d39c:\t67 9d ff 97\tbl\t_ideck_lab_wine_initial_ready",
+            "10001d6a0:\t58 9a ff 97\tbl\t_ideck_lab_wine_initial_create"
+          ]
+        },
+        "guest_exit_success": true,
+        "diagnostic_reply": 125,
+        "request_count": 1,
+        "guest_from_signed_package": true,
+        "actual_steam_play": false,
+        "windows_game_execution": false,
+        "same_app_return": false
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "sequences": [
+          1866,
+          1897
+        ],
+        "sample_delta_ms": 310001,
+        "frames": 632,
+        "play": 0,
+        "cli_sequence": 4,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+        "reserve_map_delta": 20,
+        "reserve_release_delta": 23,
+        "reserve_live": 0
+      },
+      "app_lifecycle_action": false,
+      "device_input": false,
+      "artifacts": [
+        {
+          "path": "run83/air93-approved-upgrade-v1/run84-observe-only-health-data.json",
+          "sha256": "a2543eb3d58097a92b4a3baeac6a1b5a3479f2309357016b5b5bd61a317c5f98",
+          "bytes": 1725
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run84-observe-only-summary.json",
+          "sha256": "82ffa0c4670c4a6a41f2946759af158fc28789d82f19dfbde7270e268db8183f",
+          "bytes": 521
+        },
+        {
+          "path": "run83/bridge94-exact-signed-control/run84-observe-only-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/bridge94-exact-signed-control/ideck-compatibility-results.txt",
+          "sha256": "3b0d74c67347215ba87194296657195b40cd06a5aa9f58c053d0c256ec6ab4a5",
+          "bytes": 31
+        },
+        {
+          "path": "run83/bridge94-exact-signed-control/tool-control.log",
+          "sha256": "470e8303ef5724d902429c9d155a40442e71315b24afa927a6537d2aa006d0ed",
+          "bytes": 976
+        },
+        {
+          "path": "run83/bridge94-exact-signed-control/build94-play-chain-private.json",
+          "sha256": "7b6c6a7b1e2ff27d3d6a9077553f4c5b82d5f3a731f4e9777d2ed6b5d6a47cde",
+          "bytes": 3163
+        }
+      ]
     }
   }
 }

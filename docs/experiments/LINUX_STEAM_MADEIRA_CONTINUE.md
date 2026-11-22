@@ -1,3 +1,42 @@
+## Run83 follow-up — signed Play path and late Air93 activity
+
+Read-only Air4 observation found the same Build93 PID 31278. Over
+310.001 seconds between health 1866 and 1897 the guest crop and 632
+frame callbacks remained unchanged, with dispatch sequence 4 and zero
+Play requests. Meanwhile the shared-file reserve completed 20 additional
+maps and 23 releases, bringing its live span count from three to zero.
+Guest file-memory activity continued during the visible stall. These
+counters do not identify the active guest process or the stuck display
+layer. No Air input, termination or installation occurred.
+
+Audited direct ARM64 calls in the exact signed Build94 binary. The
+retained frontend installs the bundled compatibility tool, then checks
+the captured request, maps its Windows path, binds the shared library
+to the isolated prefix and calls the Dock staging entry. The setup
+button revalidates the staged ID and drains the reserve before opening
+Madeira. Wine startup is wired to the initial-thread observer. This
+qualifies the linked paths. Their interactions require a genuine Steam
+Play request on the Air.
+
+The host interpreter ran the actual signed package's ARM64
+`ideck-madeira` executable and both matching VDF files in a fresh clone
+of the offline fakefs. ASan/UBSan instrument the Lab control. The pinned
+LinuxRunner archives are uninstrumented. The executable installed
+through the actual VFS, made exactly one native bridge request and
+received the expected diagnostic status 125. The outer control exited
+zero. Reproduce with the Run8 installed-helper recipe and Build94's
+`LabCompatibility` folder, using a fresh clone of
+`run52/x11-state-clean-root` and a short temporary socket path. No
+Steam account or Windows execution was involved in this control.
+Private evidence and hashes at
+`run83.build94_signed_play_chain_and_late_air93_activity`.
+
+Preserve the old Lab pending a visible wake or authorization to upgrade.
+Build94's next Air discriminator is the second bounded refresh after a
+reproduced stall. Then choose an owned Windows title in the isolated
+shared library and observe genuine Steam Play, licensing, launch, exit
+and return. No repeated game cycle has been verified.
+
 ## Run83 follow-up — Build94 signed, active Air93 preserved
 
 Signed a separate, private copy of the exact audited Build94 app using
