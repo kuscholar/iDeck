@@ -1,3 +1,28 @@
+## Run83 follow-up — recheck Air and provisioning after the user unlocked
+
+At 23:46 EST the selected Air's CoreDevice lock-state command succeeded
+with `passcodeRequired=false` and `unlockedSinceBoot=true`. The same
+Build86 PID 29952 showed the same white guest crop, 17022 frames and zero
+Play. Health had advanced to 25679. No input, termination, or install.
+
+Retried only the official `xcodebuild -allowProvisioningUpdates`
+automatic managed profile mode with `Apple Development`, the existing
+team, the two original Lab identifiers, and the selected Air. The CLI
+returned 65 with `No Accounts` and no matching profiles. The local
+development identity remained available and none of the four scanned
+profiles was a valid exact main/helper match. The CLI result does not
+establish the status of an Xcode GUI account. No device registration
+flag or authentication automation was used. The preserved Build93
+binary SHA-256 matches its prior ARM64 audit.
+
+The Air can be observed now. Deploying Build93 still requires the two
+valid development profiles covering the Air and existing certificate.
+When they are available, sign a copy and check whether the existing Lab
+is safe to replace. The next physical test remains one full refresh on
+a reproduced white screen, with a before/after crop and viewer counters.
+No new Steam interaction, game execution, or return proof. Exact hashes
+and the redacted provisioning result are in `run83.build93_after_air_unlock`.
+
 ## Run83 follow-up — full refresh of a quiet real X11 desktop
 
 At 21:15 EST the selected Air still returned Build86 PID 29952. Health

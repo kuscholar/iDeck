@@ -23738,6 +23738,64 @@
           "bytes": 5596
         }
       ]
+    },
+    "build93_after_air_unlock": {
+      "source_base": "70665a54cb441a0cbcd4f738ed5179f8b9ada160",
+      "linuxrunner_revision": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "unsigned_build93_sha256": "5c9caae42ba92b8a1f3fde93ad51f71123c214458bf0dacb25fc82da82aff6c4",
+      "xcode_managed_retry": {
+        "checked_utc": "2026-11-22T04:46:42Z",
+        "existing_identity_available": true,
+        "before_inspected": 4,
+        "before_valid_roles": [
+          "False",
+          "False"
+        ],
+        "xcode_exit": 65,
+        "xcode_no_accounts": true,
+        "xcode_no_matching_profiles": true,
+        "xcode_identity_conflict": false,
+        "xcode_missing_specifier": false,
+        "xcode_sign_or_project_error": true,
+        "after_inspected": 4,
+        "valid_main": false,
+        "valid_helper": false
+      },
+      "air": {
+        "passcode_required": false,
+        "unlocked_since_boot": true,
+        "build": 86,
+        "pid": 29952,
+        "health_sequence": 25679,
+        "frames": 17022,
+        "play": 0,
+        "crop_sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94"
+      },
+      "device_input": false,
+      "installed": false,
+      "launched": false,
+      "artifacts": [
+        {
+          "path": "run83/health-user-unlocked-93-data-private.json",
+          "sha256": "2af444b1fb707f9e8f4cd6af0bc2ebf9bfde28c9589b74a086fec7dbe4f64d5a",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/screen-user-unlocked-93-private.png",
+          "sha256": "66146ead593b1590ed7392c1df2569aa0a0d82cfee3bccf62ddd344e947dc956",
+          "bytes": 213211
+        },
+        {
+          "path": "run83/crop-user-unlocked-93-private.png",
+          "sha256": "7d8616640351d8fc5a689b8e3f9d04a01af9fd2936c663c6be67a7603608eb94",
+          "bytes": 36857
+        },
+        {
+          "path": "run83/profile-managed-build93-after-unlock-v1/result.json",
+          "sha256": "f65d89dc6f5e0b455cc058bc62c1cb219685e254e8bfaa1101821a5992797447",
+          "bytes": 434
+        }
+      ]
     }
   }
 }
