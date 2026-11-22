@@ -24248,6 +24248,261 @@
           "bytes": 253
         }
       ]
+    },
+    "build93_genuine_bpm_and_idle_transition": {
+      "source_base": "03d244038c8e3c903c77defe74e11ca98a891d4a",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "signed_build93_sha256": "c7b267033c1d0b98b6d055c417b7048f95fe4da2704f5b99f2da6f88dadc9d66",
+      "pid": 31278,
+      "samples": [
+        {
+          "tag": "resume-evidence",
+          "visual": "Full-screen Steam loading animation",
+          "sequence": 72,
+          "frames": 390,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 2
+        },
+        {
+          "tag": "bpm-resume-1",
+          "visual": "Big Picture recent-games and news rows rendered with initial cover placeholders",
+          "sequence": 76,
+          "frames": 406,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 2
+        },
+        {
+          "tag": "bpm-right-result",
+          "visual": "Big Picture covers loaded, Tomb Raider still focused at the first check",
+          "sequence": 79,
+          "frames": 424,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 2
+        },
+        {
+          "tag": "bpm-resume-4",
+          "visual": "Ratatan focused with matching background and keyboard navigation affordances",
+          "sequence": 81,
+          "frames": 431,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 3
+        },
+        {
+          "tag": "ratatan-focus-precheck",
+          "visual": "Ori Steam idle artwork, account away indicator",
+          "sequence": 1767,
+          "frames": 632,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 3
+        },
+        {
+          "tag": "idle-wake-early",
+          "visual": "Same Ori idle artwork and pointer position after fixed wake",
+          "sequence": 1770,
+          "frames": 632,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 4
+        },
+        {
+          "tag": "idle-wake-settled",
+          "visual": "Same Ori idle artwork and pointer position after fixed wake",
+          "sequence": 1771,
+          "frames": 632,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 4
+        },
+        {
+          "tag": "idle-wake-later",
+          "visual": "Same cropped guest image after fixed wake",
+          "sequence": 1775,
+          "frames": 632,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 4
+        }
+      ],
+      "conclusion": {
+        "same_process_live_later": true,
+        "big_picture_observed": true,
+        "directional_input_actual_focus_change": true,
+        "new_library_verified": false,
+        "wake_dispatch_ack": true,
+        "wake_left_idle_artwork": false,
+        "wake_transport_completion_verified": false,
+        "pre_and_post_guest_crop_equal": true,
+        "x11_observer_rows": 120,
+        "x11_observer_covers_wake": false,
+        "steam_play": false,
+        "windows_game": false,
+        "return_cycle": false
+      },
+      "artifacts": [
+        {
+          "path": "run83/air93-approved-upgrade-v1/resume-evidence-summary.json",
+          "sha256": "5fd45dbc4474e5bdb590f1f13be433e01b3ad956b0ca80f0c16234bbccab9383",
+          "bytes": 510
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/resume-evidence-screen.png",
+          "sha256": "fb466395da4962edd696ba903aaf854316f14fbc2cef4b7dacb104d33876a874",
+          "bytes": 95645
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/resume-evidence-health-data.json",
+          "sha256": "e6a5c3edb7ef855efa47e321189de892c25d3e8ea84dccc772fbcf3ce4dacd36",
+          "bytes": 1701
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-1-summary.json",
+          "sha256": "6fae08f9bd63ad959b85d7741e5498b474a3d17d8e51d4f08e1ad5d54017d18d",
+          "bytes": 501
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-1-screen.png",
+          "sha256": "1901bfc49331309cd1d913a7147c8b95c332b5b6e53729a646e8c585c6222393",
+          "bytes": 701729
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-1-health-data.json",
+          "sha256": "6e11d6793c4805f5ca60295638306f0e880fc654afbc87396285df662c3d7fc9",
+          "bytes": 1701
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-right-result-summary.json",
+          "sha256": "f15d4cef94db84560cd9d71a77b5ff54c971f33aba6c9c32faf6f93353803ceb",
+          "bytes": 513
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-right-result-screen.png",
+          "sha256": "2c5ce4849cc4cb376c3088a11743b0163e88549bba53045d9acec26a64cbe187",
+          "bytes": 1457304
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-right-result-health-data.json",
+          "sha256": "23d1e770fdb6f7b4761eeb62e56384abda355e5c72aec0e474be21b8e837e591",
+          "bytes": 1701
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-4-summary.json",
+          "sha256": "f0ce1f8333bd47233c71316a441ef51b4009196a53fb3b9e3194e20308062756",
+          "bytes": 501
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-4-screen.png",
+          "sha256": "9f8d0b018425efa1fdeaab36244a73b6a7469444ccd1589e672783bef2a5a2f9",
+          "bytes": 1521211
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-4-health-data.json",
+          "sha256": "26eb28fa7c5c707d22ed27025d84cdf707777fca421b9d79b8dc965f9c36d4ae",
+          "bytes": 1701
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/ratatan-focus-precheck-summary.json",
+          "sha256": "1355b69c014dc8f250ea7f38dad237c6cf018f645557a7261293fbfb1990bf2f",
+          "bytes": 533
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/ratatan-focus-precheck-screen.png",
+          "sha256": "0dcc535c4a43f868f4c8718d962f6ce54becfb37d4d923b91e604a8dbab2ab18",
+          "bytes": 1578011
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/ratatan-focus-precheck-health-data.json",
+          "sha256": "4d562868703dfa9c1ae1412c7872abad31a92141481e7624bb29564d5ef5108e",
+          "bytes": 1731
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-early-summary.json",
+          "sha256": "7b95b246aabc82f13d6d3e9056cf467f00090e4b4885316145167e455a1f6860",
+          "bytes": 512
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-early-screen.png",
+          "sha256": "0dcc535c4a43f868f4c8718d962f6ce54becfb37d4d923b91e604a8dbab2ab18",
+          "bytes": 1578011
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-early-health-data.json",
+          "sha256": "c4c3c5e5984fd5977107066d74090af2ff9fadf6a80a9e8784253f624c7be84e",
+          "bytes": 1731
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-settled-summary.json",
+          "sha256": "bfa1c05c0b66b77960f5781726370fd542cb01be1f9dc81009b8c5f60d9c6a0a",
+          "bytes": 518
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-settled-screen.png",
+          "sha256": "63a9955ee27a348d4bcdc1d319ddcf7e2b36c515f53b6cdf524e5acc3877d869",
+          "bytes": 1578405
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-settled-health-data.json",
+          "sha256": "aaa9fc8af9fc5e6cc6563a4e95a8c0dcdcc34458752322872c8c105d43968250",
+          "bytes": 1725
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-later-summary.json",
+          "sha256": "f46069f0987d28a31d8dee0af20ee19937105511a26e8586d3254a9ad0bebd40",
+          "bytes": 512
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-later-screen.png",
+          "sha256": "63a9955ee27a348d4bcdc1d319ddcf7e2b36c515f53b6cdf524e5acc3877d869",
+          "bytes": 1578405
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-later-health-data.json",
+          "sha256": "55f113fdcb1e8585943b8427041a6091da9531fe612fd6ee059584cdf518c404",
+          "bytes": 1731
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-resume-right/receipt.json",
+          "sha256": "abf720c4eb80a187279776c76f7e6d4474b1eafafab99176c86cdac03b5a07ce",
+          "bytes": 131
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-idle-wake-1/receipt.json",
+          "sha256": "81cc8d28795f75f6121bee2d163a983f1e10f46e6eac2f938a731b975bd23258",
+          "bytes": 130
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-native-log-summary.json",
+          "sha256": "8524c11224a80534b9f1d90393b53ae2b234b7b8e8273b2ca07c658221d9a5e9",
+          "bytes": 253
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/build93-x11-idle-wake.jsonl",
+          "sha256": "1f7d2c9dedf053b77e7db4f0180fa581b476c799b5fd19a9afcc33ee0aad7dc5",
+          "bytes": 298695
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/ratatan-focus-precheck-crop.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/idle-wake-later-crop.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        }
+      ]
     }
   }
 }

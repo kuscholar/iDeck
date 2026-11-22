@@ -1,3 +1,31 @@
+## Run83 follow-up — Air Build93 Big Picture, selection and idle recovery
+
+The delayed result of the earlier Big Picture click is genuine on
+Air Build93 PID 31278. At 10:45 EST the active session showed a full-screen
+Steam loading animation, then rendered Big Picture's recent-game row and
+news. Game covers filled in. The single fixed Right action advanced the
+native sequence 2 to 3 and the screen shows Ratatan replacing Tomb Raider
+as the focused game. This proves a real directional response. It does
+not establish a complete Library or licensed game launch.
+
+At 15:27 EST the same Lab was still alive but displaying Steam's Ori
+screensaver. One fixed wake changed the native input acknowledgement
+from 3 to 4. Frame count remained at 632 through health 1775 and the
+pre/post 2010x1200 guest crops are byte-identical. This demonstrates no
+visible wake in the observed interval. Native acknowledgement cannot
+establish a socket write or guest delivery. The periodic X11 watcher
+had exhausted its 120 rows before this attempt. The unchanged bounded
+native log does not verify later guest fault state. No Play request.
+
+The next discriminator is one physical tap in the idle artwork and the
+actual response. Preserve the active Lab, avoid another scripted wake or
+a second full refresh, and hold game selection until an interactive
+surface is visible. Any game terms remain user-only.
+
+Exact samples and artifact hashes are recorded under
+`run83.build93_genuine_bpm_and_idle_transition`. No app upgrade or
+restart. Only the existing Air Lab session was observed or navigated.
+
 ## Run83 follow-up — Air Build93 starts after user trust
 
 The user's photo showed the Lab listed as Verified while the device
