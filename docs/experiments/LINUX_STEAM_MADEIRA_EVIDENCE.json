@@ -24930,6 +24930,79 @@
           "bytes": 702
         }
       ]
+    },
+    "shared_reserve_suspend_resume_host": {
+      "source_base": "a18d60d2ff44ac4e8eb46e46e417113d69b9a42e",
+      "recorded_at_utc": "2026-11-22T21:13:58.770743+00:00",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "source_sha256": {
+        "app/SharedFileReserve.c": "393b7e8d29833fec06afdccbaa47332a9e31546e8b411af347bc709b7a544802",
+        "app/SharedFileReserve.h": "a89ab2b108cc28f543f202f8baeafdb979f030f4d6c5e1b6561a7f322cd7f610",
+        "tools/shared-file-reserve-control.c": "287785bc8eded6196993573547fe2bcdb27f47f0b1c7eefb50a7c3b7d3926ae1",
+        "tools/shared-file-reserve-integration-control.c": "75121eb76d4f848170991114140d7fc552d5ca58dd58b8df54a83e0d38ee26d4",
+        "tools/test-shared-file-reserve.py": "d4f5a2eb9b2af0885ae331c4d290a83b3294a6e8a4524c019f9cf5435d21a5b3",
+        "tools/test-shared-file-reserve-integration.py": "cf8ef7b1d7aeb2001e5995de8ac122973e7b9d30c9902f71c49b17f0d58297a1"
+      },
+      "host_archive_sha256": "4b2dd5229a38dc2d4c701cc3b38c39eac6d1d7029f87261a3b79c23bc8e78f42",
+      "arm64_ios_object_sha256": "7c5beac5bc464a49f24facab8216bfbbe8c2ca07623c027b8b98ed8875c9bc60",
+      "host_control": {
+        "darwin_modes": 13,
+        "concurrent_allocations": 800,
+        "linux_modes": 14,
+        "refuses_live_backing": true,
+        "rejects_stale_token": true,
+        "late_release_prevents_resume": true,
+        "resumed_file_bytes_match": true
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 2022,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "final_app_link": false,
+      "device_component_test": false,
+      "wine_game": false,
+      "automatic_return": false,
+      "artifacts": [
+        {
+          "path": "run83/shared-reserve-suspend-v2/darwin-evidence-private.json",
+          "sha256": "d9eb09d8a9db88e7cdc96602fe9d0cd28f0bcb5fc179ac7bd0c6275c6f592380",
+          "bytes": 3043
+        },
+        {
+          "path": "run83/shared-reserve-suspend-v2/linux-evidence-private.json",
+          "sha256": "a3f3c375333a942ff46fbdf94fc7342ac5a09384f85cf786271925e6ec985a4c",
+          "bytes": 4207
+        },
+        {
+          "path": "run83/shared-reserve-suspend-v2/late-release-private.log",
+          "sha256": "988d4d6f85882a4f47456040baf8e32459531f1a1c90eb1a5ecc933e62df94c3",
+          "bytes": 69
+        },
+        {
+          "path": "run83/shared-reserve-suspend-v2/linux-suspend-private.log",
+          "sha256": "224760314fee7eb8425551c0df6a55ced19ccfc5ab0e9bca88120a13251aaab3",
+          "bytes": 94
+        },
+        {
+          "path": "run83/shared-reserve-suspend-v2/SharedFileReserve-ios.o",
+          "sha256": "7c5beac5bc464a49f24facab8216bfbbe8c2ca07623c027b8b98ed8875c9bc60",
+          "bytes": 6776
+        },
+        {
+          "path": "run83/shared-reserve-suspend-v2/run86-reserve-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run86-reserve-review-health-data.json",
+          "sha256": "ef4033730b074ae40b7ad7312b9e0bb73002ad41adbe7b2fcb0dd2e90a662e50",
+          "bytes": 1731
+        }
+      ]
     }
   }
 }

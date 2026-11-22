@@ -14,10 +14,10 @@ cmd=['xcrun','clang','-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DISH_INTERNAL=1',
 cmd.insert(cmd.index(str(control)),str(lab/'app/NativeKernelLog.c'))
 with (out/'build.log').open('x') as f:subprocess.run(cmd,check=True,stdout=f,stderr=subprocess.STDOUT)
 rows=[]
-for mode in ('ordinary','unprepared','shared','aliases','fork','readonly','private','offset','unaligned','data-failure','pte-failure','memfd','memfd-close'):
+for mode in ('ordinary','unprepared','shared','aliases','fork','suspend','readonly','private','offset','unaligned','data-failure','pte-failure','memfd','memfd-close'):
     directory=out/mode;directory.mkdir(mode=0o700);log=directory/'test.log'
     with log.open('x') as f:r=subprocess.run([out/'control',mode,directory/'fixture'],stdout=f,stderr=subprocess.STDOUT,timeout=20,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
     rows.append({'mode':mode,'exit':r.returncode,'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest()})
     assert not r.returncode,(mode,r.returncode,log)
 (out/'evidence.json').write_text(json.dumps({'scope':'HOST actual pinned Linux realfs/sys_mmap64/PTE/fd backing integration; generated changed realfs/memory plus own helper/test sanitized. Original native ENOMEM and metadata failures injected. NOT iOS VA pressure, device UI/game proof','tests':rows,'command':cmd,'archive_sha256':hashlib.sha256(archive.read_bytes()).hexdigest(),'sources_sha256':{str(q):hashlib.sha256(q.read_bytes()).hexdigest() for q in [control,lab/'app/SharedFileReserve.c',lab/'app/SharedFileReserve.h']}},indent=2)+'\n')
-print('HOST13 actual Linux mmap/PTE/file lifetime controls PASS; NOT device proof')
+print('HOST14 actual Linux mmap/PTE/file lifetime controls PASS; NOT device proof')

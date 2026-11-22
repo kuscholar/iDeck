@@ -20,6 +20,13 @@ void *ideck_file_reserve_after_enomem(int fd, size_t bytes, off_t offset,
  * A negative result must NEVER fall through to another native munmap. */
 int ideck_file_reserve_release(void *pointer, size_t bytes);
 int ideck_file_reserve_snapshot(struct ideck_file_reserve_stats *out);
+/* Suspend an empty, quiescent Linux reserve across a native session without
+ * releasing its virtual address range. The caller must have stopped all Linux
+ * users. Resume requires the matching token and separate native teardown proof.
+ * A late release into the owned address range poisons the suspended reserve.
+ * These operations do not authorize any runtime or transfer file ownership. */
+int ideck_file_reserve_suspend(uint64_t *token);
+int ideck_file_reserve_resume(uint64_t token);
 /* Only after all Linux users have stopped and every owned mapping is released.
  * No reinitialization or Linux restart is allowed after this terminal drain. */
 int ideck_file_reserve_drain(void);

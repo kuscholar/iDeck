@@ -127,6 +127,40 @@ int main(int argc,char **argv) {
         void *foreign=mmap(NULL,page,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0);
         assert(foreign!=MAP_FAILED&&ideck_file_reserve_release(foreign,page)==0);
         *(char *)foreign=7;assert(!munmap(foreign,page));
+    } else if(!strcmp(mode,"suspend")) {
+        uint64_t first=0, second=0;
+        assert(ideck_file_reserve_suspend(NULL)==-EINVAL);
+        assert(ideck_file_reserve_resume(0)==-EINVAL);
+        void *p=allocate(fd,page);assert(p!=MAP_FAILED);
+        assert(ideck_file_reserve_suspend(&first)==-EBUSY&&!first);
+        release(p,page);
+        unsigned writes=atomic_load(&fixed_calls), unmaps=atomic_load(&unmap_calls);
+        assert(!ideck_file_reserve_suspend(&first)&&first);
+        assert(ideck_file_reserve_suspend(&second)==-EBUSY&&!second);
+        assert(allocate(fd,page)==MAP_FAILED);
+        assert(ideck_file_reserve_drain()==-EBUSY&&ideck_file_reserve_prepare()==-EBUSY);
+        assert(atomic_load(&fixed_calls)==writes&&atomic_load(&unmap_calls)==unmaps);
+        assert(ideck_file_reserve_resume(first+1)==-ESTALE);
+        assert(!ideck_file_reserve_resume(first)&&ideck_file_reserve_resume(first)==-EBUSY);
+        assert(allocate(fd,page)==p);release(p,page);
+        assert(!ideck_file_reserve_suspend(&second)&&second>first);
+        assert(ideck_file_reserve_resume(first)==-ESTALE&&allocate(fd,page)==MAP_FAILED);
+        assert(!ideck_file_reserve_resume(second));
+        assert(allocate(fd,page)==p);release(p,page);
+        s=snapshot();assert(!s.live&&s.mapped==3&&s.released==3);
+    } else if(!strcmp(mode,"suspend-late-release")) {
+        uint64_t token=0;
+        void *p=allocate(fd,page);assert(p!=MAP_FAILED);
+        release(p,page);
+        unsigned writes=atomic_load(&fixed_calls), unmaps=atomic_load(&unmap_calls);
+        assert(!ideck_file_reserve_suspend(&token)&&token);
+        assert(ideck_file_reserve_release(p,page)==-EINVAL);
+        assert(ideck_file_reserve_resume(token)==-EBUSY&&allocate(fd,page)==MAP_FAILED);
+        assert(ideck_file_reserve_drain()==-EBUSY&&ideck_file_reserve_prepare()==-EBUSY);
+        assert(atomic_load(&fixed_calls)==writes&&atomic_load(&unmap_calls)==unmaps);
+        s=snapshot();assert(s.invalid_releases==1&&!s.live&&s.released==1);
+        assert(!close(fd));
+        puts("HOST late release poisons suspended reserve and prevents resume PASS");return 0;
     } else if(!strcmp(mode,"concurrency")) {
         pthread_t threads[8];struct worker args[8];
         for(unsigned i=0;i<8;i++) {
@@ -149,6 +183,7 @@ int main(int argc,char **argv) {
         unsigned before=atomic_load(&fixed_calls);assert(allocate(fd,page)==MAP_FAILED&&atomic_load(&fixed_calls)==before);
         s=snapshot();assert(s.map_failures==1&&s.quarantined==1&&!s.live);
         assert(ideck_file_reserve_drain()==-EBUSY&&!atomic_load(&unmap_calls));
+        uint64_t token=42;assert(ideck_file_reserve_suspend(&token)==-EBUSY&&!token);
         puts("HOST failed mapping quarantined/no retry PASS");return 0;
     } else if(!strcmp(mode,"reset-failure")) {
         void *p=allocate(fd,page);assert(p!=MAP_FAILED);atomic_store(&fail_reset,1);
@@ -156,6 +191,7 @@ int main(int argc,char **argv) {
         unsigned before=atomic_load(&fixed_calls);assert(allocate(fd,page)==MAP_FAILED&&atomic_load(&fixed_calls)==before);
         s=snapshot();assert(s.release_failures==1&&s.quarantined==1&&!s.live);
         assert(ideck_file_reserve_drain()==-EBUSY&&!atomic_load(&unmap_calls));
+        uint64_t token=42;assert(ideck_file_reserve_suspend(&token)==-EBUSY&&!token);
         puts("HOST failed reset quarantined/no reuse PASS");return 0;
     } else if(!strcmp(mode,"drain-failure")) {
         atomic_store(&fail_drain,1);assert(ideck_file_reserve_drain()==-EIO);

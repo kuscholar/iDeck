@@ -74,7 +74,34 @@ int main(int argc,char **argv){
         if(ismemfd)assert(file->memfd->maywrite_maps==1&&(sdword_t)sys_fcntl(number,1033,F_SEAL_WRITE_)==_EBUSY);
         unsigned char value=0;assert(!user_read(first+101,&value,1)&&value==alias[101]);
         value=0xa1;assert(!user_write(first+101,&value,1)&&alias[101]==value);
-        if(!strcmp(mode,"fork")){
+        if(!strcmp(mode,"suspend")){
+            uint64_t token=0;
+            struct mem child;mem_init(&child);
+            assert(!pt_copy_on_write(current->mem,&child,PAGE(first),bytes/PAGE_SIZE));
+            assert(!sys_munmap(first,bytes)&&snapshot().live==1);
+            assert(ideck_file_reserve_suspend(&token)==-EBUSY&&!token);
+            mem_destroy(&child);
+            assert(!snapshot().live&&!ideck_file_reserve_suspend(&token)&&token);
+
+            /* The original native mmap fails on this fixture. While suspended,
+             * verify the fallback cannot install a PTE or take a reference. */
+            unsigned long parked_changes=current->mem->mmu.changes;
+            int parked_used=current->mem->pgdir_used;
+            assert((int64_t)sys_mmap64(first,bytes,P_READ|P_WRITE,flags,number,0)==_ENOMEM);
+            assert(!mem_pt(current->mem,PAGE(first))&&snapshot().mapped==1);
+            assert(current->mem->mmu.changes==parked_changes&&current->mem->pgdir_used==parked_used);
+            assert(atomic_load(&file->refcount)==fdrefs);
+
+            /* The native alias remains usable while Linux has no mapping. */
+            alias[101]=0x7b;
+            assert(!ideck_file_reserve_resume(token));
+            assert(sys_mmap64(first,bytes,P_READ|P_WRITE,flags,number,0)==first);
+            assert(!user_read(first+101,&value,1)&&value==0x7b);
+            value=0x63;assert(!user_write(first+101,&value,1)&&alias[101]==value);
+            assert(!sys_munmap(first,bytes));
+            struct ideck_file_reserve_stats s=snapshot();
+            assert(!s.live&&s.mapped==2&&s.released==2);
+        }else if(!strcmp(mode,"fork")){
             struct mem child;mem_init(&child);
             assert(!pt_copy_on_write(current->mem,&child,PAGE(first),bytes/PAGE_SIZE));
             assert(atomic_load(&data->refcount)==2*bytes/PAGE_SIZE&&snapshot().live==1);

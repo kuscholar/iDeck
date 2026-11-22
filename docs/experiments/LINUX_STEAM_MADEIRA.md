@@ -8140,3 +8140,50 @@ the post-join receipt, and uses the self-process Darwin APIs. No sign,
 installation or on-device census. RFB recovery, genuine Play, licensed
 game and same-app return are still open. Audit and private evidence
 hashes at `run83.build95_post_join_process_thread_census`.
+
+## Run83 follow-up — retain the empty file reserve across sequential runtimes
+
+The latest read-only Air sample was still Build93 PID 31278 at health
+2022. The guest crop matches the previous Ori screensaver byte for byte.
+Frame callbacks remain at 632 and Play at zero. No input or lifecycle
+action. The signed Build94 remains the next refresh candidate.
+
+The Lab's shared-file reserve now supports an isolated reversible
+transition once its last Linux backing is released. While suspended it
+retains its existing 16 MiB PROT_NONE address range and admits no shared
+file allocations. Only the matching suspension token restores
+allocation. An older token fails, and an unexpected release into the
+suspended range makes the reserve non-resumable. Suspension performs no
+map or unmap operation. The current native setup still uses terminal
+drain. These APIs require the caller to prove runtime quiescence on both
+sides. This preserves the mapping prerequisite for a future return and
+supplies no evidence about Wine address headroom while holding the range.
+
+Thirteen ASan/UBSan Darwin modes passed, including stale tokens, refusal
+with a live span, late-release poisoning and 800 concurrent allocations.
+Fourteen controls using the pinned LinuxRunner mmap, realfs, PTE and
+fd paths passed. A live fork alias blocks suspension until its final
+PTE is released. During suspension an injected native ENOMEM stays
+ENOMEM, with no new PTE or retained fd reference. After resume a real
+shared mapping sees the byte written via a native alias and writes back
+to it. ASan/UBSan cover the changes and control path, with the prepared
+unchanged dependencies reused. No iOS memory pressure was simulated on
+the Air.
+
+Reproduce with fresh private output directories on easystore:
+
+```sh
+lab=experiments/linux-steam/tools
+python3 "$lab/test-shared-file-reserve.py" "$NEW_DARWIN_OUT"
+python3 "$lab/test-shared-file-reserve-integration.py" \
+  "$LINUX_LAB_ARTIFACTS" \
+  "$LINUX_LAB_ARTIFACTS/run82/shared-reserve-real-hooks-host-v3/libish.a" "$NEW_LINUX_OUT"
+```
+
+The implementation compiles as an ARM64 iOS object. No app was linked,
+signed or deployed with the new reserve operations. Evidence and hashes
+at `run83.shared_reserve_suspend_resume_host`. Once genuine Play is
+observable, check the qualified Linux shutdown and actual Madeira
+launch, then use the Wine receipt to identify session-owned resources
+that survive game exit before wiring the reversible reserve into the
+return path. Reliable return still requires device evidence.

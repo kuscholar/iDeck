@@ -21,7 +21,7 @@ extern int ideck_file_reserve_test_unmap(void *, size_t);
 #define own_unmap munmap
 #endif
 
-enum { FRESH, READY, POISONED, DRAINED };
+enum { FRESH, READY, POISONED, DRAINED, SUSPENDED };
 enum { FREE, HEAD, TAIL, QUARANTINED };
 enum { MAX_SLOTS = IDECK_FILE_RESERVE_BYTES / 4096u };
 static pthread_mutex_t gate = PTHREAD_MUTEX_INITIALIZER;
@@ -31,6 +31,7 @@ static unsigned char occupied[MAX_SLOTS];
 static size_t lengths[MAX_SLOTS];
 static unsigned spans[MAX_SLOTS];
 static struct ideck_file_reserve_stats stats;
+static uint64_t suspension;
 
 int ideck_file_reserve_prepare(void) {
     int saved = errno, error = 0;
@@ -109,6 +110,14 @@ int ideck_file_reserve_release(void *pointer, size_t bytes) {
         goto done;
     size_t delta = address - first;
     unsigned index = (unsigned)(delta / stats.page_bytes);
+    if (stats.state == SUSPENDED) {
+        /* A release after the boundary contradicts quiescence. Keep the
+         * owned range reserved and refuse resumption for this lifetime. */
+        stats.invalid_releases++;
+        stats.state = POISONED;
+        result = -EINVAL;
+        goto done;
+    }
     if (stats.state == DRAINED || delta % stats.page_bytes ||
         occupied[index] != HEAD || lengths[index] != bytes) {
         stats.invalid_releases++; result = -EINVAL; goto done;
@@ -138,6 +147,38 @@ int ideck_file_reserve_snapshot(struct ideck_file_reserve_stats *out) {
     if (pthread_mutex_trylock(&gate)) return -EBUSY;
     *out = stats;
     pthread_mutex_unlock(&gate); return 0;
+}
+
+int ideck_file_reserve_suspend(uint64_t *token) {
+    if (!token) return -EINVAL;
+    *token = 0;
+    pthread_mutex_lock(&gate);
+    int error = 0;
+    if (stats.state != READY || stats.live || stats.quarantined) {
+        error = -EBUSY;
+    } else if (suspension == UINT64_MAX) {
+        error = -EOVERFLOW;
+    } else {
+        stats.state = SUSPENDED;
+        *token = ++suspension;
+    }
+    pthread_mutex_unlock(&gate);
+    return error;
+}
+
+int ideck_file_reserve_resume(uint64_t token) {
+    if (!token) return -EINVAL;
+    pthread_mutex_lock(&gate);
+    int error = 0;
+    if (stats.state != SUSPENDED) {
+        error = -EBUSY;
+    } else if (token != suspension) {
+        error = -ESTALE;
+    } else {
+        stats.state = READY;
+    }
+    pthread_mutex_unlock(&gate);
+    return error;
 }
 
 int ideck_file_reserve_drain(void) {
