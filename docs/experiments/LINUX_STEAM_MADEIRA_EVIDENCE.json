@@ -24645,6 +24645,64 @@
           "bytes": 1273806
         }
       ]
+    },
+    "build94_signed_candidate_live_air93_preserved": {
+      "source_base": "24e992e697b4e0368ec247652ba193776df0adf7",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "signature": {
+        "build": 94,
+        "profiles": [
+          {
+            "profile_role": "main",
+            "expiry_utc": "2026-11-29T06:20:56Z",
+            "bundle_device_certificate_match": true
+          },
+          {
+            "profile_role": "helper",
+            "expiry_utc": "2026-11-29T06:20:57Z",
+            "bundle_device_certificate_match": true
+          }
+        ],
+        "deep_strict": true,
+        "unsigned_sha256": "6920b411e953cf89b9c5189dee26a5acefb47f1398d9ea181d3e4b5354e2d86f",
+        "signed_sha256": "31ce6266f027468b54789c6efc9308f51f5e186f718a0f36556875c797826a9b",
+        "text_sha256": "5d5a41982618959ecc0a6f1c3f28c3140e926610b5f6272856a17fa7675c1c95",
+        "text_unchanged": true,
+        "installed": false,
+        "device_launch": false
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "sequence": 1866,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "app_lifecycle_action": false,
+      "device_input": false,
+      "artifacts": [
+        {
+          "path": "run83/signed94-bounded-refresh/verification-private.json",
+          "bytes": 664,
+          "sha256": "4a6460b8242a74d6ad952c9f76f0a894602594e6f73bfca63317f704d5867ebf"
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/sign94-air-current-summary.json",
+          "bytes": 521,
+          "sha256": "0b43d9160b53120c802fa52c0e81d85396efae73a09bf0677e1bce2ba78d5659"
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/sign94-air-current-crop.png",
+          "bytes": 1273806,
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/sign94-air-current-health-data.json",
+          "bytes": 1731,
+          "sha256": "722c2c219f86584006819806c64b1edb6225b3a712436da3c569e0a46b137601"
+        }
+      ]
     }
   }
 }

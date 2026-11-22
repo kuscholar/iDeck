@@ -1,3 +1,23 @@
+## Run83 follow-up — Build94 signed, active Air93 preserved
+
+Signed a separate, private copy of the exact audited Build94 app using
+`tools/resign-app.py` and the user-renewed Build93 development profiles.
+Both profiles still match the original team and certificate, exact Air
+and exact main/helper bundle IDs. Deep-strict signature verification,
+embedded profile equality, and unchanged Mach-O `__TEXT,__text` passed.
+Both profiles expire November 29 UTC. No new profile request or account
+change. The unsigned Build94 original is intact.
+
+Build93 PID 31278 remained observable. Health advanced to 1866 while
+the guest crop and 632 frames remained unchanged from the post-wake
+Ori screensaver. Play remains zero. No additional input or restart.
+Preserve the old Lab while awaiting an observed wake or specific
+permission to end it and install Build94 in place. On Build94, wait for
+real Steam content, then test the second refresh on the reproduced idle
+stall. Steam Play, Windows execution and return are unverified. Private
+binary, profile and screen artifacts remain outside Git. Hashes at
+`run83.build94_signed_candidate_live_air93_preserved`.
+
 ## Run83 follow-up — allow one later refresh in the same viewer
 
 At 15:30 EST Air Build93 PID 31278 still had 632 frames and zero Play
