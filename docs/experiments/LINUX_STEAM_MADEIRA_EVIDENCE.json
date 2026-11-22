@@ -23944,6 +23944,310 @@
           "bytes": 313
         }
       ]
+    },
+    "build93_launch_after_user_trust": {
+      "source_base": "75341a6762dea339e89494c9318e05bbf9814333",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "deployment": {
+        "installed_build": 93,
+        "old_stopped": true,
+        "launch_pid": 31278,
+        "interpreter": true,
+        "attached_to_live_lab": false,
+        "signed_sha256": "c7b267033c1d0b98b6d055c417b7048f95fe4da2704f5b99f2da6f88dadc9d66",
+        "text_sha256": "1773050d8b0229b707a844a515cd55408d30722f6f9c7ad29060011cd921014d"
+      },
+      "prior_trust_failure_user_photo": true,
+      "user_confirmed_ready": true,
+      "bootstrap_update_complete_utc": "2026-11-22T15:36:51Z",
+      "samples": [
+        {
+          "tag": "after-trust-first",
+          "visible": "Native startup; no guest frame counted yet",
+          "sequence": 1,
+          "frames": 0,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 0
+        },
+        {
+          "tag": "after-trust-progress",
+          "visible": "Valve updater extracting package",
+          "sequence": 2,
+          "frames": 3,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 0
+        },
+        {
+          "tag": "updater-7",
+          "visible": "Black with X11 cursor after update completion",
+          "sequence": 25,
+          "frames": 8,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 0
+        },
+        {
+          "tag": "updater-11",
+          "visible": "Genuine Steam desktop navigation and signed-in chrome, black content",
+          "sequence": 38,
+          "frames": 198,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 0
+        },
+        {
+          "tag": "library-later",
+          "visible": "Black guest viewport with pointer at Library position",
+          "sequence": 48,
+          "frames": 213,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 1
+        },
+        {
+          "tag": "after-one-refresh",
+          "visible": "Genuine Steam desktop navigation and Library flyout rendered, black content",
+          "sequence": 51,
+          "frames": 243,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 1
+        },
+        {
+          "tag": "after-refresh-settled",
+          "visible": "Library flyout retained, black content",
+          "sequence": 54,
+          "frames": 277,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 1
+        },
+        {
+          "tag": "bpm-settled",
+          "visible": "Big Picture pointer reached the desktop control, no Big Picture surface; Library flyout and black main content",
+          "sequence": 59,
+          "frames": 306,
+          "pool_exhausted": 0,
+          "play": 0,
+          "game_launched": false,
+          "input": 2
+        }
+      ],
+      "findings": {
+        "actual_air_genuine_desktop_chrome": true,
+        "actual_air_library_dropdown": true,
+        "routed_cli_library_input": true,
+        "single_refresh_local_write": true,
+        "same_viewer_started": [
+          235,
+          236
+        ],
+        "same_viewer_decoded": [
+          235,
+          236
+        ],
+        "refresh_window_ms": 2121,
+        "refresh_proven_causal_for_ui": false,
+        "actual_library_contents": false,
+        "actual_big_picture": false,
+        "real_windows_game_and_return": false
+      },
+      "artifacts": [
+        {
+          "path": "run83/air93-approved-upgrade-v1/deployment.json",
+          "sha256": "a1d9917de0c920a8d558a0de64c32f60cf96e3d352d1bd2f693313449c43ad5b",
+          "bytes": 302
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-launch-retained-build93.json",
+          "sha256": "3628c11877a3cf0c4d11cf60f7f893858733e9be0ac1613b478e1a496712c347",
+          "bytes": 1624
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/steam-bootstrap-window-1.txt",
+          "sha256": "8ba1603077728a6c2e4928b747cc628d62c16dee0318bc2cd90367db144c4b92",
+          "bytes": 180458
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-baseline-native-log-summary.json",
+          "sha256": "9f236481af95c217a9c93ad22db28a5641c29476c46cd533fb592503db20dcee",
+          "bytes": 253
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/post-update-native-log-summary.json",
+          "sha256": "8524c11224a80534b9f1d90393b53ae2b234b7b8e8273b2ca07c658221d9a5e9",
+          "bytes": 253
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/build93-x11-start.jsonl",
+          "sha256": "462c7e5fe8c1139540d0b10b500a82e559a7b9832303372b405003a0c9090810",
+          "bytes": 10249
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-first-summary.json",
+          "sha256": "8005999c30b54d4710d0c7cb9bcef14037f35f718cdb545067e3f5e58e7a0852",
+          "bytes": 513
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-first-screen.png",
+          "sha256": "f7ff798e75da6cbeaa3eb8b48fecec6f39632af8a4a4e998820e583d31e4c3e3",
+          "bytes": 81266
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-first-health-data.json",
+          "sha256": "c06659f175c8eddcc4ed74152d66ada5d2c4c13a700cf370b6742d9ec168f86d",
+          "bytes": 1644
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-progress-summary.json",
+          "sha256": "3ca5afed778d92d4bd97d1652ed897e397d64ebe04bd36178579e1e1d9772d3a",
+          "bytes": 522
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-progress-screen.png",
+          "sha256": "8aa773e0b9d7d372a068d4631a5b23985406b8347fd50f425f7f0955ab449ec2",
+          "bytes": 72796
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-trust-progress-health-data.json",
+          "sha256": "c2351dcefe2babdb75ee0f183656a9769bf96377173a3ee69e5ed4882c100583",
+          "bytes": 1680
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-7-summary.json",
+          "sha256": "644fe3b4c019e5dd788c4ed3f3f702fdde2f4da9b57f942c762fc0d0df932c9f",
+          "bytes": 490
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-7-screen.png",
+          "sha256": "7fe762b5beecc9672c671e71a2f8db2008c4562eada9dbc2e05dfffe8e04bd4f",
+          "bytes": 70616
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-7-health-data.json",
+          "sha256": "16f2b224c25fe0943478b3dd824d081edf5dfbc67116160cece439231196fb17",
+          "bytes": 1683
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-11-summary.json",
+          "sha256": "569aa2349eb6fe972c3c7d5798e04c7ad3b53914b17470fbda3dd273d7847845",
+          "bytes": 495
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-11-screen.png",
+          "sha256": "b464f24f23d641c8256b802bf3ce05ace838f6c6741c59f7d609343ad0df711e",
+          "bytes": 99085
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/updater-11-health-data.json",
+          "sha256": "0609f45a90d45a6f8337b0ab2f6f4df76469055a74b59640185134818c9c1a9f",
+          "bytes": 1699
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/library-later-summary.json",
+          "sha256": "4b6e52d7948fe06b87d7111e90be6e7926a9c96df376cfa933a243f4f87f4698",
+          "bytes": 504
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/library-later-screen.png",
+          "sha256": "3eb45ceb6218ba96b830dcd5f1a028e2af05fa632a28a7e13f97da7e4259328a",
+          "bytes": 70544
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/library-later-health-data.json",
+          "sha256": "150254abd2874bb677eef67775ef3897973195863c78f9eea8a224d8ce06be6c",
+          "bytes": 1699
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-one-refresh-summary.json",
+          "sha256": "63fae1a61f6bea72f1ddb31b5f1a1863144305deb4cdd9a47471d26f06330a26",
+          "bytes": 516
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-one-refresh-screen.png",
+          "sha256": "e76bd3dd660e0e8d67cb9d931faafe398c3b7829e73ffacc126764a5e82ff981",
+          "bytes": 104550
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-one-refresh-health-data.json",
+          "sha256": "7fb832bdd44f6b289ef2e61ad13b3819dac4966f4485d55e48a483a5dba8f2df",
+          "bytes": 1700
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-refresh-settled-summary.json",
+          "sha256": "73200b1e86c345013529fe2bebd558434946f18201f0f5b247022c0ddbaadc6a",
+          "bytes": 528
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-refresh-settled-screen.png",
+          "sha256": "2d25ba03b17f8b44183b6c51bc4bd8630dce732139abb86355eeafb555f9e302",
+          "bytes": 104665
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-refresh-settled-health-data.json",
+          "sha256": "4d86d7e2f62ee7c166d9056ff1df1ebd06c4365f3d5b6bb07aa9f12b7bc5223a",
+          "bytes": 1700
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-settled-summary.json",
+          "sha256": "fab1f8d28c9abdcc73eb1dcb1239a17ec5632b208c4e82ba76f567d5fd209b9a",
+          "bytes": 498
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-settled-screen.png",
+          "sha256": "805d9672e36b42fd99e1556ffb41cd922fe8136ee66ea08dd28aa2c0422ab171",
+          "bytes": 104671
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-settled-health-data.json",
+          "sha256": "bc7f76768294511408877c507021090561de7edd29713ea4466b1dec620305fb",
+          "bytes": 1701
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/library-navigation-1/receipt.json",
+          "sha256": "952252df434f36168a84ed72e3f60c8547a27ab2c5b39f702bd816d7428032e9",
+          "bytes": 133
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/library-later-crop.png",
+          "sha256": "96cc6ad58646b76f8750df2532fe1cec36c7cbdb79d6453ee6a68e987e4260e5",
+          "bytes": 32277
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/refresh-air93-receipt-private.json",
+          "sha256": "6b5842ca01783375883c07aea90279c8a857f67f1b86fc3a92f13333b81bf572",
+          "bytes": 302
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/refresh-navigation-1/receipt.json",
+          "sha256": "50de76ccddae6d2e023fbc8a4bf83e07bd1bec4c739fdabd4976d55486df1302",
+          "bytes": 141
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-one-refresh-crop.png",
+          "sha256": "1febb7ef3b6412a2b99a000e2eb1e70c789594cf4a420166f4155aa59739b81f",
+          "bytes": 36216
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/bpm-navigation-1/receipt.json",
+          "sha256": "7a336e84fa7484d7b743a76c9afa54c98049840a6afcf382d6ffd2f22c041545",
+          "bytes": 137
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-rfb-control-native-log-summary.json",
+          "sha256": "8524c11224a80534b9f1d90393b53ae2b234b7b8e8273b2ca07c658221d9a5e9",
+          "bytes": 253
+        }
+      ]
     }
   }
 }

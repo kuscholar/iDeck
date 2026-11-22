@@ -7935,3 +7935,43 @@ once, then verify physical screen, Linux startup and input. No Linux
 crash or Steam/Play/game/return evidence from this attempted launch.
 Hashes and private artifact references are in
 `run83.build93_approved_air_upgrade_trust_gate`.
+
+## Run83 follow-up — Air Build93 starts after user trust
+
+The user's photo showed the Lab listed as Verified while the device
+reported Unable to Trust. The user subsequently confirmed it was ready.
+Rechecked the installed Build93, found no existing Lab process, then
+started the isolated Lab once using `linux-steam-retained-frontend`,
+`ISH_JIT=0`, `ISH_JIT_BLOCK_LIMIT=200000`, and `TERM=dumb`. Actual Air
+PID 31278 emitted fresh Build93 diagnostics. No reinstallation,
+restart, or automation of trust or credentials.
+
+The real Steam extractor was visible. Valve's bootstrap log records
+update completion at 15:36:51 UTC and then installation verification.
+During the post-update black interval, actual X11 state rows changed
+focus and mapped surfaces. The first two bounded native log snapshots
+reported no guest faults or mmap failures. This observation is limited
+to those snapshots.
+
+Actual signed-in Steam desktop chrome appeared before the main content
+was ready. One fixed Library click later reported input sequence 1,
+with a black viewport and moved cursor. Two samples had 213 frames.
+One full refresh wrote successfully. Its same-viewer receipt counted
+235 to 236 started and completed updates over 2121 ms. The physical
+guest crop changed and the controller frame count reached 243. The
+Library flyout became visible again, with black main content. This
+rules out an entirely stalled decoder during the captured interval.
+RFB updates do not identify their request or prove the refresh caused
+Steam to paint. A later click on the visible Big Picture control
+advanced input sequence to 2, while the screenshot still showed the
+desktop and not Big Picture. No Play request or game execution.
+
+Preserve the live Air93 session. If the Library menu is present, ask
+for one direct physical tap on Library > Home and use the actual game
+list or continued black screen as the next discriminator. Do not
+repeat the one-shot refresh or relaunch this active Lab. The Air
+trust gate is resolved for this observed execution.
+
+Exact build, LinuxRunner pin, signed and normalized text hashes, before
+and after screens, and diagnostic receipt hashes are indexed at
+`run83.build93_launch_after_user_trust`. Raw screenshots and logs remain private.
