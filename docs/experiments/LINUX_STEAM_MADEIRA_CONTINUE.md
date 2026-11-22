@@ -1,3 +1,41 @@
+## Run83 follow-up — allow one later refresh in the same viewer
+
+At 15:30 EST Air Build93 PID 31278 still had 632 frames and zero Play
+requests. The guest crop matches the previous post-wake Ori screensaver
+byte for byte. A later sample advanced health from 1785 to 1835 with
+the same frame count and crop. No further Air input, relaunch or
+installation.
+
+Build93 uses its only full-frame refresh during initial Steam startup.
+The late stalled view cannot request another one in that connection.
+The Lab-only change admits a second explicit refresh after the first
+write succeeds, a three-second quiet interval passes and decode progress
+is observed. It refuses bursts, writes while another refresh is pending,
+and a third request. No automatic request. Main-queue receipts carry a
+sequence so an older sample or replaced viewer cannot overwrite a newer
+one. RFB supplies no request ID, so decoder progress is an admission
+condition rather than proof of a specific reply.
+
+Run the existing Build93 RFB loopback recipe in a fresh directory. All
+ten sanitizer cases passed with the new adapter. The same test fixture
+linked with the Build93 generated adapter fails on the second request.
+The first private fakefs clone timed out before any guest launched.
+In a second clone x11vnc startup exceeded the 12-second socket list
+window. With a fresh clone and a longer copy and listener window,
+the isolated fakefs/Xvfb/x11vnc repeat control on the pooled
+generated source receives three identical frames on one connection:
+initial, first manual refresh and second manual refresh. No pool
+exhaustion. Private outputs and exact hashes are indexed in
+`run83.build94_bounded_second_display_refresh`.
+
+Replay the Build93 two-object archive replacement and private Xcode
+build with fresh paths and build number 94. Final ARM64 package and
+linked call-site checks passed. Build94 is unsigned and uninstalled.
+Keep Air93 live. A physical tap on the actual idle artwork is still
+the next discriminator for this session. If a later deployment of a
+new Lab is authorized, test the bounded refresh on a reproduced stall.
+Steam Play, game execution and reliable return are still unverified.
+
 ## Run83 follow-up — Air Build93 Big Picture, selection and idle recovery
 
 The delayed result of the earlier Big Picture click is genuine on

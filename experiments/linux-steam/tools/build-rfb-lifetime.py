@@ -33,7 +33,7 @@ if a.frame_snapshot_pool:
 @property(nonatomic,strong) IDECKFrameSnapshotPool *ideckFramePool;
 @end
 @implementation LRRFBClient {''',1)
-replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;\n    BOOL _ideckRefreshSubmitted;\n    _Atomic uint32_t _ideckRequestedExtent;\n    _Atomic uint64_t _ideckUpdatesStarted,_ideckUpdatesDecoded;')
+replace('@implementation LRRFBClient {','@implementation LRRFBClient {\n    NSRecursiveLock *_ideckAdmission;\n    dispatch_group_t _ideckTasks;\n    BOOL _ideckClosing;\n    unsigned _ideckRefreshCount;\n    BOOL _ideckRefreshWriting;\n    double _ideckLastRefreshWrite;\n    uint64_t _ideckRefreshDecodeBaseline;\n    _Atomic uint32_t _ideckRequestedExtent;\n    _Atomic uint64_t _ideckUpdatesStarted,_ideckUpdatesDecoded;')
 replace('_password=[password copy];_socket=-1;','_password=[password copy];_socket=-1;\n        _ideckAdmission=[NSRecursiveLock new];_ideckTasks=dispatch_group_create();')
 if a.frame_snapshot_pool:
  replace('- (instancetype)initWithPort:', '@synthesize ideckFramePool=_ideckFramePool;\n- (instancetype)initWithPort:')
@@ -68,14 +68,25 @@ replace('- (BOOL)update {','''- (IDECKRFBDecodeProgress)ideckDecodeProgress {
     if(!completion)return NO;
     [_ideckAdmission lock];
     uint32_t extent=atomic_load(&_ideckRequestedExtent);
-    if(_ideckClosing||_ideckRefreshSubmitted||!atomic_load(&_ready)||atomic_load(&_stopped)||!extent){
+    uint64_t decoded=atomic_load(&_ideckUpdatesDecoded);
+    BOOL first=_ideckRefreshCount==0;
+    BOOL readyForSecond=_ideckRefreshCount==1&&_ideckLastRefreshWrite>0&&
+        LRTransportClock()-_ideckLastRefreshWrite>=3.0&&decoded>_ideckRefreshDecodeBaseline;
+    if(_ideckClosing||_ideckRefreshWriting||(!first&&!readyForSecond)||!atomic_load(&_ready)||atomic_load(&_stopped)||!extent){
         [_ideckAdmission unlock];return NO;
     }
-    _ideckRefreshSubmitted=YES;
+    _ideckRefreshCount++;
+    _ideckRefreshWriting=YES;
+    _ideckRefreshDecodeBaseline=decoded;
     dispatch_group_async(_ideckTasks,_inputQueue,^{@autoreleasepool{
         uint8_t packet[10]={3,0,0,0,0,0,(uint8_t)(extent>>24),(uint8_t)(extent>>16),
                             (uint8_t)(extent>>8),(uint8_t)extent};
-        completion([self write:packet count:sizeof packet]);
+        BOOL written=[self write:packet count:sizeof packet];
+        [_ideckAdmission lock];
+        _ideckLastRefreshWrite=written?LRTransportClock():0;
+        _ideckRefreshWriting=NO;
+        [_ideckAdmission unlock];
+        completion(written);
     }});
     [_ideckAdmission unlock];
     return YES;

@@ -24503,6 +24503,148 @@
           "bytes": 1273806
         }
       ]
+    },
+    "build94_bounded_second_display_refresh": {
+      "source_base": "dd921f53351c574d1054ac23963d5e4b5a1a7dbf",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "candidate": {
+        "build": 94,
+        "architecture": "arm64",
+        "unsigned_sha256": "6920b411e953cf89b9c5189dee26a5acefb47f1398d9ea181d3e4b5354e2d86f",
+        "source_files_sha256": {
+          "app/LabRFBCompletion.h": "6899fa3180a4279128c30c52821e6ff3f2ea6c82678f5184d84c9d662a43d5b5",
+          "app/LinuxSteamViewController.m": "95b6af279fb6c9972fcd3602557ee2bc09c7fde3616a18c37ca0bf2eb767a4ca",
+          "tests/rfb-lifetime-control.m": "1ec69a3b9b93a5c6576f4d089c1cc4653a32e93ac8f1814b981f56816996ac09",
+          "tests/test_rfb_lifetime.py": "fa29f2b425d273f7fc877a5ea6453fce5ab954caee32b381c1c0d321a0210b58",
+          "tools/build-rfb-lifetime.py": "85e703b2cf28f69d5291ec9b7fd3e9d55da5fdfcf95f289ac90821afcf2e92c7"
+        },
+        "runtime_archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "ca34e8ac563a438b8113f62ebf10543576db1900bba6e301c0a6fa0e8dd95432",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "compiled_ivars": [
+          "_ideckRefreshCount",
+          "_ideckRefreshWriting",
+          "_ideckLastRefreshWrite",
+          "_ideckRefreshDecodeBaseline"
+        ],
+        "controller_calls": [
+          "100a15300:\td8 c2 67 94\tbl\t_objc_msgSend$cliDisplayRefreshSequence",
+          "100a1544c:\tb5 c8 67 94\tbl\t\"_objc_msgSend$ideckRequestFullRefreshWithCompletion:\"",
+          "100a1547c:\td9 d3 67 94\tbl\t\"_objc_msgSend$setCliDisplayRefreshSequence:\""
+        ],
+        "sequence_guards": [
+          "100a15ae4:\tdf c0 67 94\tbl\t_objc_msgSend$cliDisplayRefreshSequence",
+          "100a15fc0:\ta8 bf 67 94\tbl\t_objc_msgSend$cliDisplayRefreshSequence"
+        ],
+        "transport_calls": [
+          "100a1eeb4:\t8e 00 00 94\tbl\t_LRTransportClock",
+          "100a1f084:\t86 90 67 94\tbl\t0x10240329c ; symbol stub for: _dispatch_group_async"
+        ],
+        "signed": false,
+        "installed": false
+      },
+      "host_real_x11": {
+        "scope": "HOST LinuxRunner with actual Xvfb/x11vnc and Lab framebuffer pool; own idle desktop only",
+        "viewer": {
+          "idle_frames": 1,
+          "prior_incremental_writes": 1,
+          "full_written": 1,
+          "updates_started": 3,
+          "updates_decoded": 3,
+          "frames": 3,
+          "identical_second": 1,
+          "identical_third": 1,
+          "second_written": 1,
+          "pool_exhausted": 0
+        },
+        "display_exit": 0,
+        "linuxrunner": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+        "source_db_sha256": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+        "dependencies_sha256": {
+          "Xvfb": "d7e34c84456cb0325bc663121ac9b39d990ecfdab0854d834d4bb56c72118810",
+          "x11vnc": "c02e72d9360580206ba69e562ed015f3633284e01188a754317e414d19c78bb2"
+        },
+        "recipe_sha256": "439a6508a10ad529a7f544afc7cbff906f420e5fcb4d618ca962a3cbc611288b",
+        "fixture_sha256": "59025f39e1d0103fec6d09ad06c03f8640864ccd36dcc3691fdbc23fd18b7dd6",
+        "viewer_sha256": "0966b4e04220751f0bced11d3ffe86a1fdc8a710a724c4fbab07bc48f915f0bd",
+        "generated_sha256": "f314f9fcf2ec140dcb18c76943892190b8cb1ddecae7d93607782813ef6be3f4",
+        "runner_sha256": "f5fd9996297755a7650b5de61b05c4add5a53769aeede5b37440303b310d620b",
+        "expected_static_refresh": true
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "sequences": [
+          1785,
+          1835
+        ],
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "hypothesis": "The permanent one-per-viewer cap prevents a later explicit refresh after startup has used the first one.",
+      "result": "Old wire fixture rejects the second request; new fixture and real Xvfb/x11vnc accept a second bounded refresh after decode progress.",
+      "limitation": "Host behavior and final Mach-O only. No device change or evidence that the second refresh will leave the Steam saver.",
+      "artifacts": [
+        {
+          "path": "run83/rfb-bounded-repeat-v1/results/evidence.json",
+          "sha256": "0c7d746b6cf03c8f606f2c274ed8d754852470dcded93031938fc09ed317e0bf",
+          "bytes": 2593
+        },
+        {
+          "path": "run83/rfb-bounded-repeat-v1/old-results/refresh-repeat.log",
+          "sha256": "0e393f6914f22a8f61b1a01e3d2fdc2de4067439d10a55d6e265c4b809780708",
+          "bytes": 208
+        },
+        {
+          "path": "run83/real-x11-bounded-repeat94-v3/evidence.json",
+          "sha256": "07c341bf90d5788029709e9384d9fe3a3bd7dc6d6798d9d321fe2ca4afcbf825",
+          "bytes": 1239
+        },
+        {
+          "path": "run83/runtime94-rfb-bounded-repeat/evidence.json",
+          "sha256": "1557c29f22ed09a94a26525837fd11b33cd114084f39bddfa464a5547f8b6313",
+          "bytes": 114055
+        },
+        {
+          "path": "run83/hybrid94-rfb-bounded-repeat/package-validation.json",
+          "sha256": "af1836b0c2e47d8d2f9450bf32eab5b41fe710217ee88c2b7b6055cae144bfa9",
+          "bytes": 702
+        },
+        {
+          "path": "run83/hybrid94-rfb-bounded-repeat/prepare-evidence.json",
+          "sha256": "7d8d0638f4abaa7fff91e8e37bb844f1889c8f39e20905d1ed247183e296b4fd",
+          "bytes": 322430
+        },
+        {
+          "path": "run83/hybrid94-rfb-bounded-repeat/final-bounded-refresh-link-private.json",
+          "sha256": "b43cb8c9b71c376e5db809537e84d8c2cca36e7f3bb5727df5ecba51091b4b02",
+          "bytes": 1889
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/next-refresh-precheck-summary.json",
+          "sha256": "7eb126152ea32a8b3363294ef36e59723eaa7ee54b9cef47763fa29bf9f5045e",
+          "bytes": 530
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/next-refresh-precheck-crop.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/refresh94-air-preserve-summary.json",
+          "sha256": "0077cec4dda5777ea6f7243a9c2fc3cdb173f25495c8f645e0b186c67a2497e8",
+          "bytes": 533
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/refresh94-air-preserve-crop.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        }
+      ]
     }
   }
 }

@@ -160,6 +160,7 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 #if IDECK_LAB_CLI_INPUT
 @property(nonatomic,strong) NSMutableArray<NSNumber *> *cliInputTokens;
 @property(nonatomic) NSTimeInterval cliInputLastEvent;
+@property(nonatomic) uint64_t cliDisplayRefreshSequence;
 #endif
 #if IDECK_LAB_RETAINED_FRONTEND
 @property(nonatomic,strong) NSThread *frontendOwner;
@@ -328,6 +329,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     NSURL *support=[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
     NSURL *receipt=[support URLByAppendingPathComponent:@"iDeckLinuxLab/last-display-refresh.json"];
     LRRFBClient *client=self.client;
+    uint64_t sequence=self.cliDisplayRefreshSequence+1;
     IDECKRFBDecodeProgress baseline=[client ideckDecodeProgress];
     __weak LRRFBClient *weakClient=client;
     __weak typeof(self) weakSelf=self;
@@ -338,26 +340,31 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     };
     // The local write and subsequent decoder activity are independently
     // observable. Neither identifies a reply or verifies a visible frame.
-    [client ideckRequestFullRefreshWithCompletion:^(BOOL written){
-        NSDictionary *initial=@{@"full_refresh_written":@(written),@"ui_verified":@NO,
-            @"updates_started_before":@(baseline.started),@"updates_decoded_before":@(baseline.decoded),
-            @"observation_complete":@NO};
-        writeReceipt(initial);
-        if(!written)return;
+    BOOL admitted=[client ideckRequestFullRefreshWithCompletion:^(BOOL written){
         NSTimeInterval sentAt=NSProcessInfo.processInfo.systemUptime;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,2*NSEC_PER_SEC),dispatch_get_main_queue(),^{
+        dispatch_async(dispatch_get_main_queue(),^{
             LRRFBClient *observed=weakClient;
-            // A stopped or replaced viewer must not overwrite a newer receipt.
-            if(!observed||weakSelf.client!=observed)return;
-            IDECKRFBDecodeProgress later=[observed ideckDecodeProgress];
-            NSMutableDictionary *fields=[initial mutableCopy];
-            fields[@"observation_complete"]=@YES;
-            fields[@"observed_after_ms"]=@((uint64_t)((NSProcessInfo.processInfo.systemUptime-sentAt)*1000));
-            fields[@"updates_started_after"]=@(later.started);
-            fields[@"updates_decoded_after"]=@(later.decoded);
-            writeReceipt(fields);
+            if(!observed||weakSelf.client!=observed||weakSelf.cliDisplayRefreshSequence!=sequence)return;
+            NSDictionary *initial=@{@"refresh_sequence":@(sequence),@"full_refresh_written":@(written),@"ui_verified":@NO,
+                @"updates_started_before":@(baseline.started),@"updates_decoded_before":@(baseline.decoded),
+                @"observation_complete":@NO};
+            writeReceipt(initial);
+            if(!written)return;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,2*NSEC_PER_SEC),dispatch_get_main_queue(),^{
+                LRRFBClient *current=weakClient;
+                // A replaced viewer or superseded sample must not overwrite a newer receipt.
+                if(!current||weakSelf.client!=current||weakSelf.cliDisplayRefreshSequence!=sequence)return;
+                IDECKRFBDecodeProgress later=[current ideckDecodeProgress];
+                NSMutableDictionary *fields=[initial mutableCopy];
+                fields[@"observation_complete"]=@YES;
+                fields[@"observed_after_ms"]=@((uint64_t)((NSProcessInfo.processInfo.systemUptime-sentAt)*1000));
+                fields[@"updates_started_after"]=@(later.started);
+                fields[@"updates_decoded_after"]=@(later.decoded);
+                writeReceipt(fields);
+            });
         });
     }];
+    if(admitted)self.cliDisplayRefreshSequence=sequence;
 }
 #endif
 - (void)showStatus:(NSString *)value {dispatch_async(dispatch_get_main_queue(),^{self.status.text=value;self.status.hidden=NO;});}

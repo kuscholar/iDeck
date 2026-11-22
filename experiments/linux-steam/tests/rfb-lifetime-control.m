@@ -16,7 +16,9 @@ int main(int argc,char **argv){@autoreleasepool{
     BOOL input=[mode isEqual:@"input-held"],frame=[mode isEqual:@"frame-held"];
     BOOL wake=[mode isEqual:@"wake-wire"],partial=[mode isEqual:@"refresh-partial-reply"];
     BOOL silent=[mode isEqual:@"refresh-silent"],empty=[mode isEqual:@"refresh-empty-reply"];
-    BOOL refresh=partial||silent||empty||[mode isEqual:@"full-refresh"];
+    BOOL repeat=[mode isEqual:@"refresh-repeat"];
+    BOOL refresh=partial||silent||empty||repeat||[mode isEqual:@"full-refresh"];
+    __block atomic_bool repeatedWritten=false;
     __block atomic_bool refreshWritten=false;
     __block atomic_uint seenFrames=0;
     if(refresh)assert(![client ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
@@ -37,7 +39,14 @@ int main(int argc,char **argv){@autoreleasepool{
             assert(initial.started==1&&initial.decoded==1);
             assert([weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){
                 assert(written);atomic_store(&refreshWritten,true);
-                if(partial||silent||empty)dispatch_after(dispatch_time(DISPATCH_TIME_NOW,500*NSEC_PER_MSEC),dispatch_get_main_queue(),^{
+                if(repeat)dispatch_after(dispatch_time(DISPATCH_TIME_NOW,3300*NSEC_PER_MSEC),dispatch_get_main_queue(),^{
+                    assert([weakClient ideckRequestFullRefreshWithCompletion:^(BOOL second){
+                        assert(second);atomic_store(&repeatedWritten,true);
+                    }]);
+                    assert(![weakClient ideckRequestFullRefreshWithCompletion:^(BOOL wrote){(void)wrote;abort();}]);
+                });
+                if(partial||silent||empty)dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(silent?3300:500)*NSEC_PER_MSEC),dispatch_get_main_queue(),^{
+                    if(silent)assert(![weakClient ideckRequestFullRefreshWithCompletion:^(BOOL wrote){(void)wrote;abort();}]);
                     assert(atomic_load(&seenFrames)==1);
                     IDECKRFBDecodeProgress progress=[weakClient ideckDecodeProgress];
                     assert(progress.started==(silent?1:2)&&progress.decoded==(empty?2:1));
@@ -56,10 +65,21 @@ int main(int argc,char **argv){@autoreleasepool{
             assert(progress.started==2&&progress.decoded==2);
             const uint8_t *data=pixels.bytes;
             for(NSUInteger i=0;i<pixels.length;i++)assert(data[i]==0x5a);
+            if(repeat)return;
             [weakClient ideckStopWithCompletion:^{
                 assert(atomic_load(&refreshWritten));
                 assert(![weakClient ideckRequestFullRefreshWithCompletion:^(BOOL written){(void)written;abort();}]);
                 puts("RFB_REFRESH second_frame=1 same_connection=1 duplicate_refused=1");
+                exit(0);
+            }];
+        }else if(repeat&&n==3){
+            IDECKRFBDecodeProgress progress=[weakClient ideckDecodeProgress];
+            assert(progress.started==3&&progress.decoded==3);
+            const uint8_t *data=pixels.bytes;
+            for(NSUInteger i=0;i<pixels.length;i++)assert(data[i]==0xa5);
+            [weakClient ideckStopWithCompletion:^{
+                assert(atomic_load(&repeatedWritten));
+                puts("RFB_REFRESH two_explicit_requests=1 same_connection=1 burst_refused=1");
                 exit(0);
             }];
         }

@@ -12,8 +12,9 @@ typedef struct {
  * No timer-based success, group wait on main or Linux/game quiescence claim.
  */
 - (void)ideckStopWithCompletion:(dispatch_block_t)completion;
-/* One non-incremental request per connected viewer. Completion runs on the
- * input queue and means only that the request bytes were written locally. */
+/* At most two explicit non-incremental requests per connected viewer.
+ * A second requires a quiet interval and decode progress after the first was
+ * admitted. Completion runs on the input queue and reports local write only. */
 - (BOOL)ideckRequestFullRefreshWithCompletion:(void (^)(BOOL written))completion;
 /* Connection counters. A decoded message can contain zero rectangles.
  * RFB replies do not identify their originating request. */
