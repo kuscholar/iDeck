@@ -23848,6 +23848,102 @@
           "bytes": 637
         }
       ]
+    },
+    "build93_approved_air_upgrade_trust_gate": {
+      "source_base": "5633704d7abff5b69ef37b7512942e7757ef077c",
+      "linuxrunner_revision": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "profile_provenance": "User-generated Apple Xcode CLI ExistingProfiles build on same team and exact Air",
+      "signed_sha256": "c7b267033c1d0b98b6d055c417b7048f95fe4da2704f5b99f2da6f88dadc9d66",
+      "unsigned_sha256": "5c9caae42ba92b8a1f3fde93ad51f71123c214458bf0dacb25fc82da82aff6c4",
+      "text_sha256": "1773050d8b0229b707a844a515cd55408d30722f6f9c7ad29060011cd921014d",
+      "profile_expiry_utc": [
+        "2026-11-29T06:20:56Z",
+        "2026-11-29T06:20:57Z"
+      ],
+      "deep_strict": true,
+      "text_unchanged": true,
+      "old_build": 86,
+      "old_pid": 29952,
+      "old_health_sequence": 29512,
+      "old_play": 0,
+      "old_frames": 17022,
+      "old_normal_termination": true,
+      "installed_build": 93,
+      "same_bundle_in_place": true,
+      "old_native_receipt_retained": true,
+      "launch_parser_exit": 64,
+      "launch_coredevice_code": 10002,
+      "device_visible_alert": "Untrusted Developer",
+      "build93_process_seen": false,
+      "steam_ui_verified": false,
+      "game_verified": false,
+      "artifacts": [
+        {
+          "path": "run83/signed93-user-authorized-profiles/verification-private.json",
+          "sha256": "3df165648cfa19fdad51d70e9fa98e2aa26cca3ad9d39d02127488e5e6478df9",
+          "bytes": 664
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/app-before.json",
+          "sha256": "41afaa8232a7c318932f8eaeb3d76238cf1f00db5f8a6ed9f1e0696278430c8a",
+          "bytes": 1411
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/app-after.json",
+          "sha256": "451306e50d78184896a092826f8fd91463de474972d987e72eec8c1a4138dce0",
+          "bytes": 1410
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/old-health.json",
+          "sha256": "ad0848ac263bfd7ace3ebc3d64b0f955277db414b1ddcac47e07f1a667142074",
+          "bytes": 1724
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/terminate-approved-build86.json",
+          "sha256": "54484049a4689bcd74512b4ed09432fa54607f876127b4598255dc7946fe34ce",
+          "bytes": 990
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-stop-0.json",
+          "sha256": "a0c80030756c35e3718582b9ea2639ae1c88cda0e93d31b18ccb3748a1c591dc",
+          "bytes": 49572
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/install-build93.json",
+          "sha256": "26352b1a686a4abcd1479f53a70d8d98bde558f4171bb64db932e3d71980f6de",
+          "bytes": 1186
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/launch-build93.log",
+          "sha256": "311ff532686c6b1185cb457107314f43f6e23f2b854dbfbe530b5c1bcc46b15c",
+          "bytes": 474
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/launch-retained-build93.json",
+          "sha256": "fbbf29a08766ee5a560ab1e603ae67e24719cb777f0b45db0b03cf05d08c2dab",
+          "bytes": 2532
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-security-processes.json",
+          "sha256": "e1bcb30bba5f4c87ae7c82890a7f4f509455f039977f3e4618a38e6632f2b8f2",
+          "bytes": 68100
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/after-security-refusal.png",
+          "sha256": "1fc3dc67c0e37e9f892169d2b17581b4484affe783f2cb3cbe60cae7d13e9a47",
+          "bytes": 11243140
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/old-native-receipt.json",
+          "sha256": "a33b2cb8118c6ebf0ce75d314dec12436621aaa59a1226e8d093c65e45f76d01",
+          "bytes": 313
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/retained-native-receipt.json",
+          "sha256": "a33b2cb8118c6ebf0ce75d314dec12436621aaa59a1226e8d093c65e45f76d01",
+          "bytes": 313
+        }
+      ]
     }
   }
 }

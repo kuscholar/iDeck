@@ -7907,3 +7907,31 @@ error. CoreDevice still found the prior Lab process on the exact Air with
 no passcode required. The live Lab and working app were left in place.
 Resume standard CLI re-signing when an exact valid pair is issued. Genuine
 Play, Windows execution, and repeated return remain open.
+
+## Run83 follow-up — Build93 installed on Air, developer trust pending
+
+The user ran the `ExistingProfiles` project. Both new development
+profiles match their exact Lab bundle IDs, the selected Air, original
+team and existing Apple Development certificate. They expire November
+29 UTC. The disposable Build93 copy passed deep-strict verification,
+embedded profile checks and byte-identical Mach-O `__TEXT,__text`.
+
+After the user's explicit approval to end Build86 and upgrade, matched
+its installed bundle, installation UUID, PID and live health receipt.
+It still counted 17022 frames and zero Play requests. CoreDevice sent
+one normal termination to that exact process and confirmed the old
+bundle had no running process. One same-ID in-place install succeeded
+and device readback reports Build93. Copying the old numeric diagnostic
+receipt after installation returned identical bytes. No uninstall.
+
+The first launch command failed locally because options followed the
+bundle positional argument. Corrected the ordering and used the same
+retained-frontend interpreter mode as Build86 (`ISH_JIT=0`). CoreDevice
+returned 10002. The Air screenshot explicitly shows Untrusted Developer
+and the process list confirms no Build93 process. The user must finish
+the device's trust prompt. Do not reinstall. Once trust is confirmed,
+check for an already running Lab, otherwise launch the installed Build93
+once, then verify physical screen, Linux startup and input. No Linux
+crash or Steam/Play/game/return evidence from this attempted launch.
+Hashes and private artifact references are in
+`run83.build93_approved_air_upgrade_trust_gate`.
