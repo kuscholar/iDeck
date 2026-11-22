@@ -1,19 +1,58 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception */
 #include "WineInitialJoin.h"
 #include <errno.h>
+#include <mach/mach.h>
 #include <stdlib.h>
 #include <unistd.h>
 static pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;
 static pid_t owner;
 static pthread_t initial_thread;
 static struct ideck_wine_initial_snapshot state;
+enum { THREAD_LIMIT = 1024 };
+struct thread_sample {
+    uint64_t ids[THREAD_LIMIT];
+    unsigned count;
+};
+static struct thread_sample baseline;
+static int baseline_error;
+static uint64_t observer_id;
+
+static int sample_threads(struct thread_sample *out, uint64_t exclude) {
+    thread_act_array_t threads = NULL;
+    mach_msg_type_number_t count = 0;
+    const task_t self = mach_task_self();
+    if (task_threads(self, &threads, &count) != KERN_SUCCESS) return EIO;
+
+    int error = count > THREAD_LIMIT ? EOVERFLOW : 0;
+    out->count = 0;
+    for (mach_msg_type_number_t i = 0; i < count; i++) {
+        if (!error) {
+            thread_identifier_info_data_t identity;
+            mach_msg_type_number_t size = THREAD_IDENTIFIER_INFO_COUNT;
+            if (thread_info(threads[i], THREAD_IDENTIFIER_INFO, (thread_info_t)&identity, &size) != KERN_SUCCESS ||
+                size != THREAD_IDENTIFIER_INFO_COUNT || !identity.thread_id) {
+                error = EIO;
+            } else if (identity.thread_id != exclude) {
+                out->ids[out->count++] = identity.thread_id;
+            }
+        }
+        if (mach_port_deallocate(self, threads[i]) != KERN_SUCCESS) error = EIO;
+    }
+    if (threads && vm_deallocate(self, (vm_address_t)threads, count * sizeof(*threads)) != KERN_SUCCESS)
+        error = EIO;
+    return error;
+}
+
 struct watch { pthread_t thread; uint64_t generation; };
 static void *observe(void *opaque) {
     struct watch *watch=opaque;
     int error=pthread_join(watch->thread,NULL);
+    uint64_t thread_id = 0;
+    int identity_error = pthread_threadid_np(NULL, &thread_id);
     pthread_mutex_lock(&lock);
     if(owner==getpid()&&state.generation==watch->generation){
         if(!error)state.initial_joined=1;
+        if (!identity_error) observer_id = thread_id;
         if(error&&!state.observer_error)state.observer_error=error;
         state.phase=state.observer_error?IDECK_WINE_INITIAL_OBSERVER_FAILED:IDECK_WINE_INITIAL_JOINED;
     }
@@ -32,6 +71,8 @@ int ideck_lab_wine_initial_create(pthread_t *thread,const pthread_attr_t *attrib
     }
     if(state.generation==UINT64_MAX){pthread_mutex_unlock(&lock);free(watch);return EOVERFLOW;}
     owner=getpid();state=(struct ideck_wine_initial_snapshot){.generation=state.generation+1};
+    observer_id = 0;
+    baseline_error = sample_threads(&baseline, 0);
     int error=pthread_create(thread,attributes,entry,argument);
     if(error){state.phase=IDECK_WINE_INITIAL_START_FAILED;state.create_error=error;pthread_mutex_unlock(&lock);free(watch);return error;}
     state.phase=IDECK_WINE_INITIAL_ACTIVE;state.initial_created=1;
@@ -82,6 +123,31 @@ int ideck_lab_wine_initial_report_server_join(int attempted,int join_error,unsig
     pthread_mutex_unlock(&lock);
     return error;
 }
+int ideck_lab_wine_thread_census(uint64_t generation, struct ideck_wine_thread_census *out) {
+    if (!out || !generation) return EINVAL;
+    *out = (struct ideck_wine_thread_census){0};
+    pthread_mutex_lock(&lock);
+    int error = !owner ? ENODEV : owner != getpid() ? EXDEV :
+        generation != state.generation ? ESTALE :
+        !state.initial_joined || state.observer_error ? EBUSY :
+        !observer_id ? EIO : baseline_error;
+    if (!error) {
+        struct thread_sample current;
+        error = sample_threads(&current, observer_id);
+        if (!error) {
+            out->baseline_count = baseline.count;
+            out->current_count = current.count;
+            for (unsigned i = 0; i < current.count; i++) {
+                unsigned j = 0;
+                while (j < baseline.count && baseline.ids[j] != current.ids[i]) j++;
+                if (j == baseline.count) out->started_since_baseline++;
+            }
+        }
+    }
+    pthread_mutex_unlock(&lock);
+    return error;
+}
+
 int ideck_lab_wine_initial_ready(void) {
     struct ideck_wine_initial_snapshot value;
     int error=ideck_lab_wine_initial_snapshot(&value);if(error)return error;

@@ -1,3 +1,43 @@
+## Run83 follow-up — measure threads that outlive the initial Wine join
+
+Air Build93 PID 31278 reported health 1936, 632 frame callbacks and zero
+Play requests. Its latest guest crop matches the earlier Ori screensaver
+byte for byte. No device input, termination or installation. Build94
+remains the signed candidate for the later-viewer refresh experiment.
+
+The private native Lab now snapshots process-local Darwin thread IDs
+immediately before the initial Wine pthread starts and compares them
+after its observed join. It excludes the observer itself and records
+only counts and sample status in the bounded Wine receipt. Sampling
+failure, an incomplete join, and a stale generation give no counts.
+The sample can contain unrelated app threads and cannot see ownership
+by Wine, persistent state on baseline threads, mappings, GPU work or
+storage. The native setup's current return gate is unchanged.
+
+The current Wine startup calls `winios_freeze_watch_start` after opening
+its log. That function starts an app-lifetime watchdog and supervisor.
+Their existing stop policy is one concrete reason to distinguish the
+sample from a count of remaining guest Wine workers.
+
+The real pthread control holds a second thread alive after the initial
+thread's join. It reports one post-baseline thread, then zero after
+that worker is joined. Both the normal and initial-create-retry paths
+produce that result under ASan/UBSan. The previous TLS destructor,
+server outcomes and observer failure controls still pass. Reproduce with
+`python3 experiments/linux-steam/tools/test-wine-initial-join.py "$NEW_PRIVATE_OUT"`
+on the active Mac. The changed C also compiles to an ARM64 iOS object.
+
+Unsigned Build95 reuses Build94's exact Linux runtime archives and adds
+the private Wine receipt sampling. Reproduce the Build94 private app
+recipe with its prior prepared source as the read-only payload source,
+the same dependency root, `--build-number 95 --madeira-setup
+--observe-wine-initial-join --build`, and a fresh output directory.
+The final ARM64 Mach-O links the sample before pthread creation and from
+the post-join receipt, and uses the self-process Darwin APIs. No sign,
+installation or on-device census. RFB recovery, genuine Play, licensed
+game and same-app return are still open. Audit and private evidence
+hashes at `run83.build95_post_join_process_thread_census`.
+
 ## Run83 follow-up — signed Play path and late Air93 activity
 
 Read-only Air4 observation found the same Build93 PID 31278. Over

@@ -48,6 +48,16 @@ int ideck_lab_wine_initial_report_result(unsigned source,uint32_t code);
  * thread. A successful join only reports a known main result if the
  * server returned the corresponding token through pthread_join. */
 int ideck_lab_wine_initial_report_server_join(int attempted,int join_error,unsigned main_outcome);
+struct ideck_wine_thread_census {
+    unsigned baseline_count;
+    unsigned current_count;
+    unsigned started_since_baseline;
+};
+/* Compare process-local Darwin thread IDs with the sample immediately before
+ * Wine starts. Excludes the initial-thread join observer itself. ENODEV,
+ * ESTALE, EBUSY or a sampling error leave no counts. Zero new threads is not
+ * proof of Wine worker teardown or permission to start the Linux frontend. */
+int ideck_lab_wine_thread_census(uint64_t generation, struct ideck_wine_thread_census *);
 /* Early refusal before Wine mutates prefix/socket state. Zero means only that
  * this initial-thread observer is idle, never full Wine/runtime readiness. */
 int ideck_lab_wine_initial_ready(void);

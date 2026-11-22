@@ -68,6 +68,29 @@ static void *normal(void *argument){
     }
     return argument;
 }
+static pthread_t held_worker;
+static atomic_int worker_release;
+static void *worker(void *argument) {
+    (void)argument;
+    while (!atomic_load(&worker_release)) usleep(1000);
+    return NULL;
+}
+static void *initial_with_worker(void *argument) {
+    (void)argument;
+    assert(!pthread_create(&held_worker, NULL, worker, NULL));
+    return NULL;
+}
+static struct ideck_wine_thread_census read_census(uint64_t generation) {
+    struct ideck_wine_thread_census census;
+    for (unsigned attempt = 0; attempt < 3000; attempt++) {
+        int error = ideck_lab_wine_thread_census(generation, &census);
+        if (!error) return census;
+        /* A thread in the kernel's list may exit before thread_info. */
+        assert(error == EIO);
+        usleep(1000);
+    }
+    abort();
+}
 int main(int argc,char **argv){
     assert(argc==2);fail_call=atoi(argv[1]);assert(!pthread_key_create(&key,destroy));
     struct ideck_wine_initial_snapshot value;assert(!ideck_lab_wine_initial_snapshot(&value));
@@ -94,6 +117,9 @@ int main(int argc,char **argv){
     assert(value.body_result_source==IDECK_WINE_BODY_LONGJMP&&value.body_exit_code==0xc0000005u);
     assert(value.server_join_state==IDECK_WINE_SERVER_JOINED&&!value.server_join_error);
     assert(value.server_main_outcome==IDECK_WINE_SERVER_MAIN_UNKNOWN);
+    struct ideck_wine_thread_census unavailable = {123,123,123};
+    assert(ideck_lab_wine_thread_census(value.generation,&unavailable)==EBUSY);
+    assert(!unavailable.baseline_count&&!unavailable.current_count&&!unavailable.started_since_baseline);
     assert(ideck_lab_wine_initial_report_server_join(1,0,0)==EPERM);
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP,0)==EPERM);
     assert(ideck_lab_wine_initial_ready()==EBUSY);
@@ -135,6 +161,20 @@ int main(int argc,char **argv){
             assert(value.server_main_outcome==expected[mode]);
         }
         puts("HOST joined server outcome distinguishes main returned zero/nonzero and pthread_exit without marker");
+        const uint64_t older = value.generation;
+        assert(!ideck_lab_wine_initial_create(&another,NULL,initial_with_worker,NULL));
+        for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
+        assert(value.initial_joined && value.generation == older+1);
+        assert(ideck_lab_wine_thread_census(older, &unavailable) == ESTALE);
+        const struct ideck_wine_thread_census before=read_census(value.generation);
+        assert(before.baseline_count && before.current_count && before.started_since_baseline>=1);
+        atomic_store(&worker_release,1);
+        assert(!pthread_join(held_worker,NULL));
+        const struct ideck_wine_thread_census after=read_census(value.generation);
+        assert(after.baseline_count==before.baseline_count);
+        assert(after.started_since_baseline < before.started_since_baseline);
+        printf("HOST census finds held worker after initial join and decreases after exit: %u -> %u\n",
+               before.started_since_baseline,after.started_since_baseline);
     }
     assert(!pthread_key_delete(key));puts("HOST real initial pthread/TLS join and failure controls PASS; no Wine/Steam/game/return proof");return 0;
 }
@@ -167,5 +207,5 @@ assert adapted.count('ideck_lab_wine_initial_report_result(')==2
 assert adapted.index('ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP')<adapted.index('        g_wine_running = 0;',adapted.index('        if (setjmp('))
 (out/'WineProcessBridge-private.m').write_text(adapted)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-(out/'evidence.json').write_text(json.dumps({'scope':'HOST server stop join, explicit main return tokens/early pthread_exit and missing handle with copied bridge body, self-join refusal from the host pthread API, actual initial pthread+held TLS destructor, body-result owner/duplicate/invalid refusals, uint32 abnormal vs known-normal vs unknown, generation reset, injected create/observer failures and private exact bridge hook; NOT actual Wine workers/device/game/return proof','commands':commands,'modes':[0,1,2],'exit':0,'join_source_sha256':sha(source/'WineInitialJoin.c'),'bridge_original_sha256':sha(repo/'app/Madeira/WineProcessBridge.m'),'bridge_private_sha256':sha(out/'WineProcessBridge-private.m'),'server_original_sha256':sha(server_original),'server_private_sha256':sha(out/'WineServerBridge-private.m'),'server_stop_fixture_sha256':sha(out/'server-stop-control.c'),'fixture_sha256':sha(out/'control.c'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
+(out/'evidence.json').write_text(json.dumps({'scope':'HOST server stop join, explicit main return tokens/early pthread_exit and missing handle with copied bridge body, self-join refusal from the host pthread API, actual initial pthread+held TLS destructor and post-join census of one real held worker, body-result owner/duplicate/invalid refusals, uint32 abnormal vs known-normal vs unknown, generation reset, injected create/observer failures and private exact bridge hook; NOT actual Wine workers/device/game/return proof','commands':commands,'modes':[0,1,2],'exit':0,'join_source_sha256':sha(source/'WineInitialJoin.c'),'bridge_original_sha256':sha(repo/'app/Madeira/WineProcessBridge.m'),'bridge_private_sha256':sha(out/'WineProcessBridge-private.m'),'server_original_sha256':sha(server_original),'server_private_sha256':sha(out/'WineServerBridge-private.m'),'server_stop_fixture_sha256':sha(out/'server-stop-control.c'),'fixture_sha256':sha(out/'control.c'),'log_sha256':sha(out/'control.log')},indent=2)+'\n')
 print((out/'control.log').read_text())

@@ -24819,6 +24819,117 @@
           "bytes": 3163
         }
       ]
+    },
+    "build95_post_join_process_thread_census": {
+      "source_base": "874ccf4cc81ebc86b7e1fab5c1f1f4cec1f3ee09",
+      "recorded_at_utc": "2026-11-22T21:09:03.440893+00:00",
+      "candidate": {
+        "build": 95,
+        "architecture": "arm64",
+        "unsigned_sha256": "d2fc8d98afddaa134fa306bfe7fcb8c105654290877ad380bf87caaeb4c6456d",
+        "linked_calls": {
+          "receipt": [
+            "100005c44:\tc1 fb ff 97\tbl\t_ideck_lab_wine_thread_census"
+          ],
+          "before_wine": [
+            "100004234:\t55 00 00 94\tbl\t_sample_threads",
+            "100004250:\t83 01 90 94\tbl\t0x10240485c ; symbol stub for: _pthread_create",
+            "1000042f4:\t5a 01 90 94\tbl\t0x10240485c ; symbol stub for: _pthread_create"
+          ],
+          "after_join": [
+            "100004ce0:\taa fd ff 97\tbl\t_sample_threads"
+          ],
+          "self_task_only": [
+            "1000043c0:\t51 04 90 94\tbl\t0x102405504 ; symbol stub for: _task_threads",
+            "100004440:\t49 04 90 94\tbl\t0x102405564 ; symbol stub for: _thread_info",
+            "1000044c4:\t09 ff 8f 94\tbl\t0x1024040e8 ; symbol stub for: _mach_port_deallocate",
+            "10000450c:\t55 04 90 94\tbl\t0x102405660 ; symbol stub for: _vm_deallocate"
+          ]
+        },
+        "source_sha256": {
+          "app/WineInitialJoin.c": "1b8122d142014bb04935c753bc99355f5373b9a8c2e1ccf605d6e8e604faf304",
+          "app/WineInitialJoin.h": "63e55a699f0f404dbe47b48549f258ccdb8328374892ee6179cabf16c152c234",
+          "app/main.m": "72e0db46c0b75e589324eba3d9df077c10566c799f5f7f11224fe670be0a5f6c",
+          "tools/test-wine-initial-join.py": "e04b772d1ef8d53a039737afc88d1e454831d990f81f7ecd393bd597405aa210"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "ca34e8ac563a438b8113f62ebf10543576db1900bba6e301c0a6fa0e8dd95432",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "arm64_ios_object_sha256": "fa14c924f28f1c0719e7b39213bea78ae934b985a1073d3416a64420fb08d825",
+        "signing": false,
+        "installation": false,
+        "device_execution": false,
+        "game_exit": false,
+        "return_to_steam": false
+      },
+      "host_control": {
+        "sanitizers": [
+          "ASan",
+          "UBSan"
+        ],
+        "modes": [
+          0,
+          1,
+          2
+        ],
+        "added_threads_while_worker_held": 1,
+        "added_threads_after_worker_join": 0,
+        "real_wine": false
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 1936,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "artifacts": [
+        {
+          "path": "run83/wine-census95-control/control.log",
+          "sha256": "a745904957da280ef7a6464ff9ed51d551493509bc95f88dd037f37812468000",
+          "bytes": 712
+        },
+        {
+          "path": "run83/wine-census95-control/evidence.json",
+          "sha256": "739a337b91d3043c2977ac1f07e7229adf53c24e495ef0cc321acb3bf327b297",
+          "bytes": 2468
+        },
+        {
+          "path": "run83/wine-census95-control/WineInitialJoin-ios.o",
+          "sha256": "fa14c924f28f1c0719e7b39213bea78ae934b985a1073d3416a64420fb08d825",
+          "bytes": 7576
+        },
+        {
+          "path": "run83/wine-census95-control/run85-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run85-return-review-health-data.json",
+          "sha256": "276937c65bc56ffc655bd2240bafcd40124e8cba7bb9ed98900a8648902039e4",
+          "bytes": 1725
+        },
+        {
+          "path": "run83/hybrid95-wine-thread-census/final-wine-census-private.json",
+          "sha256": "f148a7d53cae76d258b8371e9e1e9ba31f20bee7a8ff7e10e951502c628eed56",
+          "bytes": 2031
+        },
+        {
+          "path": "run83/hybrid95-wine-thread-census/prepare-evidence.json",
+          "sha256": "a4ef61693c548133ff1d8e2c215db43a5f46c26fa867f11ccdcdbb278e1cb820",
+          "bytes": 322430
+        },
+        {
+          "path": "run83/hybrid95-wine-thread-census/package-validation.json",
+          "sha256": "98a1fbefdf34a42093f70fb816ab66b72b4795685a30ea43fead86aaa3477c41",
+          "bytes": 702
+        }
+      ]
     }
   }
 }

@@ -36,6 +36,7 @@ extern const char ideck_casp_order_marker[];
 #endif
 #if IDECK_LAB_WINE_INITIAL_JOIN
 #include "WineInitialJoin.h"
+#include <errno.h>
 #endif
 
 @interface LinuxLabDelegate : UIResponder <UIApplicationDelegate>
@@ -138,7 +139,9 @@ extern const char ideck_casp_order_marker[];
         // One bounded session-specific receipt survives the kernel append cap.
         // An observed initial-body exit code is not a child-game completion or
         // proof that Wine workers, signals, storage or rendering are drained.
-        NSDictionary *body=@{@"schema":@1,@"pid":@(getpid()),@"build":@(build),
+        struct ideck_wine_thread_census census = {0};
+        int censusStatus = wine.generation ? ideck_lab_wine_thread_census(wine.generation, &census) : ENODEV;
+        NSDictionary *body=@{@"schema":@2,@"pid":@(getpid()),@"build":@(build),
             @"native_log":[NSString stringWithUTF8String:ideck_native_log_name()],
             @"generation":@(wine.generation),@"phase":@(wine.phase),
             @"initial_created":@(wine.initial_created),@"initial_joined":@(wine.initial_joined),
@@ -146,6 +149,8 @@ extern const char ideck_casp_order_marker[];
             @"body_result_source":@(wine.body_result_source),@"body_exit_code":@(wine.body_exit_code),
             @"server_join_state":@(wine.server_join_state),@"server_join_error":@(wine.server_join_error),
             @"server_main_outcome":@(wine.server_main_outcome),
+            @"post_join_threads":@{@"status":@(censusStatus),@"baseline_count":@(census.baseline_count),
+                @"current_count":@(census.current_count),@"started_since_baseline":@(census.started_since_baseline)},
             @"all_Wine_workers_qualified":@NO,@"game_exit_qualified":@NO};
         NSData *data=[NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
         if(!self.wineInitialReceiptURL||!data||![data writeToURL:self.wineInitialReceiptURL options:NSDataWritingAtomic error:nil])
