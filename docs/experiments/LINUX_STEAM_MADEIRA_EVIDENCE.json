@@ -25003,6 +25003,172 @@
           "bytes": 1731
         }
       ]
+    },
+    "genuine_steam_graceful_quit_command_host": {
+      "source_base": "f998cbc9a04088ecacde59d40eb3395c56af1375",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "recorded_at_utc": "2026-11-23T02:44:24.500175+00:00",
+      "experiments": [
+        {
+          "scope": "real unauthenticated official Linux Steam under host LinuxRunner; bounded local UI lifecycle probe",
+          "ish_sha256": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+          "source_db_sha256": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "steam_before_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+          "steam_after_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+          "guest_recipe_sha256": "44eef8561e507e8c891b2e78ff26bdfc32e1d2fa3020f9139be096e624343e6d",
+          "elapsed": 59.87,
+          "host_exit": 1,
+          "states": [
+            "shutdown_request=1",
+            "shutdown_client_exit=0",
+            "initial_client_exit=1"
+          ],
+          "mapped_windows": 1,
+          "x11_sample_sha256": "5b856e7ddb7e064030190490340b9dfcbca96fb908ff4aa1f279d11b9cccd38c",
+          "mapped_sizes": [
+            [
+              400,
+              129
+            ]
+          ],
+          "measurement_correction": "Raw X11 sample uses windows_bottom_to_top_then_extra_focus, not windows."
+        },
+        {
+          "scope": "real unauthenticated official Linux Steam under host LinuxRunner; bounded local UI lifecycle probe",
+          "ish_sha256": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+          "source_db_sha256": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "steam_before_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+          "steam_after_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+          "guest_recipe_sha256": "7b97bdf840d737870050ade18d40120b967ef36ed28cd1e7c9a86b0dbc731d68",
+          "elapsed": 32.225,
+          "host_exit": 12,
+          "states": [
+            "initial_exit_before_request=1"
+          ],
+          "mapped_windows": 0,
+          "mapped_sizes": [],
+          "x11_sample_sha256": null
+        },
+        {
+          "scope": "real official Steam under host packet-pipe LinuxRunner, terminated by the observer at its own bound",
+          "ish_sha256": "16451294273bff93f0b25270e6724931f71c83a6228652abb1cc6d3eb2e588a5",
+          "source_db_sha256": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "steam_before_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+          "steam_after_sha256": "7faec98260d94ee3c8e801100f1e4af446f70042abafddd351aae7390e6fbc2d",
+          "guest_recipe_sha256": "7b97bdf840d737870050ade18d40120b967ef36ed28cd1e7c9a86b0dbc731d68",
+          "host_exit": null,
+          "observer_timeout_seconds": 340,
+          "states": [
+            "shutdown_request=1",
+            "shutdown_client_exit=0"
+          ],
+          "mapped_windows": 1,
+          "mapped_sizes": [
+            [
+              700,
+              350
+            ]
+          ],
+          "x11_sample_sha256": "01808191b1576a870c5c54d156087dd30e55910e8901655c7e58c4651761edb0",
+          "command_forwarded": true,
+          "controller_pipe_assertion": false
+        }
+      ],
+      "packet_archive_sha256": "b08005d5b2a1466e36e86a0a656652abde4652c68b66c541f3e5e09cf8d2680b",
+      "graceful_host_quit": false,
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 2049,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "device_shutdown": false,
+      "verified_resource_drain": false,
+      "wine_game": false,
+      "artifacts": [
+        {
+          "path": "run83/genuine-steam-quit-command-host/host-runner-private.py",
+          "sha256": "b148b38652afee8f15a3a43f4c175f6dbe60079a72b3b5f70e1b4d613839c2cf",
+          "bytes": 4726
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/run87-play-close-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v1-evidence.json",
+          "sha256": "86e5f50517a04b30263204ef24f80ece851d57dc10ae85fa11f8e393cf822704",
+          "bytes": 823
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v1-guest.sh",
+          "sha256": "44eef8561e507e8c891b2e78ff26bdfc32e1d2fa3020f9139be096e624343e6d",
+          "bytes": 1456
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v1-ideck-shutdown-client.log",
+          "sha256": "0e172386cbc3d8cdb732dea9d80176494e3e862b80d7fabcd0ed7b10851f0f10",
+          "bytes": 239
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v1-ideck-shutdown-steam.log",
+          "sha256": "8b99896228cfac5fc27eca18da63750a9454896f481ae1ca2afe3c975c51f5d1",
+          "bytes": 4948
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v1-ideck-shutdown-window.json",
+          "sha256": "5b856e7ddb7e064030190490340b9dfcbca96fb908ff4aa1f279d11b9cccd38c",
+          "bytes": 665
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v2-evidence.json",
+          "sha256": "ca0a0b4c6e66afe99ec52a51133cc3a7c9aa466b01686303fe3e1690199014f6",
+          "bytes": 737
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v2-guest.sh",
+          "sha256": "7b97bdf840d737870050ade18d40120b967ef36ed28cd1e7c9a86b0dbc731d68",
+          "bytes": 1580
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v2-ideck-shutdown-steam.log",
+          "sha256": "b39ee0bec4d1afe7816566df21259c79359f36d8cde42ed14b6b4c072201ee44",
+          "bytes": 4878
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v3-evidence.json",
+          "sha256": "0234f97508288410d3ab0559d1aa06f682839d87df5f1d9e2f639d677697af2d",
+          "bytes": 938
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v3-guest.sh",
+          "sha256": "7b97bdf840d737870050ade18d40120b967ef36ed28cd1e7c9a86b0dbc731d68",
+          "bytes": 1580
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v3-ideck-shutdown-client.log",
+          "sha256": "0e172386cbc3d8cdb732dea9d80176494e3e862b80d7fabcd0ed7b10851f0f10",
+          "bytes": 239
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v3-ideck-shutdown-steam.log",
+          "sha256": "a51440bc611bf4ad9fd6ce1f19f30ece8eb88b9f736e15331334efdaf4234e19",
+          "bytes": 10222
+        },
+        {
+          "path": "run83/genuine-steam-quit-command-host/v3-ideck-shutdown-window.json",
+          "sha256": "01808191b1576a870c5c54d156087dd30e55910e8901655c7e58c4651761edb0",
+          "bytes": 1702
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run87-play-close-health-data.json",
+          "sha256": "3e7914225a81129e2e84f0d73d11402685fe3c772bcba87a9d4c2e9cd7b85a8a",
+          "bytes": 1730
+        }
+      ]
     }
   }
 }

@@ -8187,3 +8187,45 @@ observable, check the qualified Linux shutdown and actual Madeira
 launch, then use the Wine receipt to identify session-owned resources
 that survive game exit before wiring the reversible reserve into the
 return path. Reliable return still requires device evidence.
+
+## Run83 follow-up — exercise Steam’s own graceful close command
+
+Air Build93 PID 31278 health 2049 still shows 632 frames, zero Play
+and a byte-identical Ori crop. No input, app stop or deployment.
+
+The programmatic close candidate uses the genuine compiled ARM64 Linux
+client under the same guest session. The test uses separate clones of the
+stopped unauthenticated fakefs, an owned Xvfb and numeric X11 samples.
+In the first control the 400×129 updater window was enough to trigger
+the request. Steam forwarded the command, and the requester returned 0,
+but the original client returned 1. An initial result parser mistakenly
+looked under `windows`. The saved numeric sample confirms the one mapped
+window and its size. The second control waited for a larger mapped window.
+The original client still returned 1 before any request. Both logs
+record the known `controllerxinput_linux.cpp:31` pipe assertion. This
+discriminates the startup failure from a confirmed clean shutdown.
+
+Compared with the second, the third control changes only the LinuxRunner packet-pipe archive,
+using the existing Run28 patched archive and the same host CLI main
+object, libraries, cutoff and cloned guest inputs. It reached a mapped 700×350 window without the earlier controller assertion. The second client forwarded the shutdown command and returned 0. The original client had no observed exit when the 340-second host limit stopped its own test. This does not qualify a clean programmatic shutdown.
+All three use the same official Steam executable bytes. The mapped
+window does not establish interactive login or Library.
+
+To reproduce, link the existing `host/ish.p/main.c.o` with
+`run28/host-no-profile/packet/libish.a`, `host/libish_emu.a` and
+`host/libfakefs.a` using `xcrun clang ... -lm -ldl -lsqlite3`.
+On a fresh offline clone of `run52/x11-state-clean-root`, run the
+private `v3-guest.sh` recipe with the linked CLI as
+`ish -f "$NEW_FAKEFS" /bin/sh -c "$(cat "$PRIVATE_GUEST_SCRIPT")"`.
+The script waits for a mapped window of at least 500×300, invokes
+`./steamrtarm64/steam -shutdown` in the same guest, and waits for the
+original client. The output distinguishes forwarding, original exit
+and startup before the request. No Valve binaries, roots or raw logs
+in Git. Evidence and hashes at `run83.genuine_steam_graceful_quit_command_host`.
+
+The Air still needs a visible wake or authorization to upgrade to
+signed Build94. Preserve the existing user-driven exit path. For a
+programmatic close, the next discriminator is using the complete
+known-good Run28 host frontend composition and comparing a forwarded
+request with its previously observed manual close, after genuine UI
+readiness. Continue to require natural exit and the release boundaries.
