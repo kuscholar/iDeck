@@ -149,6 +149,7 @@ if a.madeira_setup:
     bridging=native/'Madeira-Bridging-Header.h'
     imports='\n#include "WindowsLaunchMap.h"\n'
     if recheck_pending:imports+='#include "GameFilePolicy.h"\n'
+    if recheck_pending and a.observe_wine_initial_join:imports+='#include "WineInitialJoin.h"\n'
     bridging.write_text(bridging.read_text()+imports)
     cold_sources['private-adapted/Madeira-Bridging-Header.h']=hashof(bridging)
     # The pending request chooses Valve's actual option in the SAME normal
@@ -156,7 +157,11 @@ if a.madeira_setup:
     import importlib.util
     spec=importlib.util.spec_from_file_location('dock_option_hook',lab/'tools/dock-launch-selection.py')
     hook=importlib.util.module_from_spec(spec);spec.loader.exec_module(hook)
-    content=native/'ContentView.swift';content.write_text(hook.patched(content.read_text(),recheck_pending=recheck_pending))
+    content=native/'ContentView.swift'
+    adapted_content=hook.patched(content.read_text(),recheck_pending=recheck_pending)
+    if recheck_pending and a.observe_wine_initial_join:
+        adapted_content=hook.paired_wine_start(adapted_content)
+    content.write_text(adapted_content)
     cold_sources['private-adapted/ContentView.swift']=hashof(content)
     if recheck_pending:
         dock=native/'MadeiraDock.swift'

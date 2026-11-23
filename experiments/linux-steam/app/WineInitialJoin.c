@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <mach/mach.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 static pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;
 static pid_t owner;
@@ -59,7 +60,24 @@ static void *observe(void *opaque) {
     pthread_mutex_unlock(&lock);
     free(watch);return NULL;
 }
-int ideck_lab_wine_initial_create(pthread_t *thread,const pthread_attr_t *attributes,void *(*entry)(void *),void *argument) {
+int ideck_lab_wine_report_identity(struct ideck_wine_report_identity *out,uint64_t sequence,const char *token) {
+    if(!out||!sequence||!token||strnlen(token,sizeof out->report_token)!=sizeof out->report_token-1)
+        return EINVAL;
+    for(unsigned i=0;i<sizeof out->report_token-1;i++){
+        char byte=token[i];
+        if(i==8||i==13||i==18||i==23){
+            if(byte!='-')return EINVAL;
+        }else if(!(byte>='0'&&byte<='9')&&!(byte>='a'&&byte<='f')){
+            return EINVAL;
+        }
+    }
+    out->capture_sequence=sequence;
+    memcpy(out->report_token,token,sizeof out->report_token);
+    return 0;
+}
+
+int ideck_lab_wine_initial_create(pthread_t *thread,const pthread_attr_t *attributes,void *(*entry)(void *),void *argument,
+                                 const struct ideck_wine_report_identity *report) {
     if(!thread||!entry)return EINVAL;
     int detach=PTHREAD_CREATE_JOINABLE;
     if(attributes){int error=pthread_attr_getdetachstate(attributes,&detach);if(error)return error;}
@@ -71,6 +89,7 @@ int ideck_lab_wine_initial_create(pthread_t *thread,const pthread_attr_t *attrib
     }
     if(state.generation==UINT64_MAX){pthread_mutex_unlock(&lock);free(watch);return EOVERFLOW;}
     owner=getpid();state=(struct ideck_wine_initial_snapshot){.generation=state.generation+1};
+    if(report)state.report=*report;
     observer_id = 0;
     baseline_error = sample_threads(&baseline, 0);
     int error=pthread_create(thread,attributes,entry,argument);

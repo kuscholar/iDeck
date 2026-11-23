@@ -127,3 +127,22 @@ def patched_report_reader(source):
         }
         lastReport = report""")
     return source[:start] + body + source[end:]
+
+def paired_wine_start(source):
+    start = '            self.startWineProcess()'
+    source = replace_once(source, start, '            self.startWineProcess(labDockPreparation: labDockPreparation)')
+    start = '    private func startWineProcess() {'
+    source = replace_once(source, start, '    private func startWineProcess(labDockPreparation: UInt64?) {')
+    ordinary = '        let result = wine_process_start(winePrefixPath)'
+    return replace_once(source, ordinary, """        let result: Int32
+        if let sequence = labDockPreparation {
+            guard let token = LabDockPending.shared.reportToken(sequence: sequence) else {
+                logStore.log("[madeira-dock] the captured attempt changed before Wine start", level: .error)
+                return
+            }
+            result = winePrefixPath.withCString { prefix in
+                token.withCString { ideck_lab_wine_process_start_for_report(prefix, sequence, $0) }
+            }
+        } else {
+            result = wine_process_start(winePrefixPath)
+        }""")

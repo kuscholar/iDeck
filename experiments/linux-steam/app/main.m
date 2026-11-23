@@ -141,9 +141,11 @@ extern const char ideck_casp_order_marker[];
         // proof that Wine workers, signals, storage or rendering are drained.
         struct ideck_wine_thread_census census = {0};
         int censusStatus = wine.generation ? ideck_lab_wine_thread_census(wine.generation, &census) : ENODEV;
-        NSDictionary *body=@{@"schema":@2,@"pid":@(getpid()),@"build":@(build),
+        NSDictionary *body=@{@"schema":@3,@"pid":@(getpid()),@"build":@(build),
             @"native_log":[NSString stringWithUTF8String:ideck_native_log_name()],
             @"generation":@(wine.generation),@"phase":@(wine.phase),
+            @"capture_sequence":@(wine.report.capture_sequence),
+            @"report_token":[NSString stringWithUTF8String:wine.report.report_token],
             @"initial_created":@(wine.initial_created),@"initial_joined":@(wine.initial_joined),
             @"create_error":@(wine.create_error),@"observer_error":@(wine.observer_error),
             @"body_result_source":@(wine.body_result_source),@"body_exit_code":@(wine.body_exit_code),

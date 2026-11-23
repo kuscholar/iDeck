@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
 """Observe the original Wine initial pthread in the private Lab copy only."""
 CREATE='int ret = pthread_create(&g_wine_thread, &attr, wine_process_thread, NULL);'
-REPLACEMENT='int ret = ideck_lab_wine_initial_create(&g_wine_thread, &attr, wine_process_thread, NULL);'
+REPLACEMENT='int ret = ideck_lab_wine_initial_create(&g_wine_thread, &attr, wine_process_thread, NULL, report);'
 DETACH='    pthread_detach(g_wine_thread);'
 EARLY='    if (g_prefix_path) free(g_prefix_path);'
 NORMAL='            dprintf(STDERR_FILENO, "[WineProc] __wine_main returned normally\\n");'
@@ -15,6 +15,28 @@ def patched(source):
     source=source.replace(LONGJMP,LONGJMP+'\n            (void)ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP, (uint32_t)wine_ios_exit_code);')
     start=source.index('int wine_process_start(const char *prefix_path) {')
     before=source[:start];body=source[start:]
+    signature='int wine_process_start(const char *prefix_path) {'
+    body=body.replace(signature, 'static int lab_wine_process_start(const char *prefix_path, const struct ideck_wine_report_identity *report) {', 1)
+    busy='''    if (g_wine_running) {
+        LOG("Wine process already running");
+        return 0;
+    }'''
+    assert body.count(busy)==1
+    body=body.replace(busy,busy.replace('return 0;','return report ? -1 : 0;'))
+    next_function='int wine_process_is_running(void) {'
+    assert body.count(next_function)==1
+    body=body.replace(next_function,'''int wine_process_start(const char *prefix_path) {
+    return lab_wine_process_start(prefix_path, NULL);
+}
+
+int ideck_lab_wine_process_start_for_report(const char *prefix_path,uint64_t sequence,const char *token) {
+    struct ideck_wine_report_identity report;
+    if (ideck_lab_wine_report_identity(&report, sequence, token)) return -1;
+    return lab_wine_process_start(prefix_path, &report);
+}
+
+'''+next_function)
+
     assert body.count(EARLY)==1
     body=body.replace(EARLY,'    if (ideck_lab_wine_initial_ready()) {\n        LOG("Lab initial Wine pthread is not reaped; preserve the current session");\n        return -1;\n    }\n\n'+EARLY)
     return '#include "WineInitialJoin.h"\n'+before+body.replace(CREATE,REPLACEMENT).replace(DETACH,'    /* Lab observer owns the initial pthread join; other Wine threads unchanged. */')

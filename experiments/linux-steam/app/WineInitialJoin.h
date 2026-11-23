@@ -22,8 +22,15 @@ enum ideck_wine_server_main_outcome {
     IDECK_WINE_SERVER_MAIN_RETURNED_ZERO,
     IDECK_WINE_SERVER_MAIN_RETURNED_NONZERO
 };
+struct ideck_wine_report_identity {
+    uint64_t capture_sequence;
+    char report_token[37];
+};
+int ideck_lab_wine_report_identity(struct ideck_wine_report_identity *,uint64_t,const char *);
+int ideck_lab_wine_process_start_for_report(const char *,uint64_t,const char *);
 struct ideck_wine_initial_snapshot {
     uint64_t generation;
+    struct ideck_wine_report_identity report;
     unsigned phase,initial_created,initial_joined;
     int create_error,observer_error;
     unsigned body_result_source;
@@ -38,7 +45,8 @@ struct ideck_wine_initial_snapshot {
  * failure to create a game that actually started: create still returns zero.
  * No cancellation, Wine worker tracking, signal reset or return permission.
  */
-int ideck_lab_wine_initial_create(pthread_t *,const pthread_attr_t *,void *(*)(void *),void *);
+int ideck_lab_wine_initial_create(pthread_t *,const pthread_attr_t *,void *(*)(void *),void *,
+                                 const struct ideck_wine_report_identity *);
 int ideck_lab_wine_initial_snapshot(struct ideck_wine_initial_snapshot *);
 /* Only the actual initial pthread may report once, before its body returns.
  * UNKNOWN remains distinct from zero. This is the initial Wine body result,

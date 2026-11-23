@@ -25502,6 +25502,140 @@
           "bytes": 702
         }
       ]
+    },
+    "bind_dock_attempt_to_wine_generation": {
+      "source_base": "d67fb0723d8328a50c2f828f048d490ebafb9234",
+      "recorded_at_utc": "2026-11-23T03:19:02.357130+00:00",
+      "candidate": {
+        "build": 99,
+        "architecture": "arm64",
+        "unsigned_sha256": "7fb2a43da2287f85b4971e2448ecac23194591b6c7c718bae152d6ca80fcebca",
+        "dockhost_sha256": "113302ea31bec13d3ef05b8ff6c700b12f0b4273d9ec5306882996176d0aac01",
+        "linked_calls": {
+          "swift": {
+            "_$s7Madeira11ContentViewV16startWineProcess33_210CB801764C3044F996987440283C1BLL18labDockPreparationys6UInt64VSg_tF": [
+              "10063f948:\t8e c4 e8 97\tbl\t_$s7Madeira14LabDockPendingC11reportToken8sequenceSSSgs6UInt64V_tF",
+              "10063fbe8:\t1a 78 e7 97\tbl\t_wine_process_start"
+            ],
+            "_$s7Madeira11ContentViewV16startWineProcess33_210CB801764C3044F996987440283C1BLL18labDockPreparationys6UInt64VSg_tFs5Int32VSPys4Int8VGXEfU_AkNXEfU_": [
+              "100648f7c:\t92 54 e7 97\tbl\t_ideck_lab_wine_process_start_for_report"
+            ]
+          },
+          "tagged_entry": {
+            "_ideck_lab_wine_process_start_for_report": [
+              "10001e1f8:\t82 97 ff 97\tbl\t_ideck_lab_wine_report_identity",
+              "10001e218:\t98 fe ff 97\tbl\t_lab_wine_process_start"
+            ]
+          },
+          "ordinary_entry": {
+            "_wine_process_start": [
+              "10001dc68:\t04 00 00 94\tbl\t_lab_wine_process_start"
+            ]
+          },
+          "creation": {
+            "_lab_wine_process_start": [
+              "10001e048:\t51 98 ff 97\tbl\t_ideck_lab_wine_initial_create"
+            ]
+          },
+          "receipt": {
+            "-[LinuxLabDelegate writeNativeHealth]": [
+              "100005dbc:\tb1 fa ff 97\tbl\t_ideck_lab_wine_initial_snapshot",
+              "100005e80:\tb0 fb ff 97\tbl\t_ideck_lab_wine_thread_census"
+            ]
+          }
+        },
+        "adapted_source_sha256": {
+          "ContentView.swift": "e394b5bcbe37bc6f225beba594ec21bb4187fe301bc6c5e49d06937b6bcc1336",
+          "WineProcessBridge.m": "b87ca3569438d820fa272250caa8e330f5b80cfae3ddb359ec670cd291791f9e",
+          "Madeira-Bridging-Header.h": "769b5bc186809cea9ef6fba569a9420716eff1ccd373df6ea9a8c13fea7d3d71"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LabDockRequest.swift": "a6b4508d0d340f36dd01dd02569de8373a9a83631411b3f73087c33089c9b0c1",
+          "experiments/linux-steam/app/WineInitialJoin.c": "991242aa1c00e327a9a1fb63c57d6983ed6091b05cc1adfdedad055e16e21fc9",
+          "experiments/linux-steam/app/WineInitialJoin.h": "088e3de860226d66c125a19e08e3d5cdf8260e661fd5e2be991cb469b7894108",
+          "experiments/linux-steam/app/main.m": "d511d9c1633151446a26f753eaa49410026710ac52d42181f9da707245d67a07",
+          "experiments/linux-steam/tools/build-hybrid-app.py": "b4c8093658724b9ca68a0d624d412dce6db9f5055fa904c6f1731ed32c265df4",
+          "experiments/linux-steam/tools/dock-launch-selection.py": "eec9d608440a4b97beb3052bfec083a2aa5c9e432095e0ddf3a540aaa53ad943",
+          "experiments/linux-steam/tools/test-dock-selection.py": "f6cf498e87d0381fccd41c03036b6de4d8d8bc389419f80c8b2e9b5b2ba91434",
+          "experiments/linux-steam/tools/test-wine-initial-join.py": "98663f79bcba9c78777d4e934bd3463520a6857d77856b5aee84466c4dbc4a72",
+          "experiments/linux-steam/tools/wine-initial-join.py": "46b419f44ba768a242ea5fa1c827360b61c922c12374d19a844eb0e7d2dc0e07"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "e7a18d0fda5faba3bb33cae9bcac5c7fe6a74ad6e0b1ed41863fa3e388524c76",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "signed": false,
+        "installed": false,
+        "device_execution": false
+      },
+      "host_controls": {
+        "canonical_token": true,
+        "copy_owned": true,
+        "tagged_create_failure": true,
+        "tagged_real_fixture_join": true,
+        "ordinary_generation_clears_identity": true
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 4199,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "actual_game_started": false,
+      "actual_wine_cleanup": false,
+      "steam_return": false,
+      "artifacts": [
+        {
+          "path": "run83/wine-pair99-controls/dock-report-identity-control.log",
+          "sha256": "0bf7435863f934b94fe576c120bc1e92236079c9ade367c39705c531de373a36",
+          "bytes": 1125
+        },
+        {
+          "path": "run83/wine-pair99-controls/dock-report-identity-evidence.json",
+          "sha256": "9ea622022ee9850a9408528756cf670be94a8e9e3bd85ef61ec16aaf2997a918",
+          "bytes": 2657
+        },
+        {
+          "path": "run83/wine-pair99-controls/run91-wine-pair-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/wine-pair99-controls/wine-report-identity-v2-control.log",
+          "sha256": "a91f8aff45ccb5e587c234454aa46b2e8728583af8afcf940f6d6e73a4686425",
+          "bytes": 906
+        },
+        {
+          "path": "run83/wine-pair99-controls/wine-report-identity-v2-evidence.json",
+          "sha256": "887c8aa64c9acb05fc6b97c9348537daa1821f7df7db77f9bf4a01f759859c37",
+          "bytes": 2528
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run91-wine-pair-health-data.json",
+          "sha256": "26256dcd2e575ff4770cb573c4259a52a8d46b2ad55497ec8f846fca4e75f15d",
+          "bytes": 1733
+        },
+        {
+          "path": "run83/hybrid99-wine-pair/final-wine-pair-link-private.json",
+          "sha256": "556f6fd779d4807d056181c0d8155e8c5811df85e9b1b241da4514111776dda8",
+          "bytes": 3517
+        },
+        {
+          "path": "run83/runtime96-play-hint/evidence.json",
+          "sha256": "af9c9ded29b07ac5ceb11b1e134f4ecc6e9a803cd7ffdf78e941808822b86f3e",
+          "bytes": 127111
+        },
+        {
+          "path": "run83/hybrid99-wine-pair/package-validation.json",
+          "sha256": "8274b4a341af614c7c9d8fd0ebbf7e27588cd219ac1168f8de4fe371c8169902",
+          "bytes": 702
+        }
+      ]
     }
   }
 }

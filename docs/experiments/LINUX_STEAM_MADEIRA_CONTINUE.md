@@ -1,3 +1,42 @@
+## Run83 follow-up — put the same Play attempt identity in the Wine receipt
+
+The private captured Dock path now passes its current capture sequence
+and report token to the initial Wine pthread entry. The token uses the
+same lowercase UUID text as the Dock receipt and goes through the C
+call, with no environment transfer. The Wine monitor copies it into
+the new generation before thread creation. Creation failure retains
+the identity and errno. A later ordinary generation clears the tag.
+The Wine receipt's schema 3 carries the two fields alongside actual
+initial and server joins. Native systems, directories, credentials
+and Valve launch checks stay on their existing paths.
+
+The host tests exercise the real C initializer and pthread observer.
+They reject malformed tokens, confirm ownership after mutating the
+input record, preserve identity through failure or a real fixture
+join and clear it on the next ordinary generation. The Swift parser
+test verifies that the active sequence's token agrees with the
+report filename and receipt, including refusal for another sequence.
+One test fixture still called the older C signature with four
+arguments on the first compile. The corrected fixture passed in a
+fresh directory. The controls contain no genuine game execution.
+
+Reproduce with `test-wine-initial-join.py` and `test-dock-selection.py`
+under `experiments/linux-steam/tools` in fresh private directories.
+Build99 uses the Build98 private app recipe with Runtime96's exact
+archives and `--build-number 99`. The finished ARM64 link confirms
+the Swift path, C validation and entry, actual thread creation and
+session receipt calls. The bundled Dock PE remains byte-identical
+to Build98. Build99 is unsigned and uninstalled. Hashes and private
+artifacts are at `run83.bind_dock_attempt_to_wine_generation`.
+
+The new Air read found Build93 PID 31278 at health 4199, the same 632
+frames and Ori crop, and zero Play. No input or lifecycle action.
+When the real game path is available, compare both receipts by process,
+capture and token before interpreting their results. Valve's game-ended
+observation and a Wine generation join still leave process resources
+and same-app Steam return unqualified. Build94 remains the signed
+candidate for the pending Air refresh test.
+
 ## Run83 follow-up — correlate the captured Play with Dock's real child-game report
 
 The pinned Madeira Dock already emits `launch-game-running` and

@@ -67,7 +67,7 @@ final class LabDockPending {
         let pid = getpid()
         let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
         let capture_sequence: UInt64
-        let report_token: UUID
+        let report_token: String
         let appid: UInt32
         let valve_reported_result: Int?
         let valve_reported_running: Bool
@@ -140,6 +140,13 @@ final class LabDockPending {
         return Self.reportFilename(report.token)
     }
 
+    func reportToken(sequence: UInt64) -> String? {
+        lock.lock(); defer { lock.unlock() }
+        guard owner == getpid(), preparingSequence == sequence, pending?.sequence == sequence,
+              let report = activeReport else { return nil }
+        return report.token.uuidString.lowercased()
+    }
+
     /// Positive observations only come from the active request's report.
     /// Valve's running/ended observations and Dock's exit remain separate
     /// from proof of game input, Wine teardown or readiness to resume Linux.
@@ -148,7 +155,7 @@ final class LabDockPending {
         guard owner == getpid(), let pending, preparingSequence == pending.sequence,
               let report = activeReport, Self.reportFilename(report.token) == filename,
               fields["probe-start-bits"] == "64" else { return nil }
-        let sample = ReportEvidence(capture_sequence: pending.sequence, report_token: report.token,
+        let sample = ReportEvidence(capture_sequence: pending.sequence, report_token: report.token.uuidString.lowercased(),
             appid: pending.request.appID,
             valve_reported_result: fields["launch-client-error"].flatMap(Int.init),
             valve_reported_running: fields["launch-game-running"] == "1",

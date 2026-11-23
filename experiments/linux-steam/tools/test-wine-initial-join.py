@@ -12,6 +12,7 @@ fixture=r'''#include "WineInitialJoin.h"
 #include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 static pthread_mutex_t gate=PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t condition=PTHREAD_COND_INITIALIZER;
@@ -103,17 +104,26 @@ int main(int argc,char **argv){
     assert(ideck_lab_wine_initial_report_server_join(1,0,0)==ENODEV);
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_NORMAL_RETURN,0)==ENODEV);
     pthread_attr_t attr;assert(!pthread_attr_init(&attr));assert(!pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED));
-    pthread_t thread;assert(ideck_lab_wine_initial_create(&thread,&attr,guest,NULL)==EINVAL);
+    pthread_t thread;assert(ideck_lab_wine_initial_create(&thread,&attr,guest,NULL,NULL)==EINVAL);
     assert(!ideck_lab_wine_initial_snapshot(&value)&&!value.generation);pthread_attr_destroy(&attr);
+    const char *identifier="351af9a1-1aad-4e9d-82d7-a85fe18d582e";
+    struct ideck_wine_report_identity report;
+    assert(ideck_lab_wine_report_identity(&report,0,identifier)==EINVAL);
+    assert(ideck_lab_wine_report_identity(&report,7,"short")==EINVAL);
+    assert(ideck_lab_wine_report_identity(&report,7,"351af9a1-1aad-4e9d-82d7-a85fe18d582g")==EINVAL);
+    assert(!ideck_lab_wine_report_identity(&report,7,identifier));
     if(fail_call==1){
-        assert(ideck_lab_wine_initial_create(&thread,NULL,guest,NULL)==EAGAIN);
+        assert(ideck_lab_wine_initial_create(&thread,NULL,guest,NULL,&report)==EAGAIN);
         assert(!ideck_lab_wine_initial_snapshot(&value)&&value.phase==IDECK_WINE_INITIAL_START_FAILED&&value.create_error==EAGAIN&&!value.initial_created);
+        assert(value.report.capture_sequence==7&&!strcmp(value.report.report_token,identifier));
         assert(!ideck_lab_wine_initial_ready());
     }
-    assert(!ideck_lab_wine_initial_create(&thread,NULL,guest,NULL));
+    assert(!ideck_lab_wine_initial_create(&thread,NULL,guest,NULL,&report));
+    memset(&report,0,sizeof report);
     pthread_mutex_lock(&gate);while(!inside_destructor)pthread_cond_wait(&condition,&gate);pthread_mutex_unlock(&gate);
     assert(atomic_load(&body_returned));
     assert(!ideck_lab_wine_initial_snapshot(&value)&&value.initial_created&&!value.initial_joined);
+    assert(value.report.capture_sequence==7&&!strcmp(value.report.report_token,identifier));
     assert(value.body_result_source==IDECK_WINE_BODY_LONGJMP&&value.body_exit_code==0xc0000005u);
     assert(value.server_join_state==IDECK_WINE_SERVER_JOINED&&!value.server_join_error);
     assert(value.server_main_outcome==IDECK_WINE_SERVER_MAIN_UNKNOWN);
@@ -123,7 +133,7 @@ int main(int argc,char **argv){
     assert(ideck_lab_wine_initial_report_server_join(1,0,0)==EPERM);
     assert(ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP,0)==EPERM);
     assert(ideck_lab_wine_initial_ready()==EBUSY);
-    pthread_t another;assert(ideck_lab_wine_initial_create(&another,NULL,empty,NULL)==EBUSY);
+    pthread_t another;assert(ideck_lab_wine_initial_create(&another,NULL,empty,NULL,NULL)==EBUSY);
     if(fail_call==2)assert(value.phase==IDECK_WINE_INITIAL_OBSERVER_FAILED&&value.observer_error==EAGAIN);
     else assert(value.phase==IDECK_WINE_INITIAL_ACTIVE&&!value.observer_error);
     pthread_mutex_lock(&gate);release_destructor=1;pthread_cond_broadcast(&condition);pthread_mutex_unlock(&gate);
@@ -135,18 +145,21 @@ int main(int argc,char **argv){
     }else{
         for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
         assert(value.initial_joined&&value.phase==IDECK_WINE_INITIAL_JOINED&&!value.observer_error);
+        assert(value.report.capture_sequence==7&&!strcmp(value.report.report_token,identifier));
         assert(!ideck_lab_wine_initial_ready());uint64_t previous=value.generation;
-        assert(!ideck_lab_wine_initial_create(&another,NULL,empty,NULL));
+        assert(!ideck_lab_wine_initial_create(&another,NULL,empty,NULL,NULL));
         for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
         assert(value.initial_joined&&value.generation==previous+1);
         assert(!value.server_join_state&&!value.server_join_error);
+        assert(!value.report.capture_sequence&&!value.report.report_token[0]);
+        puts("HOST captured token survives the actual Wine pthread join and clears on ordinary generation PASS");
         assert(!value.body_result_source&&!value.body_exit_code); /* Unknown is not successful exit0. */
-        assert(!ideck_lab_wine_initial_create(&another,NULL,normal,NULL));
+        assert(!ideck_lab_wine_initial_create(&another,NULL,normal,NULL,NULL));
         for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
         assert(value.initial_joined&&value.generation==previous+2);
         assert(value.body_result_source==IDECK_WINE_BODY_NORMAL_RETURN&&!value.body_exit_code);
         assert(value.server_join_state==IDECK_WINE_SERVER_NO_HANDLE&&!value.server_join_error);
-        assert(!ideck_lab_wine_initial_create(&another,NULL,normal,(void *)1));
+        assert(!ideck_lab_wine_initial_create(&another,NULL,normal,(void *)1,NULL));
         for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
         assert(value.initial_joined&&value.generation==previous+3);
         assert(value.server_join_state==IDECK_WINE_SERVER_JOIN_FAILED&&value.server_join_error>0);
@@ -154,7 +167,7 @@ int main(int argc,char **argv){
         assert(value.server_main_outcome==IDECK_WINE_SERVER_MAIN_UNKNOWN);
         unsigned expected[]={IDECK_WINE_SERVER_MAIN_RETURNED_ZERO,IDECK_WINE_SERVER_MAIN_RETURNED_NONZERO,IDECK_WINE_SERVER_MAIN_UNKNOWN};
         for(int mode=0;mode<3;mode++){
-            assert(!ideck_lab_wine_initial_create(&another,NULL,joined_server_result,&mode));
+            assert(!ideck_lab_wine_initial_create(&another,NULL,joined_server_result,&mode,NULL));
             for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
             assert(value.initial_joined&&value.generation==previous+4+(uint64_t)mode);
             assert(value.server_join_state==IDECK_WINE_SERVER_JOINED&&!value.server_join_error);
@@ -162,7 +175,7 @@ int main(int argc,char **argv){
         }
         puts("HOST joined server outcome distinguishes main returned zero/nonzero and pthread_exit without marker");
         const uint64_t older = value.generation;
-        assert(!ideck_lab_wine_initial_create(&another,NULL,initial_with_worker,NULL));
+        assert(!ideck_lab_wine_initial_create(&another,NULL,initial_with_worker,NULL,NULL));
         for(unsigned i=0;i<3000;i++){assert(!ideck_lab_wine_initial_snapshot(&value));if(value.initial_joined)break;usleep(1000);}
         assert(value.initial_joined && value.generation == older+1);
         assert(ideck_lab_wine_thread_census(older, &unavailable) == ESTALE);
@@ -201,9 +214,11 @@ for cmd in commands:subprocess.run(cmd,check=True)
 with (out/'control.log').open('x') as log:
     for mode in [0,1,2]:subprocess.run([out/'control',str(mode)],stdout=log,stderr=subprocess.STDOUT,timeout=20,check=True)
 original=(repo/'app/Madeira/WineProcessBridge.m').read_text();adapted=module.patched(original)
-assert adapted.index('ideck_lab_wine_initial_ready()')<adapted.index('    if (g_prefix_path) free(g_prefix_path);',adapted.index('int wine_process_start('))
+assert adapted.index('ideck_lab_wine_initial_ready()')<adapted.index('    if (g_prefix_path) free(g_prefix_path);',adapted.index('static int lab_wine_process_start('))
 assert 'pthread_detach(g_wine_thread)' not in adapted
 assert adapted.count('ideck_lab_wine_initial_report_result(')==2
+assert 'lab_wine_process_start(prefix_path, NULL)' in adapted
+assert 'lab_wine_process_start(prefix_path, &report)' in adapted
 assert adapted.index('ideck_lab_wine_initial_report_result(IDECK_WINE_BODY_LONGJMP')<adapted.index('        g_wine_running = 0;',adapted.index('        if (setjmp('))
 (out/'WineProcessBridge-private.m').write_text(adapted)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()

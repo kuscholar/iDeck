@@ -21,6 +21,10 @@ assert body.index('guard labLaunch.sequence == labPreparation') < body.index('aw
 assert body.index('submittedToWine = true') < body.index('runWineFullSequence(profile: profile, labDockPreparation:')
 assert body.index('try MadeiraDock.writeHandoff(') < body.index('beginReport(sequence:') < body.index('submittedToWine = true')
 assert 'beginReport(sequence:' not in unflagged
+paired=hooks['paired_wine_start'](flagged)
+assert 'self.startWineProcess(labDockPreparation: labDockPreparation)' in paired
+assert 'ideck_lab_wine_process_start_for_report(prefix, sequence, $0)' in paired
+assert 'result = wine_process_start(winePrefixPath)' in paired
 start=flagged.index('    private func runWineFullSequence(')
 wine=flagged[start:flagged.index('\n    private func ',start+1)]
 cut=wine.index('self.startWineserver()')
@@ -234,6 +238,9 @@ precondition(reportSlot.observeReport(filename:"madeira-dock.txt",fields:partial
 precondition(reportSlot.observeReport(filename:reportName,fields:["probe-result":"0"])==nil)
 let started=reportSlot.observeReport(filename:reportName,fields:partial)!
 precondition(started.capture_sequence==11&&started.appid==480&&started.valve_reported_running)
+precondition(reportSlot.reportToken(sequence:11)==started.report_token)
+precondition(reportSlot.reportToken(sequence:10)==nil)
+precondition(reportName=="madeira-lab-dock-\(started.report_token).txt")
 precondition(!started.valve_reported_ended&&started.dock_exit_status==nil && !started.valve_client_shutdown)
 precondition(reportSlot.observeReport(filename:reportName,fields:partial)==nil)
 let finalReport=partialReport+Data(("\n[steam-host] ml2016 shutdown-complete=1\n" +
