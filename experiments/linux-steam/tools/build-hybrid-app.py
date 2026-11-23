@@ -158,6 +158,10 @@ if a.madeira_setup:
     hook=importlib.util.module_from_spec(spec);spec.loader.exec_module(hook)
     content=native/'ContentView.swift';content.write_text(hook.patched(content.read_text(),recheck_pending=recheck_pending))
     cold_sources['private-adapted/ContentView.swift']=hashof(content)
+    if recheck_pending:
+        dock=native/'MadeiraDock.swift'
+        dock.write_text(hook.patched_report_reader(dock.read_text()))
+        cold_sources['private-adapted/MadeiraDock.swift']=hashof(dock)
     spec=importlib.util.spec_from_file_location('native_setup_rules',lab/'tools/native-setup-adaptation.py')
     setup_rules=importlib.util.module_from_spec(spec);spec.loader.exec_module(setup_rules)
     startup=native/'SteamUIExperiment.swift';startup.write_text(setup_rules.patched(startup.read_text()))

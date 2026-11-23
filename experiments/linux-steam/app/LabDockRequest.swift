@@ -60,6 +60,25 @@ final class LabDockPending {
     private var lastSequence: UInt64 = 0
     private var pending: (sequence: UInt64, request: LabDockRequest)?
     private var preparingSequence: UInt64?
+    private var activeReport: (token: UUID, last: ReportEvidence?)?
+
+    struct ReportEvidence: Encodable, Equatable {
+        let schema = 1
+        let pid = getpid()
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
+        let capture_sequence: UInt64
+        let report_token: UUID
+        let appid: UInt32
+        let valve_reported_result: Int?
+        let valve_reported_running: Bool
+        let valve_reported_ended: Bool
+        let valve_client_shutdown: Bool
+        let dock_exit_status: Int?
+    }
+
+    private static func reportFilename(_ token: UUID) -> String {
+        "madeira-lab-dock-\(token.uuidString.lowercased()).txt"
+    }
 
     func stage(_ request: LabDockRequest, sequence: UInt64) -> Int32 {
         lock.lock(); defer { lock.unlock() }
@@ -101,6 +120,44 @@ final class LabDockPending {
         lock.lock(); defer { lock.unlock() }
         guard owner == getpid(), preparingSequence == sequence else { return }
         preparingSequence = nil
+        activeReport = nil
+    }
+
+    /// Allocate the filename once, after the existing report reset. The
+    /// Windows host already supports an explicit destination for its report.
+    func beginReport(sequence: UInt64) -> String? {
+        lock.lock(); defer { lock.unlock() }
+        guard owner == getpid(), preparingSequence == sequence, pending?.sequence == sequence,
+              activeReport == nil else { return nil }
+        let token = UUID()
+        activeReport = (token, nil)
+        return Self.reportFilename(token)
+    }
+
+    func reportFilename() -> String? {
+        lock.lock(); defer { lock.unlock() }
+        guard owner == getpid(), let report = activeReport else { return nil }
+        return Self.reportFilename(report.token)
+    }
+
+    /// Positive observations only come from the active request's report.
+    /// Valve's running/ended observations and Dock's exit remain separate
+    /// from proof of game input, Wine teardown or readiness to resume Linux.
+    func observeReport(filename: String, fields: [String: String]) -> ReportEvidence? {
+        lock.lock(); defer { lock.unlock() }
+        guard owner == getpid(), let pending, preparingSequence == pending.sequence,
+              let report = activeReport, Self.reportFilename(report.token) == filename,
+              fields["probe-start-bits"] == "64" else { return nil }
+        let sample = ReportEvidence(capture_sequence: pending.sequence, report_token: report.token,
+            appid: pending.request.appID,
+            valve_reported_result: fields["launch-client-error"].flatMap(Int.init),
+            valve_reported_running: fields["launch-game-running"] == "1",
+            valve_reported_ended: fields["launch-game-ended"] == "1",
+            valve_client_shutdown: fields["shutdown-complete"] == "1",
+            dock_exit_status: fields["probe-result"].flatMap(Int.init))
+        guard sample != report.last else { return nil }
+        activeReport = (report.token, sample)
+        return sample
     }
 
     /// Used at the existing native Dock launch-option selection point. All

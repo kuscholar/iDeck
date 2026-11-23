@@ -25386,6 +25386,122 @@
           "bytes": 702
         }
       ]
+    },
+    "correlate_play_with_actual_dock_report": {
+      "source_base": "6331f47ca148278cb3ea10f2e17a6934082f5b93",
+      "recorded_at_utc": "2026-11-23T03:12:06.930994+00:00",
+      "candidate": {
+        "build": 98,
+        "architecture": "arm64",
+        "unsigned_sha256": "2c06bad6a7a5fd90cf4be181073621e41e9c3b3d16e055572375f89e7c30df0c",
+        "dockhost_sha256": "113302ea31bec13d3ef05b8ff6c700b12f0b4273d9ec5306882996176d0aac01",
+        "dock_source_pin": "72558e416a390f3669457930f09a389e54f49556",
+        "upstream_game_report_fields": [
+          "launch-game-running",
+          "launch-game-ended",
+          "shutdown-complete",
+          "probe-result"
+        ],
+        "linked_calls": {
+          "start": {
+            "_$s7Madeira11ContentViewV9startDock33_210CB801764C3044F996987440283C1BLL_11compactPool7profileyAA0E4GameV_SbAA12LibraryEntryVSgtFyyYacfU1_TY4_": [
+              "10064279c:\t38 b6 e8 97\tbl\t_$s7Madeira14LabDockPendingC11beginReport8sequenceSSSgs6UInt64V_tF",
+              "1006429b4:\tdb 2e 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "100643030:\t3c 2d 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "100643258:\tb2 2c 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "1006434c0:\t18 2c 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "100644084:\t27 29 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "1006441f4:\tcb 28 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "1006442dc:\t91 28 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "1006443d8:\t52 28 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv",
+              "1006444c0:\t18 28 77 94\tbl\t0x10240e520 ; symbol stub for: _setenv"
+            ]
+          },
+          "observe": {
+            "_$s7Madeira0A4DockO10pollReportAC0D0VyFZ": [
+              "10008f074:\tb0 85 ff 97\tbl\t_$s7Madeira14LabDockPendingC14reportFilenameSSSgyF",
+              "10008ffe4:\t6c 82 ff 97\tbl\t_$s7Madeira14LabDockPendingC13observeReport8filename6fieldsAC0F8EvidenceVSgSS_SDyS2SGtF",
+              "1000901a8:\t5f db 8d 94\tbl\t0x102406f24 ; symbol stub for: _$s10Foundation11JSONEncoderC6encodeyAA4DataVxKSERzlFTj"
+            ]
+          }
+        },
+        "adapted_source_sha256": {
+          "ContentView.swift": "56682e1ab218050c36d6bb7a1f81391f7582eebf4b59a5115dfe4c9e05efc869",
+          "MadeiraDock.swift": "e12a851c74d2dafcd30797d7062dc24e8bdf2081d803ef94b4eac184edb5b7bd"
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LabDockRequest.swift": "8aef198c150dd5a79ae0a86ca7e602b64cce746e55022e35a3f365415aa93d2a",
+          "experiments/linux-steam/tools/build-hybrid-app.py": "d8673604f57a4bbda4fb0fb84bb4af74922d0233d58732b6ef21b2cae17f7bbd",
+          "experiments/linux-steam/tools/dock-launch-selection.py": "d4573c389e1dfaa361aa7c8261a8b55cadf183ab698747bfb4378e70fa90e12c",
+          "experiments/linux-steam/tools/test-dock-selection.py": "9cab6ab58a50b0c345fd77707ffeb72b659da9f01e3bdc8806c53f5842e3dd50"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "e7a18d0fda5faba3bb33cae9bcac5c7fe6a74ad6e0b1ed41863fa3e388524c76",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "signed": false,
+        "installed": false,
+        "device_execution": false
+      },
+      "host_control": {
+        "stale_report_refused": true,
+        "source_report_fixture": true,
+        "partial_line_refused": true,
+        "duplicate_suppressed": true,
+        "retry_has_distinct_filename": true,
+        "real_valve_launch": false
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 4152,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "actual_game_started": false,
+      "actual_wine_cleanup": false,
+      "steam_return": false,
+      "artifacts": [
+        {
+          "path": "run83/dock-report98-controls/control.log",
+          "sha256": "0bf7435863f934b94fe576c120bc1e92236079c9ade367c39705c531de373a36",
+          "bytes": 1125
+        },
+        {
+          "path": "run83/dock-report98-controls/evidence.json",
+          "sha256": "0e92106837867bb5d40fb1df73150fdd7f04e8534ab83c9c832bb7307dbe1f10",
+          "bytes": 2597
+        },
+        {
+          "path": "run83/dock-report98-controls/run90-report-correlation-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run90-report-correlation-health-data.json",
+          "sha256": "d146b3856d69c73546d2c460556e8fe90e64e335c78bb352a30a5fbe97d2a0e2",
+          "bytes": 1734
+        },
+        {
+          "path": "run83/hybrid98-dock-report/final-dock-report-link-private.json",
+          "sha256": "ed428bf01fa1ce355195305b8edda964ab83056f957042d31be81367b05a87a3",
+          "bytes": 3147
+        },
+        {
+          "path": "run83/runtime96-play-hint/evidence.json",
+          "sha256": "af9c9ded29b07ac5ceb11b1e134f4ecc6e9a803cd7ffdf78e941808822b86f3e",
+          "bytes": 127111
+        },
+        {
+          "path": "run83/hybrid98-dock-report/package-validation.json",
+          "sha256": "066ae8257fc83fc46fe76297661b5ca3909d784fd08b44aec3cb298f503eaed1",
+          "bytes": 702
+        }
+      ]
     }
   }
 }

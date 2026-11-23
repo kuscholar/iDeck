@@ -1,3 +1,45 @@
+## Run83 follow-up — correlate the captured Play with Dock's real child-game report
+
+The pinned Madeira Dock already emits `launch-game-running` and
+`launch-game-ended` from Valve's game-running query. Its end event
+requires that Valve previously reported a running game. The iOS
+allowlist previously dropped both names. The private Lab now retains
+them and assigns a new report filename to each claimed Play attempt.
+The original Windows host writes this file using its existing
+`MADEIRA_STEAM_HOST_LOG` destination. The normal Dock report path stays
+in use for launches without a Lab capture.
+
+The private reader accepts reports for the current filename and
+launch claim. On changed observations it writes a numeric JSON
+receipt with the captured sequence, attempt token, Valve result,
+running/ended observations, client shutdown and Dock exit status.
+It excludes credentials, paths and raw report text. A disk receipt is
+only useful with its matching attempt token and a fresh sample. These
+signals are separate from actual gameplay, native Wine teardown and
+authorization to resume Linux.
+
+The host test uses the actual adapted report parser with fixture lines.
+It rejects the canonical report and an older attempt, separates partial
+lines and a result-only report from a running game, suppresses duplicate
+observations and gives retries on the same capture a new filename.
+Run `python3 experiments/linux-steam/tools/test-dock-selection.py "$NEW_PRIVATE_OUT"`
+on the Mac. The first added fixture failed to compile due to Swift
+operator whitespace. The fresh corrected run passed, including prior
+C mapping, selection and concurrency regressions.
+
+Build98 uses Runtime96 and the Build97 private recipe with
+`--build-number 98`. Full Xcode build, packaging and the final ARM64
+calls from native submission and report polling pass. The packaged
+x86-64 Dock executable is byte-identical to Build97 and contains all
+four observed field names. No signed device install or Valve binary
+change. Evidence at `run83.correlate_play_with_actual_dock_report`.
+
+Air Build93 PID 31278 still reports 632 frames and zero Play at health
+4152 with the same Ori crop. No input, restart or upgrade. Keep signed
+Build94 as the next refresh candidate once authorized. A real Play, game
+interaction and observed cleanup are still required before adding the
+same-process Linux return.
+
 ## Run83 follow-up — serialize the captured request into native startup
 
 The captured Play now holds its Dock slot before the private app awaits

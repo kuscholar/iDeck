@@ -58,6 +58,18 @@ def retain_preparation(dock):
                 return
             }
 """ + anchor)
+    configure = '            MadeiraDock.configure(game, launchOption: launchOption)'
+    dock = replace_once(dock, configure, configure + r"""
+            if let labPreparation {
+                guard let reportName = LabDockPending.shared.beginReport(sequence: labPreparation) else {
+                    fail(LabDockSelection.Failure.mismatched)
+                    return
+                }
+                guard setenv("MADEIRA_STEAM_HOST_LOG", "C:\\\(reportName)", 1) == 0 else {
+                    fail(DockError.message("Madeira could not configure the Lab’s launch report."))
+                    return
+                }
+            }""")
     call = '            runWineFullSequence(profile: profile)'
     return replace_once(dock, call, """            submittedToWine = true
             runWineFullSequence(profile: profile, labDockPreparation: labPreparation)""")
@@ -93,3 +105,25 @@ def patched(source, recheck_pending=False):
         dock = retain_preparation(dock.replace(TRANSFER,RECHECK+TRANSFER))
         result = allow_retry_before_wine(result[:start] + dock + rest)
     return result
+
+
+def patched_report_reader(source):
+    source = replace_once(source, '"game-scm", "game-scm-timeout", "launch-keep-alive",',
+        '"game-scm", "game-scm-timeout", "launch-keep-alive", "launch-game-running", "launch-game-ended",')
+    start = source.index('    @MainActor static func pollReport() -> Report {')
+    end = source.index('\n    }', start)
+    body = source[start:end]
+    body = replace_once(body, '        let url = drive.appendingPathComponent("madeira-dock.txt")',
+        '        let name = LabDockPending.shared.reportFilename() ?? "madeira-dock.txt"\n'
+        '        let url = drive.appendingPathComponent(name)')
+    body = replace_once(body, '        lastReport = report', """        if let evidence = LabDockPending.shared.observeReport(filename: name, fields: report.fields),
+           let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+            let file = support.appendingPathComponent("iDeckLinuxLab/last-native-dock-game.json")
+            do {
+                try JSONEncoder().encode(evidence).write(to: file, options: .atomic)
+            } catch {
+                SteamLog.event("[dock-report] lab-lifecycle-receipt-write-failed=1")
+            }
+        }
+        lastReport = report""")
+    return source[:start] + body + source[end:]

@@ -6,7 +6,8 @@ from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('output',type=Path);a=p.parse_args()
 out=a.output.resolve();repo=Path(__file__).resolve().parents[3];lab=repo/'experiments/linux-steam';dock=repo/'app/Madeira/MadeiraDock.swift'
 assert str(out).startswith('/Volumes/easystore/') and not out.exists();out.mkdir(mode=0o700,parents=True)
-hook=runpy.run_path(str(lab/'tools/dock-launch-selection.py'))['patched']
+hooks=runpy.run_path(str(lab/'tools/dock-launch-selection.py'))
+hook=hooks['patched']
 content=(repo/'app/Madeira/ContentView.swift').read_text()
 unflagged=hook(content)
 flagged=hook(content,recheck_pending=True)
@@ -18,6 +19,8 @@ assert 'beginPreparation()' not in unflagged and 'labDockPreparation' not in unf
 assert body.index('beginPreparation()') < body.index('func fail(') < body.index('Task { @MainActor in')
 assert body.index('guard labLaunch.sequence == labPreparation') < body.index('await SteamOwnedLibrary.shared.prepareDock()')
 assert body.index('submittedToWine = true') < body.index('runWineFullSequence(profile: profile, labDockPreparation:')
+assert body.index('try MadeiraDock.writeHandoff(') < body.index('beginReport(sequence:') < body.index('submittedToWine = true')
+assert 'beginReport(sequence:' not in unflagged
 start=flagged.index('    private func runWineFullSequence(')
 wine=flagged[start:flagged.index('\n    private func ',start+1)]
 cut=wine.index('self.startWineserver()')
@@ -33,6 +36,12 @@ appid_line=next(line for line in source.splitlines() if line.startswith('    sta
 methods=appid_line+'\n'+'\n'.join(extract(s,'\n    }') for s in ['    static func validFolderName(', '    static func game(manifest'])
 generated='// Pinned iDeck Madeira Dock GPL source; Copyright2026 125hz; Converter Exception retained.\nimport Foundation\n'+model+'\nenum MadeiraDock {\n'+methods+'\n}\n'
 (out/'DockManifest.swift').write_text(generated)
+adapted_report=hooks['patched_report_reader'](source)
+assert 'activeReport' not in source and 'observeReport(filename: name, fields: report.fields)' in adapted_report
+first=adapted_report.index('    static let reportAllowed:')
+last=adapted_report.index('    @MainActor private static var lastReport',first)
+(out/'DockReportParser.swift').write_text('import Foundation\nenum CaptureReportParser {\nstruct Report { var fields:[String:String] = [:] }\n'+adapted_report[first:last]+'}\n')
+
 option_source=repo/'app/Madeira/SwiftSteam/Library/SteamAppInfo.swift'
 option_text=option_source.read_text();start=option_text.index('struct SteamLaunchOption:');end=option_text.index('\n}',start)+2
 (out/'SteamLaunchOption.swift').write_text('// GPL-3.0-or-later; Copyright2026 125hz; Converter Exception retained.\nimport Foundation\n'+option_text[start:end]+'\n')
@@ -209,6 +218,43 @@ preparation.releasePreparationBeforeWine(next)
 precondition(preparation.discard(sequence:2)==0)
 print("HOST captured native preparation remains exclusive, stale release refused and safe retry retains request PASS")
 
+let reportSlot=LabDockPending()
+precondition(reportSlot.stage(decoded,sequence:11)==0)
+precondition(reportSlot.beginReport(sequence:11)==nil)
+let attempt=try reportSlot.beginPreparation()
+precondition(attempt==11&&reportSlot.beginReport(sequence:10)==nil)
+let reportName=reportSlot.beginReport(sequence:11)!
+precondition(reportName==reportSlot.reportFilename()&&reportSlot.beginReport(sequence:11)==nil)
+let partialReport=Data(("[steam-host] ml2016 probe-start-bits=64\n" +
+                        "[steam-host] ml2016 launch-client-error=0\n" +
+                        "[steam-host] ml2016 launch-game-running=1\n" +
+                        "[steam-host] ml2016 launch-game-ended=1").utf8)
+let partial=CaptureReportParser.parseReport(partialReport).fields
+precondition(reportSlot.observeReport(filename:"madeira-dock.txt",fields:partial)==nil)
+precondition(reportSlot.observeReport(filename:reportName,fields:["probe-result":"0"])==nil)
+let started=reportSlot.observeReport(filename:reportName,fields:partial)!
+precondition(started.capture_sequence==11&&started.appid==480&&started.valve_reported_running)
+precondition(!started.valve_reported_ended&&started.dock_exit_status==nil && !started.valve_client_shutdown)
+precondition(reportSlot.observeReport(filename:reportName,fields:partial)==nil)
+let finalReport=partialReport+Data(("\n[steam-host] ml2016 shutdown-complete=1\n" +
+                                    "[steam-host] ml2016 probe-result=0\n").utf8)
+let finals=CaptureReportParser.parseReport(finalReport).fields
+let ended=reportSlot.observeReport(filename:reportName,fields:finals)!
+precondition(ended.valve_reported_running&&ended.valve_reported_ended&&ended.valve_client_shutdown)
+precondition(ended.valve_reported_result==0&&ended.dock_exit_status==0&&ended.report_token==started.report_token)
+let receipt=try JSONSerialization.jsonObject(with:JSONEncoder().encode(ended)) as! [String:Any]
+precondition(Set(receipt.keys)==Set(["schema","pid","build","capture_sequence","report_token","appid","valve_reported_result",
+                                       "valve_reported_running","valve_reported_ended","valve_client_shutdown","dock_exit_status"]))
+reportSlot.releasePreparationBeforeWine(attempt) // Fixture models the pre-Wine cleanup callback.
+let retry=try reportSlot.beginPreparation()
+let retryName=reportSlot.beginReport(sequence:retry!)!
+precondition(retry==11&&retryName != reportName)
+precondition(reportSlot.observeReport(filename:reportName,fields:finals)==nil)
+let clean=reportSlot.observeReport(filename:retryName,fields:["probe-start-bits":"64"])!
+precondition(!clean.valve_reported_running && !clean.valve_reported_ended&&clean.dock_exit_status==nil)
+print("HOST exact native report parser retains Steam game events, refuses stale attempt and redacts output PASS")
+
+
 
 let slot=LabDockPending(),raceLock=NSLock();var results:[Int32]=[]
 DispatchQueue.concurrentPerform(iterations:8) { i in
@@ -228,7 +274,7 @@ for unit in ['LaunchProtocol','WindowsLaunchMap']:
  obj=out/(unit+'.o');subprocess.run(['xcrun','clang','-Wall','-Wextra','-Werror','-fsanitize=undefined','-I'+str(lab/'app'),'-c',str(lab/'app'/(unit+'.c')),'-o',str(obj)],check=True);objects.append(str(obj))
 caller=out/'caller.o';subprocess.run(['xcrun','clang','-Wall','-Wextra','-Werror','-fsanitize=undefined','-I'+str(lab/'app'),'-c',str(lab/'tools/dock-request-call-control.c'),'-o',str(caller)],check=True);objects.append(str(caller))
 header=out/'Control-Bridging-Header.h';header.write_text('#include "'+str(lab/'app/WindowsLaunchMap.h')+'"\n#include "'+str(lab/'app/LabDockRequestBridge.h')+'"\nint32_t ideck_test_call_dock_receiver(const void *,size_t,uint64_t);\n')
-cmd=['xcrun','swiftc','-sanitize=undefined','-import-objc-header',str(header),'-module-cache-path',str(out/'module-cache'),str(out/'DockManifest.swift'),str(out/'SteamLaunchOption.swift'),str(repo/'app/Madeira/SteamKeyValues.swift'),str(lab/'app/LabDockSelection.swift'),str(lab/'app/LabDockRequest.swift'),str(out/'main.swift'),*objects,'-o',str(out/'control')]
+cmd=['xcrun','swiftc','-sanitize=undefined','-import-objc-header',str(header),'-module-cache-path',str(out/'module-cache'),str(out/'DockManifest.swift'),str(out/'DockReportParser.swift'),str(out/'SteamLaunchOption.swift'),str(repo/'app/Madeira/SteamKeyValues.swift'),str(lab/'app/LabDockSelection.swift'),str(lab/'app/LabDockRequest.swift'),str(out/'main.swift'),*objects,'-o',str(out/'control')]
 subprocess.run(cmd,check=True,timeout=180)
 r=subprocess.run([out/'control'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=20);(out/'control.log').write_text(r.stdout);assert not r.returncode,r.stdout
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
