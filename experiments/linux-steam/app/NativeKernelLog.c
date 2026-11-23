@@ -151,9 +151,10 @@ int ideck_native_health(unsigned build,const char *stage,int guests,int workers)
         struct ideck_game_file_observation observed={0};
         int policy=ideck_game_file_policy_observation(&observed);
         size_t used=(size_t)length-2;
-        int added=snprintf(body+used,sizeof body-used,",\"file_policy\":{\"query_status\":%d,\"submitted\":%llu,\"completed_sequence\":%llu,\"appid\":%u,\"status\":%d,\"library\":%d,\"machine\":%u,\"diagnostic_only\":true,\"game_launched\":false}}\n",
+        int added=snprintf(body+used,sizeof body-used,",\"file_policy\":{\"query_status\":%d,\"submitted\":%llu,\"completed_sequence\":%llu,\"pending_shared_sequence\":%llu,\"appid\":%u,\"status\":%d,\"library\":%d,\"machine\":%u,\"diagnostic_only\":true,\"game_launched\":false}}\n",
             policy,(unsigned long long)observed.submitted,(unsigned long long)observed.completed_sequence,
-            observed.appid,observed.status,observed.library,observed.machine);
+            (unsigned long long)observed.pending_shared_sequence,observed.appid,observed.status,
+            observed.library,observed.machine);
         length=added<0||(size_t)added>=sizeof body-used?-1:(int)used+added;
     }
 #endif

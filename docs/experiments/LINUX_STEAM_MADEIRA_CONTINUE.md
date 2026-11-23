@@ -1,3 +1,45 @@
+## Run83 follow-up — show the accepted shared-library Play request
+
+The Lab now shows an Exit Steam hint while an accepted Play request from
+its physical shared library is pending and the Steam viewer is active.
+The native receipt includes the pending sequence separately from the
+latest inspection. A later busy inspection can update the latest status
+without overwriting the first request. Capture disabled, discard and the
+default library leave the hint absent. The hint clears as the viewer
+drains. The genuine Steam menu still controls exit. Native game setup
+still requires actual Linux exit, display and backend drain, file
+revalidation and the existing Madeira launch and license checks.
+
+ASan/UBSan controls ran an ARM64 fixture through the actual LinuxRunner
+bridge on the host and exercised capture on and off, default storage, duplicate
+and concurrent requests, and discard. The Windows fixture is inspected
+without execution. The extracted Objective-C method passes eight refusal
+cases plus display and clearance on a simulated native UI. The original
+native setup and restart controls and the real numeric health writer
+also pass. The first fixture compile hit conflicting linkage declarations
+on two stubs after importing the real policy header. The corrected fixture
+passed in a fresh directory.
+
+Reproduce with `test-native-setup-entry.py`, `test-navigation-health.py`
+and `test-capture-launch.py --dock-storage` (also with `--capture-off`) from
+`experiments/linux-steam/tools` in fresh private output directories.
+For iOS, replay Runtime94's ARM64 compile commands for GameFilePolicy,
+LabBridge, NativeKernelLog and the RFB-updated LinuxSteamViewController,
+refreshing every consumer of the policy observation struct in a fresh
+archive. Build the private app with the Build95 recipe using
+`--build-number 96` and that archive. Build96 passes final ARM64 audits
+for the policy, viewer and receipt call sites and includes the Build95
+thread observation. The reversible reserve remains a separate unlinked
+component. Build96 is unsigned and uninstalled.
+
+A fresh Air read at sequence 4035 found the same Build93 PID 31278, 632
+frames, zero Play and the unchanged Ori crop. No device action. Build94
+remains the isolated signed refresh candidate. Once a genuine Steam Play
+request is observable, use Steam's own exit menu and compare the live
+pending sequence with the staged request after actual resource drain.
+No licensed game or return cycle is verified. Evidence and private hashes at
+`run83.shared_play_capture_manual_exit_hint`.
+
 ## Run83 follow-up — exercise Steam’s own graceful close command
 
 Air Build93 PID 31278 health 2049 still shows 632 frames, zero Play

@@ -160,6 +160,7 @@ for enabled, policy, broker, snapshot,pool,hashguard,jit,pte,reserve in ((0,0,0,
         assert 'cli_navigation' not in receipt
     if policy:
         assert receipt['file_policy']['query_status'] < 0
+        assert receipt['file_policy']['pending_shared_sequence'] == 0
         assert not receipt['file_policy']['game_launched']
     else:
         assert 'file_policy' not in receipt

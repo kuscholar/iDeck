@@ -19,12 +19,35 @@ method = body[start:end]
 restart_start = body.index('- (void)restartRetainedSteam {')
 restart_end = body.index('\n}', restart_start) + 2
 restart = body[restart_start:restart_end]
+hint_start = body.index('- (void)refreshPendingPlayHint {')
+hint_end = body.index('\n}', hint_start) + 2
+hint = body[hint_start:hint_end]
 out = a.output.resolve()
 assert str(out).startswith('/Volumes/easystore/') and not out.exists()
 out.mkdir(mode=0o700, parents=True)
 fixture = r'''#import <Foundation/Foundation.h>
 #include <assert.h>
 #include "RetainedFrontend.h"
+#include "GameFilePolicy.h"
+enum {UIApplicationStateActive, UIApplicationStateBackground};
+@interface UIApplication : NSObject
+@property int applicationState;
++ (UIApplication *)sharedApplication;
+@end
+@implementation UIApplication
++ (UIApplication *)sharedApplication {
+    static UIApplication *app;
+    if(!app)app=[UIApplication new];
+    return app;
+}
+@end
+static uint64_t sharedCapture;
+static int observationStatus;
+int ideck_game_file_policy_observation(struct ideck_game_file_observation *observation){
+    *observation=(struct ideck_game_file_observation){.pending_shared_sequence=sharedCapture};
+    return observationStatus;
+}
+
 #include <errno.h>
 #define IDECK_LAB_NATIVE_SETUP_TRANSITION 1
 #define IDECK_LAB_METAL_DRAIN 1
@@ -52,7 +75,7 @@ enum { UIModalPresentationFullScreen = 0, UIControlStateNormal = 0 };
 static int discards,reopens,connects,discardError;
 static BOOL reopenAllowed;
 static uint64_t expectedDiscard;
-static int ideck_game_file_policy_discard(uint64_t sequence){
+int ideck_game_file_policy_discard(uint64_t sequence){
     assert(sequence==expectedDiscard);
     discards++;
     return discardError;
@@ -68,7 +91,7 @@ static int snapshotError,guestThreads,nativeWorkers,factoryCalls,presents,notice
 static uint64_t pendingSequence;
 static int checks,stageDiscards,recheckError,stageDiscardError,drains;
 static int ideck_file_reserve_drain(void){drains++;return 0;}
-static int ideck_game_file_policy_revalidate_pending_shared(uint64_t sequence){
+int ideck_game_file_policy_revalidate_pending_shared(uint64_t sequence){
     assert(sequence==pendingSequence);checks++;return recheckError;
 }
 static int32_t ideck_lab_discard_staged_dock_sequence(uint64_t sequence){
@@ -94,7 +117,8 @@ static void ideck_native_log_line(const char *line){
 @property(strong) NSURL *retainedRoot;
 @property(strong) FakeDisplay *display;
 @property(copy) NSString *status;
-@property(strong) FakeButton *nativeSetupButton,*restartSteamButton;
+@property(strong) FakeButton *nativeSetupButton,*restartSteamButton,*pendingPlayHint;
+@property(strong) NSTimer *pendingPlayTimer;
 @property(strong) UIViewController *presentedViewController;
 @property(strong) FakeView *view;
 @property(strong) NSObject *client;
@@ -110,7 +134,7 @@ static void ideck_native_log_line(const char *line){
     assert(controller.modalInPresentation&&controller.modalPresentationStyle==UIModalPresentationFullScreen);
     assert(animated&&!completion);self.presentedViewController=controller;presents++;
 }
-''' + method + '\n' + restart + r'''
+''' + method + '\n' + restart + '\n' + hint + r'''
 @end
 static Control *ready(void){
     snapshotError=guestThreads=nativeWorkers=0;pendingSequence=7;
@@ -155,6 +179,34 @@ static void restartCases(void){
     c=readyRestart();[c restartRetainedSteam];
     assert(!discards&&reopens==1&&connects==1&&c.frontendRequested);
 }
+static void playHintCases(void){
+    for(int variant=0;variant<8;variant++){
+        Control *c=ready();
+        c.pendingPlayHint=[FakeButton new];c.pendingPlayHint.hidden=NO;
+        c.client=[NSObject new];c.acceptsFrames=YES;c.guestEnded=NO;
+        sharedCapture=7;observationStatus=0;
+        UIApplication.sharedApplication.applicationState=UIApplicationStateActive;
+        switch(variant){
+        case 0:c.view.window=nil;break;
+        case 1:UIApplication.sharedApplication.applicationState=UIApplicationStateBackground;break;
+        case 2:c.client=nil;break;
+        case 3:c.acceptsFrames=NO;break;
+        case 4:c.guestEnded=YES;break;
+        case 5:c.nativeSetupTransferred=YES;break;
+        case 6:c.presentedViewController=[UIViewController new];break;
+        case 7:observationStatus=-EIO;break;
+        }
+        [c refreshPendingPlayHint];assert(c.pendingPlayHint.hidden);
+    }
+    Control *c=ready();
+    c.pendingPlayHint=[FakeButton new];c.pendingPlayHint.hidden=YES;
+    c.client=[NSObject new];c.acceptsFrames=YES;c.guestEnded=NO;
+    sharedCapture=7;observationStatus=0;
+    [c refreshPendingPlayHint];assert(!c.pendingPlayHint.hidden);
+    sharedCapture=0;
+    [c refreshPendingPlayHint];assert(c.pendingPlayHint.hidden);
+    puts("HOST exact pending Play hint: eight refusals, shared request display and clearance PASS");
+}
 int main(void){@autoreleasepool{
 id observer=[NSNotificationCenter.defaultCenter addObserverForName:@"IDeckLinuxMadeiraSetupWillPresent" object:nil queue:nil usingBlock:^(NSNotification *note){(void)note;notices++;}];
 for(int variant=0;variant<18;variant++){
@@ -198,6 +250,7 @@ assert(checks==1&&!stageDiscards&&drains==1);
 [c openNativeMadeiraSetup];assert(factoryCalls==1&&presents==1&&notices==1&&releases==1&&logs==1);
 [NSNotificationCenter.defaultCenter removeObserver:observer];
 restartCases();
+playHintCases();
 puts("HOST exact native setup entry:18 refusal cases, single presentation, and unstaged restart policy PASS; UI/runtime dependencies are count-only stubs");
 return 0;}}
 '''
@@ -216,6 +269,7 @@ sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     'actual_frontend_sha256': sha(source),
     'extracted_method_sha256': hashlib.sha256(method.encode()).hexdigest(),
     'extracted_restart_method_sha256': hashlib.sha256(restart.encode()).hexdigest(),
+    'extracted_play_hint_method_sha256': hashlib.sha256(hint.encode()).hexdigest(),
     'fixture_sha256': sha(out / 'control.m'), 'log_sha256': sha(out / 'control.log'),
 }, indent=2) + '\n')
 print((out / 'control.log').read_text())

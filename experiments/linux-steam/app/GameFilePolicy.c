@@ -14,6 +14,7 @@ static pid_t native_owner;
 static struct ideck_game_file_observation last={.status=-EAGAIN,.library=-1};
 static struct ideck_launch_request pending;
 static uint64_t pending_sequence;
+static int pending_library=-1;
 #if IDECK_LAB_CAPTURE_LAUNCH
 static uint64_t capture_reservation;
 #endif
@@ -57,7 +58,11 @@ void ideck_game_file_policy_inspect(const struct ideck_launch_request *request) 
 #if IDECK_LAB_CAPTURE_LAUNCH
     if(capture_reservation==sequence){
         capture_reservation=0;
-        if(!error){pending=owned;pending_sequence=sequence;}
+        if(!error){
+            pending=owned;
+            pending_sequence=sequence;
+            pending_library=observation.library;
+        }
     }
 #endif
     if(sequence>last.completed_sequence){observation.submitted=last.submitted;last=observation;}
@@ -65,7 +70,13 @@ void ideck_game_file_policy_inspect(const struct ideck_launch_request *request) 
 }
 int ideck_game_file_policy_observation(struct ideck_game_file_observation *out) {
     if(!out)return -EINVAL;
-    pthread_mutex_lock(&lock);*out=last;int result=root<0?-ENODEV:native_owner!=getpid()?-EXDEV:0;pthread_mutex_unlock(&lock);return result;
+    pthread_mutex_lock(&lock);
+    *out=last;
+    int result=root<0?-ENODEV:native_owner!=getpid()?-EXDEV:0;
+    if(!result&&shared>=0&&pending_library==IDECK_LIBRARY_SHARED)
+        out->pending_shared_sequence=pending_sequence;
+    pthread_mutex_unlock(&lock);
+    return result;
 }
 int ideck_game_file_policy_pending(struct ideck_launch_request *out,uint64_t *sequence) {
     if(!out||!sequence)return -EINVAL;
@@ -102,6 +113,10 @@ int ideck_game_file_policy_revalidate_pending_shared(uint64_t sequence) {
 int ideck_game_file_policy_discard(uint64_t sequence) {
     pthread_mutex_lock(&lock);
     int result=native_owner!=getpid()?-EXDEV:!sequence||sequence!=pending_sequence?-ESTALE:0;
-    if(!result){pending=(struct ideck_launch_request){0};pending_sequence=0;}
+    if(!result){
+        pending=(struct ideck_launch_request){0};
+        pending_sequence=0;
+        pending_library=-1;
+    }
     pthread_mutex_unlock(&lock);return result;
 }

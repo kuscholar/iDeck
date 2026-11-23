@@ -58,13 +58,13 @@ int main(int argc,char **argv){
  struct ideck_launch_request ignored;uint64_t ignored_seq;
  if(ideck_game_file_policy_pending(&ignored,&ignored_seq)!=-EAGAIN)return 17;
  struct ideck_game_file_observation observed;
- if(ideck_game_file_policy_observation(&observed)||observed.status||observed.machine!=0x8664)return 18;
+ if(ideck_game_file_policy_observation(&observed)||observed.status||observed.machine!=0x8664||observed.pending_shared_sequence)return 18;
  puts("PASS actual ARM64 IPC observation with request capture OFF; response125; no Windows execution");return 0;
 #else
  struct ideck_launch_request r;uint64_t seq=0;
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=1||r.appid!=0x70000001||r.argc!=3||strcmp(r.install,IDECK_LAUNCH_ROOT "Bridge Probe"))return 5;
  struct ideck_game_file_observation observation;
- if(ideck_game_file_policy_observation(&observation)||observation.status||observation.library!=1||observation.machine!=0x8664)return 6;
+ if(ideck_game_file_policy_observation(&observation)||observation.status||observation.library!=1||observation.machine!=0x8664||observation.pending_shared_sequence!=seq)return 6;
  struct ideck_launch_request original=r;
 #if IDECK_LAB_DOCK_STORAGE
  struct ideck_windows_launch_map mapped;
@@ -75,6 +75,7 @@ int main(int argc,char **argv){
 #endif
  r.appid++;ideck_game_file_policy_inspect(&r);
  if(ideck_game_file_policy_pending(&r,&seq)||memcmp(&r,&original,sizeof r))return 7;
+ if(ideck_game_file_policy_observation(&observation)||observation.status!=-EBUSY||observation.pending_shared_sequence!=seq)return 37;
  if(ideck_game_file_policy_discard(seq+1)!=-ESTALE)return 26;
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=1||memcmp(&r,&original,sizeof r))return 27;
  if(ideck_game_file_policy_revalidate_pending_shared(0)!=-EINVAL||
@@ -90,6 +91,7 @@ int main(int argc,char **argv){
  if(unlink(game)||rename(saved,game)||ideck_game_file_policy_revalidate_pending_shared(seq))return 32;
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=1||memcmp(&r,&original,sizeof r))return 33;
  if(ideck_game_file_policy_discard(seq))return 8;
+ if(ideck_game_file_policy_observation(&observation)||observation.pending_shared_sequence)return 38;
  if(ideck_game_file_policy_revalidate_pending_shared(seq)!=-ESTALE)return 34;
  ideck_game_file_policy_inspect(&original);
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=3||memcmp(&r,&original,sizeof r))return 9;
@@ -100,7 +102,7 @@ int main(int argc,char **argv){
  atomic_store_explicit(&begin,1,memory_order_release);
  for(unsigned i=0;i<2;i++)if(pthread_join(threads[i],NULL))return 12;
  if(ideck_game_file_policy_pending(&r,&seq)||(r.appid!=pair[0].appid&&r.appid!=pair[1].appid))return 13;
- if(ideck_game_file_policy_observation(&observation)||observation.submitted!=5||observation.completed_sequence!=5)return 14;
+ if(ideck_game_file_policy_observation(&observation)||observation.submitted!=5||observation.completed_sequence!=5||observation.pending_shared_sequence!=seq)return 14;
  if(ideck_game_file_policy_discard(seq))return 15;
  ideck_game_file_policy_inspect(&original);
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=6||memcmp(&r,&original,sizeof r))return 16;
@@ -108,6 +110,8 @@ int main(int argc,char **argv){
  ideck_game_file_policy_inspect(&default_request);
  if(ideck_game_file_policy_pending(&r,&seq)||seq!=7||
     ideck_game_file_policy_revalidate_pending_shared(seq)!=-EXDEV)return 36;
+ if(ideck_game_file_policy_observation(&observation)||observation.pending_shared_sequence)return 39;
+ puts("PASS retained shared-play sequence survives later busy inspection and clears on discard; default library excluded");
  puts("PASS exact shared revalidation, missing/invalid file, restored file, retired capture and default-library refusal");
  printf("PASS actual ARM64 IPC -> separate native shared files -> one owned request; busy retains first; two concurrent native requests yield one slot; native discard permits next; response125; Windows game NOT executed\n");return 0;
 #endif

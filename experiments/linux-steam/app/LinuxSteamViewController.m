@@ -174,6 +174,8 @@ static NSDictionary *LabIdentifiedResult(NSDictionary *fields) {
 @property(nonatomic) unsigned automaticUpdateRestarts;
 #if IDECK_LAB_NATIVE_SETUP_TRANSITION
 @property(nonatomic,strong) UIButton *nativeSetupButton;
+@property(nonatomic,strong) UILabel *pendingPlayHint;
+@property(nonatomic,strong) NSTimer *pendingPlayTimer;
 @property(nonatomic) uint64_t nativeRequestSequence;
 @property(nonatomic) uint64_t unstagedRestartSequence;
 @property(nonatomic) BOOL nativeSetupTransferred;
@@ -222,6 +224,25 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
         self.nativeSetupButton.translatesAutoresizingMaskIntoConstraints=NO;
         [self.nativeSetupButton addTarget:self action:@selector(openNativeMadeiraSetup) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.nativeSetupButton];
+        self.pendingPlayHint=[[UILabel alloc]init];
+        self.pendingPlayHint.text=@"Play request saved. Choose Exit Steam in Steam’s menu to continue in Madeira.";
+        self.pendingPlayHint.textColor=UIColor.whiteColor;
+        self.pendingPlayHint.backgroundColor=[UIColor colorWithWhite:0 alpha:.85];
+        self.pendingPlayHint.textAlignment=NSTextAlignmentCenter;
+        self.pendingPlayHint.numberOfLines=0;
+        self.pendingPlayHint.hidden=YES;
+        self.pendingPlayHint.translatesAutoresizingMaskIntoConstraints=NO;
+        [self.view addSubview:self.pendingPlayHint];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.pendingPlayHint.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:8],
+            [self.pendingPlayHint.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-8],
+            [self.pendingPlayHint.bottomAnchor constraintEqualToAnchor:self.restartSteamButton.topAnchor constant:-8]]];
+        self.pendingPlayTimer=[NSTimer timerWithTimeInterval:1 repeats:YES block:^(NSTimer *timer){
+            LinuxSteamViewController *controller=weakSelf;
+            if(controller)[controller refreshPendingPlayHint];
+            else [timer invalidate];
+        }];
+        [NSRunLoop.mainRunLoop addTimer:self.pendingPlayTimer forMode:NSRunLoopCommonModes];
         [NSLayoutConstraint activateConstraints:@[[self.nativeSetupButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-8],
             [self.nativeSetupButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-8]]];
 #endif
@@ -264,6 +285,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{[weakSelf startFrontend];});
 }
 - (void)dealloc {
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+    [self.pendingPlayTimer invalidate];
+#endif
 #if IDECK_LAB_CLI_INPUT
     for(NSNumber *token in self.cliInputTokens)notify_cancel(token.intValue);
 #endif
@@ -377,6 +401,9 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
 - (void)endDisplayForGuestStatus:(int)status completion:(dispatch_block_t)completion {
     dispatch_async(dispatch_get_main_queue(),^{
         self.acceptsFrames=NO;[self.input releaseInput];self.input.client=nil;
+#if IDECK_LAB_NATIVE_SETUP_TRANSITION
+        self.pendingPlayHint.hidden=YES;
+#endif
         LRRFBClient *client=self.client;
         dispatch_block_t finished=^{
             client.frameHandler=nil;client.statusHandler=nil;
@@ -489,6 +516,14 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     [self connectRetainedDisplay:self.retainedRoot wave:self.retainedNextWave];
 }
 #if IDECK_LAB_NATIVE_SETUP_TRANSITION
+- (void)refreshPendingPlayHint {
+    struct ideck_game_file_observation observation;
+    BOOL waiting=self.view.window&&UIApplication.sharedApplication.applicationState==UIApplicationStateActive&&
+        self.client&&self.acceptsFrames&&!self.guestEnded&&!self.nativeSetupTransferred&&!self.presentedViewController&&
+        !ideck_game_file_policy_observation(&observation)&&observation.pending_shared_sequence;
+    self.pendingPlayHint.hidden=!waiting;
+}
+
 - (void)openNativeMadeiraSetup {
     NSAssert(NSThread.isMainThread,@"Native setup presentation belongs to main");
     struct ideck_frontend_result state;
@@ -522,6 +557,7 @@ static int LabDrainRetainedTransport(void *context,int guestStatus);
     ideck_native_log_line("IDECK_SHARED_FILE_RESERVE_V1 terminal_drain=1 linux_restarts_disabled=1");
 #endif
     self.nativeSetupTransferred=YES;self.nativeSetupButton.enabled=NO;self.restartSteamButton.enabled=NO;
+    [self.pendingPlayTimer invalidate];self.pendingPlayHint.hidden=YES;
     [self releaseInput];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"IDeckLinuxMadeiraSetupWillPresent" object:nil];
     UIViewController *controller=(__bridge_transfer UIViewController *)ideck_lab_madeira_setup_controller();

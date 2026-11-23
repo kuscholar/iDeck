@@ -25169,6 +25169,120 @@
           "bytes": 1730
         }
       ]
+    },
+    "shared_play_capture_manual_exit_hint": {
+      "source_base": "69db854e6f49642d6af652565f5032ca6b36e291",
+      "recorded_at_utc": "2026-11-23T02:55:29.653679+00:00",
+      "candidate": {
+        "build": 96,
+        "architecture": "arm64",
+        "unsigned_sha256": "cdd42b17d09619a38e9fca0b392708bcc658fdd59b7a99b86c16b66eb32ccad0",
+        "source_sha256": {
+          "experiments/linux-steam/app/GameFilePolicy.c": "02b9584a77933699f434fbcc11ac6f778c9c9c1769cd867e2f99eff3bef375d3",
+          "experiments/linux-steam/app/GameFilePolicy.h": "07555a9c3d6607081afef7f2d8701255dc17c572086a279cb370f7c7198e7e1c",
+          "experiments/linux-steam/app/LinuxSteamViewController.m": "81fcfe600305f1bdea84498f7e21c6d1da0fb7a1a40fb1138d801a3025e83d30",
+          "experiments/linux-steam/app/NativeKernelLog.c": "58f0cd920e0a1b82385b7dcc903ba0fc6ee16befd1564fd6ed00fd752823e593",
+          "experiments/linux-steam/tools/capture-launch-control.c": "732e2736e74f75593bd9595f86f4cd547e2e15140ec7000226ebdf61a0d4765e",
+          "experiments/linux-steam/tools/test-native-setup-entry.py": "e50be9cc475b087ee21b3222827641ec459590e8240be8f1b3ce2eb426f4220c",
+          "experiments/linux-steam/tools/test-navigation-health.py": "387f71ec1f998bfac4f540b621c8a6bc6fb6cf55cc18a546dd0dae168e386c26"
+        },
+        "calls": {
+          "ui": [
+            "100a1970c:\t37 34 00 94\tbl\t_ideck_game_file_policy_observation",
+            "100a197fc:\t89 cb 67 94\tbl\t\"_objc_msgSend$setHidden:\""
+          ],
+          "receipt": [
+            "100a0cbb0:\t0e 67 00 94\tbl\t_ideck_game_file_policy_observation"
+          ],
+          "bridge": [
+            "100a0a8a4:\ted 6e 00 94\tbl\t_ideck_game_file_policy_inspect",
+            "100a0a8ac:\tcf 6f 00 94\tbl\t_ideck_game_file_policy_observation"
+          ]
+        },
+        "refreshed_abi_objects": [
+          "GameFilePolicy.o",
+          "LabBridge.o",
+          "NativeKernelLog.o",
+          "LinuxSteamViewController.o"
+        ],
+        "runtime_archive_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "e7a18d0fda5faba3bb33cae9bcac5c7fe6a74ad6e0b1ed41863fa3e388524c76",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "signed": false,
+        "installed": false,
+        "device_execution": false
+      },
+      "host_controls": {
+        "ui_refusals": 8,
+        "existing_native_setup_refusals": 18,
+        "hint_clears": true,
+        "later_busy_retains_capture": true,
+        "default_library_excluded": true,
+        "capture_disabled_receipt_zero": true,
+        "health_modes": 10
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 4035,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "actual_steam_play": false,
+      "game_started": false,
+      "returned": false,
+      "artifacts": [
+        {
+          "path": "run83/play-hint96-controls/capture-evidence.json",
+          "sha256": "cc8b2ce197a6f64d635ac99515fbdc19e8897f0e550c2ac3fdd6fc54fa22a458",
+          "bytes": 5771
+        },
+        {
+          "path": "run83/play-hint96-controls/capture-off-evidence.json",
+          "sha256": "3da6e960ed1c616617abab5002546d266956b33c57579cf7868ef326dace161b",
+          "bytes": 5784
+        },
+        {
+          "path": "run83/play-hint96-controls/health-evidence.json",
+          "sha256": "51e6c8945ce594c35cf6abbabacf769a453c629e2e6556ecc32e5e2239e93ac1",
+          "bytes": 35928
+        },
+        {
+          "path": "run83/play-hint96-controls/native-v2-evidence.json",
+          "sha256": "77a7b7058c11b144e4799e406720ab903f360e53cf43802461b2d3a7ce52f3c9",
+          "bytes": 1246
+        },
+        {
+          "path": "run83/play-hint96-controls/run88-play-prompt-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run88-play-prompt-health-data.json",
+          "sha256": "6ab4f3f0c1fbe64527e34dc4ce1b0db2e0e83b56717c7484bb6ad86340ce1dd5",
+          "bytes": 1733
+        },
+        {
+          "path": "run83/hybrid96-play-hint/final-play-hint-link-private.json",
+          "sha256": "473c51b5fb19f7e78d4004174280940f51cd7f882fa7585c40ad0c00bd6c0a72",
+          "bytes": 2142
+        },
+        {
+          "path": "run83/runtime96-play-hint/evidence.json",
+          "sha256": "af9c9ded29b07ac5ceb11b1e134f4ecc6e9a803cd7ffdf78e941808822b86f3e",
+          "bytes": 127111
+        },
+        {
+          "path": "run83/hybrid96-play-hint/package-validation.json",
+          "sha256": "3fb8e7491c876511330c2b96376e1bc8c512a71feeb475e037edd5c701128a62",
+          "bytes": 702
+        }
+      ]
     }
   }
 }

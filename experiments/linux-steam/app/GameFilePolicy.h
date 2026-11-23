@@ -16,6 +16,9 @@ int ideck_game_file_policy_start_shared(int data_directory,int shared_library_di
 void ideck_game_file_policy_inspect(const struct ideck_launch_request *request);
 struct ideck_game_file_observation {
     uint64_t submitted,completed_sequence;
+    /* Zero unless the current capture came from the physical shared library.
+     * The capture persists independently of the latest inspection outcome. */
+    uint64_t pending_shared_sequence;
     uint32_t appid;
     int status,library;
     unsigned machine;
