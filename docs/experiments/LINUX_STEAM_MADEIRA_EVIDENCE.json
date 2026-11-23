@@ -25283,6 +25283,109 @@
           "bytes": 702
         }
       ]
+    },
+    "exclusive_captured_dock_preparation": {
+      "source_base": "6aabbe745e81b067f7c42695da7afad6f7afdfdb",
+      "recorded_at_utc": "2026-11-23T03:03:33.804893+00:00",
+      "candidate": {
+        "build": 97,
+        "architecture": "arm64",
+        "unsigned_sha256": "694927c5ee2c7427d3d04b2fbed4cdbef23cb6a2c91c42b3251dccc6b5a47fe1",
+        "linked_calls": {
+          "dock_preflight": {
+            "_$s7Madeira11ContentViewV9startDock33_210CB801764C3044F996987440283C1BLL_11compactPool7profileyAA0E4GameV_SbAA12LibraryEntryVSgtF": [
+              "1006005c8:\t4f b4 e9 97\tbl\t_$s7Madeira14LabDockPendingC16beginPreparations6UInt64VSgyKF",
+              "100600b14:\tdc b3 e9 97\tbl\t_$s7Madeira14LabDockPendingC28releasePreparationBeforeWineyys6UInt64VSgF"
+            ],
+            "_$s7Madeira11ContentViewV9startDock33_210CB801764C3044F996987440283C1BLL_11compactPool7profileyAA0E4GameV_SbAA12LibraryEntryVSgtFyyYacfU1_TY4_": [
+              "10063d3b4:\tc6 85 ff 97\tbl\t_$s7Madeira11ContentViewV19runWineFullSequence33_210CB801764C3044F996987440283C1BLL7profile7steamUI18labDockPreparationyAA12LibraryEntryVSg_Sbs6UInt64VSgtFfA0_",
+              "10063d3cc:\tc3 85 ff 97\tbl\t_$s7Madeira11ContentViewV19runWineFullSequence33_210CB801764C3044F996987440283C1BLL7profile7steamUI18labDockPreparationyAA12LibraryEntryVSg_Sbs6UInt64VSgtF"
+            ],
+            "_$s7Madeira11ContentViewV9startDock33_210CB801764C3044F996987440283C1BLL_11compactPool7profileyAA0E4GameV_SbAA12LibraryEntryVSgtFyyYacfU1_6$deferL_yyF": [
+              "10063d8ac:\t76 c0 e8 97\tbl\t_$s7Madeira14LabDockPendingC28releasePreparationBeforeWineyys6UInt64VSgF"
+            ]
+          },
+          "wine_refusals": {
+            "_$s7Madeira11ContentViewV19runWineFullSequence33_210CB801764C3044F996987440283C1BLL7profile7steamUI18labDockPreparationyAA12LibraryEntryVSg_Sbs6UInt64VSgtF": [
+              "10061f7e4:\ta8 38 e9 97\tbl\t_$s7Madeira14LabDockPendingC28releasePreparationBeforeWineyys6UInt64VSgF"
+            ],
+            "_$s7Madeira11ContentViewV19runWineFullSequence33_210CB801764C3044F996987440283C1BLL7profile7steamUI18labDockPreparationyAA12LibraryEntryVSg_Sbs6UInt64VSgtFyyYbcfU4_yyScMYccfU6_": [
+              "100638240:\t11 d6 e8 97\tbl\t_$s7Madeira14LabDockPendingC28releasePreparationBeforeWineyys6UInt64VSgF"
+            ]
+          }
+        },
+        "source_sha256": {
+          "experiments/linux-steam/app/LabDockRequest.swift": "7e437a086d97d3b6905f3272a3f52e61c7e6cf50a4d022902ac578b7e7733371",
+          "experiments/linux-steam/tools/dock-launch-selection.py": "16ac1b5d04954cc3bc98cb504b34e2d2f7f9c5dd925798968bd5f0fffb756d2e",
+          "experiments/linux-steam/tools/test-dock-selection.py": "e9f0972520443dad639f97924638b82dcf66dab816f433e566114381324e9c63"
+        },
+        "adapted_content_view_sha256": "0dc7d608e3fdce50909980683ca1b62b4091eda257d32fc4673d481469ebf077",
+        "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+        "archives_sha256": {
+          "libfakefs.a": "d41c8919f4b470509e2cfd97663d85772c8cd3943db1fb192886ab46b8c92bd6",
+          "libish.a": "f11d74518559361bd057b1f6e408c0cb85337a2ce53042c2b290db18d36f905b",
+          "libideck_linux_frontend.a": "e7a18d0fda5faba3bb33cae9bcac5c7fe6a74ad6e0b1ed41863fa3e388524c76",
+          "libish_emu.a": "fbd2b170d523b3d0942b7c1eb04e3d9b5f3da2e5ff534a8bb57953e720df47dc"
+        },
+        "signed": false,
+        "installed": false,
+        "device_execution": false
+      },
+      "host_control": {
+        "concurrent_attempts": 8,
+        "accepted_attempts": 1,
+        "early_retry": true,
+        "stale_release_refused": true,
+        "ordinary_path_kept": true
+      },
+      "air": {
+        "build": 93,
+        "pid": 31278,
+        "health_sequence": 4100,
+        "frames": 632,
+        "play": 0,
+        "crop_sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9"
+      },
+      "actual_game_started": false,
+      "actual_wine_cleanup": false,
+      "steam_return": false,
+      "artifacts": [
+        {
+          "path": "run83/dock-preparation97-controls/control.log",
+          "sha256": "2db6761a894f61b043ece6e175ea5d4ba766156a5e9e77e18ee8e493951ffc30",
+          "bytes": 1020
+        },
+        {
+          "path": "run83/dock-preparation97-controls/evidence.json",
+          "sha256": "2a914bb38f62e9e492840f2bbc8dddaca82cee0ebc4fe2b335ff2f9dfbfcbb7f",
+          "bytes": 2508
+        },
+        {
+          "path": "run83/dock-preparation97-controls/run89-play-lifetime-crop-private.png",
+          "sha256": "2ee287bb74b01c8a4bc6bd33e4c62522ce53eb6079c230cd8a5aecea2f9e2ca9",
+          "bytes": 1273806
+        },
+        {
+          "path": "run83/air93-approved-upgrade-v1/run89-play-lifetime-health-data.json",
+          "sha256": "0f2621f7987d90691eed48a374443319f5d698b5f7eeb3f9aaa5c1fdb4942076",
+          "bytes": 1733
+        },
+        {
+          "path": "run83/hybrid97-dock-preparation/final-dock-preparation-link-private.json",
+          "sha256": "209cfa3e251aeae04a104a75927e20f6732a597097a5ac54e019ea72ad98dc37",
+          "bytes": 3044
+        },
+        {
+          "path": "run83/runtime96-play-hint/evidence.json",
+          "sha256": "af9c9ded29b07ac5ceb11b1e134f4ecc6e9a803cd7ffdf78e941808822b86f3e",
+          "bytes": 127111
+        },
+        {
+          "path": "run83/hybrid97-dock-preparation/package-validation.json",
+          "sha256": "41f34b06da51e465c7b41639cb7a51da26642d0d7d5bcea937c16667aa5bfdef",
+          "bytes": 702
+        }
+      ]
     }
   }
 }

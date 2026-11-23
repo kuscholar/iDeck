@@ -8271,3 +8271,43 @@ request is observable, use Steam's own exit menu and compare the live
 pending sequence with the staged request after actual resource drain.
 No licensed game or return cycle is verified. Evidence and private hashes at
 `run83.shared_play_capture_manual_exit_hint`.
+
+## Run83 follow-up — serialize the captured request into native startup
+
+The captured Play now holds its Dock slot before the private app awaits
+Steam launch configuration. A second attempt exits before it can touch
+the first attempt's preparation or cleanup. The exact sequence is
+checked again before closing the native library connection. The original
+authentication, configuration, executable recheck and launch path stay
+in effect.
+
+A synchronous validation failure or asynchronous preflight failure
+releases the preparation and leaves the captured request available.
+The two known failures before Wine or wineserver starts also release it:
+JIT missing at entry and JIT pool allocation failure. The private hook
+cleans Dock state before releasing it. Once native startup is submitted,
+there is no release based on a timer or the initial Wine body exit.
+Keeping the slot until proven native teardown is still necessary.
+Ordinary Dock launch selection retains its original behavior.
+
+Run `experiments/linux-steam/tools/test-dock-selection.py "$NEW_PRIVATE_OUT"`
+for the host controls. One of eight concurrent attempts acquires a
+captured request. Stale releases and discard during a claimed attempt
+are refused. A pre-Wine release permits retry with the same sequence.
+The actual C request mapping, Dock metadata matching, launch-option
+selection and previous checks also pass. Generated source checks put
+both safe runtime releases before wineserver startup.
+
+Build97 uses the Build96 private recipe and exact Runtime96 archives
+with `--build-number 97`. The full iOS build succeeds. Final ARM64
+disassembly links the private Dock preflight claim, native submission
+and both pre-Wine failure releases. The build is unsigned and uninstalled.
+No post-game claim retirement or return was added. That boundary
+still requires a real licensed game and observed native cleanup.
+
+Air Build93 PID 31278 at health 4100 still has 632 frames, zero Play
+and the same Ori crop. No device lifecycle or input operation occurred.
+Build94 remains the signed isolated refresh candidate. Once the Air
+accepts genuine Play, observe whether the correct capture reaches the
+native Dock path and collect the real game/exit receipts before retiring
+the request. Evidence at `run83.exclusive_captured_dock_preparation`.

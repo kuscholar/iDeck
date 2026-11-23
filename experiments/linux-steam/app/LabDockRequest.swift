@@ -59,6 +59,7 @@ final class LabDockPending {
     private let owner = getpid()
     private var lastSequence: UInt64 = 0
     private var pending: (sequence: UInt64, request: LabDockRequest)?
+    private var preparingSequence: UInt64?
 
     func stage(_ request: LabDockRequest, sequence: UInt64) -> Int32 {
         lock.lock(); defer { lock.unlock() }
@@ -77,8 +78,29 @@ final class LabDockPending {
         lock.lock(); defer { lock.unlock() }
         guard owner == getpid() else { return -18 }
         guard sequence != 0, pending?.sequence == sequence else { return -116 }
+        guard preparingSequence == nil else { return -16 }
         pending = nil
         return 0
+    }
+
+    /// Serializes the captured Play while Dock awaits Steam configuration and
+    /// submits native startup. Ordinary Dock choices do not claim this slot.
+    func beginPreparation() throws -> UInt64? {
+        lock.lock(); defer { lock.unlock() }
+        guard owner == getpid() else { throw LabDockSelection.Failure.mismatched }
+        guard let sequence = pending?.sequence else { return nil }
+        guard preparingSequence == nil else { throw Failure.preparing }
+        preparingSequence = sequence
+        return sequence
+    }
+
+    /// Only for an attempt that returned before starting Wine or wineserver.
+    /// The captured request remains available for a legitimate retry.
+    func releasePreparationBeforeWine(_ sequence: UInt64?) {
+        guard let sequence else { return }
+        lock.lock(); defer { lock.unlock() }
+        guard owner == getpid(), preparingSequence == sequence else { return }
+        preparingSequence = nil
     }
 
     /// Used at the existing native Dock launch-option selection point. All
@@ -96,7 +118,7 @@ final class LabDockPending {
 
     /// Fail closed before the regular native Steam handoff. Ordinary Dock
     /// choices keep their fallback and never touch the Lab shared library.
-    enum Failure: Error { case sharedExecutable(Int32) }
+    enum Failure: Error { case sharedExecutable(Int32), preparing }
 
     func validateForHandoff(sequence: UInt64?, recheck: (UInt64) -> Int32) throws {
         guard snapshot()?.sequence == sequence else { throw LabDockSelection.Failure.mismatched }

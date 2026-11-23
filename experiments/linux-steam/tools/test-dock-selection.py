@@ -14,6 +14,16 @@ assert 'validateForHandoff' not in unflagged and flagged.count('validateForHando
 start=flagged.index('    private func startDock(')
 body=flagged[start:flagged.index('\n    private func ',start+1)]
 assert body.index('await SteamOwnedLibrary.shared.prepareDock()') < body.index('validateForHandoff') < body.index('SteamSignIn.credentialsForDock()') < body.index('MadeiraDock.writeHandoff(')
+assert 'beginPreparation()' not in unflagged and 'labDockPreparation' not in unflagged
+assert body.index('beginPreparation()') < body.index('func fail(') < body.index('Task { @MainActor in')
+assert body.index('guard labLaunch.sequence == labPreparation') < body.index('await SteamOwnedLibrary.shared.prepareDock()')
+assert body.index('submittedToWine = true') < body.index('runWineFullSequence(profile: profile, labDockPreparation:')
+start=flagged.index('    private func runWineFullSequence(')
+wine=flagged[start:flagged.index('\n    private func ',start+1)]
+cut=wine.index('self.startWineserver()')
+assert wine[:cut].count('releasePreparationBeforeWine(labDockPreparation)')==2
+assert 'releasePreparationBeforeWine' not in wine[cut:]
+
 print('HOST private staged Dock adapter rechecks after prepareDock and before the existing sign-in handoff PASS')
 source=dock.read_text()
 def extract(signature,end):
@@ -162,6 +172,43 @@ do {
 } catch LabDockSelection.Failure.mismatched {}
 precondition(dispatcher.snapshot()?.sequence==2)
 print("HOST staged sequence preserved across handoff, changed slot and missing physical file refuse, ordinary path does not recheck PASS")
+
+let preparation=LabDockPending()
+let ordinaryPreparation=try preparation.beginPreparation()
+precondition(ordinaryPreparation==nil)
+precondition(preparation.stage(decoded, sequence:1)==0)
+let acceptedPreparation=try preparation.beginPreparation()
+precondition(acceptedPreparation==1)
+do {
+    _=try preparation.beginPreparation()
+    fatalError("A second attempt overlapped the captured launch")
+} catch LabDockPending.Failure.preparing {}
+precondition(preparation.discard(sequence:1) == -16)
+preparation.releasePreparationBeforeWine(nil)
+preparation.releasePreparationBeforeWine(2)
+do {
+    _=try preparation.beginPreparation()
+    fatalError("A stale callback released a current attempt")
+} catch LabDockPending.Failure.preparing {}
+preparation.releasePreparationBeforeWine(acceptedPreparation)
+precondition(preparation.snapshot()?.sequence==1)
+let claimLock=NSLock()
+var preparations:[UInt64]=[]
+DispatchQueue.concurrentPerform(iterations:8) { _ in
+    if let sequence=try? preparation.beginPreparation() {
+        claimLock.lock();preparations.append(sequence);claimLock.unlock()
+    }
+}
+precondition(preparations==[1])
+preparation.releasePreparationBeforeWine(preparations.first)
+precondition(preparation.discard(sequence:1)==0&&preparation.stage(decoded,sequence:2)==0)
+let next=try preparation.beginPreparation()
+preparation.releasePreparationBeforeWine(1)
+precondition(next==2&&preparation.discard(sequence:2) == -16)
+preparation.releasePreparationBeforeWine(next)
+precondition(preparation.discard(sequence:2)==0)
+print("HOST captured native preparation remains exclusive, stale release refused and safe retry retains request PASS")
+
 
 let slot=LabDockPending(),raceLock=NSLock();var results:[Int32]=[]
 DispatchQueue.concurrentPerform(iterations:8) { i in
