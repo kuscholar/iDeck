@@ -13,11 +13,18 @@ run(['xcrun','clang','--target=aarch64-linux-gnu','--ld-path='+str(a.ld_lld.abso
 sources=[lab/'app'/n for n in ('SharedLibraryConfig.c','SharedLibraryRegister.c','SharedSteamLibrary.c','LabDeviceFS.c')]+[lab/'tools/library-registration-control.c']
 run(['xcrun','clang','-fsanitize=address,undefined','-fno-sanitize-recover=all','-DGUEST_ARM64=1','-DENGINE_ASBESTOS=1','-DISH_INTERNAL=1','-DLOG_HANDLER_DPRINTF=1','-DIDECK_LAB_DOCK_STORAGE=1','-DIDECK_LAB_RETIRE_EMPTY_PROBE='+str(int(a.retire_empty_probe)),'-I'+str(src),'-I'+str(host),'-I'+str(lab/'app'),'-Wall','-Wextra','-Werror','-Wno-unused-parameter',*sources,host/'libish.a',host/'libish_emu.a',host/'libfakefs.a','-lsqlite3','-o',out/'control'])
 results=[]
-for phase in ('fresh','merge','interrupted'):
+for phase in ('fresh','merge','interrupted','file-conflict','symlink-conflict'):
  root=out/phase;root.mkdir();start=time.monotonic()
  with (out/(phase+'.log')).open('x') as f:r=subprocess.run([out/'control',root,out/'probe',phase,out/(phase+'.vdf')],stdout=f,stderr=subprocess.STDOUT,timeout=20)
  results.append({'phase':phase,'returncode':r.returncode,'seconds':round(time.monotonic()-start,3),'log_sha256':h(out/(phase+'.log'))})
  if r.returncode:raise RuntimeError((out/(phase+'.log')).read_text()[-2000:])
+ shared=root/'MadeiraPrefix/drive_c/SteamLibrary/steamapps'
+ if phase in ('fresh','merge'):
+  assert shared.is_dir() and (shared/'keep').read_bytes()==b'existing'
+ elif phase=='file-conflict':
+  assert shared.is_file() and shared.read_bytes()==b'keep'
+ elif phase=='symlink-conflict':
+  assert shared.is_symlink()
 swift='''import Foundation
 for name in ["fresh","merge"] {
     let file=URL(fileURLWithPath:CommandLine.arguments[1]).appendingPathComponent(name+".vdf")

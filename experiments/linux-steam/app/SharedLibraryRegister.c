@@ -2,6 +2,7 @@
 #include "SharedLibraryConfig.h"
 #include "SharedSteamLibrary.h"
 #include "kernel/task.h"
+#include "kernel/errno.h"
 #include "kernel/calls.h"
 #include "fs/fd.h"
 #include "fs/path.h"
@@ -22,11 +23,22 @@ static int write_new(const char *path,const char *bytes,size_t size,int *owned) 
     while(used<size){ssize_t n=fd->ops->write(fd,bytes+used,size-used);if(n<=0){error=n<0?(int)n:-5;break;}used+=(size_t)n;}
     int closed=fd_close(fd);return error?error:closed;
 }
+/* The client checks the steamapps directory before installing to a library
+ * added through libraryfolders.vdf. Prepare it before publishing the entry. */
+static int prepare_shared_steamapps(void) {
+    const char *path=IDECK_SHARED_STEAM_GUEST "/steamapps";
+    int error=generic_mkdirat(AT_PWD,path,0700);
+    if(error!=_EEXIST)return error;
+    struct statbuf st;
+    error=generic_statat(AT_PWD,path,&st,false);
+    return error?error:S_ISDIR(st.mode)?0:_ENOTDIR;
+}
 int ideck_shared_library_register(int *changed) {
     if(changed)*changed=0;if(!changed||!current)return -22;
     if(current->pid!=1)return -16;
     struct statbuf st;int error=generic_statat(AT_PWD,IDECK_SHARED_STEAM_GUEST,&st,false);
     if(error||!S_ISDIR(st.mode))return error?error:-20;
+    error=prepare_shared_steamapps();if(error)return error;
     error=generic_mkdirat(AT_PWD,"/Steam/steamapps",0700);if(error&&error!=-17)return error;
     char *old=malloc(IDECK_LIBRARY_CONFIG_MAX),*planned=malloc(IDECK_LIBRARY_CONFIG_MAX+512),*check=malloc(IDECK_LIBRARY_CONFIG_MAX+512);
     if(!old||!planned||!check){free(old);free(planned);free(check);return -12;}

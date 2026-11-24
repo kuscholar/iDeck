@@ -5,6 +5,7 @@
 #include "kernel/init.h"
 #include "kernel/calls.h"
 #include "kernel/task.h"
+#include "kernel/errno.h"
 #include "fs/fake.h"
 #include "fs/fd.h"
 #include "fs/path.h"
@@ -39,6 +40,20 @@ int main(int argc,char **argv){
 #endif
  check(!ideck_shared_steam_mount(argv[1]),"actual shared mount");check(!generic_mkdirat(AT_PWD,"/Steam",0700),"Steam dir");check(!generic_mkdirat(AT_PWD,"/Steam/steamapps",0700),"steamapps dir");
  const char old[]="// retained comment with }\n\"libraryfolders\"\n{\n\"0\" { \"path\" \"/Steam\" \"label\" \"braces { } and \\\"quote\\\"\" \"apps\" { \"123\" \"45\" } }\n\"2\" { \"path\" \"/Other Library\" \"unknown\" \"keep me\" }\n}\n// tail retained\n";
+ const char shared_apps[]=IDECK_SHARED_STEAM_GUEST "/steamapps";
+ int file_conflict=!strcmp(argv[3],"file-conflict"),link_conflict=!strcmp(argv[3],"symlink-conflict");
+ if(file_conflict||link_conflict){
+  struct statbuf st;
+  if(file_conflict)put(shared_apps,"keep",4);
+  else check(!generic_symlinkat("/Steam/steamapps",AT_PWD,shared_apps),"shared symlink fixture");
+  int changed=-1;
+  check(ideck_shared_library_register(&changed)==_ENOTDIR&&!changed,"shared nondirectory refused");
+  check(generic_statat(AT_PWD,IDECK_LIBRARY_CONFIG_PATH,&st,false)==_ENOENT,"registration not published");
+  check(!generic_statat(AT_PWD,shared_apps,&st,false),"conflicting node preserved");
+  check(file_conflict?S_ISREG(st.mode):S_ISLNK(st.mode),"original node kind kept");
+  if(file_conflict){char bytes[4];check(get(shared_apps,bytes,sizeof bytes)==4&&!memcmp(bytes,"keep",4),"original data kept");}
+  puts("PASS conflicting shared steamapps node preserved; VDF absent");return 0;
+ }
  int fresh=!strcmp(argv[3],"fresh"),conflict=!strcmp(argv[3],"interrupted");
  if(!fresh){put(IDECK_LIBRARY_CONFIG_PATH,old,sizeof old-1);check(!generic_setattrat(AT_PWD,IDECK_LIBRARY_CONFIG_PATH,make_attr(mode,S_IFREG|0640),false),"original metadata mode");}
  if(conflict)put(IDECK_LIBRARY_CONFIG_STAGE,"previous-stage",14);
@@ -46,7 +61,14 @@ int main(int argc,char **argv){
  if(conflict){check(error==-17&&!changed,"interrupted stage retained");size_t n=get(IDECK_LIBRARY_CONFIG_PATH,bytes,sizeof bytes);check(n==sizeof old-1&&!memcmp(bytes,old,n),"original retained on interrupted publication");check(get(IDECK_LIBRARY_CONFIG_STAGE,bytes,sizeof bytes)==14&&!memcmp(bytes,"previous-stage",14),"prior stage retained");puts("PASS interrupted publication retains original and earlier stage; no guest started");return 0;}
  check(!error&&changed,"register library");size_t n=get(IDECK_LIBRARY_CONFIG_PATH,bytes,sizeof bytes);
  if(!fresh){size_t b=get(IDECK_LIBRARY_CONFIG_BACKUP,backup,sizeof backup);check(b==sizeof old-1&&!memcmp(backup,old,b),"exact original backup");struct statbuf st;check(!generic_statat(AT_PWD,IDECK_LIBRARY_CONFIG_PATH,&st,false)&&(st.mode&0777)==0640,"original config mode retained");}
- check(!ideck_shared_library_register(&changed)&&!changed,"idempotent registration");size_t b=get(IDECK_LIBRARY_CONFIG_PATH,backup,sizeof backup);check(b==n&&!memcmp(bytes,backup,n),"repeat preserves bytes");
+ struct statbuf shared_dir;
+ check(!generic_statat(AT_PWD,shared_apps,&shared_dir,false)&&S_ISDIR(shared_dir.mode),"shared steamapps exists before client start");
+ const char seed[]=IDECK_SHARED_STEAM_GUEST "/steamapps/keep";
+ put(seed,"existing",8);
+ check(!ideck_shared_library_register(&changed)&&!changed,"idempotent registration");
+ struct statbuf repeat_dir;
+ check(!generic_statat(AT_PWD,shared_apps,&repeat_dir,false)&&repeat_dir.inode==shared_dir.inode,"repeat preserves directory inode");
+ char retained[8];check(get(seed,retained,sizeof retained)==8&&!memcmp(retained,"existing",8),"repeat preserves shared file");size_t b=get(IDECK_LIBRARY_CONFIG_PATH,backup,sizeof backup);check(b==n&&!memcmp(bytes,backup,n),"repeat preserves bytes");
  FILE *output=fopen(argv[4],"wb");check(output!=NULL,"private fixture readback");check(fwrite(bytes,1,n,output)==n&&!fclose(output),"private output close");
  FILE *probe=fopen(argv[2],"rb");check(probe!=NULL,"probe input");b=fread(backup,1,sizeof backup,probe);check(b>0&&feof(probe)&&!fclose(probe),"own ELF read");put("/probe",backup,b);
  check(!become_new_init_child(),"guest child");check(ideck_shared_library_register(&changed)==-16,"guest cannot register while running");guest=current;
