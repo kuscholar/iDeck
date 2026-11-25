@@ -22,6 +22,8 @@ parser.add_argument('--meson', required=True)
 parser.add_argument('--ninja', required=True)
 parser.add_argument('--native-jit', action='store_true',
                     help='Build the optional pinned ARM64 emitter; default remains interpreter. Does not activate iOS JIT.')
+parser.add_argument('--child-subreaper', action='store_true',
+                    help='Apply the guest-only child-subreaper patch to a private source copy.')
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[3]
 source = repo / 'vendor/LinuxRunner'
@@ -34,7 +36,19 @@ out.mkdir(parents=True, mode=0o700)
 header = out / 'LinuxSymbolNamespace.h'
 shutil.copy2(repo / 'experiments/linux-steam/app/LinuxSymbolNamespace.h', header)
 c_args = ['-DIDECK_LAB_LINUX_SYMBOL_NAMESPACE=1', '-include', str(header)]
-command = [args.meson, 'setup', str(out / 'build'), str(source)]
+build_source = source
+child_subreaper_patch = None
+child_subreaper_sources = {}
+if args.child_subreaper:
+    child_subreaper_patch = repo / 'experiments/linux-steam/patches/linuxrunner-child-subreaper.patch'
+    build_source = out / 'source'
+    subprocess.run(['/bin/cp', '-cRp', str(source), str(build_source)], check=True)
+    subprocess.run(['/usr/bin/patch', '--batch', '--fuzz=0', '-p1', '-i', str(child_subreaper_patch)],
+                   cwd=build_source, check=True)
+    for name in ('exit.c', 'fork.c', 'misc.c', 'task.h'):
+        path = build_source / 'kernel' / name
+        child_subreaper_sources['kernel/' + name] = hashlib.sha256(path.read_bytes()).hexdigest()
+command = [args.meson, 'setup', str(out / 'build'), str(build_source)]
 sdk = None
 if args.platform == 'ios':
     sdk = subprocess.check_output(['xcrun', '--sdk', 'iphoneos', '--show-sdk-path'], text=True).strip()
@@ -71,6 +85,8 @@ definitions = [line for line in archives['libish.a']['namespaced_rows'] if '(__D
 assert len(definitions) == 1, definitions
 (out / 'evidence.json').write_text(json.dumps(dict(scope='Darwin arm64 isolated archives/symbols only, NOT final app or runtime coexistence',
     linuxrunner=pin, platform=args.platform, sdk=sdk, native_jit_compiled=args.native_jit,
+    child_subreaper_patch_sha256=hashof(child_subreaper_patch) if child_subreaper_patch else None,
+    child_subreaper_source_sha256=child_subreaper_sources,
     native_jit_execution_validated=False, namespace_header_sha256=hashof(header),
     builder_sha256=hashof(Path(__file__)), archives=archives,
     existing_dirfd_overlay_sha256=hashof(repo/'experiments/linux-steam/patches/linuxrunner-dirfd.patch'),

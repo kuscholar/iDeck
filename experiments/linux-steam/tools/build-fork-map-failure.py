@@ -10,6 +10,7 @@ from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
 for name in ('source','build','archive','output'):p.add_argument(name,type=Path)
 p.add_argument('--memory-source',type=Path);p.add_argument('--mmap-source',type=Path)
+p.add_argument('--fork-source',type=Path,help='Use the fork translation unit from the validated private LinuxRunner build')
 p.add_argument('--sanitize',action='store_true');p.add_argument('--host-inject',action='store_true')
 a=p.parse_args();src,build,archive,out=[getattr(a,n).resolve() for n in ('source','build','archive','output')]
 assert str(out).startswith('/Volumes/easystore/') and not out.exists()
@@ -19,20 +20,24 @@ assert subprocess.check_output(['git','-C',src,'rev-parse','HEAD'],text=True).st
 assert not subprocess.check_output(['git','-C',src,'status','--porcelain','--untracked-files=no'],text=True).strip()
 out.mkdir(mode=0o700,parents=True);sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 entries=json.loads((build/'compile_commands.json').read_text());rows=[];objects=[]
-for name,transform,prepared in [('memory',module.memory,a.memory_source),('mmap',module.mmap,a.mmap_source),('fork',module.fork,None)]:
+for name,transform,prepared in [('memory',module.memory,a.memory_source),('mmap',module.mmap,a.mmap_source),('fork',module.fork,a.fork_source)]:
  original=subprocess.check_output(['git','-C',src,'show',module.PIN+':kernel/'+name+'.c'])
  assert original==(src/'kernel'/f'{name}.c').read_bytes()
  inp=prepared.resolve() if prepared else src/'kernel'/f'{name}.c'
  body=inp.read_text()
+ entry=next(e for e in entries if e['file'].endswith('/kernel/'+name+'.c'))
  if prepared:
   assert str(inp).startswith('/Volumes/easystore/') and not inp.is_relative_to(src)
-  signature={'memory':'int pt_copy_on_write(', 'mmap':'struct mm *mm_copy('}[name]
+  if name=='fork':
+   assert inp == (Path(entry['directory'])/entry['file']).resolve()
+   signature='static int copy_task('
+  else:
+   signature={'memory':'int pt_copy_on_write(', 'mmap':'struct mm *mm_copy('}[name]
   assert module.function(body,signature)==module.function(original.decode(),signature)
  generated=out/f'{name}.c';generated.write_text(transform(body))
- entry=next(e for e in entries if e['file'].endswith('/kernel/'+name+'.c'))
  cmd=shlex.split(entry['command']);obj=out/Path(cmd[cmd.index('-o')+1]).name
  cmd[cmd.index(entry['file'])]=str(generated);cmd[cmd.index('-o')+1]=str(obj)
- if prepared:cmd+=['-I',str(inp.parent)]
+ if prepared and name!='fork':cmd+=['-I',str(inp.parent)]
  for key,value in [('-MF',out/f'{name}.d'),('-MQ',obj)]:
   if key in cmd:cmd[cmd.index(key)+1]=str(value)
  if a.sanitize:cmd+=['-fsanitize=address,undefined','-fno-omit-frame-pointer']

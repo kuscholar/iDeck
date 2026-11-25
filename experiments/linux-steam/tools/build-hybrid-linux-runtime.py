@@ -74,6 +74,16 @@ original=json.loads((ns/'evidence.json').read_text());assert original['platform'
 assert bool(original.get('native_jit_compiled',False))==a.native_jit, 'Native JIT engine and adapter layouts must be selected together'
 for name,data in original['archives'].items():assert hashof(build/name)==data['sha256'],name
 assert hashof(ns/'LinuxSymbolNamespace.h')==original['namespace_header_sha256']==hashof(lab/'app/LinuxSymbolNamespace.h')
+runtime_src = src
+fork_input = []
+subreaper_patch_sha = original.get('child_subreaper_patch_sha256')
+if subreaper_patch_sha:
+    assert subreaper_patch_sha == hashof(lab/'patches/linuxrunner-child-subreaper.patch')
+    runtime_src = ns/'source'
+    units = original['child_subreaper_source_sha256']
+    assert set(units) == {'kernel/exit.c', 'kernel/fork.c', 'kernel/misc.c', 'kernel/task.h'}
+    assert all(hashof(runtime_src/name) == sha for name, sha in units.items())
+    fork_input = ['--fork-source', runtime_src/'kernel/fork.c']
 entries=json.loads((build/'compile_commands.json').read_text())
 assert all('-DIDECK_LAB_LINUX_SYMBOL_NAMESPACE=1' in e['command'] for e in entries)
 out.mkdir(mode=0o700);commands=[]
@@ -92,7 +102,7 @@ if a.file_map_cleanup:
     kernel=out/'file-map-cleanup/libish.a'
 if a.fork_map_failure:
     run('build-fork-map-failure.py',src,build,kernel,out/'fork-map-failure',
-        '--memory-source',out/'lazy/memory.c','--mmap-source',out/'advice/mmap.c')
+        '--memory-source',out/'lazy/memory.c','--mmap-source',out/'advice/mmap.c',*fork_input)
     kernel=out/'fork-map-failure/libish.a'
 if a.cow_native_group:
     memory=out/'fork-map-failure/memory.c' if a.fork_map_failure else out/'lazy/memory.c'
@@ -131,7 +141,7 @@ flags=['-target','arm64-apple-ios26.0','-isysroot',sdk,'-DGUEST_ARM64=1','-DENGI
  '-DIDECK_LAB_SHARED_DISPLAY=1','-DIDECK_LAB_CEF_DISABLE_GPU=1','-DIDECK_LAB_MADVISE_STATS=1','-DIDECK_LAB_LAZY_PAGES=1',
  '-DIDECK_LAB_X11_TRACE=0','-DIDECK_LAB_GAME_FILE_POLICY='+str(int(a.capture_launch)),'-DIDECK_LAB_CAPTURE_LAUNCH='+str(int(a.capture_launch)),'-DIDECK_LAB_PRIVATE_DISCARD='+str(int(a.exclusive_private_discard)),
  '-DIDECK_LAB_ROOTFS_SHA256="8afdfb2b9dfa76eef305865ec64994451a7cf953fd1bc2eb3a53fd10d066d84a"',
- '-I',str(src),'-I',str(build),'-I',str(lab/'app'),'-I',str(src/'app/LinuxRunner'),'-I',str(out/'rfb'),
+ '-I',str(runtime_src),'-I',str(build),'-I',str(lab/'app'),'-I',str(runtime_src/'app/LinuxRunner'),'-I',str(out/'rfb'),
  '-O0','-g','-fvisibility=hidden']
 sources=[lab/'app'/name for name in ('LinuxLabRuntime.c','LabDeviceFS.c','LabBridge.c','LaunchProtocol.c','ToolInstall.c','NativeKernelLog.c','NativeSignalLease.c','RetainedFrontend.c','LabRootFS.m','LabSocketPrefix.m','LinuxSteamViewController.m','LabRFBClient.m')]
 if a.pthread_stack_soft_limit:flags+=['-DIDECK_LAB_PTHREAD_STACK_SOFT_LIMIT=1']
@@ -205,6 +215,7 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
 (out/'evidence.json').write_text(json.dumps({'scope':'Qualified copied NAMESPACED Linux kernel/engine/frontend link inputs ONLY; NOT combined app/Wine execution/device/game proof',
  'linuxrunner':original['linuxrunner'],'namespace_base_evidence_sha256':hashof(ns/'evidence.json'),
  'namespace_header_sha256':hashof(ns/'LinuxSymbolNamespace.h'),'base_archives_unchanged':True,
+ 'child_subreaper_patch_sha256':subreaper_patch_sha,
  'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
  'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,

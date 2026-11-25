@@ -1,0 +1,155 @@
+--- a/kernel/task.h
++++ b/kernel/task.h
+@@ -258,6 +258,7 @@
+ struct tgroup {
+     struct list threads; // locked by pids_lock, by majority vote
+     struct task *leader; // immutable
++    bool child_subreaper; // pids_lock; shared by threads, not inherited by fork
+     struct rusage_ rusage;
+ 
+     // locked by pids_lock
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -58,6 +58,7 @@
+     }
+     group->itimer = NULL;
+     group->doing_group_exit = false;
++    group->child_subreaper = false;
+     // A new process starts with no CPU time of its own or of children.
+     group->rusage = (struct rusage_) {};
+     group->children_rusage = (struct rusage_) {};
+--- a/kernel/misc.c
++++ b/kernel/misc.c
+@@ -5,6 +5,8 @@
+ 
+ #define PRCTL_SET_KEEPCAPS_ 8
+ #define PRCTL_SET_NAME_ 15
++#define PRCTL_SET_CHILD_SUBREAPER_ 36
++#define PRCTL_GET_CHILD_SUBREAPER_ 37
+ 
+ int_t sys_prctl(dword_t option, addr_t arg2, addr_t arg3, addr_t arg4, addr_t arg5) {
+     switch (option) {
+@@ -23,6 +25,17 @@
+             if (arg2 > 1) return _EINVAL;
+             mm_set_dumpable(current->mm, arg2);
+             return 0;
++        case PRCTL_SET_CHILD_SUBREAPER_:
++            lock(&pids_lock);
++            current->group->child_subreaper = arg2 != 0;
++            unlock(&pids_lock);
++            return 0;
++        case PRCTL_GET_CHILD_SUBREAPER_: {
++            lock(&pids_lock);
++            int_t enabled = current->group->child_subreaper;
++            unlock(&pids_lock);
++            return user_put(arg2, enabled) ? _EFAULT : 0;
++        }
+         case 38: // PR_SET_NO_NEW_PRIVS
+             if (arg2 != 1 || arg3 || arg4 || arg5) return _EINVAL;
+             current->no_new_privs = true;
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -58,12 +58,47 @@
+     // Orphans go to their PID namespace's init; a dying init hands them to
+     // the parent namespace's init (its members are being killed).
+     struct pid_ns *ns = task->pidns;
+-    if (ns && pidns_is_init(task->group->leader))
++    struct task *leader = task->group->leader;
++    if (!pidns_is_init(leader)) {
++        // Subreaping follows process ancestry. The task-parent chain can
++        // include creator threads that are reparented within their own group.
++        unsigned remaining = MAX_PID;
++        for (struct task *ancestor = leader->parent;
++             ancestor && ancestor->pidns == ns && remaining;
++             ancestor = ancestor->group->leader->parent, --remaining) {
++            if (ancestor->group == task->group)
++                break;
++            if (!ancestor->group->child_subreaper)
++                continue;
++            list_for_each_entry(&ancestor->group->threads, new_parent, group_links) {
++                if (!new_parent->exiting)
++                    return new_parent;
++            }
++        }
++    } else {
+         ns = NULL;
++    }
+     struct task *ns_init = ns ? pidns_init_task(ns) : NULL;
+     if (ns_init && ns_init->group != task->group && !ns_init->exiting)
+         return ns_init;
+     return pid_get_task(1);
++}
++
++// pids_lock protects the child state and its relationship to the parent.
++static void notify_parent_of_zombie(struct task *parent, struct task *child, int status) {
++    notify(&parent->group->child_exit);
++    if (child->exit_signal == 0)
++        return;
++    struct siginfo_ info = {
++        .code = SI_KERNEL_,
++        .child.pid = task_vnr(child, parent->pidns),
++        .child.uid = child->uid,
++        .child.status = status,
++        .child.utime = clock_from_timeval(child->group->rusage.utime),
++        .child.stime = clock_from_timeval(child->group->rusage.stime),
++    };
++    waitid_decode_status(&info);
++    send_signal(parent, child->exit_signal, info);
+ }
+ 
+ noreturn void do_exit(int status) {
+@@ -164,7 +199,6 @@
+     struct rusage_ rusage = rusage_get_current();
+     lock(&current->group->lock);
+     rusage_add(&current->group->rusage, &rusage);
+-    struct rusage_ group_rusage = current->group->rusage;
+     unlock(&current->group->lock);
+ 
+     // the actual freeing needs pids_lock
+@@ -193,6 +227,15 @@
+         child->parent = new_parent;
+         list_remove(&child->siblings);
+         list_add(&new_parent->children, &child->siblings);
++        if (task_is_leader(child) && new_parent->group != current->group &&
++            new_parent->group->child_subreaper) {
++            child->exit_signal = SIGCHLD_;
++            if (child->zombie) {
++                int adopted_status = child->group->doing_group_exit
++                    ? child->group->group_exit_code : child->exit_code;
++                notify_parent_of_zombie(new_parent, child, adopted_status);
++            }
++        }
+         // PR_SET_PDEATHSIG: the parent thread died. (glycin, systemd tools and
+         // Rust's process spawning rely on this to kill helpers with their owner.)
+         if (child->pdeath_signal && !child->exiting)
+@@ -224,20 +267,9 @@
+             halt_system();
+         } else {
+             leader->zombie = true;
+-            notify(&parent->group->child_exit);
++            notify_parent_of_zombie(parent, leader, final_status);
+             // Wake any pidfd poller waiting on this pid.
+             pidfd_notify_exit(leader->pid);
+-            struct siginfo_ info = {
+-                .code = SI_KERNEL_,
+-                .child.pid = task_vnr(leader, parent->pidns),
+-                .child.uid = leader->uid,
+-                .child.status = final_status,
+-                .child.utime = clock_from_timeval(group_rusage.utime),
+-                .child.stime = clock_from_timeval(group_rusage.stime),
+-            };
+-            waitid_decode_status(&info);
+-            if (leader->exit_signal != 0)
+-                send_signal(parent, leader->exit_signal, info);
+         }
+ 
+         if (parent != NULL && exit_hook != NULL)
+@@ -707,7 +739,7 @@
+         struct task *parent;
+         list_for_each_entry(&current->group->threads, parent, group_links) {
+             struct task *task;
+-            list_for_each_entry(&current->children, task, siblings) {
++            list_for_each_entry(&parent->children, task, siblings) {
+                 if (!task_is_leader(task))
+                     continue;
+                 if (idtype == P_PGID_ && task->group->pgid != id)
