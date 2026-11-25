@@ -20,15 +20,13 @@ BOOL LabBindWindowsLibrary(NSURL *root,NSURL *documents,BOOL *created,NSError **
     NSFileManager *fm=NSFileManager.defaultManager;
     NSURL *prefix=[root URLByAppendingPathComponent:@"MadeiraPrefix" isDirectory:YES];
     NSURL *drive=[prefix URLByAppendingPathComponent:@"drive_c" isDirectory:YES];
-    BOOL isDir=NO;
-    if(![fm fileExistsAtPath:drive.path isDirectory:&isDir]||!isDir)return fail(error,ENOENT,@"Prepare the experimental Windows storage layout first.");
-    if(!directory(documents,error))return NO;
-    NSURL *alias=[documents URLByAppendingPathComponent:@"wine" isDirectory:YES];
-    NSDictionary *old=[fm attributesOfItemAtPath:alias.path error:nil];
-    if(old) {
-        if(![old[NSFileType] isEqual:NSFileTypeSymbolicLink]||
-           ![alias.URLByResolvingSymlinksInPath.path isEqual:prefix.URLByResolvingSymlinksInPath.path])
-            return fail(error,EEXIST,@"Existing Windows prefix retained. No migration was performed.");
+    // Both native consumers use this dedicated prefix directly. An old
+    // Documents alias can refer to the data container from a prior install.
+    for (NSURL *location in @[prefix, drive]) {
+        NSDictionary *info=[fm attributesOfItemAtPath:location.path error:error];
+        if(!info)return NO;
+        if(![info[NSFileType] isEqual:NSFileTypeDirectory])
+            return fail(error,ENOTDIR,@"Expected a physical Lab prefix directory.");
     }
     NSString *client=@IDECK_LAB_STEAM_WINDOWS_ROOT;
     NSURL *folder=drive;
@@ -45,6 +43,5 @@ BOOL LabBindWindowsLibrary(NSURL *root,NSURL *documents,BOOL *created,NSError **
         if(![[vdf dataUsingEncoding:NSUTF8StringEncoding] writeToURL:settings options:NSDataWritingWithoutOverwriting error:error])return NO;
         if(created)*created=YES;
     } // Preserve existing settings verbatim; real Dock discovery must verify them.
-    if(!old&&![fm createSymbolicLinkAtURL:alias withDestinationURL:prefix error:error])return NO;
     return YES;
 }

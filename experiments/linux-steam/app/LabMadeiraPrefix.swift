@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
 import Foundation
 
-// The Lab owns this one binding. Production installers still check every
-// destination normally; an unrelated prefix is returned without adaptation.
+// Only the isolated Lab compiles this adapter. Its default Windows
+// prefix lives beside the Linux root and does not use Documents/wine.
 enum LabMadeiraPrefix {
     static func canonical(_ prefix: URL, documents: URL, linuxRoot: URL) -> URL {
         let binding = documents.appendingPathComponent("wine", isDirectory: true)
-        let expected = linuxRoot.appendingPathComponent("MadeiraPrefix", isDirectory: true)
+        guard prefix.standardizedFileURL == binding.standardizedFileURL else { return prefix }
+        return linuxRoot.appendingPathComponent("MadeiraPrefix", isDirectory: true)
             .resolvingSymlinksInPath().standardizedFileURL
-        guard prefix.standardizedFileURL == binding.standardizedFileURL,
-              binding.resolvingSymlinksInPath().standardizedFileURL == expected else { return prefix }
-        return expected
     }
 
     static func canonical(_ prefix: URL) -> URL {
