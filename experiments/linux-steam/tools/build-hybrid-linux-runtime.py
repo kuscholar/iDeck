@@ -48,6 +48,7 @@ p.add_argument('--stage-dock-request',action='store_true',help='Copy a normally 
 p.add_argument('--native-setup-transition',action='store_true',help='Explicit main-thread native setup button after normal drain/staging; disables Linux restart, no automatic game launch')
 p.add_argument('--cli-input-controls',action='store_true',help='Development only: nine fixed navigation events through existing RFB; no text or game-launch payload')
 p.add_argument('--x11-window-state',action='store_true',help='Explicit Lab-only bounded read-only X11 window/focus observer, no WM/input/pixels')
+p.add_argument('--steam-big-picture',action='store_true',help='Start Valve Steam with its Big Picture command-line option')
 a=p.parse_args();ns,base,out=(getattr(a,n).resolve() for n in ('namespace_root','artifacts','output'))
 assert all(str(x).startswith('/Volumes/easystore/') for x in (ns,base,out)) and not out.exists()
 assert not (a.checked_frame_snapshot and a.frame_snapshot_pool),'Select one explicit snapshot policy'
@@ -197,6 +198,7 @@ objects=[];rows=[];objdir=out/'adapters';objdir.mkdir()
 if a.stage_dock_request:flags+=['-DIDECK_LAB_STAGE_DOCK_REQUEST=1']
 if a.native_setup_transition:flags+=['-DIDECK_LAB_NATIVE_SETUP_TRANSITION=1']
 if a.cli_input_controls:flags+=['-DIDECK_LAB_CLI_INPUT=1']
+if a.steam_big_picture:flags+=['-DIDECK_LAB_STEAM_BIG_PICTURE=1']
 for source in sources:
     assert source.is_file(),source
     obj=objdir/(source.stem+'.o');cmd=['xcrun','clang',*flags]
@@ -216,6 +218,7 @@ for name,data in original['archives'].items():assert hashof(build/name)==data['s
  'linuxrunner':original['linuxrunner'],'namespace_base_evidence_sha256':hashof(ns/'evidence.json'),
  'namespace_header_sha256':hashof(ns/'LinuxSymbolNamespace.h'),'base_archives_unchanged':True,
  'child_subreaper_patch_sha256':subreaper_patch_sha,
+ 'steam_big_picture_startup_enabled':a.steam_big_picture,
  'native_jit_compiled':a.native_jit,'native_jit_device_activation_validated':False,
  'debugger_prepared_jit_enabled':a.debugger_prepared_jit,
  'archives_sha256':{p.name:hashof(p) for p in runtime.iterdir()},'native_adapter_objects':rows,'commands':commands,

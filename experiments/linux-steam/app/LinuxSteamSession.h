@@ -1,6 +1,6 @@
 #include "GuestSteamStackPolicy.h"
 /* SPDX-License-Identifier: GPL-3.0-or-later WITH Madeira-Converter-Exception
- * Fixed genuine desktop launch, not an account/credential command contract.
+ * Fixed Valve Steam launch, not an account/credential command contract.
  * Native adapter removes only its own stale display readiness paths BEFORE
  * this first/only runtime lifetime starts. No remote CEF debugging on device.
  */
@@ -31,6 +31,12 @@
 #else
 #define IDECK_X11_STATE_START ""
 #endif
+#if IDECK_LAB_STEAM_BIG_PICTURE
+/* Valve startup argument. Both initial and retained launches use this contract. */
+#define IDECK_STEAM_UI_ARG " -gamepadui"
+#else
+#define IDECK_STEAM_UI_ARG " -nobigpicture"
+#endif
 #define IDECK_LINUX_STEAM_ARGS_IMPL(TRACE_ENV) \
     "/bin/sh\0-c\0" \
     "set -eu; umask 077; " \
@@ -49,7 +55,7 @@
     "cd /Steam; export DISPLAY=:99 STEAM_RUNTIME=1; " \
     "export LD_LIBRARY_PATH=/Steam/steamrtarm64:/Steam/steamrtarm64/libs:/Steam/steamrtarm64/panorama; " \
     TRACE_ENV \
-    "./steamrtarm64/steam -clientbeta steamdeck_stable -nobigpicture" IDECK_LAB_CEF_GPU_ARGS " > /tmp/ideck-steam.log 2>&1 & spid=$!; " \
+    "./steamrtarm64/steam -clientbeta steamdeck_stable" IDECK_STEAM_UI_ARG IDECK_LAB_CEF_GPU_ARGS " > /tmp/ideck-steam.log 2>&1 & spid=$!; " \
     "wait \"$spid\"\0"
 #define IDECK_LINUX_STEAM_ARGS IDECK_LINUX_STEAM_ARGS_IMPL("")
 #if IDECK_LAB_X11_TRACE
