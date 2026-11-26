@@ -6,7 +6,11 @@ import Foundation
 enum LabMadeiraPrefix {
     static func canonical(_ prefix: URL, documents: URL, linuxRoot: URL) -> URL {
         let binding = documents.appendingPathComponent("wine", isDirectory: true)
-        guard prefix.standardizedFileURL == binding.standardizedFileURL else { return prefix }
+        // The Dock's unhinted URL may lack the trailing slash before the
+        // directory exists. Compare the lexical file paths without resolving
+        // a possible stale Documents alias.
+        guard prefix.isFileURL, documents.isFileURL,
+              prefix.standardizedFileURL.path == binding.standardizedFileURL.path else { return prefix }
         return linuxRoot.appendingPathComponent("MadeiraPrefix", isDirectory: true)
             .resolvingSymlinksInPath().standardizedFileURL
     }

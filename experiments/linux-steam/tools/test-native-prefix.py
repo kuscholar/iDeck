@@ -24,6 +24,16 @@ let physical=root.appendingPathComponent("MadeiraPrefix",isDirectory:true)
 let fm=FileManager.default
 try fm.createDirectory(at:physical.appendingPathComponent("drive_c/Program Files (x86)/Steam"),withIntermediateDirectories:true)
 try fm.createDirectory(at:docs,withIntermediateDirectories:true)
+// MadeiraDock.prefix constructs its URL without a directory hint. In a Lab
+// with no Documents alias, Foundation gives it a different URL identity.
+let implicitDockPrefix=docs.appendingPathComponent("wine")
+let explicitDockPrefix=docs.appendingPathComponent("wine",isDirectory:true)
+precondition(implicitDockPrefix.standardizedFileURL != explicitDockPrefix.standardizedFileURL)
+let dedicated=physical.resolvingSymlinksInPath().standardizedFileURL
+guard LabMadeiraPrefix.canonical(implicitDockPrefix,documents:docs,linuxRoot:root)==dedicated else {
+    print("FAIL exact unhinted MadeiraDock prefix does not select the dedicated Lab directory")
+    exit(1)
+}
 let logical=docs.appendingPathComponent("wine",isDirectory:true)
 try fm.createSymbolicLink(at:logical,withDestinationURL:physical)
 let relative="Program Files (x86)/Steam/steam.exe"
@@ -50,9 +60,10 @@ try fm.removeItem(at:logical)
 let stale = base.appendingPathComponent("missing-old-container/MadeiraPrefix")
 try fm.createSymbolicLink(at:logical,withDestinationURL:stale)
 precondition(LabMadeiraPrefix.canonical(logical,documents:docs,linuxRoot:root)==resolved)
+precondition(LabMadeiraPrefix.canonical(docs.appendingPathComponent("wine",isDirectory:false),documents:docs,linuxRoot:root)==resolved)
 let preservedStale = try fm.destinationOfSymbolicLink(atPath:logical.path)
 precondition(preservedStale==stale.path)
-print("PASS dedicated Lab prefix is selected without following or replacing Documents aliases; installer checks retained")
+print("PASS exact unhinted Dock prefix and broken/foreign aliases select the dedicated Lab directory; installer checks retained")
 '''
 (out/'main.swift').write_text(main)
 cmd=['xcrun','swiftc','-module-cache-path',str(out/'module-cache'),str(lab/'app/LabMadeiraPrefix.swift'),str(out/'main.swift'),'-o',str(out/'control')]
