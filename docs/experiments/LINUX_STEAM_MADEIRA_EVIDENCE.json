@@ -21952,6 +21952,61 @@
     }
   },
   "run83": {
+    "host_single_session_steam_client_023_factory": {
+      "runs": {
+        "missing": {
+          "exit": 3,
+          "resolved": null,
+          "log_sha256": "cbc6ef407350774ae3e12cae61a7dc3cf54f568eb320dc3a0b8ebce364392410"
+        },
+        "other_library": {
+          "exit": 4,
+          "resolved": 0,
+          "log_sha256": "f3a98c46d62a38cb2dfbba8eda75c69b30334d430214bbcd882fd80cbd7db6c6"
+        },
+        "official": {
+          "exit": 0,
+          "resolved": 7,
+          "log_sha256": "42fe4f80659c3bfd744f7ee8bffe449e0918694234575192e79d4b613072fe29",
+          "factory": {
+            "present": 1,
+            "factory_code": 0,
+            "unknown_present": 0,
+            "unknown_code": 1
+          }
+        }
+      },
+      "host_only": true,
+      "invoked_factory_only": true,
+      "invoked_interface_methods": false,
+      "steam_client_gui_started": false,
+      "guest_root": "fresh sparse fakefs with matched glibc files",
+      "guest_glibc_sha256": {
+        "ld-linux-aarch64.so.1": "1b882eddacd494b060413a8aa4f0a4754ee3f84775e68cecbf8a86092b59cca6",
+        "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+        "libm.so.6": "a8afb2d1f4a0c5e14c0fc82f794ec839eafe29738907aa92895410f57630bbe2",
+        "libdl.so.2": "8023ba7cb6ecabb57d1910ecd24ce347cba5653d1b547d9c7950301ed59716ca",
+        "librt.so.1": "a4b07c4b8bf45da4ec97170e6cd15097c42af1f94124a9ab251551a9a0a79556",
+        "libpthread.so.0": "b4f0bcbb029e42861545757592356a490d87ef42cfa8a7f2d4295846e42698b5"
+      },
+      "source_metadata_sha256_unchanged": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+      "artifacts_sha256": {
+        "steamclient.so": "33ae8d62d122d1fb6a653598259beed34117d09ca4ce87a1d6e31a9af3eb170e",
+        "client-loader": "a5b0dabd1286fa6f5044abf96a2fe737aacf94af0578aa884f77f9867d9a1a2b",
+        "client-loader.c": "72ea044bd209ca76c9daa05fde2d77923adf675c6b25f20730f4ac3c408fc2c0",
+        "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+        "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+        "xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+        "create_fakefs.py": "9fa1903e7e08cbf4ff7e92a1a74513d5bc1224a23aa98e87508970a39812d7b3"
+      },
+      "observed_at_utc": "2026-11-27T03:02:46.264055+00:00",
+      "receipt_sha256": "79f5966a87ae9322a2a6cbd4d45076b8aeaadc6c96c698ff015f2b0e4ca732de",
+      "driver_sha256": "5ad879d8cb8ced8df3e5403a9fd22867b00857994fd6d00e13a9ece107335161",
+      "known_interface": "SteamClient023",
+      "device_source_evidence": "run83.air118_single_session_steamworks_binary_and_loader_control",
+      "gameplay_or_return_verified": false,
+      "next": "Connect an explicitly enabled bounded guest consumer to the real client without passing guest pointers or credentials. Distinguish interface creation from a live Steam pipe while preserving the authentic negative control."
+    },
     "air118_single_session_steamworks_binary_and_loader_control": {
       "observed_at_utc": "2026-11-27T03:00:46.646193+00:00",
       "experiment_head": "801413a7fb22921fb5e842a63047f40539d0ac20",

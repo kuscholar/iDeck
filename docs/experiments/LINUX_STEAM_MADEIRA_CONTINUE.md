@@ -40,6 +40,18 @@ results, with Steam receiving the actual game lifecycle. No licensed
 Windows gameplay or return was demonstrated in this run.
 The source, binary and receipt hashes are in `run83.air118_single_session_steamworks_binary_and_loader_control`.
 
+### Host control — the real ARM64 client creates SteamClient023
+
+A separate unauthenticated LinuxRunner host fakefs loaded the same
+Air library. The genuine CreateInterface factory returned a
+SteamClient023 object and result 0. A deliberately unknown interface
+returned no object and result 1. The consumer never called methods on
+the object or moved guest pointers into native Wine. No Steam GUI,
+Steam pipe, active login, license decision or game was used.
+The next gate is the genuine Linux client connection through a
+bounded guest consumer under the retained Steam session.
+Exact fixture and receipt hashes are in `run83.host_single_session_steam_client_023_factory`.
+
 ## Run83 follow-up — put the same Play attempt identity in the Wine receipt
 
 The private captured Dock path now passes its current capture sequence
