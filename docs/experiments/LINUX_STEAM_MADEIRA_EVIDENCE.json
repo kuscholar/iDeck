@@ -21952,6 +21952,217 @@
     }
   },
   "run83": {
+    "air118_single_session_steamworks_binary_and_loader_control": {
+      "observed_at_utc": "2026-11-27T03:00:46.646193+00:00",
+      "experiment_head": "801413a7fb22921fb5e842a63047f40539d0ac20",
+      "device_model": "iPad13,1",
+      "app_build": 118,
+      "lab_pid_at_read_only_preflight": 66268,
+      "lab_foreground_at_preflight": false,
+      "device_binary_inspection": {
+        "device_model": "iPad13,1",
+        "title_appid": 2949320,
+        "root_receipt_sha256": "517c7f2055d53777649f1b2d7ed156dc7094b2d4acac45ee3e49523699238a89",
+        "data_receipt_sha256": "5e2d652aa647f05e6fccedaaf19e1f108f02e9bbaed123f1ac027f1648a16d47",
+        "plugins_receipt_sha256": "5a03c1abe6328e38eb2b359103514bada3f4722def2db7e776d0bb4f2d97444a",
+        "architecture_receipt_sha256": "93d9b82717aec2aec1b48a832b216fd72cd8c5faf26669c876a24593512e775a",
+        "game_files": {
+          "game.exe": {
+            "sha256": "627531aba2e94500ceabae5c4cdf84d5a3d2b7c9dfc431e2d5ed1f0b04432bfc",
+            "bytes": 672256,
+            "copy_receipt_sha256": "d26031380ea3596c79cb8fd61a5f90e717efc98cd4c5ab7f4fad50281fa48b7d",
+            "x86_64_pe": true,
+            "direct_steam_dll_imports": [],
+            "public_sdk_names_in_headers": []
+          },
+          "steam_api64.dll": {
+            "sha256": "1add7f151fa644870a735ae86e68d1f019f296130d8e7c0a7ed3ecc7482dccbc",
+            "bytes": 300392,
+            "copy_receipt_sha256": "6f55bd769b72009cb5a00fd6c8d42ac9ff04172b4805bdcd84f2076c09e8a258",
+            "x86_64_pe": true,
+            "direct_steam_dll_imports": [],
+            "public_sdk_names_in_headers": [
+              "SteamAPI_InitFlat",
+              "SteamAPI_Shutdown",
+              "SteamAPI_RestartAppIfNecessary",
+              "SteamAPI_ISteamApps_BIsSubscribedApp"
+            ]
+          }
+        },
+        "execution_observed": false,
+        "objdump_sha256": "83b32f39e5475ee168927eb1509c82978e08e0100ec8c6fafeca588d9960773c",
+        "summary_sha256": "3e471a74631f6724f457d571c16dbffbaacd1059b12976b99b8b25aaacc1d674"
+      },
+      "device_linux_client_exports": {
+        "device_model": "iPad13,1",
+        "library_abi": "AArch64 ELF64",
+        "library_sha256": "33ae8d62d122d1fb6a653598259beed34117d09ca4ce87a1d6e31a9af3eb170e",
+        "bytes": 46358128,
+        "copy_receipt_sha256": "ec22f6bb266719695eadaa3d238addc4f3702cb665db1a923ad864373980b5ec",
+        "objdump_sha256": "83b32f39e5475ee168927eb1509c82978e08e0100ec8c6fafeca588d9960773c",
+        "upstream_reference": "https://github.com/ValveSoftware/Proton/blob/proton_11.0/lsteamclient/unixlib.cpp",
+        "expected_exports_present": [
+          "CreateInterface",
+          "Steam_BGetCallback",
+          "Steam_FreeLastCallback",
+          "Steam_GetAPICallResult",
+          "Steam_IsKnownInterface",
+          "Steam_NotifyMissingInterface",
+          "Steam_ReleaseThreadLocalMemory"
+        ],
+        "expected_exports_absent": [],
+        "authentication_or_interface_execution_observed": false,
+        "summary_sha256": "2cb7b75c5dc2cfcb1a0653f8ff73f5622995b245d00bb95e3cb9275fef7ce087"
+      },
+      "host_linuxrunner_dlopen_dlsym": {
+        "runs": {
+          "missing": {
+            "exit": 3,
+            "resolved": null,
+            "log_sha256": "7935936eed9dfc1dd5f6aa7b27b000998e846b6b4e1b0f853616c4eb1ee7455c"
+          },
+          "other_library": {
+            "exit": 4,
+            "resolved": 0,
+            "log_sha256": "bf86b82011bf31fafb6d8fd1cfff1b679d41940ced415f351ae775c39709b521"
+          },
+          "official": {
+            "exit": 0,
+            "resolved": 7,
+            "log_sha256": "f02050537c01f37ef66a2f072e552d611aca0d144349f3603fc68411bd55918d"
+          }
+        },
+        "host_only": true,
+        "invoked_steam_exports": false,
+        "steam_client_gui_started": false,
+        "guest_root": "fresh sparse fakefs with matched glibc files",
+        "guest_glibc_sha256": {
+          "ld-linux-aarch64.so.1": "1b882eddacd494b060413a8aa4f0a4754ee3f84775e68cecbf8a86092b59cca6",
+          "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+          "libm.so.6": "a8afb2d1f4a0c5e14c0fc82f794ec839eafe29738907aa92895410f57630bbe2",
+          "libdl.so.2": "8023ba7cb6ecabb57d1910ecd24ce347cba5653d1b547d9c7950301ed59716ca",
+          "librt.so.1": "a4b07c4b8bf45da4ec97170e6cd15097c42af1f94124a9ab251551a9a0a79556",
+          "libpthread.so.0": "b4f0bcbb029e42861545757592356a490d87ef42cfa8a7f2d4295846e42698b5"
+        },
+        "source_metadata_sha256_unchanged": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+        "artifacts_sha256": {
+          "steamclient.so": "33ae8d62d122d1fb6a653598259beed34117d09ca4ce87a1d6e31a9af3eb170e",
+          "client-loader": "67878123c098d05af262b418d27cd6e34b440ff5c45704472b80b2692878c8c3",
+          "client-loader.c": "95f4f1a0f4b79bfe66919a558fd14bb2f228041544cb8828e9a1ac80398c4493",
+          "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+          "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+          "xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+          "create_fakefs.py": "9fa1903e7e08cbf4ff7e92a1a74513d5bc1224a23aa98e87508970a39812d7b3"
+        },
+        "summary_sha256": "8b09e798338284924371c0decb8ccaab655c76fa0c626506ddba52cb8a3ba1aa"
+      },
+      "earlier_host_controls": {
+        "full_clone_timed_out_before_guest_execution": true,
+        "sparse_realfs_before_loader_execute_mode": {
+          "runs": {
+            "missing": {
+              "exit": 243,
+              "resolved": null,
+              "log_sha256": "69f21b19bb1bb93b9f35f76c07c300574ec8722f7d70c602f7a9b62c5112a216"
+            },
+            "other_library": {
+              "exit": 243,
+              "resolved": null,
+              "log_sha256": "69f21b19bb1bb93b9f35f76c07c300574ec8722f7d70c602f7a9b62c5112a216"
+            },
+            "official": {
+              "exit": 243,
+              "resolved": null,
+              "log_sha256": "69f21b19bb1bb93b9f35f76c07c300574ec8722f7d70c602f7a9b62c5112a216"
+            }
+          },
+          "host_only": true,
+          "invoked_steam_exports": false,
+          "steam_client_gui_started": false,
+          "guest_root": "fresh sparse realfs with matched glibc files",
+          "guest_glibc_sha256": {
+            "ld-linux-aarch64.so.1": "1b882eddacd494b060413a8aa4f0a4754ee3f84775e68cecbf8a86092b59cca6",
+            "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+            "libm.so.6": "a8afb2d1f4a0c5e14c0fc82f794ec839eafe29738907aa92895410f57630bbe2",
+            "libdl.so.2": "8023ba7cb6ecabb57d1910ecd24ce347cba5653d1b547d9c7950301ed59716ca",
+            "librt.so.1": "a4b07c4b8bf45da4ec97170e6cd15097c42af1f94124a9ab251551a9a0a79556",
+            "libpthread.so.0": "b4f0bcbb029e42861545757592356a490d87ef42cfa8a7f2d4295846e42698b5"
+          },
+          "source_metadata_sha256_unchanged": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "artifacts_sha256": {
+            "steamclient.so": "33ae8d62d122d1fb6a653598259beed34117d09ca4ce87a1d6e31a9af3eb170e",
+            "client-loader": "67878123c098d05af262b418d27cd6e34b440ff5c45704472b80b2692878c8c3",
+            "client-loader.c": "95f4f1a0f4b79bfe66919a558fd14bb2f228041544cb8828e9a1ac80398c4493",
+            "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+            "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+            "xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59"
+          },
+          "summary_sha256": "ca72211def544a6e6c9308615bd9da5bb60e3de8cbb2399fd9e18914af545878"
+        },
+        "sparse_realfs_loader_entered_guests": {
+          "runs": {
+            "missing": {
+              "exit": 3,
+              "resolved": null,
+              "log_sha256": "0db4b8860f7694ab0e59a88f8e737b91ee7438a13580812682365256fcea7dd7"
+            },
+            "other_library": {
+              "exit": 4,
+              "resolved": 0,
+              "log_sha256": "deb9be280560291bbd0745ee98f2af2b4ac29348f691e31b84a3c023d336a434"
+            },
+            "official": {
+              "exit": 1,
+              "resolved": null,
+              "log_sha256": "b9a9d5710b524fca6f2b857f03f653fc0d2d7e80b09e2efce2f8fc8ef97893df"
+            }
+          },
+          "host_only": true,
+          "invoked_steam_exports": false,
+          "steam_client_gui_started": false,
+          "guest_root": "fresh sparse realfs with matched glibc files",
+          "guest_glibc_sha256": {
+            "ld-linux-aarch64.so.1": "1b882eddacd494b060413a8aa4f0a4754ee3f84775e68cecbf8a86092b59cca6",
+            "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+            "libm.so.6": "a8afb2d1f4a0c5e14c0fc82f794ec839eafe29738907aa92895410f57630bbe2",
+            "libdl.so.2": "8023ba7cb6ecabb57d1910ecd24ce347cba5653d1b547d9c7950301ed59716ca",
+            "librt.so.1": "a4b07c4b8bf45da4ec97170e6cd15097c42af1f94124a9ab251551a9a0a79556",
+            "libpthread.so.0": "b4f0bcbb029e42861545757592356a490d87ef42cfa8a7f2d4295846e42698b5"
+          },
+          "source_metadata_sha256_unchanged": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+          "artifacts_sha256": {
+            "steamclient.so": "33ae8d62d122d1fb6a653598259beed34117d09ca4ce87a1d6e31a9af3eb170e",
+            "client-loader": "67878123c098d05af262b418d27cd6e34b440ff5c45704472b80b2692878c8c3",
+            "client-loader.c": "95f4f1a0f4b79bfe66919a558fd14bb2f228041544cb8828e9a1ac80398c4493",
+            "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+            "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+            "xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59"
+          },
+          "summary_sha256": "1f04ad320b0260bc8e2f624f5b3fab32e43e3ca7dbe79229158fc4a273fcc148"
+        },
+        "sparse_realfs_official_library_outcome": "Normal random-device prerequisite was absent in the sparse fixture."
+      },
+      "control_drivers_sha256": {
+        "inspect-air-ratatan-steamworks.py": "ed333309973d77c48e27e148d01037294c882810550769ff975caec1df637aec",
+        "inspect-air-linux-steam-export-contract.py": "f565f98c2eafef95a14c1fd971ee32481bf6d16be190d2821472c4a43428ede9",
+        "test-linux-steam-client-loader.py": "2dbcdd7f223edb6c7ebe6b661c34cf5fac59cab0ac9283fc3a0ab767885a87a9"
+      },
+      "inspected_bridge_sources_sha256": {
+        "app/LaunchProtocol.h": "d8faa83407f7be2eadeabaa2c2267d10d4246e4d5fa52ce288d1a817ebedc02e",
+        "app/LabBridge.c": "df2b098c870b29c98285a69baf498292b5931755efd3d6a0c7dc4f6919b17a1a",
+        "app/GameFilePolicy.c": "0c94b55b25cfcdcbe5dae36d6d59935b550045981c265e7d7a6f02f53ad34497",
+        "guest/compatibility.c": "f2128b59dd1d8d2382d2297ccd0f7dd178e22a0161be5a554090555e3ce56ea2"
+      },
+      "rejected": [
+        "A valid captured AppID and PE file prove Windows Steamworks access.",
+        "The installed Air ARM64 library lacks a required upstream loader export."
+      ],
+      "initial_probe": "The guessed Ratatan_Data path returned CoreDevice.ActionError 3; only the actual game_Data plug-in path was used for the ABI comparison.",
+      "active_signed_in_steamworks_session_tested": false,
+      "windows_game_renderer_or_return_observed": false,
+      "stable_success": false,
+      "next": "Validate the genuine Linux Steam client path from a bounded guest consumer. Establish the LinuxRunner guest dispatch boundary for fixed data and the selected compatibility lifetime before Madeira game admission. Preserve Valve's actual Steamworks results and normal game exit."
+    },
     "source_parent": "f7446ff982dda1b2f528099e0bcd7c58f1a7a817",
     "phase": "Real interactive Library/BPM and Ratatan details verified. Preserved Air86 now cycles Steam idle artwork. Physical tap needed for a reliable wake and game install.",
     "observed_failure": "Run82 first trap has guest anonymous MAP_STACK mmap ENOMEM before clone. See run82.first_fault.",

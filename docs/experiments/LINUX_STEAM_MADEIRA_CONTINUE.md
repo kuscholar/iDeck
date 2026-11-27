@@ -1,3 +1,45 @@
+## Run83 follow-up — Single-login Steamworks boundary on Air
+
+The active acceptance target is one sign-in and one Steam Play in iDeck,
+and a normally exited Madeira game returning to the same usable Linux Steam
+login. The earlier request to sign in separately to Dock applies only to the
+diagnostic route. Build 119's Dock path is not the acceptance route.
+
+CoreDevice identified Build 118 and its known Lab PID on the selected Air.
+AXe identified a different foreground process, so no device input, upgrade
+or app restart was performed. The host inspected bounded copies of Ratatan's
+actual x86-64 game.exe and game_Data/Plugins/x86_64/steam_api64.dll. The game
+exe's direct imports did not list Steam. The separately installed Steamworks
+DLL exports initialization, normal shutdown and subscription interfaces.
+This establishes packaging, not runtime use of a particular API.
+
+Valve's [compatibility registration](https://github.com/ValveSoftware/Proton#install-proton-locally)
+describes discoverability. The [Linux client adapter](https://github.com/ValveSoftware/Proton/blob/proton_11.0/lsteamclient/unixlib.cpp)
+separately loads the genuine Linux Steam client and forwards Steamworks
+interfaces and callbacks. It has an ARM64 ELF path. That is an upstream
+reference for the interface boundary, not a proposal to run Linux Proton.
+The current iDeck v1 bridge records the Play metadata and returns diagnostic
+125. It does not carry game-to-Steam interfaces or the game lifetime.
+
+All seven required loader exports were present in the Air's actual
+AArch64 ELF steamclient.so. A fresh, unauthenticated LinuxRunner host
+fakefs with matching glibc loaded the exact bytes with RTLD_NOW and
+resolved seven of seven names. The full fixture copy timed out before
+execution. The sparse realfs needed its copied loader's execute mode and
+then reached Valve's ordinary missing-random-device check. The final
+fakefs supplied LinuxRunner's normal device nodes.
+The nonexistent-file control returned 3. The unrelated glibc control
+loaded and resolved zero expected names, returning 4. The probe never
+called the resolved exports, never opened the Steam GUI, did not handle
+account data, and preserved the stopped fixture's source metadata hash.
+
+The next interface test needs a bounded guest consumer and genuine Linux
+Steam results, plus a way for Madeira to exchange fixed data with that
+consumer. It must preserve the authorized Linux session and real Steam
+results, with Steam receiving the actual game lifecycle. No licensed
+Windows gameplay or return was demonstrated in this run.
+The source, binary and receipt hashes are in `run83.air118_single_session_steamworks_binary_and_loader_control`.
+
 ## Run83 follow-up — put the same Play attempt identity in the Wine receipt
 
 The private captured Dock path now passes its current capture sequence
