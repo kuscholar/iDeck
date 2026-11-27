@@ -21952,6 +21952,64 @@
     }
   },
   "run83": {
+    "host_single_session_steam_client_023_pipe_without_client": {
+      "runs": {
+        "missing": {
+          "exit": 3,
+          "log_sha256": "42b7d9c96bb605751f82fe3a4e1a39138a853a3e7daf5a21c86c21ffa8b0e397"
+        },
+        "other_library": {
+          "exit": 4,
+          "log_sha256": "e4bb7480388323cd46176de818afc098c9f036e2a0b005c271b61c1b5b2bec38"
+        },
+        "official": {
+          "exit": 0,
+          "log_sha256": "4995df8636baec823918453a6a8fcd1f27b752c52ee7e06d2e7c2c7aaea3d075",
+          "probe": {
+            "factory_code": 0,
+            "pipe_present": 0,
+            "pipe_released": 0
+          }
+        }
+      },
+      "host_only": true,
+      "steam_client_gui_started": false,
+      "global_user_or_license_query": false,
+      "guest_root": "fresh sparse fakefs with matched glibc and no running Steam client",
+      "guest_glibc_sha256": {
+        "ld-linux-aarch64.so.1": "1b882eddacd494b060413a8aa4f0a4754ee3f84775e68cecbf8a86092b59cca6",
+        "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+        "libm.so.6": "a8afb2d1f4a0c5e14c0fc82f794ec839eafe29738907aa92895410f57630bbe2",
+        "libdl.so.2": "8023ba7cb6ecabb57d1910ecd24ce347cba5653d1b547d9c7950301ed59716ca",
+        "librt.so.1": "a4b07c4b8bf45da4ec97170e6cd15097c42af1f94124a9ab251551a9a0a79556",
+        "libpthread.so.0": "b4f0bcbb029e42861545757592356a490d87ef42cfa8a7f2d4295846e42698b5"
+      },
+      "source_metadata_sha256_unchanged": "b27026b21fd443cf1638111f9209915c32494589f647b75820db2c402e59ab84",
+      "artifacts_sha256": {
+        "steamclient.so": "33ae8d62d122d1fb6a653598259beed34117d09ca4ce87a1d6e31a9af3eb170e",
+        "client-pipe": "9b1d4afbef0fc5b01a6f79504850a481120db8cdfabad1307cbb8c4a355dd8e0",
+        "client-pipe.cpp": "10351074a11c3705e52f6f087e8bb0b5496812dc990470ea2d7340306df6edf9",
+        "ish": "935ea1c9291bd8fe870b9a8da3183226d33e5b5c71da8b493978dbab579750a3",
+        "libc.so.6": "70fa4c4cf57eabeb96097cce47582d02379c4cd1de3db3e98ade4dd7089a1b13",
+        "xlib-glibc-start.S": "83dfd00f6627928523d3a9a15b9be609475c6b9fe55dc91f26e5a8e1ec5b9b59",
+        "create_fakefs.py": "9fa1903e7e08cbf4ff7e92a1a74513d5bc1224a23aa98e87508970a39812d7b3",
+        "ideck-run83-isteamclient023.h": "cf409526affe5956b561b40b71feb8600acae5971de91115b42a79974ab08387"
+      },
+      "observed_at_utc": "2026-11-27T03:08:25.981880+00:00",
+      "source_commit": "10ab97db7ca70a6e03d38df01cc0c8fa2718ab6d",
+      "linuxrunner": "d1419782da2e299fe22f1ddb85c70ae3d1e276b1",
+      "receipt_sha256": "a77629ade338d53d74e910b5ea83cd4a0bb6e5fc76f0e3961f4171974df9cd79",
+      "driver_sha256": "59ea7af441f53ee023f29f9b01ee9a357a9fc0a224b0c51abf6d3497032d1e7b",
+      "sdk_reference": "https://raw.githubusercontent.com/ValveSoftware/Proton/proton_11.0/lsteamclient/steamworks_sdk_165/isteamclient.h",
+      "device_read_only": {
+        "model": "iPad13,1",
+        "build": 118,
+        "lab_running": true,
+        "lab_foreground": false
+      },
+      "gameplay_or_return_verified": false,
+      "next": "Compare the same probe before and during a matching running, unauthenticated Valve client in one isolated LinuxRunner fixture."
+    },
     "host_single_session_steam_client_023_factory": {
       "runs": {
         "missing": {

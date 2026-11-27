@@ -58,6 +58,27 @@ The next gate is the genuine Linux client connection through a
 bounded guest consumer under the retained Steam session.
 Exact fixture and receipt hashes are in `run83.host_single_session_steam_client_023_factory`.
 
+### Host control — a SteamClient023 factory object is insufficient for IPC
+
+On the selected Air, CoreDevice still reported Build 118 and the Lab
+owner. AXe showed another process in the foreground. There was no
+device input, install or restart.
+
+In a fresh sparse host LinuxRunner fakefs, the exact Air ARM64 library
+again returned factory code 0 for SteamClient023. The probe then called
+the API's [CreateSteamPipe](https://partner.steamgames.com/doc/api/ISteamClient#CreateSteamPipe)
+with no Steam client running. It returned zero, so there was no pipe
+to release. The missing-library control returned 3 and the unrelated
+glibc control returned 4. The tested interface declaration and the
+LinuxRunner, client, probe, glibc and result hashes are recorded in
+`run83.host_single_session_steam_client_023_pipe_without_client`.
+
+This separates a loadable Valve interface from an actual connection.
+The next comparison uses a matching running Valve client in an
+isolated host guest before testing the Air's retained Linux session.
+This test made no global-user or license query and did not exercise
+Madeira gameplay or return.
+
 ## Baseline and isolation
 
 - Fork: https://github.com/kuscholar/iDeck; fetched `origin/main` at
